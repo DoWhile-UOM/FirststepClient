@@ -1,24 +1,52 @@
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+/>
+
 <app-nav-bar></app-nav-bar>
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Please sign in</h3>
+<div class="body" fxLayout="column" fxLayoutAlign="center center">
+  <div class="title"><span>Login to FirstStep</span></div>
+  <div class="card">
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+          <input
+            matInput
+            placeholder="Enter your Email"
+            [(ngModel)]="loginObj.email"
+            name="email"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            [(ngModel)]="loginObj.password"
+            name="password"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <div class="forgot-password">
+          <span class="forgot-password-details"
+            >Forgot your password?
+            <a href="forgotPassword" class="reset">Reset</a></span
+          >
         </div>
-        <div class="panel-body">
-          <form>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" [(ngModel)]="loginObj.email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" [(ngModel)]="loginObj.password" name="password" required>
-            </div>
-            <button type="button" class="btn btn-primary" (click)="onLogin()">Sign in</button>
-            </form>
-        </div>
-        </div>
-        </div>
-        </div>
+        <button mat-button class="login" (click)="onLogin()">Login</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+.body{
+    font-family: 'Lato', sans-serif;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+.title {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center; /* Center the text horizontally */
+  }
+mat-card{
+    border-radius: 10px;
+    width: 60%;
+    align-self: center;
+}
+.card{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+}
+mat-card-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+mat-label{
+    font-family: 'Lato', sans-serif;
+}
+mat-form-field{
+    width: 75%;
+}
+input{
+    width: 100%;
+    margin: 10px 0;
+}
+.login{
+    background-color: #008080;
+    color: #fff;
+    font-weight: 700;
+    width: 75%;
+    font-family: 'Lato', sans-serif;
+    margin-top: 10px; 
+}
+.forgot-password{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    font-family: 'Lato', sans-serif;
+    
+}
+.forgot-password-details{
+    align-items: flex-start;
+}
+.reset{
+    color: #008080;
+    text-decoration: none;
+}
