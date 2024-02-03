@@ -1,0 +1,84 @@
+.form-popup {
+  width: 725px;
+  height: 642px;
+  border: 3px black;
+  border-radius: 25px;
+  background: #fff;
+
+  box-shadow: 7px 7px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.pop-up-Header {
+  position: relative;
+  margin-top: 28px;
+  margin-left: 39px;
+  color: #000;
+  font-family: Lato;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.formchild {
+  width: 404px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #a9a9a9;
+  background: #f9f9f9;
+  margin-left: 30px;
+  margin-right: 80px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+
+  /* align-items: flex-start;*/
+}
+.child {
+  position: relative;
+  margin-bottom: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 97px;
+}
+
+#firstchild {
+  margin-top: 53px;
+}
+
+#thirdchild {
+}
+
+.child label {
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+.checkbox {
+  margin-right: 220px;
+}
+
+#Documentsubmissioncontainer {
+  box-sizing: border-box;
+  height: 100px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+}
+
+
+/*get uplod icon middle of the button*/
+

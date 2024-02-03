@@ -1,0 +1,51 @@
+<div class="form-popup" id="myForm">
+  <div class="pop-up-Header">Create New Subordinate Account</div>
+  <form class="form-container">
+    <div class="child" id="firstchild">
+      <label for="fname">First Name</label>
+      <input type="text" name="fname" class="formchild" />
+    </div>
+    <div class="child" id="secondchild">
+      <label for="lname">Last Name</label>
+      <input type="text" name="lname" class="formchild" />
+    </div>
+    <div class="child" id="thirdchild">
+      <label for="email">Email</label>
+      <input type="email" name="email" class="formchild" />
+    </div>
+    <div class="child" id="fourthchild">
+      <label for="pswrd">password</label>
+      <input type="password" name="pswrd" class="formchild" />
+    </div>
+    <div class="child">
+      <label for="type">Type</label>
+      <section class="example-section">
+        <div class="checkbox">
+          <mat-checkbox
+            class="example-margin"
+            name="subordinate"
+            value="HRManager"
+            >HR Manager</mat-checkbox
+          >
+          <mat-checkbox
+            class="example-margin"
+            name="subordinate"
+            value="HRAssistant"
+            >HR Assistant</mat-checkbox
+          >
+        </div>
+      </section>
+    </div>
+    <div class="child" id="fileupload">
+      <label for="profile">Profile Photo</label>
+      <div id="Documentsubmissioncontainer" class="formchild">
+            <input
+              type="file" hidden id="fileID" style="display:none;"
+            />
+            <button  class="fileuploadbtn" mat-button><mat-icon class="uploadicon">upload</mat-icon></button>
+            <div>Click To Upload Image</div>
+          
+      </div>
+    </div>
+  </form>
+</div>
