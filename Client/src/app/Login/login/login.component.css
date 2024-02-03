@@ -46,19 +46,21 @@ input{
     font-weight: 700;
     width: 75%;
     font-family: 'Lato', sans-serif;
-    margin-top: 10px; 
+    margin: 10px; 
 }
-.forgot-password{
+.forgot-password,.signUp{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: flex-start;
     margin-top: 10px;
     font-family: 'Lato', sans-serif;
-    
+    width: 75%;
+    color: #000;
 }
-.forgot-password-details{
-    align-items: flex-start;
-}
-.reset{
+
+
+.reset,.signUp{
     color: #008080;
     text-decoration: none;
+    margin-left: 5px;
 }
