@@ -1,1 +1,16 @@
-<p>nav-bar works!</p>
+<mat-toolbar class="nav-bar" color="primary">
+  <span>
+    <a routerLink="/">
+      <img src="assets/images/logo.png" alt="Logo">
+    </a>
+  </span>
+  <span>FirstStep</span>
+  <span class="flex-spacer"></span>
+  <div class="right-buttons">
+    <a mat-button routerLink="/home">Home</a>
+    <a mat-button routerLink="/about">About</a>
+    <a mat-button routerLink="/contact">Contact</a>
+    <img src="assets/images/dp.png" alt="Profile Picture" class="profile-image">
+  </div>
+</mat-toolbar>
+
