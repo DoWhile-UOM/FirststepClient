@@ -39,10 +39,13 @@ mat-label{
 }
 mat-form-field{
     width: 75%;
-}
-input{
+    height: 100px;
+    
+matInput{
     width: 100%;
     margin: 10px 0;
+    background-color: aquamarine;
+}
 }
 .login{
     background-color: #008080;
