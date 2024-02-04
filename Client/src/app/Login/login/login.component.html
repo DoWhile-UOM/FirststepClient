@@ -4,10 +4,10 @@
 />
 
 <app-nav-bar></app-nav-bar>
-<div class="body" fxLayout="column" fxLayoutAlign="center center">
+<div class="body">
   <div class="title"><span>Login to FirstStep</span></div>
   <div class="card">
-    <mat-card>
+    <mat-card class="body-card">
       <mat-card-content>
         <mat-form-field appearance="outline">
           <mat-label>Email Address</mat-label>
@@ -42,9 +42,11 @@
           >Forgot your password?
           <a href="forgotPassword" class="reset">Reset</a></span
         >
-        <button mat-button class="login" (click)="onLogin()">Login</button>
+        <button mat-button class="login" (click)="onLogin()">
+          <span class="Login-btn-name">Login</span>
+        </button>
 
-        <span class="signUp"
+        <span class="SignUp"
           >New here? <a href="forgotPassword" class="signUp">signUp</a></span
         >
       </mat-card-content>

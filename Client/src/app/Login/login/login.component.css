@@ -15,8 +15,11 @@
   }
 mat-card{
     border-radius: 10px;
-    width: 60%;
-    align-self: center;
+    width: 30%;
+    align-self: center;  
+}
+.body-card{
+    box-shadow: 2px 2px 5px #888888;
 }
 .card{
     text-align: center;
@@ -29,6 +32,7 @@ mat-card-content{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
 }
 mat-label{
     font-family: 'Lato', sans-serif;
@@ -48,7 +52,10 @@ input{
     font-family: 'Lato', sans-serif;
     margin: 10px; 
 }
-.forgot-password,.signUp{
+.Login-btn-name{
+    color: #fff;
+}
+.forgot-password{
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -63,4 +70,5 @@ input{
     color: #008080;
     text-decoration: none;
     margin-left: 5px;
+    margin-bottom: 10px;
 }
