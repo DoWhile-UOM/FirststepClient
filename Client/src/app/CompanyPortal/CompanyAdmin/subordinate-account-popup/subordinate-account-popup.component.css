@@ -33,8 +33,6 @@
 .form-container {
   display: flex;
   flex-direction: column;
-
-  /* align-items: flex-start;*/
 }
 .child {
   position: relative;
@@ -79,6 +77,13 @@
 
 }
 
+.spanicon{
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
 
 /*get uplod icon middle of the button*/
 
