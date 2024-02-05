@@ -23,14 +23,14 @@
       <mat-checkbox class="example-margin">HR Manager</mat-checkbox>
       <mat-checkbox class="example-margin">HR Assistant</mat-checkbox>
     </section>
-
+   <app-file-upload></app-file-upload>
     <div class="fileupload">
       <div id="Documentsubmissioncontainer" class="formchild">
-        <input type="file" hidden id="fileID" style="display: none" />
+        <input type="file" hidden id="fileID" style="display: none" (change)="handleFileInput($event)" />
         <span class="spanicon"
           ><mat-icon class="uploadicon">upload</mat-icon></span
         >
-        <button class="fileuploadbtn" mat-button onclick="triggerFileInput()">
+        <button class="fileuploadbtn" mat-button (click)="triggerFileInput()">
           Upload Profile Photo
         </button>
       </div>
