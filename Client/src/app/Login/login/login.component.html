@@ -13,6 +13,7 @@
           <mat-label>Email Address</mat-label>
           <input
             matInput
+            class="email-field"
             placeholder="Enter your Email"
             [(ngModel)]="loginObj.email"
             name="email"
@@ -23,6 +24,7 @@
           <mat-label>Enter your password</mat-label>
           <input
             matInput
+            class="password-field"
             [type]="hide ? 'password' : 'text'"
             [(ngModel)]="loginObj.password"
             name="password"

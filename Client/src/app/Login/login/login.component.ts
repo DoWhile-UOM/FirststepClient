@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
-
+import {FlexLayoutServerModule} from '@angular/flex-layout/server';
 
 
 @Component({
@@ -15,7 +15,7 @@ import {MatButtonModule} from '@angular/material/button';
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.css',
-    imports: [NavBarComponent,FormsModule,HttpClientModule,MatCardModule,MatFormFieldModule, MatInputModule, MatIconModule,MatButtonModule]
+    imports: [NavBarComponent,FormsModule,HttpClientModule,MatCardModule,MatFormFieldModule, MatInputModule, MatIconModule,MatButtonModule,FlexLayoutServerModule]
 })
 export class LoginComponent {
     hide = true;
