@@ -4,22 +4,23 @@
 />
 
 <app-nav-bar></app-nav-bar>
-<div class="body">
+<div class="body" fxLayout="column" fxLayoutAlign="center center">
   <div class="title"><span>Login to FirstStep</span></div>
-  <div class="card">
+  <div class="card" fxFlex.gt-sm="50" fxFlex.xs="75">
     <mat-card class="body-card">
-      <mat-card-content>
-        <mat-form-field appearance="outline">
+      <mat-card-content fxLayout="column" fxLayoutGap="20px">
+        <mat-form-field appearance="outline" fxFlex>
           <mat-label>Email Address</mat-label>
           <input
             matInput
+            class="input-field"
             placeholder="Enter your Email"
             [(ngModel)]="loginObj.email"
             name="email"
             required
           />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" fxFlex>
           <mat-label>Enter your password</mat-label>
           <input
             matInput

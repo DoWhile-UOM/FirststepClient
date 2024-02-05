@@ -1,77 +1,87 @@
-.body{
-    font-family: 'Lato', sans-serif;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
-    padding: 20px;
+.body {
+  font-family: "Lato", sans-serif;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
 }
 .title {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    text-align: center; /* Center the text horizontally */
-  }
-mat-card{
-    border-radius: 10px;
-    width: 30%;
-    align-self: center;  
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: center; /* Center the text horizontally */
 }
-.body-card{
-    box-shadow: 2px 2px 5px #888888;
+mat-card {
+  border-radius: 10px;
+  width: 30%;
+  align-self: center;
 }
-.card{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 20px;
+.body-card {
+  box-shadow: 2px 2px 5px #888888;
+  box-sizing: border-box;
+  width: 100%;
 }
-mat-card-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
+.card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
-mat-label{
-    font-family: 'Lato', sans-serif;
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 }
-mat-form-field{
-    width: 75%;
-    height: 100px;
-    
-matInput{
-    width: 100%;
-    margin: 10px 0;
-    background-color: aquamarine;
+mat-label {
+  font-family: "Lato", sans-serif;
 }
-}
-.login{
-    background-color: #008080;
-    color: #fff;
-    font-weight: 700;
-    width: 75%;
-    font-family: 'Lato', sans-serif;
-    margin: 10px; 
-}
-.Login-btn-name{
-    color: #fff;
-}
-.forgot-password{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-top: 10px;
-    font-family: 'Lato', sans-serif;
-    width: 75%;
-    color: #000;
+mat-form-field {
+  width: 75%;
+  height: 100px;
 }
 
+.input-field {
+  width: 100%;
+  margin: 10px 0;
+}
 
-.reset,.signUp{
-    color: #008080;
-    text-decoration: none;
-    margin-left: 5px;
-    margin-bottom: 10px;
+.login {
+  background-color: #008080;
+  color: #fff;
+  font-weight: 700;
+  width: 75%;
+  font-family: "Lato", sans-serif;
+  margin: 10px 0px;
+}
+.Login-btn-name {
+  color: #fff;
+}
+.forgot-password {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-top: 10px;
+  font-family: "Lato", sans-serif;
+  width: 75%;
+  color: #000;
+}
+
+.reset,
+.signUp {
+  color: #008080;
+  text-decoration: none;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-label {
+  margin-top: -15px;
+}
+::ng-deep label.ng-star-inserted {
+  transform: translateY(-0.59375em) scale(0.75) !important;
 }
