@@ -1,0 +1,139 @@
+<app-nav-bar></app-nav-bar>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+/>
+<div class="bodySection">
+  <span class="sectionHeading">Company Name</span>
+  <div class="top-section">
+    <img src="assets/BistechLogo.png" class="md-card-image" />
+    <div class="image-side-section">
+      <form class="form">
+        <mat-form-field class="form-field">
+          <mat-label>Company Name</mat-label>
+          <input
+            matInput
+            placeholder="Enter your Company Name"
+            value="Bistec Global"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+          <mat-label>Company Number</mat-label>
+          <input
+            matInput
+            placeholder="Enter your Company Number"
+            value="CN-001"
+          />
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="sectionTwo" style="width: 100%">
+      <mat-form-field class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          value="some details"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div style="display: flex">
+      <div class="staring-section">
+        <div class="sectionTwo">
+          <mat-form-field class="form-field">
+            <mat-label>Web Site</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Company website"
+              value="www.bistecglobal.com"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="ending-section">
+        <div class="sectionTwo">
+          <span class="detail-name">Businnes Scale of Company</span>
+          <select id="bussinessScale" name="bussinessScale">
+            <option value="option1" selected>small</option>
+            <option value="option2">medium</option>
+            <option value="option3">large</option>
+          </select>
+
+          <mat-form-field>
+            <mat-label> Bussiness Scale</mat-label>
+            <mat-select>
+              @for (type of scale; track type) {
+              <mat-option [value]="type.scaleType">{{
+                type.viewValue
+              }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex">
+      <div class="staring-section">
+        <div class="sectionTwo">
+          <span class="detail-name">Contact Number</span>
+          <input type="text" id="userInput" name="userInput" />
+        </div>
+      </div>
+      <div class="ending-section">
+        <div class="sectionTwo">
+          <span class="detail-name">Email</span>
+          <input type="text" id="userInput" name="userInput" />
+        </div>
+      </div>
+    </div>
+    <div style="display: flex">
+      <div class="staring-section">
+        <div class="sectionTwo">
+          <span class="detail-name">City</span>
+          <select id="city" name="city">
+            <option value="option1" selected>Colombo</option>
+            <option value="option2">Matara</option>
+            <option value="option3">Kegalle</option>
+          </select>
+        </div>
+      </div>
+      <div class="ending-section">
+        <div class="sectionTwo">
+          <span class="detail-name">Province</span>
+          <select id="province" name="province">
+            <option value="option1">Colombo</option>
+            <option value="option2">Matara</option>
+            <option value="option3">Kegalle</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-section">
+    <div class="right-btn">
+      <button
+        style="margin-right: 10px"
+        type="submit"
+        class="apply-changes-class"
+      >
+        <span class="apply-changes">Apply Changes</span>
+      </button>
+      <button class="discard-changes-class" type="reset">
+        <span class="discard-changes">Discard Changes</span>
+      </button>
+    </div>
+    <div class="left-btn">
+      <button class="delete-account-class">
+        <span class="delete-account">Delete Accoount</span>
+      </button>
+    </div>
+  </div>
+</div>
