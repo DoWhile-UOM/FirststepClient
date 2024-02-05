@@ -40,17 +40,21 @@ mat-label {
 mat-form-field {
   width: 75%;
   height: 4px;
-  margin: 40px;
+  margin: 10px;
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+.forgot-password {
+  margin-bottom: 20px;
 }
 
 matInput {
   width: 100%;
   margin: 10px 0;
-  background-color: aquamarine;
 }
 .email-field,
 .password-field {
-  background-color: #008080;
+  box-sizing: border-box;
 }
 
 .login {
@@ -80,4 +84,16 @@ matInput {
   text-decoration: none;
   margin-left: 5px;
   margin-bottom: 10px;
+}
+@media screen and (max-width: 480px) {
+  mat-card {
+    width: 95%;
+  }
+  mat-form-field {
+    width: 85%;
+    height: 2px;
+    margin: 10px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+  }
 }
