@@ -1,181 +1,186 @@
 .bodySection {
-    padding: 100px;
+  padding: 100px;
 }
-.sectionHeading{
-    font-size: 30px;
-    font-weight: 800;
-    font-family: Lato, Helvetica, sans-serif;
-    color: #008080;
+.sectionHeading {
+  font-size: 30px;
+  font-weight: 800;
+  font-family: Lato, Helvetica, sans-serif;
+  color: #008080;
 }
-span{
-    font-family: Lato, Helvetica, sans-serif;
-    font-weight: 700;
+span {
+  font-family: Lato, Helvetica, sans-serif;
+  font-weight: 700;
 }
-.top-section{
-    margin-top: 50px;
-    width: 100%;
-
+.top-section {
+  margin-top: 50px;
+  width: 100%;
 }
 
 .sectionName {
-    font-size: 24px;
-    font-weight: 500;
-    font-family: Lato, Helvetica, sans-serif;
-    color: #008080;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: Lato, Helvetica, sans-serif;
+  color: #008080;
 }
-.top-section{
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 20px;
+.top-section {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.md-card-image{
-    padding: 15px;
+.md-card-image {
+  padding: 15px;
 }
-img{
-    width: 200px;
-    height: auto;
-    margin-right: 10px;
-    padding: 70px;
-    
+img {
+  width: 200px;
+  height: auto;
+  margin-right: 10px;
+  padding: 70px;
 }
-.image-side-section{
-    margin-left: 20px;
-    width: 100%;
+.image-side-section {
+  margin-left: 20px;
+  width: 100%;
 }
-.detail-name{
-    margin-left: 5px ;
-    min-width:150px;
-} 
-.staring-section{
-    justify-content: flex-start;
-    display: flex;
-    width: 50%;
+.detail-name {
+  margin-left: 5px;
+  min-width: 150px;
 }
-.ending-section{
-    justify-content: flex-end;
-    display: flex;
-    width: 50%;
+.staring-section {
+  justify-content: flex-start;
+  display: flex;
+  width: 50%;
 }
- .sectionOne{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 20px;
-    
-    
- }
- #userInput,#userTextarea,#province,#bussinessScale,#city{
-    margin-left: 10px;
-    width: 100%;
-    border-color: #A9A9A9;
-    border-width: 1px;
-    border-style: solid;
-    outline: none;
-    background-color: #F9F9F9;
-    border-radius: 5px;
-    padding: 2px 0;
- }
- .form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-    margin-top: 20px;
-    
-  }
-  
-  .form-field{
-    width: 100%;
-    
-  }
- .sectionTwo{
-    margin-top: 20px;
-    width: 75%;
- }
+.ending-section {
+  justify-content: flex-end;
+  display: flex;
+  width: 50%;
+}
+.sectionOne {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#userInput,
+#userTextarea,
+#province,
+#bussinessScale,
+#city {
+  margin-left: 10px;
+  width: 100%;
+  border-color: #a9a9a9;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 2px 0;
+}
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin-top: 20px;
+}
 
- .sectionTwo{
-    margin-right: 15px;
- }
- .button-section{
-    display: flex;
-    margin-top: 40px;
- }
- .right-btn{
-    justify-content:flex-start;
-    width: 50%;
-    display: flex;
- }
- .left-btn{
-    justify-content:flex-end;
-    width: 50%;
-    display: flex;
- }
- button{
-    width: 25%;
- }
- .apply-changes,.discard-changes,.delete-account{
-    font-weight: 400;
- }
-.apply-changes-class{
-    background-color: #008080;
-    color: #ffffff;
-    border-width: 1px;
-    border-style: none;
-    outline: none;
-    border-radius: 5px;
-    padding: 2px 0;
+.form-field {
+  width: 100%;
 }
-.apply-changes-class:hover{
-    background-color: #ffffff;
-    color: #008080;
-    border-width: 1px;
-    border-style: solid;
-    outline: none;
-    border-radius: 5px;
-    border-color: #008080;
-    padding: 2px 0;
+.sectionTwo {
+  margin-top: 20px;
+  width: 75%;
 }
-.discard-changes-class{
-    background-color: #ffffff;
-    color: #008080;
-    border-width: 1px;
-    border-style: solid;
-    outline: none;
-    border-radius: 5px;
-    border-color: #008080;
-    padding: 2px 0;
+
+.sectionTwo {
+  margin-right: 15px;
 }
-.discard-changes-class:hover{
-    background-color: #008080;
-    color: #ffffff;
-    border-width: 1px;
-    border-style: none;
-    outline: none;
-    border-radius: 5px;
-    padding: 2px 0;
+.button-section {
+  display: flex;
+  margin-top: 40px;
 }
-button:hover{
-    cursor: pointer;
+.right-btn {
+  justify-content: flex-start;
+  width: 50%;
+  display: flex;
+  padding: 5px;
 }
-.delete-account-class{
-    background-color: #D73434;
-    color: #ffffff;
-    border-width: 1px;
-    border-style: none;
-    outline: none;
-    border-radius: 5px;
-    padding: 2px 0;
+.left-btn {
+  justify-content: flex-end;
+  width: 50%;
+  display: flex;
 }
-.delete-account-class:hover{
-    background-color: #ffffff;
-    color: #D73434;
-    border-width: 1px;
-    border-style: solid;
-    outline: none;
-    border-radius: 5px;
-    padding: 2px 0;
+button {
+  width: 25%;
 }
-```
-    
+.apply-changes,
+.discard-changes,
+.delete-account {
+  font-weight: 400;
+}
+.apply-changes-class {
+  background-color: #008080;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.apply-changes-class:hover {
+  background-color: #ffffff;
+  color: #008080;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+}
+.discard-changes-class {
+  background-color: #ffffff;
+  color: #008080;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+  padding: 2px 0;
+}
+.discard-changes-class:hover {
+  background-color: #008080;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+}
+button:hover {
+  cursor: pointer;
+}
+.delete-account-class {
+  background-color: #d73434;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+}
+.delete-account-class:hover {
+  background-color: #ffffff;
+  color: #d73434;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+}
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+  margin: 8px 8px 8px 0;
+}

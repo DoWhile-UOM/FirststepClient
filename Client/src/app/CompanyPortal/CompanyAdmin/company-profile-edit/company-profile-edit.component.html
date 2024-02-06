@@ -15,7 +15,7 @@
             matInput
             placeholder="Enter your Company Name"
             value="Bistec Global"
-          />
+          /><mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
 
         <mat-form-field class="form-field">
@@ -24,7 +24,7 @@
             matInput
             placeholder="Enter your Company Number"
             value="CN-001"
-          />
+          /><mat-icon matSuffix>mode_edit</mat-icon>
         </mat-form-field>
       </form>
     </div>
@@ -41,7 +41,8 @@
           cdkAutosizeMinRows="1"
           cdkAutosizeMaxRows="5"
           value="some details"
-        ></textarea>
+        ></textarea
+        ><mat-icon matSuffix>mode_edit</mat-icon>
       </mat-form-field>
     </div>
     <div style="display: flex">
@@ -53,27 +54,19 @@
               matInput
               placeholder="Enter your Company website"
               value="www.bistecglobal.com"
-            />
+            /><mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
         </div>
       </div>
       <div class="ending-section">
         <div class="sectionTwo">
-          <span class="detail-name">Businnes Scale of Company</span>
-          <select id="bussinessScale" name="bussinessScale">
-            <option value="option1" selected>small</option>
-            <option value="option2">medium</option>
-            <option value="option3">large</option>
-          </select>
-
-          <mat-form-field>
-            <mat-label> Bussiness Scale</mat-label>
-            <mat-select>
-              @for (type of scale; track type) {
-              <mat-option [value]="type.scaleType">{{
-                type.viewValue
-              }}</mat-option>
-              }
+          <mat-form-field class="form-field">
+            <mat-label>Bussiness Scale</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Small Scale</mat-option>
+              <mat-option value="option2">Medium Scale</mat-option>
+              <mat-option value="option3">Large Scale</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -82,36 +75,58 @@
     <div style="display: flex">
       <div class="staring-section">
         <div class="sectionTwo">
-          <span class="detail-name">Contact Number</span>
-          <input type="text" id="userInput" name="userInput" />
+          <mat-form-field class="form-field">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Company phone Number"
+              value="011234567"
+            /><mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
         </div>
       </div>
       <div class="ending-section">
         <div class="sectionTwo">
-          <span class="detail-name">Email</span>
-          <input type="text" id="userInput" name="userInput" />
+          <mat-form-field class="form-field">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="Enter your email"
+              value="bistechglobal@gmail.com"
+            />
+            @if (email.invalid) {
+            <mat-error>{{ getErrorMessage() }}</mat-error>
+            }
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
         </div>
       </div>
     </div>
-    <div style="display: flex">
+    <div style="display: flex; background-color: aquamarine">
       <div class="staring-section">
         <div class="sectionTwo">
-          <span class="detail-name">City</span>
-          <select id="city" name="city">
-            <option value="option1" selected>Colombo</option>
-            <option value="option2">Matara</option>
-            <option value="option3">Kegalle</option>
-          </select>
+          <mat-form-field class="form-field">
+            <mat-label>City</mat-label>
+            <mat-select [(value)]="selectedCity">
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Colombo 07</mat-option>
+              <mat-option value="option2">Wellawatta</mat-option>
+              <mat-option value="option3">Boralesgamuwa</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
       <div class="ending-section">
         <div class="sectionTwo">
-          <span class="detail-name">Province</span>
-          <select id="province" name="province">
-            <option value="option1">Colombo</option>
-            <option value="option2">Matara</option>
-            <option value="option3">Kegalle</option>
-          </select>
+          <mat-form-field class="form-field">
+            <mat-label>Province</mat-label>
+            <mat-select [(value)]="selectedProvince">
+              <mat-option>None</mat-option>
+              <mat-option value="option1">Colombo</mat-option>
+              <mat-option value="option2">Matara</mat-option>
+              <mat-option value="option3">Kegalle</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
     </div>

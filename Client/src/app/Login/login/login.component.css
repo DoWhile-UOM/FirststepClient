@@ -97,3 +97,16 @@ matInput {
     margin-top: 20px;
   }
 }
+
+@media screen and (max-width: 1000px) {
+  mat-card {
+    width: 80%;
+  }
+  mat-form-field {
+    width: 85%;
+    height: 2px;
+    margin: 10px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+  }
+}
