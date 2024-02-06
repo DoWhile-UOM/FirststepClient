@@ -14,6 +14,10 @@ span {
 .top-section {
   margin-top: 50px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .sectionName {
@@ -22,13 +26,9 @@ span {
   font-family: Lato, Helvetica, sans-serif;
   color: #008080;
 }
-.top-section {
+.details-section-two {
   display: flex;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 20px;
 }
-
 .md-card-image {
   padding: 15px;
 }
@@ -39,7 +39,7 @@ img {
   padding: 70px;
 }
 .image-side-section {
-  margin-left: 20px;
+  margin-left: 0px;
   width: 100%;
 }
 .detail-name {
@@ -49,12 +49,12 @@ img {
 .staring-section {
   justify-content: flex-start;
   display: flex;
-  width: 50%;
+  width: 100%;
 }
 .ending-section {
   justify-content: flex-end;
   display: flex;
-  width: 50%;
+  width: 100%;
 }
 .sectionOne {
   display: flex;
@@ -63,20 +63,7 @@ img {
   text-align: center;
   margin-bottom: 20px;
 }
-#userInput,
-#userTextarea,
-#province,
-#bussinessScale,
-#city {
-  margin-left: 10px;
-  width: 100%;
-  border-color: #a9a9a9;
-  border-width: 1px;
-  border-style: solid;
-  outline: none;
-  border-radius: 5px;
-  padding: 2px 0;
-}
+
 .form {
   min-width: 150px;
   max-width: 500px;
@@ -89,12 +76,10 @@ img {
 }
 .sectionTwo {
   margin-top: 20px;
-  width: 75%;
+  width: 85%;
+  margin-right: 10px;
 }
 
-.sectionTwo {
-  margin-right: 15px;
-}
 .button-section {
   display: flex;
   margin-top: 40px;
@@ -146,7 +131,9 @@ button {
   outline: none;
   border-radius: 5px;
   border-color: #008080;
-  padding: 2px 0;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .discard-changes-class:hover {
   background-color: #008080;
@@ -155,7 +142,8 @@ button {
   border-style: none;
   outline: none;
   border-radius: 5px;
-  padding: 2px 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 button:hover {
   cursor: pointer;
@@ -182,4 +170,50 @@ button:hover {
   display: table-cell;
   max-width: 600px;
   margin: 8px 8px 8px 0;
+}
+@media screen and (max-width: 480px) {
+  .bodySection {
+    font-size: medium;
+    padding: 10px;
+  }
+  .sectionHeading {
+    font-size: large;
+  }
+  .top-section,
+  .details-section-two,
+  .button-section,
+  .right-btn,
+  .staring-section,
+  .ending-section {
+    display: block;
+  }
+  .form-field {
+    width: 100%;
+  }
+  .sectionTwo {
+    margin-top: 20px;
+    width: 100%;
+    margin-right: 0 px;
+  }
+  .staring-section,
+  .ending-section {
+    width: 100%;
+  }
+  .right-btn,
+  .left-btn {
+    width: 100%;
+  }
+  .left-btn {
+    justify-content: flex-start;
+  }
+  button {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .apply-changes,
+  .discard-changes,
+  .delete-account {
+    padding: 5px;
+  }
 }
