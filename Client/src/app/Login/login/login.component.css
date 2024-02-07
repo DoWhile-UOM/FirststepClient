@@ -90,11 +90,15 @@ matInput {
     width: 95%;
   }
   mat-form-field {
-    width: 85%;
-    height: 2px;
+    width: 95%;
+    height: 1px;
     margin: 10px;
     margin-bottom: 50px;
     margin-top: 20px;
+  }
+  mat-icon-button {
+    height: 2px;
+    background-color: #008080;
   }
 }
 

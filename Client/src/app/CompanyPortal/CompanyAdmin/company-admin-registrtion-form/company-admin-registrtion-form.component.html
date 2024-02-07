@@ -11,17 +11,59 @@
       <mat-card-content>
         <span class="heading">Create Compnay Admin Account</span>
 
-        <span class="forgot-password"
-          >Forgot your password?
-          <a href="forgotPassword" class="reset">Reset</a></span
-        >
-        <button mat-button class="login">
-          <span class="Login-btn-name">Login</span>
-        </button>
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Enter your first anme" />
+        </mat-form-field>
 
-        <span class="SignUp"
-          >New here? <a href="forgotPassword" class="signUp">signUp</a></span
-        >
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Enter your last name" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            matput
+            placeholder="Enter your email"
+            [formControl]="email"
+            required
+          />
+          @if (email.invalid) {
+          <mat-error>{{ getErrorMessage() }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confrim Password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <button mat-button class="create-button">
+          <span class="create-btn-name">Create</span>
+        </button>
       </mat-card-content>
     </mat-card>
   </div>

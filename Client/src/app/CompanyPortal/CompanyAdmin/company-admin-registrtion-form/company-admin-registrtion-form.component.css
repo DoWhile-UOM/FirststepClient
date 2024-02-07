@@ -16,7 +16,7 @@ body {
   width: 80%;
   height: 80%;
   text-align: center;
-
+  border-radius: 20px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -38,4 +38,18 @@ mat-card-content {
   font-size: 1.5rem;
   text-align: center;
   margin-bottom: 20px;
+}
+mat-form-field {
+  width: 85%;
+}
+.create-button {
+  background-color: #008080;
+  color: #fff;
+  font-weight: 700;
+  width: 10%;
+  font-family: "Lato", sans-serif;
+  margin: 10px;
+}
+.create-btn-name {
+  color: #fff;
 }
