@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonModule} from '@angular/material/button';
 import { FileUploadComponent } from "../../shared/file-upload/file-upload.component";
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Employee } from '../../../../models/employee';
 
 
 @Component({
@@ -14,21 +15,32 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     standalone: true, 
     templateUrl: './addroles-popup.component.html',
     styleUrl: './addroles-popup.component.css',
-    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatButtonModule, FileUploadComponent, FormsModule, HttpClientModule]
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule, HttpClientModule]
 })
 export class AddrolesPopupComponent {
+    [x: string]: any;
+    emp_role: string = "Non";
 
     constructor(private http: HttpClient) { 
 
     }
-
-    onRoleCreate(role: {first_name: string, last_name: string, email: string, password: string, company_id: number}){
-        role.company_id = 8;
-        console.log(role);
-
-        this.http.post('https://localhost:7213/api/Employee/AddNewHRManager', role)
-        .subscribe((res:any) => {
-        });
-    }
  
+    onRoleCreate(employee: Employee){
+        employee.company_id = 8; // sample company_id
+        console.log(employee);
+
+        if (this.emp_role == "HRM") {
+            this.http.post('https://localhost:7213/api/Employee/AddNewHRManager', employee).subscribe((res:any) => {});
+        }
+        else if (this.emp_role == "HRA") {
+            this.http.post('https://localhost:7213/api/Employee/AddNewHRAssistant', employee).subscribe((res:any) => {});
+        }
+        else {
+            this['dialog'].open("Invalid role", "OK");
+
+            throw new Error("Invalid role");
+        }
+
+        
+    }
 }
