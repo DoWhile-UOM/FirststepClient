@@ -8,7 +8,7 @@ import { AdminDashboardComponent } from './CompanyPortal/CompanyAdmin/admin-dash
 
 export const routes: Routes = [
     {path:'manageRoles',component:ManageRolesComponent},
-   {path:'addRole',component:AddrolesPopupComponent},
+   {path:'AddRole',component:AddrolesPopupComponent},
     {path:'EditRole',component:EditRoleComponent},
     {path:'AdminDashBoard',component:AdminDashboardComponent}
    

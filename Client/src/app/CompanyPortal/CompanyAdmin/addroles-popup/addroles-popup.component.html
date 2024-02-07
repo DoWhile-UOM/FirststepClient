@@ -1,33 +1,33 @@
 <div class="form-popup" id="myForm">
-  <form class="form-container">
+  <form class="form-container" #subroleForm="ngForm" (ngSubmit)="onRoleCreate(subroleForm.value)">
   <div class="pop-up-Header">Create New Subordinate Account</div>
 
     <mat-form-field appearance="outline" id="firstchild">
       <mat-label>First Name</mat-label>
-      <input matInput />
+      <input matInput name="first_name" ngModel/>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Last Name</mat-label>
-      <input matInput  />
+      <input matInput name="last_name" ngModel/>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput  />
+      <input matInput name="email" ngModel/>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input matInput />
+      <input matInput name="password" ngModel/>
     </mat-form-field>
 
     <section class="example-section">
       <label class="example-margin">Type</label>
-      <mat-checkbox class="example-margin">HR Manager</mat-checkbox>
-      <mat-checkbox class="example-margin">HR Assistant</mat-checkbox>
+      <mat-checkbox class="example-margin" name="hrm">HR Manager</mat-checkbox>
+      <mat-checkbox class="example-margin" name="hra">HR Assistant</mat-checkbox>
     </section>
    <app-file-upload></app-file-upload>
    
     <section class="buttons">
-      <button mat-raised-button color="primary">Create Account</button>
+      <button type="submit" mat-raised-button color="primary">Create Account</button>
       <button mat-raised-button color="primary">Cancel</button>
     </section>
   </form>
