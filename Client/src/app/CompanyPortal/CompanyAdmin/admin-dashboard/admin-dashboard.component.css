@@ -1,0 +1,16 @@
+
+.child{
+    height:200px;
+    width:200px
+}
+
+#child1{
+    background-color: red;
+    
+}
+#child2{
+    background-color:green;
+}
+#child3{
+    background-color:blue;
+}

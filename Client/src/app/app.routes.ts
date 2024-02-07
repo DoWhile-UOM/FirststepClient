@@ -3,12 +3,14 @@ import { ManageRolesComponent } from './CompanyPortal/CompanyAdmin/manage-roles/
 
 import { EditRoleComponent } from './CompanyPortal/CompanyAdmin/edit-role/edit-role.component';
 import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-popup/addroles-popup.component';
+import { AdminDashboardComponent } from './CompanyPortal/CompanyAdmin/admin-dashboard/admin-dashboard.component';
 
 
 export const routes: Routes = [
     {path:'manageRoles',component:ManageRolesComponent},
    {path:'addRole',component:AddrolesPopupComponent},
-    {path:'EditRole',component:EditRoleComponent}
+    {path:'EditRole',component:EditRoleComponent},
+    {path:'AdminDashBoard',component:AdminDashboardComponent}
    
 ]
 
