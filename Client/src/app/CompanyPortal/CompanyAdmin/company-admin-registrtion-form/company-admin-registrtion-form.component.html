@@ -11,31 +11,28 @@
       <mat-card-content>
         <span class="heading">Create Compnay Admin Account</span>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>First Name</mat-label>
-          <input matInput placeholder="Enter your first anme" />
+          <input matInput placeholder="Enter your first name" />
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Last Name</mat-label>
           <input matInput placeholder="Enter your last name" />
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input
-            matput
-            placeholder="Enter your email"
-            [formControl]="email"
-            required
-          />
-          @if (email.invalid) {
-          <mat-error>{{ getErrorMessage() }}</mat-error>
-          }
+
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Email Address</mat-label>
+          <input matInput placeholder="Enter your email address" />
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" />
+          <input
+            matInput
+            placeholder="Enter your password"
+            [type]="hide ? 'password' : 'text'"
+          />
           <button
             mat-icon-button
             matSuffix
@@ -47,9 +44,13 @@
           </button>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
           <mat-label>Confrim Password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" />
+          <input
+            matInput
+            placeholder="Re-enter your password"
+            [type]="hide ? 'password' : 'text'"
+          />
           <button
             mat-icon-button
             matSuffix

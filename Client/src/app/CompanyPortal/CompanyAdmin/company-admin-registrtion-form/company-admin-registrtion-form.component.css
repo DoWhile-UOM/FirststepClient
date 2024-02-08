@@ -1,12 +1,12 @@
 body {
   background-color: #f7f7f7;
+
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 .body {
   width: 100%;
-  height: 100%;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -14,22 +14,23 @@ body {
 .body-card {
   box-shadow: 2px 2px 5px #888888;
   width: 80%;
-  height: 80%;
   text-align: center;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
+mat-card {
+  width: 80%;
+}
 
 mat-card-content {
   text-align: center;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 20px;
-  align-items: center;
-  margin: 10px;
+  width: 40%;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .heading {
@@ -37,19 +38,24 @@ mat-card-content {
   font-weight: 700;
   font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
-mat-form-field {
-  width: 85%;
-}
+
 .create-button {
   background-color: #008080;
   color: #fff;
   font-weight: 700;
   width: 10%;
   font-family: "Lato", sans-serif;
-  margin: 10px;
+  margin-top: 20px;
+  padding: 0px 50px;
 }
 .create-btn-name {
   color: #fff;
+}
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 40px !important;
+}
+::ng-deep .mat-mdc-form-field-flex {
+  margin-top: -7px !important;
 }
