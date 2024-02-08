@@ -1,3 +1,11 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+ 
+}
+
 .form-popup {
     width: 725px;
     height: 642px;
@@ -5,10 +13,6 @@
     border-radius: 25px;
     background: #fff;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-    display: block;
-    margin: auto;
-    
-   
   }
  
   .pop-up-Header {
@@ -31,7 +35,11 @@
 
   mat-form-field {
     width: 404px;
+  
   }
+
+/* Override Angular Material toolbar heights */
+
 
   #firstchild {
     margin-top: 30px;
@@ -58,5 +66,15 @@
   }
   .buttons button{
     margin:10px;
+  }
+
+  /*making pages responsive*/
+
+  @media(max-width: 768px){
+    .form-popup {
+      
+     
+    }
+
   }
   
