@@ -4,4 +4,7 @@ export class Apipaths {
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
     static readonly addNewHRAssistant: string = this.baseUrl + 'Employee/AddNewHRAssistant';
+
+    // advertisements
+    static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/';
 }

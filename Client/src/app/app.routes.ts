@@ -13,7 +13,6 @@ export const routes: Routes = [
     {path:'AddRole',component:AddrolesPopupComponent},
     {path:'EditRole',component:EditRoleComponent},
     {path:'AdminDashBoard',component:AdminDashboardComponent},
-    {path:'Advertisement',component:AdvertisementViewComponent},
-    {path:'AdvertisementHeader',component:AdvertisementHeaderComponent}
+    {path:'Advertisement',component:AdvertisementViewComponent}
 ]
 
