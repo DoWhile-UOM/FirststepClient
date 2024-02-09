@@ -28,7 +28,9 @@ export class AddrolesPopupComponent {
     onRoleCreate(employee: Employee){
         employee.company_id = 8; // sample company_id
         console.log(employee);
+        this.http.post('https://localhost:7213/api/Employee/AddNewHRManager', employee).subscribe((res:any) => {});
 
+        /*
         if (this.emp_role == "HRM") {
             this.http.post('https://localhost:7213/api/Employee/AddNewHRManager', employee).subscribe((res:any) => {});
         }
@@ -39,8 +41,10 @@ export class AddrolesPopupComponent {
             this['dialog'].open("Invalid role", "OK");
 
             throw new Error("Invalid role");
-        }
+        }*/
 
         
     }
 }
+
+
