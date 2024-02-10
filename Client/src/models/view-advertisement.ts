@@ -5,7 +5,7 @@ export class ViewAdvertisement {
     location_city: string;
     employeement_type: string;
     arrangement: string;
-    is_experience_required: boolean;
+    is_experience_required: string;
     salary: string;
     submission_deadline: string;
     posted_date: string;
@@ -23,7 +23,7 @@ export class ViewAdvertisement {
         location_city: string, 
         employeement_type: string, 
         arrangement: string, 
-        is_experience_required: boolean, 
+        is_experience_required: string, 
         salary: string, 
         submission_deadline: string,
         posted_date: string, 

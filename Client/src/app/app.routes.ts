@@ -4,8 +4,7 @@ import { ManageRolesComponent } from './CompanyPortal/CompanyAdmin/manage-roles/
 import { EditRoleComponent } from './CompanyPortal/CompanyAdmin/edit-role/edit-role.component';
 import { AdminDashboardComponent } from './CompanyPortal/CompanyAdmin/admin-dashboard/admin-dashboard.component';
 import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-popup/addroles-popup.component';
-import { AdvertisementViewComponent } from './shared/advertisement-view/advertisement-view.component';
-import { AdvertisementHeaderComponent } from './shared/advertisement-header/advertisement-header.component';
+import { AdvertisementViewPageComponent } from './SeekerPortal/advertisement-view-page/advertisement-view-page.component';
 
 
 export const routes: Routes = [
@@ -13,6 +12,6 @@ export const routes: Routes = [
     {path:'AddRole',component:AddrolesPopupComponent},
     {path:'EditRole',component:EditRoleComponent},
     {path:'AdminDashBoard',component:AdminDashboardComponent},
-    {path:'Advertisement',component:AdvertisementViewComponent}
+    {path:'JobAd',component:AdvertisementViewPageComponent}
 ]
 
