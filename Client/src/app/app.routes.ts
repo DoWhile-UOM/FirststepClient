@@ -5,6 +5,7 @@ import { EditRoleComponent } from './CompanyPortal/CompanyAdmin/edit-role/edit-r
 import { AdminDashboardComponent } from './CompanyPortal/CompanyAdmin/admin-dashboard/admin-dashboard.component';
 import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-popup/addroles-popup.component';
 import { AdvertisementViewPageComponent } from './SeekerPortal/advertisement-view-page/advertisement-view-page.component';
+import { SeekerHomePageComponent } from './SeekerPortal/seeker-home-page/seeker-home-page.component';
 
 
 export const routes: Routes = [
@@ -12,6 +13,7 @@ export const routes: Routes = [
     {path:'AddRole',component:AddrolesPopupComponent},
     {path:'EditRole',component:EditRoleComponent},
     {path:'AdminDashBoard',component:AdminDashboardComponent},
-    {path:'JobAd',component:AdvertisementViewPageComponent}
+    {path:'JobAd',component:AdvertisementViewPageComponent},
+    {path:'SeekerHomePage',component:SeekerHomePageComponent},
 ]
 
