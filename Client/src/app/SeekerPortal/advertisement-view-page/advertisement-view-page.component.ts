@@ -4,6 +4,7 @@ import { AdvertisementViewComponent } from '../../shared/advertisement-view/adve
 import { ViewAdvertisement } from '../../../models/view-advertisement';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Apipaths } from '../../apipaths/apipaths';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-advertisement-view-page',
@@ -13,16 +14,16 @@ import { Apipaths } from '../../apipaths/apipaths';
   styleUrl: './advertisement-view-page.component.css'
 })
 export class AdvertisementViewPageComponent {
-  public jobID: number = 4;
-
   adData!: ViewAdvertisement;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: ActivatedRoute) {
     this.adData = {} as ViewAdvertisement;
   }
   
   ngOnInit() {
-    this.httpClient.get(Apipaths.getJobDetails + this.jobID).subscribe((res: any) => {
+    let jobID: string | null = this.router.snapshot.paramMap.get('jobID');
+
+    this.httpClient.get(Apipaths.getJobDetails + jobID).subscribe((res: any) => {
       this.adData = res;
 
       try {

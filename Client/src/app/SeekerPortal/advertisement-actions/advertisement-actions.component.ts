@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -10,5 +10,5 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './advertisement-actions.component.css'
 })
 export class AdvertisementActionsComponent {
-  icon: string = 'bookmark_border'; // bookmark
+  @Input()icon: string = 'bookmark_border'; // bookmark
 }

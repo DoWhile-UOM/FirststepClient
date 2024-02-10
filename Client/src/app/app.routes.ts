@@ -13,7 +13,7 @@ export const routes: Routes = [
     {path:'AddRole',component:AddrolesPopupComponent},
     {path:'EditRole',component:EditRoleComponent},
     {path:'AdminDashBoard',component:AdminDashboardComponent},
-    {path:'JobAd',component:AdvertisementViewPageComponent},
+    {path:'JobDetails',component:AdvertisementViewPageComponent},
     {path:'SeekerHomePage',component:SeekerHomePageComponent},
 ]
 

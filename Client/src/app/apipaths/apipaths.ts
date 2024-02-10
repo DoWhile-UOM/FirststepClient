@@ -7,4 +7,5 @@ export class Apipaths {
 
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/';
+    static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
 }
