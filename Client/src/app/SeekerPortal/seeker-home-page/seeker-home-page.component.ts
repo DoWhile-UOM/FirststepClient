@@ -20,18 +20,30 @@ export class SeekerHomePageComponent implements OnInit{
   }
 
   ngOnInit() : void{
-    this.http.get(Apipaths.getAdvertisements).subscribe((res: any) => {
-      this.jobList = res;
-      
-      try{
-        for (let i = 0; i < this.jobList.length; i++) {
-          var postDate = new Date(this.jobList[i].posted_date);
-          this.jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+    try{
+      this.http.get(Apipaths.getAdvertisements).subscribe({
+        next: data => {
+          this.jobList = data as ViewAdvertisementCard[];
+  
+          try{
+            for (let i = 0; i < this.jobList.length; i++) {
+              var postDate = new Date(this.jobList[i].posted_date);
+              this.jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+            }
+          }
+          catch (error) {
+            console.log("No advertisements found");
+          }
+        },
+        error: error => {
+            alert('Nerwork Error: ' + error.message);
+            console.error('Error occured', error.message);
         }
-      }
-      catch (error) {
-        console.log("No advertisements found");
-      }
-    });
+      });
+    }
+    catch (error) {
+      alert('Nerwork Error: ' + error);
+    }
+    
   }
 }

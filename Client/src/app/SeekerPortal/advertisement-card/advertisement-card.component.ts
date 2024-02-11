@@ -27,6 +27,7 @@ export class AdvertisementCardComponent implements OnInit{
   }
 
   onClickMoreDetails() {
-    this.router.navigate(['/JobDetails', {jobID: this.job.advertisement_id}]);
+    // change only the component
+    this.router.navigate(['/jobdetails', {jobID: this.job.advertisement_id}]);
   }
 }

@@ -1,0 +1,182 @@
+<div class="container">
+    <mat-card class="card">
+        <div class="heading">
+            <p class="title">Create New Job Advertisement</p>
+            <p class="companyname">BISTECH GLOBAL SERVICES</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="container-top-content">
+            <p class="created">Created by: </p>
+            <p class="hrmanagername">Ashan Induwara, HR Manager, BISTECH GLOBAL</p>
+        </div>
+        <mat-grid-list cols="{{noOfRows}}" rowHeight="90">
+            <mat-grid-tile>
+                <mat-form-field color="primary" appearance="outline">
+                    <mat-label>Post On</mat-label>
+                    <input matInput [matDatepicker]="picker1">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>  
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Target Job Field</mat-label>
+                    <mat-select>
+                      @for (field of fields; track field) {
+                        <mat-option [value]="field.fieldID">{{field.fieldName}}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field color="primary" appearance="outline">
+                    <mat-label>Application Submission Deadline</mat-label>
+                    <input matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>  
+            </mat-grid-tile>
+            <mat-grid-tile colspan="{{noOfRows - 1}}">
+                <mat-form-field appearance="outline">
+                    <mat-label>Job Title</mat-label>
+                    <input matInput placeholder="Job Title">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Job Number</mat-label>
+                    <input matInput placeholder="Job Number">
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="{{noOfRows}}" rowspan="2">
+                <mat-form-field appearance="outline" class="textbox-form-field">
+                    <mat-label>Keywords</mat-label>
+                    <mat-chip-grid #chipGrid aria-label="Fruit selection">
+                      @for (fruit of fruits; track fruit) {
+                        <mat-chip-row (removed)="remove(fruit)">
+                          {{fruit}}
+                          <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+                            <mat-icon>cancel</mat-icon>
+                          </button>
+                        </mat-chip-row>
+                      }
+                    </mat-chip-grid>
+                    <input placeholder="New Fruit..." #fruitInput [formControl]="fruitCtrl"
+                      [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      (matChipInputTokenEnd)="add($event)"/>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                      @for (fruit of filteredFruits | async; track fruit) {
+                        <mat-option [value]="fruit">{{fruit}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                    <mat-hint>These keywords are used to search purpose</mat-hint>
+                  </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Employment Type</mat-label>
+                    <mat-select>
+                      @for (emptype of empTypes; track emptype) {
+                        <mat-option [value]="emptype">{{emptype}}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Job Arrangement</mat-label>
+                    <mat-select>
+                      @for (arrangement of jobArrangement; track arrangement) {
+                        <mat-option [value]="arrangement">{{arrangement}}</mat-option>
+                      }
+                    </mat-select>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Experience</mat-label>
+                    <mat-select>
+                        <mat-option [value]="0">Not Required</mat-option>
+                        <mat-option [value]="1">Required</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Location Country</mat-label>
+                    <input type="text"
+                           placeholder="Pick a Country"
+                           aria-label="Country"
+                           matInput
+                           [formControl]="locationCountryControl"
+                           [matAutocomplete]="autocountry">
+                    <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
+                      @for (option of locationCountryFilteredOptions | async; track option) {
+                        <mat-option [value]="option">{{option}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Location City</mat-label>
+                    <input type="text"
+                           placeholder="Pick a City"
+                           aria-label="City"
+                           matInput
+                           [formControl]="locationCityControl"
+                           [matAutocomplete]="autocity">
+                    <mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
+                      @for (option of locationCityFilteredOptions | async; track option) {
+                        <mat-option [value]="option">{{option}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                    <mat-label>Salary</mat-label>
+                    <input matInput placeholder="Salary in {{unitOfSalary}}">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="{{noOfRows}}" rowspan="2">
+                <mat-form-field appearance="outline" class="textbox-form-field">
+                    <mat-label>Job Overview</mat-label>
+                    <textarea matInput></textarea>
+                    <mat-hint>0/500 words</mat-hint>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="{{noOfRows}}" rowspan="2">
+                <mat-form-field appearance="outline" class="textbox-form-field">
+                    <mat-label>Required Qualifications</mat-label>
+                    <textarea matInput></textarea>
+                    <mat-hint>0/500 words</mat-hint>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="{{noOfRows}}" rowspan="2">
+                <mat-form-field appearance="outline" class="textbox-form-field">
+                    <mat-label>Candidate Responsibilities</mat-label>
+                    <textarea matInput></textarea>
+                    <mat-hint>0/500 words</mat-hint>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="{{noOfRows}}" rowspan="2">
+                <mat-form-field appearance="outline" class="textbox-form-field">
+                    <mat-label>Benefits of the Job</mat-label>
+                    <textarea matInput></textarea>
+                    <mat-hint>0/500 words</mat-hint>
+                  </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="{{noOfRows}}" rowspan="2">
+                <mat-form-field appearance="outline" class="textbox-form-field">
+                    <mat-label>Other Details</mat-label>
+                    <textarea matInput></textarea>
+                    <mat-hint>0/500 words</mat-hint>
+                  </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card>
+</div>

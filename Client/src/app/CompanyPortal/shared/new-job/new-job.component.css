@@ -1,0 +1,69 @@
+.container{
+    padding: 3em;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.card{
+    padding: 2em;
+}
+
+mat-form-field{
+    width: 100%;
+    margin: 1em;
+}
+
+mat-grid-tile{
+    height: auto;
+}
+
+textarea {
+    resize: none;
+}
+
+.textbox-form-field{
+    height: 87%;
+}
+
+.title{
+    color: #008080;
+    font-size: 25px;
+    font-family: Lato;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+.companyname{
+    color: black;
+    font-size: 18px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: 700;
+    word-wrap: break-word;
+    margin-top: 0.75em;
+    margin-bottom: 1em;
+}
+
+.container-top-content{
+    margin-top: 1em;
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: row;
+}
+
+.created{
+    color: black;
+    font-size: 15px;
+    font-family: Lato;
+    font-weight: 700;
+    word-wrap: break-word
+}
+
+.hrmanagername{
+    color: black;
+    font-size: 15px;
+    font-family: Lato;
+    font-style: italic;
+    word-wrap: break-word;
+    margin-left: 0.5em;
+}
