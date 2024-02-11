@@ -1,6 +1,5 @@
 .body {
   width: 100%;
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,10 +72,9 @@ img {
   margin-bottom: 20px;
 }
 
-.form {
+.company-name-field {
   min-width: 150px;
   max-width: 500px;
-  width: 100%;
   margin-top: 20px;
 }
 
