@@ -1,5 +1,6 @@
 header {
-    background-color: bisque;
+   /* background-color: bisque;*/
+    border-bottom: 1px solid #140e0e;
     height: 102px;
   }
   
@@ -36,15 +37,14 @@ header {
   }
   .button {
     width: 50%;
-   /* background-color: coral;*/
+   /*background-color: coral;*/
     color: #008080;
     font-family: Lato;
-    font-size:2.1vw;
     font-style: normal;
-    font-weight: 700;
     line-height: normal;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
   }
   
   #role {

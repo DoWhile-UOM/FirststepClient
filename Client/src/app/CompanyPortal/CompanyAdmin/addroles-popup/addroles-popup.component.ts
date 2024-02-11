@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Employee } from '../../../../models/employee';
 import { Apipaths } from '../../../api-paths/apipaths';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Apipaths } from '../../../api-paths/apipaths';
     standalone: true, 
     templateUrl: './addroles-popup.component.html',
     styleUrl: './addroles-popup.component.css',
-    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule, HttpClientModule]
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule, HttpClientModule,FlexLayoutModule]
 })
 export class AddrolesPopupComponent {
     [x: string]: any;

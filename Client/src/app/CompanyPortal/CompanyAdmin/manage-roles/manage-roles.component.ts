@@ -4,25 +4,24 @@ import {ViewChild} from '@angular/core';
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 
+
 export interface PeriodicElement {
   name: string;
   position: number;
   Role: string;
-  symbol: string;
+  symbol1: string;
+  symbol2: string;
  
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Nethmi Rathnayake', Role:'HR Manager',symbol: 'H'},
-  {position: 2, name: 'Ashan Induwara', Role: 'HR Manager' ,symbol: 'He'},
- /* {position: 3, name: 'Lithium', Role: 6.941},
-  {position: 4, name: 'Beryllium', Role: 9.0122},
-  {position: 5, name: 'Boron', Role: 10.811},
-  {position: 6, name: 'Carbon', Role: 12.0107},
-  {position: 7, name: 'Nitrogen', Role: 14.0067},
-  {position: 8, name: 'Oxygen', Role: 15.9994},
-  {position: 9, name: 'Fluorine', Role: 18.9984},
-  {position: 10, name: 'Neon', Role: 20.1797},*/
+  {position: 1, name: 'Nethmi Rathnayake', Role:'HR Manager',symbol1: 'delete',symbol2: 'edit'},
+  {position: 2, name: 'Ashan Induwara', Role: 'HR Manager' ,symbol1: 'delete',symbol2: 'edit'},
+  {position: 3, name: 'Giman Arawinda', Role: 'HR Manager' ,symbol1: 'delete',symbol2: 'edit'},
+  {position: 4, name: 'Nethma Karunathilaka', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
+  {position: 5, name: 'Ashani Perera', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
+  {position: 6, name: 'Kavinda Bandara', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
+  {position: 7, name: 'Gayuni Basnayaka', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
 ];
 
 @Component({
