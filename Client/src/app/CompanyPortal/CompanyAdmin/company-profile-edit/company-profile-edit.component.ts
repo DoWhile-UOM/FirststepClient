@@ -74,12 +74,19 @@ export class CompanyProfileEditComponent {
 
   [x: string]: any;
   emp_role: string = 'Non';
-  onRoleCreate(company: Company) {
+  updateDetails(company: Company) {
     company.company_id = 8; // sample company_id
     console.log(company);
     this.http
       .put(this.APIURL + 'UpdateCompanyDetails', company)
       .subscribe((res: any) => {});
+    this.getDefaultValues();
+  }
+  discardChanges() {
+    this.http.delete(this.APIURL + 'DeleteCompanyDetails').subscribe((data) => {
+      alert(data);
+      this.getDefaultValues();
+    });
   }
   //actual code ends here
 }
