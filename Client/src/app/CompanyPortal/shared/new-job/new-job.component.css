@@ -8,7 +8,7 @@
     padding: 2em;
 }
 
-mat-form-field{
+mat-grid-tile mat-form-field{
     width: 100%;
     margin: 1em;
 }
@@ -17,12 +17,14 @@ mat-grid-tile{
     height: auto;
 }
 
-textarea {
-    resize: none;
+.textbox-form-field{
+    margin-bottom: 1.2em;
+    position: relative;
 }
 
-.textbox-form-field{
-    height: 87%;
+.textbox-form-field mat-form-field{
+    padding-left: 1em;
+    width: calc(100% - 2em);
 }
 
 .title{
@@ -66,4 +68,14 @@ textarea {
     font-style: italic;
     word-wrap: break-word;
     margin-left: 0.5em;
+}
+
+mat-hint{
+    display: flex;
+    flex-direction: row-reverse;
+    position: absolute;
+}
+
+.button-container{
+    margin: 2em 1em 1em 1em;
 }

@@ -1,14 +1,13 @@
 export class AddAdvertisement {
     job_number: number;
     title: string;
-    location_province: string;
-    location_city: string;
+    country: string;
+    city: string;
     employeement_type: string;
     arrangement: string;
     is_experience_required: boolean;
     salary: number;
-    submission_deadline: Date;
-    current_status: string;
+    submission_deadline: string;
     job_overview: string;
     job_responsibilities: string;
     job_qualifications: string;
@@ -20,14 +19,13 @@ export class AddAdvertisement {
 
     constructor(job_number: number, 
         title: string, 
-        location_province: string, 
-        location_city: string, 
+        country: string, 
+        city: string, 
         employeement_type: string, 
         arrangement: string, 
         is_experience_required: boolean, 
         salary: number, 
-        submission_deadline: Date, 
-        current_status: string, 
+        submission_deadline: string, 
         job_overview: string, 
         job_responsibilities: string, 
         job_qualifications: string, 
@@ -39,14 +37,13 @@ export class AddAdvertisement {
         
         this.job_number = job_number;
         this.title = title;
-        this.location_province = location_province;
-        this.location_city = location_city;
+        this.country = country;
+        this.city = city;
         this.employeement_type = employeement_type;
         this.arrangement = arrangement;
         this.is_experience_required = is_experience_required;
         this.salary = salary;
         this.submission_deadline = submission_deadline;
-        this.current_status = current_status;
         this.job_overview = job_overview;
         this.job_responsibilities = job_responsibilities;
         this.job_qualifications = job_qualifications;
