@@ -1,3 +1,6 @@
+*{
+  font-family: Lato;
+}
 header {
    /* background-color: bisque;*/
     border-bottom: 1px solid #140e0e;
@@ -26,8 +29,7 @@ header {
    /* background-color: cadetblue;*/
     width: 100%;
     color: #008080;
-    font-family: Lato;
-    font-size: 3.7vw;
+    font-size: 3vw;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -62,5 +64,9 @@ header {
   
   .demo-button + .demo-button {
     margin-left: 8px;
+  }
+
+  mat-icon{
+    font-family:'Material Icons';
   }
 

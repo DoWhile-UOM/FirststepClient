@@ -1,0 +1,24 @@
+@use '@angular/material' as mat;
+
+// Define the new primary and accent palettes
+$my-primary: mat.define-palette(mat.$teal-palette, 500);
+$my-accent: mat.define-palette(mat.$pink-palette);
+
+// Define the warn palette (optional)
+$my-warn: mat.define-palette(mat.$red-palette);
+
+// Define the theme using the updated palettes
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+// Include necessary styles for components
+@include mat.core();
+@include mat.core-theme($my-theme);
+@include mat.all-component-themes($my-theme);
