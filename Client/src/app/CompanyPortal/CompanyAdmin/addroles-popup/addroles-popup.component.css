@@ -2,57 +2,54 @@
   display: flex;
   justify-content: center;
   align-items: center;
-height: 100vh;
-  background-color: aqua;
+  height: 100vh;
+ 
 }
 
 .form-popup {
-  background-color: orange;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-}
   
-  /*  width: 32%;
+    width: 32%;
     height:90%;
     border: 3px black;
     border-radius: 25px;
     background: #fff;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-  }*/
+  }
  
   .pop-up-Header {
-   position: relative;
+    position: relative;
     margin-top: 28px;
-    font-family:lato;
-    font-size: 1.5vw;
+    color: #000;
+    font-family: Lato;
+    font-size: 26px;
+    font-style: normal;
     font-weight: 700;
     line-height: normal;
-    
-   
   }
   
 .form-container {
     display: flex;
     flex-direction: column;
+    align-items: Center;
+    
   }
 
- /* mat-form-field {
-   width:80%;
- }*/
+  mat-form-field {
+    width: 404px;
+  
+  }
+
+/* Override Angular Material toolbar heights */
 
   #firstchild {
     margin-top: 30px;
   }
 
- .example-radio-group {
+  .example-section {
     display: flex;
     align-content: center;
     align-items: center;
     height: 60px;
-    background-color: blueviolet;
   }
   
   .example-margin {
@@ -60,24 +57,21 @@ height: 100vh;
   }
 
 
- /*.buttons{
+  .buttons{
     display:flex;
-    align-items: center;
-    justify-content: center;
-    background-color: blue;
   }
- /* .buttons button{
+  .buttons button{
     margin:10px;
-  }*/
+  }
 
-  /*making pages responsive
+  /*making pages responsive*/
 
   @media (max-width: 900px) {
     .form-popup {
       border:none;
-      box-shadow:white;  Set border width to 0, effectively hiding the border 
+      box-shadow:white; /* Set border width to 0, effectively hiding the border */
     }
-  }*/
+  }
 
   
 
