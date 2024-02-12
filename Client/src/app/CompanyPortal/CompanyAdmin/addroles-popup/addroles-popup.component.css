@@ -1,4 +1,4 @@
-.container{
+/*.container{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,7 +39,7 @@
   
   }
 
-/* Override Angular Material toolbar heights */
+/* Override Angular Material toolbar heights 
 
   #firstchild {
     margin-top: 30px;
@@ -64,14 +64,171 @@
     margin:10px;
   }
 
-  /*making pages responsive*/
+  /*making pages responsive
 
   @media (max-width: 900px) {
     .form-popup {
       border:none;
-      box-shadow:white; /* Set border width to 0, effectively hiding the border */
+      box-shadow:white; /* Set border width to 0, effectively hiding the border 
+    }
+  }*/
+  /*.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-popup {
+    width: 32%;
+    height: 90%;
+    border: 3px black;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .pop-up-Header {
+    position: relative;
+    margin-top: 28px;
+    color: #000;
+    font-family: Lato;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  mat-form-field {
+    width: 404px;
+  }
+  
+  #firstchild {
+    margin-top: 30px;
+  }
+  
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .example-margin {
+    margin: 0 10px;
+  }
+  
+  .buttons {
+    display: flex;
+  }
+  
+  .buttons button {
+    margin: 10px;
+  }
+  
+  /* Media query for mobile responsiveness 
+  @media (max-width: 900px) {
+    .form-popup {
+      width: 90%; /* Adjust the width for mobile screens 
+      border: none; /* Remove border for mobile screens 
+      box-shadow: none; /* Remove box shadow for mobile screens 
+    }
+  
+    .form-container {
+      padding: 20px; /* Add padding for mobile screens 
+    }
+  
+    mat-form-field {
+      width: 100%; /* Set width to 100% for mobile screens 
+    }
+  }*/
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-popup {
+    width: 32%;
+    height: 90%;
+   border: 3px  black;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .pop-up-Header {
+    position: relative;
+    margin-top: 28px;
+    color: #000;
+    font-family: Lato;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  mat-form-field {
+  width: 90%; /* Set width to 100% to fill the container */
+  max-width: 400px;
+  }
+  
+  #firstchild {
+    margin-top: 30px;
+  }
+  
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .example-margin {
+    margin: 0 10px;
+  }
+  
+  .buttons {
+    display: flex;
+  }
+  
+  .buttons button {
+    margin: 10px;
+  }
+  
+  /* Media query for mobile responsiveness */
+  @media (max-width: 1200px) {
+    .form-popup {
+      width: auto; /* Set width to auto for mobile screens */
+      border: none; /* Remove border for mobile screens */
+      border-radius: 0; /* Remove border radius for mobile screens */
+      box-shadow: none; /* Remove box shadow for mobile screens */
+    }
+  
+    .form-container {
+      padding: 20px; /* Add padding for mobile screens */
+    }
+  
+    mat-form-field {
+      width: 100%; /* Set width to 100% for mobile screens */
     }
   }
+  
+  
 
   
 
