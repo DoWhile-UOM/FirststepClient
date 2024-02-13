@@ -8,7 +8,7 @@ import { FileUploadComponent } from "../../shared/file-upload/file-upload.compon
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Employee } from '../../../../models/employee';
-import { Apipaths } from '../../../api-paths/apipaths';
+import { Apipaths } from '../../../apipaths/apipaths';
 
 
 @Component({
@@ -31,17 +31,29 @@ export class AddrolesPopupComponent {
         console.log(employee);
 
         if (this.emp_role == "HRM") {
-            this.http.post(Apipaths.addNewHRManager, employee).subscribe((res:any) => {});
+            this.http.post(Apipaths.addNewHRManager, employee).subscribe({
+                next: data => {
+                    alert('HR Manager added successfully')
+                },
+                error: error => {
+                    console.error('Error occured', error);
+                }
+            });
         }
         else if (this.emp_role == "HRA") {
-            this.http.post(Apipaths.addNewHRAssistant, employee).subscribe((res:any) => {});
+            this.http.post(Apipaths.addNewHRAssistant, employee).subscribe({
+                next: data => {
+                    alert('HR Assistant added successfully')
+                },
+                error: error => {
+                    console.error('Error occured', error);
+                }
+            });
         }
         else {
             this['dialog'].open("Invalid role", "OK");
 
             throw new Error("Invalid role");
-        }
-
-        
+        }        
     }
 }
