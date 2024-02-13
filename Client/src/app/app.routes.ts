@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { ManageRolesComponent } from './CompanyPortal/CompanyAdmin/manage-roles/manage-roles.component';
 
 import { EditRoleComponent } from './CompanyPortal/CompanyAdmin/edit-role/edit-role.component';
@@ -14,11 +15,14 @@ import { ForgotPasswordComponent } from './Login/forgot-password/forgot-password
 import { CompanyProfileEditComponent } from './CompanyPortal/CompanyAdmin/company-profile-edit/company-profile-edit.component';
 import { CompanyAdminRegistrtionFormComponent } from './CompanyPortal/CompanyAdmin/company-admin-registrtion-form/company-admin-registrtion-form.component';
 
-
 import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-popup/addroles-popup.component';
 
-export const routes: Routes = [
+import { SignupFirstPageComponent } from './SeekerPortal/signup-first-page/signup-first-page.component';
 
+export const routes: Routes = [
+  
+    {path: 'seeker-portal', component: SignupFirstPageComponent},
+  
     // company portal
     {path:'ManageRoles',component:ManageRolesComponent},
     {path:'AddRole',component:AddrolesPopupComponent},
@@ -58,4 +62,3 @@ export const routes: Routes = [
       component: CompanyProfileEditComponent,
     },
 ]
-
