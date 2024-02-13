@@ -5,6 +5,7 @@ import axios from 'axios';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AdvertisementServices {
 
   constructor() { }
@@ -33,5 +34,20 @@ export class AdvertisementServices {
       );
 
     return jobList;
+  }
+
+  async addNewJob(job: any) {
+    let response: any = null;
+
+    await axios.post(Apipaths.addNewJob, job)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
+
+    console.log("Error " + response);
+    //return response;
   }
 }

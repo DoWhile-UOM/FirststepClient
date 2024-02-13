@@ -24,7 +24,6 @@
     "@angular/platform-server": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@angular/ssr": "^17.1.1",
-    "@syncfusion/ej2-angular-richtexteditor": "^24.2.4",
     "axios": "^1.6.7",
     "express": "^4.18.2",
     "ngx-spinner": "^16.0.2",

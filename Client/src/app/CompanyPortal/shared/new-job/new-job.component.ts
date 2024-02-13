@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild, inject } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
@@ -18,138 +17,157 @@ import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatButtonModule } from '@angular/material/button';
-import { AddAdvertisement } from '../../../../models/add-advertisement';
-import { Apipaths } from '../../../apipaths/apipaths';
+import { AdvertisementServices } from '../../../../services/advertisement.service';
+import { JobfieldService } from '../../../../services/jobfield.service';
 
 interface Field {
-  fieldName: string;
-  fieldID: number;
+  	fieldName: string;
+  	fieldID: number;
+}
+
+interface AddJob {
+	ob_number: number;
+    title: string;
+    country: string;
+    city: string;
+    employeement_type: string;
+    arrangement: string;
+    is_experience_required: boolean;
+    salary: number;
+    submission_deadline: string;
+    job_overview: string;
+    job_responsibilities: string;
+    job_qualifications: string;
+    job_benefits: string;
+    job_other_details: string;
+    hrManager_id: number;
+    field_id: number;
+    keywords: string[];
 }
 
 @Component({
-  selector: 'app-new-job',
-  standalone: true,
-  providers: [provideNativeDateAdapter()],
-  imports: [
-	MatGridListModule, MatFormFieldModule, MatInputModule,
-	MatDividerModule, MatCardModule, MatDatepickerModule,
-	MatSelectModule, HttpClientModule, MatChipsModule,
-	MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
-	AsyncPipe, MatButtonModule, FormsModule],
-  templateUrl: './new-job.component.html',
-  styleUrl: './new-job.component.css'
+	selector: 'app-new-job',
+	standalone: true,
+	providers: [provideNativeDateAdapter()],
+	imports: [
+		MatGridListModule, MatFormFieldModule, MatInputModule,
+		MatDividerModule, MatCardModule, MatDatepickerModule,
+		MatSelectModule, MatChipsModule,
+		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
+		AsyncPipe, MatButtonModule, FormsModule],
+	templateUrl: './new-job.component.html',
+	styleUrl: './new-job.component.css'
 })
 
 export class NewJobComponent{
-  noOfCols: number = 3;
-  maxTextareaWordLimit: number = 200;
-  maxTextareaHeight: number = 15;
+	noOfCols: number = 3;
+	maxTextareaWordLimit: number = 200;
+	maxTextareaHeight: number = 15;
 
-  jobOtherDetails: string = '1525';
+	unitOfSalary: string = "LKR";
 
-  unitOfSalary: string = "LKR";
+	fields: Field[] = [];
 
-  fields: Field[] = [
-	{fieldName: 'IT and CS', fieldID: 1},
-	{fieldName: 'Civil Engineering', fieldID: 2},
-	{fieldName: 'Electrical Engineering', fieldID: 2},
-	{fieldName: 'Healthcare', fieldID: 4},
-	{fieldName: 'Business', fieldID: 5}
-  ];
+	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
+	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
 
-  empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
+	// for location country autocomplete
+	locationCountryControl = new FormControl('');
+	countries: string[] = ['Sri Lanka', 'USA', 'Norway']; // need a function to get all countries
+	locationCountryFilteredOptions: Observable<string[]>;
 
-  jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
+	// for city country autocomplete
+	locationCityControl = new FormControl('');
+	cities: string[] = ['Colombo', 'Kandy', 'Moratuwa', 'Mount Lavinia', 'Mathara', 'Kadawatha']; // need a function to get cities of a country
+	locationCityFilteredOptions: Observable<string[]>;
 
-  // for location country autocomplete
-  locationCountryControl = new FormControl('');
-  countries: string[] = ['Sri Lanka', 'USA', 'Norway']; // need a function to get all countries
-  locationCountryFilteredOptions: Observable<string[]>;
+	// for keywords
+	separatorKeysCodes: number[] = [ENTER, COMMA];
+	keywordCtrl = new FormControl('');
+	filteredkeywords: Observable<string[]>;
+	keywords: string[] = [];
+	allkeywords: string[] = [];
+	@ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
+	announcer = inject(LiveAnnouncer);
 
-  // for city country autocomplete
-  locationCityControl = new FormControl('');
-  cities: string[] = ['Colombo', 'Kandy', 'Moratuwa', 'Mount Lavinia', 'Mathara', 'Kadawatha']; // need a function to get cities of a country
-  locationCityFilteredOptions: Observable<string[]>;
+	constructor(
+		private advertisementService: AdvertisementServices,
+		private jobFieldService: JobfieldService) {
 
-  // for keywords
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  keywordCtrl = new FormControl('');
-  filteredkeywords: Observable<string[]>;
-  keywords: string[] = [];
-  allkeywords: string[] = [];
-  @ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
-  announcer = inject(LiveAnnouncer);
+		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
+			startWith(null),
+			map((keyword: string | null) => (keyword ? this._filterKeyword(keyword) : this.allkeywords.slice())),
+		);
 
-  constructor(private httpClient: HttpClient) {
-	this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
-	  startWith(null),
-	  map((keyword: string | null) => (keyword ? this._filterKeyword(keyword) : this.allkeywords.slice())),
-	);
+		this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCountry(value || '')),
+		);
 
-	this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
-	  startWith(''),
-	  map(value => this._filterCountry(value || '')),
-	);
-
-	this.locationCityFilteredOptions = this.locationCityControl.valueChanges.pipe(
-	  startWith(''),
-	  map(value => this._filterCity(value || '')),
-	);
-  }
-
-  add(event: MatChipInputEvent): void {
-	const value = (event.value || '').trim();
-
-	// Add our keyword
-	if (value) {
-	  this.keywords.push(value);
+		this.locationCityFilteredOptions = this.locationCityControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCity(value || '')),
+		);
 	}
 
-	// Clear the input value
-	event.chipInput!.clear();
+	add(event: MatChipInputEvent): void {
+		const value = (event.value || '').trim();
 
-	this.keywordCtrl.setValue(null);
-  }
+		// Add our keyword
+		if (value) {
+		this.keywords.push(value);
+		}
 
-  remove(keyword: string): void {
-	const index = this.keywords.indexOf(keyword);
+		// Clear the input value
+		event.chipInput!.clear();
 
-	if (index >= 0) {
-	  this.keywords.splice(index, 1);
-
-	  this.announcer.announce(`Removed ${keyword}`);
+		this.keywordCtrl.setValue(null);
 	}
-  }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-	this.keywords.push(event.option.viewValue);
-	this.keywordInput.nativeElement.value = '';
-	this.keywordCtrl.setValue(null);
-  }
+	remove(keyword: string): void {
+		const index = this.keywords.indexOf(keyword);
 
-  private _filterKeyword(value: string): string[] {
-	const filterValue = value.toLowerCase();
+		if (index >= 0) {
+		this.keywords.splice(index, 1);
 
-	return this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
-  }
+		this.announcer.announce(`Removed ${keyword}`);
+		}
+	}
 
-  private _filterCountry(value: string): string[] {
-	const filterValue = value.toLowerCase();
+	selected(event: MatAutocompleteSelectedEvent): void {
+		this.keywords.push(event.option.viewValue);
+		this.keywordInput.nativeElement.value = '';
+		this.keywordCtrl.setValue(null);
+	}
 
-	return this.countries.filter(option => option.toLowerCase().includes(filterValue));
-  }
+	private _filterKeyword(value: string): string[] {
+		const filterValue = value.toLowerCase();
 
-  private _filterCity(value: string): string[] {
-	const filterValue = value.toLowerCase();
+		return this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
+	}
 
-	return this.cities.filter(option => option.toLowerCase().includes(filterValue));
-  }
+	private _filterCountry(value: string): string[] {
+		const filterValue = value.toLowerCase();
 
-  ngOnInit(): void {
+		return this.countries.filter(option => option.toLowerCase().includes(filterValue));
+	}
 
-  }
+	private _filterCity(value: string): string[] {
+		const filterValue = value.toLowerCase();
 
-	onChangeField(selectedField: string) {
+		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	async ngOnInit() {
+		await this.jobFieldService.getAll()
+			.then((response) => {
+				this.fields = response;
+			});
+	}
+
+	async onChangeField(selectedField: string) {
+		// call the api to get all keywords for the selected field
+		/*
 		try{
 			this.httpClient.get(Apipaths.getKeywords + selectedField).subscribe((res: any) => {
 				this.allkeywords = res;
@@ -157,10 +175,10 @@ export class NewJobComponent{
 		}
 		catch (e){
 			console.log(e);
-		}
+		}*/
 	}
 
-  createNewJob(addAdvertisement: AddAdvertisement){
+  	async createNewJob(addAdvertisement: AddJob){
 		addAdvertisement.keywords = this.keywords;
 		addAdvertisement.hrManager_id = 10; // sample hrManager_id
 
@@ -176,10 +194,9 @@ export class NewJobComponent{
 		if (addAdvertisement.submission_deadline != ""){	
 			addAdvertisement.submission_deadline = new Date(addAdvertisement.submission_deadline).toISOString();
 		}
-
-		console.log(addAdvertisement);
 		
-		
+		await this.advertisementService.addNewJob(addAdvertisement);
+		/*
 		this.httpClient.post(Apipaths.addNewJob, addAdvertisement).subscribe({
 			next: data => {
 				alert('New Job Created under company');
@@ -189,6 +206,6 @@ export class NewJobComponent{
 				console.error('Error occured', error);
 
 			}
-		});
-  }
+		});*/
+  	}
 }
