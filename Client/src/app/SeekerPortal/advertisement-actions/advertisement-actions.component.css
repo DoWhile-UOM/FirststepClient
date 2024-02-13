@@ -1,0 +1,11 @@
+.job-actions{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2em;
+    margin-right: 3em;
+    margin-bottom: 1em;
+}
+
+.save-button{
+    margin-right: 1em;
+}

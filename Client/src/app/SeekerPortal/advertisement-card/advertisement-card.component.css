@@ -1,0 +1,70 @@
+.job-card {
+    margin: 1em;
+    padding: 1.75em;
+    padding-left: 2.4em;
+    display: flex;
+    flex-direction: row;
+}
+
+.job-heading{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+
+.job-details-outer{
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+}
+
+.job-details-inner{
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5em;
+    justify-content: flex-end;
+    margin-right: 3em;
+}
+  
+.job-logo {
+    background-size: cover;
+}
+
+.job-title {
+    color: black; 
+    font-size: 33px; 
+    font-family: Lato; 
+    font-weight: 700; 
+    word-wrap: break-word
+}
+  
+.company-name {
+    color: #008080; 
+    font-size: 20px; 
+    font-family: Lato; 
+    font-weight: 700; 
+    word-wrap: break-word;
+    margin-top: 0.75em;
+}
+  
+.job-field {
+    color: black; 
+    font-family: Lato;
+    margin-top: 1.75em;
+}
+
+.job-details-section{
+    color: black; 
+    font-family: Lato;
+    font-size: 18px;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+}
+
+.post-date{
+    color: #008080; 
+    font-family: Lato;
+    font-size: 15px;
+    margin-top: 1em;
+    margin-right: 5em;
+}
