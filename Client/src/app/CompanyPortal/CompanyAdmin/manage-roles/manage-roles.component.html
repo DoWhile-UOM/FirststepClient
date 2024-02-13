@@ -1,1 +1,60 @@
-<a><button mat-button ><mat-icon >person_add_alt</mat-icon>Add Account</button></a>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+<header></header>
+<section class="container">
+ <div class="sec" id="TitlePart">  
+   <div class="topic"><p>Manage Roles</p></div>
+   <div class="button"><button mat-raised-button color="primary" (click)="addData()" class="demo-button">
+    <mat-icon>person_add_alt
+    </mat-icon>Add Account
+  </button></div>
+</div>
+ <div class="sec" id="role">
+    <div class="demo-button-container">
+        <!--<button mat-raised-button (click)="addData()" class="demo-button">
+          Add data
+        </button>
+        <button
+            mat-raised-button
+            [disabled]="!dataSource.length"
+            (click)="removeData()"
+            class="demo-button">
+          Remove data
+        </button>-->
+      </div>
+      
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef>No.</th>
+          <td mat-cell *matCellDef="let element">{{element.position}}</td>
+        </ng-container>
+      
+     
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+     
+        <ng-container matColumnDef="Role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let element">{{element.Role}}</td>
+        </ng-container>
+      
+    
+    <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef>symbol</th>
+          <td mat-cell *matCellDef="let element"> <button mat-icon-button   [disabled]="!dataSource.length"
+            (click)="removeData()"><mat-icon>{{element.symbol1}}</mat-icon></button><button mat-icon-button  ><mat-icon>{{element.symbol2}}</mat-icon></button></td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+      
+      
+ </div> 
+</section>

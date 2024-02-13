@@ -1,6 +1,8 @@
+
 <div class="fileupload">
+  <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
     <div id="Documentsubmissioncontainer" class="formchild">
-      <input type="file" hidden id="fileID" style="display: none" (change)="handleFileInput($event)" />
+      <input type="file" hidden id="fileID" style="display: none" (change)="handleFileInput($event)" onchange="console.log(event.target.files)"/>
       <span class="spanicon"
         ><mat-icon class="uploadicon">upload</mat-icon></span
       >
@@ -9,4 +11,5 @@
       </button>
     </div>
   </div>
+<!---->
 
