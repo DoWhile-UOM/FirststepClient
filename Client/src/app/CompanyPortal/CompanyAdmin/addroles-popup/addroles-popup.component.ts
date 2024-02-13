@@ -8,7 +8,8 @@ import { FileUploadComponent } from "../../shared/file-upload/file-upload.compon
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Employee } from '../../../../models/employee';
-import { Apipaths } from '../../../apipaths/apipaths';
+import { Apipaths } from '../../../api-paths/apipaths';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { Apipaths } from '../../../apipaths/apipaths';
     standalone: true, 
     templateUrl: './addroles-popup.component.html',
     styleUrl: './addroles-popup.component.css',
-    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule, HttpClientModule]
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule, HttpClientModule,FlexLayoutModule]
 })
 export class AddrolesPopupComponent {
     [x: string]: any;
@@ -29,7 +30,9 @@ export class AddrolesPopupComponent {
     onRoleCreate(employee: Employee){
         employee.company_id = 8; // sample company_id
         console.log(employee);
+        this.http.post('https://localhost:7213/api/Employee/AddNewHRManager', employee).subscribe((res:any) => {});
 
+        /*
         if (this.emp_role == "HRM") {
             this.http.post(Apipaths.addNewHRManager, employee).subscribe({
                 next: data => {
@@ -54,6 +57,9 @@ export class AddrolesPopupComponent {
             this['dialog'].open("Invalid role", "OK");
 
             throw new Error("Invalid role");
-        }        
+
+        }*/
     }
 }
+
+
