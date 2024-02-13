@@ -66,6 +66,7 @@
 
   /*making pages responsive
 
+
   @media (max-width: 900px) {
     .form-popup {
       border:none;
@@ -196,7 +197,6 @@
     align-content: center;
     align-items: center;
     height: 60px;
-  }
   
   .example-margin {
     margin: 0 10px;

@@ -1,0 +1,13 @@
+.container{
+    margin: 0 auto;
+    width: 65%;
+    height: auto;
+    padding: 2% 2% 3% 2%;
+    margin-top: 5px;
+    border: 1px solid #A9A9A9;
+    border-radius: 15px;
+}
+
+hr{
+    width: 100%;
+}
