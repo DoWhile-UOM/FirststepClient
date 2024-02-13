@@ -60,12 +60,19 @@ export class CompanyProfileEditComponent {
   constructor(private http: HttpClient) {}
 
   details: any = [];
+
   getDefaultValues() {
-    this.http
-      .get<Company>(this.APIURL + 'GetCompanyDetails')
-      .subscribe((data) => {
-        const company: Company = data;
-      });
+    var company: Company;
+    const companyId = 8; // sample company_id
+    this.http.get(this.APIURL + 'GetCompanyDetails/' + companyId).subscribe(
+      (res: any) => {
+        console.log('Response:', res);
+        company = res;
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -74,13 +81,38 @@ export class CompanyProfileEditComponent {
 
   [x: string]: any;
   emp_role: string = 'Non';
-  updateDetails(company: Company) {
-    company.company_id = 8; // sample company_id
-    console.log(company);
-    this.http
-      .put(this.APIURL + 'UpdateCompanyDetails', company)
-      .subscribe((res: any) => {});
-    this.getDefaultValues();
+  id = 1;
+  name = 'Bistec Global';
+  description = 'Bistec Global is a software company';
+  website = 'www.bistecglobal.com';
+  business_scale = 'Small';
+  phone_number = 1234567890;
+  c_email = 'bistecglobal@gmail.com';
+  city = 'Calgary';
+  province = 'Alberta';
+
+  updateDetails() {
+    var company = new Company(
+      this.id,
+      this.name,
+      this.description,
+      this.website,
+      this.business_scale,
+      this.phone_number,
+      this.c_email,
+      this.city,
+      this.province
+    ); // Initialize company if it's not already defined
+    const companyId = 8; // sample company_id
+    this.http.get(this.APIURL + 'GetCompanyDetails/' + companyId).subscribe(
+      (res: any) => {
+        console.log('Response:', res);
+        company = res;
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
   }
   discardChanges() {
     this.http.delete(this.APIURL + 'DeleteCompanyDetails').subscribe((data) => {
