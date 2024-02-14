@@ -115,7 +115,8 @@
 							aria-label="Country"
 							matInput
 							[formControl]="locationCountryControl"
-							[matAutocomplete]="autocountry">
+							[matAutocomplete]="autocountry"
+							(input)="onselectedCountryChanged($event)">
 						<mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
 						@for (option of locationCountryFilteredOptions | async; track option) {
 							<mat-option [value]="option">{{option}}</mat-option>

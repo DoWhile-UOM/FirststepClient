@@ -15,8 +15,9 @@ import { map, startWith } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { ENTER, COMMA, PLUS_SIGN } from '@angular/cdk/keycodes';
+import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatButtonModule } from '@angular/material/button';
+import { Country, State, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../../services/advertisement.service';
 import { JobfieldService } from '../../../../services/jobfield.service';
 import { KeywordService } from '../../../../services/keyword.service'; 
@@ -76,10 +77,10 @@ export class NewJobComponent{
 
 	// for location country autocomplete
 	locationCountryControl = new FormControl('');
-	countries: string[] = ['Sri Lanka', 'USA', 'Norway']; // need a function to get all countries
+	countries: string[] = [];
 	locationCountryFilteredOptions: Observable<string[]>;
 
-	// for city country autocomplete
+	// for city autocomplete
 	locationCityControl = new FormControl('');
 	cities: string[] = ['Colombo', 'Kandy', 'Moratuwa', 'Mount Lavinia', 'Mathara', 'Kadawatha']; // need a function to get cities of a country
 	locationCityFilteredOptions: Observable<string[]>;
@@ -184,13 +185,39 @@ export class NewJobComponent{
 			});
 
 		// get all country names using an external API
-		await this.advertisementService.getAllCountries();
+		this.countries = Country.getAllCountries().map(country => country.name);
+
+		// get all cities in sri lanka
+		const citiesOfSriLanka = City.getCitiesOfCountry('Sri Lanka');
+		if (citiesOfSriLanka){
+			this.cities = citiesOfSriLanka.map(city => city.name);
+			alert("Add cities");
+			console.log(this.cities);
+		}
 	}
 
 	async onChangeField(selectedField: number) {
 		// load the keywords for the selected field
 		// put loading animation
+		this.keywords = [];
 		this.allkeywords = await this.keywordService.getAllKeywords(selectedField);
+	}
+
+	onselectedCountryChanged(event: any){
+		/*
+		console.log(event.target.value);
+		if (event.target.value != '' && event.target.value == 'Sri Lanka') {
+			console.log(event.target.value);
+
+			const citiesOfCountry = City.getCitiesOfCountry(event.target.value);
+
+				// clear the current value of the city
+				this.locationCityControl.setValue('');
+				
+				if (citiesOfCountry) {
+					this.cities = citiesOfCountry.map(city => city.name);
+				}
+		}*/
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
