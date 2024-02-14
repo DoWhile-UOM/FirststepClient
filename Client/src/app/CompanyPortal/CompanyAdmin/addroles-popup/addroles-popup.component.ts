@@ -8,7 +8,7 @@ import { FileUploadComponent } from "../../shared/file-upload/file-upload.compon
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Employee } from '../../../../models/employee';
-import { Apipaths } from '../../../api-paths/apipaths';
+import { Apipaths } from '../../../apipaths/apipaths'; 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 
