@@ -15,14 +15,15 @@ import { map, startWith } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { ENTER, COMMA } from '@angular/cdk/keycodes';
+import { ENTER, COMMA, PLUS_SIGN } from '@angular/cdk/keycodes';
 import { MatButtonModule } from '@angular/material/button';
 import { AdvertisementServices } from '../../../../services/advertisement.service';
 import { JobfieldService } from '../../../../services/jobfield.service';
+import { KeywordService } from '../../../../services/keyword.service'; 
 
 interface Field {
-  	fieldName: string;
-  	fieldID: number;
+	field_name: string;
+	field_id: number;
 }
 
 interface AddJob {
@@ -66,6 +67,8 @@ export class NewJobComponent{
 
 	unitOfSalary: string = "LKR";
 
+	currentDate = new FormControl(new Date());
+
 	fields: Field[] = [];
 
 	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
@@ -82,9 +85,10 @@ export class NewJobComponent{
 	locationCityFilteredOptions: Observable<string[]>;
 
 	// for keywords
-	separatorKeysCodes: number[] = [ENTER, COMMA];
+	separatorKeysCodes: number[] = [ COMMA, ENTER ];
 	keywordCtrl = new FormControl('');
 	filteredkeywords: Observable<string[]>;
+	filteredkeywordslength: number = 0;
 	keywords: string[] = [];
 	allkeywords: string[] = [];
 	@ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
@@ -92,7 +96,8 @@ export class NewJobComponent{
 
 	constructor(
 		private advertisementService: AdvertisementServices,
-		private jobFieldService: JobfieldService) {
+		private jobFieldService: JobfieldService, 
+		private keywordService: KeywordService) {
 
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
@@ -114,12 +119,12 @@ export class NewJobComponent{
 		const value = (event.value || '').trim();
 
 		// Add our keyword
-		if (value) {
-		this.keywords.push(value);
+		if (value && value.length > 0) {
+			this.keywords.push(value);
 		}
 
 		// Clear the input value
-		event.chipInput!.clear();
+		//event.chipInput!.clear();
 
 		this.keywordCtrl.setValue(null);
 	}
@@ -128,13 +133,22 @@ export class NewJobComponent{
 		const index = this.keywords.indexOf(keyword);
 
 		if (index >= 0) {
-		this.keywords.splice(index, 1);
+			this.keywords.splice(index, 1);
 
-		this.announcer.announce(`Removed ${keyword}`);
+			this.announcer.announce(`Removed ${keyword}`);
+		}
+		else{
+
+			alert(`Keyword not found`);
 		}
 	}
 
 	selected(event: MatAutocompleteSelectedEvent): void {
+		var inputFieldValue = this.keywordInput.nativeElement.value;
+		if (inputFieldValue.length > 0){
+			this.remove(inputFieldValue);
+		}
+
 		this.keywords.push(event.option.viewValue);
 		this.keywordInput.nativeElement.value = '';
 		this.keywordCtrl.setValue(null);
@@ -143,7 +157,10 @@ export class NewJobComponent{
 	private _filterKeyword(value: string): string[] {
 		const filterValue = value.toLowerCase();
 
-		return this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
+		var filtered = this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
+		this.filteredkeywordslength = filtered.length;
+
+		return filtered;
 	}
 
 	private _filterCountry(value: string): string[] {
@@ -159,23 +176,21 @@ export class NewJobComponent{
 	}
 
 	async ngOnInit() {
+		// get all fields from the database
 		await this.jobFieldService.getAll()
 			.then((response) => {
 				this.fields = response;
+				console.log(this.fields);
 			});
+
+		// get all country names using an external API
+		await this.advertisementService.getAllCountries();
 	}
 
-	async onChangeField(selectedField: string) {
-		// call the api to get all keywords for the selected field
-		/*
-		try{
-			this.httpClient.get(Apipaths.getKeywords + selectedField).subscribe((res: any) => {
-				this.allkeywords = res;
-			});
-		}
-		catch (e){
-			console.log(e);
-		}*/
+	async onChangeField(selectedField: number) {
+		// load the keywords for the selected field
+		// put loading animation
+		this.allkeywords = await this.keywordService.getAllKeywords(selectedField);
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
@@ -186,26 +201,21 @@ export class NewJobComponent{
 		addAdvertisement.country = this.locationCountryControl.value ?? '';
 
 		if (addAdvertisement.city == '' || addAdvertisement.country == ''){
-			alert('Location is required');
+			alert('Input Error: Location is required');
 			return;
 		}
 
-		console.log(addAdvertisement);
 		if (addAdvertisement.submission_deadline != ""){	
 			addAdvertisement.submission_deadline = new Date(addAdvertisement.submission_deadline).toISOString();
+
+			if (addAdvertisement.submission_deadline < new Date().toISOString()){
+				alert('Input Error: Submission deadline should be a future date');
+				return;
+			}
 		}
 		
 		await this.advertisementService.addNewJob(addAdvertisement);
-		/*
-		this.httpClient.post(Apipaths.addNewJob, addAdvertisement).subscribe({
-			next: data => {
-				alert('New Job Created under company');
-			},
-			error: error => {
-				alert('Error occured ' + error.manage);
-				console.error('Error occured', error);
 
-			}
-		});*/
+		alert('Job added successfully');
   	}
 }
