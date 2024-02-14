@@ -3,7 +3,6 @@ import {MatIconRegistry, MatIconModule} from '@angular/material/icon';
 import {ViewChild} from '@angular/core';
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
-import { AddrolesPopupComponent } from "../addroles-popup/addroles-popup.component";
 
 
 export interface PeriodicElement {
@@ -26,11 +25,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-    selector: 'app-manage-roles',
-    standalone: true,
-    templateUrl: './manage-roles.component.html',
-    styleUrl: './manage-roles.component.css',
-    imports: [MatIconModule, MatButtonModule, MatTableModule, AddrolesPopupComponent]
+  selector: 'app-manage-roles',
+  standalone: true,
+  imports: [MatIconModule,MatButtonModule, MatTableModule],
+  templateUrl: './manage-roles.component.html',
+  styleUrl: './manage-roles.component.css'
 })
 export class ManageRolesComponent {
   displayedColumns: string[] = ['position', 'name', 'Role','symbol'];
@@ -48,10 +47,6 @@ export class ManageRolesComponent {
   removeData() {
     this.dataSource.pop();
     this.table.renderRows();
-  }
-
-  openAddRole(){
-    document.getElementById("PopupAdd")
   }
 }
 

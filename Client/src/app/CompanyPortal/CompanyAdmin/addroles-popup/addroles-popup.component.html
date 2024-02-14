@@ -21,8 +21,8 @@
     </mat-form-field>
 
     <mat-radio-group class="example-radio-group">
-      <mat-radio-button class="example-margin" name="subrole" value="HRM" checked="checked" >HR Manager</mat-radio-button>
-      <mat-radio-button class="example-margin" name="subrole" value="HRA">HR Assistant</mat-radio-button><!--[ngModel]='emp_role'-->
+      <mat-radio-button class="example-margin" name="subrole" value="HRM" checked="checked" [(ngModel)]="emp_role">HR Manager</mat-radio-button>
+      <mat-radio-button class="example-margin" name="subrole" value="HRA" [(ngModel)]="emp_role">HR Assistant</mat-radio-button>
     </mat-radio-group>
 
    <app-file-upload></app-file-upload>
