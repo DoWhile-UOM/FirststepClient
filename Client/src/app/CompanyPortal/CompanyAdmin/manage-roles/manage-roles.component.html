@@ -6,7 +6,7 @@
 <section class="container">
  <div class="sec" id="TitlePart">  
    <div class="topic"><p>Manage Roles</p></div>
-   <div class="button"><button mat-raised-button color="primary" (click)="addData()" class="demo-button">
+   <div class="button"><button mat-raised-button color="primary" (click)="openAdd()" class="demo-button">
     <mat-icon>person_add_alt
     </mat-icon>Add Account
   </button></div>
@@ -24,7 +24,9 @@
           Remove data
         </button>-->
       </div>
+      <section class="popup">
       
+    </section>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
         <!-- Position Column -->
         <ng-container matColumnDef="position">

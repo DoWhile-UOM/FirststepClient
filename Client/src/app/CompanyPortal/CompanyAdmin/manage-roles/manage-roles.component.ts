@@ -3,6 +3,7 @@ import {MatIconRegistry, MatIconModule} from '@angular/material/icon';
 import {ViewChild} from '@angular/core';
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import { FileUploadComponent } from "../../shared/file-upload/file-upload.component";
 
 
 export interface PeriodicElement {
@@ -25,11 +26,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-manage-roles',
-  standalone: true,
-  imports: [MatIconModule,MatButtonModule, MatTableModule],
-  templateUrl: './manage-roles.component.html',
-  styleUrl: './manage-roles.component.css'
+    selector: 'app-manage-roles',
+    standalone: true,
+    templateUrl: './manage-roles.component.html',
+    styleUrl: './manage-roles.component.css',
+    imports: [MatIconModule, MatButtonModule, MatTableModule, FileUploadComponent]
 })
 export class ManageRolesComponent {
   displayedColumns: string[] = ['position', 'name', 'Role','symbol'];
@@ -37,6 +38,8 @@ export class ManageRolesComponent {
 
   @ViewChild(MatTable)
   table!: MatTable<PeriodicElement>;
+
+
 
   addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
@@ -47,6 +50,11 @@ export class ManageRolesComponent {
   removeData() {
     this.dataSource.pop();
     this.table.renderRows();
+  }
+  openAdd(){
+      // Call the method in the app-file-upload component to show the popup form
+      
+  
   }
 }
 
