@@ -6,23 +6,17 @@
 <section class="container">
  <div class="sec" id="TitlePart">  
    <div class="topic"><p>Manage Roles</p></div>
-   <div class="button"><button mat-raised-button color="primary" (click)="addData()" class="demo-button">
+   <div class="button">
+    <!--<button mat-raised-button color="primary" (click)="addData()" class="demo-button">-->
+      <button mat-raised-button color="primary" (click)="openAddRole()" class="demo-button"> 
     <mat-icon>person_add_alt
     </mat-icon>Add Account
   </button></div>
+ <app-addroles-popup  class="popupAdd" id="popupAdd"></app-addroles-popup>
 </div>
  <div class="sec" id="role">
     <div class="demo-button-container">
-        <!--<button mat-raised-button (click)="addData()" class="demo-button">
-          Add data
-        </button>
-        <button
-            mat-raised-button
-            [disabled]="!dataSource.length"
-            (click)="removeData()"
-            class="demo-button">
-          Remove data
-        </button>-->
+
       </div>
       
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
