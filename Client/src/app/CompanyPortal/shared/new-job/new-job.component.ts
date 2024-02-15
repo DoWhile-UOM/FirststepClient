@@ -21,6 +21,7 @@ import { Country, State, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../../services/advertisement.service';
 import { JobfieldService } from '../../../../services/jobfield.service';
 import { KeywordService } from '../../../../services/keyword.service'; 
+import { Router } from '@angular/router';
 
 interface Field {
 	field_name: string;
@@ -98,7 +99,8 @@ export class NewJobComponent{
 	constructor(
 		private advertisementService: AdvertisementServices,
 		private jobFieldService: JobfieldService, 
-		private keywordService: KeywordService) {
+		private keywordService: KeywordService, 
+		private router: Router) {
 
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
@@ -243,6 +245,6 @@ export class NewJobComponent{
 		
 		await this.advertisementService.addNewJob(addAdvertisement);
 
-		alert('Job added successfully');
+		this.router.navigate(['/newJobUploaded']);
   	}
 }

@@ -7,6 +7,8 @@ import { SeekerHomePageComponent } from './SeekerPortal/seeker-home-page/seeker-
 import { NewJobComponent } from './CompanyPortal/shared/new-job/new-job.component';
 import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-profile.component';
 
+import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
+
 export const routes: Routes = [
     // company portal
     {path:'ManageRoles',component:ManageRolesComponent},
@@ -19,4 +21,5 @@ export const routes: Routes = [
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
     {path:'company-profile',component:CompanyProfileComponent},
+    {path:'newJobUploaded',component:NewJobUploadedComponent},
 ];
