@@ -51,11 +51,11 @@ export class AdvertisementServices {
     //return response;
   }
 
-  async getAdvertisementsByCompanyId(company_id: string) {
+  async getCompanyProfile(company_id: string) {
     let company: any;
     let jobList: any = [];
 
-    await axios.get(Apipaths.getAdvertisementsByCompanyId + company_id)
+    await axios.get(Apipaths.getCompanyProfile + company_id)
       .then(function (response) {
         try {
           company = response.data;

@@ -9,14 +9,15 @@ export class Apipaths {
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
     static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
     static readonly addNewJob: string = this.baseUrl + 'Advertisement/AddAdvertisement';
-    static readonly getAdvertisementsByCompanyId: string = this.baseUrl + 'Advertisement/GetAdvertisementsByCompany/'; // + company_id
+
+    // company
+    static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 
     // fields
     static readonly getAllFields: string = this.baseUrl + 'JobField/GetAllJobFields';
-
 
     // external
     static readonly getCountryNames: string = 'https://api.first.org/v1/get-countries';

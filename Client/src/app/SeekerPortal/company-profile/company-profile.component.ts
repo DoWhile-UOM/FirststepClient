@@ -60,7 +60,7 @@ export class CompanyProfileComponent {
       return;
     }
 
-    this.advertisementService.getAdvertisementsByCompanyId(company_id)
+    this.advertisementService.getCompanyProfile(company_id)
       .then((response) => {
         this.company = response;
 
