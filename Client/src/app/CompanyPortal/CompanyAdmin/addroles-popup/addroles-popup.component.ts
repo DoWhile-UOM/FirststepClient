@@ -7,9 +7,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { FileUploadComponent } from "../../shared/file-upload/file-upload.component";
 import { FormsModule } from '@angular/forms';
 
-import { Employee } from '../../../../models/employee';
-import { Apipaths } from '../../../apipaths/apipaths'; 
+
 import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
+import { EmployeeService } from '../../../../services/employee.service';
 
 
 
@@ -21,9 +21,20 @@ import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule} fro
     imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule,MatDialogModule,MatDialogContent,MatDialogActions,MatDialogClose]
 })
 export class AddrolesPopupComponent {
+    
+  employee: any = {};
 
+  constructor(private employeeService:EmployeeService){}
 
-
+  async onSubmit() {
+    try {
+        const response = await this.employeeService.addNewHRManager(this.employee);
+        console.log('HR manager added successfully:', response);
+         // Optionally, reset the form or do other actions upon successful submission
+    } catch (error) {
+        console.error('Error adding HR manager:', error);
+    }
+  }
 
 
            /*  [x: string]: any;

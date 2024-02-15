@@ -9,17 +9,18 @@ export class EmployeeService {
 
   constructor() { }
 
-  async addNewHRManager(hrManager: any) {
-    await axios.post('/url', {
-      // create the model according to the api request
-      firstName: 'Fred',
-      lastName: 'Flintstone'
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+
+async addNewHRManager(employee: any) {
+    try{
+    const response =await axios.post('https://localhost:7213/api/Employee/AddNewHRManager',employee) 
+    console.log(response.data);
+    return response.data;
+    }
+    catch (error) {
+      console.error(error);
+      throw error; 
+    }
+  
+  
+}
 }
