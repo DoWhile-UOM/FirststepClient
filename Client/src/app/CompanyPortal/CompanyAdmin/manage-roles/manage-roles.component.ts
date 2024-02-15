@@ -2,7 +2,17 @@ import { Component } from '@angular/core';
 import {MatIconRegistry, MatIconModule} from '@angular/material/icon';
 import {ViewChild} from '@angular/core';
 import {MatTable, MatTableModule} from '@angular/material/table';
+
 import {MatButtonModule} from '@angular/material/button';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { AddrolesPopupComponent } from "../addroles-popup/addroles-popup.component";
+
 
 
 export interface PeriodicElement {
@@ -25,11 +35,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-manage-roles',
-  standalone: true,
-  imports: [MatIconModule,MatButtonModule, MatTableModule],
-  templateUrl: './manage-roles.component.html',
-  styleUrl: './manage-roles.component.css'
+    selector: 'app-manage-roles',
+    standalone: true,
+    templateUrl: './manage-roles.component.html',
+    styleUrl: './manage-roles.component.css',
+    imports: [MatIconModule, MatButtonModule, MatTableModule, AddrolesPopupComponent]
 })
 export class ManageRolesComponent {
   displayedColumns: string[] = ['position', 'name', 'Role','symbol'];
@@ -38,15 +48,26 @@ export class ManageRolesComponent {
   @ViewChild(MatTable)
   table!: MatTable<PeriodicElement>;
 
-  addData() {
+  constructor(public dialog: MatDialog) {}
+
+  openDialog() {
+    this.dialog.open(AddrolesPopupComponent);
+  }
+
+ 
+
+ /* addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
     this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
     this.table.renderRows();
-  }
+  }*/
 
   removeData() {
     this.dataSource.pop();
     this.table.renderRows();
   }
+ 
+ 
 }
+
 

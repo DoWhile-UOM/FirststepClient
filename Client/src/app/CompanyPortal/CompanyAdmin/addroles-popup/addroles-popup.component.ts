@@ -6,22 +6,27 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatButtonModule} from '@angular/material/button';
 import { FileUploadComponent } from "../../shared/file-upload/file-upload.component";
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 import { Employee } from '../../../../models/employee';
 import { Apipaths } from '../../../apipaths/apipaths'; 
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
 
 
 
 @Component({
     selector: 'app-addroles-popup',
     standalone: true, 
-    templateUrl: './addroles-popup.component.html',
+    templateUrl:'./addroles-popup.component.html',
     styleUrl: './addroles-popup.component.css',
-    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule, HttpClientModule,FlexLayoutModule]
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, MatRadioModule, MatButtonModule, FileUploadComponent, FormsModule,MatDialogModule,MatDialogContent,MatDialogActions,MatDialogClose]
 })
 export class AddrolesPopupComponent {
-    [x: string]: any;
+
+
+
+
+
+           /*  [x: string]: any;
     emp_role: string = "Non";
 
     constructor(private http: HttpClient) { 
@@ -60,6 +65,6 @@ export class AddrolesPopupComponent {
             throw new Error("Invalid role");
         }*/
     }
-}
+
 
 
