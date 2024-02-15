@@ -51,26 +51,33 @@ export class AdvertisementServices {
     //return response;
   }
 
-  async getAllCountries() {
-    let countries: any = [];
+  async getAdvertisementsByCompanyId(company_id: string) {
+    let company: any;
+    let jobList: any = [];
 
-    await axios.get(Apipaths.getCountryNames)
+    await axios.get(Apipaths.getAdvertisementsByCompanyId + company_id)
       .then(function (response) {
         try {
-          countries = response.data;
-          console.log(countries.data);
+          company = response.data;
+          jobList = company.advertisementUnderCompany;
+          
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+
+          company.advertisementUnderCompany = jobList;
         }
         catch (error) {
-          console.log("No countries found");
+          console.log("No advertisements found");
         }
       })
       .catch(
         function (error) {
-          alert(error);
+          alert('Network Error: ' + error);
         }
       );
-
-    console.log(countries.data);
-    //return countries;
+    
+    return company;
   }
 }

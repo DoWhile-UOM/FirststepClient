@@ -5,6 +5,7 @@ import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-po
 import { AdvertisementViewPageComponent } from './SeekerPortal/advertisement-view-page/advertisement-view-page.component';
 import { SeekerHomePageComponent } from './SeekerPortal/seeker-home-page/seeker-home-page.component';
 import { NewJobComponent } from './CompanyPortal/shared/new-job/new-job.component';
+import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-profile.component';
 
 export const routes: Routes = [
     // company portal
@@ -17,4 +18,5 @@ export const routes: Routes = [
     // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
+    {path:'company-profile',component:CompanyProfileComponent},
 ];

@@ -7,6 +7,7 @@ interface Job {
   advertisement_id: number;
   title: string;
   company_name: string;
+  company_id: number;
   field_name: string;
   country: string;
   city: string;

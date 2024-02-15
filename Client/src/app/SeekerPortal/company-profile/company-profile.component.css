@@ -1,0 +1,96 @@
+.profile-card{
+    margin: 0 auto;
+    width: 95%;
+}
+
+.card-container{
+    padding: 2em;
+}
+
+.heading{
+    display: flex;
+    flex-direction: row;
+}
+
+.back-button{
+    padding: 1em;
+    background-color: white;
+    border: none;
+    border-radius: 50%;
+    margin-right: 1em;
+}
+
+.back-button:hover{
+    background-color: #E6E6E6;
+}
+
+.company-name{
+    color: black; 
+    font-size: 37px; 
+    font-family: Lato; 
+    font-weight: 700; 
+    word-wrap: break-word;
+    margin-left: 1.5em;
+}
+
+.desc{
+    color: #5B5454;
+    font-size: 18px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: 700;
+    word-wrap: break-word;
+    margin-top: 1.75em;
+    margin-bottom: 1.5em;
+    margin-left: 3em;
+}
+
+.heading-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 0.5em;
+}
+
+.detail-title{
+    color: black;
+    font-size: 20px;
+    font-family: Lato;
+    font-weight: 700;
+    word-wrap: break-word;
+    width: 50%;
+    text-align: right;
+}
+
+.detail-content{
+    color: black;
+    font-size: 18px;
+    font-family: Lato;
+    word-wrap: break-word;
+    margin-left: 1em;
+    width: 50%;
+}
+
+.container-content{
+    margin-top: 1em;
+    width: 60%;
+}
+
+.container-content mat-grid-tile{
+    margin-top: 0.5em;
+}
+
+.adcard-container{
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    margin: 0 auto;
+    margin-top: 1em;
+}
+
+/* for temp */
+.company-logo img{
+    width: 135px;
+    height: 90px;
+}
+
