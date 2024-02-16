@@ -1,0 +1,32 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-bar {
+    height: 102px; /* change height of navbar */
+  }
+  
+  .flex-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .right-buttons {
+    display: flex;
+    gap: 16px; /* spacing between buttons */
+  }
+  
+  .right-buttons a{
+    font-size: 24px;
+  }
+  
+  .profile-image {
+    height: 60px; /* Adjust as needed */
+    width: 60px; /* Adjust as needed */
+    border-radius: 50%; /* For circular profile picture */
+    margin-left: 16px; /* Optional spacing */
+  }
+
+  
+  

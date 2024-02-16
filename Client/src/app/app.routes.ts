@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 import { ManageRolesComponent } from './CompanyPortal/CompanyAdmin/manage-roles/manage-roles.component';
-
 import { EditRoleComponent } from './CompanyPortal/CompanyAdmin/edit-role/edit-role.component';
-
 //import { AdminDashboardComponent } from './CompanyPortal/CompanyAdmin/admin-dashboard/admin-dashboard.component';
 import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-popup/addroles-popup.component';
 import { AdvertisementViewPageComponent } from './SeekerPortal/advertisement-view-page/advertisement-view-page.component';
@@ -16,7 +14,6 @@ export const routes: Routes = [
     {path:'EditRole',component:EditRoleComponent},
     //{path:'AdminDashBoard',component:AdminDashboardComponent},
     {path:'newJob',component:NewJobComponent},
-
     // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
