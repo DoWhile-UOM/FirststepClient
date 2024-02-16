@@ -12,6 +12,17 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
+  selected: number = 0;
+  colorList = ['primary', 'back', 'black', 'black']
 
+  constructor() { }
+
+  ngOnInit(): void {
+    this.colorList.forEach(element => {
+      element = 'black';
+    });
+    
+    this.colorList[this.selected] = 'primary';
+  }
 }
 
