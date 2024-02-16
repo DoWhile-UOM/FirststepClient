@@ -5,11 +5,12 @@ import { ViewAdvertisement } from '../../../models/view-advertisement';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Apipaths } from '../../apipaths/apipaths';
 import { ActivatedRoute } from '@angular/router';
+import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, HttpClientModule],
+  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, HttpClientModule,NavBarComponent],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })
