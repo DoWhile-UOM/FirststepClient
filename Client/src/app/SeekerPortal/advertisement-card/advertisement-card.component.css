@@ -45,6 +45,7 @@
     font-weight: 700; 
     word-wrap: break-word;
     margin-top: 0.75em;
+    cursor: pointer;
 }
   
 .job-field {

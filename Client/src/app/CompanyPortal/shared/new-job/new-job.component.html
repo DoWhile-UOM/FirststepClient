@@ -14,7 +14,7 @@
 				<mat-grid-tile>
 					<mat-form-field color="primary" appearance="outline">
 						<mat-label>Post On</mat-label>
-						<input matInput [matDatepicker]="picker1">
+						<input matInput [matDatepicker]="picker1" autocomplete="off" [formControl]="currentDate" readonly>
 						<mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
 						<mat-datepicker #picker1></mat-datepicker>
 					</mat-form-field>  
@@ -24,7 +24,7 @@
 						<mat-label>Target Job Field</mat-label>
 						<mat-select #selectField name="field_id" ngModel (valueChange)="onChangeField(selectField.value)">
 						@for (field of fields; track field) {
-							<mat-option [value]="field.fieldID">{{field.fieldName}}</mat-option>
+							<mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
 						}
 						</mat-select>
 					</mat-form-field>
@@ -115,7 +115,8 @@
 							aria-label="Country"
 							matInput
 							[formControl]="locationCountryControl"
-							[matAutocomplete]="autocountry">
+							[matAutocomplete]="autocountry"
+							(input)="onselectedCountryChanged($event)">
 						<mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
 						@for (option of locationCountryFilteredOptions | async; track option) {
 							<mat-option [value]="option">{{option}}</mat-option>

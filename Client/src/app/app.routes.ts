@@ -6,6 +6,10 @@ import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-po
 import { AdvertisementViewPageComponent } from './SeekerPortal/advertisement-view-page/advertisement-view-page.component';
 import { SeekerHomePageComponent } from './SeekerPortal/seeker-home-page/seeker-home-page.component';
 import { NewJobComponent } from './CompanyPortal/shared/new-job/new-job.component';
+import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-profile.component';
+import { JobOfferListComponent } from './CompanyPortal/shared/job-offer-list/job-offer-list.component';
+
+import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
 
 export const routes: Routes = [
     // company portal
@@ -14,7 +18,11 @@ export const routes: Routes = [
     {path:'EditRole',component:EditRoleComponent},
     //{path:'AdminDashBoard',component:AdminDashboardComponent},
     {path:'newJob',component:NewJobComponent},
-    // seeker portal
+    {path:'jobOfferList',component:JobOfferListComponent},
+    
+  // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
+    {path:'company-profile',component:CompanyProfileComponent},
+    {path:'newJobUploaded',component:NewJobUploadedComponent},
 ];

@@ -1,0 +1,49 @@
+<mat-card class="profile-card">
+    <div class="card-container">
+        <div class="heading">
+            <div>
+                <button class='back-button' title='Go back' (click)="goBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+            </div>
+            <div class="heading-container">
+                <div class="company-logo">
+                    <img src="assets/images/bistec-logo.png" alt="er">
+                </div>
+                <div class="company-name">
+                    <p>{{company.company_name}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="desc">
+            <p>{{company.company_description}}</p>
+        </div>
+
+        <mat-divider class="middle-divider"></mat-divider>
+
+        <div class="container-content">
+            <mat-grid-list cols="2" rowHeight="15:1">
+                <mat-grid-tile>
+                    <p class="detail-title">Bussiness Scale</p>
+                    <p class="detail-content">{{company.company_business_scale}}</p>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <p class="detail-title">Phone</p>
+                    <p class="detail-content">{{company.company_phone_number}}</p>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <p class="detail-title">Email</p>
+                    <p class="detail-content">{{company.company_email}}</p>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <p class="detail-title">Website</p>
+                    <p class="detail-content">{{company.company_website}}</p>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+    </div>
+</mat-card>
+
+<div class="adcard-container">
+    <app-advertisement-card *ngFor="let job of jobList" [job]="job"></app-advertisement-card>
+</div>
