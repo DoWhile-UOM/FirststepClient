@@ -142,4 +142,18 @@ export class AdvertisementServices {
     
     return adData;
   }
+
+  async deleteAdvertisement(jobID: string) {
+    let response: any = null;
+
+    await axios.delete(Apipaths.deleteJob + jobID)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
+
+    return response;
+  }
 }

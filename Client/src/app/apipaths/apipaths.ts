@@ -10,6 +10,7 @@ export class Apipaths {
     static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
     static readonly getAdvertisementsByCompanyID: string = this.baseUrl + 'Advertisement/GetAdvertisementsByCompanyID/'; // + company_id
     static readonly addNewJob: string = this.baseUrl + 'Advertisement/AddAdvertisement';
+    static readonly deleteJob: string = this.baseUrl + 'Advertisement/DeleteAdvertisement/'; // + advertisement_id
 
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
