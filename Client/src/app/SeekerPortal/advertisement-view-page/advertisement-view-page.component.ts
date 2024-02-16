@@ -1,51 +1,53 @@
 import { Component } from '@angular/core';
 import { AdvertisementHeaderComponent } from '../../shared/advertisement-header/advertisement-header.component';
 import { AdvertisementViewComponent } from '../../shared/advertisement-view/advertisement-view.component';
-import { ViewAdvertisement } from '../../../models/view-advertisement';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Apipaths } from '../../apipaths/apipaths';
 import { ActivatedRoute } from '@angular/router';
 import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
+import { MatCardModule } from '@angular/material/card';
+import { AdvertisementServices } from '../../../services/advertisement.service';
+
+interface Job{
+  job_number: number;
+  title: string;
+  country: string;
+  city: string;
+  employeement_type: string;
+  arrangement: string;
+  is_experience_required: string;
+  salary: string;
+  submission_deadline: string;
+  posted_date: string;
+  job_overview: string;
+  job_responsibilities: string;
+  job_qualifications: string;
+  job_benefits: string;
+  job_other_details: string;
+  field_name: string;
+  company_name: string;
+}
 
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, HttpClientModule,NavBarComponent],
+  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, NavBarComponent, MatCardModule],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })
 export class AdvertisementViewPageComponent {
-  adData!: ViewAdvertisement;
+  adData: Job = {} as Job;
 
-  constructor(private httpClient: HttpClient, private router: ActivatedRoute) {
-    this.adData = {} as ViewAdvertisement;
+  constructor(private router: ActivatedRoute, private adService: AdvertisementServices) {
+    
   }
   
-  ngOnInit() {
+  async ngOnInit() {
     let jobID: string | null = this.router.snapshot.paramMap.get('jobID');
 
-    this.httpClient.get(Apipaths.getJobDetails + jobID).subscribe((res: any) => {
-      this.adData = res;
+    if (jobID == null) {
+      console.log("No job ID found");
+      return;
+    }
 
-      try {
-        var postDate = new Date(this.adData.posted_date);
-        console.log(this.adData.posted_date);
-        this.adData.posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
-        
-        var submissionDate = new Date(this.adData.submission_deadline);
-        this.adData.submission_deadline = submissionDate.toLocaleString('default', { month: 'short' }) + " " + submissionDate.getDate() + ", " + submissionDate.getFullYear();
-
-        if (this.adData.is_experience_required == "1") {
-          this.adData.is_experience_required = "Required";
-        }
-        else{
-          this.adData.is_experience_required = "Not Required";
-        }
-        
-      } catch (error) {
-        console.log("No advertisement found");
-      }
-
-    });
+    this.adData = await this.adService.getAdvertisementById(jobID);
   }
 }

@@ -107,4 +107,39 @@ export class AdvertisementServices {
 
     return jobList;
   }
+
+  async getAdvertisementById(jobID: string) {
+    let adData: any = {};
+
+    await axios.get(Apipaths.getJobDetails + jobID)
+      .then(function (response) { 
+        adData = response.data;
+
+        try {
+          var postDate = new Date(adData.posted_date);
+          console.log(adData.posted_date);
+          adData.posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          
+          var submissionDate = new Date(adData.submission_deadline);
+          adData.submission_deadline = submissionDate.toLocaleString('default', { month: 'short' }) + " " + submissionDate.getDate() + ", " + submissionDate.getFullYear();
+  
+          if (adData.is_experience_required == "1") {
+            adData.is_experience_required = "Required";
+          }
+          else{
+            adData.is_experience_required = "Not Required";
+          }
+          
+        } catch (error) {
+          console.log("No advertisement found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+    
+    return adData;
+  }
 }
