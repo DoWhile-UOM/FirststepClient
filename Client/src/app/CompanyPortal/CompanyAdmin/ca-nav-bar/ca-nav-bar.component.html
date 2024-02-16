@@ -1,1 +1,22 @@
-<p>ca-nav-bar works!</p>
+<mat-toolbar class="nav-bar mat-elevation-z4">
+    <span>
+      <a routerLink="/">
+        <img src="assets/images/logo.png" alt="Logo" class="logo">
+      </a>
+    </span>
+    <span>FirstStep</span>
+    <span class="flex-spacer"></span>
+    <div class="right-buttons">
+      <a mat-button color="{{colorList[0]}}">Dashboard</a>
+      <a mat-button color="{{colorList[1]}}">Company Peofile</a>
+      <a mat-button color="{{colorList[2]}}">Manage Roles</a>
+      <a mat-button color="{{colorList[3]}}">Job Offers</a>
+      
+      <!--
+      <div>
+        <p>Ashan Induwara</p>
+        <p>BISTEC GLOBAL SERVICES</p>
+      </div>-->
+
+    </div>
+</mat-toolbar>  

@@ -5,6 +5,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AdvertisementServices } from '../../../../services/advertisement.service';
 import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component'; 
+import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips'; 
@@ -61,7 +62,8 @@ var selectedAdID: number = 0;
     NavBarComponent, 
     MatIconModule,
     MatButtonModule,
-    MatChipsModule],
+    MatChipsModule, 
+    CaNavBarComponent],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })

@@ -3,6 +3,7 @@ import { AdvertisementHeaderComponent } from '../../shared/advertisement-header/
 import { AdvertisementViewComponent } from '../../shared/advertisement-view/advertisement-view.component';
 import { ActivatedRoute } from '@angular/router';
 import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
+import { CaNavBarComponent } from '../../CompanyPortal/CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 
@@ -29,7 +30,7 @@ interface Job{
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, NavBarComponent, MatCardModule],
+  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, NavBarComponent, MatCardModule, CaNavBarComponent],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })
