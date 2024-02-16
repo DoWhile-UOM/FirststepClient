@@ -192,7 +192,7 @@ export class ConfirmDialog {
   }
 
   async onYesClick() {
-    //await this.advertisementService.deleteAdvertisement(selectedAdID.toString());
+    await this.advertisementService.deleteAdvertisement(selectedAdID.toString());
 
     this.snackBar.open(selectedAdTitle + " job offer successfully deleted!")._dismissAfter(5000);
 
