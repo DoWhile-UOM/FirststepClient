@@ -1,28 +1,43 @@
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
   
-      <!-- Position Column -->
-      <ng-container matColumnDef="jobNum">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by jobNum"> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      <!-- JobNo Column -->
+      <ng-container matColumnDef="Job Number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by jobNum"> Job No </th>
+        <td mat-cell *matCellDef="let joboffer"> {{joboffer.job_number}} </td>
       </ng-container>
   
-      <!-- Name Column -->
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      <!-- Title Column -->
+      <ng-container matColumnDef="Title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title"> Title </th>
+        <td mat-cell *matCellDef="let joboffer"> {{joboffer.title}} </td>
       </ng-container>
   
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight"> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      <!-- postedDate Column -->
+      <ng-container matColumnDef="Posted Date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date"> Posted Date </th>
+        <td mat-cell *matCellDef="let joboffer"> {{joboffer.posted_date}} </td>
       </ng-container>
   
       <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol"> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      <ng-container matColumnDef="Applications">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Application">Applications</th>
+        <td mat-cell *matCellDef="let joboffer"> {{joboffer.no_of_applications}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Reviewed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by E Application">Reviewed</th>
+        <td mat-cell *matCellDef="let joboffer"> {{joboffer.no_of_evaluated_applications}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Accepted">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by A Application">Accepted</th>
+        <td mat-cell *matCellDef="let joboffer"> {{joboffer.no_of_accepted_applications}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Rejected">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by R Application">Rejected</th>
+        <td mat-cell *matCellDef="let joboffer"> {{joboffer.no_of_rejected_applications}} </td>
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
