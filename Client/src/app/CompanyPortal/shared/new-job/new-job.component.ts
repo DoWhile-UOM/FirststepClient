@@ -22,6 +22,7 @@ import { AdvertisementServices } from '../../../../services/advertisement.servic
 import { JobfieldService } from '../../../../services/jobfield.service';
 import { KeywordService } from '../../../../services/keyword.service'; 
 import { Router } from '@angular/router';
+import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 
 interface Field {
 	field_name: string;
@@ -57,7 +58,7 @@ interface AddJob {
 		MatDividerModule, MatCardModule, MatDatepickerModule,
 		MatSelectModule, MatChipsModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
-		AsyncPipe, MatButtonModule, FormsModule],
+		AsyncPipe, MatButtonModule, FormsModule, CaNavBarComponent],
 	templateUrl: './new-job.component.html',
 	styleUrl: './new-job.component.css'
 })
