@@ -1,44 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { Observable } from 'rxjs';
+import { FileUploadService } from '../../../../services/file-upload.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [MatIconModule,MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatProgressBarModule],
+  imports: [AsyncPipe,MatIconModule,MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatProgressBarModule],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css'
 })
-export class FileUploadComponent {
-  fileName = ''; 
-  constructor(private http: HttpClient) { }
-  triggerFileInput() {
-    const fileInput = document.getElementById('fileID') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
+export class FileUploadComponent implements OnInit {
+  currentFile?: File;
+  message = '';
+  fileInfos?: Observable<any>;
+
+  constructor(private uploadService: FileUploadService) { }
+
+  ngOnInit(): void {
+    this.fileInfos = this.uploadService.getFiles();
   }
 
-  handleFileInput(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-      // access the selected file using inputElement.files[0]
-      const selectedFile = inputElement.files[0];
-      this.fileName = selectedFile.name;
-      console.log('Selected file:', selectedFile);
 
-      //  uploading the file to a server.
+  selectFile(event: any): void {
+    this.currentFile = event.target.files.item(0);
+  }
 
-      const formData = new FormData();
-      formData.append("thumbnail", selectedFile);
-      const upload$=this.http.post("/api/thumbnail-upload", formData)
-      upload$.subscribe();
+  async upload() {
+    if (this.currentFile) {
+      await this.uploadService.upload(this.currentFile);
     }
   }
-   
+  
 }

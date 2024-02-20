@@ -5,9 +5,6 @@ import { SignUpSecondPageComponent } from "./SeekerPortal/sign-up-second-page/si
 import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-popup/addroles-popup.component';
 
 
-
-
-
 @Component({
     selector: 'app-root',
     standalone: true,
