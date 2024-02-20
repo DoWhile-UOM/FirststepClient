@@ -1,7 +1,7 @@
 <mat-card class="job-card">
     <div class="job-heading">
         <mat-card-title class="job-title">{{job.title}}</mat-card-title>
-        <mat-card-subtitle class="company-name">{{job.company_name}}</mat-card-subtitle>
+        <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{job.company_name}}</mat-card-subtitle>
         <p class="job-field">{{job.field_name}}</p>
     </div>
     <div class="job-details-outer">
