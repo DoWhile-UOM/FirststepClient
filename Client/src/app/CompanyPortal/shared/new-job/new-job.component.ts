@@ -194,7 +194,7 @@ export class NewJobComponent{
 		const citiesOfSriLanka = City.getCitiesOfCountry('Sri Lanka');
 		if (citiesOfSriLanka){
 			this.cities = citiesOfSriLanka.map(city => city.name);
-			alert("Add cities");
+			//alert("Add cities");
 			console.log(this.cities);
 		}
 	}
