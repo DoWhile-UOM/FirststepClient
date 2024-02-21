@@ -13,7 +13,7 @@ export class SignupComponent {
   constructor(private auth:AuthService){}
   signupform = new FormGroup({
     Password: new FormControl('', [Validators.required]),
-    Username: new FormControl('', [Validators.required])
+    Email: new FormControl('', [Validators.required])
   });
 
 

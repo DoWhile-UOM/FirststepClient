@@ -1,5 +1,5 @@
 <form [formGroup]="loginForm">
-    <input type="text" formControlName="Username" placeholder="Email">
+    <input type="email" formControlName="Email" placeholder="Email">
     <input type="text" formControlName="Password" placeholder="Password">
     <button type="submit" [disabled]="!loginForm.valid" (click)="onLogin()">Submit</button>
 </form>
