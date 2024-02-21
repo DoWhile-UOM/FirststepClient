@@ -10,8 +10,13 @@ import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-
 import { JobOfferListComponent } from './CompanyPortal/shared/job-offer-list/job-offer-list.component';
 
 import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
+import { LoginComponent } from './Login/login/login.component';
 
 export const routes: Routes = [
+
+    //Common
+    {path:'login',component:LoginComponent},
+    
     // company portal
     {path:'ManageRoles',component:ManageRolesComponent},
     {path:'AddRole',component:AddrolesPopupComponent},
