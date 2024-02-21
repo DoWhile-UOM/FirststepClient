@@ -110,14 +110,13 @@
 				</mat-grid-tile>
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
-						<mat-label>Location Country</mat-label>
+						<mat-label>Job Country</mat-label>
 						<input type="text"
 							placeholder="Pick a Country"
 							aria-label="Country"
-							matInput
+							matInput #countryInput
 							[formControl]="locationCountryControl"
-							[matAutocomplete]="autocountry"
-							(input)="onselectedCountryChanged($event)">
+							[matAutocomplete]="autocountry" (change)="onSelectedCountryChanged(countryInput.value)">
 						<mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
 						@for (option of locationCountryFilteredOptions | async; track option) {
 							<mat-option [value]="option">{{option}}</mat-option>
@@ -127,7 +126,7 @@
 				</mat-grid-tile>
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
-						<mat-label>Location City</mat-label>
+						<mat-label>Job City</mat-label>
 						<input type="text"
 							placeholder="Pick a City"
 							aria-label="City"

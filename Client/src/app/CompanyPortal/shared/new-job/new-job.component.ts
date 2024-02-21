@@ -17,12 +17,13 @@ import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatButtonModule } from '@angular/material/button';
-import { Country, State, City } from 'country-state-city';
+import { Country, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../../services/advertisement.service';
 import { JobfieldService } from '../../../../services/jobfield.service';
 import { KeywordService } from '../../../../services/keyword.service'; 
 import { Router } from '@angular/router';
 import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Field {
 	field_name: string;
@@ -58,7 +59,8 @@ interface AddJob {
 		MatDividerModule, MatCardModule, MatDatepickerModule,
 		MatSelectModule, MatChipsModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
-		AsyncPipe, MatButtonModule, FormsModule, CaNavBarComponent],
+		AsyncPipe, MatButtonModule, FormsModule, 
+		CaNavBarComponent],
 	templateUrl: './new-job.component.html',
 	styleUrl: './new-job.component.css'
 })
@@ -84,7 +86,7 @@ export class NewJobComponent{
 
 	// for city autocomplete
 	locationCityControl = new FormControl('');
-	cities: string[] = ['Colombo', 'Kandy', 'Moratuwa', 'Mount Lavinia', 'Mathara', 'Kadawatha']; // need a function to get cities of a country
+	cities: string[] = []; //['Colombo', 'Kandy', 'Moratuwa', 'Mount Lavinia', 'Mathara', 'Kadawatha']; // need a function to get cities of a country
 	locationCityFilteredOptions: Observable<string[]>;
 
 	// for keywords
@@ -101,7 +103,8 @@ export class NewJobComponent{
 		private advertisementService: AdvertisementServices,
 		private jobFieldService: JobfieldService, 
 		private keywordService: KeywordService, 
-		private router: Router) {
+		private router: Router, 
+		private snackBar: MatSnackBar) {
 
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
@@ -190,13 +193,7 @@ export class NewJobComponent{
 		// get all country names using an external API
 		this.countries = Country.getAllCountries().map(country => country.name);
 
-		// get all cities in sri lanka
-		const citiesOfSriLanka = City.getCitiesOfCountry('Sri Lanka');
-		if (citiesOfSriLanka){
-			this.cities = citiesOfSriLanka.map(city => city.name);
-			//alert("Add cities");
-			console.log(this.cities);
-		}
+		//this.cities = [];
 	}
 
 	async onChangeField(selectedField: number) {
@@ -206,21 +203,21 @@ export class NewJobComponent{
 		this.allkeywords = await this.keywordService.getAllKeywords(selectedField);
 	}
 
-	onselectedCountryChanged(event: any){
-		/*
-		console.log(event.target.value);
-		if (event.target.value != '' && event.target.value == 'Sri Lanka') {
-			console.log(event.target.value);
+	onSelectedCountryChanged(selectedCountry: string){
+		this.locationCityControl.setValue('');
+		//this.locationCityFilteredOptions = new Observable<string[]>();
+		this.cities = [];
 
-			const citiesOfCountry = City.getCitiesOfCountry(event.target.value);
+		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
-				// clear the current value of the city
-				this.locationCityControl.setValue('');
-				
-				if (citiesOfCountry) {
-					this.cities = citiesOfCountry.map(city => city.name);
-				}
-		}*/
+		if (countryCode == undefined){
+			this.snackBar.open("Error Updating City Lsit")._dismissAfter(3000);
+			return;
+		}
+		
+		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
+
+		this.snackBar.open("Update City List")._dismissAfter(3000);
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
