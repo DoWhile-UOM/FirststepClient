@@ -1,7 +1,7 @@
-<form [formGroup]="myForm">
-    <input type="text" formControlName="name" placeholder="Name">
-    <input type="email" formControlName="email" placeholder="Email">
-    <button type="submit" [disabled]="!myForm.valid" (click)="onLogin()">Submit</button>
+<form [formGroup]="loginForm">
+    <input type="text" formControlName="Username" placeholder="Email">
+    <input type="text" formControlName="Password" placeholder="Password">
+    <button type="submit" [disabled]="!loginForm.valid" (click)="onLogin()">Submit</button>
 </form>
 
 

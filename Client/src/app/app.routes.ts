@@ -12,11 +12,14 @@ import { JobOfferListComponent } from './CompanyPortal/shared/job-offer-list/job
 import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
 import { LoginComponent } from './Login/login/login.component';
 
+import { SignupComponent } from './signup/signup.component';
+
 export const routes: Routes = [
 
     //Common
     {path:'login',component:LoginComponent},
-    
+    {path:'signup',component:SignupComponent},
+
     // company portal
     {path:'ManageRoles',component:ManageRolesComponent},
     {path:'AddRole',component:AddrolesPopupComponent},
@@ -29,5 +32,5 @@ export const routes: Routes = [
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
     {path:'company-profile',component:CompanyProfileComponent},
-    {path:'newJobUploaded',component:NewJobUploadedComponent},
+    {path:'newJobUploaded',component:NewJobUploadedComponent}
 ];

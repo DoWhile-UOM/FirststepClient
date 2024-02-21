@@ -1,28 +1,26 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { FormGroup, FormControl, Validators,ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signup',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.css'
 })
-export class LoginComponent {
-
+export class SignupComponent {
   constructor(private auth:AuthService){}
-
-
-  loginForm = new FormGroup({
+  signupform = new FormGroup({
     password: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required])
+    username: new FormControl('', [Validators.required, Validators.email])
   });
 
-  onLogin(){
-    console.log(this.loginForm.value);
+
+  onSignup(){
+    console.log(this.signupform.value);
     //this.auth.signup(this.myForm.value)
-    this.auth.login(this.loginForm.value)
+    this.auth.signup(this.signupform.value)
     .subscribe({
       next:(res)=>{
         alert(res.message)

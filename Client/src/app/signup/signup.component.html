@@ -1,0 +1,6 @@
+<form [formGroup]="signupform">
+    
+    <input type="email" formControlName="username" placeholder="Email">
+    <input type="text" formControlName="password" placeholder="Name">
+    <button type="submit" [disabled]="!signupform.valid" (click)="onSignup()">Submit</button>
+</form>
