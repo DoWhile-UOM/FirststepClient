@@ -12,8 +12,8 @@ import { FormGroup, FormControl, Validators,ReactiveFormsModule } from '@angular
 export class SignupComponent {
   constructor(private auth:AuthService){}
   signupform = new FormGroup({
-    password: new FormControl('', [Validators.required]),
-    username: new FormControl('', [Validators.required, Validators.email])
+    Password: new FormControl('', [Validators.required]),
+    Username: new FormControl('', [Validators.required])
   });
 
 
