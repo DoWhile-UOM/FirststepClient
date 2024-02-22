@@ -13,6 +13,7 @@ import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded
 import { SeekerEditProfileComponent } from './SeekerPortal/seeker-edit-profile/seeker-edit-profile.component';
 import { SeekersignupComponent } from './SeekerPortal/seekersignup/seekersignup.component';
 import { AdmindashboardComponent } from './CompanyPortal/CompanyAdmin/admindashboard/admindashboard.component';
+import { FileUploadComponent } from './CompanyPortal/shared/file-upload/file-upload.component';
 
 export const routes: Routes = [
     // company portal
@@ -31,4 +32,7 @@ export const routes: Routes = [
     {path:'newJobUploaded',component:NewJobUploadedComponent},
     {path:'SeekerEditProfile',component:SeekerEditProfileComponent},
     {path: 'seekersignup', component: SeekersignupComponent},
+
+    // shared
+    {path:'fileUpload',component:FileUploadComponent}
 ];

@@ -1,8 +1,3 @@
-.page {
-  /* background-color: #008080; */
-  font-family: "roboto";
-}
-
 .form-popup {
   width: 1200px;
   height: 600px;
@@ -99,3 +94,74 @@ p {
 
 }
 
+.mat-stepper-header-icon-foreground-color {
+  color: white;
+}
+
+.mat-stepper-header-selected-state-icon-background-color {
+  background-color: white;
+}
+
+.mat-stepper-header-selected-state-icon-foreground-color {
+  color: #008080;
+}
+
+.mat-stepper-header-done-state-icon-background-color {
+  background-color: #009688;
+}
+
+.mat-stepper-header-done-state-icon-foreground-color {
+  color: white;
+}
+
+.mat-stepper-header-edit-state-icon-background-color {
+  background-color: #009688;
+}
+
+.mat-stepper-header-edit-state-icon-foreground-color {
+  color: white;
+}
+
+.mat-stepper-container-color {
+  background-color: white;
+}
+
+.mat-stepper-line-color {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.mat-stepper-header-hover-state-layer-color {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.mat-stepper-header-focus-state-layer-color {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.mat-stepper-header-label-text-color {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-stepper-header-optional-label-text-color {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-stepper-header-selected-state-label-text-color {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.mat-stepper-header-error-state-label-text-color {
+  color: #f44336;
+}
+
+.mat-stepper-header-icon-background-color {
+  background-color: rgba(0, 0, 0, 0.54);
+}
+
+.mat-stepper-header-error-state-icon-foreground-color {
+  color: #f44336;
+}
+
+.mat-stepper-header-error-state-icon-background-color {
+  background-color: transparent;
+}
