@@ -163,6 +163,24 @@ h1 {
       width: 100%;
     }
     
+    ::ng-deep .mat-stepper-horizontal-line {
+      border-top-color: white;
+      border-top-width: 5px solid!important;
+    }
+
+    ::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header{
+      &[ng-reflect-selected = "false"].mat-step-header {
+        background-color:white;
+      }
+    }
+
+    ::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header{
+      &[ng-reflect-selected = "true"].mat-step-header {
+        background-color:white;
+        border: 1px solid rgb(167, 52, 52)!important;
+        backdrop-filter:blur(10px);
+      }
+    }
     
   
     

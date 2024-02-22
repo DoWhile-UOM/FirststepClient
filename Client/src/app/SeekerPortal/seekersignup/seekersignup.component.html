@@ -2,14 +2,14 @@
     <section class="navbar"></section>
     <h1>Edit Profile</h1>
     <mat-stepper
-      style="background-color: #008080"
+      style="background-color: white"
       labelPosition="bottom"
       #stepper
       color="primary"
     >
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel></ng-template>
+          <ng-template matStepLabel style="width: 100px;"></ng-template>
   
           <div class="form-popup" id="myForm">
             <div class="up-container">
@@ -162,8 +162,8 @@
 
   
                     <div>
-                      <button mat-button matStepperPrevious>Back</button>
-                      <button mat-button matStepperNext>Next</button>
+                      <button mat-button matStepperPrevious style="color: #008080; margin-left: 10px;">Back</button>
+                      <button mat-button matStepperNext style="color: white; margin-left: 20px;">Next</button>
                     </div>
                   </div>
                 </div>
@@ -258,8 +258,8 @@
                     
   
                     <div>
-                      <button mat-button matStepperPrevious>Back</button>
-                      <button mat-button matStepperNext>Next</button>
+                      <button mat-button matStepperPrevious  class="custom-stepper-button">Back</button>
+                      <button mat-button matStepperNext class="custom-stepper1-button">Next</button>
                     </div>
                   </div>
                 </div>

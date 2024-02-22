@@ -1,86 +1,101 @@
-.page{
-    background-color: #008080;
-    font-family: 'roboto';
-    }
-    
-    .form-popup {
-        
-        width: 1200px;
-        height: 600px;
-        border: 3px black;
-        border-radius: 25px;
-        background: #fff;  
-        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
-        padding: 25px 25px 25px 25px;
-        margin-left: 130px;
-    
-    }
-    
-    .up-container{
-        display: flex;
-        flex-direction: row;
-        /* justify-content: space-between; */
-      }
-    
-      .up-container .left {
-        flex: 1;
-        padding: 10px;
-        align-items: center;
-        
-      }
-      .right{
-        flex: 1;
-        padding: 10px;
-        align-items: right;
-      }
-    
-      img{
-        width: 400px;
-        height: auto;
-        padding: 60px 100px 30px 100px;
-      }
+.page {
+  /* background-color: #008080; */
+  font-family: "roboto";
+}
 
-      h2{
-        font-size: 30px;
-        font-weight:550;
-        font-family: 'roboto';
-        align-items: center;
-        font-style: italic;
-       
-      }
-    
-      h3{
-        font-size: 30px;
-        font-weight:550;
-        font-family: 'roboto';
-        align-items: center;
-        padding-top: 40px;
-        padding-left: 40px;
-        padding-bottom: 25px;
-    }
-    
-    p {
-        text-align: center;
-        align-items: center;
-    }
-    
-    .form-container{
-        border: 3px black;
-        border-radius: 25px;
-        background: #fff;  
-        box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
-        padding: 25px 25px 25px 25px;
-        width: 500px;
-        height: 525px;
-    
-    }
-    
-    .mat-mdc-form-field {
-        margin-top: 16px;
-        display: grid;
-        width: 450px;
-        align-items: center;
-        padding-left: 15px;
-      }
-      
-    
+.form-popup {
+  width: 1200px;
+  height: 600px;
+  border: 3px black;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  padding: 25px 25px 25px 25px;
+  margin-left: 130px;
+}
+
+.up-container {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+}
+
+.up-container .left {
+  flex: 1;
+  padding: 10px;
+  align-items: center;
+}
+.right {
+  flex: 1;
+  padding: 10px;
+  align-items: right;
+}
+
+img {
+  width: 400px;
+  height: auto;
+  padding: 60px 100px 30px 100px;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 550;
+  font-family: "roboto";
+  align-items: center;
+  font-style: italic;
+}
+
+h3 {
+  font-size: 30px;
+  font-weight: 550;
+  font-family: "roboto";
+  align-items: center;
+  padding-top: 40px;
+  padding-left: 40px;
+  padding-bottom: 25px;
+}
+
+p {
+  text-align: center;
+  align-items: center;
+}
+
+.form-container {
+  border: 3px black;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+  padding: 25px 25px 25px 25px;
+  width: 500px;
+  height: 525px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 16px;
+  display: grid;
+  width: 450px;
+  align-items: center;
+  padding-left: 15px;
+}
+
+/* Adjusting the distance between steps */
+.mat-horizontal-stepper .mat-step-header {
+  margin-right: 20px; /* Increase or decrease this value to adjust the distance */
+}
+
+.custom-stepper-button {
+  background-color: white;
+  color:#008080;
+  border: 3px solid #008080;
+}
+.custom-stepper1-button {
+  background-color: #008080;
+  color:white;
+  
+}
+
+.mat-button{
+  padding-left: 10px;
+
+}
+
