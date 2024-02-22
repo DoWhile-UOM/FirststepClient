@@ -10,6 +10,9 @@ import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-
 import { JobOfferListComponent } from './CompanyPortal/shared/job-offer-list/job-offer-list.component';
 
 import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
+import { SeekerEditProfileComponent } from './SeekerPortal/seeker-edit-profile/seeker-edit-profile.component';
+import { SeekersignupComponent } from './SeekerPortal/seekersignup/seekersignup.component';
+import { AdmindashboardComponent } from './CompanyPortal/CompanyAdmin/admindashboard/admindashboard.component';
 
 export const routes: Routes = [
     // company portal
@@ -19,10 +22,13 @@ export const routes: Routes = [
     //{path:'AdminDashBoard',component:AdminDashboardComponent},
     {path:'newJob',component:NewJobComponent},
     {path:'jobOfferList',component:JobOfferListComponent},
+    {path:'AdminDashBoard',component:AdmindashboardComponent},
     
   // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
     {path:'company-profile',component:CompanyProfileComponent},
     {path:'newJobUploaded',component:NewJobUploadedComponent},
+    {path:'SeekerEditProfile',component:SeekerEditProfileComponent},
+    {path: 'seekersignup', component: SeekersignupComponent},
 ];
