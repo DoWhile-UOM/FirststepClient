@@ -26,7 +26,7 @@
   align-items: right;
 }
 
-img {
+.seeker {
   width: 400px;
   height: auto;
   padding: 60px 100px 30px 100px;
@@ -71,6 +71,7 @@ p {
   width: 450px;
   align-items: center;
   padding-left: 15px;
+  padding-bottom: 0;
 }
 
 /* Adjusting the distance between steps */
@@ -94,6 +95,8 @@ p {
 
 }
 
+
+/* 
 .mat-stepper-header-icon-foreground-color {
   color: white;
 }
@@ -164,4 +167,4 @@ p {
 
 .mat-stepper-header-error-state-icon-background-color {
   background-color: transparent;
-}
+} */

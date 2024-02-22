@@ -78,7 +78,7 @@
             <div class="up-container">
               <div class="left">
                 <img
-                  src="\assets\images\signup5.png"
+                  src="\assets\images\signup2.png"
                   alt="Seeker"
                   class="seeker"
                 />
@@ -96,14 +96,17 @@
                   </p>
                   <br />
                   <mat-form-field>
-                    <mat-label>Email Address</mat-label>
+                    <mat-label>Email Address </mat-label>
                     <input
                       matInput
                       formControlName="secondCtrl"
                       placeholder="example@gmail.com"
                       required
                     />
+                    
                   </mat-form-field>
+                  <button mat-button class="custom-stepper1-button" style="background-color: #595959; color: white; margin-left: 20px; height: 40px; margin-top: 0; padding-top: 0;">Resend OTP</button>
+
                   <mat-form-field>
                     <mat-label>OTP</mat-label>
                     <input
@@ -113,9 +116,11 @@
                       required
                     />
                   </mat-form-field>
-                  <br><br><br><br>
+                  <button mat-button class="custom-stepper1-button" style="background-color: #595959; color: white; margin-left: 20px; height: 40px; margin-top: 0; padding-top: 0;">Confirm</button>
+
+                  <br><br><br>
                   <div>
-                    <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080; margin-left: 10px;">Back</button>
+                    <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080; margin-left: 15px;">Back</button>
                     <button mat-button matStepperNext class="custom-stepper1-button" style="color: white; margin-left: 20px;">Next</button>
                 </div>
                 </div>
@@ -164,13 +169,14 @@
                         
                       />
                     </mat-form-field>
-                    <mat-label>CV/Resume</mat-label>
+                    <mat-label style="font-size: 15px; font-weight: 500; padding-left: 15px; padding-bottom: 10px; font-family: 'roboto';">CV/Resume</mat-label>
+                    <app-file-upload style="width: 300px;"></app-file-upload>
                     <br><br>
 
   
                     <div>
                       <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080; margin-left: 10px;">Back</button>
-                      <button mat-button matStepperNext class="custom-stepper1-button" style="color: white; margin-left: 20px;">Next</button>
+                      <button mat-button matStepperNext class="custom-stepper1-button" style="color: white; margin-left: 20px; ">Next</button>
                     </div>
                   </div>
                 </div>
@@ -210,13 +216,14 @@
                         
                       />
                     </mat-form-field>
+                    <mat-label style="font-size: 15px; font-weight: 500; padding-left: 15px; padding-bottom: 10px; font-family: 'roboto';">Add your skills</mat-label>
+              
                     
-                    <mat-label>Add your skills</mat-label>
                     <br><br>
 
   
                     <div>
-                      <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080; margin-left: 10px;">Back</button>
+                      <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080; margin-left: 15px;">Back</button>
                       <button mat-button matStepperNext class="custom-stepper1-button" style="color: white; margin-left: 20px;">Next</button>
                     </div>
                   </div>
@@ -231,8 +238,8 @@
             <ng-template matStepLabel></ng-template>
     
             <div class="form-popup" id="myForm">
-              <div class="up-container">
-                <div class="left">
+              <div class="up-container" style="padding-left: 10px;">
+                <div class="left" style="padding-left: 10px;">
                   <img
                     src="\assets\images\signup5.png"
                     alt="Seeker"
@@ -246,7 +253,12 @@
                   <div class="form-container">
                     <h3>Create your FirstStep Account</h3>
   
-                    <mat-label>Profile Picture</mat-label>
+                    <mat-label style="font-size: 15px; font-weight: 500; padding-left: 15px; padding-bottom: 10px; font-family: 'roboto';">Profile Picture</mat-label>
+                    <div class="left">
+            <img [src] ="url" style="height: 100px; width: auto;"><br>
+            <input type="file" (change)="onselectFile($event)">
+          </div>
+    
   
                     <mat-form-field>
                       <mat-label>Bio</mat-label>
@@ -271,7 +283,7 @@
                     
   
                     <div>
-                      <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080; margin-left: 10px;">Back</button>
+                      <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080; margin-left: 15px;">Back</button>
                     </div>
                   </div>
                 </div>
