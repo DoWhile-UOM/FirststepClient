@@ -1,11 +1,53 @@
-<section class="container">
+
+<form class="form-container"  #subroleForm="ngForm">
+  <h2 mat-dialog-title>Edit Account Details</h2>
+  
+  <mat-dialog-content class="mat-typography">
+    <section class="inputFields">
+  <mat-form-field appearance="outline" id="firstchild">
+    <mat-label>First Name</mat-label>
+    <input matInput name="first_name"   [(ngModel)]="employeeDetails.first_name" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Last Name</mat-label>
+    <input matInput name="last_name" [(ngModel)]="employeeDetails.last_name" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput name="email" [(ngModel)]="employeeDetails.email" />
+  </mat-form-field>
+ 
+  </section>
+  <mat-radio-group class="example-radio-group"  name="subrole">
+    <mat-radio-button  name="subrole" value="HRM" checked="checked" >HR Manager</mat-radio-button>
+   <mat-radio-button name="subrole" value="HRA" >HR Assistant</mat-radio-button>
+  </mat-radio-group>
+  
+  </mat-dialog-content>
+  
+  <section class="buttons">
+    <mat-dialog-actions>
+    <button type="submit" mat-raised-button color="primary" aria-label="Show an example snack-bar">Apply changes</button>
+    <button type="button" mat-raised-button color="primary" class="cancel" mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+  </section>
+  
+  </form>
+
+<div></div>
+
+
+
+
+
+<!--<section class="container">
 <div class="form-popup" id="myForm">
     <form class="form-container">
     <div class="pop-up-Header">Edit Account Details</div>
   
       <mat-form-field appearance="outline" id="firstchild">
-        <mat-label>First Name</mat-label>
-        <input matInput />
+        <mat-label  >First Name</mat-label>
+        <input matInput/>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
@@ -29,4 +71,7 @@
       </section>
     </form>
   </div>
-</section>
+</section>-->
+
+
+

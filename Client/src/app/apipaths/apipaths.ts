@@ -15,4 +15,6 @@ export class Apipaths {
 
     // fields
     static readonly getAllFields: string = this.baseUrl + 'JobField/GetAllJobFields';
+
+    // 
 }

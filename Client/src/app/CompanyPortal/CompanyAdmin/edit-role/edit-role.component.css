@@ -1,4 +1,70 @@
-.container {
+
+
+
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  
+}
+
+mat-dialog-content{
+  width:404px;
+}
+
+h2{
+  font-family: Lato;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+
+.inputFields{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+mat-form-field {
+  width: 90%; /* Set width to 100% to fill the container */
+  max-width: 400px;
+  }
+
+  #firstchild {
+    margin-top: 10px;
+  }
+
+.example-radio-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+.buttons {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}  
+
+.buttons {
+  
+  margin-bottom: 50px;
+}
+
+.cancel{
+  margin-left:50
+}
+.mat-snack-bar-container {
+    background-color:white;
+}
+
+/*.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,4 +121,4 @@ mat-form-field {
 }
 .buttons button {
   margin: 10px;
-}
+}*/

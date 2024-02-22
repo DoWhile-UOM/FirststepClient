@@ -1,18 +1,65 @@
-import { Component } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatButtonModule} from '@angular/material/button';
-import { FileUploadComponent } from "../../shared/file-upload/file-upload.component";
+import { Component, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
+import { FileUploadComponent } from '../../shared/file-upload/file-upload.component';
+import { FormsModule } from '@angular/forms';
+
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogModule,
+} from '@angular/material/dialog';
+import { EmployeeService } from '../../../../services/employee.service';
+
+
+interface Employee {
+  email: string;
+  first_name: string;
+  last_name: string;
+  user_type: string;
+}
 
 @Component({
   selector: 'app-edit-role',
   standalone: true,
-  imports: [MatIconModule,MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,FileUploadComponent],
-  templateUrl: './edit-role.component.html',
-  styleUrl: './edit-role.component.css'
-})
-export class EditRoleComponent {
+  imports: [
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    FileUploadComponent,
 
+    MatInputModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatButtonModule,
+    FileUploadComponent,
+    FormsModule,
+    MatDialogModule,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
+  templateUrl: './edit-role.component.html',
+  styleUrl: './edit-role.component.css',
+})
+export class EditRoleComponent implements OnInit {
+  employeeDetails: any = {};
+
+  user_id: number = 19;
+
+  constructor(private employeeService: EmployeeService) {}
+ 
+  async ngOnInit() {
+    this.fetchEmployeeDetails();
+  }
+  
+  async fetchEmployeeDetails() {
+    this.employeeDetails = await this.employeeService.getEmployeeDetails(this.user_id);
+  }
+  
 }

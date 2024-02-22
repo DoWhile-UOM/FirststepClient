@@ -12,6 +12,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { AddrolesPopupComponent } from "../addroles-popup/addroles-popup.component";
+import { EditRoleComponent } from '../edit-role/edit-role.component';
 
 
 
@@ -31,7 +32,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 4, name: 'Nethma Karunathilaka', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
   {position: 5, name: 'Ashani Perera', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
   {position: 6, name: 'Kavinda Bandara', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-  {position: 7, name: 'Gayuni Basnayaka', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
+  {position: 7, name: 'Thimesha Karunathilaka', Role:'HR Manager',symbol1: 'delete',symbol2: 'edit'},
 ];
 
 @Component({
@@ -54,14 +55,11 @@ export class ManageRolesComponent {
     this.dialog.open(AddrolesPopupComponent);
   }
 
+  openEdit(){
+    this.dialog.open(EditRoleComponent);
+  }
+
  
-
- /* addData() {
-    const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
-    this.table.renderRows();
-  }*/
-
   removeData() {
     this.dataSource.pop();
     this.table.renderRows();
@@ -70,4 +68,9 @@ export class ManageRolesComponent {
  
 }
 
+/* addData() {
+    const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
+    this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
+    this.table.renderRows();
+  }*/
 

@@ -6,6 +6,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  
+    
   }
 
   mat-dialog-content{
@@ -49,7 +51,111 @@
     align-items: center;
   }  
   
-  .buttons button   {
-    margin-left: 10px;
+  .buttons {
+    
+    margin-bottom: 50px;
   }
+
+  .cancel{
+    margin-left:50
+  }
+  .mat-snack-bar-container {
+      background-color:white;
+  }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
   
