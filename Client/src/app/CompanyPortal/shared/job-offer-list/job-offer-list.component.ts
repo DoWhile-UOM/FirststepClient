@@ -64,7 +64,7 @@ export class JobOfferListComponent implements AfterViewInit{
   dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   company_id: string = "7";
 
@@ -115,8 +115,8 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   announceSortChange(sortState: Sort) {
@@ -130,7 +130,7 @@ export class JobOfferListComponent implements AfterViewInit{
 
   filter(selected: any){
     // filter by current status of the advertisement
-    this.snackBar.open("Refeshing table to show " + selected.value + " job offers...")._dismissAfter(3000);
+    this.snackBar.open("Refeshing table to show " + selected.value + " job offers...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
     this.refreshTable(selected.value);
     this.selectedFilter = selected.value;
   }
@@ -202,7 +202,7 @@ export class ConfirmDialog {
   async onYesClick() {
     if (this.dialogtitle == "Close") {
       await this.advertisementService.closeAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully deleted!")._dismissAfter(5000); 
+      this.snackBar.open(this.title + " job offer successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000); 
     }
     else if (this.dialogtitle == "Activate") {
       await this.advertisementService.activateAdvertisement(this.id.toString());
