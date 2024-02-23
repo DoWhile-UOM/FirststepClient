@@ -19,6 +19,7 @@ import {
   MatDialogContent,
 } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms'; 
 
 interface JobOffer{
   advertisement_id: number;
@@ -37,16 +38,13 @@ interface JobOfferTable{
   advertisement_id: number;
   job_number: number;
   title: string;
+  status: string;
   posted_date: string;
   no_of_applications: number;
   no_of_evaluated_applications: number;
   no_of_accepted_applications: number;
   no_of_rejected_applications: number;
-  viewbtn: string;
-  editbtn: string;
-  deletebtn: string;
 }
-
 
 var Table_data: JobOfferTable[] = [];
 
@@ -63,13 +61,14 @@ var selectedAdID: number = 0;
     MatIconModule,
     MatButtonModule,
     MatChipsModule, 
-    CaNavBarComponent],
+    CaNavBarComponent,
+    FormsModule],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
 
 export class JobOfferListComponent implements AfterViewInit{
-  displayedColumns: string[] = ['Job Number', 'Title', 'Posted Date', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
+  displayedColumns: string[] = ['Job Number', 'Title', 'Status', 'Posted Date', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
   dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -82,14 +81,15 @@ export class JobOfferListComponent implements AfterViewInit{
     private liveAnnouncer: LiveAnnouncer, 
     private advertisementService: AdvertisementServices,
     public dialog: MatDialog,
-    private router: Router){
+    private router: Router, 
+    private snackBar: MatSnackBar){
   }
 
   async ngOnInit() {
-    this.refreshTable();
+    this.refreshTable('all');
   }
 
-  async refreshTable(){
+  async refreshTable(status: string){
     await this.advertisementService.getAllAdvertisementsByCompanyID(this.company_id)
       .then((response) => {
         this.jobList = response;
@@ -101,18 +101,20 @@ export class JobOfferListComponent implements AfterViewInit{
         Table_data = [];
 
         for (let i = 0; i < this.jobList.length; i++) {
+          if (this.jobList[i].current_status.toLowerCase() != status && status != 'all') {
+            continue;
+          }
+
           Table_data.push({
             advertisement_id: this.jobList[i].advertisement_id,
             job_number: this.jobList[i].job_number,
             title: this.jobList[i].title,
+            status: this.jobList[i].current_status.toLowerCase(),
             posted_date: this.jobList[i].posted_date,
             no_of_applications: this.jobList[i].no_of_applications,
             no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
             no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,
-            no_of_rejected_applications: this.jobList[i].no_of_rejected_applications,
-            editbtn: "Edit",
-            deletebtn: "Delete",
-            viewbtn: "View"
+            no_of_rejected_applications: this.jobList[i].no_of_rejected_applications            
           });
         }
 
@@ -135,6 +137,12 @@ export class JobOfferListComponent implements AfterViewInit{
     }
   }
 
+  filter(selected: any){
+    // filter by current status of the advertisement
+    this.snackBar.open("Refeshing table to show " + selected.value + " job offers")._dismissAfter(3000);
+    this.refreshTable(selected.value);
+  }
+
   viewAd(adID: number){
     alert("Viewing job offer " + adID);
   }
@@ -145,6 +153,7 @@ export class JobOfferListComponent implements AfterViewInit{
 
   deleteAd(adID: number){
     // find title of the joboofer by using adId if the offer
+    // remove this
     Table_data.forEach(element => {
       if (element.advertisement_id == adID) {
         selectedAdTitle = element.title;
@@ -153,7 +162,7 @@ export class JobOfferListComponent implements AfterViewInit{
     });
 
     this.openDeleteDialog('250ms', '250ms');
-    this.refreshTable();
+    this.refreshTable('all');
   }
 
   exploreAd(adID: number){
