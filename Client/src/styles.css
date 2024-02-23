@@ -18,4 +18,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     &.app-notification-success {
         --mdc-snackbar-container-color: #43a446;
     }
+
+    &.app-notification-normal {
+        --mdc-snackbar-container-color: #008080;
+        --mat-mdc-snack-bar-button-color: #fff;
+        --mdc-snackbar-supporting-text-color: #fff;
+    }
 }

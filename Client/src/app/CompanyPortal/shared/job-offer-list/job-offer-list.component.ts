@@ -206,7 +206,7 @@ export class ConfirmDialog {
     }
     else if (this.dialogtitle == "Activate") {
       await this.advertisementService.activateAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully activate again!")._dismissAfter(5000);
+      this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
 
     this.dialogRef.close();
