@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, inject, HostListener } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
@@ -24,6 +24,7 @@ import { KeywordService } from '../../../../services/keyword.service';
 import { Router } from '@angular/router';
 import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxCurrencyDirective } from 'ngx-currency';
 
 interface Field {
 	field_name: string;
@@ -60,7 +61,7 @@ interface AddJob {
 		MatSelectModule, MatChipsModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
 		AsyncPipe, MatButtonModule, FormsModule, 
-		CaNavBarComponent],
+		CaNavBarComponent, NgxCurrencyDirective],
 	templateUrl: './new-job.component.html',
 	styleUrl: './new-job.component.css'
 })
@@ -194,6 +195,17 @@ export class NewJobComponent{
 		this.countries = Country.getAllCountries().map(country => country.name);
 
 		//this.cities = [];
+	}
+
+	@HostListener('window:resize', ['$event'])
+	onResize() {
+		// resize the grid list based on the window size
+		if (window.innerWidth < window.innerHeight){
+			this.noOfCols = 1;
+		}
+		else {
+			this.noOfCols = window.innerWidth < 768 ? 2 : 3;
+		}
 	}
 
 	async onChangeField(selectedField: number) {

@@ -6,10 +6,6 @@
 			<p class="companyname">BISTECH GLOBAL SERVICES</p>
 		</div>
 		<mat-divider></mat-divider>
-		<div class="container-top-content">
-			<p class="created">Created by: </p>
-			<p class="hrmanagername">Ashan Induwara, HR Manager, BISTECH GLOBAL</p>
-		</div>
 		<form class="form-container" #createJobForm="ngForm" (ngSubmit)="createNewJob(createJobForm.value)">
 			<mat-grid-list cols="{{noOfCols}}" rowHeight="90">
 				<mat-grid-tile>
@@ -32,7 +28,7 @@
 				</mat-grid-tile>
 				<mat-grid-tile>
 					<mat-form-field color="primary" appearance="outline">
-						<mat-label>Application Submission Deadline</mat-label>
+						<mat-label>Deadline</mat-label>
 						<input matInput [matDatepicker]="picker2" name="submission_deadline" ngModel>
 						<mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2></mat-datepicker>
