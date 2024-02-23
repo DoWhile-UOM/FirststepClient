@@ -143,10 +143,29 @@ export class AdvertisementServices {
     return adData;
   }
 
+  async activateAdvertisement(jobID: string) {
+    this.changeStatus(jobID, "active");
+  }
+
+  async holdAdvertisement(jobID: string) {
+    this.changeStatus(jobID, "hold");
+  }
+
   async closeAdvertisement(jobID: string) {
+    this.changeStatus(jobID, "closed");
+  }
+
+  private async changeStatus(jobID: string, status: string) {
     let response: any = null;
 
-    await axios.put(Apipaths.closeJob + jobID)
+    // validate status
+    var validStatus = ["active", "hold", "closed"];
+    if (!validStatus.includes(status)) {
+      alert("Invalid status")
+      return response;
+    }
+
+    await axios.put(Apipaths.changeStatusOfJob + jobID + "/status=" + status)
       .then(function (res) {
         response = res;
       })

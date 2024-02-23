@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -10,16 +10,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { Router } from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
-} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms'; 
+import { CommonModule } from '@angular/common';
 
 interface JobOffer{
   advertisement_id: number;
@@ -48,9 +42,6 @@ interface JobOfferTable{
 
 var Table_data: JobOfferTable[] = [];
 
-var selectedAdTitle: string = "";
-var selectedAdID: number = 0;
-
 @Component({
   selector: 'app-job-offer-list',
   standalone: true,
@@ -62,7 +53,8 @@ var selectedAdID: number = 0;
     MatButtonModule,
     MatChipsModule, 
     CaNavBarComponent,
-    FormsModule],
+    FormsModule,
+    CommonModule],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
@@ -75,7 +67,9 @@ export class JobOfferListComponent implements AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
 
   company_id: string = "7";
+
   jobList: JobOffer[] = [];
+  selectedFilter: string = 'active';
 
   constructor(
     private liveAnnouncer: LiveAnnouncer, 
@@ -86,7 +80,7 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   async ngOnInit() {
-    this.refreshTable('active');
+    this.refreshTable(this.selectedFilter);
   }
 
   async refreshTable(status: string){
@@ -136,25 +130,23 @@ export class JobOfferListComponent implements AfterViewInit{
 
   filter(selected: any){
     // filter by current status of the advertisement
-    this.snackBar.open("Refeshing table to show " + selected.value + " job offers")._dismissAfter(3000);
+    this.snackBar.open("Refeshing table to show " + selected.value + " job offers...")._dismissAfter(3000);
     this.refreshTable(selected.value);
+    this.selectedFilter = selected.value;
   }
 
   editAd(adID: number){
     alert("Editing job offer " + adID);
   }
 
-  deleteAd(adID: number){
+  changeStatusOfJob(adID: number, action: string){
     // find title of the joboofer by using adId if the offer
-    // remove this
     Table_data.forEach(element => {
       if (element.advertisement_id == adID) {
-        selectedAdTitle = element.title;
-        selectedAdID = adID;
+        this.openConfirmDialogBox('250ms', '250ms', action, element.title, adID);
+        return;
       }
     });
-
-    this.openDeleteDialog('250ms', '250ms');
   }
 
   exploreAd(adID: number){
@@ -165,12 +157,17 @@ export class JobOfferListComponent implements AfterViewInit{
     this.router.navigate(['/newJob']);
   }
 
-  openDeleteDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(ConfirmDialog, {
+  openConfirmDialogBox(enterAnimationDuration: string, exitAnimationDuration: string, dialogtitle: string, adTitle: string, adId: number): void {
+    let dialogRef = this.dialog.open(ConfirmDialog, {
       width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
-      disableClose: true
+      disableClose: true,
+      data: {dialogtitle: dialogtitle, title: adTitle, id: adId}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshTable(this.selectedFilter);
     });
   }
 }
@@ -183,22 +180,34 @@ export class JobOfferListComponent implements AfterViewInit{
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
 })
 export class ConfirmDialog {
-  title: string = selectedAdTitle; 
-  id: number = selectedAdID;
+  title: string = ""; 
+  id: number = 0;
+  dialogtitle: string = "";
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialog>,
     private advertisementService: AdvertisementServices,
-    private snackBar: MatSnackBar) {}
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+
+    this.title = data.title;
+    this.id = data.id;      
+    this.dialogtitle = data.dialogtitle;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   async onYesClick() {
-    await this.advertisementService.closeAdvertisement(selectedAdID.toString());
-
-    this.snackBar.open(selectedAdTitle + " job offer successfully deleted!")._dismissAfter(5000);
+    if (this.dialogtitle == "Close") {
+      await this.advertisementService.closeAdvertisement(this.id.toString());
+      this.snackBar.open(this.title + " job offer successfully deleted!")._dismissAfter(5000); 
+    }
+    else if (this.dialogtitle == "Activate") {
+      await this.advertisementService.activateAdvertisement(this.id.toString());
+      this.snackBar.open(this.title + " job offer successfully activate again!")._dismissAfter(5000);
+    }
 
     this.dialogRef.close();
   }
