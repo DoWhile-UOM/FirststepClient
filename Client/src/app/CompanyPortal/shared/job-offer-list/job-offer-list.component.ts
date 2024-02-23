@@ -86,11 +86,11 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   async ngOnInit() {
-    this.refreshTable('all');
+    this.refreshTable('active');
   }
 
   async refreshTable(status: string){
-    await this.advertisementService.getAllAdvertisementsByCompanyID(this.company_id)
+    await this.advertisementService.getAllAdvertisementsByCompanyID(this.company_id, status)
       .then((response) => {
         this.jobList = response;
 
@@ -101,9 +101,6 @@ export class JobOfferListComponent implements AfterViewInit{
         Table_data = [];
 
         for (let i = 0; i < this.jobList.length; i++) {
-          if (this.jobList[i].current_status.toLowerCase() != status && status != 'all') {
-            continue;
-          }
 
           Table_data.push({
             advertisement_id: this.jobList[i].advertisement_id,
@@ -143,10 +140,6 @@ export class JobOfferListComponent implements AfterViewInit{
     this.refreshTable(selected.value);
   }
 
-  viewAd(adID: number){
-    alert("Viewing job offer " + adID);
-  }
-
   editAd(adID: number){
     alert("Editing job offer " + adID);
   }
@@ -162,7 +155,6 @@ export class JobOfferListComponent implements AfterViewInit{
     });
 
     this.openDeleteDialog('250ms', '250ms');
-    this.refreshTable('all');
   }
 
   exploreAd(adID: number){
@@ -178,6 +170,7 @@ export class JobOfferListComponent implements AfterViewInit{
       width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
+      disableClose: true
     });
   }
 }
@@ -203,7 +196,7 @@ export class ConfirmDialog {
   }
 
   async onYesClick() {
-    await this.advertisementService.deleteAdvertisement(selectedAdID.toString());
+    await this.advertisementService.closeAdvertisement(selectedAdID.toString());
 
     this.snackBar.open(selectedAdTitle + " job offer successfully deleted!")._dismissAfter(5000);
 

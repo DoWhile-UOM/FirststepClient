@@ -81,10 +81,10 @@ export class AdvertisementServices {
     return company;
   }
 
-  async getAllAdvertisementsByCompanyID(company_id: string) {
+  async getAllAdvertisementsByCompanyID(company_id: string, filterby: string) {
     let jobList: any = [];
 
-    await axios.get(Apipaths.getAdvertisementsByCompanyID + company_id)
+    await axios.get(Apipaths.getAdvertisementsByCompanyID + company_id + "/filterby=" + filterby)
       .then(function (response) {
         try {
           jobList = response.data;
@@ -141,6 +141,20 @@ export class AdvertisementServices {
       );
     
     return adData;
+  }
+
+  async closeAdvertisement(jobID: string) {
+    let response: any = null;
+
+    await axios.put(Apipaths.closeJob + jobID)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
+
+    return response;
   }
 
   async deleteAdvertisement(jobID: string) {

@@ -25,7 +25,7 @@
 }
 
 .action-buttons{
-  width: 22.5em;
+  width: 10em;
 }
 
 .nu-column{
@@ -35,4 +35,35 @@
 
 th.mat-header-cell .nu-header{
   text-align: center !important;
+}
+
+.action-buttons span{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.small-icon-button {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 5px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+
+  & > *[role=img] {
+    width: 22px;
+    height: 22px;
+    font-size: 22px;
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .mat-mdc-button-touch-target {
+     width: 32px !important;
+     height: 32px !important;
+  }
 }

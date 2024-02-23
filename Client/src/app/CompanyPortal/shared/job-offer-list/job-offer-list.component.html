@@ -6,8 +6,8 @@
   <div class="pagetitle-content">
     <span>
       <mat-chip-listbox aria-label="Filter" #filterByStatus (change)="filter(filterByStatus.selected)" >
-        <mat-chip-option selected value="all">All</mat-chip-option>
-        <mat-chip-option value="active">Active</mat-chip-option>
+        <mat-chip-option value="all">All</mat-chip-option>
+        <mat-chip-option selected value="active">Active</mat-chip-option>
         <mat-chip-option value="hold">Hold</mat-chip-option>
         <mat-chip-option value="closed">Closed</mat-chip-option>
       </mat-chip-listbox>  
@@ -71,10 +71,15 @@
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let joboffer" class="action-buttons">
         <span>
-          <button mat-button color="primary" (click)="exploreAd(joboffer.advertisement_id)">Explore</button>
-          <button mat-button color="primary" (click)="viewAd(joboffer.advertisement_id)">View</button>
-          <button mat-button color="primary" (click)="editAd(joboffer.advertisement_id)">Edit</button>
-          <button mat-button color="primary" (click)="deleteAd(joboffer.advertisement_id)">Delete</button>
+          <button mat-icon-button color="primary" (click)="exploreAd(joboffer.advertisement_id)" class="small-icon-button">
+            <mat-icon>explore</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="editAd(joboffer.advertisement_id)" class="small-icon-button">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="deleteAd(joboffer.advertisement_id)" class="small-icon-button">
+            <mat-icon>delete</mat-icon>
+          </button>
         </span>
       </td>
     </ng-container>
