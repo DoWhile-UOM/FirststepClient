@@ -19,7 +19,13 @@
   </div>
 </div>
 
-<div class="adTable mat-elevation-z8">
+<mat-card class="emptymsg" *ngIf="jobListLength <= 0">
+  <div>
+    <p class="center-text">Can't Find Any Results!</p>
+  </div>
+</mat-card>
+
+<div class="adTable mat-elevation-z8" *ngIf="jobListLength > 0">
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
 
     <!-- JobNo Column -->
@@ -68,7 +74,7 @@
 
     
     <ng-container matColumnDef="Action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Action"></th>
+      <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let joboffer" class="action-buttons">
         <span>
           <button mat-icon-button color="primary" (click)="exploreAd(joboffer.advertisement_id)" class="small-icon-button">

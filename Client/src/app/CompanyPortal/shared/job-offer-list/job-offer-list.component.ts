@@ -14,6 +14,7 @@ import { MatDialog, MatDialogRef, MatDialogActions, MatDialogClose, MatDialogTit
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card'; 
 
 interface JobOffer{
   advertisement_id: number;
@@ -54,7 +55,8 @@ var Table_data: JobOfferTable[] = [];
     MatChipsModule, 
     CaNavBarComponent,
     FormsModule,
-    CommonModule],
+    CommonModule, 
+    MatCardModule],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
@@ -70,6 +72,7 @@ export class JobOfferListComponent implements AfterViewInit{
 
   jobList: JobOffer[] = [];
   selectedFilter: string = 'active';
+  jobListLength: number = 0;
 
   constructor(
     private liveAnnouncer: LiveAnnouncer, 
@@ -77,13 +80,15 @@ export class JobOfferListComponent implements AfterViewInit{
     public dialog: MatDialog,
     private router: Router, 
     private snackBar: MatSnackBar){
+      this.jobListLength = 1;
   }
 
   async ngOnInit() {
-    this.refreshTable(this.selectedFilter);
+    
   }
 
   async refreshTable(status: string){
+    this.jobListLength = 1;
     await this.advertisementService.getAllAdvertisementsByCompanyID(this.company_id, status)
       .then((response) => {
         this.jobList = response;
@@ -110,13 +115,16 @@ export class JobOfferListComponent implements AfterViewInit{
         }
 
         this.dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
+
+        this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+
+        this.jobListLength = this.jobList.length;
       });
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.refreshTable(this.selectedFilter);
   }
 
   announceSortChange(sortState: Sort) {

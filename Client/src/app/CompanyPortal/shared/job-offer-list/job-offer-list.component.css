@@ -1,8 +1,15 @@
-.adTable{
+.adTable, .emptymsg{
   width: 95%;
   margin: 0 auto;
   margin-top: 3em;
   margin-bottom: 0.5em;
+}
+
+.emptymsg{
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .page-title{
@@ -66,4 +73,14 @@ th.mat-header-cell .nu-header{
      width: 32px !important;
      height: 32px !important;
   }
+}
+
+.emptymsg div{
+  margin: 0 auto;
+}
+
+.center-text{
+  color:#008080;
+  font-family: Lato;
+  font-size: xx-large;
 }
