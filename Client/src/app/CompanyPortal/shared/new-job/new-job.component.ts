@@ -25,7 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxCurrencyDirective } from 'ngx-currency';
-import { RichTextEditorModule, ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
+import { RichTextEditorModule, ToolbarService, LinkService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 
 interface Field {
 	field_name: string;
@@ -42,11 +42,7 @@ interface AddJob {
     is_experience_required: boolean;
     salary: number;
     submission_deadline: string;
-    job_overview: string;
-    job_responsibilities: string;
-    job_qualifications: string;
-    job_benefits: string;
-    job_other_details: string;
+	description: string;
     hrManager_id: number;
     field_id: number;
     keywords: string[];
@@ -75,7 +71,7 @@ interface Job{
 @Component({
 	selector: 'app-new-job',
 	standalone: true,
-	providers: [provideNativeDateAdapter(), ToolbarService, LinkService, ImageService, HtmlEditorService],
+	providers: [provideNativeDateAdapter(), ToolbarService, LinkService, HtmlEditorService],
 	imports: [
 		MatGridListModule, MatFormFieldModule, MatInputModule,
 		MatDividerModule, MatCardModule, MatDatepickerModule,
@@ -104,7 +100,8 @@ export class NewJobComponent{
 
 	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
 	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
-	description: string[] = ['', '', '', '', '', ''];
+	descriptionList: string[] = ['', '', '', '', '', ''];
+	description: string = '';
 
 	// for location country autocomplete
 	locationCountryControl = new FormControl('');
@@ -125,6 +122,13 @@ export class NewJobComponent{
 	allkeywords: string[] = [];
 	@ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
 	announcer = inject(LiveAnnouncer);
+
+	public tools: object = {
+        type: 'Expand',
+        items: ['Bold', 'Italic', 'Underline', 'StrikeThrough', 'LowerCase', 'UpperCase', '|',
+			'Formats', 'Alignments', 'OrderedList', 'UnorderedList', 'Outdent', 'Indent', '|',
+			'CreateLink', '|', 'ClearFormat', '|', 'Undo', 'Redo']
+		};
 
 	constructor(
 		private advertisementService: AdvertisementServices,
@@ -218,11 +222,11 @@ export class NewJobComponent{
 		this.locationCountryControl.setValue(this.adData.country);
 		this.locationCityControl.setValue(this.adData.city);
 
-		this.description[0] = this.adData.job_overview;
-		this.description[1] = this.adData.job_responsibilities;
-		this.description[2] = this.adData.job_qualifications;
-		this.description[3] = this.adData.job_benefits;
-		this.description[4] = this.adData.job_other_details;
+		this.descriptionList[0] = this.adData.job_overview;
+		this.descriptionList[1] = this.adData.job_responsibilities;
+		this.descriptionList[2] = this.adData.job_qualifications;
+		this.descriptionList[3] = this.adData.job_benefits;
+		this.descriptionList[4] = this.adData.job_other_details;
 	}
 
 	async ngOnInit() {

@@ -38,6 +38,13 @@ mat-grid-tile{
     margin-bottom: 1.2em;
 }
 
+.description-text-editor p{
+    font-size: 15px;
+    word-wrap: break-word;
+    margin-top: 0.75em;
+    padding-left: 0.75em;
+}
+
 .title{
     color: #008080;
     font-size: 25px;
