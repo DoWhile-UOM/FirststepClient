@@ -13,7 +13,7 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/ma
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatIconModule } from '@angular/material/icon';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { MatButtonModule } from '@angular/material/button';
@@ -61,14 +61,14 @@ interface AddJob {
 		MatSelectModule, MatChipsModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
 		AsyncPipe, MatButtonModule, FormsModule, 
-		CaNavBarComponent, NgxCurrencyDirective],
+		CaNavBarComponent, NgxCurrencyDirective, CommonModule],
 	templateUrl: './new-job.component.html',
 	styleUrl: './new-job.component.css'
 })
 
 export class NewJobComponent{
 	noOfCols: number = 3;
-	maxTextareaWordLimit: number = 200;
+	maxTextareaCharLimit: number = 500;
 	maxTextareaHeight: number = 15;
 
 	unitOfSalary: string = "LKR";
@@ -79,6 +79,7 @@ export class NewJobComponent{
 
 	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
 	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
+	description: string[] = ['', '', '', '', '', ''];
 
 	// for location country autocomplete
 	locationCountryControl = new FormControl('');
@@ -87,7 +88,7 @@ export class NewJobComponent{
 
 	// for city autocomplete
 	locationCityControl = new FormControl('');
-	cities: string[] = []; //['Colombo', 'Kandy', 'Moratuwa', 'Mount Lavinia', 'Mathara', 'Kadawatha']; // need a function to get cities of a country
+	cities: string[] = []; 
 	locationCityFilteredOptions: Observable<string[]>;
 
 	// for keywords
