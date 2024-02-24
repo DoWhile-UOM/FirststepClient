@@ -21,7 +21,7 @@ import { Country, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../../services/advertisement.service';
 import { JobfieldService } from '../../../../services/jobfield.service';
 import { KeywordService } from '../../../../services/keyword.service'; 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxCurrencyDirective } from 'ngx-currency';
@@ -51,6 +51,26 @@ interface AddJob {
     keywords: string[];
 }
 
+interface Job{
+	job_number: number;
+	title: string;
+	country: string;
+	city: string;
+	employeement_type: string;
+	arrangement: string;
+	is_experience_required: string;
+	salary: string;
+	submission_deadline: string;
+	posted_date: string;
+	job_overview: string;
+	job_responsibilities: string;
+	job_qualifications: string;
+	job_benefits: string;
+	job_other_details: string;
+	field_name: string;
+	company_name: string;
+  }
+
 @Component({
 	selector: 'app-new-job',
 	standalone: true,
@@ -67,9 +87,13 @@ interface AddJob {
 })
 
 export class NewJobComponent{
+	adData: Job = {} as Job;
+
 	noOfCols: number = 3;
 	maxTextareaCharLimit: number = 500;
 	maxTextareaHeight: number = 15;
+
+	isUpdate: boolean = false;
 
 	unitOfSalary: string = "LKR";
 
@@ -106,8 +130,8 @@ export class NewJobComponent{
 		private jobFieldService: JobfieldService, 
 		private keywordService: KeywordService, 
 		private router: Router, 
+		private acRouter: ActivatedRoute,
 		private snackBar: MatSnackBar) {
-
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
 			map((keyword: string | null) => (keyword ? this._filterKeyword(keyword) : this.allkeywords.slice())),
@@ -122,6 +146,7 @@ export class NewJobComponent{
 			startWith(''),
 			map(value => this._filterCity(value || '')),
 		);
+
 	}
 
 	add(event: MatChipInputEvent): void {
@@ -184,6 +209,21 @@ export class NewJobComponent{
 		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
 	}
 
+	async setupForUpdate(jobID: string){
+		this.adData = await this.advertisementService.getAdvertisementById(jobID);
+		//alert("Job ID: " + jobID + " Title: " + this.adData.title);
+		this.isUpdate = true;
+
+		this.locationCountryControl.setValue(this.adData.country);
+		this.locationCityControl.setValue(this.adData.city);
+
+		this.description[0] = this.adData.job_overview;
+		this.description[1] = this.adData.job_responsibilities;
+		this.description[2] = this.adData.job_qualifications;
+		this.description[3] = this.adData.job_benefits;
+		this.description[4] = this.adData.job_other_details;
+	}
+
 	async ngOnInit() {
 		// get all fields from the database
 		await this.jobFieldService.getAll()
@@ -195,7 +235,14 @@ export class NewJobComponent{
 		// get all country names using an external API
 		this.countries = Country.getAllCountries().map(country => country.name);
 
-		//this.cities = [];
+		let jobID: string | null = this.acRouter.snapshot.paramMap.get('jobID');
+
+		if (jobID != null){
+			this.setupForUpdate(jobID);
+		}
+		else{
+			this.isUpdate = false;
+		}
 	}
 
 	@HostListener('window:resize', ['$event'])

@@ -17,7 +17,8 @@ export const routes: Routes = [
     {path:'AddRole',component:AddrolesPopupComponent},
     {path:'EditRole',component:EditRoleComponent},
     //{path:'AdminDashBoard',component:AdminDashboardComponent},
-    {path:'newJob',component:NewJobComponent},
+    {path:'jobOfferList/newJob',component:NewJobComponent},
+    {path:'jobOfferList/updateJobDetails',component:NewJobComponent},
     {path:'jobOfferList',component:JobOfferListComponent},
     
   // seeker portal

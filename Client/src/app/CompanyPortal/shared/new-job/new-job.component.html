@@ -2,7 +2,7 @@
 <div class="container">
 	<mat-card class="card">
 		<div class="heading">
-			<p class="title">Create New Job Advertisement</p>
+			<p class="title">{{(isUpdate) ? 'Update' : 'Create New'}} Job Advertisement {{(isUpdate) ? ': ' + adData.title: ''}}</p>
 			<p class="companyname">BISTECH GLOBAL SERVICES</p>
 		</div>
 		<mat-divider></mat-divider>

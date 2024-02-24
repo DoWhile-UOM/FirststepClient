@@ -15,6 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card'; 
+import { NewJobComponent } from '../new-job/new-job.component';
 
 interface JobOffer{
   advertisement_id: number;
@@ -56,7 +57,8 @@ var Table_data: JobOfferTable[] = [];
     CaNavBarComponent,
     FormsModule,
     CommonModule, 
-    MatCardModule],
+    MatCardModule,
+    NewJobComponent],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
@@ -144,7 +146,7 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   editAd(adID: number){
-    alert("Editing job offer " + adID);
+    this.router.navigate(['jobOfferList/updateJobDetails', {jobID: adID}]);
   }
 
   changeStatusOfJob(adID: number, action: string){
@@ -162,7 +164,8 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   addNew(){
-    this.router.navigate(['/newJob']);
+    //this.router.navigate(['jobOfferList/newJob']);
+    this.router.navigate(['jobOfferList/newJob']);
   }
 
   openConfirmDialogBox(enterAnimationDuration: string, exitAnimationDuration: string, dialogtitle: string, adTitle: string, adId: number): void {
