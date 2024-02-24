@@ -25,6 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxCurrencyDirective } from 'ngx-currency';
+import { RichTextEditorModule, ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 
 interface Field {
 	field_name: string;
@@ -69,16 +70,16 @@ interface Job{
 	job_other_details: string;
 	field_name: string;
 	company_name: string;
-  }
+}
 
 @Component({
 	selector: 'app-new-job',
 	standalone: true,
-	providers: [provideNativeDateAdapter()],
+	providers: [provideNativeDateAdapter(), ToolbarService, LinkService, ImageService, HtmlEditorService],
 	imports: [
 		MatGridListModule, MatFormFieldModule, MatInputModule,
 		MatDividerModule, MatCardModule, MatDatepickerModule,
-		MatSelectModule, MatChipsModule,
+		MatSelectModule, MatChipsModule, RichTextEditorModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
 		AsyncPipe, MatButtonModule, FormsModule, 
 		CaNavBarComponent, NgxCurrencyDirective, CommonModule],
