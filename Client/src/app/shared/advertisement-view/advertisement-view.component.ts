@@ -1,6 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ViewAdvertisement } from '../../../models/view-advertisement';
 import { MatButtonModule } from '@angular/material/button';
+
+interface Job{
+	job_number: number;
+	title: string;
+	country: string;
+	city: string;
+	employeement_type: string;
+	arrangement: string;
+	is_experience_required: string;
+	salary: string;
+	submission_deadline: string;
+	posted_date: string;
+	job_description: string;
+	field_name: string;
+	company_name: string;
+}
 
 @Component({
   selector: 'app-advertisement-view',
@@ -10,7 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatButtonModule]
 })
 export class AdvertisementViewComponent implements OnInit{
-  @Input() adData!: ViewAdvertisement;
+  @Input() adData!: Job;
 
   constructor() { }
 

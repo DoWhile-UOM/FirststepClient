@@ -8,23 +8,19 @@ import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 
 interface Job{
-  job_number: number;
-  title: string;
-  country: string;
-  city: string;
-  employeement_type: string;
-  arrangement: string;
-  is_experience_required: string;
-  salary: string;
-  submission_deadline: string;
-  posted_date: string;
-  job_overview: string;
-  job_responsibilities: string;
-  job_qualifications: string;
-  job_benefits: string;
-  job_other_details: string;
-  field_name: string;
-  company_name: string;
+	job_number: number;
+	title: string;
+	country: string;
+	city: string;
+	employeement_type: string;
+	arrangement: string;
+	is_experience_required: string;
+	salary: string;
+	submission_deadline: string;
+	posted_date: string;
+	job_description: string;
+	field_name: string;
+	company_name: string;
 }
 
 @Component({

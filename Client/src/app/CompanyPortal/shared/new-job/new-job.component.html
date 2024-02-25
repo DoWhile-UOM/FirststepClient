@@ -48,31 +48,31 @@
 				</mat-grid-tile>
 			</mat-grid-list>
 
-				<div class="textbox-form-field">
-					<mat-form-field appearance="outline">
-						<mat-label>Keywords</mat-label>
-						<mat-chip-grid #chipGrid aria-label="keyword selection">
-							@for (keyword of keywords; track keyword) {
-							<mat-chip-row (removed)="remove(keyword)">
-								{{keyword}}
-								<button matChipRemove [attr.aria-label]="'remove ' + keyword">
-								<mat-icon>cancel</mat-icon>
-								</button>
-							</mat-chip-row>
+			<div class="textbox-form-field">
+				<mat-form-field appearance="outline" class="chips-form-field">
+					<mat-label>Keywords</mat-label>
+					<mat-chip-grid #chipGrid aria-label="keyword selection">
+						@for (keyword of keywords; track keyword) {
+						<mat-chip-row (removed)="remove(keyword)">
+							{{keyword}}
+							<button matChipRemove [attr.aria-label]="'remove ' + keyword">
+							<mat-icon>cancel</mat-icon>
+							</button>
+						</mat-chip-row>
+					}
+					</mat-chip-grid>
+					<input placeholder="New keyword..." #keywordInput [formControl]="keywordCtrl"
+						[matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+						[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+						(matChipInputTokenEnd)="add($event)"/>
+					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+						@for (keyword of filteredkeywords | async; track keyword) {
+							<mat-option [value]="keyword">{{keyword}}</mat-option>
 						}
-						</mat-chip-grid>
-						<input placeholder="New keyword..." #keywordInput [formControl]="keywordCtrl"
-							[matChipInputFor]="chipGrid" [matAutocomplete]="auto"
-							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-							(matChipInputTokenEnd)="add($event)"/>
-						<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-							@for (keyword of filteredkeywords | async; track keyword) {
-								<mat-option [value]="keyword">{{keyword}}</mat-option>
-							}
-						</mat-autocomplete>
-						<mat-hint>These keywords are used to search purpose of the job title</mat-hint>
-					</mat-form-field>
-				</div>
+					</mat-autocomplete>
+					<mat-hint>These keywords are used to search purpose of the job title</mat-hint>
+				</mat-form-field>
+			</div>
 				
 			<mat-grid-list cols="{{noOfCols}}" rowHeight="90">
 				<mat-grid-tile>
@@ -143,6 +143,10 @@
 					</mat-form-field>
 				</mat-grid-tile>
 			</mat-grid-list>
+
+			<div class="textbox-form-field">
+				<app-add-skills [hint]="'Skills that a candidate should required to have to apply this job'"></app-add-skills>
+			</div>
 
 			<div class="description-text-editor">
 				<p>Job Description</p>

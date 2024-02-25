@@ -26,6 +26,7 @@ import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.comp
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { RichTextEditorModule, ToolbarService, LinkService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
+import { AddSkillsComponent } from '../../../shared/add-skills/add-skills.component';
 
 interface Field {
 	field_name: string;
@@ -74,7 +75,8 @@ interface Job{
 		MatSelectModule, MatChipsModule, RichTextEditorModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
 		AsyncPipe, MatButtonModule, FormsModule, 
-		CaNavBarComponent, NgxCurrencyDirective, CommonModule],
+		CaNavBarComponent, NgxCurrencyDirective, CommonModule, 
+		AddSkillsComponent],
 	templateUrl: './new-job.component.html',
 	styleUrl: './new-job.component.css'
 })
@@ -99,16 +101,16 @@ export class NewJobComponent{
 
 	// sample content for description
 	description: string = `
-		<h2><strong>Job Overview</strong></h2>
+		<h2><strong>Overview</strong></h2>
 			<p style="letter-spacing: 0.214286px;">Enter the job overview here.......</p>
 			<br>
-		<h2><strong>Job Qualifications</strong></h2>
+		<h2><strong>Qualifications</strong></h2>
 			<p style="letter-spacing: 0.214286px;">Enter job qualifications here.......</p>
 			<br>
-		<h2><strong>Job Candidate Responsibilities</strong></h2>
+		<h2><strong>Responsibilities</strong></h2>
 			<p style="letter-spacing: 0.214286px;">Enter job responsibilities here.......</p>
 			<br>
-		<h2><strong>Job Benefits</strong></h2>
+		<h2><strong>Benefits</strong></h2>
 			<p style="letter-spacing: 0.214286px;">Enter job benefits here.......</p>
 			<br>`;
 
@@ -161,66 +163,6 @@ export class NewJobComponent{
 			startWith(''),
 			map(value => this._filterCity(value || '')),
 		);
-	}
-
-	add(event: MatChipInputEvent): void {
-		const value = (event.value || '').trim();
-
-		// Add our keyword
-		if (value && value.length > 0) {
-			this.keywords.push(value);
-		}
-
-		// Clear the input value
-		//event.chipInput!.clear();
-
-		this.keywordCtrl.setValue(null);
-	}
-
-	remove(keyword: string): void {
-		const index = this.keywords.indexOf(keyword);
-
-		if (index >= 0) {
-			this.keywords.splice(index, 1);
-
-			this.announcer.announce(`Removed ${keyword}`);
-		}
-		else{
-
-			alert(`Keyword not found`);
-		}
-	}
-
-	selected(event: MatAutocompleteSelectedEvent): void {
-		var inputFieldValue = this.keywordInput.nativeElement.value;
-		if (inputFieldValue.length > 0){
-			this.remove(inputFieldValue);
-		}
-
-		this.keywords.push(event.option.viewValue);
-		this.keywordInput.nativeElement.value = '';
-		this.keywordCtrl.setValue(null);
-	}
-
-	private _filterKeyword(value: string): string[] {
-		const filterValue = value.toLowerCase();
-
-		var filtered = this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
-		this.filteredkeywordslength = filtered.length;
-
-		return filtered;
-	}
-
-	private _filterCountry(value: string): string[] {
-		const filterValue = value.toLowerCase();
-
-		return this.countries.filter(option => option.toLowerCase().includes(filterValue));
-	}
-
-	private _filterCity(value: string): string[] {
-		const filterValue = value.toLowerCase();
-
-		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
 	}
 
 	async setupForUpdate(jobID: string){
@@ -328,4 +270,64 @@ export class NewJobComponent{
 			this.snackBar.open("Error Uploading Job", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 		}	
   	}
+
+	add(event: MatChipInputEvent): void {
+		const value = (event.value || '').trim();
+
+		// Add our keyword
+		if (value && value.length > 0) {
+			this.keywords.push(value);
+		}
+
+		// Clear the input value
+		//event.chipInput!.clear();
+
+		this.keywordCtrl.setValue(null);
+	}
+
+	remove(keyword: string): void {
+		const index = this.keywords.indexOf(keyword);
+
+		if (index >= 0) {
+			this.keywords.splice(index, 1);
+
+			this.announcer.announce(`Removed ${keyword}`);
+		}
+		else{
+
+			alert(`Keyword not found`);
+		}
+	}
+
+	selected(event: MatAutocompleteSelectedEvent): void {
+		var inputFieldValue = this.keywordInput.nativeElement.value;
+		if (inputFieldValue.length > 0){
+			this.remove(inputFieldValue);
+		}
+
+		this.keywords.push(event.option.viewValue);
+		this.keywordInput.nativeElement.value = '';
+		this.keywordCtrl.setValue(null);
+	}
+
+	private _filterKeyword(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		var filtered = this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
+		this.filteredkeywordslength = filtered.length;
+
+		return filtered;
+	}
+
+	private _filterCountry(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.countries.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	private _filterCity(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
 }

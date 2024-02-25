@@ -39,29 +39,6 @@
 </div>
 <hr>
 
-<div class="section">
-    <div class="heading">Overview</div>
-    <div class="content">{{adData.job_overview}}</div>
-</div>
-
-<div class="section">
-    <div class="heading">Your Qualifications</div>
-    <div class="content">{{adData.job_qualifications}}</div>
-</div>
-
-<div class="section">
-    <div class="heading">Your Responsibilities</div>
-    <div class="content">{{adData.job_responsibilities}}</div>
-</div>
-
-<div class="section">
-    <div class="heading">Benefits</div>
-    <div class="content">{{adData.job_benefits}}</div>
-</div>
-
-<div class="section">
-    <div class="heading">Other Details</div>
-    <div class="content">{{adData.job_other_details}}</div>
-</div>
+<div class="section" [innerHTML]="adData.job_description.trim()"></div>
 
 <button mat-raised-button class="apply-button" title="ApplyJob" color="primary">Apply To This Job</button>
