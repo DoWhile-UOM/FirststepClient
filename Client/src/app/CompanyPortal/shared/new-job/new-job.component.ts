@@ -87,7 +87,7 @@ export class NewJobComponent{
 	adData: Job = {} as Job;
 
 	noOfCols: number = 3;
-	maxTextareaCharLimit: number = 500;
+	maxTextareaCharLimit: number = 2500;
 	maxTextareaHeight: number = 15;
 
 	isUpdate: boolean = false;
@@ -101,7 +101,21 @@ export class NewJobComponent{
 	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
 	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
 	descriptionList: string[] = ['', '', '', '', '', ''];
-	description: string = '';
+
+	// sample content for description
+	description: string = `
+		<h2><strong>Job Overview</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter the job overview here.......</p>
+			<br>
+		<h2><strong>Job Qualifications</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter job qualifications here.......</p>
+			<br>
+		<h2><strong>Job Candidate Responsibilities</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter job responsibilities here.......</p>
+			<br>
+		<h2><strong>Job Benefits</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter job benefits here.......</p>
+			<br>`;
 
 	// for location country autocomplete
 	locationCountryControl = new FormControl('');
@@ -137,6 +151,7 @@ export class NewJobComponent{
 		private router: Router, 
 		private acRouter: ActivatedRoute,
 		private snackBar: MatSnackBar) {
+
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
 			map((keyword: string | null) => (keyword ? this._filterKeyword(keyword) : this.allkeywords.slice())),
@@ -151,7 +166,6 @@ export class NewJobComponent{
 			startWith(''),
 			map(value => this._filterCity(value || '')),
 		);
-
 	}
 
 	add(event: MatChipInputEvent): void {
@@ -305,9 +319,19 @@ export class NewJobComponent{
 				return;
 			}
 		}
-		
-		await this.advertisementService.addNewJob(addAdvertisement);
 
-		this.router.navigate(['/newJobUploaded']);
+		if (this.description.length > this.maxTextareaCharLimit){
+			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			return;
+		}
+		
+		let response: boolean = await this.advertisementService.addNewJob(addAdvertisement);
+
+		if (response){
+			this.router.navigate(['/newJobUploaded']);
+		}
+		else{
+			this.snackBar.open("Error Uploading Job", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+		}	
   	}
 }
