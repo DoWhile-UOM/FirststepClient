@@ -42,7 +42,7 @@ interface AddJob {
     is_experience_required: boolean;
     salary: number;
     submission_deadline: string;
-	description: string;
+	job_description: string;
     hrManager_id: number;
     field_id: number;
     keywords: string[];
@@ -59,11 +59,7 @@ interface Job{
 	salary: string;
 	submission_deadline: string;
 	posted_date: string;
-	job_overview: string;
-	job_responsibilities: string;
-	job_qualifications: string;
-	job_benefits: string;
-	job_other_details: string;
+	job_description: string;
 	field_name: string;
 	company_name: string;
 }
@@ -100,7 +96,6 @@ export class NewJobComponent{
 
 	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
 	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
-	descriptionList: string[] = ['', '', '', '', '', ''];
 
 	// sample content for description
 	description: string = `
@@ -236,11 +231,7 @@ export class NewJobComponent{
 		this.locationCountryControl.setValue(this.adData.country);
 		this.locationCityControl.setValue(this.adData.city);
 
-		this.descriptionList[0] = this.adData.job_overview;
-		this.descriptionList[1] = this.adData.job_responsibilities;
-		this.descriptionList[2] = this.adData.job_qualifications;
-		this.descriptionList[3] = this.adData.job_benefits;
-		this.descriptionList[4] = this.adData.job_other_details;
+		this.description = this.adData.job_description;
 	}
 
 	async ngOnInit() {
@@ -324,6 +315,11 @@ export class NewJobComponent{
 			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 			return;
 		}
+		else{
+			addAdvertisement.job_description = this.description;
+		}
+
+		console.log(addAdvertisement);
 		
 		let response: boolean = await this.advertisementService.addNewJob(addAdvertisement);
 

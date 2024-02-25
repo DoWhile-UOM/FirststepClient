@@ -42,13 +42,13 @@ export class AdvertisementServices {
     await axios.post(Apipaths.addNewJob, job)
       .then(function (res) {
         response = res;
-        return true;
       })
       .catch(function (error) {
         alert('Network Error: ' + error);
+        return false;
       });
 
-    return false;
+    return true;
   }
 
   async getCompanyProfile(company_id: string) {

@@ -19,14 +19,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     
     &.app-notification-warning {
         --mdc-snackbar-container-color: #f2a541;
+        --mat-mdc-snack-bar-button-color: #000;
+        --mdc-snackbar-supporting-text-color: #000;
     }
 
     &.app-notification-error {
         --mdc-snackbar-container-color: #f23a2f;
+        --mat-mdc-snack-bar-button-color: #fff;
+        --mdc-snackbar-supporting-text-color: #fff;
     }
 
     &.app-notification-success {
         --mdc-snackbar-container-color: #43a446;
+        --mat-mdc-snack-bar-button-color: #000;
+        --mdc-snackbar-supporting-text-color: #000;
     }
 
     &.app-notification-normal {
