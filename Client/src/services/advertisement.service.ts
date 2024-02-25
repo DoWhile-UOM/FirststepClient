@@ -45,10 +45,10 @@ export class AdvertisementServices {
       })
       .catch(function (error) {
         alert('Network Error: ' + error);
+        return false;
       });
 
-    console.log("Error " + response);
-    //return response;
+    return true;
   }
 
   async getCompanyProfile(company_id: string) {

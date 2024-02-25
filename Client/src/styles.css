@@ -1,3 +1,13 @@
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-icons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -9,14 +19,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     
     &.app-notification-warning {
         --mdc-snackbar-container-color: #f2a541;
+        --mat-mdc-snack-bar-button-color: #000;
+        --mdc-snackbar-supporting-text-color: #000;
     }
 
     &.app-notification-error {
         --mdc-snackbar-container-color: #f23a2f;
+        --mat-mdc-snack-bar-button-color: #fff;
+        --mdc-snackbar-supporting-text-color: #fff;
     }
 
     &.app-notification-success {
         --mdc-snackbar-container-color: #43a446;
+        --mat-mdc-snack-bar-button-color: #000;
+        --mdc-snackbar-supporting-text-color: #000;
     }
 
     &.app-notification-normal {

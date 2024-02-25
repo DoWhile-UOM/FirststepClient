@@ -25,6 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxCurrencyDirective } from 'ngx-currency';
+import { RichTextEditorModule, ToolbarService, LinkService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 
 interface Field {
 	field_name: string;
@@ -41,11 +42,7 @@ interface AddJob {
     is_experience_required: boolean;
     salary: number;
     submission_deadline: string;
-    job_overview: string;
-    job_responsibilities: string;
-    job_qualifications: string;
-    job_benefits: string;
-    job_other_details: string;
+	job_description: string;
     hrManager_id: number;
     field_id: number;
     keywords: string[];
@@ -62,23 +59,19 @@ interface Job{
 	salary: string;
 	submission_deadline: string;
 	posted_date: string;
-	job_overview: string;
-	job_responsibilities: string;
-	job_qualifications: string;
-	job_benefits: string;
-	job_other_details: string;
+	job_description: string;
 	field_name: string;
 	company_name: string;
-  }
+}
 
 @Component({
 	selector: 'app-new-job',
 	standalone: true,
-	providers: [provideNativeDateAdapter()],
+	providers: [provideNativeDateAdapter(), ToolbarService, LinkService, HtmlEditorService],
 	imports: [
 		MatGridListModule, MatFormFieldModule, MatInputModule,
 		MatDividerModule, MatCardModule, MatDatepickerModule,
-		MatSelectModule, MatChipsModule,
+		MatSelectModule, MatChipsModule, RichTextEditorModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
 		AsyncPipe, MatButtonModule, FormsModule, 
 		CaNavBarComponent, NgxCurrencyDirective, CommonModule],
@@ -90,7 +83,7 @@ export class NewJobComponent{
 	adData: Job = {} as Job;
 
 	noOfCols: number = 3;
-	maxTextareaCharLimit: number = 500;
+	maxTextareaCharLimit: number = 2500;
 	maxTextareaHeight: number = 15;
 
 	isUpdate: boolean = false;
@@ -103,7 +96,21 @@ export class NewJobComponent{
 
 	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
 	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
-	description: string[] = ['', '', '', '', '', ''];
+
+	// sample content for description
+	description: string = `
+		<h2><strong>Job Overview</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter the job overview here.......</p>
+			<br>
+		<h2><strong>Job Qualifications</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter job qualifications here.......</p>
+			<br>
+		<h2><strong>Job Candidate Responsibilities</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter job responsibilities here.......</p>
+			<br>
+		<h2><strong>Job Benefits</strong></h2>
+			<p style="letter-spacing: 0.214286px;">Enter job benefits here.......</p>
+			<br>`;
 
 	// for location country autocomplete
 	locationCountryControl = new FormControl('');
@@ -125,6 +132,13 @@ export class NewJobComponent{
 	@ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
 	announcer = inject(LiveAnnouncer);
 
+	public tools: object = {
+        type: 'Expand',
+        items: ['Bold', 'Italic', 'Underline', 'StrikeThrough', 'LowerCase', 'UpperCase', '|',
+			'Formats', 'Alignments', 'OrderedList', 'UnorderedList', 'Outdent', 'Indent', '|',
+			'CreateLink', '|', 'ClearFormat', '|', 'Undo', 'Redo']
+		};
+
 	constructor(
 		private advertisementService: AdvertisementServices,
 		private jobFieldService: JobfieldService, 
@@ -132,6 +146,7 @@ export class NewJobComponent{
 		private router: Router, 
 		private acRouter: ActivatedRoute,
 		private snackBar: MatSnackBar) {
+
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
 			map((keyword: string | null) => (keyword ? this._filterKeyword(keyword) : this.allkeywords.slice())),
@@ -146,7 +161,6 @@ export class NewJobComponent{
 			startWith(''),
 			map(value => this._filterCity(value || '')),
 		);
-
 	}
 
 	add(event: MatChipInputEvent): void {
@@ -217,11 +231,7 @@ export class NewJobComponent{
 		this.locationCountryControl.setValue(this.adData.country);
 		this.locationCityControl.setValue(this.adData.city);
 
-		this.description[0] = this.adData.job_overview;
-		this.description[1] = this.adData.job_responsibilities;
-		this.description[2] = this.adData.job_qualifications;
-		this.description[3] = this.adData.job_benefits;
-		this.description[4] = this.adData.job_other_details;
+		this.description = this.adData.job_description;
 	}
 
 	async ngOnInit() {
@@ -286,6 +296,7 @@ export class NewJobComponent{
 
 		addAdvertisement.city = this.locationCityControl.value ?? '';
 		addAdvertisement.country = this.locationCountryControl.value ?? '';
+		addAdvertisement.job_description = this.description;
 
 		if (addAdvertisement.city == '' || addAdvertisement.country == ''){
 			alert('Input Error: Location is required');
@@ -300,9 +311,21 @@ export class NewJobComponent{
 				return;
 			}
 		}
-		
-		await this.advertisementService.addNewJob(addAdvertisement);
 
-		this.router.navigate(['/newJobUploaded']);
+		if (addAdvertisement.job_description.length > this.maxTextareaCharLimit){
+			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			return;
+		}
+
+		console.log(addAdvertisement);
+		
+		let response: boolean = await this.advertisementService.addNewJob(addAdvertisement);
+
+		if (response){
+			this.router.navigate(['/newJobUploaded']);
+		}
+		else{
+			this.snackBar.open("Error Uploading Job", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+		}	
   	}
 }

@@ -144,70 +144,16 @@
 				</mat-grid-tile>
 			</mat-grid-list>
 
-			<div class="textbox-form-field">
-				<mat-form-field appearance="outline">
-					<mat-label>Overview of the Job</mat-label>
-					<textarea matInput 
-						cdkTextareaAutosize 
-						#autosize="cdkTextareaAutosize" 
-						cdkAutosizeMinRows="5" 
-						cdkAutosizeMaxRows="{{maxTextareaHeight}}" 
-						name="job_overview" [(ngModel)]="description[0]" maxlength="{{maxTextareaCharLimit}}"></textarea>
-					<mat-hint>{{description[0].length}}/{{maxTextareaCharLimit}} characters</mat-hint>
-				</mat-form-field>
-			</div>
-
-			<div class="textbox-form-field">
-				<mat-form-field appearance="outline">
-					<mat-label>Required Qualifications</mat-label>
-					<textarea matInput 
-						cdkTextareaAutosize 
-						#autosize="cdkTextareaAutosize" 
-						cdkAutosizeMinRows="5" 
-						cdkAutosizeMaxRows="{{maxTextareaHeight}}"
-						name="job_qualifications" [(ngModel)]="description[1]" maxlength="{{maxTextareaCharLimit}}"></textarea>
-						<mat-hint>{{description[1].length}}/{{maxTextareaCharLimit}} characters</mat-hint>
-				</mat-form-field>
-			</div>
-
-			<div class="textbox-form-field">
-				<mat-form-field appearance="outline">
-					<mat-label>Responsibility of the Candidate</mat-label>
-					<textarea matInput 
-						cdkTextareaAutosize 
-						#autosize="cdkTextareaAutosize" 
-						cdkAutosizeMinRows="5" 
-						cdkAutosizeMaxRows="{{maxTextareaHeight}}"
-						name="job_responsibilities" [(ngModel)]="description[2]" maxlength="{{maxTextareaCharLimit}}"></textarea>
-						<mat-hint>{{description[2].length}}/{{maxTextareaCharLimit}} characters</mat-hint>
-				</mat-form-field>
-			</div>
-
-			<div class="textbox-form-field">
-				<mat-form-field appearance="outline">
-					<mat-label>Benefits of the Job</mat-label>
-					<textarea matInput 
-						cdkTextareaAutosize 
-						#autosize="cdkTextareaAutosize" 
-						cdkAutosizeMinRows="5" 
-						cdkAutosizeMaxRows="{{maxTextareaHeight}}"
-						name="job_benefits" [(ngModel)]="description[3]" maxlength="{{maxTextareaCharLimit}}"></textarea>
-						<mat-hint>{{description[3].length}}/{{maxTextareaCharLimit}} characters</mat-hint>
-				</mat-form-field>
-			</div>
-
-			<div class="textbox-form-field">
-				<mat-form-field appearance="outline">
-					<mat-label>Other Details</mat-label>
-					<textarea
-						matInput 
-						cdkTextareaAutosize 
-						#autosize="cdkTextareaAutosize" 
-						cdkAutosizeMinRows="5" 
-						cdkAutosizeMaxRows="{{maxTextareaHeight}}" maxlength="50"
-						name="job_other_details" [(ngModel)]="description[4]" maxlength="{{maxTextareaCharLimit}}"></textarea>
-						<mat-hint>{{description[4].length}}/{{maxTextareaCharLimit}} characters</mat-hint>
-				</mat-form-field>
+			<div class="description-text-editor">
+				<p>Job Description</p>
+				<ejs-richtexteditor 
+					#fromRTE #name='ngModel' 
+					[toolbarSettings]='tools' 
+					[(value)]='description' 
+					name="description" 
+					[(ngModel)]="description">
+				</ejs-richtexteditor>
+				<span>{{description.length}}/{{maxTextareaCharLimit}} characters</span>
 			</div>
 
 
