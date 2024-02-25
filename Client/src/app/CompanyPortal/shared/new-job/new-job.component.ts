@@ -296,6 +296,7 @@ export class NewJobComponent{
 
 		addAdvertisement.city = this.locationCityControl.value ?? '';
 		addAdvertisement.country = this.locationCountryControl.value ?? '';
+		addAdvertisement.job_description = this.description;
 
 		if (addAdvertisement.city == '' || addAdvertisement.country == ''){
 			alert('Input Error: Location is required');
@@ -311,12 +312,9 @@ export class NewJobComponent{
 			}
 		}
 
-		if (this.description.length > this.maxTextareaCharLimit){
+		if (addAdvertisement.job_description.length > this.maxTextareaCharLimit){
 			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 			return;
-		}
-		else{
-			addAdvertisement.job_description = this.description;
 		}
 
 		console.log(addAdvertisement);

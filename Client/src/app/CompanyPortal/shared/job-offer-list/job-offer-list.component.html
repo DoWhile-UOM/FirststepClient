@@ -42,15 +42,15 @@
       <td mat-cell *matCellDef="let joboffer"> {{joboffer.title}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="Status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status"> Status </th>
-      <td mat-cell *matCellDef="let joboffer"> {{joboffer.status}} </td>
-    </ng-container>
-
     <!-- postedDate Column -->
     <ng-container matColumnDef="Posted Date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Date"> Posted Date </th>
       <td mat-cell *matCellDef="let joboffer"> {{joboffer.posted_date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by status"> Status </th>
+      <td mat-cell *matCellDef="let joboffer"> {{joboffer.status}} </td>
     </ng-container>
 
     <!-- Symbol Column -->

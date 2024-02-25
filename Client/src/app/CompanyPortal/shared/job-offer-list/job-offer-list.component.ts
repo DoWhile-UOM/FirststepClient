@@ -64,7 +64,7 @@ var Table_data: JobOfferTable[] = [];
 })
 
 export class JobOfferListComponent implements AfterViewInit{
-  displayedColumns: string[] = ['Job Number', 'Title', 'Status', 'Posted Date', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
+  displayedColumns: string[] = ['Job Number', 'Title', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
   dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
