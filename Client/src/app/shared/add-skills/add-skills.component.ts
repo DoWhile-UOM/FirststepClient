@@ -26,7 +26,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
       <mat-label>{{title}}</mat-label>
       <mat-chip-grid #chipGrid aria-label="skill selection">
         @for (skill of skills; track skill) {
-          <mat-chip-row (removed)="remove(skill)">
+          <mat-chip-row (removed)="removeSkill(skill)">
             {{skill}}
             <button matChipRemove [attr.aria-label]="'remove ' + skill">
               <mat-icon>cancel</mat-icon>
@@ -37,8 +37,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
       <input placeholder="New skill..." #skillInput [formControl]="skillCtrl"
         [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="add($event)"/>
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        (matChipInputTokenEnd)="addSkill($event)"/>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedSkill($event)">
         @for (skill of filteredskills | async; track skill) {
           <mat-option [value]="skill">{{skill}}</mat-option>
         }
@@ -70,11 +70,11 @@ export class AddSkillsComponent {
   constructor() {
     this.filteredskills = this.skillCtrl.valueChanges.pipe(
       startWith(null),
-      map((skill: string | null) => (skill ? this._filter(skill) : this.allskills.slice())),
+      map((skill: string | null) => (skill ? this._filterSkills(skill) : this.allskills.slice())),
     );
   }
 
-  add(event: MatChipInputEvent): void {
+  addSkill(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     // Add our skill
@@ -88,7 +88,7 @@ export class AddSkillsComponent {
     this.skillCtrl.setValue(null);
   }
 
-  remove(skill: string): void {
+  removeSkill(skill: string): void {
     const index = this.skills.indexOf(skill);
 
     if (index >= 0) {
@@ -98,10 +98,10 @@ export class AddSkillsComponent {
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    var inputFieldValue = this.skillInput.nativeElement.value;
-		if (inputFieldValue.length > 0){
-			this.remove(inputFieldValue);
+  selectedSkill(event: MatAutocompleteSelectedEvent): void {
+    var skillFieldValue = this.skillInput.nativeElement.value;
+		if (skillFieldValue.length > 0){
+			this.removeSkill(skillFieldValue);
 		}
 
     this.skills.push(event.option.viewValue);
@@ -109,7 +109,7 @@ export class AddSkillsComponent {
     this.skillCtrl.setValue(null);
   }
 
-  private _filter(value: string): string[] {
+  private _filterSkills(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.allskills.filter(skill => skill.toLowerCase().includes(filterValue));
