@@ -6,36 +6,17 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [MatIconModule,MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatProgressBarModule],
+  imports: [MatIconModule,MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatProgressBarModule, NgIf ],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css'
 })
 export class FileUploadComponent implements OnInit {
 
-
- /* fileName = ''; 
-  constructor(private http: HttpClient) { }
-  triggerFileInput() {
-    const fileInput = document.getElementById('fileID') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
-    }
-  }
-
-  handleFileInput(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-      // access the selected file using inputElement.files[0]
-      const selectedFile = inputElement.files[0];
-      this.fileName = selectedFile.name;
-      console.log('Selected file:', selectedFile);
-    }
-  }
- */ 
   public message: string = '';
   public progress: number=0;
   @Output() public onUploadFinished = new EventEmitter();
@@ -67,6 +48,7 @@ public uploadFile = (files: FileList) => {
     });
 
 }
+
 
 }
    

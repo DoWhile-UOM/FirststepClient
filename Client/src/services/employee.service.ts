@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from '../app/apipaths/apipaths';
 import axios from 'axios';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,21 @@ export class EmployeeService {
 
     return empData;
   }
+//all employee details
+ async getEmployeeList() {
+    let empData: any;
+    try{
+      await axios.get('https://localhost:7213/api/Employee/GetAllEmployees')
+        .then((response) => {
+          empData = response.data;
+        });
+    }
+    catch (error) {
+      console.error(error);
+    }
 
-  constructor() { }
+    return empData;
+ }
 
 
   async addNewHRManager(employee: any) {
@@ -38,6 +52,9 @@ export class EmployeeService {
       console.error(error);
     }
   }
+  
+  
+  
 
   async addNewHRAssistant(employee: any) {
     try{
@@ -60,6 +77,15 @@ export class EmployeeService {
           console.log(response);
         });
       
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  async deleteEmployee(employeeID:number){
+    try{
+      await axios.delete("https://localhost:7213/api/Employee/DeleteEmployee/"+employeeID)
     }
     catch (error) {
       console.error(error);

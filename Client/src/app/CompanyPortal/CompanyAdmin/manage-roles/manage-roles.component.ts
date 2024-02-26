@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import {MatIconRegistry, MatIconModule} from '@angular/material/icon';
-import {ViewChild} from '@angular/core';
-import {MatTable, MatTableModule} from '@angular/material/table';
-
-import {MatButtonModule} from '@angular/material/button';
+import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
+import { ViewChild } from '@angular/core';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialog,
   MatDialogActions,
@@ -11,66 +10,99 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { AddrolesPopupComponent } from "../addroles-popup/addroles-popup.component";
+import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
 import { EditRoleComponent } from '../edit-role/edit-role.component';
+import { EmployeeService } from '../../../../services/employee.service';
 
-
-
-export interface PeriodicElement {
+export interface RolesData {
+  id: number;
   name: string;
   position: number;
   Role: string;
   symbol1: string;
   symbol2: string;
- 
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Nethmi Rathnayake', Role:'HR Manager',symbol1: 'delete',symbol2: 'edit'},
-  {position: 2, name: 'Ashan Induwara', Role: 'HR Manager' ,symbol1: 'delete',symbol2: 'edit'},
-  {position: 3, name: 'Giman Arawinda', Role: 'HR Manager' ,symbol1: 'delete',symbol2: 'edit'},
-  {position: 4, name: 'Nethma Karunathilaka', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-  {position: 5, name: 'Ashani Perera', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-  {position: 6, name: 'Kavinda Bandara', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-  {position: 7, name: 'Thimesha Karunathilaka', Role:'HR Manager',symbol1: 'delete',symbol2: 'edit'},
-];
-
 @Component({
-    selector: 'app-manage-roles',
-    standalone: true,
-    templateUrl: './manage-roles.component.html',
-    styleUrl: './manage-roles.component.css',
-    imports: [MatIconModule, MatButtonModule, MatTableModule, AddrolesPopupComponent]
+  selector: 'app-manage-roles',
+  standalone: true,
+  templateUrl: './manage-roles.component.html',
+  styleUrl: './manage-roles.component.css',
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    AddrolesPopupComponent,
+  ],
 })
 export class ManageRolesComponent {
-  displayedColumns: string[] = ['position', 'name', 'Role','symbol'];
-  dataSource = [...ELEMENT_DATA];
+  displayedColumns: string[] = ['position', 'name', 'Role', 'symbol'];
+  rolesData: RolesData[] = [];
 
   @ViewChild(MatTable)
-  table!: MatTable<PeriodicElement>;
+  table!: MatTable<RolesData>;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private employeeService: EmployeeService
+  ) {}
 
-  openDialog() {
-    this.dialog.open(AddrolesPopupComponent);
+  //Fetch data from the database when the component initializes
+  ngOnInit(): void {
+    this.fetchData();
   }
 
-  openEdit(){
+  fetchData(): void {
+    this.employeeService
+      .getEmployeeList()
+      .then((data: any[]) => {
+        this.rolesData = data.map((item, index) => ({
+          id: item.user_id, // Use user_id
+          position: index + 1, // Increment position
+          name: `${item.first_name} ${item.last_name}`, // Combine first_name and last_name
+          Role: item.user_type, // Use user_type
+          symbol1: 'delete', // Add symbol1 property
+          symbol2: 'edit', // Add symbol2 property
+        }));
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }
+  //end of fetch data
+  openDialog() {
+    /*  const dialogRef = this.dialog.open(AddrolesPopupComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // If the user added new data, fetch the updated data from the database
+        this.fetchData();
+      }
+    });*/
+  }
+
+  openEdit() {
     this.dialog.open(EditRoleComponent);
   }
 
- 
-  removeData() {
-    this.dataSource.pop();
-    this.table.renderRows();
-  }
- 
- 
-}
+  removeData(id: number): void {
+    this.employeeService
+      .deleteEmployee(id)
+      .then(() => {
+        this.rolesData = this.rolesData.filter(
+          (employee) => employee.id !== id
+        );
+        this.table.renderRows();
+        this.fetchData();
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+      });
 
-/* addData() {
+    /* addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
     this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
     this.table.renderRows();
   }*/
-
+  }
+}

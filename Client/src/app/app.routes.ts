@@ -21,5 +21,7 @@ export const routes: Routes = [
     // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
+
+    //shared
     {path:'file',component:FileUploadComponent}
 ];
