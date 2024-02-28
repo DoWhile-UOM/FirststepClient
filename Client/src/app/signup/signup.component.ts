@@ -13,11 +13,20 @@ export class SignupComponent {
   constructor(private auth:AuthService){}
   signupform = new FormGroup({
     Password: new FormControl('', [Validators.required]),
-    Email: new FormControl('', [Validators.required])
+    Cpassword: new FormControl('', [Validators.required]),
+    Email: new FormControl('', [Validators.required]),
+    Fname: new FormControl('', [Validators.required]),
+    Lname: new FormControl('', [Validators.required]),
+    Phone: new FormControl('', [Validators.required])
+
   });
 
 
   onSignup(){
+    if(this.signupform.value.Password!=this.signupform.value.Cpassword){
+      alert("Password and Confirm Password should be same")
+      return
+    }
     console.log(this.signupform.value);
     //this.auth.signup(this.myForm.value)
     this.auth.signup(this.signupform.value)

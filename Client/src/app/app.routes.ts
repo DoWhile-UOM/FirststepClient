@@ -13,6 +13,7 @@ import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded
 import { LoginComponent } from './Login/login/login.component';
 
 import { SignupComponent } from './signup/signup.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
 
@@ -30,7 +31,7 @@ export const routes: Routes = [
     
   // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
-    {path:'home',component:SeekerHomePageComponent},
+    {path:'home',component:SeekerHomePageComponent,canActivate:[authGuard]},
     {path:'company-profile',component:CompanyProfileComponent},
     {path:'newJobUploaded',component:NewJobUploadedComponent}
 ];

@@ -15,8 +15,8 @@ export class LoginComponent {
 
 
   loginForm = new FormGroup({
-    Password: new FormControl('', [Validators.required]),
-    Email: new FormControl('', [Validators.required])
+    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required])
   });
 
   onLogin(){
@@ -25,12 +25,13 @@ export class LoginComponent {
     this.auth.login(this.loginForm.value)
     .subscribe({
       next:(res)=>{
+        this.auth.storeToken(res.token)
         alert(res.message)
-        console.log(res.message)
+        console.log(res.token)
       },
       error:(err)=>{
         alert(err.message)
-        console.log(err.message)
+        console.log(err)
       }
   });
   

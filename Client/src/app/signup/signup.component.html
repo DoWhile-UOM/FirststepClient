@@ -1,6 +1,9 @@
 <form [formGroup]="signupform">
-    
+    <input type="text" formControlName="Fname" placeholder="Firt Name">
+    <input type="text" formControlName="Lname" placeholder="Last Name">
     <input type="email" formControlName="Email" placeholder="Email">
-    <input type="text" formControlName="Password" placeholder="Name">
+    <input type="text" formControlName="Phone" placeholder="Phone">
+    <input type="text" formControlName="Password" placeholder="Password">
+    <input type="text" formControlName="Cpassword" placeholder="Confirm Password">
     <button type="submit" [disabled]="!signupform.valid" (click)="onSignup()">Submit</button>
 </form>
