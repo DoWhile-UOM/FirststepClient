@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AsyncPipe } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { SkillService } from '../../../services/skill.service';
 
 @Component({
   selector: 'app-add-skills',
@@ -53,25 +54,30 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     }
   `
 })
-export class AddSkillsComponent {
+export class AddSkillsComponent implements OnInit{
   @Input() title: string = "Skills";
   @Input() hint: string = "";
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   skillCtrl = new FormControl('');
   filteredskills: Observable<string[]>;
-  skills: string[] = [];
-  allskills: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  public skills: string[] = [];
+  allskills: string[] = [];
 
   @ViewChild('skillInput') skillInput!: ElementRef<HTMLInputElement>;
 
   announcer = inject(LiveAnnouncer);
 
-  constructor() {
+  constructor(private skillService: SkillService) {
     this.filteredskills = this.skillCtrl.valueChanges.pipe(
       startWith(null),
       map((skill: string | null) => (skill ? this._filterSkills(skill) : this.allskills.slice())),
     );
+  }
+
+  async ngOnInit() {
+    this.allskills = await this.skillService.getAllSkills();
+    alert(this.allskills.length);
   }
 
   addSkill(event: MatChipInputEvent): void {
@@ -80,6 +86,8 @@ export class AddSkillsComponent {
     // Add our skill
     if (value) {
       this.skills.push(value);
+
+      
     }
 
     // Clear the input value

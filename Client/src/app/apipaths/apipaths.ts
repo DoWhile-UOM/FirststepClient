@@ -19,6 +19,9 @@ export class Apipaths {
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 
+    // skills 
+    static readonly getAllSkills: string = this.baseUrl + 'Skills/GetAllSkills';
+
     // fields
     static readonly getAllFields: string = this.baseUrl + 'JobField/GetAllJobFields';
 

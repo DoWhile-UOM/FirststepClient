@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, inject, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, inject, HostListener } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
@@ -47,6 +47,7 @@ interface AddJob {
     hrManager_id: number;
     field_id: number;
     keywords: string[];
+	reqSkills: string[];
 }
 
 interface Job{
@@ -81,7 +82,7 @@ interface Job{
 	styleUrl: './new-job.component.css'
 })
 
-export class NewJobComponent{
+export class NewJobComponent implements AfterViewInit, OnInit{
 	adData: Job = {} as Job;
 
 	noOfCols: number = 3;
@@ -133,6 +134,9 @@ export class NewJobComponent{
 	allkeywords: string[] = [];
 	@ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
 	announcer = inject(LiveAnnouncer);
+
+	skills: string[] = [];
+	@ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
 
 	public tools: object = {
         type: 'Expand',
@@ -197,6 +201,12 @@ export class NewJobComponent{
 		}
 	}
 
+	ngAfterViewInit() {
+		//this.onResize();
+
+		this.skills = this.addSkillsComponent.skills;
+	}
+
 	@HostListener('window:resize', ['$event'])
 	onResize() {
 		// resize the grid list based on the window size
@@ -234,6 +244,8 @@ export class NewJobComponent{
 
   	async createNewJob(addAdvertisement: AddJob){
 		addAdvertisement.keywords = this.keywords;
+		addAdvertisement.reqSkills = this.skills;
+		
 		addAdvertisement.hrManager_id = 10; // sample hrManager_id
 
 		addAdvertisement.city = this.locationCityControl.value ?? '';
@@ -270,6 +282,14 @@ export class NewJobComponent{
 			this.snackBar.open("Error Uploading Job", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 		}	
   	}
+
+	changeSkillsArray($event: Event){
+		var skills = $event;
+		if (skills != null){
+			this.skills = skills as unknown as string[];
+		}
+		alert("Skills: " + this.skills);
+	}
 
 	add(event: MatChipInputEvent): void {
 		const value = (event.value || '').trim();

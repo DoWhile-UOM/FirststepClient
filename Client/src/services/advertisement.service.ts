@@ -42,6 +42,7 @@ export class AdvertisementServices {
     await axios.post(Apipaths.addNewJob, job)
       .then(function (res) {
         response = res;
+        return true;
       })
       .catch(function (error) {
         alert('Network Error: ' + error);

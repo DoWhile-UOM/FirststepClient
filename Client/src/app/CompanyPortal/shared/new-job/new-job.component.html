@@ -145,7 +145,7 @@
 			</mat-grid-list>
 
 			<div class="textbox-form-field">
-				<app-add-skills [hint]="'Skills that a candidate should required to have to apply this job'"></app-add-skills>
+				<app-add-skills [hint]="'Skills that a candidate should required to have to apply this job'" (skillChange)="changeSkillsArray($event)"></app-add-skills>
 			</div>
 
 			<div class="description-text-editor">
