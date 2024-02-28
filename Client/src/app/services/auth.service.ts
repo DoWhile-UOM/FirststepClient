@@ -29,9 +29,13 @@ export class AuthService {
   }
 
   isLoggedIn(){
-    var istoken=localStorage.getItem('token')
-    console.log(!!istoken)
-    return !!istoken
+    
+    try {
+      return !!localStorage.getItem('token');
+    } catch (error) {
+      //console.log(error); //raises the error
+      return false;
+    }
   }
 
 
