@@ -77,7 +77,6 @@ export class AddSkillsComponent implements OnInit{
 
   async ngOnInit() {
     this.allskills = await this.skillService.getAllSkills();
-    alert(this.allskills.length);
   }
 
   addSkill(event: MatChipInputEvent): void {
@@ -85,9 +84,7 @@ export class AddSkillsComponent implements OnInit{
 
     // Add our skill
     if (value) {
-      this.skills.push(value);
-
-      
+      this.skills.push(value)
     }
 
     // Clear the input value

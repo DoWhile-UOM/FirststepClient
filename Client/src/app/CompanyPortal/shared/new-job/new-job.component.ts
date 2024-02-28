@@ -313,10 +313,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 			this.announcer.announce(`Removed ${keyword}`);
 		}
-		else{
-
-			alert(`Keyword not found`);
-		}
 	}
 
 	selected(event: MatAutocompleteSelectedEvent): void {

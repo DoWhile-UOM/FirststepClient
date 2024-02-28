@@ -1,6 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
 
+interface Skill{
+	skill_name: string;
+	skill_id: number;
+  }
+  
 interface Job{
 	job_number: number;
 	title: string;
@@ -15,21 +22,20 @@ interface Job{
 	job_description: string;
 	field_name: string;
 	company_name: string;
+	skills: Skill[];
 }
 
 @Component({
-  selector: 'app-advertisement-view',
-  standalone: true,
-  templateUrl: './advertisement-view.component.html',
-  styleUrl: './advertisement-view.component.css',
-  imports: [MatButtonModule]
+	selector: 'app-advertisement-view',
+	standalone: true,
+	templateUrl: './advertisement-view.component.html',
+	styleUrl: './advertisement-view.component.css',
+	imports: [MatButtonModule, CommonModule, MatChipsModule]
 })
 export class AdvertisementViewComponent implements OnInit{
-  @Input() adData!: Job;
+	@Input() adData!: Job;
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit(): void {
-    
-  }
+	ngOnInit(): void {}
 }

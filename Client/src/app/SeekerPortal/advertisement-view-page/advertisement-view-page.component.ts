@@ -7,6 +7,11 @@ import { CaNavBarComponent } from '../../CompanyPortal/CompanyAdmin/ca-nav-bar/c
 import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 
+interface Skill{
+  skill_name: string;
+  skill_id: number;
+}
+
 interface Job{
 	job_number: number;
 	title: string;
@@ -21,6 +26,7 @@ interface Job{
 	job_description: string;
 	field_name: string;
 	company_name: string;
+  skills: Skill[];
 }
 
 @Component({
