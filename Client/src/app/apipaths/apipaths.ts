@@ -10,6 +10,7 @@ export class Apipaths {
     static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
     static readonly getAdvertisementsByCompanyID: string = this.baseUrl + 'Advertisement/GetAdvertisementsByCompanyID/'; // + company_id
     static readonly addNewJob: string = this.baseUrl + 'Advertisement/AddAdvertisement';
+    static readonly changeStatusOfJob: string = this.baseUrl + 'Advertisement/ChangeStatus/'; // + advertisement_id
     static readonly deleteJob: string = this.baseUrl + 'Advertisement/DeleteAdvertisement/'; // + advertisement_id
 
     // company
@@ -17,6 +18,9 @@ export class Apipaths {
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
+
+    // skills 
+    static readonly getAllSkills: string = this.baseUrl + 'Skills/GetAllSkills';
 
     // fields
     static readonly getAllFields: string = this.baseUrl + 'JobField/GetAllJobFields';
