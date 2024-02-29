@@ -13,14 +13,15 @@ import {
 import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../../services/employee.service';
+import { SuccessPopupComponent } from '../../shared/success-popup/success-popup.component';
+
 
 export interface RolesData {
   id: number;
   name: string;
+  email:string;
   position: number;
   Role: string;
-  symbol1: string;
-  symbol2: string;
 }
 
 @Component({
@@ -36,15 +37,18 @@ export interface RolesData {
   ],
 })
 export class ManageRolesComponent {
-  displayedColumns: string[] = ['position', 'name', 'Role', 'symbol'];
+  displayedColumns: string[] = ['position', 'name','email', 'Role', 'symbol'];
   rolesData: RolesData[] = [];
+
+  company_id: number = 7; // sample company_id
 
   @ViewChild(MatTable)
   table!: MatTable<RolesData>;
 
   constructor(
     public dialog: MatDialog,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+ 
   ) {}
 
   //Fetch data from the database when the component initializes
@@ -52,39 +56,24 @@ export class ManageRolesComponent {
     this.fetchData();
   }
 
-  fetchData(): void {
-    this.employeeService
-      .getEmployeeList()
+  async fetchData() {
+    await this.employeeService
+      .getEmployeeList(this.company_id)
       .then((data: any[]) => {
         this.rolesData = data.map((item, index) => ({
           id: item.user_id, // Use user_id
           position: index + 1, // Increment position
-          name: `${item.first_name} ${item.last_name}`, // Combine first_name and last_name
-          Role: item.user_type, // Use user_type
-          symbol1: 'delete', // Add symbol1 property
-          symbol2: 'edit', // Add symbol2 property
+          name: `${item.first_name} ${item.last_name}`, 
+          email:item.email,
+          Role: (item.user_type) == 'HRM' ? 'HR Manager': 'HR Assistant', // Use user_type
         }));
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        error('Error fetching data:', error);
       });
   }
   //end of fetch data
-  openDialog() {
-    /*  const dialogRef = this.dialog.open(AddrolesPopupComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // If the user added new data, fetch the updated data from the database
-        this.fetchData();
-      }
-    });*/
-  }
-
-  openEdit() {
-    this.dialog.open(EditRoleComponent);
-  }
-
+ 
   removeData(id: number): void {
     this.employeeService
       .deleteEmployee(id)
@@ -98,11 +87,28 @@ export class ManageRolesComponent {
       .catch((error) => {
         console.error('Error deleting data:', error);
       });
+    }
 
-    /* addData() {
-    const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
-    this.table.renderRows();
-  }*/
+    openDialog(){
+      const dialog=this.dialog.open(AddrolesPopupComponent); 
+      dialog.afterClosed().subscribe(result => {
+        if(result=true){
+          this.fetchData();
+          window.location.reload();
+        }
+      });
+    }
+
+    openEdit() {
+      const editdialog=this.dialog.open(EditRoleComponent);
+      editdialog.afterClosed().subscribe(result => {
+        if(result=true){
+          this.fetchData();
+          window.location.reload();
+        }
+      });
+    }
+     
   }
-}
+    
+  

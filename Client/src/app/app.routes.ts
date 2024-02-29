@@ -9,6 +9,7 @@ import { AdvertisementViewPageComponent } from './SeekerPortal/advertisement-vie
 import { SeekerHomePageComponent } from './SeekerPortal/seeker-home-page/seeker-home-page.component';
 import { NewJobComponent } from './CompanyPortal/shared/new-job/new-job.component';
 import { FileUploadComponent } from './CompanyPortal/shared/file-upload/file-upload.component';
+import { SeekerApplicationFormComponent } from './SeekerPortal/seeker-application-form/seeker-application-form.component';
 
 export const routes: Routes = [
     // company portal
@@ -21,6 +22,8 @@ export const routes: Routes = [
     // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
     {path:'home',component:SeekerHomePageComponent},
+    {path:'applicationForm',component:SeekerApplicationFormComponent},
+    
 
     //shared
     {path:'file',component:FileUploadComponent}

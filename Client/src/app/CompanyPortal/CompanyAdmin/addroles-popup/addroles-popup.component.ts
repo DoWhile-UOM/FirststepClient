@@ -57,14 +57,7 @@ export class AddrolesPopupComponent {
       await this.employeeService.addNewHRManager(this.employee);
     }
   }
-  durationInSeconds = 2;
- 
-  openSnackBar() {
-    this._snackBar.openFromComponent(SuccessPopupComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
-  }
 
-
- 
+  
 }
+

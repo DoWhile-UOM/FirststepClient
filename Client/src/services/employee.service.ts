@@ -23,16 +23,16 @@ export class EmployeeService {
     return empData;
   }
 //all employee details
- async getEmployeeList() {
+ async getEmployeeList(company_id: number) {
     let empData: any;
     try{
-      await axios.get('https://localhost:7213/api/Employee/GetAllEmployees')
+      await axios.get('https://localhost:7213/api/Employee/GetAllEmployees/' + company_id)
         .then((response) => {
           empData = response.data;
         });
     }
     catch (error) {
-      console.error(error);
+      //console.error(error);
     }
 
     return empData;
@@ -52,7 +52,8 @@ export class EmployeeService {
       console.error(error);
     }
   }
-  
+ 
+
   
   
 
@@ -70,7 +71,7 @@ export class EmployeeService {
     }
   }
 
-  async editNewHRManager(employee: any, employeeID: number) {
+  async editemployee(employee: any, employeeID: number) {
     try{      
       await axios.put("https://localhost:7213/api/Employee/UpdateEmployee/" + employeeID, employee)
         .then((response) => {

@@ -61,5 +61,9 @@ export class EditRoleComponent implements OnInit {
   async fetchEmployeeDetails() {
     this.employeeDetails = await this.employeeService.getEmployeeDetails(this.user_id);
   }
+
+  async onApply() {
+    await this.employeeService.editemployee(this.employeeDetails, this.user_id); 
+  }
   
 }

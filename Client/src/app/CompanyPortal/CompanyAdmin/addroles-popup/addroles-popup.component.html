@@ -31,8 +31,8 @@
 
 <section class="buttons">
   <mat-dialog-actions>
-  <button type="submit" mat-raised-button color="primary" (click)="openSnackBar()" aria-label="Show an example snack-bar">Create Account</button>
-  <button type="button" mat-raised-button color="primary" class="cancel" mat-button mat-dialog-close>Cancel</button>
+  <button type="submit" mat-raised-button color="primary"  aria-label="Show an example snack-bar" [mat-dialog-close]="true" cdkFocusInitial>Create Account</button>
+  <button type="button" mat-raised-button color="primary" class="cancel"  mat-button mat-dialog-close>Cancel</button>
 </mat-dialog-actions>
 </section>
 

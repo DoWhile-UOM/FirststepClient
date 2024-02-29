@@ -15,7 +15,7 @@
   <div class="fileupload">
     
     <div id="Documentsubmissioncontainer" class="formchild">
-      <mat-progress-bar *ngIf="progress > 0" mode="determinate" [value]="progress"></mat-progress-bar>
+      
       <input type="file" #file style="display: none" (change)="file.files && uploadFile(file.files)" onchange="console.log(event.target.files)"/>
       <span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
       <button class="fileuploadbtn" mat-button (click)="file.click()">

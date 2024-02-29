@@ -1,5 +1,5 @@
 
-<form class="form-container"  #subroleForm="ngForm">
+<form class="form-container"  #subroleForm="ngForm" (ngSubmit)="onApply()">
   <h2 mat-dialog-title>Edit Account Details</h2>
   
   <mat-dialog-content class="mat-typography">
@@ -27,7 +27,7 @@
   
   <section class="buttons">
     <mat-dialog-actions>
-    <button type="submit" mat-raised-button color="primary" aria-label="Show an example snack-bar">Apply changes</button>
+    <button type="submit" mat-raised-button color="primary" aria-label="Show an example snack-bar" [mat-dialog-close]="true" cdkFocusInitial>Apply changes</button>
     <button type="button" mat-raised-button color="primary" class="cancel" mat-button mat-dialog-close>Close</button>
   </mat-dialog-actions>
   </section>
