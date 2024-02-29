@@ -26,6 +26,7 @@
     "@angular/ssr": "^17.1.1",
     "@canvasjs/angular-charts": "^1.1.1",
     "@canvasjs/charts": "^3.7.39",
+    "@types/axios": "^0.14.0",
     "axios": "^1.6.7",
     "canvasjs": "^1.8.3",
     "chart.js": "^4.4.1",
