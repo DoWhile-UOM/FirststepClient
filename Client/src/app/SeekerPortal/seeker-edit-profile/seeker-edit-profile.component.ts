@@ -6,7 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { ElementRef, ViewChild, inject } from '@angular/core';
+import { ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteSelectedEvent,
@@ -22,6 +22,17 @@ import {MatCardModule} from '@angular/material/card';
 import { OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { MatIconRegistry } from '@angular/material/icon';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+ //import { seekerservice } from '../../services/seeker.service';
+
 
 @Component({
   selector: 'app-seeker-edit-profile',
@@ -30,13 +41,10 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './seeker-edit-profile.component.html',
   styleUrl: './seeker-edit-profile.component.css'
 })
-export class SeekerEditProfileComponent implements OnInit {
 
-  // ngOnInit(): void {
-  //   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-  //   //Add 'implements OnInit' to the class.
-    
-  // }
+
+export class SeekerEditProfileComponent {
+ 
   url = "./assets/images/SeekerEdit.jpg";
   
   onselectFile(event: any){
@@ -50,29 +58,23 @@ export class SeekerEditProfileComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient) { }
-
-  ngOnInit() {
-    this.fetchPosts();
-  }
-
-  fetchPosts() {
-    this.http
-      .get<any>('http://localhost:3000/api/posts')
-      .pipe(
-        map(responseData => {
-          const postsArray = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              postsArray.push({ ...responseData[key], id: key });
-            }
-          }
-          return postsArray;
-        })
-      )
-      .subscribe(posts => {
-        console.log(posts);
-      });
-  }
+  // constructor(private seekerService: seekerservice) { }
+  
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  
