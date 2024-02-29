@@ -28,12 +28,14 @@ interface Job {
 export class SeekerHomePageComponent implements OnInit{
   jobList: Job[] = [];
 
+  seekerID: number = 4; // sample seekerID
+
   constructor(private advertisementService: AdvertisementServices) {
     
   }
 
   async ngOnInit(){
-    await this.advertisementService.getAllAdvertisements()
+    await this.advertisementService.getAllAdvertisements(String(this.seekerID))
       .then((response) => {
         this.jobList = response;
 

@@ -33,10 +33,6 @@ export class AdvertisementCardComponent implements OnInit{
   }
 
   ngOnInit() : void{ 
-    if (this.job.is_saved){
-      this.icon = 'bookmark';
-    }
-    this.icon = 'bookmark';
   }
 
   onClickMoreDetails() {
