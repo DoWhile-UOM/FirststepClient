@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-advertisement-actions',
@@ -21,7 +22,8 @@ export class AdvertisementActionsComponent {
 
   constructor(
     private advertisementServices: AdvertisementServices,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit() {
     if (this.currentStatus){
@@ -44,5 +46,9 @@ export class AdvertisementActionsComponent {
     this.icon = 'bookmark_border';
     this.snackbar.open("Unsaved job...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
     this.currentStatus = false;
+
+    if (this.router.url == '/home/saved'){
+      window.location.reload();
+    }
   }
 }
