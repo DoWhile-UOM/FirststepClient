@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,7 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { FileUploadComponent } from '../../shared/file-upload/file-upload.component';
 import { FormsModule } from '@angular/forms';
 
+
 import {
+  MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -32,7 +34,6 @@ interface Employee {
     MatFormFieldModule,
     MatButtonModule,
     FileUploadComponent,
-
     MatInputModule,
     MatFormFieldModule,
     MatRadioModule,
@@ -40,30 +41,30 @@ interface Employee {
     FileUploadComponent,
     FormsModule,
     MatDialogModule,
-    MatDialogContent,
-    MatDialogActions,
     MatDialogClose,
   ],
   templateUrl: './edit-role.component.html',
   styleUrl: './edit-role.component.css',
 })
 export class EditRoleComponent implements OnInit {
-  employeeDetails: any = {};
-
-  user_id: number = 19;
-
-  constructor(private employeeService: EmployeeService) {}
+ /* employeeDetails: any = {};*/
+  employeeDetails: Employee = {} as Employee;
  
+
+  constructor(private employeeService: EmployeeService,@Inject(MAT_DIALOG_DATA)public data:any) {}
+  user_id: number = this.data.id;
   async ngOnInit() {
     this.fetchEmployeeDetails();
+    console.log(this.data);
   }
   
   async fetchEmployeeDetails() {
     this.employeeDetails = await this.employeeService.getEmployeeDetails(this.user_id);
   }
 
+
   async onApply() {
-    await this.employeeService.editemployee(this.employeeDetails, this.user_id); 
+   await this.employeeService.editemployee(this.employeeDetails, this.user_id);
   }
-  
+ 
 }

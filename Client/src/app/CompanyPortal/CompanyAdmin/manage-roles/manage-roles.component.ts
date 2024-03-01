@@ -99,16 +99,17 @@ export class ManageRolesComponent {
       });
     }
 
-    openEdit() {
-      const editdialog=this.dialog.open(EditRoleComponent);
-      editdialog.afterClosed().subscribe(result => {
-        if(result=true){
+    openEdit( id:number){
+      const dialog = this.dialog.open(EditRoleComponent,{data:{id}});
+     
+      dialog.afterClosed().subscribe(result => {
+        if (result === true) {
           this.fetchData();
           window.location.reload();
         }
       });
     }
      
+  
   }
-    
   
