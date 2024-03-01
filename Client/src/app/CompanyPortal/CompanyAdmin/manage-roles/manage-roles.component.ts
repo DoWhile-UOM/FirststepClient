@@ -1,52 +1,115 @@
 import { Component } from '@angular/core';
-import {MatIconRegistry, MatIconModule} from '@angular/material/icon';
-import {ViewChild} from '@angular/core';
-import {MatTable, MatTableModule} from '@angular/material/table';
-import {MatButtonModule} from '@angular/material/button';
+import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
+import { ViewChild } from '@angular/core';
+import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
+import { EditRoleComponent } from '../edit-role/edit-role.component';
+import { EmployeeService } from '../../../../services/employee.service';
+import { SuccessPopupComponent } from '../../shared/success-popup/success-popup.component';
 
 
-export interface PeriodicElement {
+export interface RolesData {
+  id: number;
   name: string;
+  email:string;
   position: number;
   Role: string;
-  symbol1: string;
-  symbol2: string;
- 
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Nethmi Rathnayake', Role:'HR Manager',symbol1: 'delete',symbol2: 'edit'},
-  {position: 2, name: 'Ashan Induwara', Role: 'HR Manager' ,symbol1: 'delete',symbol2: 'edit'},
-  {position: 3, name: 'Giman Arawinda', Role: 'HR Manager' ,symbol1: 'delete',symbol2: 'edit'},
-  {position: 4, name: 'Nethma Karunathilaka', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-  {position: 5, name: 'Ashani Perera', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-  {position: 6, name: 'Kavinda Bandara', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-  {position: 7, name: 'Gayuni Basnayaka', Role:'HR Assistant',symbol1: 'delete',symbol2: 'edit'},
-];
 
 @Component({
   selector: 'app-manage-roles',
   standalone: true,
-  imports: [MatIconModule,MatButtonModule, MatTableModule],
   templateUrl: './manage-roles.component.html',
-  styleUrl: './manage-roles.component.css'
+  styleUrl: './manage-roles.component.css',
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    AddrolesPopupComponent,
+  ],
 })
 export class ManageRolesComponent {
-  displayedColumns: string[] = ['position', 'name', 'Role','symbol'];
-  dataSource = [...ELEMENT_DATA];
+  displayedColumns: string[] = ['position', 'name','email', 'Role', 'symbol'];
+  rolesData: RolesData[] = [];
+
+  company_id: number = 7; // sample company_id
 
   @ViewChild(MatTable)
-  table!: MatTable<PeriodicElement>;
+  table!: MatTable<RolesData>;
 
-  addData() {
-    const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
-    this.table.renderRows();
+  constructor(
+    public dialog: MatDialog,
+    private employeeService: EmployeeService,
+ 
+  ) {}
+
+  //Fetch data from the database when the component initializes
+  ngOnInit(): void {
+    this.fetchData();
   }
 
-  removeData() {
-    this.dataSource.pop();
-    this.table.renderRows();
+  async fetchData() {
+    await this.employeeService
+      .getEmployeeList(this.company_id)
+      .then((data: any[]) => {
+        this.rolesData = data.map((item, index) => ({
+          id: item.user_id, // Use user_id
+          position: index + 1, // Increment position
+          name: `${item.first_name} ${item.last_name}`, 
+          email:item.email,
+          Role: (item.user_type) == 'HRM' ? 'HR Manager': 'HR Assistant', // Use user_type
+        }));
+      })
+      .catch((error) => {
+        error('Error fetching data:', error);
+      });
   }
-}
+  //end of fetch data
+ 
+  removeData(id: number): void {
+    this.employeeService
+      .deleteEmployee(id)
+      .then(() => {
+        this.rolesData = this.rolesData.filter(
+          (employee) => employee.id !== id
+        );
+        this.table.renderRows();
+        this.fetchData();
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+      });
+    }
 
+    openDialog(){
+      const dialog=this.dialog.open(AddrolesPopupComponent); 
+      dialog.afterClosed().subscribe(result => {
+        if(result=true){
+          this.fetchData();
+          window.location.reload();
+        }
+      });
+    }
+
+    openEdit( id:number){
+      const dialog = this.dialog.open(EditRoleComponent,{data:{id}});
+     
+      dialog.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.fetchData();
+          window.location.reload();
+        }
+      });
+    }
+     
+  
+  }
+  
