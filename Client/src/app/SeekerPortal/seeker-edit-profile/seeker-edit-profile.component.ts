@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -19,7 +19,6 @@ import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
-import { OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MatIconRegistry } from '@angular/material/icon';
@@ -31,7 +30,7 @@ import {
   MatDialogContent,
   MatDialogTitle,
 } from '@angular/material/dialog';
- //import { seekerservice } from '../../services/seeker.service';
+import { SeekerService } from '../../../services/seeker.service';
 
 
 @Component({
@@ -43,9 +42,17 @@ import {
 })
 
 
-export class SeekerEditProfileComponent {
+export class SeekerEditProfileComponent implements OnInit{
  
   url = "./assets/images/SeekerEdit.jpg";
+
+  constructor(private seekerService: SeekerService) { }
+
+  async ngOnInit() {
+    let seekerID = 4; // sample seeker id
+    let seekerData = await this.seekerService.getSeeker(seekerID);
+    console.log(seekerData);
+  }
   
   onselectFile(event: any){
     if(event.target.files){

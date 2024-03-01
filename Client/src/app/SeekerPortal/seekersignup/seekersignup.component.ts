@@ -26,6 +26,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 
 
+
 @Component({
     selector: 'app-seekersignup',
     standalone: true,
