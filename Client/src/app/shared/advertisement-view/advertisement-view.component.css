@@ -54,7 +54,12 @@
 
 .section{
     margin-top: 2em;
-    margin-bottom: 3em;
+    margin-bottom: 2.5em;
+    font-family: Lato;
+}
+
+.skill-set{
+    margin-top: 2em;
 }
 
 .heading {
@@ -72,10 +77,22 @@
     font-style: italic;
     font-weight: 700;
     word-wrap: break-word;
-    margin-top: 0.75em;
+    margin-top: 0.25em;
 }
 
-.apply-button {
-    background-color: #008080;
+.skill-chip{
+    background-color: #0a9a8d;
     color: white;
+    padding: 0.6em 1em;
+    margin-right: 1em;
+    border-radius: 20px;
+    font-size: 13.5px;
+    margin-bottom: 0.5em;
+}
+
+.skill-set{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2em;
 }

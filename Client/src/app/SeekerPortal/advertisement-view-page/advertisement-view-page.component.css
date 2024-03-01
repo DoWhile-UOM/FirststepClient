@@ -1,11 +1,16 @@
+mat-card{
+    height: auto;
+    padding: 4%;
+    box-shadow: 
+        0px 0px 10px 0px #9b9b9b,
+        0 1px 1px 0 #9b9b9b,
+        0 1px 3px 0 #9b9b9b;
+}
+
 .container{
     margin: 0 auto;
     width: 65%;
-    height: auto;
-    padding: 2% 2% 3% 2%;
-    margin-top: 5px;
-    border: 1px solid #A9A9A9;
-    border-radius: 15px;
+    margin-top: 2em;
 }
 
 hr{

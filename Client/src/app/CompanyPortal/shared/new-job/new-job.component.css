@@ -1,6 +1,7 @@
 .container{
     padding: 3em;
     width: 60%;
+    min-width: 400px;
     margin: 0 auto;
 }
 
@@ -8,9 +9,13 @@
     padding: 2em;
 }
 
+.form-container{
+    margin-top: 2em;
+}
+
 mat-grid-tile mat-form-field{
     width: 100%;
-    margin: 1em;
+    margin: 0.75em;
 }
 
 mat-grid-tile{
@@ -18,13 +23,28 @@ mat-grid-tile{
 }
 
 .textbox-form-field{
-    margin-bottom: 1.2em;
     position: relative;
+    width: calc(100% - 2.2em);
+    margin: 0 auto;
 }
 
-.textbox-form-field mat-form-field{
+.chips-form-field{
+    width: 100%;
+    margin-bottom: 1.2em;
+}
+
+.description-text-editor{
     padding-left: 1em;
-    width: calc(100% - 2em);
+    width: calc(100% - 2.2em);
+    margin-bottom: 1.2em;
+    padding-top: 1em;
+}
+
+.description-text-editor p{
+    font-size: 15px;
+    word-wrap: break-word;
+    margin-top: 0.75em;
+    padding-left: 0.75em;
 }
 
 .title{
