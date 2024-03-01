@@ -51,6 +51,8 @@ export class CompanyProfileComponent {
   company: Company = {} as Company;
   jobList: Job[] = [];
 
+  seekerID: number = 4; // sample seekerID
+
   constructor(private advertisementService: AdvertisementServices, private router: ActivatedRoute) { }
 
   async ngOnInit(){
@@ -62,7 +64,7 @@ export class CompanyProfileComponent {
       return;
     }
 
-    this.advertisementService.getCompanyProfile(company_id)
+    this.advertisementService.getCompanyProfile(company_id, String(this.seekerID))
       .then((response) => {
         this.company = response;
 

@@ -10,10 +10,10 @@ export class AdvertisementServices {
 
   constructor() { }
 
-  async getAllAdvertisements() {
+  async getAllAdvertisements(seekerID: string) {
     let jobList: any = [];
 
-    await axios.get(Apipaths.getAdvertisements)
+    await axios.get(Apipaths.getAdvertisements + '/seekerID=' + seekerID)
       .then(function (response) {
         try {
           jobList = response.data;
@@ -52,11 +52,11 @@ export class AdvertisementServices {
     return true;
   }
 
-  async getCompanyProfile(company_id: string) {
+  async getCompanyProfile(company_id: string, seekerID: string) {
     let company: any;
     let jobList: any = [];
 
-    await axios.get(Apipaths.getCompanyProfile + company_id)
+    await axios.get(Apipaths.getCompanyProfile + company_id + "/seekerID=" + seekerID)
       .then(function (response) {
         try {
           company = response.data;
@@ -189,5 +189,56 @@ export class AdvertisementServices {
       });
 
     return response;
+  }
+
+  async saveAdvertisement(jobID: string, seekerID: string, isSave: boolean) {
+    let response: any = null;
+
+    if (isSave) {
+      await axios.put(Apipaths.saveJob + jobID + "/seekerId=" + seekerID)
+        .then(function (res) {
+          response = res;
+        })
+        .catch(function (error) {
+          alert('Network Error: ' + error);
+        });
+    }
+    else {
+      await axios.put(Apipaths.unsaveJob + jobID + "/seekerId=" + seekerID)
+        .then(function (res) {
+          response = res;
+        })
+        .catch(function (error) {
+          alert('Network Error: ' + error);
+        });
+    }
+
+    return response;
+  }
+
+  async getSavedAdvertisements(seekerID: string) {
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getSavedAdvertisements + seekerID)
+      .then(function (response) {
+        try {
+          jobList = response.data;
+          
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+        }
+        catch (error) {
+          console.log("No advertisements found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
   }
 }

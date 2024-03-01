@@ -19,23 +19,21 @@ interface Job {
 }
 
 @Component({
-  selector: 'app-seeker-home-page',
+  selector: 'app-saved-advertisement-list',
   standalone: true,
-  imports: [ AdvertisementCardComponent, CommonModule,NavBarComponent],
-  templateUrl: './seeker-home-page.component.html',
-  styleUrl: './seeker-home-page.component.css'
+  imports: [NavBarComponent, AdvertisementCardComponent, CommonModule],
+  templateUrl: './saved-advertisement-list.component.html',
+  styleUrl: './saved-advertisement-list.component.css'
 })
-export class SeekerHomePageComponent implements OnInit{
+export class SavedAdvertisementListComponent {
   jobList: Job[] = [];
 
   seekerID: number = 4; // sample seekerID
 
-  constructor(private advertisementService: AdvertisementServices) {
-    
-  }
+  constructor(private advertisementService: AdvertisementServices) {}
 
   async ngOnInit(){
-    await this.advertisementService.getAllAdvertisements(String(this.seekerID))
+    await this.advertisementService.getSavedAdvertisements(String(this.seekerID))
       .then((response) => {
         this.jobList = response;
 
@@ -45,4 +43,3 @@ export class SeekerHomePageComponent implements OnInit{
       });
   }
 }
-
