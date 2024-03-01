@@ -10,20 +10,42 @@ import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-
 import { JobOfferListComponent } from './CompanyPortal/shared/job-offer-list/job-offer-list.component';
 
 import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
+import { LoginComponent } from './Login/login/login.component';
+import { CompanyProfileEditComponent } from './CompanyPortal/CompanyAdmin/company-profile-edit/company-profile-edit.component';
+import { RoleProfileEditComponent } from './CompanyPortal/shared/role-profile-edit/role-profile-edit.component';
+import { CompanyAdminRegistrtionFormComponent } from './CompanyPortal/CompanyAdmin/company-admin-registrtion-form/company-admin-registrtion-form.component';
 
 export const routes: Routes = [
-    // company portal
-    {path:'ManageRoles',component:ManageRolesComponent},
-    {path:'AddRole',component:AddrolesPopupComponent},
-    {path:'EditRole',component:EditRoleComponent},
-    //{path:'AdminDashBoard',component:AdminDashboardComponent},
-    {path:'jobOfferList/newJob',component:NewJobComponent},
-    {path:'jobOfferList/updateJobDetails',component:NewJobComponent},
-    {path:'jobOfferList',component:JobOfferListComponent},
-    
+  // company portal
+  { path: 'ManageRoles', component: ManageRolesComponent },
+  { path: 'AddRole', component: AddrolesPopupComponent },
+  { path: 'EditRole', component: EditRoleComponent },
+  {
+    path: 'company-admin/profile-edit',
+    component: CompanyProfileEditComponent,
+  },
+  {
+    path: 'company-registration/company-admin-registration',
+    component: CompanyAdminRegistrtionFormComponent,
+  },
+  {
+    path: 'company-registration/company-roleEdit',
+    component: RoleProfileEditComponent,
+  },
+  //{path:'AdminDashBoard',component:AdminDashboardComponent},
+  { path: 'jobOfferList/newJob', component: NewJobComponent },
+  { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
+  { path: 'jobOfferList', component: JobOfferListComponent },
+
   // seeker portal
-    {path:'jobdetails',component:AdvertisementViewPageComponent},
-    {path:'home',component:SeekerHomePageComponent},
-    {path:'company-profile',component:CompanyProfileComponent},
-    {path:'newJobUploaded',component:NewJobUploadedComponent},
+  { path: 'jobdetails', component: AdvertisementViewPageComponent },
+  { path: 'home', component: SeekerHomePageComponent },
+  { path: 'company-profile', component: CompanyProfileComponent },
+  { path: 'newJobUploaded', component: NewJobUploadedComponent },
+
+  //common
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
 ];

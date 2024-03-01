@@ -1,0 +1,185 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="body">
+  <app-spinner></app-spinner>
+  <div class="bodySection">
+    <span class="sectionHeading">Company Name</span>
+    <div class="top-section">
+      <img src="assets/images/BistechLogo.png" class="md-card-image" />
+      <div class="image-side-section">
+        <form class="form">
+          <mat-form-field
+            class="form-field company-name-field"
+            appearance="outline"
+          >
+            <mat-label>Company Name</mat-label>
+            <input
+              matInput
+              #companyName
+              placeholder="Enter your Company Name"
+              [value]="company.company_name"
+              (input)="company.company_name = companyName.value"
+            /><mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+
+    <div class="bottom-section">
+      <div class="sectionTwo" style="width: 100%">
+        <form class="form">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              #companyDescription
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="5"
+              [value]="company.company_description"
+              (input)="company.company_description = companyDescription.value"
+            ></textarea
+            ><mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="details-section-two">
+        <div class="staring-section">
+          <div class="sectionTwo">
+            <form class="form">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Web Site</mat-label>
+                <input
+                  matInput
+                  #companyWebsite
+                  placeholder="Enter your Company website"
+                  [value]="company.company_website"
+                  (input)="company.company_website = companyWebsite.value"
+                /><mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="ending-section">
+          <div class="sectionTwo">
+            <form class="form">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Bussiness Scale</mat-label>
+
+                <mat-select
+                  [value]="selected"
+                  #bussiness_scale
+                  (input)="
+                    company.company_business_scale = bussiness_scale.value
+                  "
+                >
+                  <mat-option value="option1">Small Scale</mat-option>
+                  <mat-option value="option2">Medium Scale</mat-option>
+                  <mat-option value="option3">Large Scale</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="details-section-two">
+        <div class="staring-section">
+          <div class="sectionTwo">
+            <form class="form">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Phone Number</mat-label>
+                <input
+                  matInput
+                  #companyPhoneNumber
+                  placeholder="Enter your Company phone Number"
+                  [value]="company.company_phone_number"
+                  (input)="
+                    company.company_phone_number =
+                      companyPhoneNumber.valueAsNumber
+                  "
+                /><mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="ending-section">
+          <div class="sectionTwo">
+            <form class="form">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input
+                  matInput
+                  #email
+                  placeholder="Enter your email"
+                  [value]="company.company_email"
+                />
+
+                <mat-icon matSuffix>mode_edit</mat-icon>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="details-section-two">
+        <div class="staring-section">
+          <div class="sectionTwo">
+            <form class="form">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>City</mat-label>
+                <mat-select
+                  [value]="selectedCity"
+                  #city
+                  (input)="company.company_city = city.value"
+                >
+                  <mat-option value="option1">Colombo 07</mat-option>
+                  <mat-option value="option2">Wellawatta</mat-option>
+                  <mat-option value="option3">Boralesgamuwa</mat-option>
+                  <mat-option value="Moratuwa">Moratuwa</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="ending-section">
+          <div class="sectionTwo">
+            <form class="form">
+              <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Province</mat-label>
+                <mat-select
+                  [value]="selectedProvince"
+                  #province
+                  (input)="company.company_province = province.value"
+                >
+                  <mat-option value="option1">Colombo</mat-option>
+                  <mat-option value="option2">Matara</mat-option>
+                  <mat-option value="option3">Kegalle</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-section">
+      <div class="right-btn">
+        <button
+          style="margin-right: 10px"
+          class="apply-changes-class"
+          (click)="applyChanges()"
+        >
+          <span class="apply-changes">Apply Changes</span>
+        </button>
+        <button class="discard-changes-class" (click)="discardChanges()">
+          <span class="discard-changes">Discard Changes</span>
+        </button>
+      </div>
+      <div class="left-btn">
+        <button class="delete-account-class" (click)="deleteAccount()">
+          <span class="delete-account">Delete Accoount</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
