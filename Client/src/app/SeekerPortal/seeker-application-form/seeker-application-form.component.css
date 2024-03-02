@@ -3,6 +3,23 @@ header {
      height: 102px;
    }
 
- section{
-    background-color: aqua;
- }  
+ .example-card {
+  margin:2vw;
+  width:95%;
+  height:calc(100% - 102px);
+}
+
+.detailsField{
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+}
+
+.textSection{
+  display:flex;
+  
+}
+
+.fieldSection{
+  display:flex;
+}

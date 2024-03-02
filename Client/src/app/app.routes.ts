@@ -22,7 +22,7 @@ export const routes: Routes = [
   {path:'jobOfferList/newJob',component:NewJobComponent},
   {path:'jobOfferList/updateJobDetails',component:NewJobComponent},
   {path:'jobOfferList',component:JobOfferListComponent},
-  {path:'applicationForm',component:SeekerApplicationFormComponent},
+ 
   
   // seeker portal
   {path:'jobdetails',component:AdvertisementViewPageComponent},
@@ -30,6 +30,7 @@ export const routes: Routes = [
   {path:'home/saved',component:SavedAdvertisementListComponent},
   {path:'company-profile',component:CompanyProfileComponent},
   {path:'newJobUploaded',component:NewJobUploadedComponent},
+  {path:'applicationForm',component:SeekerApplicationFormComponent},
   
   {path:'file',component:FileUploadComponent}
 ];

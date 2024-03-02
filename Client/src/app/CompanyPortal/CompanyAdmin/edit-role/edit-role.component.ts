@@ -47,7 +47,7 @@ interface Employee {
   styleUrl: './edit-role.component.css',
 })
 export class EditRoleComponent implements OnInit {
- /* employeeDetails: any = {};*/
+
   employeeDetails: Employee = {} as Employee;
  
 
