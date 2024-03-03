@@ -3,6 +3,7 @@ import { AdvertisementCardComponent } from '../advertisement-card/advertisement-
 import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
+import { SearchBasicComponent } from '../search-basic/search-basic.component';
 
 interface Job {
   advertisement_id: number;
@@ -21,7 +22,7 @@ interface Job {
 @Component({
   selector: 'app-seeker-home-page',
   standalone: true,
-  imports: [ AdvertisementCardComponent, CommonModule,NavBarComponent],
+  imports: [ AdvertisementCardComponent, CommonModule, NavBarComponent, SearchBasicComponent],
   templateUrl: './seeker-home-page.component.html',
   styleUrl: './seeker-home-page.component.css'
 })
