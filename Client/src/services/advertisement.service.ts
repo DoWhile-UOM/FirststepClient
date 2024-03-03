@@ -241,4 +241,30 @@ export class AdvertisementServices {
 
     return jobList;
   }
+
+  async searchAdsBasicAlgo(seekerID: string, searchData: any){
+    let jobList: any = [];
+
+    await axios.put(Apipaths.basicSearch + seekerID, searchData)
+      .then(function (response) {
+        try {
+          jobList = response.data;
+          
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+        }
+        catch (error) {
+          console.log("No advertisements found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
+  }
 }

@@ -1,18 +1,18 @@
-<mat-card>
-    <div class="container">
+<mat-card class="search-card mat-elevation-4z">
+    <form class="container" #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
         <mat-form-field appearance="outline" class="search-element title">
             <mat-label>Job Title</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" name="title" ngModel>
         </mat-form-field>
     
         <mat-form-field appearance="outline" class="search-element">
             <mat-label>Country</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" name="country" ngModel>
         </mat-form-field>
     
         <mat-form-field appearance="outline" class="search-element">
             <mat-label>City</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" name="city" ngModel>
         </mat-form-field>
     
         <mat-form-field appearance="outline" class="search-element">
@@ -33,8 +33,11 @@
             </mat-select>
         </mat-form-field>
     
-        <button mat-icon-button color="primary">
-            <mat-icon>search</mat-icon>
-        </button>    
-    </div>
+        <div class="searchBtn">
+            <button mat-icon-button color="primary">
+                <mat-icon>search</mat-icon>
+            </button>    
+        </div>
+        
+    </form>
 </mat-card>

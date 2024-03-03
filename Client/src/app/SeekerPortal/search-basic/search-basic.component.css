@@ -1,4 +1,4 @@
-mat-card{
+.search-card{
     width: 82%;
     height: 8em;
     margin: 0 auto;
@@ -7,9 +7,17 @@ mat-card{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
-    z-index: 2;
 }
+
+/*
+.search-card:not([class*=mat-elevation-z]) {
+    box-shadow: 
+        0 2px 1px -1px rgba(0, 0, 0, 1),
+        0 0.5px 0.5px 0 rgba(0, 0, 0, 1),
+        0 0.5px 3.5px 0 rgba(0, 0, 0, 1)
+    ;
+}*/
+
 
 .container{
     display: flex;
@@ -28,8 +36,10 @@ mat-card{
 }
 
 .searchBtn{
-    width: 10em;
     margin-left: 1em;
+    margin-right: 1em;
+    width: 4em;
+    height: 4em;
     cursor: pointer;
     display: flex;
     flex-direction: column;

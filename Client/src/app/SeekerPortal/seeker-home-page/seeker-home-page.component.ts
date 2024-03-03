@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
@@ -26,7 +26,7 @@ interface Job {
   templateUrl: './seeker-home-page.component.html',
   styleUrl: './seeker-home-page.component.css'
 })
-export class SeekerHomePageComponent implements OnInit{
+export class SeekerHomePageComponent implements OnInit, AfterViewInit{
   jobList: Job[] = [];
 
   seekerID: number = 4; // sample seekerID
@@ -35,15 +35,14 @@ export class SeekerHomePageComponent implements OnInit{
     
   }
 
-  async ngOnInit(){
-    await this.advertisementService.getAllAdvertisements(String(this.seekerID))
-      .then((response) => {
-        this.jobList = response;
+  @ViewChild(SearchBasicComponent) searchComponent!: SearchBasicComponent;
 
-        if (this.jobList.length == 0) {
-          console.log("No advertisements found");
-        }
-      });
+  async ngOnInit(){
+    
   }
+
+  ngAfterViewInit() {
+		this.jobList = this.searchComponent.jobList;
+	}
 }
 
