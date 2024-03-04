@@ -26,6 +26,18 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import axios, { Axios } from 'axios';
 
+interface seekerData{
+  Firstname: string;
+  Lastname: string;
+  EmailAddress: string;
+  ContactNumber: string;
+  University: string;
+  LinkedIn: string;
+  Field: string;
+  Bio: string;
+  Description: string;
+
+}
 
 
 @Component({
@@ -35,6 +47,7 @@ import axios, { Axios } from 'axios';
     styleUrl: './seekersignup.component.css',
     imports: [FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, FileUploadComponent, JobOfferListComponent, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule]
 })
+
 export class SeekersignupComponent implements OnInit{
 
    //form group for the stepper
@@ -72,7 +85,6 @@ onselectFile(event: any){
     reader.onload = (event: any) => {
       this.url = event.target.result;
     }
-    
   }
 }
 
@@ -80,8 +92,14 @@ async ngOnInit() {
   // Sample seeker data
   let seekerData = {
     Firstname: 'John Doe',
-    age: 30,
-    // Add other properties as needed
+    Lastname: 'Doe',
+    EmailAddress: 'abc@gmail.com',
+    ContactNumber: '1234567890',
+    University: 'University of Texas',
+    LinkedIn: 'linkedin.com',
+    Field: 'Software Engineering',
+    Bio: 'I am a software engineer',
+    Description: 'I am a software engineer with 5 years of experience'
   };
 
   try {

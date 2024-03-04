@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,9 +17,8 @@ import { Observable, Subscribable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatCardModule} from '@angular/material/card';
-import { HttpClient } from '@angular/common/http';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatTable, MatTableModule } from '@angular/material/table';
@@ -31,7 +30,6 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { SeekerService } from '../../../services/seeker.service';
-import { Axios } from 'axios';
 
 
 @Component({
@@ -50,11 +48,13 @@ export class SeekerEditProfileComponent implements OnInit{
   constructor(private seekerService: SeekerService) { }
 
   async ngOnInit() {
-    let seekerID = 4; // sample seeker id
+    let seekerID = 3; // sample seeker id
     let seekerData = await this.seekerService.getSeeker(seekerID);
     console.log(seekerData);
   }
-  
+  //post part eka gahanna
+
+  //files
   onselectFile(event: any){
     if(event.target.files){
       var reader = new FileReader();
@@ -65,10 +65,6 @@ export class SeekerEditProfileComponent implements OnInit{
       
     }
   }
-
-  // constructor(private seekerService: seekerservice) { }
-  
-
 }
 
 

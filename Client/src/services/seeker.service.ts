@@ -49,7 +49,7 @@ export class SeekerService {
       console.error(error);
     }
   }
-
+  
   async addseeker(seeker: any){
     try{
       await axios.post("Seeker/AddSeeker", seeker)
