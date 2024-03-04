@@ -1,4 +1,4 @@
-import { Component, OnInit  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +9,20 @@ import { MatCardModule } from '@angular/material/card';
 import { FormControl, FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { Country, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../services/advertisement.service';
+
+interface Job {
+  advertisement_id: number;
+  title: string;
+  company_name: string;
+  company_id: number;
+  field_name: string;
+  country: string;
+  city: string;
+  employeement_type: string;
+  arrangement: string;
+  posted_date: string;
+  is_saved: boolean;
+}
 
 interface SearchData{
   title: string;
@@ -39,28 +53,28 @@ export class SearchBasicComponent implements OnInit{
 
   seekerID: string = "4"; // sample seekerID
 
+  @Output() newItemEvent = new EventEmitter<Job[]>();
+
   jobList: any = [];
 
   constructor(private advertisementService: AdvertisementServices) { }
 
   async ngOnInit() {
-    var result: any;
-
     await this.advertisementService.getAllAdvertisements(String(this.seekerID))
       .then((response) => {
-        result = response;
+        this.jobList = response;
 
         if (this.jobList.length == 0) {
           console.log("No advertisements found");
         }
-      });
 
-    if (result != null){
-      this.jobList = result;
-    }
+        this.newItemEvent.emit(this.jobList);
+      });
   }
 
   async search(data: SearchData){
     this.jobList = await this.advertisementService.searchAdsBasicAlgo(this.seekerID, data);
+
+    this.newItemEvent.emit(this.jobList);
   }
 }

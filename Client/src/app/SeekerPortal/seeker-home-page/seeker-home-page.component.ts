@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
@@ -26,7 +26,7 @@ interface Job {
   templateUrl: './seeker-home-page.component.html',
   styleUrl: './seeker-home-page.component.css'
 })
-export class SeekerHomePageComponent implements OnInit, AfterViewInit{
+export class SeekerHomePageComponent{
   jobList: Job[] = [];
 
   seekerID: number = 4; // sample seekerID
@@ -35,14 +35,8 @@ export class SeekerHomePageComponent implements OnInit, AfterViewInit{
     
   }
 
-  @ViewChild(SearchBasicComponent) searchComponent!: SearchBasicComponent;
-
-  async ngOnInit(){
-    
+  changeJobList(newJobList: Job[]){
+    this.jobList = newJobList;
   }
-
-  ngAfterViewInit() {
-		this.jobList = this.searchComponent.jobList;
-	}
 }
 
