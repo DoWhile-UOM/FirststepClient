@@ -24,4 +24,8 @@ export class Apipaths {
     // external
     static readonly getCountryNames: string = 'https://api.first.org/v1/get-countries';
     static readonly getCityNames: string = 'https://countriesnow.space/api/v0.1/countries/cities';
+
+    //seeker
+    static readonly getSeeker: string = this.baseUrl + 'Seeker/GetSeeker/'; // + advertisement_id
+
 }

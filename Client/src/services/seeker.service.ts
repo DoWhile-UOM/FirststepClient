@@ -15,7 +15,7 @@ export class SeekerService {
 
   // GetSeeker(): Observable<any> {
   //   return new Observable<any>((observer) => {
-  //     axios.get('https://localhost:7213/api/Seeker/GetSeeker')
+  //     axios.get('Seeker/GetSeeker')
   //       .then(response => {
   //         observer.next(response.data);
   //         observer.complete();
@@ -30,7 +30,7 @@ export class SeekerService {
   async getSeeker(id : number) {
     let seekerData: any;
     try{
-      await axios.get('https://localhost:7213/api/Seeker/GetSeeker'+ id)
+      await axios.get('Seeker/GetSeeker/'+ id)
         .then((response) => {
           seekerData = response.data;
         });
@@ -44,7 +44,7 @@ export class SeekerService {
 
   async editseeker(seeker: any, seekerID: number) {
     try{      
-      await axios.put("https://localhost:7213/api/Seeker/UpdateSeeker" + seekerID, seeker)
+      await axios.put("Seeker/UpdateSeeker" + seekerID, seeker)
         .then((response) => {
           console.log(response);
         });
@@ -57,7 +57,7 @@ export class SeekerService {
 
   async deleteseeker(seekerID:number){
     try{
-      await axios.delete("https://localhost:7213/api/Seeker/DeleteSeeker"+seekerID)
+      await axios.delete("Seeker/DeleteSeeker"+seekerID)
     }
     catch (error) {
       console.error(error);
