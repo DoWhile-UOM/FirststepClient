@@ -14,6 +14,7 @@ import { LoginComponent } from './Login/login/login.component';
 import { CompanyProfileEditComponent } from './CompanyPortal/CompanyAdmin/company-profile-edit/company-profile-edit.component';
 import { RoleProfileEditComponent } from './CompanyPortal/shared/role-profile-edit/role-profile-edit.component';
 import { CompanyAdminRegistrtionFormComponent } from './CompanyPortal/CompanyAdmin/company-admin-registrtion-form/company-admin-registrtion-form.component';
+import { LandingPageComponent } from './shared/landing-page/landing-page.component';
 
 export const routes: Routes = [
   // company portal
@@ -47,5 +48,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'first-step',
+    component: LandingPageComponent,
   },
 ];
