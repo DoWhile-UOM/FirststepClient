@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -24,6 +24,7 @@ import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
+import axios, { Axios } from 'axios';
 
 
 
@@ -34,7 +35,7 @@ import {MatCardModule} from '@angular/material/card';
     styleUrl: './seekersignup.component.css',
     imports: [FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, FileUploadComponent, JobOfferListComponent, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule]
 })
-export class SeekersignupComponent {
+export class SeekersignupComponent implements OnInit{
 
    //form group for the stepper
  firstFormGroup = this._formBuilder.group({
@@ -57,11 +58,11 @@ fifthFormGroup = this._formBuilder.group({
 constructor(private _formBuilder: FormBuilder) { }
 
 //image
-ngOnInit(): void {
-  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-  //Add 'implements OnInit' to the class.
+// ngOnInit(): void {
+//   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+//   //Add 'implements OnInit' to the class.
   
-}
+// }
 url = "./assets/images/SeekerEdit.jpg";
 
 onselectFile(event: any){
@@ -74,5 +75,23 @@ onselectFile(event: any){
     
   }
 }
+
+async ngOnInit() {
+  // Sample seeker data
+  let seekerData = {
+    Firstname: 'John Doe',
+    age: 30,
+    // Add other properties as needed
+  };
+
+  try {
+    // Perform POST request to create a seeker
+    let response = await axios.post('api/seekers', seekerData);
+    console.log('Seeker created:', response.data);
+  } catch (error) {
+    console.error('Error creating seeker:', error);
+  }
+}
+
 
 }

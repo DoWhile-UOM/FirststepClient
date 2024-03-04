@@ -31,6 +31,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { SeekerService } from '../../../services/seeker.service';
+import { Axios } from 'axios';
 
 
 @Component({

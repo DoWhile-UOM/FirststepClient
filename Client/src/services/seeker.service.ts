@@ -13,20 +13,6 @@ export class SeekerService {
 
   constructor() { }
 
-  // GetSeeker(): Observable<any> {
-  //   return new Observable<any>((observer) => {
-  //     axios.get('Seeker/GetSeeker')
-  //       .then(response => {
-  //         observer.next(response.data);
-  //         observer.complete();
-  //       })
-  //       .catch(error => {
-  //         observer.error(error);
-  //       });
-  //   });
-  // }
-
-
   async getSeeker(id : number) {
     let seekerData: any;
     try{
@@ -44,7 +30,7 @@ export class SeekerService {
 
   async editseeker(seeker: any, seekerID: number) {
     try{      
-      await axios.put("Seeker/UpdateSeeker" + seekerID, seeker)
+      await axios.put("Seeker/UpdateSeeker/" + seekerID, seeker)
         .then((response) => {
           console.log(response);
         });
@@ -57,7 +43,16 @@ export class SeekerService {
 
   async deleteseeker(seekerID:number){
     try{
-      await axios.delete("Seeker/DeleteSeeker"+seekerID)
+      await axios.delete("Seeker/DeleteSeeker/"+seekerID)
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  async addseeker(seeker: any){
+    try{
+      await axios.post("Seeker/AddSeeker", seeker)
     }
     catch (error) {
       console.error(error);
