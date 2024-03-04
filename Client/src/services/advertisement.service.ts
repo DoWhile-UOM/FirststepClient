@@ -244,7 +244,7 @@ export class AdvertisementServices {
 
   async searchAdsBasicAlgo(seekerID: string, searchData: any){
     let jobList: any = [];
-
+    
     await axios.put(Apipaths.basicSearch + seekerID, searchData)
       .then(function (response) {
         try {

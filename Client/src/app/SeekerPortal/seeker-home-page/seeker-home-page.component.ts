@@ -29,11 +29,7 @@ interface Job {
 export class SeekerHomePageComponent{
   jobList: Job[] = [];
 
-  seekerID: number = 4; // sample seekerID
-
-  constructor(private advertisementService: AdvertisementServices) {
-    
-  }
+  seekerID: number = 3; // sample seekerID
 
   changeJobList(newJobList: Job[]){
     this.jobList = newJobList;
