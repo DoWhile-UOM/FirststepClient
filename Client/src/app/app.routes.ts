@@ -15,6 +15,10 @@ import { LoginComponent } from './Login/login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { authGuard } from './guards/auth.guard';
 
+import { RegisterCompanyComponent } from './CompanyPortal/CompanyAdmin/register-company/register-company.component';
+
+
+
 export const routes: Routes = [
 
     //Common
@@ -28,6 +32,7 @@ export const routes: Routes = [
     //{path:'AdminDashBoard',component:AdminDashboardComponent},
     {path:'newJob',component:NewJobComponent},
     {path:'jobOfferList',component:JobOfferListComponent},
+    {path:'RegisterCompany',component:RegisterCompanyComponent},
     
   // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},
