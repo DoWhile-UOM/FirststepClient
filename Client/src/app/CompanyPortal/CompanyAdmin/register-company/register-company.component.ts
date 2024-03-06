@@ -34,10 +34,17 @@ export class RegisterCompanyComponent {
 
   //form group for the stepper
   firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
+    fName: ['', Validators.required],
+    lName: ['', Validators.required],
+    email: ['', Validators.required],
+    otp: ['', Validators.required],
+    pNumber: ['', Validators.required]
   });
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    businessScl: ['', Validators.required],
+    location: ['', Validators.required],
+    des: ['', Validators.required],
+    logo: ['', Validators.required]
   });
 
   constructor(private _formBuilder: FormBuilder) { }

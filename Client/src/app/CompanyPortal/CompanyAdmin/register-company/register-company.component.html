@@ -20,20 +20,26 @@
 
                 <h3>Create your FirstStep Account</h3>
                 <mat-form-field>
-                  <mat-label>First Name</mat-label>
-                  <input matInput placeholder="Enter First name" formControlName="firstCtrl" required />
+                  <mat-label>Company Name</mat-label>
+                  <input matInput placeholder="Enter First name" formControlName="fName" required />
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>Last Name</mat-label>
-                  <input matInput placeholder="Enter Last name" formControlName="firstCtrl" required />
+                  <mat-label>Company Web site</mat-label>
+                  <input matInput placeholder="Enter Last name" formControlName="lName" required />
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label>Email Address</mat-label>
-                  <input matInput placeholder="Enter Email" formControlName="firstCtrl" required />
+                  <input matInput placeholder="Enter Email" formControlName="email" required />
                 </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>OTP</mat-label>
+                  <input matInput placeholder="Enter OTP" formControlName="otp" required />
+                </mat-form-field>
+
                 <mat-form-field>
                   <mat-label>Contact Number</mat-label>
-                  <input matInput placeholder="Enter contact Number" formControlName="firstCtrl" required />
+                  <input matInput placeholder="Enter contact Number" formControlName="pNumber" required />
                 </mat-form-field>
                 <div>
                   <button mat-button matStepperNext class="custom-stepper1-button"
@@ -50,7 +56,7 @@
       </mat-step>
 
       <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="firstFormGroup">
+        <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel style="width: 100px;"></ng-template>
           
           <div class="up-container">
@@ -64,24 +70,24 @@
 
                 <h3>Create your FirstStep Account</h3>
                 <mat-form-field>
-                  <mat-label>First Name</mat-label>
-                  <input matInput placeholder="Enter First name" formControlName="firstCtrl" required />
+                  <mat-label>Business Scale</mat-label>
+                  <input matInput placeholder="Enter First name" formControlName="businessScl" required />
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>Last Name</mat-label>
-                  <input matInput placeholder="Enter Last name" formControlName="firstCtrl" required />
+                  <mat-label>Default Location</mat-label>
+                  <input matInput placeholder="Enter Last name" formControlName="location" required />
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>Email Address</mat-label>
-                  <input matInput placeholder="Enter Email" formControlName="firstCtrl" required />
+                  <mat-label>Description</mat-label>
+                  <input matInput placeholder="Enter Email" formControlName="des" required />
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>Contact Number</mat-label>
-                  <input matInput placeholder="Enter contact Number" formControlName="firstCtrl" required />
+                  <mat-label>Company Logo</mat-label>
+                  <input matInput placeholder="Enter contact Number" formControlName="logo" required />
                 </mat-form-field>
                 <div>
                   <button mat-button matStepperNext class="custom-stepper1-button"
-                    style="color: white; margin-left: 20px;">Next</button>
+                    style="color: white; margin-left: 20px;">Register</button>
                 </div>
 
 
