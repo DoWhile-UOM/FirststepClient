@@ -17,6 +17,7 @@ import { authGuard } from './guards/auth.guard';
 
 import { RegisterCompanyComponent } from './CompanyPortal/CompanyAdmin/register-company/register-company.component';
 
+import { RegCmpStateCheckComponent } from './CompanyPortal/CompanyAdmin/reg-cmp-state-check/reg-cmp-state-check.component';
 
 
 export const routes: Routes = [
@@ -33,6 +34,7 @@ export const routes: Routes = [
     {path:'newJob',component:NewJobComponent},
     {path:'jobOfferList',component:JobOfferListComponent},
     {path:'RegisterCompany',component:RegisterCompanyComponent},
+    {path:'RegCheck',component:RegCmpStateCheckComponent},
     
   // seeker portal
     {path:'jobdetails',component:AdvertisementViewPageComponent},

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +23,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component';
 
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
 @Component({
   selector: 'app-register-company',
   standalone: true,
@@ -30,7 +33,10 @@ import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component';
   templateUrl: './register-company.component.html',
   styleUrl: './register-company.component.css'
 })
-export class RegisterCompanyComponent {
+export class RegisterCompanyComponent{
+
+
+
 
   //form group for the stepper
   firstFormGroup = this._formBuilder.group({
@@ -47,15 +53,45 @@ export class RegisterCompanyComponent {
     logo: ['', Validators.required]
   });
 
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(private _formBuilder: FormBuilder,private http: HttpClient) { }
+
+  apiUrl='https://localhost:7093/api/Attachment';
+
+  selectedFile: File | null = null;
 
   //image
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-
   }
   url = "./assets/images/SeekerEdit.jpg";
+  
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  uploadFile() {
+    if (!this.selectedFile) {
+      return; // Handle no file selected case
+    }
+
+    const fileData = new FormData();
+    fileData.append('files', this.selectedFile, this.selectedFile.name);
+
+    const headers = new HttpHeaders()
+      .set('Accept', '*/*')
+      .set('Content-Type', 'multipart/form-data');
+
+    this.http.post(this.apiUrl, fileData, { headers })
+      .subscribe(response => {
+        console.log('Upload successful:', response);
+        this.selectedFile = null; // Clear selection after successful upload
+      }, error => {
+        console.error('Upload error:', error);
+      });
+  }
+
+
+
 
   onselectFile(event: any) {
     if (event.target.files) {

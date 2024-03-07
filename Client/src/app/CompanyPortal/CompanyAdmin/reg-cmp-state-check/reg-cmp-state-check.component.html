@@ -1,0 +1,23 @@
+<p>reg-cmp-state-check works!</p>
+
+<!-- app.component.html -->
+
+<mat-horizontal-stepper>
+    <!-- Step 1: Application Submission -->
+    <mat-step>
+      <ng-template matStepLabel>Application Submission</ng-template>
+      <mat-icon>done</mat-icon>
+      <p>DEC 15, 2023</p>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+  
+    <!-- Step 2: Application Screening -->
+    <mat-step>
+      <ng-template matStepLabel>Application Screening</ng-template>
+      <mat-icon class="rejected">highlight_off</mat-icon>
+      <p>Rejected</p>
+    </mat-step>
+  </mat-horizontal-stepper>
+  
