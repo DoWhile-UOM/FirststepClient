@@ -5,6 +5,7 @@ import { AdvertisementServices } from '../../../services/advertisement.service';
 import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
+import { UserStoreService } from '../../services/user-store.service';
 
 interface Job {
   advertisement_id: number;
@@ -31,7 +32,9 @@ export class SeekerHomePageComponent implements OnInit {
   jobList: Job[] = [];
   users: any;
 
-  constructor(private advertisementService: AdvertisementServices, private api: ApiService,private authService:AuthService) {
+  public fullName: string = "";
+
+  constructor(private userStore:UserStoreService,private advertisementService: AdvertisementServices, private api: ApiService,private authService:AuthService) {
 
   }
 
@@ -40,12 +43,21 @@ export class SeekerHomePageComponent implements OnInit {
     //this.auth.signup(this.myForm.value)
   }
 
-  async ngOnInit() {
+  ngOnInit() {
 
     this.api.getUsers()
       .subscribe(res => {
         this.users = res;
       });
+
+      this.userStore.getFullNameFromStore()
+      .subscribe(val=>{
+        const fullNameFromToken = this.authService.getFullName();
+        this.fullName = val || fullNameFromToken
+      });
+
+
+
 /*
     await this.advertisementService.getAllAdvertisements()
       .then((response) => {
@@ -55,6 +67,7 @@ export class SeekerHomePageComponent implements OnInit {
           console.log("No advertisements found");
         }
       });*/
-  }
+  
 }
 
+}

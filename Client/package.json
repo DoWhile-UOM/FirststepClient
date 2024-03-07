@@ -24,6 +24,7 @@
     "@angular/platform-server": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@angular/ssr": "^17.1.1",
+    "@auth0/angular-jwt": "^5.2.0",
     "axios": "^1.6.7",
     "country-state-city": "^3.2.1",
     "express": "^4.18.2",
