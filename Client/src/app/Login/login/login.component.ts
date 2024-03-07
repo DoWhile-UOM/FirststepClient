@@ -28,6 +28,22 @@ export class LoginComponent {
         this.auth.storeToken(res.token)
         alert(res.message)
         console.log(res.token)
+
+        console.log(res.message);
+        this.loginForm.reset();
+        this.auth.storeToken(res.accessToken);
+        this.auth.storeRefreshToken(res.refreshToken);
+        const tokenPayload = this.auth.decodedToken();
+        this.userStore.setFullNameForStore(tokenPayload.name);
+        this.userStore.setRoleForStore(tokenPayload.role);
+        //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
+        this.router.navigate(['dashboard'])
+
+
+
+
+
+
       },
       error:(err)=>{
         alert(err.message)
