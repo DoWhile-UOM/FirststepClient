@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router} from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { LocalService } from '../../services/local.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService {
 
   private baseUrl:string="https://localhost:7213/api/User"
 
-  constructor(private http:HttpClient,private route:Router) {
+  constructor(private local:LocalService,private http:HttpClient,private route:Router) {
     this.userPayload = this.decodedToken() //call decodedToken() to get payload data
    }
 
@@ -26,31 +27,33 @@ export class AuthService {
 
   storeToken(token:string){
     //console.log('Token Stored')
-    localStorage.setItem('token',token)
+    this.local.saveData('token',token)
+    //localStorage.setItem('token',token)
     //console.log('Token is '+localStorage.getItem('token'))
   }
 
   storeRefreshToken(tokenValue: string){
-    localStorage.setItem('refreshToken', tokenValue)
+    //localStorage.setItem('refreshToken', tokenValue)
+    this.local.saveData('refreshToken', tokenValue)
   }
 
   getToken(){
     //console.log("Test");
     //localStorage.setItem('token', '')
-    return localStorage.getItem('token');
+    return this.local.getData('token');
   }
 
 
   getrefToken(){
     //console.log("Test");
     //localStorage.setItem('token', '')
-    return localStorage.getItem('refreshToken');
+    return this.local.getData('refreshToken');
   }
 
   isLoggedIn(){
     
     try {
-      return !!localStorage.getItem('token');
+      return !!this.local.getData('token');
     } catch (error) {
       //console.log(error); //raises the error
       return false;
@@ -58,7 +61,7 @@ export class AuthService {
   }
 
   signOut(){
-    localStorage.clear();
+    this.local.clearData();
     this.route.navigate(['login'])
   }
 

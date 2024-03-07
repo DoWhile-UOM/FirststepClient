@@ -12,21 +12,19 @@ import { FormGroup, FormControl, Validators,ReactiveFormsModule } from '@angular
 export class SignupComponent {
   constructor(private auth:AuthService){}
   signupform = new FormGroup({
-    Password: new FormControl('', [Validators.required]),
-    Cpassword: new FormControl('', [Validators.required]),
-    Email: new FormControl('', [Validators.required]),
-    Fname: new FormControl('', [Validators.required]),
-    Lname: new FormControl('', [Validators.required]),
-    Phone: new FormControl('', [Validators.required])
+    password_hash: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required]),
+    first_name: new FormControl('', [Validators.required]),
+    last_name: new FormControl('', [Validators.required]),
 
   });
 
 
   onSignup(){
-    if(this.signupform.value.Password!=this.signupform.value.Cpassword){
-      alert("Password and Confirm Password should be same")
-      return
-    }
+    //if(this.signupform.value.password_hash!=this.signupform.value.Cpassword){
+    //  alert("Password and Confirm Password should be same")
+    //  return
+    //}
     console.log(this.signupform.value);
     //this.auth.signup(this.myForm.value)
     this.auth.signup(this.signupform.value)
@@ -34,6 +32,7 @@ export class SignupComponent {
       next:(res)=>{
         alert(res.message)
         console.log(res.message)
+        
       },
       error:(err)=>{
         alert(err.message)
