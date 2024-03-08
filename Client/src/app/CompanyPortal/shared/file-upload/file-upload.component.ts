@@ -7,7 +7,10 @@ import {MatButtonModule} from '@angular/material/button';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
+import { HttpHeaders } from '@angular/common/http';
 
+
+const apiUrl = 'https://localhost:7213/api/Document';
 @Component({
   selector: 'app-file-upload',
   standalone: true,
@@ -15,40 +18,36 @@ import { NgIf } from '@angular/common';
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css'
 })
+
 export class FileUploadComponent implements OnInit {
+  selectedFile: File | null = null;
 
-  public message: string = '';
-  public progress: number=0;
-  @Output() public onUploadFinished = new EventEmitter();
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { 
+  ngOnInit(): void {}
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    this.uploadFile();
   }
-   ngOnInit() {    
-  
-}
 
-public uploadFile = (files: FileList) => {
-  if (files.length === 0) {
-    return;
+  uploadFile() {
+    if (!this.selectedFile) {
+      return; // Handle no file selected case
+    }
+
+    const fileData = new FormData();
+    fileData.append('files', this.selectedFile, this.selectedFile.name);
+
+    const headers = new HttpHeaders()
+      .set('Accept', '*/*');
+
+    this.http.post(apiUrl, fileData, { headers })
+      .subscribe(response => {
+        console.log('Upload successful:', response);
+        this.selectedFile = null; // Clear selection after successful upload
+      }, error => {
+        console.error('Upload error:', error);
+      });
   }
-  let fileToUpload = <File>files[0];
-  const formData = new FormData();
-  formData.append('file', fileToUpload, fileToUpload.name);
-  this.http.post('https://localhost:7213/api/UploadFiles', formData, {reportProgress: true, observe: 'events'})
-    .subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        if (event.total !== undefined) {
-          this.progress = Math.round(100 * event.loaded / event.total);
-        }
-      } else if (event.type === HttpEventType.Response) {
-        this.message = 'Upload success.';
-        this.onUploadFinished.emit(event.body);
-      }
-    });
-
 }
-
-
-}
-   

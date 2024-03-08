@@ -1,34 +1,17 @@
-<!--hidden id="fileID"
 <div class="fileupload">
-    <div id="Documentsubmissioncontainer" class="formchild">
-      <input type="file"  #file style="display: none" (change)="file.files && uploadFile(file.files)" onchange="console.log(event.target.files)"/>
-      <span class="spanicon"
-        ><mat-icon class="uploadicon">upload</mat-icon></span
-      >
-      <button class="fileuploadbtn" mat-button (click)="file.click()">
-        Upload Profile Photo
-      </button>
-    </div>
-   
-  </div>
- -->
-  <div class="fileupload">
-    
-    <div id="Documentsubmissioncontainer" class="formchild">
-      
-      <input type="file" #file style="display: none" (change)="file.files && uploadFile(file.files)" onchange="console.log(event.target.files)"/>
-      <span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
-      <button class="fileuploadbtn" mat-button (click)="file.click()">
-        Upload Profile Photo
-      </button>
- 
-      <!-- Progress bar and upload indicator -->
-      
-      <div *ngIf="progress > 0 && progress < 100" class="upload-indicator">
-      Uploading... {{ progress }}%
-      </div>
-    </div>
-  </div>
-  
+  <div id="Documentsubmissioncontainer" class="formchild">
 
+<input type="file" #file style="display: none" (change)="onFileSelected($event)" />
 
+<span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
+
+<button class="fileuploadbtn" mat-button (click)="file.click()">
+  Upload Profile Photo
+</button>
+  </div>
+</div>
+<!--
+<input type="file" (change)="onFileSelected($event)" />
+<button (click)="uploadFile()">Upload File</button>-->
+
+<!--  (change)="file.files && uploadFile(file.files)"  file.click()  onchange="console.log(event.target.files)"  -->
