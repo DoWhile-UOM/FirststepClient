@@ -12,14 +12,13 @@ header {
 .detailsField{
   background-color: aqua;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
-.textSection{
+.textSection .fieldSection{
   display:flex;
+  flex-direction:column;
   
 }
 
-.fieldSection{
-  display:flex;
-}
+
