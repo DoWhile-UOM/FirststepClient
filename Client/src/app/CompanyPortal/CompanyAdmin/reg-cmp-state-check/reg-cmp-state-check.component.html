@@ -1,23 +1,26 @@
-<p>reg-cmp-state-check works!</p>
+<p>Register your Company</p>
 
-<!-- app.component.html -->
-
-<mat-horizontal-stepper>
-    <!-- Step 1: Application Submission -->
-    <mat-step>
-      <ng-template matStepLabel>Application Submission</ng-template>
-      <mat-icon>done</mat-icon>
-      <p>DEC 15, 2023</p>
-      <div>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </mat-step>
-  
-    <!-- Step 2: Application Screening -->
-    <mat-step>
-      <ng-template matStepLabel>Application Screening</ng-template>
-      <mat-icon class="rejected">highlight_off</mat-icon>
-      <p>Rejected</p>
-    </mat-step>
-  </mat-horizontal-stepper>
-  
+<form>
+    <h2>Contact Us</h2>
+    <div class="form-group">
+        <label for="companyName">Company Name</label>
+        <input type="text" class="form-control" id="companyName" name="companyName" required>
+    </div>
+    <div class="form-group">
+        <label for="websiteUrl">URL of the Website</label>
+        <input type="url" class="form-control" id="websiteUrl" name="websiteUrl" required>
+    </div>
+    <div class="form-group">
+        <label for="emailAddress">Email Address</label>
+        <input type="email" class="form-control" id="emailAddress" name="emailAddress" required>
+    </div>
+    <div class="form-group">
+        <label for="emailAddress">Contact No</label>
+        <input type="email" class="form-control" id="emailAddress" name="emailAddress" required>
+    </div>
+    <div class="form-group">
+        <label for="emailAddress">Company Logo</label>
+        <input type="email" class="form-control" id="emailAddress" name="emailAddress" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
