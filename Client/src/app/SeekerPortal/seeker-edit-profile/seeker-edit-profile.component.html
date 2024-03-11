@@ -1,125 +1,97 @@
-<p>seeker-edit-profile works!</p>
-<section class="navbar">
-</section>
+//navbar
+<section class="navbar"></section>
+
+//Heading
 <h1>Edit Profile</h1>
+
+//Form for editing profile
 <div class="form-popup" id="myForm">
-    <form class="form-container">      
+  <form class="form-container">
+    //Image update
+    <div class="up-container">
+      <div class="left">
+        <img [src]="url" height="200px" /><br />
+        <input type="file" (change)="onselectFile($event)" />
+      </div>
 
-        <div class="up-container">
-          <div class="left">
-            <img [src] ="url" height="200px"><br>
-            <input type="file" (change)="onselectFile($event)">
-          </div>
-    
-          <div class="right">
-    
-            <mat-form-field class="elem" appearance="outline" >
-              <mat-label>First Name</mat-label>
-              <input matInput placeholder="Enter First Name"/>
-            </mat-form-field>
-      
-            <mat-form-field class="elem" appearance="outline" >
-              <mat-label>Last Name</mat-label>
-              <input matInput placeholder="Enter Last Name" />
-            </mat-form-field>
-      
-            <mat-form-field class="elem" appearance="outline">
-              <mat-label>Bio</mat-label>
-              <input matInput placeholder="Enter Last Name" />
-            </mat-form-field> 
-    
-          </div>
-        </div>
-        <br>
-        <br>
-    
-        
-        <div class="sidebyside">
-    
-          <mat-form-field class="elem" appearance="outline">
-            <mat-label id="des">Description</mat-label>
-            <input matInput placeholder="Description" />
-          </mat-form-field>
-    
-          <mat-form-field class="elem" appearance="outline">
-            <mat-label>LinkedIn URL</mat-label>
-            <input matInput placeholder="Enter LinkedIn" />
-          </mat-form-field>
-    
-          <mat-form-field class="elem" appearance="outline">
-            <mat-label>Field of Work</mat-label>
-            <input matInput placeholder="Enter Field of Work" />
-          </mat-form-field>
-        
-    
-          <mat-form-field class="elem" appearance="outline">
-            <mat-label>Phone Number</mat-label>
-            <input matInput placeholder="Enter Phone Number" />
-          </mat-form-field>
-    
-          <mat-form-field class="elem" appearance="outline">
-            <mat-label>Email Address</mat-label>
-            <input matInput placeholder="Enter Email" />
-          </mat-form-field>
-    
-          <mat-form-field class="elem" appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput placeholder="Enter new Password" />
-          </mat-form-field>
-    
-        </div>
+      //Profile Details update in the upper section
+      <div class="right">
+        <mat-form-field class="elem" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="Enter First Name" />
+        </mat-form-field>
 
-        <br><br>
-    
-        <div class="button-container">
-          <button mat-raised-button color="primary">Upload New</button>
-          <button mat-raised-button id="discard">View</button>
-        </div>
+        <mat-form-field class="elem" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Enter Last Name" />
+        </mat-form-field>
 
+        <mat-form-field class="elem" appearance="outline">
+          <mat-label>Bio</mat-label>
+          <input matInput placeholder="Enter Last Name" />
+        </mat-form-field>
+      </div>
+    </div>
+    <br />
+    <br />
 
-        <br><br>
-    
-        
-        <!-- <form>
-          <mat-form-field class="example-chip-list">
-            <mat-label>Favorite Fruits</mat-label>
-            <mat-chip-grid #chipGrid aria-label="Fruit selection">
-              @for (fruit of fruits; track fruit) {
-                <mat-chip-row (removed)="remove(fruit)">
-                  {{fruit}}
-                  <button matChipRemove [attr.aria-label]="'remove ' + fruit">
-                    <mat-icon>cancel</mat-icon>
-                  </button>
-                </mat-chip-row>
-              }
-            </mat-chip-grid>
-            <input placeholder="New Fruit..." #fruitInput [formControl]="fruitCtrl"
-              [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              (matChipInputTokenEnd)="add($event)"/>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-              @for (fruit of filteredFruits | async; track fruit) {
-                <mat-option [value]="fruit">{{fruit}}</mat-option>
-              }
-            </mat-autocomplete>
-          </mat-form-field>
-        </form> 
-         -->
-    
-      <mat-divider></mat-divider>
-      <br><br>
-      <section>
-        <div class="example-button-row">
-          <button mat-raised-button color="primary">Update Profile</button>
-          <button mat-raised-button id="discard">Discard Changes</button>
-          <button mat-raised-button color="warn" id="delete">Delete Profile</button>
-          
-          <!-- <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a> -->
-        </div>
-      </section>
-      
-    
-      
-      </form>
+    //Profile Details update in the lower section side by side
+    <div class="sidebyside">
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label id="des">Description</mat-label>
+        <input matInput placeholder="Description" />
+      </mat-form-field>
 
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>LinkedIn URL</mat-label>
+        <input matInput placeholder="Enter LinkedIn" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Field of Work</mat-label>
+        <input matInput placeholder="Enter Field of Work" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input matInput placeholder="Enter Phone Number" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput placeholder="Enter Email" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Enter new Password" />
+      </mat-form-field>
+    </div>
+
+    <br /><br />
+
+    //CV upload button and view button
+    <div class="button-container">
+      <button mat-raised-button color="primary">Upload New</button>
+      <button mat-raised-button id="discard">View</button>
+    </div>
+
+    <br /><br />
+
+    //skills update
+    <section class="skillchip"></section>
+
+    //Buttons
+    <mat-divider></mat-divider>
+    <br /><br />
+    <section>
+      <div class="example-button-row">
+        <button mat-raised-button color="primary">Update Profile</button>
+        <button mat-raised-button id="discard">Discard Changes</button>
+        <button mat-raised-button color="warn" id="delete">
+          Delete Profile
+        </button>
+      </div>
+    </section>
+  </form>
 </div>
