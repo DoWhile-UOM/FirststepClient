@@ -5,30 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatAutocompleteSelectedEvent,
-  MatAutocompleteModule,
-} from '@angular/material/autocomplete';
-import { MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import { Observable, Subscribable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { AsyncPipe } from '@angular/common';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import {  MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-
-import { MatIconRegistry } from '@angular/material/icon';
-import { MatTable, MatTableModule } from '@angular/material/table';
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogTitle,
-} from '@angular/material/dialog';
 import { SeekerService } from '../../../services/seeker.service';
 
 
@@ -42,19 +22,11 @@ import { SeekerService } from '../../../services/seeker.service';
 
 
 export class SeekerEditProfileComponent implements OnInit{
- 
+
+ // The image url of the default image
   url = "./assets/images/SeekerEdit.jpg";
 
-  constructor(private seekerService: SeekerService) { }
-
-  async ngOnInit() {
-    let seekerID = 3; // sample seeker id
-    let seekerData = await this.seekerService.getSeeker(seekerID);
-    console.log(seekerData);
-  }
-  //post part eka gahanna
-
-  //files
+  //image upload 
   onselectFile(event: any){
     if(event.target.files){
       var reader = new FileReader();
@@ -65,6 +37,23 @@ export class SeekerEditProfileComponent implements OnInit{
       
     }
   }
+
+  //constructor for seeker service
+  constructor(private seekerService: SeekerService) { }
+
+  //get method
+  async ngOnInit() {
+    let seekerID = 13; // sample seeker id
+    let seekerData = await this.seekerService.getSeeker(seekerID);
+    console.log(seekerData);
+  }
+
+  //update method or post method
+
+  
+  //delete method
+
+  
 }
 
 
