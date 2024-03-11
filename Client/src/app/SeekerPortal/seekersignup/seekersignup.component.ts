@@ -13,7 +13,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { FileUploadComponent } from '../../CompanyPortal/shared/file-upload/file-upload.component';
 import { JobOfferListComponent } from '../../CompanyPortal/shared/job-offer-list/job-offer-list.component';
 import { MatIconModule } from '@angular/material/icon';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
@@ -51,7 +51,7 @@ interface seekerData {
     FileUploadComponent,
     JobOfferListComponent,
     MatIconModule,
-    FlexLayoutModule,
+    //FlexLayoutModule,
     MatCheckboxModule,
     MatAutocompleteModule,
     MatChipsModule,
@@ -60,9 +60,6 @@ interface seekerData {
   ],
 })
 export class SeekersignupComponent implements OnInit {
-submitForm() {
-throw new Error('Method not implemented.');
-}
   
   //form group for the stepper
   constructor(private _formBuilder: FormBuilder) {}
