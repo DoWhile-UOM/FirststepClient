@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  Validators,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
+  Validators
 } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,7 +13,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { FileUploadComponent } from '../../CompanyPortal/shared/file-upload/file-upload.component';
 import { JobOfferListComponent } from '../../CompanyPortal/shared/job-offer-list/job-offer-list.component';
 import { MatIconModule } from '@angular/material/icon';
-// import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
@@ -51,20 +50,29 @@ interface seekerData {
     FileUploadComponent,
     JobOfferListComponent,
     MatIconModule,
-    //FlexLayoutModule,
     MatCheckboxModule,
     MatAutocompleteModule,
     MatChipsModule,
     MatDividerModule,
-    MatCardModule,
+    MatCardModule
   ],
 })
 export class SeekersignupComponent implements OnInit {
+
+  //default image for the profile picture
+  url = './assets/images/SeekerEdit.jpg';
+
+  //function to select the file
+  onselectFile(event: any) {
+    if (event.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
+    }
+  }
   
-  //form group for the stepper
-  constructor(private _formBuilder: FormBuilder) {}
-
-
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -81,44 +89,33 @@ export class SeekersignupComponent implements OnInit {
     fifthCtrl: ['', Validators.required],
   });
 
+  constructor(private _formBuilder: FormBuilder) {}
 
-  
-
-  //default image for the profile picture
-  url = './assets/images/SeekerEdit.jpg';
-
-  //function to select the file
-  onselectFile(event: any) {
-    if (event.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-      };
-    }
+  ngOnInit(): void {
+    // You can keep this method empty or add any additional initialization if needed
   }
 
-  async ngOnInit() {
-    // Sample seeker data
-    let seekerData = {
-      Firstname: 'John Doe',
-      Lastname: 'Doe',
-      EmailAddress: 'abc@gmail.com',
-      ContactNumber: '1234567890',
-      University: 'University of Texas',
-      LinkedIn: 'linkedin.com',
-      Field: 'Software Engineering',
-      Bio: 'I am a software engineer',
-      Description: 'I am a software engineer with 5 years of experience',
-      Password: 'password',
+  // Function to submit seeker data
+  async submitSeekerData() {
+    const seekerData = {
+      Firstname: this.firstFormGroup.value.firstCtrl,
+      Lastname: this.secondFormGroup.value.secondCtrl,
+      EmailAddress: this.thirdFormGroup.value.thirdCtrl,
+      ContactNumber: this.fourthFormGroup.value.fourthCtrl,
+      University: this.fifthFormGroup.value.fifthCtrl,
+      LinkedIn: '', 
+      Field: '', 
+      Bio: '',
+      Description: '', 
+      Password: '', 
     };
 
     try {
-      // Perform POST request to create a seeker
-      let response = await axios.post('api/seekers', seekerData);
+      const response = await axios.post('api/seekers', seekerData);
       console.log('Seeker created:', response.data);
     } catch (error) {
       console.error('Error creating seeker:', error);
     }
   }
+
 }
