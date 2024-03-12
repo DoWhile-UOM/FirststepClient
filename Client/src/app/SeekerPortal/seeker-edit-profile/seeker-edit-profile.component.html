@@ -1,20 +1,18 @@
-//navbar
-<section class="navbar"></section>
+<!-- navbar -->
+<app-nav-bar></app-nav-bar>
 
-//Heading
-<h1>Edit Profile</h1>
-
-//Form for editing profile
+<!-- Form for editing profile -->
+<br><br>
 <div class="form-popup" id="myForm">
   <form class="form-container">
-    //Image update
+    <!-- Image update -->
     <div class="up-container">
       <div class="left">
         <img [src]="url" height="200px" /><br />
         <input type="file" (change)="onselectFile($event)" />
       </div>
 
-      //Profile Details update in the upper section
+      <!-- Profile Details update in the upper section -->
       <div class="right">
         <mat-form-field class="elem" appearance="outline">
           <mat-label>First Name</mat-label>
@@ -35,7 +33,7 @@
     <br />
     <br />
 
-    //Profile Details update in the lower section side by side
+    <!-- Profile Details update in the lower section side by side -->
     <div class="sidebyside">
       <mat-form-field class="elem" appearance="outline">
         <mat-label id="des">Description</mat-label>
@@ -70,7 +68,7 @@
 
     <br /><br />
 
-    //CV upload button and view button
+    <!-- CV upload button and view button -->
     <div class="button-container">
       <button mat-raised-button color="primary">Upload New</button>
       <button mat-raised-button id="discard">View</button>
@@ -78,10 +76,10 @@
 
     <br /><br />
 
-    //skills update
+    <!-- skills update -->
     <section class="skillchip"></section>
 
-    //Buttons
+    <!-- Buttons -->
     <mat-divider></mat-divider>
     <br /><br />
     <section>

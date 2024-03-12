@@ -18,6 +18,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { MatToolbar } from '@angular/material/toolbar';
 import axios from 'axios';
 
 
@@ -54,7 +55,7 @@ interface seekerData {
     MatAutocompleteModule,
     MatChipsModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule, MatToolbar
   ],
 })
 export class SeekersignupComponent implements OnInit {

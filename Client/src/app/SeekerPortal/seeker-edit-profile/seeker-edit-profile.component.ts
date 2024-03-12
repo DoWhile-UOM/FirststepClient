@@ -10,26 +10,33 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { SeekerService } from '../../../services/seeker.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { NavBarComponent } from "../../shared/nav-bar/nav-bar.component";
 
 @Component({
-  selector: 'app-seeker-edit-profile',
-  standalone: true,
-  imports: [
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule,
-    FlexLayoutModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatAutocompleteModule,
-    MatChipsModule,
-    MatDividerModule,
-    MatCardModule,
-  ],
-  templateUrl: './seeker-edit-profile.component.html',
-  styleUrl: './seeker-edit-profile.component.css',
+    selector: 'app-seeker-edit-profile',
+    standalone: true,
+    templateUrl: './seeker-edit-profile.component.html',
+    styleUrl: './seeker-edit-profile.component.css',
+    imports: [
+        MatIconModule,
+        MatInputModule,
+        MatFormFieldModule,
+        FlexLayoutModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatAutocompleteModule,
+        MatChipsModule,
+        MatDividerModule,
+        MatCardModule, MatSlideToggleModule, MatToolbarModule, MatButtonModule,        
+        NavBarComponent
+    ]
 })
+
+
 export class SeekerEditProfileComponent implements OnInit {
+
   // The image url of the default image
   url = './assets/images/SeekerEdit.jpg';
 
@@ -46,6 +53,8 @@ export class SeekerEditProfileComponent implements OnInit {
 
   //constructor for seeker service
   constructor(private seekerService: SeekerService) {}
+
+
 
   ngOnInit(): void {
     this.getSeekerData(13);
