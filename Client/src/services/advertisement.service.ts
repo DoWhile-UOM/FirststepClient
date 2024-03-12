@@ -10,10 +10,10 @@ export class AdvertisementServices {
 
   constructor() { }
 
-  async getAllAdvertisements() {
+  async getAllAdvertisements(seekerID: string) {
     let jobList: any = [];
 
-    await axios.get(Apipaths.getAdvertisements)
+    await axios.get(Apipaths.getAdvertisements + '/seekerID=' + seekerID)
       .then(function (response) {
         try {
           jobList = response.data;
@@ -42,20 +42,21 @@ export class AdvertisementServices {
     await axios.post(Apipaths.addNewJob, job)
       .then(function (res) {
         response = res;
+        return true;
       })
       .catch(function (error) {
         alert('Network Error: ' + error);
+        return false;
       });
 
-    console.log("Error " + response);
-    //return response;
+    return true;
   }
 
-  async getCompanyProfile(company_id: string) {
+  async getCompanyProfile(company_id: string, seekerID: string) {
     let company: any;
     let jobList: any = [];
 
-    await axios.get(Apipaths.getCompanyProfile + company_id)
+    await axios.get(Apipaths.getCompanyProfile + company_id + "/seekerID=" + seekerID)
       .then(function (response) {
         try {
           company = response.data;
@@ -81,15 +82,174 @@ export class AdvertisementServices {
     return company;
   }
 
-  async getAllAdvertisementsByCompanyID(company_id: string) {
+  async getAllAdvertisementsByCompanyID(company_id: string, filterby: string) {
     let jobList: any = [];
 
-    await axios.get(Apipaths.getAdvertisementsByCompanyID + company_id)
+    await axios.get(Apipaths.getAdvertisementsByCompanyID + company_id + "/filterby=" + filterby)
       .then(function (response) {
         try {
           jobList = response.data;
           
           // validate posted date
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+        }
+        catch (error) {
+          console.log("No advertisements found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
+  }
+
+  async getAdvertisementById(jobID: string) {
+    let adData: any = {};
+
+    await axios.get(Apipaths.getJobDetails + jobID)
+      .then(function (response) { 
+        adData = response.data;
+
+        try {
+          var postDate = new Date(adData.posted_date);
+          console.log(adData.posted_date);
+          adData.posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          
+          var submissionDate = new Date(adData.submission_deadline);
+          adData.submission_deadline = submissionDate.toLocaleString('default', { month: 'short' }) + " " + submissionDate.getDate() + ", " + submissionDate.getFullYear();
+  
+          if (adData.is_experience_required == "1") {
+            adData.is_experience_required = "Required";
+          }
+          else{
+            adData.is_experience_required = "Not Required";
+          }
+          
+        } catch (error) {
+          console.log("No advertisement found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+    
+    return adData;
+  }
+
+  async activateAdvertisement(jobID: string) {
+    this.changeStatus(jobID, "active");
+  }
+
+  async holdAdvertisement(jobID: string) {
+    this.changeStatus(jobID, "hold");
+  }
+
+  async closeAdvertisement(jobID: string) {
+    this.changeStatus(jobID, "closed");
+  }
+
+  private async changeStatus(jobID: string, status: string) {
+    let response: any = null;
+
+    // validate status
+    var validStatus = ["active", "hold", "closed"];
+    if (!validStatus.includes(status)) {
+      alert("Invalid status")
+      return response;
+    }
+
+    await axios.put(Apipaths.changeStatusOfJob + jobID + "/status=" + status)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
+
+    return response;
+  }
+
+  async deleteAdvertisement(jobID: string) {
+    let response: any = null;
+
+    await axios.delete(Apipaths.deleteJob + jobID)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
+
+    return response;
+  }
+
+  async saveAdvertisement(jobID: string, seekerID: string, isSave: boolean) {
+    let response: any = null;
+
+    if (isSave) {
+      await axios.put(Apipaths.saveJob + jobID + "/seekerId=" + seekerID)
+        .then(function (res) {
+          response = res;
+        })
+        .catch(function (error) {
+          alert('Network Error: ' + error);
+        });
+    }
+    else {
+      await axios.put(Apipaths.unsaveJob + jobID + "/seekerId=" + seekerID)
+        .then(function (res) {
+          response = res;
+        })
+        .catch(function (error) {
+          alert('Network Error: ' + error);
+        });
+    }
+
+    return response;
+  }
+
+  async getSavedAdvertisements(seekerID: string) {
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getSavedAdvertisements + seekerID)
+      .then(function (response) {
+        try {
+          jobList = response.data;
+          
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+        }
+        catch (error) {
+          console.log("No advertisements found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
+  }
+
+  async searchAdsBasicAlgo(seekerID: string, searchData: any){
+    let jobList: any = [];
+    
+    await axios.put(Apipaths.basicSearch + seekerID, searchData)
+      .then(function (response) {
+        try {
+          jobList = response.data;
+          
           for (let i = 0; i < jobList.length; i++) {
             var postDate = new Date(jobList[i].posted_date);
             jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();

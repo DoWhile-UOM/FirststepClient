@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { ActivatedRoute } from '@angular/router';
+import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component'; 
 
 interface Job {
   advertisement_id: number;
@@ -41,13 +42,16 @@ interface Company{
     MatDividerModule, 
     MatGridListModule, 
     MatIconModule, 
-    CommonModule],
+    CommonModule,
+    NavBarComponent],
   templateUrl: './company-profile.component.html',
   styleUrl: './company-profile.component.css'
 })
 export class CompanyProfileComponent {
   company: Company = {} as Company;
   jobList: Job[] = [];
+
+  seekerID: number = 3; // sample seekerID
 
   constructor(private advertisementService: AdvertisementServices, private router: ActivatedRoute) { }
 
@@ -60,7 +64,7 @@ export class CompanyProfileComponent {
       return;
     }
 
-    this.advertisementService.getCompanyProfile(company_id)
+    this.advertisementService.getCompanyProfile(company_id, String(this.seekerID))
       .then((response) => {
         this.company = response;
 
