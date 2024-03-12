@@ -17,3 +17,14 @@
     </span>
   </div>
 </div>
+
+<mat-card class="emptymsg" *ngIf="jobListLength <= 0">
+  <div>
+    <p class="center-text">Can't Find Any Results!</p>
+  </div>
+</mat-card>
+
+<!--table-->
+<div class="addTable mat-elevation-z8" *ngIf="jobListLength > 0">
+  <table mat-table></table>
+</div>
