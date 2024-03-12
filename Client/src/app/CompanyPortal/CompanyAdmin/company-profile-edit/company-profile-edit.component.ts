@@ -58,6 +58,8 @@ export class CompanyProfileEditComponent {
 
   company: Company = {} as Company; // Initialize the company property
 
+  BScales: string[] = ['Large-Scale', 'Medium-Scale', 'Small-Scale'];
+
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService
@@ -68,6 +70,8 @@ export class CompanyProfileEditComponent {
       this.spinner.show();
 
       this.company = await this.companyService.getCompanyDetails(7);
+
+      // let selected = 'company.company_business_scale';
       console.log('got details');
     } finally {
       this.spinner.hide(); // Hide spinner after fetching (even on errors)

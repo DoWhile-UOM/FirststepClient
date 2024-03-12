@@ -1,0 +1,112 @@
+.dummy-navbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+span {
+  margin-right: 30px;
+}
+.person-name {
+  font-size: larger;
+  font-weight: 700;
+}
+.company-name {
+  font-style: italic;
+}
+.body {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.body-card {
+  box-shadow: 2px 2px 5px #888888;
+  width: 50%;
+  border-radius: 20px;
+}
+.arrow-section {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+img {
+  width: 3%;
+
+  height: auto;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+mat-card-content {
+  box-sizing: border-box;
+  width: 80%;
+  margin: 10px;
+  margin-right: 40px;
+  margin-left: 40px;
+  margin-bottom: 40px;
+}
+
+mat-form-field {
+  margin: 10px 10px;
+  width: 100%;
+}
+.field-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+.btn-section {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.update-btn {
+  margin: 10px;
+  background-color: #008080;
+  border: 1px solid #008080;
+}
+.update-btn-name {
+  color: #ffffff;
+}
+.discard-btn-name {
+  color: #008080;
+}
+.update-btn-name,
+.discard-btn-name {
+  margin: 5px 20px;
+}
+.discard-btn {
+  margin: 10px;
+  background-color: #ffffff;
+  border: 1px solid #008080;
+}
+mat-button {
+  border-radius: 20px;
+}
+
+/* media query section starts here*/
+@media only screen and (max-width: 768px) {
+  .body-card {
+    width: 80%;
+  }
+  .content {
+    width: 100%;
+  }
+  mat-card-content {
+    width: 80%;
+  }
+  .field-content {
+    width: 100%;
+  }
+}

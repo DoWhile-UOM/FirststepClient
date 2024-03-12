@@ -53,4 +53,8 @@ export const routes: Routes = [
     path: 'first-step',
     component: LandingPageComponent,
   },
+  {
+    path: 'companyRegistrationList',
+    component: CompanyAdminRegistrtionFormComponent,
+  },
 ];

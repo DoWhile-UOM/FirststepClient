@@ -1,0 +1,19 @@
+<div class="page-title">
+  <p>Company Registration Application List</p>
+
+  <div class="pageTitleContent">
+    <span>
+      <mat-chip-listbox
+        aria-label="Filter"
+        #filterByStatus
+        (change)="filter(filterByStatus.selected)"
+      >
+        <mat-chip-option value="all">All</mat-chip-option>
+        <mat-chip-option selected value="registered"
+          >Registered Companies</mat-chip-option
+        >
+        <mat-chip-option value="unchecked">Unchecked Companies</mat-chip-option>
+      </mat-chip-listbox>
+    </span>
+  </div>
+</div>

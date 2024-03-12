@@ -19,7 +19,7 @@
               placeholder="Enter your Company Name"
               [value]="company.company_name"
               (input)="company.company_name = companyName.value"
-            /><mat-icon matSuffix>mode_edit</mat-icon>
+            />
           </mat-form-field>
         </form>
       </div>
@@ -39,8 +39,7 @@
               cdkAutosizeMaxRows="5"
               [value]="company.company_description"
               (input)="company.company_description = companyDescription.value"
-            ></textarea
-            ><mat-icon matSuffix>mode_edit</mat-icon>
+            ></textarea>
           </mat-form-field>
         </form>
       </div>
@@ -56,7 +55,7 @@
                   placeholder="Enter your Company website"
                   [value]="company.company_website"
                   (input)="company.company_website = companyWebsite.value"
-                /><mat-icon matSuffix>mode_edit</mat-icon>
+                />
               </mat-form-field>
             </form>
           </div>
@@ -64,8 +63,8 @@
         <div class="ending-section">
           <div class="sectionTwo">
             <form class="form">
-              <mat-form-field class="form-field" appearance="outline">
-                <mat-label>Bussiness Scale</mat-label>
+              <!-- <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Bussiness Scale</mat-label> 
 
                 <mat-select
                   [value]="selected"
@@ -73,10 +72,29 @@
                   (input)="
                     company.company_business_scale = bussiness_scale.value
                   "
+                  required
                 >
                   <mat-option value="option1">Small Scale</mat-option>
                   <mat-option value="option2">Medium Scale</mat-option>
                   <mat-option value="option3">Large Scale</mat-option>
+                </mat-select>
+                <mat-label>Bussiness Scale</mat-label>
+              </mat-form-field> -->
+
+              <mat-form-field appearance="outline">
+                <mat-label>Bussiness Scale</mat-label>
+                <mat-select
+                  name="bussiness_scale"
+                  [value]="company.company_business_scale"
+                  ngModel
+                  #bussiness_scale
+                  (input)="
+                    company.company_business_scale = bussiness_scale.value
+                  "
+                >
+                  @for(BScale of BScales ; track BScale){
+                  <mat-option [value]="BScale">{{ BScale }}</mat-option>
+                  }
                 </mat-select>
               </mat-form-field>
             </form>
@@ -98,7 +116,7 @@
                     company.company_phone_number =
                       companyPhoneNumber.valueAsNumber
                   "
-                /><mat-icon matSuffix>mode_edit</mat-icon>
+                />
               </mat-form-field>
             </form>
           </div>
@@ -114,8 +132,6 @@
                   placeholder="Enter your email"
                   [value]="company.company_email"
                 />
-
-                <mat-icon matSuffix>mode_edit</mat-icon>
               </mat-form-field>
             </form>
           </div>
