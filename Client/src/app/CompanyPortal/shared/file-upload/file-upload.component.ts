@@ -1,54 +1,42 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { NgIf } from '@angular/common';
+import { Observable } from 'rxjs';
+import { FileUploadService } from '../../../../services/file-upload.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [MatIconModule,MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatProgressBarModule, NgIf ],
+  imports: [AsyncPipe,MatIconModule,MatInputModule,MatFormFieldModule,MatCheckboxModule,MatButtonModule,MatProgressBarModule],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css'
 })
 export class FileUploadComponent implements OnInit {
+  currentFile?: File;
+  message = '';
+  fileInfos?: Observable<any>;
 
-  public message: string = '';
-  public progress: number=0;
-  @Output() public onUploadFinished = new EventEmitter();
+  constructor(private uploadService: FileUploadService) { }
 
-  constructor(private http: HttpClient) { 
-
+  ngOnInit(): void {
+    this.fileInfos = this.uploadService.getFiles();
   }
-   ngOnInit() {    
+
+
+  selectFile(event: any): void {
+    this.currentFile = event.target.files.item(0);
+  }
+
+  async upload() {
+    if (this.currentFile) {
+      await this.uploadService.upload(this.currentFile);
+    }
+  }
   
 }
-
-public uploadFile = (files: FileList) => {
-  if (files.length === 0) {
-    return;
-  }
-  let fileToUpload = <File>files[0];
-  const formData = new FormData();
-  formData.append('file', fileToUpload, fileToUpload.name);
-  this.http.post('https://localhost:7213/api/UploadFiles', formData, {reportProgress: true, observe: 'events'})
-    .subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        if (event.total !== undefined) {
-          this.progress = Math.round(100 * event.loaded / event.total);
-        }
-      } else if (event.type === HttpEventType.Response) {
-        this.message = 'Upload success.';
-        this.onUploadFinished.emit(event.body);
-      }
-    });
-
-}
-
-
-}
-   
