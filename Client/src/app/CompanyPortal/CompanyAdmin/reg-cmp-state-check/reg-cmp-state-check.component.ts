@@ -38,10 +38,12 @@ export class RegCmpStateCheckComponent {
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
     this.fetchData();
+    
   }
 
   async fetchData() {
-    await this.company.getCompnayRegState(this.company_id);
+    this.cmpData=await this.company.getCompnayRegState(this.company_id);
+    //console.log(this.cmpData);
   }
   //end of fetch data
 
