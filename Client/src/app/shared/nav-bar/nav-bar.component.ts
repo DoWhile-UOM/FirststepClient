@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,16 +13,34 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class NavBarComponent {
   selected: number = 0;
-  colorList = ['primary', 'back', 'black', 'black']
+  colorList = ['black', 'back', 'black', 'black']
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
     this.colorList.forEach(element => {
       element = 'black';
     });
+
+    if (this.router.url === '/home') {
+      this.selected = 0;
+    }
+    else if (this.router.url === '/home/saved'){
+      this.selected = 1;
+    }
+    else{
+      alert('Invalid URL: ' + this.router.url);
+    }
     
     this.colorList[this.selected] = 'primary';
+  }
+
+  navigateToSavedListPage() {
+    this.router.navigate(['/home/saved']);
+  }
+
+  navigateToHomePage() {
+    this.router.navigate(['/home']);
   }
 }
 

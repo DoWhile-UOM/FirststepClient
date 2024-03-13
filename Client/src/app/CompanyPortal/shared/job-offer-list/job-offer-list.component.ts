@@ -4,17 +4,17 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AdvertisementServices } from '../../../../services/advertisement.service';
-import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component'; 
+import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component';
 import { CaNavBarComponent } from '../../CompanyAdmin/ca-nav-bar/ca-nav-bar.component';
-import { MatIconModule } from '@angular/material/icon'; 
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips'; 
+import { MatChipsModule } from '@angular/material/chips';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card'; 
+import { MatCardModule } from '@angular/material/card';
 import { NewJobComponent } from '../new-job/new-job.component';
 
 interface JobOffer{
@@ -47,16 +47,16 @@ var Table_data: JobOfferTable[] = [];
 @Component({
   selector: 'app-job-offer-list',
   standalone: true,
-  imports: [ MatTableModule, 
-    MatSortModule, 
-    MatPaginatorModule, 
-    NavBarComponent, 
+  imports: [ MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    NavBarComponent,
     MatIconModule,
     MatButtonModule,
-    MatChipsModule, 
+    MatChipsModule,
     CaNavBarComponent,
     FormsModule,
-    CommonModule, 
+    CommonModule,
     MatCardModule,
     NewJobComponent],
   templateUrl: './job-offer-list.component.html',
@@ -77,16 +77,16 @@ export class JobOfferListComponent implements AfterViewInit{
   jobListLength: number = 0;
 
   constructor(
-    private liveAnnouncer: LiveAnnouncer, 
+    private liveAnnouncer: LiveAnnouncer,
     private advertisementService: AdvertisementServices,
     public dialog: MatDialog,
-    private router: Router, 
+    private router: Router,
     private snackBar: MatSnackBar){
       this.jobListLength = 1;
   }
 
   async ngOnInit() {
-    
+
   }
 
   async refreshTable(status: string){
@@ -112,7 +112,7 @@ export class JobOfferListComponent implements AfterViewInit{
             no_of_applications: this.jobList[i].no_of_applications,
             no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
             no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,
-            no_of_rejected_applications: this.jobList[i].no_of_rejected_applications            
+            no_of_rejected_applications: this.jobList[i].no_of_rejected_applications
           });
         }
 
@@ -132,7 +132,7 @@ export class JobOfferListComponent implements AfterViewInit{
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this.liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } 
+    }
     else {
       this.liveAnnouncer.announce('Sorting cleared');
     }
@@ -191,7 +191,7 @@ export class JobOfferListComponent implements AfterViewInit{
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
 })
 export class ConfirmDialog {
-  title: string = ""; 
+  title: string = "";
   id: number = 0;
   dialogtitle: string = "";
 
@@ -202,7 +202,7 @@ export class ConfirmDialog {
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.title = data.title;
-    this.id = data.id;      
+    this.id = data.id;
     this.dialogtitle = data.dialogtitle;
   }
 
@@ -213,7 +213,7 @@ export class ConfirmDialog {
   async onYesClick() {
     if (this.dialogtitle == "Close") {
       await this.advertisementService.closeAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000); 
+      this.snackBar.open(this.title + " job offer successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
     else if (this.dialogtitle == "Activate") {
       await this.advertisementService.activateAdvertisement(this.id.toString());
