@@ -12,5 +12,6 @@ import { MatLabel } from '@angular/material/form-field';
   styleUrl: './reg-cmp-state-check.component.css'
 })
 export class RegCmpStateCheckComponent {
+  
 
 }
