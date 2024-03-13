@@ -1,3 +1,54 @@
+.container {
+  width: 1000px;
+  height: 800px;
+  border: none;
+  padding: 25px 25px 25px 25px;
+  margin-left: 200px;
+  margin-right: 150px;
+}
+
+
+.flex-item {
+  flex: 2;
+}
+
+.up-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.up-container .left {
+  flex: 1;
+  padding: 10px;
+  align-items: center;
+}
+.right {
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px 0 10px;
+}
+
+.assigned {
+  padding: 10px;
+  font-weight: 500;
+  font-size:15px ;
+  width: 100px;
+
+}
+::ng-deep .mat-icon.large-icon {
+  font-size: 36px; /* Adjust the size as needed */
+  padding: 10px 10px 10px 10px;
+}
+
+.num {
+  color: teal;
+  font-size: 25px;
+  align-items: center;
+  background-color: none; 
+  padding-left: 18px;
+  padding-top: 10px;
+}
+
 /* navbar */
 mat-toolbar {
     display: flex;

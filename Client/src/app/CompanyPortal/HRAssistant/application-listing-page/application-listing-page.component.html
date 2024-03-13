@@ -11,32 +11,34 @@
 </mat-toolbar>
 
 <div class="container">
-  <div class="uppersection">
+  <div class="up-container">
     <div class="left">
-      <h2>ASP.NET Developer</h2>
-      <div class="no">Job Number : 2752669</div>
-      <div class="field">Information Technology and Computer Science</div>
+      <h2 style="font-weight: 650; font-size: 30px">ASP.NET Developer</h2>
+      <div class="no" style="color: teal;  font-size: 15px; font-weight: 800;">Job Number : 2752669</div> <br>
+      <div class="field"  style=" font-size: 15px; font-weight: 500;">Information Technology and Computer Science</div>
     </div>
     <div class="right">
-      <div class="assigned">
-        <mat-label
-          >Assigned <mat-icon>assignment_turned_in</mat-icon></mat-label
-        >
+      <div class="assigned" >
+        <mat-label style="align-items: center;">  <mat-icon class="large-icon" style="color: teal; ">assignment_turned_in</mat-icon> <br> Assigned<br> <div class="num" style="align-items: center;" >85</div>  </mat-label>
       </div>
       <div class="assigned">
-        <mat-label>Not Evaluated<mat-icon>assignment_late</mat-icon></mat-label>
+        <mat-label style="align-items: center;">  <mat-icon class="large-icon" style="color: teal; ">assignment_late</mat-icon> <br> Not Evaluated<br> <div class="num" style="align-items: center;">69</div>  </mat-label>
+
       </div>
       <div class="assigned">
-        <mat-label>Selected<mat-icon>check_circle</mat-icon></mat-label>
+        <mat-label style="align-items: center;">  <mat-icon class="large-icon" style="color: teal; ">check_circle</mat-icon> <br> Selected<br> <div class="num" style="align-items: center;">16</div>  </mat-label>
+
       </div>
     </div>
   </div>
-
-  <h2 style="font-weight: 650; font-size: 30px">Job Offers</h2>
-  <br />
-  <br />
+  <section></section>
+  <br >
+  <br >
 
   <section class="table-container">
+
+    <h2 style="font-weight: 500; font-size: 25px; color: teal; ">Applicant List</h2>
+
     <mat-form-field>
       <mat-label style="color: gray">Search</mat-label>
       <input
@@ -79,6 +81,10 @@
           {{ element.review }}
         </td>
       </ng-container>
+
+      
+      
+      
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
