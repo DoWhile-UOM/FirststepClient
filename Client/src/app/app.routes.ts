@@ -40,7 +40,7 @@ export const routes: Routes = [
   
   // seeker portal
   {path:'jobdetails',component:AdvertisementViewPageComponent},
-  {path:'home',component:SeekerHomePageComponent},
+  {path:'home',component:SeekerHomePageComponent,canActivate:[authGuard]},
   {path:'home/saved',component:SavedAdvertisementListComponent},
   {path:'company-profile',component:CompanyProfileComponent},
   {path:'newJobUploaded',component:NewJobUploadedComponent},

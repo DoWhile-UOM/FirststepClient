@@ -3,15 +3,28 @@ import { FormGroup, FormControl, Validators,ReactiveFormsModule } from '@angular
 import { AuthService } from '../../services/auth.service';
 import { UserStoreService } from '../../services/user-store.service';
 import { Router } from '@angular/router';
+import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+
+
+
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,NavBarComponent,FormsModule,HttpClientModule,MatCardModule,MatIconModule,MatInputModule,MatFormFieldModule,MatButtonModule,FlexLayoutServerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
+  hide = true;
   constructor(private router: Router,private auth:AuthService,private userStore:UserStoreService){}
 
 
@@ -44,12 +57,12 @@ export class LoginComponent {
         //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
         //this.router.navigate(['home'])
         switch(tokenPayload.role){
-          case "User":{
+          case "Seeker":{
             this.router.navigate(['home'])
             break;
           }
           case "Cadmin":{
-            this.router.navigate(['ManageRoles'])
+            this.router.navigate(['jobOfferList'])
             break;
           }
         }
