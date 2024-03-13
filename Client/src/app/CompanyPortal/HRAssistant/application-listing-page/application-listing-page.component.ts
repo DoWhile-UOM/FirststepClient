@@ -9,21 +9,16 @@ import {MatInputModule} from '@angular/material/input';
 
 export interface PeriodicElement {
   id: number;
-  title: string;
-  field: string;
-  date: string;
-  noOfApplications: number;
+  name: string;
+  es: string;
+  status: string;
+  review: string;
 
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, title: 'Software Engineer', field:'IT & CS', date: '20-12-2023', noOfApplications: 25},
-  {id: 2, title: 'Backend Developer', field:'IT & CS' , date: '11-05-2023', noOfApplications: 20},
-  {id: 3, title: 'ASP.NET Developer', field:'IT & CS' , date: '03-06-2023', noOfApplications: 22},
-  {id: 4, title: 'React Developer', field:'IT & CS' , date: '30-11-2023', noOfApplications: 24},
-  {id: 5, title: 'Senior Business Analyst', field:'Business' , date: '03-12-2023', noOfApplications: 19},
-  {id: 6, title: 'Frontend Developer', field:'IT & CS' , date: '11-05-2023', noOfApplications: 21},
-  {id: 7, title: 'Angular Developer', field:'IT & CS' , date: '03-06-2023', noOfApplications: 15},
+  {id: 1, name: 'SoftwareEngineer', es:'IT&CS', status: '20-12-2023', review: 'Evaluate'},
+  
 
   
 ];
@@ -43,7 +38,7 @@ export class ApplicationListingPageComponent {
 
     //table
 
-displayedColumns: string[] = ['id', 'title', 'field', 'date', 'noOfApplications'];
+displayedColumns: string[] = ['id', 'name', 'es', 'status', 'review'];
 dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 applyFilter(event: Event) {
