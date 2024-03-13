@@ -63,10 +63,17 @@
       </ng-container>
 
       <!-- Evaluation Status Column -->
-      <ng-container matColumnDef="es">
-        <th mat-header-cell *matHeaderCellDef>Evaluation Status</th>
-        <td mat-cell *matCellDef="let element">{{ element.es }}</td>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Evaluation Status </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-form-field>
+            <mat-select>
+              <mat-option *ngFor="let option of element.dropdownOptions" [value]="option">{{ option }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
       </ng-container>
+      
 
       <!-- Posted status Column -->
       <ng-container matColumnDef="status">
