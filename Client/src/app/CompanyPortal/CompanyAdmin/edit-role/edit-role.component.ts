@@ -53,6 +53,7 @@ export class EditRoleComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService,@Inject(MAT_DIALOG_DATA)public data:any) {}
   user_id: number = this.data.id;
+  
   async ngOnInit() {
     this.fetchEmployeeDetails();
     console.log(this.data);

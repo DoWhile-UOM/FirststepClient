@@ -21,7 +21,7 @@ export const routes: Routes = [
   //{path:'AdminDashBoard',component:AdminDashboardComponent},
   {path:'jobOfferList/newJob',component:NewJobComponent},
   {path:'jobOfferList/updateJobDetails',component:NewJobComponent},
-  {path:'jobOfferList',component:JobOfferListComponent},
+  {path:'jobOfferList',component:JobOfferListComponent},//get styles
  
   // seeker portal
   {path:'jobdetails',component:AdvertisementViewPageComponent},
