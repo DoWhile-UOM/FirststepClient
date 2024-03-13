@@ -13,12 +13,15 @@ import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded
 import { SeekerEditProfileComponent } from './SeekerPortal/seeker-edit-profile/seeker-edit-profile.component';
 import { SeekersignupComponent } from './SeekerPortal/seekersignup/seekersignup.component';
 import { FileUploadComponent } from './CompanyPortal/shared/file-upload/file-upload.component';
+import { ApplicationListingPageComponent } from './CompanyPortal/HRAssistant/application-listing-page/application-listing-page.component';
 
 export const routes: Routes = [
     // company portal
     {path:'ManageRoles',component:ManageRolesComponent},
     {path:'AddRole',component:AddrolesPopupComponent},
     {path:'EditRole',component:EditRoleComponent},
+    //HRAssistant
+    {path:'applicationListing',component:ApplicationListingPageComponent},
     //{path:'AdminDashBoard',component:AdminDashboardComponent},
     {path:'newJob',component:NewJobComponent},
     {path:'jobOfferList',component:JobOfferListComponent},

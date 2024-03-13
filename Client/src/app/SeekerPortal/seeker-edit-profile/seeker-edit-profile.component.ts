@@ -67,7 +67,7 @@ export class SeekerEditProfileComponent implements OnInit {
       console.log(seekerData);
     } catch (error) {
       console.error(error);
-    }
+    } 
   }
 
   //update method or put method

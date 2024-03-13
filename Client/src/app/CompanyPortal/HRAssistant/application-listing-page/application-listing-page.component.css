@@ -1,0 +1,61 @@
+/* navbar */
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-bar {
+    height: 4em; 
+    background-color: white;
+    position: absolute;
+    z-index: 2;
+    margin-top: 0;
+  }
+  
+  .mat-toolbar{
+    position: relative;
+    z-index: 2;
+  }
+  
+  .logo{
+    height: 2.5em;
+    width: 2.5em;
+    margin-right: 0.5em; 
+  }
+  
+  .flex-spacer {
+    flex: 1 1 auto;
+  }
+  
+  
+  .profile-image {
+    height: 2em;
+    width: 2em; 
+    border-radius: 50%; 
+    margin-right: 16px;
+    margin-left: 5px;
+  }
+
+  
+  /* icons */
+  
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+/* table */
+/* Structure */
+table {
+    width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
