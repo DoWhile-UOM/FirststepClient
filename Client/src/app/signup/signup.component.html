@@ -2,6 +2,6 @@
     <input type="text" formControlName="first_name" placeholder="Firt Name">
     <input type="text" formControlName="last_name" placeholder="Last Name">
     <input type="email" formControlName="email" placeholder="Email">
-    <input type="text" formControlName="password_hash" placeholder="Password">
+    <input type="password" formControlName="password_hash" placeholder="Password">
     <button type="submit" [disabled]="!signupform.valid" (click)="onSignup()">Submit</button>
 </form>
