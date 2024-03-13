@@ -29,7 +29,7 @@ export class SeekerService {
   async editseeker(seeker: any, seekerID: number) {
     try {
       await axios
-        .put('https://localhost:7213/api/Seeker/UpdateSeeker/105' + seekerID, seeker)
+        .put('https://localhost:7213/api/Seeker/UpdateSeeker/' + seekerID, seeker)
         .then((response) => {
           console.log(response);
         });

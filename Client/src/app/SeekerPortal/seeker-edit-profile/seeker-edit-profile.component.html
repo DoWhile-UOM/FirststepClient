@@ -6,7 +6,7 @@
 <br /><br />
 
 <div class="form-popup" id="myForm">
-  <form class="form-container">
+  <form class="form-container" #subroleForm="ngForm" (ngSubmit)="onApply()" >
     <!-- Image update -->
     <div class="up-container">
       <div class="left">
@@ -49,7 +49,11 @@
 
       <mat-form-field class="elem" appearance="outline">
         <mat-label>Field of Work</mat-label>
-        <input matInput name="field_name" [(ngModel)] ="seekerDetails.field_name" placeholder="Enter Field of Work" />
+        <mat-select >
+          <mat-option value="1">Information Technology and Computer Science</mat-option>
+          <mat-option value="2">Engineering</mat-option>
+          <mat-option value="3">Business</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field class="elem" appearance="outline">
@@ -86,7 +90,7 @@
     <br /><br />
     <section>
       <div class="example-button-row">
-        <button mat-raised-button color="primary">Update Profile</button>
+        <button type="submit" mat-raised-button color="primary">Update Profile</button>
         <button mat-raised-button id="discard">Discard Changes</button>
         <button mat-raised-button color="warn" id="delete">
           Delete Profile

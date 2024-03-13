@@ -14,6 +14,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavBarComponent } from "../../shared/nav-bar/nav-bar.component";
 import { FormsModule } from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
+
 
 
 interface Seeker {
@@ -49,7 +51,7 @@ interface Seeker {
         MatChipsModule,
         MatDividerModule,
         MatCardModule, MatSlideToggleModule, MatToolbarModule, MatButtonModule,        
-        NavBarComponent, FormsModule
+        NavBarComponent, FormsModule, MatSelectModule
     ]
 })
 
@@ -90,6 +92,12 @@ export class SeekerEditProfileComponent  {
     this.seekerDetails= await this.seekerService.getSeekerDetails(this.user_id);
     //console.log(this.seekerDetails);
   }
+
+  async onApply() {
+    await this.seekerService.editseeker( this.seekerDetails , this.user_id);
+   }
+
+ 
 
 
 
