@@ -7,16 +7,20 @@ import axios from 'axios';
 export class SeekerService {
   constructor() {}
 
-  //get method
-  async getSeeker(id: number) {
+  //getting all details of an employee
+  async getSeekerDetails(id: number) {
     let seekerData: any;
     try {
-      await axios.get('Seeker/GetSeeker/' + id).then((response) => {
+      await axios.get('https://localhost:7213/api/Seeker/GetSeeker/' + id)
+      .then((response) => {
         seekerData = response.data;
+        //console.log(seekerData);
       });
     } catch (error) {
-      console.error(error);
+      //console.error(error);
     }
+
+    //alert(seekerData);
 
     return seekerData;
   }
@@ -25,7 +29,7 @@ export class SeekerService {
   async editseeker(seeker: any, seekerID: number) {
     try {
       await axios
-        .put('Seeker/UpdateSeeker/' + seekerID, seeker)
+        .put('https://localhost:7213/api/Seeker/UpdateSeeker/105' + seekerID, seeker)
         .then((response) => {
           console.log(response);
         });
@@ -37,7 +41,7 @@ export class SeekerService {
   //delete method
   async deleteseeker(seekerID: number) {
     try {
-      await axios.delete('Seeker/DeleteSeeker/' + seekerID);
+      await axios.delete('https://localhost:7213/api/Seeker/DeleteSeeker/1059' + seekerID);
     } catch (error) {
       console.error(error);
     }
@@ -46,7 +50,11 @@ export class SeekerService {
   //add method
   async addseeker(seeker: any) {
     try {
-      await axios.post('Seeker/AddSeeker', seeker);
+      seeker.seeker_id= 13; //sample company id
+      await axios.post('https://localhost:7213/api/Seeker/AddSeeker', seeker)
+       .then((response) => {
+         console.log(response);
+       });
     } catch (error) {
       console.error(error);
     }

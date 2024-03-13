@@ -13,6 +13,25 @@ import { SeekerService } from '../../../services/seeker.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavBarComponent } from "../../shared/nav-bar/nav-bar.component";
+import { FormsModule } from '@angular/forms';
+
+
+interface Seeker {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: number,
+  bio: string,
+  description: string,
+  university: string,
+  cVurl: string,
+  profile_picture: string,
+  linkedin: string,  
+  field_name: string,
+  user_id: number,
+  password_hash: string,
+
+}
 
 @Component({
     selector: 'app-seeker-edit-profile',
@@ -30,13 +49,13 @@ import { NavBarComponent } from "../../shared/nav-bar/nav-bar.component";
         MatChipsModule,
         MatDividerModule,
         MatCardModule, MatSlideToggleModule, MatToolbarModule, MatButtonModule,        
-        NavBarComponent
+        NavBarComponent, FormsModule
     ]
 })
 
 
-export class SeekerEditProfileComponent implements OnInit {
-
+export class SeekerEditProfileComponent  {
+  
   // The image url of the default image
   url = './assets/images/SeekerEdit.jpg';
 
@@ -52,41 +71,28 @@ export class SeekerEditProfileComponent implements OnInit {
   }
 
   //constructor for seeker service
+
+  seekerDetails: Seeker = {} as Seeker;
+
   constructor(private seekerService: SeekerService) {}
+  user_id: number = 3;
+  field_id: number = 1;
 
-
-
-  ngOnInit(): void {
-    this.getSeekerData(13);
+  async ngOnInit() {
+    this.fetchEmployeeDetails();
+    //console.log(this.data);
+  }
+  data(data: any) {
+    throw new Error('Method not implemented.');
+  }
+  
+  async fetchEmployeeDetails() {
+    this.seekerDetails= await this.seekerService.getSeekerDetails(this.user_id);
+    //console.log(this.seekerDetails);
   }
 
-  //get method
-  async getSeekerData(seekerID: number) {
-    try {
-      let seekerData = await this.seekerService.getSeeker(seekerID);
-      console.log(seekerData);
-    } catch (error) {
-      console.error(error);
-    } 
-  }
 
-  //update method or put method
-  async editSeeker(seekerID: number, seeker: any) {
-    try {
-      let seekerData = await this.seekerService.editseeker(seeker, seekerID);
-      console.log(seekerData);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
-  //delete method
-  async deleeteSeeker(seekerID: number) {
-    try {
-      let seekerData = await this.seekerService.deleteseeker(seekerID);
-      console.log(seekerData);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+
+  
 }
