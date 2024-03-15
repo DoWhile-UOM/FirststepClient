@@ -28,9 +28,6 @@ export class NavBarComponent {
     else if (this.router.url === '/home/saved'){
       this.selected = 1;
     }
-    else{
-      alert('Invalid URL: ' + this.router.url);
-    }
     
     this.colorList[this.selected] = 'primary';
   }

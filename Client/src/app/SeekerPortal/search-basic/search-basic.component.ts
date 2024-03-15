@@ -51,7 +51,7 @@ interface SearchData{
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
-    CommonModule],
+    CommonModule,],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
@@ -125,9 +125,14 @@ export class SearchBasicComponent implements OnInit{
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
 		if (countryCode == undefined){
-			this.snackBar.open("Error Updating City Lsit", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      this.cities = City.getCitiesOfCountry('LK')?.map(city => city.name) ?? [];
+
+      this.snackBar.open("Update City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+			//this.snackBar.open("Error Updating City Lsit", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      
 			return;
 		}
+    //alert(countryCode);
 		
 		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
 
