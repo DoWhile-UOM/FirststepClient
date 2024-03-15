@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { NewJobComponent } from '../new-job/new-job.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 interface JobOffer{
   advertisement_id: number;
@@ -58,7 +60,9 @@ var Table_data: JobOfferTable[] = [];
     FormsModule,
     CommonModule,
     MatCardModule,
-    NewJobComponent],
+    NewJobComponent,
+    MatFormFieldModule,
+    MatInputModule],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
@@ -76,6 +80,8 @@ export class JobOfferListComponent implements AfterViewInit{
   selectedFilter: string = 'active';
   jobListLength: number = 0;
 
+  title: string = "";
+
   constructor(
     private liveAnnouncer: LiveAnnouncer,
     private advertisementService: AdvertisementServices,
@@ -89,44 +95,53 @@ export class JobOfferListComponent implements AfterViewInit{
 
   }
 
-  async refreshTable(status: string){
+  async refreshTable(status: string, title: string){
     this.jobListLength = 1;
-    await this.advertisementService.getAllAdvertisementsByCompanyID(this.company_id, status)
+
+    if (title == ""){
+      await this.advertisementService.getAllAdvertisementsByCompanyID(this.company_id, status)
       .then((response) => {
         this.jobList = response;
-
-        if (this.jobList.length == 0) {
-          console.log("No advertisements found");
-        }
-
-        Table_data = [];
-
-        for (let i = 0; i < this.jobList.length; i++) {
-
-          Table_data.push({
-            advertisement_id: this.jobList[i].advertisement_id,
-            job_number: this.jobList[i].job_number,
-            title: this.jobList[i].title,
-            status: this.jobList[i].current_status.toLowerCase(),
-            posted_date: this.jobList[i].posted_date,
-            no_of_applications: this.jobList[i].no_of_applications,
-            no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
-            no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,
-            no_of_rejected_applications: this.jobList[i].no_of_rejected_applications
-          });
-        }
-
-        this.dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
-
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-
-        this.jobListLength = this.jobList.length;
       });
+    }
+    else{
+      await this.advertisementService.getAllAdvertisementsByCompanyIDAndSearch(this.company_id, status, title)
+      .then((response) => {
+        this.jobList = response;
+      });
+    }
+
+    if (this.jobList.length == 0) {
+      console.log("No advertisements found");
+    }
+
+    Table_data = [];
+
+    for (let i = 0; i < this.jobList.length; i++) {
+
+      Table_data.push({
+        advertisement_id: this.jobList[i].advertisement_id,
+        job_number: this.jobList[i].job_number,
+        title: this.jobList[i].title,
+        status: this.jobList[i].current_status.toLowerCase(),
+        posted_date: this.jobList[i].posted_date,
+        no_of_applications: this.jobList[i].no_of_applications,
+        no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
+        no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,
+        no_of_rejected_applications: this.jobList[i].no_of_rejected_applications
+      });
+    }
+
+    this.dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
+
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+
+    this.jobListLength = this.jobList.length;
   }
 
   ngAfterViewInit() {
-    this.refreshTable(this.selectedFilter);
+    this.refreshTable(this.selectedFilter, "");
   }
 
   announceSortChange(sortState: Sort) {
@@ -141,7 +156,7 @@ export class JobOfferListComponent implements AfterViewInit{
   filter(selected: any){
     // filter by current status of the advertisement
     this.snackBar.open("Refeshing table to show " + selected.value + " job offers...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
-    this.refreshTable(selected.value);
+    this.refreshTable(selected.value, this.title.trim().toLowerCase());
     this.selectedFilter = selected.value;
   }
 
@@ -164,8 +179,12 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   addNew(){
-    //this.router.navigate(['jobOfferList/newJob']);
     this.router.navigate(['jobOfferList/newJob']);
+  }
+
+  search(){
+    this.snackBar.open("Refeshing table to show " + this.selectedFilter + " job offers...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+    this.refreshTable(this.selectedFilter, this.title.trim().toLowerCase());
   }
 
   openConfirmDialogBox(enterAnimationDuration: string, exitAnimationDuration: string, dialogtitle: string, adTitle: string, adId: number): void {
@@ -178,7 +197,7 @@ export class JobOfferListComponent implements AfterViewInit{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.refreshTable(this.selectedFilter);
+      this.refreshTable(this.selectedFilter, this.title.trim().toLowerCase());
     });
   }
 }
