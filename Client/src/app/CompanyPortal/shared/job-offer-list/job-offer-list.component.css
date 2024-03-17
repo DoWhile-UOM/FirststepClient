@@ -92,6 +92,7 @@ th.mat-header-cell .nu-header{
   font-size: 16px;
   outline: none;
   margin-right: 0.5em;
+  width: 18em;
 }
 
 .search-box{
@@ -111,12 +112,12 @@ th.mat-header-cell .nu-header{
 
 .search:focus {
   border-color: #008080; 
-  width: 30em;
+  width: 25em;
 }
 
 .search:hover{
   border-color: #008080;
-  width: 30em;
+  width: 25em;
 }
 
 .small-icon-button {

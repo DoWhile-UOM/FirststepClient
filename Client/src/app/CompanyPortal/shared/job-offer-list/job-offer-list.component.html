@@ -16,7 +16,7 @@
     
     <span class="add-new-button">
       <span class="search-box">
-        <input class="search" type="text" placeholder="Title" [(ngModel)]="title">
+        <input class="search" type="text" placeholder="Title" [(ngModel)]="title" (keydown.enter)="search()">
 
         <button mat-icon-button color="primary" (click)="search()" class="small-icon-button">
           <mat-icon>search</mat-icon>
