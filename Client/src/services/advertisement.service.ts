@@ -221,24 +221,13 @@ export class AdvertisementServices {
   async saveAdvertisement(jobID: string, seekerID: string, isSave: boolean) {
     let response: any = null;
 
-    if (isSave) {
-      await axios.put(Apipaths.saveJob + jobID + "/seekerId=" + seekerID)
-        .then(function (res) {
-          response = res;
-        })
-        .catch(function (error) {
-          alert('Network Error: ' + error);
-        });
-    }
-    else {
-      await axios.put(Apipaths.unsaveJob + jobID + "/seekerId=" + seekerID)
-        .then(function (res) {
-          response = res;
-        })
-        .catch(function (error) {
-          alert('Network Error: ' + error);
-        });
-    }
+    await axios.put(Apipaths.saveJob + jobID + "/save=" + isSave + "/seekerId=" + seekerID)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
 
     return response;
   }
