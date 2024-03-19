@@ -50,6 +50,11 @@ interface AddJob {
 	reqSkills: string[];
 }
 
+interface Skill {
+	skill_id: number;
+	skill_name: string;
+}
+
 interface Job{
 	job_number: number;
 	title: string;
@@ -64,6 +69,7 @@ interface Job{
 	job_description: string;
 	field_name: string;
 	company_name: string;
+	skills: Skill[];
 }
 
 @Component({
