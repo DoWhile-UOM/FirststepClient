@@ -51,7 +51,7 @@ export class CompanyProfileComponent {
   company: Company = {} as Company;
   jobList: Job[] = [];
 
-  seekerID: number = 4; // sample seekerID
+  seekerID: number = 3; // sample seekerID
 
   constructor(private advertisementService: AdvertisementServices, private router: ActivatedRoute) { }
 

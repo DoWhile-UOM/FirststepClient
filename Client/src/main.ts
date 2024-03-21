@@ -10,3 +10,4 @@ registerLicense('Ngo9BigBOggjHTQxAR8/V1NAaF1cWmhIfEx1RHxQdld5ZFRHallYTnNWUj0eQnx
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
+  

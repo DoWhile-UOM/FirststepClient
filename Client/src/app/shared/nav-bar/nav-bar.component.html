@@ -7,10 +7,10 @@
     <span>FirstStep</span>
     <span class="flex-spacer"></span>
     <div class="right-buttons">
-      <a mat-button routerLink="/home" color="{{colorList[0]}}">Search</a>
-      <a mat-button routerLink="/about">Saved List</a>
-      <a mat-button routerLink="/contact">Applications</a>
-      <a mat-button routerLink="/contact">My Profile</a>
+      <a mat-button color="{{colorList[0]}}" (click)="navigateToHomePage()">Search</a>
+      <a mat-button color="{{colorList[1]}}" (click)="navigateToSavedListPage()">Saved List</a>
+      <a mat-button color="{{colorList[2]}}">Applications</a>
+      <a mat-button color="{{colorList[3]}}">My Profile</a>
       <img src="assets/images/dp.png" alt="Profile Picture" class="profile-image">
 
     </div>

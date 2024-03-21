@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
+import { SearchBasicComponent } from '../search-basic/search-basic.component';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 interface Job {
   advertisement_id: number;
@@ -21,28 +24,28 @@ interface Job {
 @Component({
   selector: 'app-seeker-home-page',
   standalone: true,
-  imports: [ AdvertisementCardComponent, CommonModule,NavBarComponent],
+  imports: [ AdvertisementCardComponent, CommonModule, NavBarComponent, SearchBasicComponent],
   templateUrl: './seeker-home-page.component.html',
   styleUrl: './seeker-home-page.component.css'
 })
-export class SeekerHomePageComponent implements OnInit{
+export class SeekerHomePageComponent{
   jobList: Job[] = [];
 
-  seekerID: number = 4; // sample seekerID
+  constructor(private advertisementService: AdvertisementServices, private api: ApiService,private authService:AuthService) {
 
-  constructor(private advertisementService: AdvertisementServices) {
-    
   }
 
-  async ngOnInit(){
-    await this.advertisementService.getAllAdvertisements(String(this.seekerID))
-      .then((response) => {
-        this.jobList = response;
+  seekerID: number = 3; // sample seekerID
 
-        if (this.jobList.length == 0) {
-          console.log("No advertisements found");
-        }
-      });
+  changeJobList(newJobList: Job[]){
+    this.jobList = newJobList;
   }
+
+  signOut(){
+    this.authService.signOut()
+    //this.auth.signup(this.myForm.value)
+  }
+
+
+
 }
-

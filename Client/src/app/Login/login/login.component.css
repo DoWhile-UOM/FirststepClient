@@ -1,0 +1,116 @@
+.body {
+    font-family: "Lato", sans-serif;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  .title {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center; /* Center the text horizontally */
+  }
+  mat-card {
+    border-radius: 10px;
+    width: 30%;
+    align-self: center;
+  }
+  .body-card {
+    box-shadow: 2px 2px 5px #888888;
+  }
+  .card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+  }
+  mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+  }
+  mat-label {
+    font-family: "Lato", sans-serif;
+  }
+  mat-form-field {
+    width: 75%;
+    height: 4px;
+    margin: 10px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+  }
+  .forgot-password {
+    margin-bottom: 20px;
+  }
+  
+  matInput {
+    width: 100%;
+    margin: 10px 0;
+  }
+  .email-field,
+  .password-field {
+    box-sizing: border-box;
+  }
+  
+  .login {
+    background-color: #008080;
+    color: #fff;
+    font-weight: 700;
+    width: 75%;
+    font-family: "Lato", sans-serif;
+    margin: 10px;
+  }
+  .Login-btn-name {
+    color: #fff;
+  }
+  .forgot-password {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 10px;
+    font-family: "Lato", sans-serif;
+    width: 75%;
+    color: #000;
+  }
+  
+  .reset,
+  .signUp {
+    color: #008080;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-bottom: 10px;
+  }
+  @media screen and (max-width: 480px) {
+    mat-card {
+      width: 95%;
+    }
+    mat-form-field {
+      width: 95%;
+      height: 1px;
+      margin: 10px;
+      margin-bottom: 50px;
+      margin-top: 20px;
+    }
+    mat-icon-button {
+      height: 2px;
+      background-color: #008080;
+    }
+  }
+  
+  @media screen and (max-width: 1000px) {
+    mat-card {
+      width: 80%;
+    }
+    mat-form-field {
+      width: 85%;
+      height: 2px;
+      margin: 10px;
+      margin-bottom: 50px;
+      margin-top: 20px;
+    }
+  }

@@ -12,8 +12,19 @@ import { SeekerApplicationFormComponent } from './SeekerPortal/seeker-applicatio
 import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-profile.component';
 import { JobOfferListComponent } from './CompanyPortal/shared/job-offer-list/job-offer-list.component';
 import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
+import { LoginComponent } from './Login/login/login.component';
+
+import { SignupComponent } from './signup/signup.component';
+import { authGuard } from './guards/auth.guard';
+
+import { RegisterCompanyComponent } from './CompanyPortal/CompanyAdmin/register-company/register-company.component';
+
+import { RegCmpStateCheckComponent } from './CompanyPortal/CompanyAdmin/reg-cmp-state-check/reg-cmp-state-check.component';
+
 
 export const routes: Routes = [
+  {path:'login',component:LoginComponent},
+  {path:'signup',component:SignupComponent},
   // company portal
   { path: 'ManageRoles', component: ManageRolesComponent },
   { path: 'AddRole', component: AddrolesPopupComponent },

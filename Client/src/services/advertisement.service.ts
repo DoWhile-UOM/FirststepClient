@@ -17,7 +17,7 @@ export class AdvertisementServices {
       .then(function (response) {
         try {
           jobList = response.data;
-          
+
           for (let i = 0; i < jobList.length; i++) {
             var postDate = new Date(jobList[i].posted_date);
             jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
@@ -61,7 +61,7 @@ export class AdvertisementServices {
         try {
           company = response.data;
           jobList = company.advertisementUnderCompany;
-          
+
           for (let i = 0; i < jobList.length; i++) {
             var postDate = new Date(jobList[i].posted_date);
             jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
@@ -78,7 +78,7 @@ export class AdvertisementServices {
           alert('Network Error: ' + error);
         }
       );
-    
+
     return company;
   }
 
@@ -89,7 +89,34 @@ export class AdvertisementServices {
       .then(function (response) {
         try {
           jobList = response.data;
-          
+
+          // validate posted date
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+        }
+        catch (error) {
+          console.log("No advertisements found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
+  }
+
+  async getAllAdvertisementsByCompanyIDAndSearch(company_id: string, filterby: string, title: string){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getAdvertisementsByCompanyID + company_id + "/filterby=" + filterby + "/title=" + title)
+      .then(function (response) {
+        try {
+          jobList = response.data;
+
           // validate posted date
           for (let i = 0; i < jobList.length; i++) {
             var postDate = new Date(jobList[i].posted_date);
@@ -113,24 +140,24 @@ export class AdvertisementServices {
     let adData: any = {};
 
     await axios.get(Apipaths.getJobDetails + jobID)
-      .then(function (response) { 
+      .then(function (response) {
         adData = response.data;
 
         try {
           var postDate = new Date(adData.posted_date);
           console.log(adData.posted_date);
           adData.posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
-          
+
           var submissionDate = new Date(adData.submission_deadline);
           adData.submission_deadline = submissionDate.toLocaleString('default', { month: 'short' }) + " " + submissionDate.getDate() + ", " + submissionDate.getFullYear();
-  
+
           if (adData.is_experience_required == "1") {
             adData.is_experience_required = "Required";
           }
           else{
             adData.is_experience_required = "Not Required";
           }
-          
+
         } catch (error) {
           console.log("No advertisement found");
         }
@@ -140,7 +167,7 @@ export class AdvertisementServices {
           alert('Network Error: ' + error);
         }
       );
-    
+
     return adData;
   }
 
@@ -194,24 +221,13 @@ export class AdvertisementServices {
   async saveAdvertisement(jobID: string, seekerID: string, isSave: boolean) {
     let response: any = null;
 
-    if (isSave) {
-      await axios.put(Apipaths.saveJob + jobID + "/seekerId=" + seekerID)
-        .then(function (res) {
-          response = res;
-        })
-        .catch(function (error) {
-          alert('Network Error: ' + error);
-        });
-    }
-    else {
-      await axios.put(Apipaths.unsaveJob + jobID + "/seekerId=" + seekerID)
-        .then(function (res) {
-          response = res;
-        })
-        .catch(function (error) {
-          alert('Network Error: ' + error);
-        });
-    }
+    await axios.put(Apipaths.saveJob + jobID + "/save=" + isSave + "/seekerId=" + seekerID)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
 
     return response;
   }
@@ -223,7 +239,7 @@ export class AdvertisementServices {
       .then(function (response) {
         try {
           jobList = response.data;
-          
+
           for (let i = 0; i < jobList.length; i++) {
             var postDate = new Date(jobList[i].posted_date);
             jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
@@ -240,5 +256,47 @@ export class AdvertisementServices {
       );
 
     return jobList;
+  }
+
+  async searchAdsBasicAlgo(seekerID: string, searchData: any){
+    let jobList: any = [];
+
+    await axios.post(Apipaths.basicSearch + seekerID, searchData)
+      .then(function (response) {
+        try {
+          jobList = response.data;
+
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+        }
+        catch (error) {
+          console.log("No advertisements found");
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
+  }
+
+  async getAdvertisementByIDwithKeywords(jobID: string){
+    let adData: any = {};
+
+    await axios.get(Apipaths.getAdvertisementByIDwithKeywords + jobID)
+      .then(function (response) {
+        adData = response.data;
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return adData;
   }
 }
