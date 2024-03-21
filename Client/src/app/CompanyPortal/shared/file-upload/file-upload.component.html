@@ -1,46 +1,12 @@
-<!---
 <div class="fileupload">
-  <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-    <div id="Documentsubmissioncontainer" class="formchild">
-      <input type="file" hidden id="fileID" style="display: none" (change)="handleFileInput($event)" onchange="console.log(event.target.files)"/>
-      <span class="spanicon"
-        ><mat-icon class="uploadicon">upload</mat-icon></span
-      >
-      <button class="fileuploadbtn" mat-button (click)="triggerFileInput()">
-        Upload Profile Photo
-      </button>
-    </div>
-  </div>
--->
+  <div id="Documentsubmissioncontainer" class="formchild">
 
-<div class="row">
-  <div class="col-8">
-    <label class="btn btn-default p-0">
-      <input type="file" (change)="selectFile($event)" />
-    </label>
-  </div>
+<input type="file" #file style="display: none" (change)="onFileSelected($event)" />
 
-  <div class="col-4">
-    <button class="btn btn-success btn-sm" [disabled]="!currentFile" (click)="upload()">
-      Upload
-    </button>
+<span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
+
+<button class="fileuploadbtn" mat-button (click)="file.click()">
+  Upload Profile Photo
+</button>
   </div>
 </div>
-
-@if (message) {
-<div class="alert alert-secondary" role="alert">{{ message }}</div>
-}
-
-<div class="card mt-3">
-  <div class="card-header">List of Files</div>
-  <ul class="list-group list-group-flush">
-    @for (file of fileInfos | async; track file.name) {
-    <li class="list-group-item">
-      <a href="{{ file.url }}">{{ file.name }}</a>
-    </li>
-    }
-  </ul>
-</div>
-
-
-
