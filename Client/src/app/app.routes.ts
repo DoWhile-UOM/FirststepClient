@@ -18,17 +18,16 @@ import { RegCmpStateCheckComponent } from './components/reg-cmp-state-check/reg-
 export const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},
-  // company portal
-  { path: 'ManageRoles', component: ManageRolesComponent },
-  { path: 'AddRole', component: AddrolesPopupComponent },
-  { path: 'EditRole', component: EditRoleComponent },
-  { path: 'jobOfferList/newJob', component: NewJobComponent },
-  { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
-  { path: 'jobOfferList', component: JobOfferListComponent }, //get styles
+  
+  {
+    path: 'company/admin',
+    loadChildren: () => import('./portals/company-admin-portal/company-admin.module').then(m => m.caRoutes),
+    // example link: http://localhost:4200/company/admin/jobOfferList
+  },
 
   {
     path: 'seeker',
-    loadChildren: () => import('./portals/seeker-portal/seeker.module').then(m => m.routes),
+    loadChildren: () => import('./portals/seeker-portal/seeker.module').then(m => m.seekerRoutes),
     // example link: http://localhost:4200/seeker/home
   },
 

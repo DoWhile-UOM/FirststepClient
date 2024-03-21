@@ -18,7 +18,7 @@ import { SeekerApplicationFormComponent } from '../../components/seeker-applicat
 export class SeekerModule { 
 }
 
-export const routes: Routes = [
+export const seekerRoutes: Routes = [
   { path: 'jobdetails', component: AdvertisementViewPageComponent },
   { path: 'home', component: SeekerHomePageComponent },
   { path: 'home/saved', component: SavedAdvertisementListComponent },
