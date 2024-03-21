@@ -35,8 +35,8 @@ export class SignupComponent {
         
       },
       error:(err)=>{
-        alert(err.message)
-        console.log(err.message)
+        alert(err.error.message)
+        console.log(err.error.message)
       }
   });
   

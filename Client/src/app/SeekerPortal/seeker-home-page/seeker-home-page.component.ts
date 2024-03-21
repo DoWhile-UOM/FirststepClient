@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
 import { SearchBasicComponent } from '../search-basic/search-basic.component';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 
 interface Job {
   advertisement_id: number;
@@ -29,9 +31,21 @@ interface Job {
 export class SeekerHomePageComponent{
   jobList: Job[] = [];
 
+  constructor(private advertisementService: AdvertisementServices, private api: ApiService,private authService:AuthService) {
+
+  }
+
   seekerID: number = 3; // sample seekerID
 
   changeJobList(newJobList: Job[]){
     this.jobList = newJobList;
   }
+
+  signOut(){
+    this.authService.signOut()
+    //this.auth.signup(this.myForm.value)
+  }
+
+
+
 }
