@@ -1,25 +1,25 @@
 import { Routes } from '@angular/router';
-import { ManageRolesComponent } from './CompanyPortal/CompanyAdmin/manage-roles/manage-roles.component';
-import { EditRoleComponent } from './CompanyPortal/CompanyAdmin/edit-role/edit-role.component';
-//import { AdminDashboardComponent } from './CompanyPortal/CompanyAdmin/admin-dashboard/admin-dashboard.component';
-import { AddrolesPopupComponent } from './CompanyPortal/CompanyAdmin/addroles-popup/addroles-popup.component';
-import { AdvertisementViewPageComponent } from './SeekerPortal/advertisement-view-page/advertisement-view-page.component';
-import { SeekerHomePageComponent } from './SeekerPortal/seeker-home-page/seeker-home-page.component';
-import { SavedAdvertisementListComponent } from './SeekerPortal/saved-advertisement-list/saved-advertisement-list.component';
-import { NewJobComponent } from './CompanyPortal/shared/new-job/new-job.component';
-import { FileUploadComponent } from './CompanyPortal/shared/file-upload/file-upload.component';
-import { SeekerApplicationFormComponent } from './SeekerPortal/seeker-application-form/seeker-application-form.component';
-import { CompanyProfileComponent } from './SeekerPortal/company-profile/company-profile.component';
-import { JobOfferListComponent } from './CompanyPortal/shared/job-offer-list/job-offer-list.component';
-import { NewJobUploadedComponent } from './CompanyPortal/shared/new-job-uploaded/new-job-uploaded.component';
-import { LoginComponent } from './Login/login/login.component';
+import { ManageRolesComponent } from './components/manage-roles/manage-roles.component';
+import { EditRoleComponent } from './components/edit-role/edit-role.component';
+//import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AddrolesPopupComponent } from './components/addroles-popup/addroles-popup.component';
+import { AdvertisementViewPageComponent } from './components/advertisement-view-page/advertisement-view-page.component';
+import { SeekerHomePageComponent } from './components/seeker-home-page/seeker-home-page.component';
+import { SavedAdvertisementListComponent } from './components/saved-advertisement-list/saved-advertisement-list.component';
+import { NewJobComponent } from './components/new-job/new-job.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { SeekerApplicationFormComponent } from './components/seeker-application-form/seeker-application-form.component';
+import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
+import { JobOfferListComponent } from './components/job-offer-list/job-offer-list.component';
+import { NewJobUploadedComponent } from './components/new-job-uploaded/new-job-uploaded.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { SignupComponent } from './signup/signup.component';
 import { authGuard } from './guards/auth.guard';
 
-import { RegisterCompanyComponent } from './CompanyPortal/CompanyAdmin/register-company/register-company.component';
+import { RegisterCompanyComponent } from './components/register-company/register-company.component';
 
-import { RegCmpStateCheckComponent } from './CompanyPortal/CompanyAdmin/reg-cmp-state-check/reg-cmp-state-check.component';
+import { RegCmpStateCheckComponent } from './components/reg-cmp-state-check/reg-cmp-state-check.component';
 
 
 export const routes: Routes = [
