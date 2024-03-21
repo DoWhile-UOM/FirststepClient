@@ -283,4 +283,20 @@ export class AdvertisementServices {
 
     return jobList;
   }
+
+  async getAdvertisementByIDwithKeywords(jobID: string){
+    let adData: any = {};
+
+    await axios.get(Apipaths.getAdvertisementByIDwithKeywords + jobID)
+      .then(function (response) {
+        adData = response.data;
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return adData;
+  }
 }
