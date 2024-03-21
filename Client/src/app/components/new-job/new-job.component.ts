@@ -301,7 +301,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		let response: boolean = await this.advertisementService.addNewJob(addAdvertisement);
 
 		if (response){
-			this.router.navigate(['/newJobUploaded']);
+			this.router.navigate(['ca/newJobUploaded']);
 		}
 		else{
 			this.snackBar.open("Error Uploading Job", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);

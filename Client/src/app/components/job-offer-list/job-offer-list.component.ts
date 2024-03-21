@@ -159,7 +159,7 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   editAd(adID: number){
-    this.router.navigate(['jobOfferList/updateJobDetails', {jobID: adID}]);
+    this.router.navigate(['ca/jobOfferList/updateJobDetails', {jobID: adID}]);
   }
 
   changeStatusOfJob(adID: number, action: string){
@@ -177,7 +177,7 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   addNew(){
-    this.router.navigate(['jobOfferList/newJob']);
+    this.router.navigate(['ca/jobOfferList/newJob']);
   }
 
   search(){

@@ -22,10 +22,10 @@ export class NavBarComponent {
       element = 'black';
     });
 
-    if (this.router.url === '/home') {
+    if (this.router.url === 'seeker/home') {
       this.selected = 0;
     }
-    else if (this.router.url === '/home/saved'){
+    else if (this.router.url === 'seeker/home/saved'){
       this.selected = 1;
     }
     
@@ -33,11 +33,11 @@ export class NavBarComponent {
   }
 
   navigateToSavedListPage() {
-    this.router.navigate(['/home/saved']);
+    this.router.navigate(['seeker/home/saved']);
   }
 
   navigateToHomePage() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['seeker/home']);
   }
 }
 
