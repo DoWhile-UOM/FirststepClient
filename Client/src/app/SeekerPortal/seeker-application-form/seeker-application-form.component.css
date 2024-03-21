@@ -1,8 +1,57 @@
-header {
-    background-color: bisque;
-     height: 102px;
-   }
 
- section{
-    background-color: aqua;
- }  
+
+.example-card {
+  margin: 2vw;
+  width: 95%;
+  
+ /* height: calc(100% - 102px);*/
+}
+
+.detailsField {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+ 
+}
+
+.textSection .fieldSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldSection{
+  margin-left: 27px;
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #008080;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  font-size: 2vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+mat-card-content{
+color: #000;
+font-size: 1vw;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.textSection div {
+  margin-top: 37px;
+}
+.fieldSection div{
+  margin-top: 37px;
+}
+
+
+
+

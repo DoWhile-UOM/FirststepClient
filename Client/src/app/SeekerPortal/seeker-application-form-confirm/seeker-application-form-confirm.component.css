@@ -1,0 +1,17 @@
+
+.image {
+    margin-bottom: 1.25em;
+ }
+ 
+ .message {
+    
+    margin-bottom: 2em;
+ }
+ 
+ .buttons {
+    cursor: pointer;
+    gap: 2em;
+    display: flex;
+ }
+ 
+ 

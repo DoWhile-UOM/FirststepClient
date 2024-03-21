@@ -26,24 +26,23 @@ export const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},
   // company portal
-  {path:'ManageRoles',component:ManageRolesComponent},
-  {path:'AddRole',component:AddrolesPopupComponent},
-  {path:'EditRole',component:EditRoleComponent},
+  { path: 'ManageRoles', component: ManageRolesComponent },
+  { path: 'AddRole', component: AddrolesPopupComponent },
+  { path: 'EditRole', component: EditRoleComponent },
   //{path:'AdminDashBoard',component:AdminDashboardComponent},
-  {path:'jobOfferList/newJob',component:NewJobComponent},
-  {path:'jobOfferList/updateJobDetails',component:NewJobComponent},
-  {path:'jobOfferList',component:JobOfferListComponent},
-  {path:'applicationForm',component:SeekerApplicationFormComponent},
-    
-  {path:'RegisterCompany',component:RegisterCompanyComponent},
-  {path:'RegCheck',component:RegCmpStateCheckComponent},
-  
+  { path: 'jobOfferList/newJob', component: NewJobComponent },
+  { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
+  { path: 'jobOfferList', component: JobOfferListComponent }, //get styles
+
   // seeker portal
-  {path:'jobdetails',component:AdvertisementViewPageComponent},
-  {path:'home',component:SeekerHomePageComponent,canActivate:[authGuard]},
-  {path:'home/saved',component:SavedAdvertisementListComponent},
-  {path:'company-profile',component:CompanyProfileComponent},
-  {path:'newJobUploaded',component:NewJobUploadedComponent},
-  
-  {path:'file',component:FileUploadComponent}
+  { path: 'jobdetails', component: AdvertisementViewPageComponent },
+  { path: 'home', component: SeekerHomePageComponent },
+  { path: 'home/saved', component: SavedAdvertisementListComponent },
+  { path: 'company-profile', component: CompanyProfileComponent },
+  { path: 'newJobUploaded', component: NewJobUploadedComponent },
+  { path: 'applicationForm', component: SeekerApplicationFormComponent },
+  { path: 'applicationFormconfirm', component: SeekerApplicationFormComponent },
+
+  //shared
+  { path: 'file', component: FileUploadComponent },
 ];
