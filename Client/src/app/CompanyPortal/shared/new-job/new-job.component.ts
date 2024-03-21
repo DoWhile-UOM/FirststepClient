@@ -72,6 +72,24 @@ interface Job{
 	skills: Skill[];
 }
 
+interface UpdateJob{
+	job_number: number;
+	title: string;
+	country: string;
+	city: string;
+	employeement_type: string;
+	arrangement: string;
+	is_experience_required: string;
+	salary: string;
+	submission_deadline: string;
+	posted_date: string;
+	job_description: string;
+	field_name: string;
+	company_name: string;
+	skills: string[];
+	keywords: string[];
+}
+
 @Component({
 	selector: 'app-new-job',
 	standalone: true,
@@ -176,12 +194,13 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
 	async setupForUpdate(jobID: string){
-		this.adData = await this.advertisementService.getAdvertisementById(jobID);
+		this.adData = await this.advertisementService.getAdvertisementByIDwithKeywords(jobID);
 		//alert("Job ID: " + jobID + " Title: " + this.adData.title);
 		this.isUpdate = true;
 
 		this.locationCountryControl.setValue(this.adData.country);
 		this.locationCityControl.setValue(this.adData.city);
+		//this.keywords = this.adData.keywords;
 
 		this.description = this.adData.job_description;
 	}
