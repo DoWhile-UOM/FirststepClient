@@ -14,8 +14,17 @@
       </mat-chip-listbox>  
     </span>
     
-    <span class="add-new-button"><button mat-raised-button color="primary" (click)="addNew()" class="demo-button">
-      <mat-icon>library_add</mat-icon>Add New
+    <span class="add-new-button">
+      <span class="search-box">
+        <input class="search" type="text" placeholder="Title" [(ngModel)]="title" (keydown.enter)="search()">
+
+        <button mat-icon-button color="primary" (click)="search()" class="small-icon-button">
+          <mat-icon>search</mat-icon>
+        </button>
+      </span>
+
+      <button mat-raised-button color="primary" (click)="addNew()" class="demo-button">
+        <mat-icon>library_add</mat-icon>Add New
       </button>
     </span>
   </div>

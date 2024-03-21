@@ -18,7 +18,7 @@ export class AdvertisementActionsComponent {
 
   icon: string = 'bookmark_border'; // bookmark
 
-  seekerId: number = 4; // sample seekerID 
+  seekerId: number = 3; // sample seekerID 
 
   constructor(
     private advertisementServices: AdvertisementServices,

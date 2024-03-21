@@ -66,7 +66,7 @@ export class AddSkillsComponent implements OnInit{
 
   @ViewChild('skillInput') skillInput!: ElementRef<HTMLInputElement>;
 
-  announcer = inject(LiveAnnouncer);
+  announcerSkills = inject(LiveAnnouncer);
 
   constructor(private skillService: SkillService) {
     this.filteredskills = this.skillCtrl.valueChanges.pipe(
@@ -82,8 +82,12 @@ export class AddSkillsComponent implements OnInit{
   addSkill(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
+    if (!value){
+      return;
+    }
+
     // Add our skill
-    if (value) {
+    if (value.length > 0) {
       this.skills.push(value)
     }
 
@@ -99,7 +103,7 @@ export class AddSkillsComponent implements OnInit{
     if (index >= 0) {
       this.skills.splice(index, 1);
 
-      this.announcer.announce(`Removed ${skill}`);
+      this.announcerSkills.announce(`Removed ${skill}`);
     }
   }
 

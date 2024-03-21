@@ -37,13 +37,13 @@
 				<mat-grid-tile colspan="{{((noOfCols - 1 > 0) ? (noOfCols - 1) : 1)}}">
 					<mat-form-field appearance="outline">
 						<mat-label>Job Title</mat-label>
-						<input matInput placeholder="Job Title" name="title" ngModel>
+						<input matInput placeholder="Job Title" name="title" [(ngModel)]="adData.title">
 					</mat-form-field>
 				</mat-grid-tile>
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Job Number</mat-label>
-						<input matInput placeholder="Job Number" name="job_number" ngModel>
+						<input matInput placeholder="Job Number" name="job_number" [(ngModel)]="adData.job_number">
 					</mat-form-field>
 				</mat-grid-tile>
 			</mat-grid-list>
@@ -139,7 +139,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Salary</mat-label>
-						<input matInput placeholder="Salary in {{unitOfSalary}}" name="salary" ngModel>
+						<input matInput placeholder="Salary in {{unitOfSalary}}" name="salary" [(ngModel)]="adData.salary">
 					</mat-form-field>
 				</mat-grid-tile>
 			</mat-grid-list>

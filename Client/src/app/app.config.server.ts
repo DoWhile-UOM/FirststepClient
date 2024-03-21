@@ -15,4 +15,5 @@ export const config = mergeApplicationConfig(appConfig, serverConfig);
 @Injectable()
 export class ConfigService {
   constructor(private http: HttpClient) { }
+  
 }

@@ -84,3 +84,54 @@ th.mat-header-cell .nu-header{
   font-family: Lato;
   font-size: xx-large;
 }
+
+.search {
+  border: 1.5px solid #ccc;
+  border-radius: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  outline: none;
+  margin-right: 0.5em;
+  width: 18em;
+}
+
+.search-box{
+  margin-right: 5em;
+  display: flex;
+  flex-direction: row;
+}
+
+.add-new-button{
+  display: flex;
+  flex-direction: row;
+}
+
+.search::placeholder {
+  color: #888; 
+}
+
+.search:focus {
+  border-color: #008080; 
+  width: 25em;
+}
+
+.search:hover{
+  border-color: #008080;
+  width: 25em;
+}
+
+.small-icon-button {
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+
+  .mat-icon {
+    width: 22px !important;
+    height: 22px !important;
+    line-height: 22px !important;
+  }
+
+  .material-icons {
+    font-size: 22px !important;
+  }
+}

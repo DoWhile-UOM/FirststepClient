@@ -28,7 +28,7 @@ interface Job {
 export class SavedAdvertisementListComponent {
   jobList: Job[] = [];
 
-  seekerID: number = 4; // sample seekerID
+  seekerID: number = 3; // sample seekerID
 
   constructor(private advertisementService: AdvertisementServices) {}
 
