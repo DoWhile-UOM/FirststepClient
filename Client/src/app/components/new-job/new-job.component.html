@@ -19,7 +19,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Target Job Field</mat-label>
-						<mat-select #selectField name="field_id" ngModel (valueChange)="onChangeField(selectField.value)">
+						<mat-select #selectField name="field_id" [formControl]="fieldFormControl" ngModel (valueChange)="onChangeField(selectField.value)">
 						@for (field of fields; track field) {
 							<mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
 						}
@@ -78,7 +78,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Employment Type</mat-label>
-						<mat-select name="employeement_type" ngModel>
+						<mat-select name="employeement_type" [formControl]="employeeTypeFormControl" ngModel>
 							@for (emptype of empTypes; track emptype) {
 								<mat-option [value]="emptype">{{emptype}}</mat-option>
 							}
@@ -88,7 +88,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Job Arrangement</mat-label>
-						<mat-select name="arrangement" ngModel>
+						<mat-select name="arrangement" [formControl]="jobArrangementFormControl" ngModel>
 							@for (arrangement of jobArrangement; track arrangement) {
 								<mat-option [value]="arrangement">{{arrangement}}</mat-option>
 							}
@@ -98,7 +98,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Experience</mat-label>
-						<mat-select name="is_experience_required" ngModel>
+						<mat-select name="is_experience_required" [formControl]="experienceFormControl" ngModel>
 							<mat-option [value]="false">Not Required</mat-option>
 							<mat-option [value]="true">Required</mat-option>
 						</mat-select>
@@ -145,7 +145,7 @@
 			</mat-grid-list>
 
 			<div class="textbox-form-field">
-				<app-add-skills [hint]="'Skills that a candidate should required to have to apply this job'" (skillChange)="changeSkillsArray($event)"></app-add-skills>
+				<app-add-skills [hint]="'Skills that a candidate should required to have to apply this job'" [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
 			</div>
 
 			<div class="description-text-editor">

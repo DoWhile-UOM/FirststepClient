@@ -86,8 +86,8 @@ interface UpdateJob{
 	job_description: string;
 	field_name: string;
 	company_name: string;
-	skills: string[];
-	keywords: string[];
+	reqSkills: string[];
+	reqKeywords: string[];
 }
 
 @Component({
@@ -107,7 +107,7 @@ interface UpdateJob{
 })
 
 export class NewJobComponent implements AfterViewInit, OnInit{
-	adData: Job = {} as Job;
+	adData: UpdateJob = {} as UpdateJob;
 
 	noOfCols: number = 3;
 	maxTextareaCharLimit: number = 2500;
@@ -148,6 +148,12 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	locationCityControl = new FormControl('');
 	cities: string[] = []; 
 	locationCityFilteredOptions: Observable<string[]>;
+
+	// for dropdown
+	employeeTypeFormControl = new FormControl('');
+	jobArrangementFormControl = new FormControl('');
+	experienceFormControl = new FormControl('');
+	fieldFormControl = new FormControl('');
 
 	// for keywords
 	separatorKeysCodes: number[] = [ COMMA, ENTER ];
@@ -194,15 +200,31 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
 	async setupForUpdate(jobID: string){
+		this.snackBar.open("Loading...", "", {panelClass: ['app-notification-normal']})._dismissAfter(1500);
+
 		this.adData = await this.advertisementService.getAdvertisementByIDwithKeywords(jobID);
-		//alert("Job ID: " + jobID + " Title: " + this.adData.title);
-		this.isUpdate = true;
 
-		this.locationCountryControl.setValue(this.adData.country);
-		this.locationCityControl.setValue(this.adData.city);
-		//this.keywords = this.adData.keywords;
+		if (this.adData != null || this.adData != undefined){
+			this.isUpdate = true;
 
-		this.description = this.adData.job_description;
+			this.locationCountryControl.setValue(this.adData.country);
+			this.locationCityControl.setValue(this.adData.city);
+			this.keywords = this.adData.reqKeywords;
+			this.skills = this.adData.reqSkills;
+			this.description = this.adData.job_description;
+
+			this.employeeTypeFormControl.setValue(this.adData.employeement_type);
+			this.jobArrangementFormControl.setValue(this.adData.arrangement);
+			this.experienceFormControl.setValue(this.adData.is_experience_required);
+			this.fieldFormControl.setValue(this.adData.field_name);
+
+			alert(this.adData.field_name);
+		}
+		else{
+			this.snackBar.open("Can't Load Job Advertisement Data.", "", {panelClass: ['app-notification-error']})._dismissAfter(1500);
+			// go to back
+			window.history.back();
+		}
 	}
 
 	async ngOnInit() {
