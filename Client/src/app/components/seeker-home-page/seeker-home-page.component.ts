@@ -6,6 +6,7 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SearchBasicComponent } from '../search-basic/search-basic.component';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
+import { UserStoreService } from '../../services/user-store.service';
 
 interface Job {
   advertisement_id: number;
@@ -34,6 +35,12 @@ export class SeekerHomePageComponent{
   constructor(private advertisementService: AdvertisementServices, private api: ApiService,private authService:AuthService) {
 
   }
+
+  ngOnInit(){
+    var org=this.authService.getUserId();
+    console.log(org);
+  }
+
 
   seekerID: number = 3; // sample seekerID
 

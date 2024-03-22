@@ -55,17 +55,18 @@ export class LoginComponent {
         this.userStore.setRoleForStore(tokenPayload.role);
         console.log(tokenPayload);
         //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
-        //this.router.navigate(['home'])
+        this.router.navigate(['seeker'])
+        /*
         switch(tokenPayload.role){
           case "Seeker":{
-            this.router.navigate(['home'])
+            this.router.navigate(['seeker'])
             break;
           }
           case "Cadmin":{
-            this.router.navigate(['jobOfferList'])
+            this.router.navigate(['ca'])
             break;
           }
-        }
+        }*/
 
 
       },

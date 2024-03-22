@@ -4,7 +4,14 @@ import {Router} from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalService } from '../../services/local.service';
 
+/*
+Handles Authetication and Authorization
+Store and decrypt JWT token
 
+
+
+
+*/
 @Injectable({
   providedIn: 'root'
 })
@@ -77,14 +84,31 @@ export class AuthService {
     return jwtHelper.decodeToken(token)
   }
 
-  getRole(){
+  //Get JWT Payload Data in StringForm 
+  
+  getRole(){//Get Role from token
     if(this.userPayload)
     return this.userPayload.role
   }
 
-  getFullName(){
+  getFirstName(){//Get First Name from token
     if(this.userPayload)
-    return this.userPayload.unique_name
+    return this.userPayload.given_name
+  }
+
+  getLastName(){//Get Last Name from token
+    if(this.userPayload)
+    return this.userPayload.family_name
+  }
+
+  getOragnizationName(){//Get Organization from token 
+    if(this.userPayload)
+    return this.userPayload.website
+  }
+
+  getUserId(){//Get UserID from token 
+    if(this.userPayload)
+    return this.userPayload.nameid
   }
 
 

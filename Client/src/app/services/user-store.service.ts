@@ -5,8 +5,11 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UserStoreService {
-private fullName$ = new BehaviorSubject<string>("");
+private fullName$ = new BehaviorSubject<string>(""); //declare private behavior subjects to store user data
+private firstName$ = new BehaviorSubject<string>("");
+private lastName$ = new BehaviorSubject<string>("");
 private role$ = new BehaviorSubject<string>("");
+private org$ = new BehaviorSubject<string>("");
 
 constructor() { }
 
