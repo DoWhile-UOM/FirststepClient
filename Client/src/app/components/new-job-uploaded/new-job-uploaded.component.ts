@@ -14,6 +14,6 @@ export class NewJobUploadedComponent {
   constructor(private router: Router) {}
 
   navigateToJobList() {
-    this.router.navigate(['/jobOfferList']);
+    this.router.navigate(['ca/jobOfferList']);
   }
 }
