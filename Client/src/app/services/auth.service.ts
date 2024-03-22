@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   //Get JWT Payload Data in StringForm 
-  
+
   getRole(){//Get Role from token
     if(this.userPayload)
     return this.userPayload.role
@@ -110,6 +110,5 @@ export class AuthService {
     if(this.userPayload)
     return this.userPayload.nameid
   }
-
 
 }

@@ -10,21 +10,32 @@ export class CompanyService {
   constructor(private http:HttpClient) { }
 
   //Get company Registration state details---Start
-  async getCompnayRegState(id: number) {
-    let cmpData: any;
-
-    this.http.get('https://localhost:7213/api/Company/GetCompanyById/'+id)
-      .subscribe(data => {
-        // Handle successful response with the data
-        //console.log(data);
-      }, error => {
-        // Handle error scenario
-        console.error(error);
-      });
-
-    return cmpData;
+  async getCompnayRegStateOld(id: number): Promise<any | null> {
+    try {
+      const response = await this.http.get<any>(`https://localhost:7213/api/Company/GetCompanyById/${id}`);
+      return response;
+    } catch (error) {
+      console.error('Error fetching company data:', error);
+      return null; // Indicate error by returning null
+    }
   }
   //Get company Registration state details---End
+
+  async getCompnayRegState(id: number) {
+    let cmpData: any;
+    try{
+      await axios.get('https://localhost:7213/api/Company/GetCompanyById/' + id)
+        .then((response) => {
+          cmpData = response.data;
+          //console.log('Company Data:', cmpData);
+        });
+    }
+    catch (error) {
+      //console.error(error);
+    }
+
+    return cmpData;
+ }
 
 
 }
