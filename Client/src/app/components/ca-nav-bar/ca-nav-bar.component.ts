@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './ca-nav-bar.component.css'
 })
 export class CaNavBarComponent {
-  selected: number = 3;
+  selected: number = 2;
   colorList = ['black', 'back', 'black', 'black']
 
   constructor() { }

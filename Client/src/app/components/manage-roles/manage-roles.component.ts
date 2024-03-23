@@ -3,6 +3,7 @@ import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { ViewChild } from '@angular/core';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+
 import {
   MatDialog,
   MatDialogActions,
@@ -14,6 +15,7 @@ import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.compone
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
+import { CaNavBarComponent } from "../ca-nav-bar/ca-nav-bar.component";
 
 
 export interface RolesData {
@@ -25,16 +27,19 @@ export interface RolesData {
 }
 
 @Component({
-  selector: 'app-manage-roles',
-  standalone: true,
-  templateUrl: './manage-roles.component.html',
-  styleUrl: './manage-roles.component.css',
-  imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    AddrolesPopupComponent,
-  ],
+    selector: 'app-manage-roles',
+    standalone: true,
+    templateUrl: './manage-roles.component.html',
+    styleUrl: './manage-roles.component.css',
+    imports: [
+        MatIconModule,
+        MatButtonModule,
+        MatTableModule,
+        AddrolesPopupComponent,
+        CaNavBarComponent,
+    
+       
+    ]
 })
 export class ManageRolesComponent {
   displayedColumns: string[] = ['position', 'name','email', 'Role', 'symbol'];
