@@ -8,7 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
-import { FormControl, FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -84,7 +84,7 @@ interface UpdateJob{
 	submission_deadline: string;
 	posted_date: string;
 	job_description: string;
-	field_name: string;
+	field_id: string;
 	company_name: string;
 	reqSkills: string[];
 	reqKeywords: string[];
@@ -114,10 +114,10 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	maxTextareaHeight: number = 15;
 
 	isUpdate: boolean = false;
-
-	unitOfSalary: string = "LKR";
+	jobID: string = '';
 
 	currentDate = new FormControl(new Date());
+	unitOfSalary: string = 'LKR';
 
 	fields: Field[] = [];
 
@@ -181,7 +181,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		private keywordService: KeywordService, 
 		private router: Router, 
 		private acRouter: ActivatedRoute,
-		private snackBar: MatSnackBar) {
+		private snackBar: MatSnackBar,
+		private fb: FormBuilder) {
 
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
@@ -202,27 +203,23 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	async setupForUpdate(jobID: string){
 		this.snackBar.open("Loading...", "", {panelClass: ['app-notification-normal']})._dismissAfter(1500);
 
-		this.adData = await this.advertisementService.getAdvertisementByIDwithKeywords(jobID);
+		var adData: UpdateJob = await this.advertisementService.getAdvertisementByIDwithKeywords(jobID);		
 
-		if (this.adData != null || this.adData != undefined){
+		if (adData != null || adData != undefined){
 			this.isUpdate = true;
+			this.adData = adData;
+			this.locationCountryControl.setValue(adData.country);
+			this.skills = adData.reqSkills;
+			this.description = adData.job_description;
 
-			this.locationCountryControl.setValue(this.adData.country);
-			this.locationCityControl.setValue(this.adData.city);
-			this.keywords = this.adData.reqKeywords;
-			this.skills = this.adData.reqSkills;
-			this.description = this.adData.job_description;
+			await this.onChangeField(Number(adData.field_id));
+			this.keywords = adData.reqKeywords;
 
-			this.employeeTypeFormControl.setValue(this.adData.employeement_type);
-			this.jobArrangementFormControl.setValue(this.adData.arrangement);
-			this.experienceFormControl.setValue(this.adData.is_experience_required);
-			this.fieldFormControl.setValue(this.adData.field_name);
-
-			alert(this.adData.field_name);
+			this.onSelectedCountryChanged(adData.country);
+			this.locationCityControl.setValue(adData.city);
 		}
 		else{
 			this.snackBar.open("Can't Load Job Advertisement Data.", "", {panelClass: ['app-notification-error']})._dismissAfter(1500);
-			// go to back
 			window.history.back();
 		}
 	}
@@ -242,6 +239,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 		if (jobID != null){
 			this.setupForUpdate(jobID);
+			this.jobID = jobID;
 		}
 		else{
 			this.isUpdate = false;
@@ -299,36 +297,65 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		addAdvertisement.country = this.locationCountryControl.value ?? '';
 		addAdvertisement.job_description = this.description;
 
-		if (addAdvertisement.city == '' || addAdvertisement.country == ''){
-			alert('Input Error: Location is required');
+		if (this.validateInput(addAdvertisement) == false){
 			return;
 		}
-
-		if (addAdvertisement.submission_deadline != ""){	
-			addAdvertisement.submission_deadline = new Date(addAdvertisement.submission_deadline).toISOString();
-
-			if (addAdvertisement.submission_deadline < new Date().toISOString()){
-				alert('Input Error: Submission deadline should be a future date');
-				return;
-			}
-		}
-
-		if (addAdvertisement.job_description.length > this.maxTextareaCharLimit){
-			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
-			return;
-		}
-
-		console.log(addAdvertisement);
 		
 		let response: boolean = await this.advertisementService.addNewJob(addAdvertisement);
 
 		if (response){
-			this.router.navigate(['ca/newJobUploaded']);
+			this.router.navigate(['ca/jobOfferList/Uploaded']);
 		}
 		else{
 			this.snackBar.open("Error Uploading Job", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 		}	
   	}
+
+	async updateJob(adData: UpdateJob){
+		adData.reqKeywords = this.keywords;
+		adData.reqSkills = this.skills;
+
+		adData.city = this.locationCityControl.value ?? '';
+		adData.country = this.locationCountryControl.value ?? '';
+		adData.job_description = this.description;
+
+		if (this.validateInput(adData) == false){
+			return;
+		}
+
+		let response: boolean = await this.advertisementService.updateAdvertisement(adData, this.jobID);
+
+		if (response){
+			this.snackBar.open("Updated Job Details", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+			this.router.navigate(['ca/jobOfferList/Uploaded']);
+		}
+		else{
+			this.snackBar.open("Error Updating Job Details", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+		}
+	}
+
+	validateInput(adData: any){
+		if (adData.city == '' || adData.country == ''){
+			this.snackBar.open("Input Error: Location is required", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			return false;
+		}
+
+		if (adData.submission_deadline != ""){	
+			adData.submission_deadline = new Date(adData.submission_deadline).toISOString();
+
+			if (adData.submission_deadline < new Date().toISOString()){
+				this.snackBar.open("Input Error: Submission deadline should be a future date", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+				return false;
+			}
+		}
+
+		if (adData.job_description.length > this.maxTextareaCharLimit){
+			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			return false;
+		}
+
+		return true;
+	}
 
 	changeSkillsArray($event: Event){
 		var skills = $event;

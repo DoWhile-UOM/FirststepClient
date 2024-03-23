@@ -6,7 +6,7 @@
 			<p class="companyname">BISTECH GLOBAL SERVICES</p>
 		</div>
 		<mat-divider></mat-divider>
-		<form class="form-container" #createJobForm="ngForm" (ngSubmit)="createNewJob(createJobForm.value)">
+		<form class="form-container" #createJobForm="ngForm" (ngSubmit)="(isUpdate) ? updateJob(createJobForm.value) :createNewJob(createJobForm.value)">
 			<mat-grid-list cols="{{noOfCols}}" rowHeight="90">
 				<mat-grid-tile>
 					<mat-form-field color="primary" appearance="outline">
@@ -19,7 +19,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Target Job Field</mat-label>
-						<mat-select #selectField name="field_id" [formControl]="fieldFormControl" ngModel (valueChange)="onChangeField(selectField.value)">
+						<mat-select #selectField name="field_id" [(ngModel)]="adData.field_id" (valueChange)="onChangeField(selectField.value)">
 						@for (field of fields; track field) {
 							<mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
 						}
@@ -29,7 +29,7 @@
 				<mat-grid-tile>
 					<mat-form-field color="primary" appearance="outline">
 						<mat-label>Deadline</mat-label>
-						<input matInput [matDatepicker]="picker2" name="submission_deadline" ngModel>
+						<input matInput [matDatepicker]="picker2" name="submission_deadline" [(ngModel)]="adData.submission_deadline">
 						<mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
 						<mat-datepicker #picker2></mat-datepicker>
 					</mat-form-field>  
@@ -78,7 +78,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Employment Type</mat-label>
-						<mat-select name="employeement_type" [formControl]="employeeTypeFormControl" ngModel>
+						<mat-select name="employeement_type" [(ngModel)]="adData.employeement_type">
 							@for (emptype of empTypes; track emptype) {
 								<mat-option [value]="emptype">{{emptype}}</mat-option>
 							}
@@ -88,7 +88,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Job Arrangement</mat-label>
-						<mat-select name="arrangement" [formControl]="jobArrangementFormControl" ngModel>
+						<mat-select name="arrangement" [(ngModel)]="adData.arrangement">
 							@for (arrangement of jobArrangement; track arrangement) {
 								<mat-option [value]="arrangement">{{arrangement}}</mat-option>
 							}
@@ -98,7 +98,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Experience</mat-label>
-						<mat-select name="is_experience_required" [formControl]="experienceFormControl" ngModel>
+						<mat-select name="is_experience_required" [(ngModel)]="adData.is_experience_required">
 							<mat-option [value]="false">Not Required</mat-option>
 							<mat-option [value]="true">Required</mat-option>
 						</mat-select>
@@ -162,7 +162,7 @@
 
 
 			<div class="button-container">
-				<button type="submit" mat-raised-button color="primary" class="button">Post Advertisement</button>
+				<button type="submit" mat-raised-button color="primary" class="button">{{(isUpdate) ? 'Update Details' : 'Post Advertisement'}}</button>
 			</div>
 		</form>
 	</mat-card>
