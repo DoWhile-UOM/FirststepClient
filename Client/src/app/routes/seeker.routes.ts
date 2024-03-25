@@ -9,7 +9,7 @@ import { SeekerApplicationFormComponent } from '../components/seeker-application
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'jobdetails', component: AdvertisementViewPageComponent },
+  { path: 'home/jobdetails', component: AdvertisementViewPageComponent },
   { path: 'home', component: SeekerHomePageComponent },
   { path: 'saved', component: SavedAdvertisementListComponent },
   { path: 'home/company-profile', component: CompanyProfileComponent },
