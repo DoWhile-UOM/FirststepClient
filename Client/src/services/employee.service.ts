@@ -10,15 +10,14 @@ export class EmployeeService {
   
   async getEmployeeDetails(id : number) {
     let empData: any;
-    try{
-      await axios.get(Apipaths.getEmployeeDetails + id)
-        .then((response) => {
-          empData = response.data;
-        });
-    }
-    catch (error) {
-      console.error(error);
-    }
+    
+    await axios.get(Apipaths.getEmployeeDetails + id)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch (function (error) {
+        alert("Network Error: " + error);
+      });;
 
     return empData;
   }
@@ -26,19 +25,17 @@ export class EmployeeService {
   //all employee details
   async getEmployeeList(company_id: number) {
     let empData: any;
-    try{
-      await axios.get(Apipaths.getEmployeeList + company_id)
-        .then((response) => {
-          empData = response.data;
-        });
-    }
-    catch (error) {
-      console.error(error);
-    }
+
+    await axios.get(Apipaths.getEmployeeList + company_id)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch (function (error) {
+        alert("Network Error: " + error);
+      });
 
     return empData;
- }
-
+  }
 
   async addNewHRManager(employee: any) {
     try{
@@ -106,7 +103,6 @@ export class EmployeeService {
   async getAllHRAs(companyID: number){
     let empData: any;
 
-    alert(Apipaths.getAllHRAs + companyID);
     await axios.get(Apipaths.getAllHRAs + companyID)
       .then((response) => {
         empData = response.data;

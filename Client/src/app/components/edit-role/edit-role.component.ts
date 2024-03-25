@@ -47,22 +47,19 @@ interface Employee {
   styleUrl: './edit-role.component.css',
 })
 export class EditRoleComponent implements OnInit {
-
   employeeDetails: Employee = {} as Employee;
- 
+  selectedRole: string = 'HRM';
 
   constructor(private employeeService: EmployeeService,@Inject(MAT_DIALOG_DATA)public data:any) {}
   user_id: number = this.data.id;
   
   async ngOnInit() {
-    this.fetchEmployeeDetails();
-    console.log(this.data);
+    this.fetchEmployeeDetails(); 
   }
   
   async fetchEmployeeDetails() {
     this.employeeDetails = await this.employeeService.getEmployeeDetails(this.user_id);
   }
-
 
   async onApply() {
    await this.employeeService.editemployee(this.employeeDetails, this.user_id);
