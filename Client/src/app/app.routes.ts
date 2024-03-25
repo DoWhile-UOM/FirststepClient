@@ -18,4 +18,10 @@ export const routes: Routes = [
     loadChildren: () => import('./routes/seeker.routes').then(m => m.routes),
     // example link: http://localhost:4200/seeker/home
   },
+
+  {
+    path: 'sa',
+    loadChildren: () => import('./routes/system-admin.routes').then(m => m.saRoutes),
+    // example link: http://localhost:4200/sa/applicationList
+  },
 ];
