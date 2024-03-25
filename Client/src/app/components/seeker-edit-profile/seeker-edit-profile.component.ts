@@ -27,7 +27,7 @@ export class SeekerEditProfileComponent {
 
   
   // The image url of the default image
-  url = './assets/images/SeekerEdit.jpg';
+  url = '.\assets\images\SeekerEdit.jpg';
 
   //image upload
   onselectFile(event: any) {

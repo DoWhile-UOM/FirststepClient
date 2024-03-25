@@ -1,1 +1,102 @@
 <p>seeker-edit-profile works!</p>
+<!-- navbar -->
+<!-- <app-nav-bar></app-nav-bar> -->
+
+
+<!-- Form for editing profile -->
+<br /><br />
+
+<div class="form-popup" id="myForm">
+  <form class="form-container"  >
+    <!-- Image update -->
+    <div class="up-container">
+      <div class="left">
+        <img [src]="url" height="200px" /><br />
+        <input type="file" (change)="onselectFile($event)" />
+      </div>
+
+      <!-- Profile Details update in the upper section -->
+      <div class="right">
+        <mat-form-field class="elem" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput name="first_name" placeholder="Enter First Name" />
+        </mat-form-field>
+
+        <mat-form-field class="elem" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput name="last_name"  placeholder="Enter Last Name" />
+        </mat-form-field>
+
+        <mat-form-field class="elem" appearance="outline">
+          <mat-label>Bio</mat-label>
+          <input matInput name="bio" placeholder="Enter Bio" />
+        </mat-form-field>
+      </div>
+    </div>
+    <br />
+    <br />
+
+    <!-- Profile Details update in the lower section side by side -->
+    <div class="sidebyside">
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label id="des">Description</mat-label>
+        <input matInput name="description"  placeholder="Description" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>LinkedIn URL</mat-label>
+        <input matInput name="linkedin" placeholder="Enter LinkedIn" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Field of Work</mat-label>
+        <mat-select >
+          <mat-option value="1">Information Technology and Computer Science</mat-option>
+          <mat-option value="2">Engineering</mat-option>
+          <mat-option value="3">Business</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input matInput name="phone_number"  placeholder="Enter Phone Number" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput name="email"  placeholder="Enter Email" />
+      </mat-form-field>
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput name="password_hash" placeholder="Enter new Password" />
+      </mat-form-field>
+    </div>
+
+    <br /><br />
+
+    <!-- CV upload button and view button -->
+    <div class="button-container">
+      <button mat-raised-button color="primary">Upload New</button>
+      <button mat-raised-button id="discard">View</button>
+    </div>
+
+    <br /><br />
+
+    <!-- skills update -->
+    <section class="skillchip"></section>
+
+    <!-- Buttons -->
+    <mat-divider></mat-divider>
+    <br /><br />
+    <section>
+      <div class="example-button-row">
+        <button type="submit" mat-raised-button color="primary">Update Profile</button>
+        <button mat-raised-button id="discard">Discard Changes</button>
+        <button mat-raised-button color="warn" id="delete">
+          Delete Profile
+        </button>
+      </div>
+    </section>
+  </form>
+</div>
