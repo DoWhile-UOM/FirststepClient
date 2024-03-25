@@ -1,3 +1,4 @@
+<app-spinner></app-spinner>
 <div class="page-title">
   <p>Company Registration Application List</p>
 
@@ -18,13 +19,38 @@
   </div>
 </div>
 
-<mat-card class="emptymsg" *ngIf="jobListLength <= 0">
+<mat-card class="emptymsg" *ngIf="companyListLength <= 0">
   <div>
     <p class="center-text">Can't Find Any Results!</p>
   </div>
 </mat-card>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- auto incremeting No colomun-->
+  <ng-container matColumnDef="no">
+    <th mat-header-cell *matHeaderCellDef>No</th>
+    <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+  </ng-container>
 
-<!--table-->
-<div class="addTable mat-elevation-z8" *ngIf="jobListLength > 0">
-  <table mat-table></table>
-</div>
+  <!--ComanyList name-->
+  <ng-container matColumnDef="companyName">
+    <th mat-header-cell *matHeaderCellDef>Company Name</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.company_name }}
+    </td></ng-container
+  >
+
+  <!--ComapnyList verification stauts-->
+  <ng-container matColumnDef="verificationStatus">
+    <th mat-header-cell *matHeaderCellDef>Verification Status</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.verification_status }}
+    </td></ng-container
+  >
+  <!--Coloumn that has view that links to its application-->
+  <ng-container matColumnDef="view">
+    <th mat-header-cell *matHeaderCellDef>View</th>
+    <td mat-cell *matCellDef="let element">
+      <a>View</a>
+    </td></ng-container
+  >
+</table>

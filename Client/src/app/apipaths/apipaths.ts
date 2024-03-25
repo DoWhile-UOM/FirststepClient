@@ -34,6 +34,10 @@ export class Apipaths {
     this.baseUrl + 'Company/UpdateRegisteredCompany/';
   static readonly deleteCompany: string =
     this.baseUrl + 'Company/DeleteCompany/';
+  static readonly getAllComapanyList: string =
+    this.baseUrl + 'Company/GetAllComapanyList';
+  static readonly getCompanyApplicationById: string =
+    this.baseUrl + 'Company/GetCompanyApplicationById/'; //+companyId
 
   // keywords
   static readonly getKeywords: string =

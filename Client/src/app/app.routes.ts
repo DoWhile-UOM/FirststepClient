@@ -16,6 +16,7 @@ import { RoleProfileEditComponent } from './CompanyPortal/shared/role-profile-ed
 import { CompanyAdminRegistrtionFormComponent } from './CompanyPortal/CompanyAdmin/company-admin-registrtion-form/company-admin-registrtion-form.component';
 import { LandingPageComponent } from './shared/landing-page/landing-page.component';
 import { CompanyApplicationListComponent } from './SystemAdminPortal/company-application-list/company-application-list.component';
+import { CompanyApplicationComponent } from './SystemAdminPortal/company-application/company-application.component';
 
 export const routes: Routes = [
   // company portal
@@ -63,5 +64,9 @@ export const routes: Routes = [
   {
     path: 'systemAdmin/companyApplicationList',
     component: CompanyApplicationListComponent,
+  },
+  {
+    path: 'systemAdmin/companyApplicationView',
+    component: CompanyApplicationComponent,
   },
 ];

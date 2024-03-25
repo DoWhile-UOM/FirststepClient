@@ -15,7 +15,22 @@ interface Company {
   company_province: string;
   company_business_scale: string;
 }
-
+interface CompanyList {
+  company_id: number;
+  company_name: string;
+  verification_status: boolean;
+}
+interface CompanyApplication {
+  company_id: number;
+  company_name: string;
+  verification_status: boolean;
+  company_email: string;
+  company_website: string;
+  company_phone_number: number;
+  business_reg_certificate: string;
+  certificate_of_incorporation: string;
+  comment: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -42,6 +57,21 @@ export class CompanyService {
 
     console.log(companyDetails);
     return companyDetails;
+  }
+  async getCompanyApplicationById(companyId: number) {
+    let companyApplication: any = {};
+    await axios
+      .get(Apipaths.getCompanyApplicationById + companyId)
+      .then(function (response) {
+        try {
+          companyApplication = response.data;
+        } catch (error) {
+          console.log('No company application found for the given id');
+        }
+      });
+    // .then((response) => {
+    //   companyApplication = response.data;
+    // })
   }
 
   // async updateCompanyDetails(company: Company) {
@@ -89,5 +119,22 @@ export class CompanyService {
       });
 
     return response;
+  }
+
+  //get all company list from companyListDto
+  async getAllCompanyList() {
+    let companyList: CompanyList[] = [];
+
+    try {
+      const response = await axios.get(Apipaths.getAllComapanyList);
+      companyList = response.data;
+      console.log('company list was received');
+    } catch (error) {
+      this.snackBar.open('Network error occurred. Try Again', 'Close', {
+        duration: 3000,
+      });
+    }
+
+    return companyList;
   }
 }
