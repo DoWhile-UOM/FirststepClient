@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { CompanyApplicationListComponent } from '../SystemAdminPortal/company-application-list/company-application-list.component';
+import { CompanyApplicationListComponent } from '../components/company-application-list/company-application-list.component';
 
 
 export const saRoutes: Routes = [

@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 
 import { EmployeeService } from '../../../services/employee.service';
-import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Inject } from '@angular/core';

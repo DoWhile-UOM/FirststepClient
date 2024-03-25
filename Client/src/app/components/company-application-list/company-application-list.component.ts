@@ -11,7 +11,7 @@ import { CompanyService } from '../../../services/company.service';
 import { response } from 'express';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
 import { error } from 'console';
 interface CompanyList {
   company_id: number;
