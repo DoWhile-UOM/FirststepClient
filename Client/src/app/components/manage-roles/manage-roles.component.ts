@@ -18,7 +18,6 @@ import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 import { CaNavBarComponent } from "../ca-nav-bar/ca-nav-bar.component";
 
-
 export interface RolesData {
   id: number;
   name: string;
@@ -47,7 +46,7 @@ export class ManageRolesComponent {
   rolesData: RolesData[] = [];
 
   company_id: number = 7; // sample company_id
-  selected: string ="all";
+  selected: string = "all";
 
   @ViewChild(MatTable)
   table!: MatTable<RolesData>;
@@ -65,8 +64,6 @@ export class ManageRolesComponent {
 
   async fetchData(type: string) {
     let dataSet: any[] = [];
-
-    alert(type);
 
     if (type == "HRA") {
       await this.employeeService.getAllHRAs(this.company_id)
@@ -93,7 +90,7 @@ export class ManageRolesComponent {
         position: index + 1, // Increment position
         name: `${item.first_name} ${item.last_name}`, 
         email:item.email,
-        Role: (item.user_type) == 'HRM' ? 'HR Manager': 'HR Assistant', // Use user_type
+        Role: (item.user_type) == 'HRA' ? 'HR Assistant': 'HR Manager', // Use user_type
       }));
     }
     else{
@@ -123,7 +120,6 @@ export class ManageRolesComponent {
       dialog.afterClosed().subscribe(result => {
         if(result=true){
           this.fetchData(this.selected);
-          window.location.reload();
         }
       });
     }
@@ -134,14 +130,13 @@ export class ManageRolesComponent {
       dialog.afterClosed().subscribe(result => {
         if (result === true) {
           this.fetchData(this.selected);
-          window.location.reload();
         }
       });
     }
      
     async filter(selected: any){
-      this.selected = selected;
-      await this.fetchData(String(selected));
+      this.selected = selected.value;
+      await this.fetchData(selected.value);
     }
   }
   
