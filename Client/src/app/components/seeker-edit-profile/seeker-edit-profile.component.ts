@@ -15,19 +15,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 //import { NavBarComponent } from "../../shared/nav-bar/nav-bar.component";
 import { FormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
+import { AddSkillsComponent } from '../add-skills/add-skills.component';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
-  selector: 'app-seeker-edit-profile',
-  standalone: true,
-  imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule],
-  templateUrl: './seeker-edit-profile.component.html',
-  styleUrl: './seeker-edit-profile.component.css'
+    selector: 'app-seeker-edit-profile',
+    standalone: true,
+    templateUrl: './seeker-edit-profile.component.html',
+    styleUrl: './seeker-edit-profile.component.css',
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, AddSkillsComponent, NavBarComponent]
 })
 export class SeekerEditProfileComponent {
 
   
   // The image url of the default image
-  url = '.\assets\images\SeekerEdit.jpg';
+  url = './assets/images/SeekerEdit.jpg';
 
   //image upload
   onselectFile(event: any) {

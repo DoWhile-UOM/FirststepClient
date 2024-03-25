@@ -1,13 +1,11 @@
-<p>seeker-edit-profile works!</p>
 <!-- navbar -->
-<!-- <app-nav-bar></app-nav-bar> -->
-
+<app-nav-bar></app-nav-bar>
 
 <!-- Form for editing profile -->
 <br /><br />
 
 <div class="form-popup" id="myForm">
-  <form class="form-container"  >
+  <form class="form-container">
     <!-- Image update -->
     <div class="up-container">
       <div class="left">
@@ -73,6 +71,11 @@
       </mat-form-field>
     </div>
 
+    <!-- skills update -->
+    <div class="skillchip">
+      <app-add-skills></app-add-skills>
+    </div>
+
     <br /><br />
 
     <!-- CV upload button and view button -->
@@ -83,11 +86,9 @@
 
     <br /><br />
 
-    <!-- skills update -->
-    <section class="skillchip"></section>
-
     <!-- Buttons -->
     <mat-divider></mat-divider>
+
     <br /><br />
     <section>
       <div class="example-button-row">
@@ -100,3 +101,4 @@
     </section>
   </form>
 </div>
+<br>

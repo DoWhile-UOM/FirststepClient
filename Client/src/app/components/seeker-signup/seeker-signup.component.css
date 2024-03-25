@@ -1,0 +1,217 @@
+.form-popup {
+    width: 1200px;
+    height: 600px;
+    border: 3px black;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+    padding: 25px 25px 25px 25px;
+    margin-left: 130px;
+  }
+  
+  .up-container {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+  }
+  
+  .up-container .left {
+    flex: 1;
+    padding: 10px;
+    align-items: center;
+  }
+  .right {
+    flex: 1;
+    padding: 10px;
+    align-items: right;
+  }
+  
+  .seeker {
+    width: 400px;
+    height: auto;
+    padding: 60px 100px 30px 100px;
+  }
+  
+  h2 {
+    font-size: 30px;
+    font-weight: 550;
+    font-family: "roboto";
+    align-items: center;
+    font-style: italic;
+  }
+  
+  h3 {
+    font-size: 30px;
+    font-weight: 550;
+    font-family: "roboto";
+    align-items: center;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-bottom: 25px;
+  }
+  
+  p {
+    text-align: center;
+    align-items: center;
+  }
+  
+  .form-container {
+    border: 3px black;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+    padding: 25px 25px 25px 25px;
+    width: 500px;
+    height: 525px;
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+    display: grid;
+    width: 450px;
+    align-items: center;
+    padding-left: 15px;
+    padding-bottom: 0;
+  }
+  
+  /* Adjusting the distance between steps */
+  .mat-horizontal-stepper .mat-step-header {
+    margin-right: 20px; /* Increase or decrease this value to adjust the distance */
+  }
+  
+  .custom-stepper-button {
+    background-color: white;
+    color:#008080;
+    border: 3px solid #008080;
+  }
+  .custom-stepper1-button {
+    background-color: #008080;
+    color:white;
+    
+  }
+  
+  .mat-button{
+    padding-left: 10px;
+  
+  }
+  
+  
+  /* 
+  .mat-stepper-header-icon-foreground-color {
+    color: white;
+  }
+  
+  .mat-stepper-header-selected-state-icon-background-color {
+    background-color: white;
+  }
+  
+  .mat-stepper-header-selected-state-icon-foreground-color {
+    color: #008080;
+  }
+  
+  .mat-stepper-header-done-state-icon-background-color {
+    background-color: #009688;
+  }
+  
+  .mat-stepper-header-done-state-icon-foreground-color {
+    color: white;
+  }
+  
+  .mat-stepper-header-edit-state-icon-background-color {
+    background-color: #009688;
+  }
+  
+  .mat-stepper-header-edit-state-icon-foreground-color {
+    color: white;
+  }
+  
+  .mat-stepper-container-color {
+    background-color: white;
+  }
+  
+  .mat-stepper-line-color {
+    border-color: rgba(0, 0, 0, 0.12);
+  }
+  
+  .mat-stepper-header-hover-state-layer-color {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  .mat-stepper-header-focus-state-layer-color {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  .mat-stepper-header-label-text-color {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  
+  .mat-stepper-header-optional-label-text-color {
+    color: rgba(0, 0, 0, 0.54);
+  }
+  
+  .mat-stepper-header-selected-state-label-text-color {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  
+  .mat-stepper-header-error-state-label-text-color {
+    color: #f44336;
+  }
+  
+  .mat-stepper-header-icon-background-color {
+    background-color: rgba(0, 0, 0, 0.54);
+  }
+  
+  .mat-stepper-header-error-state-icon-foreground-color {
+    color: #f44336;
+  }
+  
+  .mat-stepper-header-error-state-icon-background-color {
+    background-color: transparent;
+  } */
+  
+  
+  
+  mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-bar {
+    height: 4em; 
+    background-color: white;
+    position: absolute;
+    z-index: 2;
+    margin-top: 0;
+  }
+  
+  .mat-toolbar{
+    position: relative;
+    z-index: 2;
+  }
+  
+  .logo{
+    height: 2.5em;
+    width: 2.5em;
+    margin-right: 0.5em; 
+  }
+  
+  .flex-spacer {
+    flex: 1 1 auto;
+  }
+  
+  
+  .profile-image {
+    height: 2em;
+    width: 2em; 
+    border-radius: 50%; 
+    margin-right: 16px;
+    margin-left: 5px;
+  }
+
+  
+  .skillchip {
+    margin-top: 5px;
+    width: 400px;
+    margin-left: 20px;
+  }

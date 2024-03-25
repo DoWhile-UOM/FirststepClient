@@ -8,7 +8,7 @@ h1 {
   
   .form-popup {
     width: 1000px;
-    height: 800px;
+    height: fit-content;
     border: 3px black;
     border-radius: 25px;
     background: #fff;
@@ -16,6 +16,7 @@ h1 {
     padding: 25px 25px 25px 25px;
     margin-left: 200px;
     margin-right: 200px;
+    margin-bottom: auto;
   }
   .form-container mat-form-field {
     width: 400px;
@@ -103,6 +104,10 @@ h1 {
     width: fit-content;
   }
   
+  .button-container{
+    margin-left: 10px;
+  }
+  
   .example-label {
     display: table-cell;
     font-size: 14px;
@@ -115,6 +120,7 @@ h1 {
     max-width: 600px;
     text-align: center;
     align-items: center;
+    margin-left: 10px;
   }
   
   .example-button-row .mat-mdc-button-base {
@@ -164,5 +170,12 @@ h1 {
       border: 1px solid rgb(167, 52, 52) !important;
       backdrop-filter: blur(10px);
     }
+  }
+
+
+
+  .skillchip {
+    width: 850px;
+    margin-left: 10px;
   }
   
