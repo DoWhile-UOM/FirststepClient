@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } fro
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SearchBasicComponent } from '../search-basic/search-basic.component';
 import { ApiService } from '../../services/api.service';
 import { AuthService } from '../../services/auth.service';
@@ -24,7 +23,7 @@ interface Job {
 @Component({
   selector: 'app-seeker-home-page',
   standalone: true,
-  imports: [ AdvertisementCardComponent, CommonModule, NavBarComponent, SearchBasicComponent],
+  imports: [ AdvertisementCardComponent, CommonModule, SearchBasicComponent],
   templateUrl: './seeker-home-page.component.html',
   styleUrl: './seeker-home-page.component.css'
 })

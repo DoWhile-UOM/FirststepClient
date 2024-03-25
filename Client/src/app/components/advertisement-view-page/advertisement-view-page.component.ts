@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AdvertisementHeaderComponent } from '../advertisement-header/advertisement-header.component';
 import { AdvertisementViewComponent } from '../advertisement-view/advertisement-view.component';
 import { ActivatedRoute } from '@angular/router';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { CaNavBarComponent } from '../ca-nav-bar/ca-nav-bar.component';
 import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
@@ -32,7 +31,7 @@ interface Job{
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, NavBarComponent, MatCardModule, CaNavBarComponent],
+  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, MatCardModule, CaNavBarComponent],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })
