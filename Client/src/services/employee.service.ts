@@ -11,7 +11,7 @@ export class EmployeeService {
   async getEmployeeDetails(id : number) {
     let empData: any;
     try{
-      await axios.get('https://localhost:7213/api/Employee/GetEmployeeById/' + id)
+      await axios.get(Apipaths.getEmployeeDetails + id)
         .then((response) => {
           empData = response.data;
         });
@@ -22,17 +22,18 @@ export class EmployeeService {
 
     return empData;
   }
-//all employee details
- async getEmployeeList(company_id: number) {
+
+  //all employee details
+  async getEmployeeList(company_id: number) {
     let empData: any;
     try{
-      await axios.get('https://localhost:7213/api/Employee/GetAllEmployees/' + company_id)
+      await axios.get(Apipaths.getEmployeeList + company_id)
         .then((response) => {
           empData = response.data;
         });
     }
     catch (error) {
-      //console.error(error);
+      console.error(error);
     }
 
     return empData;
@@ -42,8 +43,7 @@ export class EmployeeService {
   async addNewHRManager(employee: any) {
     try{
       employee.company_id = 7; // sample company_id
-      
-      await axios.post('https://localhost:7213/api/Employee/AddNewHRManager', employee)
+      await axios.post(Apipaths.addNewHRManager, employee)
         .then((response) => {
           console.log(response);
         });
@@ -52,16 +52,12 @@ export class EmployeeService {
       console.error(error);
     }
   }
- 
-
-  
-  
 
   async addNewHRAssistant(employee: any) {
     try{
       employee.company_id = 7; // sample company_id
       
-      await axios.post('https://localhost:7213/api/Employee/AddNewHRAssistant', employee)
+      await axios.post(Apipaths.addNewHRAssistant, employee)
         .then((response) => {
           console.log(response);
         });
@@ -73,7 +69,7 @@ export class EmployeeService {
 
   async editemployee(employee: any, employeeID: number) {
     try{      
-      await axios.put("https://localhost:7213/api/Employee/UpdateEmployee/" + employeeID, employee)
+      await axios.put( Apipaths.editemployee+ employeeID, employee)
         .then((response) => {
           console.log(response);
         });
@@ -86,10 +82,39 @@ export class EmployeeService {
 
   async deleteEmployee(employeeID:number){
     try{
-      await axios.delete("https://localhost:7213/api/Employee/DeleteEmployee/"+employeeID)
+      await axios.delete(Apipaths.deleteEmployee+employeeID)
     }
     catch (error) {
       console.error(error);
     }
+  }
+
+  async getAllHRMs(companyID: number){
+    let empData: any;
+    
+    await axios.get(Apipaths.getAllHRMs + companyID)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch(function (error) {
+        alert("Network Error: " + error);
+      });
+    
+    return empData;
+  }
+
+  async getAllHRAs(companyID: number){
+    let empData: any;
+
+    alert(Apipaths.getAllHRAs + companyID);
+    await axios.get(Apipaths.getAllHRAs + companyID)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch(function (error) {
+        alert("Network Error: " + error);
+      });
+    
+    return empData;
   }
 }

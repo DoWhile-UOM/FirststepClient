@@ -8,10 +8,17 @@
   color: #008080;
   font-family: Lato;
   font-size: 30px;
+  margin-bottom: 0.5em;
 }
 
+
 .page-title{
-  margin-bottom: 2em;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagetitle-content{
   display: flex;
   flex-direction: row;
   justify-content: space-between;

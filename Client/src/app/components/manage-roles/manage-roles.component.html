@@ -1,14 +1,26 @@
 
 <app-ca-nav-bar></app-ca-nav-bar>
 <div class="container">
-<div class="page-title">
-  <span><p>Manage Company Roles</p></span>
+  <div class="page-title">
+    <div class="title"><p>Manage Company Roles</p></div>
+  
+    <div class="pagetitle-content">
+      <span>
+        <mat-chip-listbox aria-label="Filter" #filterByStatus (change)="filter(filterByStatus.selected)" >
+          <mat-chip-option selected value="all">All</mat-chip-option>
+          <mat-chip-option value="HRM">HR Manager</mat-chip-option>
+          <mat-chip-option value="HRA">HR Assistant</mat-chip-option>
+        </mat-chip-listbox>  
+      </span>
+      
+      <span class="add-new-button">
+        <button mat-raised-button color="primary" (click)="openDialog()" class="demo-button">
+          <mat-icon>person_add_alt</mat-icon>Add Employee
+        </button>
+      </span>
+    </div>
+  </div>
 
-<span>
-      <button mat-raised-button color="primary" (click)="openDialog()" class="demo-button">
-        <mat-icon>person_add_alt</mat-icon>Add Employee
-      </button></span>
-</div>
 
 
     <table

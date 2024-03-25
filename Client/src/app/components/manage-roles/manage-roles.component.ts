@@ -3,7 +3,8 @@ import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { ViewChild } from '@angular/core';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import {
   MatDialog,
   MatDialogActions,
@@ -32,13 +33,13 @@ export interface RolesData {
     templateUrl: './manage-roles.component.html',
     styleUrl: './manage-roles.component.css',
     imports: [
-        MatIconModule,
-        MatButtonModule,
-        MatTableModule,
-        AddrolesPopupComponent,
-        CaNavBarComponent,
-    
-       
+      MatIconModule,
+      MatButtonModule,
+      MatTableModule,
+      AddrolesPopupComponent,
+      CaNavBarComponent,
+      MatCardModule,
+      MatChipsModule
     ]
 })
 export class ManageRolesComponent {
@@ -46,6 +47,7 @@ export class ManageRolesComponent {
   rolesData: RolesData[] = [];
 
   company_id: number = 7; // sample company_id
+  selected: string ="all";
 
   @ViewChild(MatTable)
   table!: MatTable<RolesData>;
@@ -58,24 +60,46 @@ export class ManageRolesComponent {
 
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
-    this.fetchData();
+    this.fetchData(this.selected);
   }
 
-  async fetchData() {
-    await this.employeeService
-      .getEmployeeList(this.company_id)
-      .then((data: any[]) => {
-        this.rolesData = data.map((item, index) => ({
-          id: item.user_id, // Use user_id
-          position: index + 1, // Increment position
-          name: `${item.first_name} ${item.last_name}`, 
-          email:item.email,
-          Role: (item.user_type) == 'HRM' ? 'HR Manager': 'HR Assistant', // Use user_type
-        }));
-      })
-      .catch((error) => {
-        error('Error fetching data:', error);
-      });
+  async fetchData(type: string) {
+    let dataSet: any[] = [];
+
+    alert(type);
+
+    if (type == "HRA") {
+      await this.employeeService.getAllHRAs(this.company_id)
+        .then((data: any[]) => {
+          dataSet = data;
+        }); 
+    }
+    else if (type == "HRM"){
+      await this.employeeService.getAllHRMs(this.company_id)
+        .then((data: any[]) => {
+          dataSet = data;
+        }); 
+    }
+    else {
+      await this.employeeService.getEmployeeList(this.company_id)
+        .then((data: any[]) => {
+          dataSet = data;
+        });  
+    }
+    
+    if (dataSet.length > 0){
+      this.rolesData = dataSet.map((item, index) => ({
+        id: item.user_id, // Use user_id
+        position: index + 1, // Increment position
+        name: `${item.first_name} ${item.last_name}`, 
+        email:item.email,
+        Role: (item.user_type) == 'HRM' ? 'HR Manager': 'HR Assistant', // Use user_type
+      }));
+    }
+    else{
+      alert("No data found");
+      this.rolesData = [];
+    }
   }
   //end of fetch data
  
@@ -87,7 +111,7 @@ export class ManageRolesComponent {
           (employee) => employee.id !== id
         );
         this.table.renderRows();
-        this.fetchData();
+        this.fetchData(this.selected);
       })
       .catch((error) => {
         console.error('Error deleting data:', error);
@@ -98,7 +122,7 @@ export class ManageRolesComponent {
       const dialog=this.dialog.open(AddrolesPopupComponent); 
       dialog.afterClosed().subscribe(result => {
         if(result=true){
-          this.fetchData();
+          this.fetchData(this.selected);
           window.location.reload();
         }
       });
@@ -109,12 +133,15 @@ export class ManageRolesComponent {
      
       dialog.afterClosed().subscribe(result => {
         if (result === true) {
-          this.fetchData();
+          this.fetchData(this.selected);
           window.location.reload();
         }
       });
     }
      
-  
+    async filter(selected: any){
+      this.selected = selected;
+      await this.fetchData(String(selected));
+    }
   }
   
