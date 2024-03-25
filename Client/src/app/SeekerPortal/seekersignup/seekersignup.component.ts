@@ -96,27 +96,4 @@ export class SeekersignupComponent implements OnInit {
     // You can keep this method empty or add any additional initialization if needed
   }
 
-  // Function to submit seeker data
-  async submitSeekerData() {
-    const seekerData = {
-      Firstname: this.firstFormGroup.value.firstCtrl,
-      Lastname: this.secondFormGroup.value.secondCtrl,
-      EmailAddress: this.thirdFormGroup.value.thirdCtrl,
-      ContactNumber: this.fourthFormGroup.value.fourthCtrl,
-      University: this.fifthFormGroup.value.fifthCtrl,
-      LinkedIn: '', 
-      Field: '', 
-      Bio: '',
-      Description: '', 
-      Password: '', 
-    };
-
-    try {
-      const response = await axios.post('api/seekers', seekerData);
-      console.log('Seeker created:', response.data);
-    } catch (error) {
-      console.error('Error creating seeker:', error);
-    }
-  }
-
 }
