@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, ReactiveFormsModule ]
+    imports: [RouterOutlet, ReactiveFormsModule]
 })
 export class AppComponent {
   title = 'Client';
