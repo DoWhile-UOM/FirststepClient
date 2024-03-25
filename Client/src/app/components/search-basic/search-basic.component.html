@@ -1,0 +1,63 @@
+<mat-card class="search-card mat-elevation-4z">
+    <form class="container" #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
+        <mat-form-field appearance="outline" class="search-element title">
+            <mat-label>Job Title</mat-label>
+            <input matInput placeholder="Placeholder" name="title" ngModel>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>Country</mat-label>
+            <input type="text"
+                placeholder="Pick a Country"
+                aria-label="Country"
+                matInput #countryInput
+                [formControl]="locationCountryControl"
+                [matAutocomplete]="autocountry" (change)="onSelectedCountryChanged(countryInput.value)">
+            <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
+            @for (option of locationCountryFilteredOptions | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+            }
+            </mat-autocomplete>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>City</mat-label>
+            <input type="text"
+                placeholder="Pick a City"
+                aria-label="City"
+                matInput
+                [formControl]="locationCityControl"
+                [matAutocomplete]="autocity">
+            <mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
+            @for (option of locationCityFilteredOptions | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+            }
+            </mat-autocomplete>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>Employment Type</mat-label>
+            <mat-select name="employeement_type" ngModel>
+                @for (emptype of empTypes; track emptype) {
+                    <mat-option [value]="emptype">{{emptype}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>Job Arrangement</mat-label>
+            <mat-select name="arrangement" ngModel>
+                @for (arrangement of jobArrangement; track arrangement) {
+                    <mat-option [value]="arrangement">{{arrangement}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    
+        <div class="searchBtn">
+            <button mat-icon-button color="primary">
+                <mat-icon>search</mat-icon>
+            </button>    
+        </div>
+        
+    </form>
+</mat-card>

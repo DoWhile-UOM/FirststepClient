@@ -1,0 +1,71 @@
+
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    
+    margin: 0% 5% 0% 5%;
+    padding: 0;
+  }
+  
+  .section {
+    flex: 1;
+  }
+  
+  #TitlePart {
+   /* background-color: orange;*/
+    display: flex;
+    flex: 0.5;
+  }
+  
+  .topic {
+   /* background-color: cadetblue;*/
+    width: 100%;
+    color:teal;
+    font-size: 3vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: flex;
+    justify-content: flex-start;
+
+  }
+  .button {
+    width: 50%;
+   /*background-color: coral;*/
+    color: #008080;
+    font-family: Lato;
+    font-style: normal;
+    line-height: normal;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  #role {
+  /*  background-color: blueviolet;*/
+    flex: 3;
+  }
+
+  .demo-table {
+    width: 100%;
+  }
+  
+ 
+
+  .mat-column-symbol {
+    text-align: right;
+  }
+
+  .demo-button-container {
+    padding-bottom: 16px;
+  }
+  
+  .demo-button + .demo-button {
+    margin-left: 8px;
+  }
+
+  mat-icon{
+    font-family:'Material Icons';
+  }
+

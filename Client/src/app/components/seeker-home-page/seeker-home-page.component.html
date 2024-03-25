@@ -1,0 +1,9 @@
+<app-nav-bar></app-nav-bar>
+
+<app-search-basic (newItemEvent)="changeJobList($event)"></app-search-basic>
+
+<div class="card-container">
+    <app-advertisement-card *ngFor="let job of jobList" [job]="job"></app-advertisement-card>
+</div>
+
+<button (click)="signOut()">Sign Out</button>
