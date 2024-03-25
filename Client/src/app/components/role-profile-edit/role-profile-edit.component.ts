@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 
-import { EmployeeService } from '../../../../services/employee.service';
-import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
+import { EmployeeService } from '../../../services/employee.service';
+import { SpinnerComponent } from '../../shared/spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Inject } from '@angular/core';

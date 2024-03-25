@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -9,12 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { CompanyService } from '../../../../services/company.service';
+import { CompanyService } from '../../../services/company.service';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { SpinnerComponent } from '../../../shared/spinner/spinner.component';
+import { SpinnerComponent } from '../../shared/spinner/spinner.component';
 
 interface Company {
   company_id: number;

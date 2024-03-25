@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../../../shared/nav-bar/nav-bar.component';
-import { FloatLabelType } from '@angular/material/form-field';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
