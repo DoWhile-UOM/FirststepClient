@@ -116,7 +116,6 @@ export class JobOfferListComponent implements AfterViewInit{
     Table_data = [];
 
     for (let i = 0; i < this.jobList.length; i++) {
-
       Table_data.push({
         advertisement_id: this.jobList[i].advertisement_id,
         job_number: this.jobList[i].job_number,
