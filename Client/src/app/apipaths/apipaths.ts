@@ -21,6 +21,12 @@ export class Apipaths {
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
 
+    // seeker
+    static readonly getSeeker: string = this.baseUrl + 'Seeker/GetSeeker/'; // + seeker_id
+    static readonly updateSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker/'; // + seeker_id
+    static readonly deleteSeeker: string = this.baseUrl + 'Seeker/DeleteSeeker/'; // + seeker_id
+    static readonly addSeeker: string = this.baseUrl + 'Seeker/AddSeeker';
+
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 
