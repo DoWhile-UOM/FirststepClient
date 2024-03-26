@@ -45,7 +45,6 @@ export class LoginComponent {
         this.userStore.setRoleForStore(tokenPayload.role);
         console.log(tokenPayload);
         //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
-        alert(tokenPayload.role)
         sessionStorage.setItem('user', tokenPayload.role);
         this.router.navigate(['/' + tokenPayload.role]);
       },
