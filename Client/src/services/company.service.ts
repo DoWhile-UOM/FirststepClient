@@ -9,6 +9,14 @@ export class CompanyService {
 
   constructor(private http:HttpClient) { }
 
+
+  private baseUrl:string="https://localhost:7213/api/Company"
+
+
+  CompanyRegister(companyObj:any){
+    return this.http.post<any>(this.baseUrl+"/AddCompany",companyObj)
+  }
+
   //Get company Registration state details---Start
   async getCompnayRegStateOld(id: number): Promise<any | null> {
     try {

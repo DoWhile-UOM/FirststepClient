@@ -24,6 +24,7 @@ import { MatCardModule } from '@angular/material/card';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CompanyService } from '../../../services/company.service';
 
 
 @Component({
@@ -39,21 +40,22 @@ export class RegisterCompanyComponent{
 
 
   //form group for the stepper
-  firstFormGroup = this._formBuilder.group({
-    fName: ['', Validators.required],
-    lName: ['', Validators.required],
-    email: ['', Validators.required],
-    otp: ['', Validators.required],
-    pNumber: ['', Validators.required]
+  companyReg = this._formBuilder.group({
+    company_name: ['', Validators.required],
+    company_website: ['', Validators.required],
+    company_email: ['', Validators.required],
+    //otp: ['', Validators.required],
+    //pNumber: ['', Validators.required]
   });
   secondFormGroup = this._formBuilder.group({
-    businessScl: ['', Validators.required],
-    location: ['', Validators.required],
-    des: ['', Validators.required],
-    logo: ['', Validators.required]
+    business_reg_certificate: ['', Validators.required],
+    company_applied_date: ['', Validators.required],
+    certificate_of_incorporation: ['', Validators.required],
+    company_phone_number: ['', Validators.required],
+    business_reg_no: ['', Validators.required]
   });
 
-  constructor(private _formBuilder: FormBuilder,private http: HttpClient) { }
+  constructor(private company:CompanyService,private _formBuilder: FormBuilder,private http: HttpClient) { }
 
   apiUrl='https://localhost:7093/api/Attachment';
 
@@ -104,4 +106,61 @@ export class RegisterCompanyComponent{
     }
   }
 
-}
+  onRegister(){
+    //console.log(this.loginForm.value);
+    //this.auth.signup(this.myForm.value)
+    this.company.CompanyRegister(this.companyReg.value)
+    .subscribe({
+      next:(res)=>{
+        //this.auth.storeToken(res.token)
+        //alert(res.message)
+        console.log(res.token)
+
+        //console.log(res.message);
+        //this.loginForm.reset();
+        //this.auth.storeToken(res.accessToken);
+        //this.auth.storeRefreshToken(res.refreshToken);
+
+        //const tokenPayload = this.auth.decodedToken();
+        //console.log(tokenPayload);
+
+        //this.userStore.setFullNameForStore(tokenPayload.unique_name);
+        //.userStore.setRoleForStore(tokenPayload.role);
+        //console.log(tokenPayload);
+        //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
+        //this.router.navigate(['seeker'])
+        /*
+        switch(tokenPayload.role){
+          case "Seeker":{
+            this.router.navigate(['seeker'])
+            break;
+          }
+          case "Cadmin":{
+            this.router.navigate(['ca'])
+            break;
+          }
+        }*/
+
+
+      },
+      error:(err)=>{
+        alert(err.message)
+        console.log(err)
+      }
+  });
+  
+}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
