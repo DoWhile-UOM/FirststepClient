@@ -1,0 +1,60 @@
+.example-container {
+    margin: 30px 30px 30px 30px;
+    width: auto;
+    height: auto;
+    border: 3px black;
+    border-radius: 15px;
+    background: #fff;  
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  }
+
+  h1{
+    font-size: 45px;
+    font-weight: 500;
+    padding: 10px 15px 15px 45px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: rgb(0, 0, 0);
+  }
+  
+  h3{
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    padding: 25px 15px 50px 15px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  mat-drawer {
+    width: fit-content;
+    background-color: #008080;
+    color: #fff;
+  }
+
+  mat-drawer-content {
+    padding: 30px;
+    padding-bottom: 100px;
+    width: 1000px;
+  }
+
+  p{
+    
+    color: white;
+  }
+
+  mat-label{
+    color: white;
+  }
+
+  /*table Structure */
+table {
+  width: 200px;
+  border-radius: 10px;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
