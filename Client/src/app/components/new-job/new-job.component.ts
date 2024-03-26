@@ -22,7 +22,6 @@ import { AdvertisementServices } from '../../../services/advertisement.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { KeywordService } from '../../../services/keyword.service'; 
 import { ActivatedRoute, Router } from '@angular/router';
-import { CaNavBarComponent } from '../ca-nav-bar/ca-nav-bar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { RichTextEditorModule, ToolbarService, LinkService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
@@ -100,8 +99,7 @@ interface UpdateJob{
 		MatSelectModule, MatChipsModule, RichTextEditorModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
 		AsyncPipe, MatButtonModule, FormsModule, 
-		CaNavBarComponent, NgxCurrencyDirective, CommonModule, 
-		AddSkillsComponent],
+		NgxCurrencyDirective, CommonModule, AddSkillsComponent],
 	templateUrl: './new-job.component.html',
 	styleUrl: './new-job.component.css'
 })

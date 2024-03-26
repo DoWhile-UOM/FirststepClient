@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { SearchBasicComponent } from '../search-basic/search-basic.component';
 import { ApiService } from '../../services/api.service';
-import { AuthService } from '../../services/auth.service';
 
 interface Job {
   advertisement_id: number;
@@ -30,7 +29,7 @@ interface Job {
 export class SeekerHomePageComponent{
   jobList: Job[] = [];
 
-  constructor(private advertisementService: AdvertisementServices, private api: ApiService,private authService:AuthService) {
+  constructor(private advertisementService: AdvertisementServices, private api: ApiService) {
 
   }
 
@@ -39,12 +38,4 @@ export class SeekerHomePageComponent{
   changeJobList(newJobList: Job[]){
     this.jobList = newJobList;
   }
-
-  signOut(){
-    this.authService.signOut()
-    //this.auth.signup(this.myForm.value)
-  }
-
-
-
 }

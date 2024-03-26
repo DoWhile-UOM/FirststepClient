@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { CommonModule } from '@angular/common';
+import { NavBarComponent } from './nav-bars/nav-bar/nav-bar.component';
+import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
 
 
 @Component({
@@ -9,10 +11,10 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, ReactiveFormsModule, NavBarComponent ]
+    imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent ]
 })
 export class AppComponent {
-  title = 'Client';
+  title = 'seeker-app';
   
 }
 
