@@ -211,7 +211,13 @@
 
   
   .skillchip {
-    margin-top: 5px;
-    width: 400px;
-    margin-left: 20px;
+    margin-top: 10px;
+    width: 450px;
+    margin-left: 15px;
+
+  }
+
+  .cvupload {
+    margin-left: 12px;
+    margin-top: 10px;
   }
