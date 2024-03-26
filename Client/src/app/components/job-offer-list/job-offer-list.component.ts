@@ -4,8 +4,6 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { AdvertisementServices } from '../../../services/advertisement.service';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
-import { CaNavBarComponent } from '../ca-nav-bar/ca-nav-bar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -51,11 +49,9 @@ var Table_data: JobOfferTable[] = [];
   imports: [ MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    NavBarComponent,
     MatIconModule,
     MatButtonModule,
     MatChipsModule,
-    CaNavBarComponent,
     FormsModule,
     CommonModule,
     MatCardModule,
@@ -116,7 +112,6 @@ export class JobOfferListComponent implements AfterViewInit{
     Table_data = [];
 
     for (let i = 0; i < this.jobList.length; i++) {
-
       Table_data.push({
         advertisement_id: this.jobList[i].advertisement_id,
         job_number: this.jobList[i].job_number,

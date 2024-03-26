@@ -34,6 +34,16 @@ mat-toolbar {
 
 .right-buttons a{
   font-size: 20px;
+  display: block;
+  text-decoration: none;
+  color: black;
+  padding: 0.2em 0.6em;
+  border-radius: 0.35em;
+}
+
+.right-buttons a:hover{
+  color: #008080;
+  background-color: #F9F9F9;
 }
 
 .profile-image {
@@ -44,5 +54,7 @@ mat-toolbar {
   margin-left: 5px;
 }
 
-  
-  
+
+.active {
+  color: #008080 !important;
+}

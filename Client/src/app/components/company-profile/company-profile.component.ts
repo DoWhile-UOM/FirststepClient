@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { ActivatedRoute } from '@angular/router';
-import { NavBarComponent } from '../nav-bar/nav-bar.component'; 
 
 interface Job {
   advertisement_id: number;
@@ -42,8 +41,7 @@ interface Company{
     MatDividerModule, 
     MatGridListModule, 
     MatIconModule, 
-    CommonModule,
-    NavBarComponent],
+    CommonModule],
   templateUrl: './company-profile.component.html',
   styleUrl: './company-profile.component.css'
 })

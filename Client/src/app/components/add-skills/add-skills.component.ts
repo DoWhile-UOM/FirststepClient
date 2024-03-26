@@ -57,11 +57,11 @@ import { SkillService } from '../../../services/skill.service';
 export class AddSkillsComponent implements OnInit{
   @Input() title: string = "Skills";
   @Input() hint: string = "";
+  @Input() skills: string[] = [];
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   skillCtrl = new FormControl('');
   filteredskills: Observable<string[]>;
-  public skills: string[] = [];
   allskills: string[] = [];
 
   @ViewChild('skillInput') skillInput!: ElementRef<HTMLInputElement>;

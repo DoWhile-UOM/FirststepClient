@@ -36,10 +36,10 @@ export class AdvertisementCardComponent implements OnInit{
   }
 
   onClickMoreDetails() {
-    this.router.navigate(['seeker/jobdetails', {jobID: this.job.advertisement_id}]);
+    this.router.navigate(['seeker/home/jobdetails', {jobID: this.job.advertisement_id}]);
   }
 
   onClickCompanyName() {
-    this.router.navigate(['seeker/company-profile', {company_id: this.job.company_id}]);
+    this.router.navigate(['seeker/home/company-profile', {company_id: this.job.company_id}]);
   }
 }

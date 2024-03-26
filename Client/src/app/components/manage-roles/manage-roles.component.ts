@@ -108,8 +108,6 @@ export class ManageRolesComponent {
           window.location.reload();
         }
       });
-    }
-     
-  
-  }
+    }  
+}
   

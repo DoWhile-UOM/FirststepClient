@@ -299,4 +299,20 @@ export class AdvertisementServices {
 
     return adData;
   }
+
+  async updateAdvertisement(job: any, jobID: string){
+    let response: any = null;
+
+    job.advertisement_id = jobID;
+
+    await axios.put(Apipaths.updateAdvertisement + '/' + jobID, job)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(function (error) {
+        alert('Network Error: ' + error);
+      });
+
+    return response;
+  }
 }
