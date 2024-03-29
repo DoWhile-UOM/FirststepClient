@@ -45,6 +45,8 @@ export class CompanyService {
       .then(function (response) {
         try {
           companyDetails = response.data;
+          
+          console.log()
         } catch (error) {
           console.log('No company details found for the given id');
         }
@@ -126,6 +128,7 @@ export class CompanyService {
     let companyList: CompanyList[] = [];
 
     try {
+      
       const response = await axios.get(Apipaths.getAllComapanyList);
       companyList = response.data;
       console.log('company list was received');

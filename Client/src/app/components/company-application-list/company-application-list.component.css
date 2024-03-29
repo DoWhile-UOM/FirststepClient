@@ -16,3 +16,15 @@
   flex-direction: row;
   justify-content: space-between;
 }
+.emptymsg{
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+th.mat-header-cell .nu-header{
+  text-align: center !important;
+}
+.emptymsg div{
+  margin: 0 auto;
+}
