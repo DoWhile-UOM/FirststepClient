@@ -6,6 +6,7 @@ import { SavedAdvertisementListComponent } from '../components/saved-advertiseme
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { NewJobUploadedComponent } from '../components/new-job-uploaded/new-job-uploaded.component';
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
+import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 
 
 export const routes: Routes = [
@@ -16,5 +17,5 @@ export const routes: Routes = [
   { path: 'company-profile', component: CompanyProfileComponent },
   { path: 'newJobUploaded', component: NewJobUploadedComponent },
   { path: 'applicationForm', component: SeekerApplicationFormComponent },
-  { path: 'applicationFormconfirm', component: SeekerApplicationFormComponent },
+  { path: 'applicationFormconfirm', component:SeekerApplicationFormConfirmComponent }
 ];
