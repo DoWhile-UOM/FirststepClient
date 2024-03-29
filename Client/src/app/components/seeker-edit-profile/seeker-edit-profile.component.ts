@@ -9,7 +9,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-//import { SeekerService } from '../../../services/seeker.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 //import { NavBarComponent } from "../../shared/nav-bar/nav-bar.component";
@@ -18,6 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SeekerService } from '../../../services/seeker.service';
+import { CommonModule } from '@angular/common';
 
 
 // seeker edit profile interface
@@ -72,21 +72,28 @@ export class SeekerEditProfileComponent {
   field_id: number = 1;
 
   async ngOnInit() {
-    this.fetchEmployeeDetails();
+    this.fetchSeekerDetails();
     //console.log(this.data);
   }
   data(data: any) {
     throw new Error('Method not implemented.');
   }
   
-  async fetchEmployeeDetails() {
-    this.seekerDetails= await this.seekerService.getSeekerDetails(this.user_id);
-    //console.log(this.seekerDetails);
+  async fetchSeekerDetails() {
+    try {
+      const response = await this.seekerService.getSeekerDetails(this.user_id);
+      this.seekerDetails = response;
+    } catch (error) {
+      console.error('Error fetching seeker details:', error);
+    }
   }
 
   async onApply() {
-    await this.seekerService.editseeker( this.seekerDetails , this.user_id);
+    try{    
+      await this.seekerService.editseeker( this.seekerDetails , this.user_id);
+    } catch (error) {
+      console.error('error updating profile',error);
+    }
    }
-
 
 }
