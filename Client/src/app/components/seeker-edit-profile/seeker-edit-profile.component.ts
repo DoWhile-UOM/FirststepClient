@@ -17,6 +17,28 @@ import { FormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { SeekerService } from '../../../services/seeker.service';
+
+
+// seeker edit profile interface
+
+interface Seeker {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: number,
+  bio: string,
+  description: string,
+  university: string,
+  cVurl: string,
+  profile_picture: string,
+  linkedin: string,  
+  field_name: string,
+  user_id: number,
+  password_hash: string,
+
+}
+
 
 @Component({
     selector: 'app-seeker-edit-profile',
@@ -41,5 +63,30 @@ export class SeekerEditProfileComponent {
       };
     }
   }
+
+
+  seekerDetails: Seeker = {} as Seeker;
+
+  constructor(private seekerService: SeekerService) {}
+  user_id: number = 3;
+  field_id: number = 1;
+
+  async ngOnInit() {
+    this.fetchEmployeeDetails();
+    //console.log(this.data);
+  }
+  data(data: any) {
+    throw new Error('Method not implemented.');
+  }
+  
+  async fetchEmployeeDetails() {
+    this.seekerDetails= await this.seekerService.getSeekerDetails(this.user_id);
+    //console.log(this.seekerDetails);
+  }
+
+  async onApply() {
+    await this.seekerService.editseeker( this.seekerDetails , this.user_id);
+   }
+
 
 }

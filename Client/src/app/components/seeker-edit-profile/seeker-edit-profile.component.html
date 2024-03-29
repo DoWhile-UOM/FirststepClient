@@ -4,7 +4,7 @@
 <!-- Form for editing profile -->
 <br /><br />
 
-<div class="form-popup" id="myForm">
+<div class="form-popup" id="myForm"  (ngSubmit)="onApply()">
   <form class="form-container">
     <!-- Image update -->
     <div class="up-container">
@@ -17,7 +17,7 @@
       <div class="right">
         <mat-form-field class="elem" appearance="outline">
           <mat-label>First Name</mat-label>
-          <input matInput name="first_name" placeholder="Enter First Name" />
+          <input matInput name="first_name"  [(ngModel)] ="seekerDetails.first_name" placeholder="Enter First Name" />
         </mat-form-field>
 
         <mat-form-field class="elem" appearance="outline">
