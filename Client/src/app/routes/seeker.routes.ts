@@ -8,7 +8,6 @@ import { NewJobUploadedComponent } from '../components/new-job-uploaded/new-job-
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
 import { SeekerEditProfileComponent } from '../components/seeker-edit-profile/seeker-edit-profile.component';
 import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup.component';
-import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -21,5 +20,4 @@ export const routes: Routes = [
   { path: 'applicationFormconfirm', component: SeekerApplicationFormComponent },
   { path: 'editProfile', component: SeekerEditProfileComponent},
   { path: 'signup', component: SeekerSignupComponent},
-  { path: 'adminDashboard', component: AdminDashboardComponent}
 ];
