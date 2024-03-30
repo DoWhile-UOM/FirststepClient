@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+
 import {
   MatDialog,
   MatDialogActions,
@@ -38,12 +40,14 @@ export interface RolesData {
       AddrolesPopupComponent,
       CaNavBarComponent,
       MatCardModule,
-      MatChipsModule
+      MatChipsModule,
+      CommonModule
     ]
 })
 export class ManageRolesComponent {
   displayedColumns: string[] = ['position', 'name','email', 'Role', 'symbol'];
   rolesData: RolesData[] = [];
+  
 
   company_id: number = 7; // sample company_id
   selected: string = "all";
@@ -94,7 +98,6 @@ export class ManageRolesComponent {
       }));
     }
     else{
-      alert("No data found");
       this.rolesData = [];
     }
   }

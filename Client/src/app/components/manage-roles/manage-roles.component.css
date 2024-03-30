@@ -1,46 +1,60 @@
-.container{
+.container {
   margin-top: 4em;
   margin-left: 4em;
   margin-right: 4em;
 }
 
-.page-title p{          
+.page-title p {
   color: #008080;
   font-family: Lato;
   font-size: 30px;
-  margin-bottom: 0.5em;
 }
 
-
-.page-title{
-  margin-bottom: 1em;
+.page-title {
   display: flex;
   flex-direction: column;
 }
 
-.pagetitle-content{
+.pagetitle-content {
+  margin-top: 2em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-  
 
-  .mat-column-symbol {
-    text-align: right;
-  }
-
-  .demo-button-container {
-    padding-bottom: 16px;
-  }
-  
-  .demo-button + .demo-button {
-    margin-left: 8px;
-  }
-
-  mat-icon{
-    font-family:'Material Icons';
-  }
+table, mat-card{
+  margin: 0 auto;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
+}
 
 
+mat-card div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height:65vh;
+}
 
-  
+.center-text{
+  color:#008080;
+  font-family: Lato;
+  font-size: xx-large;
+}
+
+.mat-column-symbol {
+  text-align: right;
+}
+
+.demo-button-container {
+  padding-bottom: 16px;
+}
+
+.demo-button + .demo-button {
+  margin-left: 8px;
+}
+
+mat-icon {
+  font-family: "Material Icons";
+}
