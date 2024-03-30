@@ -19,7 +19,10 @@
               placeholder="Enter your Company Name"
               [value]="company.company_name"
               (input)="company.company_name = companyName.value"
-            />
+              formControlName="company_name"
+            /><mat-error *ngIf="companyForm.get('company_name').invalid && companyForm.get('company_name').touched">
+              Company Name is required
+            </mat-error>
           </mat-form-field>
         </form>
       </div>

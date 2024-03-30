@@ -67,17 +67,17 @@ export class CompanyProfileEditComponent {
   ) {}
 
   async ngOnInit() {
-    // this.companyForm = this.formBuilder.group({
-    //   company_name: ['', Validators.required],
-    //   company_email: ['', [Validators.required, Validators.email]],
-    //   company_website: ['', Validators.required],
-    //   company_phone_number: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-    //   company_logo: ['', Validators.required],
-    //   company_description: ['', Validators.required],
-    //   company_city: ['', Validators.required],
-    //   company_province: ['', Validators.required],
-    //   company_business_scale: ['', Validators.required],
-    // });
+    this.companyForm = this.formBuilder.group({
+      company_name: ['', Validators.required],
+      company_email: ['', [Validators.required, Validators.email]],
+      company_website: ['', Validators.required],
+      company_phone_number: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      company_logo: ['', Validators.required],
+      company_description: ['', Validators.required],
+      company_city: ['', Validators.required],
+      company_province: ['', Validators.required],
+      company_business_scale: ['', Validators.required],
+    });
     try {
       this.spinner.show();
 
