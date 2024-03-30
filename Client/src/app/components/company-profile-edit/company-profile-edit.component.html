@@ -63,25 +63,7 @@
         <div class="ending-section">
           <div class="sectionTwo">
             <form class="form" [formGroup]="companyForm">
-              <!-- <mat-form-field class="form-field" appearance="outline">
-                <mat-label>Bussiness Scale</mat-label> 
-
-                <mat-select
-                  [value]="selected"
-                  #bussiness_scale
-                  (input)="
-                    company.company_business_scale = bussiness_scale.value
-                  "
-                  required
-                >
-                  <mat-option value="option1">Small Scale</mat-option>
-                  <mat-option value="option2">Medium Scale</mat-option>
-                  <mat-option value="option3">Large Scale</mat-option>
-                </mat-select>
-                <mat-label>Bussiness Scale</mat-label>
-              </mat-form-field> -->
-
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Bussiness Scale</mat-label>
                 <mat-select
                   name="bussiness_scale"
