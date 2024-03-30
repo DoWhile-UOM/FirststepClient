@@ -29,8 +29,8 @@ interface Job {
 export class SeekerHomePageComponent{
   jobList: Job[] = [];
 
-  constructor(private advertisementService: AdvertisementServices, private api: ApiService) {
-
+  constructor() {
+    
   }
 
   seekerID: number = 3; // sample seekerID

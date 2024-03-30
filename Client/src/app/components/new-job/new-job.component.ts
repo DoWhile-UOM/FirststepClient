@@ -27,6 +27,7 @@ import { NgxCurrencyDirective } from 'ngx-currency';
 import { RichTextEditorModule, ToolbarService, LinkService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 
+
 interface Field {
 	field_name: string;
 	field_id: number;
@@ -206,7 +207,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			this.isUpdate = true;
 			this.adData = adData;
 			this.locationCountryControl.setValue(adData.country);
-			this.skills = adData.reqSkills;
+			this.skills = this.removeDuplicates(adData.reqSkills);
 			this.description = adData.job_description;
 
 			await this.onChangeField(Number(adData.field_id));
@@ -245,7 +246,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	ngAfterViewInit() {
 		//this.onResize();
 
-		this.skills = this.addSkillsComponent.skills;
+		this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
 	}
 
 	@HostListener('window:resize', ['$event'])
@@ -274,13 +275,14 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
 		if (countryCode == undefined){
-			this.snackBar.open("Error Updating City Lsit")._dismissAfter(3000);
+			//this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			this.snackBar.open(selectedCountry)._dismissAfter(5000);
 			return;
 		}
 		
 		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
 
-		this.snackBar.open("Update City List")._dismissAfter(3000);
+		this.snackBar.open("Cities Loaded", "", {panelClass: ['app-notification-normal']})._dismissAfter(1500);
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
@@ -356,9 +358,9 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	changeSkillsArray($event: Event){
 		var skills = $event;
 		if (skills != null){
-			this.skills = skills as unknown as string[];
+			let skillArray = skills as unknown as string[];
+			this.skills = this.removeDuplicates(skillArray);
 		}
-		alert("Skills: " + this.skills);
 	}
 
 	add(event: MatChipInputEvent): void {
