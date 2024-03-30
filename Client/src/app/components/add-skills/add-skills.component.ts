@@ -25,7 +25,7 @@ import { SkillService } from '../../../services/skill.service';
   template: `
     <mat-form-field class="addskills-chip-list" appearance="outline">
       <mat-label>{{title}}</mat-label>
-      <mat-chip-grid #chipGrid aria-label="skill selection">
+      <mat-chip-grid #chipGridskills aria-label="skill selection">
         @for (skill of skills; track skill) {
           <mat-chip-row (removed)="removeSkill(skill)">
             {{skill}}
@@ -36,10 +36,10 @@ import { SkillService } from '../../../services/skill.service';
         }
       </mat-chip-grid>
       <input placeholder="New skill..." #skillInput [formControl]="skillCtrl"
-        [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+        [matChipInputFor]="chipGridskills" [matAutocomplete]="auto"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
         (matChipInputTokenEnd)="addSkill($event)"/>
-      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedSkill($event)">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         @for (skill of filteredskills | async; track skill) {
           <mat-option [value]="skill">{{skill}}</mat-option>
         }
@@ -82,12 +82,8 @@ export class AddSkillsComponent implements OnInit{
   addSkill(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    if (!value){
-      return;
-    }
-
     // Add our skill
-    if (value.length > 0) {
+    if (value && value.length > 0) {
       this.skills.push(value)
     }
 
@@ -107,15 +103,21 @@ export class AddSkillsComponent implements OnInit{
     }
   }
 
-  selectedSkill(event: MatAutocompleteSelectedEvent): void {
-    var skillFieldValue = this.skillInput.nativeElement.value;
-		if (skillFieldValue.length > 0){
-			this.removeSkill(skillFieldValue);
-		}
-
-    this.skills.push(event.option.viewValue);
-    this.skillInput.nativeElement.value = '';
-    this.skillCtrl.setValue(null);
+  selected(event: MatAutocompleteSelectedEvent): void {
+    try{
+      var skillFieldValue = this.skillInput.nativeElement.value;
+      if (skillFieldValue.length > 0){
+        this.removeSkill(skillFieldValue);
+      }
+  
+      this.skills.push(event.option.viewValue);
+      this.skillInput.nativeElement.value = '';
+      this.skillCtrl.setValue(null);
+    }
+    catch(e){
+      console.log(e);
+      this.skillInput.nativeElement.value = '';
+    }
   }
 
   private _filterSkills(value: string): string[] {

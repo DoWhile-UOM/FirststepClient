@@ -157,7 +157,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	separatorKeysCodes: number[] = [ COMMA, ENTER ];
 	keywordCtrl = new FormControl('');
 	filteredkeywords: Observable<string[]>;
-	filteredkeywordslength: number = 0;
 	keywords: string[] = [];
 	allkeywords: string[] = [];
 	@ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
@@ -227,7 +226,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		await this.jobFieldService.getAll()
 			.then((response) => {
 				this.fields = response;
-				console.log(this.fields);
 			});
 
 		// get all country names using an external API
@@ -286,8 +284,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
-		addAdvertisement.keywords = this.keywords;
-		addAdvertisement.reqSkills = this.skills;
+		addAdvertisement.keywords = this.removeDuplicates(this.keywords);
+		addAdvertisement.reqSkills = this.removeDuplicates(this.skills);
 		
 		addAdvertisement.hrManager_id = 10; // sample hrManager_id
 
@@ -310,8 +308,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
   	}
 
 	async updateJob(adData: UpdateJob){
-		adData.reqKeywords = this.keywords;
-		adData.reqSkills = this.skills;
+		adData.reqKeywords = this.removeDuplicates(this.keywords);
+		adData.reqSkills = this.removeDuplicates(this.skills);
 
 		adData.city = this.locationCityControl.value ?? '';
 		adData.country = this.locationCountryControl.value ?? '';
@@ -401,10 +399,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	private _filterKeyword(value: string): string[] {
 		const filterValue = value.toLowerCase();
 
-		var filtered = this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
-		this.filteredkeywordslength = filtered.length;
-
-		return filtered;
+		return this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
 	}
 
 	private _filterCountry(value: string): string[] {
@@ -417,5 +412,15 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		const filterValue = value.toLowerCase();
 
 		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	removeDuplicates(arr: string[]) {
+		let uniqueArr = Array.from(new Set(arr));
+
+		if (uniqueArr.length != arr.length){
+			this.snackBar.open("Removed Duplicate Keywords and Skills", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+		}
+
+		return uniqueArr;
 	}
 }
