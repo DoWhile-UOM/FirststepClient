@@ -29,6 +29,11 @@ interface Company {
   company_business_scale: string;
 }
 
+interface BusinessScale{
+  name: string,
+  value: string
+}
+
 @Component({
   selector: 'app-company-profile-edit',
   standalone: true,
@@ -58,7 +63,12 @@ export class CompanyProfileEditComponent {
 
   company: Company = {} as Company; // Initialize the company property
 
-  BScales: string[] = ['Large-Scale', 'Medium-Scale', 'Small-Scale'];
+  BusinessScales : any[] = [
+    {name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro'},
+    {name: 'Small-Sized (10 - 50 Employees)', value: 'small'},
+    {name: 'Medium-Sized (50 - 250 Employees)', value: 'medium'},
+    {name: 'Large-Sized (More Than  250 Employees)', value: 'large'}
+  ];
 
   constructor(
     private companyService: CompanyService,

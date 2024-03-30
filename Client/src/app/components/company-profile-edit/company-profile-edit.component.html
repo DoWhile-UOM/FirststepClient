@@ -3,7 +3,7 @@
 <div class="body">
   <app-spinner></app-spinner>
   <div class="bodySection">
-    <span class="sectionHeading">Company Name</span>
+    <span class="sectionHeading">{{company.company_name}}</span>
     <div class="top-section">
       <img src="assets/images/BistechLogo.png" class="md-card-image" />
       <div class="image-side-section">
@@ -63,38 +63,17 @@
         <div class="ending-section">
           <div class="sectionTwo">
             <form class="form">
-              <!-- <mat-form-field class="form-field" appearance="outline">
-                <mat-label>Bussiness Scale</mat-label> 
-
-                <mat-select
-                  [value]="selected"
-                  #bussiness_scale
-                  (input)="
-                    company.company_business_scale = bussiness_scale.value
-                  "
-                  required
-                >
-                  <mat-option value="option1">Small Scale</mat-option>
-                  <mat-option value="option2">Medium Scale</mat-option>
-                  <mat-option value="option3">Large Scale</mat-option>
-                </mat-select>
-                <mat-label>Bussiness Scale</mat-label>
-              </mat-form-field> -->
-
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Bussiness Scale</mat-label>
                 <mat-select
                   name="bussiness_scale"
                   [value]="company.company_business_scale"
                   ngModel
                   #bussiness_scale
-                  (input)="
-                    company.company_business_scale = bussiness_scale.value
-                  "
-                >
-                  @for(BScale of BScales ; track BScale){
-                  <mat-option [value]="BScale">{{ BScale }}</mat-option>
-                  }
+                  (input)="company.company_business_scale = bussiness_scale.value">
+                    @for(BScale of BusinessScales ; track BScale){
+                      <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
+                    }
                 </mat-select>
               </mat-form-field>
             </form>
