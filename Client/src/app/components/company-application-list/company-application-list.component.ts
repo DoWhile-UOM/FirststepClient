@@ -62,29 +62,23 @@ export class CompanyApplicationListComponent {
 
   companyList: CompanyList[] = [];
   companyListLength: number = 0;
+  selectedFilter: string = 'all';
 
   constructor(public dialog:MatDialog,private companyService: CompanyService, private route:Router,private spinner: NgxSpinnerService,private snackBar: MatSnackBar) {
     this.companyListLength = 1;
   }
 
-  filter(selected: any) {
-    //filter by status of the company list
-    this.snackBar
-      .open(
-        'Refreshing table to show ' + selected.value + 'company list ',
-        '',
-        { panelClass: ['app-notification-normal'] }
-      )
-      ._dismissAfter(3000);
-  }
+ 
 
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
-    this.fetchData();
-  
+    this.fetchData(this.selectedFilter);
+  }
+  ngAfterViewInit() {
+    this.fetchData(this.selectedFilter);
   }
   
-  async fetchData() {
+  async fetchData(status: string) {
     console.log('Fetching data');
     await this.companyService
       .getAllCompanyList()
@@ -96,66 +90,38 @@ export class CompanyApplicationListComponent {
           view: item.verification_status? 'Review':'Evaluate',
           
         }));
+        if(status == 'registered'){
+          this.companyList = this.companyList.filter(company => company.verification_status === 'Registered');
+        }
+        else if(status =='unregistered'){
+          this.companyList = this.companyList.filter(company => company.verification_status === 'Pending...');
+        }
         console.log('Company List', data);
         
         if(this.companyList.length == 0){
           this.companyListLength = 0;
         } 
+        
       })
       .catch((error) => {
         console.log('error', error);
       });
   }
-  //end of fetch data
+  filter(selected: any) {
+    //filter by status of the company list
+    this.snackBar
+      .open(
+        'Refreshing table to show ' + selected.value + 'company list ',
+        '',
+        { panelClass: ['app-notification-normal'] }
+      )
+      ._dismissAfter(3000);
+      this.fetchData(selected.value);
+      this.selectedFilter = selected.value;
 
-
-  // // companyList: CompanyList[] = [];
-  // selectedFilter: string = 'active';
-  // companyListLength: number = 0;
-
-  // constructor(
-  //   private snackBar: MatSnackBar,
-  //   private companyService: CompanyService,
-  //   private route: Router,
-  //   private spinner: NgxSpinnerService
-  // ) {
-  //   this.companyListLength = 1;
-  // }
-  // async ngOnInit() {}
+  }
 
  
-  // async refreshTable(status: string) {
-  //   this.spinner.show();
-  //   await this.companyService
-  //     .getAllCompanyList()
-
-  //     .then((response) => {
-  //       this.companyList = response;
-  //       console.log('Compnay list', response);
-  //       if (this.companyList.length == 0) {
-  //         this.companyListLength = 0;
-  //       }
-
-  //       Table_data = [];
-  //       for (let i = 0; i < this.companyList.length; i++) {
-  //         Table_data.push({
-  //           company_id: this.companyList[i].company_id,
-  //           company_name: this.companyList[i].company_name,
-  //           verification_status: this.companyList[i].verification_status,
-  //         });
-  //       }
-  //       this.dataSource = new MatTableDataSource<CompanyListTable>(Table_data);
-  //       this.dataSource.sort = this.sort;
-
-  //       this.companyListLength = this.companyList.length;
-  //     })
-  //     .catch((error) => {
-  //       console.log('error');
-  //       this.spinner.hide();
-  //     });
-  // }
-
-  // ngAfterViewInit() {
-  //   this.refreshTable(this.selectedFilter);
-  // }
+  
+  
 }
