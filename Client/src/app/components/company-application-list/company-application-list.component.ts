@@ -79,6 +79,7 @@ export class CompanyApplicationListComponent {
   }
   
   async fetchData(status: string) {
+    this.spinner.show(); 
     console.log('Fetching data');
     await this.companyService
       .getAllCompanyList()
@@ -101,10 +102,12 @@ export class CompanyApplicationListComponent {
         if(this.companyList.length == 0){
           this.companyListLength = 0;
         } 
+        this.spinner.hide();
         
       })
       .catch((error) => {
         console.log('error', error);
+        this.spinner.hide();
       });
   }
   filter(selected: any) {

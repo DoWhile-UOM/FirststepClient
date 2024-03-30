@@ -74,7 +74,9 @@ export class CompanyProfileEditComponent {
       // let selected = 'company.company_business_scale';
       console.log('got details');
     } finally {
-      this.spinner.hide(); // Hide spinner after fetching (even on errors)
+      setTimeout(() => {
+        this.spinner.hide();
+    }, 5000); 
     }
   }
 
@@ -85,7 +87,9 @@ export class CompanyProfileEditComponent {
       await this.companyService.updateCompanyDetails(this.company, 7); // 7 for bistec
       console.log('updated');
     } finally {
-      this.spinner.hide(); // Hide spinner after request (even on errors)
+      setTimeout(() => {
+        this.spinner.hide();
+    }, 5000); 
     }
   }
   async discardChanges() {
