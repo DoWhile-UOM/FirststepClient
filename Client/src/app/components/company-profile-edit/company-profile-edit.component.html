@@ -1,13 +1,13 @@
 <app-ca-nav-bar></app-ca-nav-bar>
 
-<div class="body">
+<!-- <div class="body">
   <app-spinner></app-spinner>
   <div class="bodySection">
-    <span class="sectionHeading">{{company.company_name}}</span>
-    <div class="top-section">
-      <img src="assets/images/BistechLogo.png" class="md-card-image" />
-      <div class="image-side-section">
-        <form class="form" [formGroup]="companyForm">
+    <span class="sectionHeading">{{ company.company_name }}</span>
+    <form class="form" [formGroup]="companyForm">
+      <div class="top-section">
+        <img src="assets/images/BistechLogo.png" class="md-card-image" />
+        <div class="image-side-section">
           <mat-form-field
             class="form-field company-name-field"
             appearance="outline"
@@ -20,17 +20,20 @@
               [value]="company.company_name"
               (input)="company.company_name = companyName.value"
               formControlName="company_name"
-            /><mat-error *ngIf="companyForm.get('company_name').invalid && companyForm.get('company_name').touched">
+            /><mat-error
+              *ngIf="
+                companyForm.get('company_name').invalid &&
+                companyForm.get('company_name').touched
+              "
+            >
               Company Name is required
             </mat-error>
           </mat-form-field>
-        </form>
+        </div>
       </div>
-    </div>
 
-    <div class="bottom-section">
-      <div class="sectionTwo" style="width: 100%">
-        <form class="form" [formGroup]="companyForm">
+      <div class="bottom-section">
+        <div class="sectionTwo" style="width: 100%">
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Description</mat-label>
             <textarea
@@ -44,12 +47,10 @@
               (input)="company.company_description = companyDescription.value"
             ></textarea>
           </mat-form-field>
-        </form>
-      </div>
-      <div class="details-section-two">
-        <div class="staring-section">
-          <div class="sectionTwo">
-            <form class="form" [formGroup]="companyForm">
+        </div>
+        <div class="details-section-two">
+          <div class="staring-section">
+            <div class="sectionTwo">
               <mat-form-field class="form-field" appearance="outline">
                 <mat-label>Web Site</mat-label>
                 <input
@@ -60,33 +61,33 @@
                   (input)="company.company_website = companyWebsite.value"
                 />
               </mat-form-field>
-            </form>
+            </div>
           </div>
-        </div>
-        <div class="ending-section">
-          <div class="sectionTwo">
-            <form class="form" [formGroup]="companyForm">
+          <div class="ending-section">
+            <div class="sectionTwo">
               <mat-form-field appearance="outline" class="form-field">
                 <mat-label>Bussiness Scale</mat-label>
                 <mat-select
                   name="bussiness_scale"
                   [value]="company.company_business_scale"
-                  
                   #bussiness_scale
-                  (input)="company.company_business_scale = bussiness_scale.value">
-                    @for(BScale of BusinessScales ; track BScale){
-                      <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
-                    }
+                  (input)="
+                    company.company_business_scale = bussiness_scale.value
+                  "
+                >
+                  @for(BScale of BusinessScales ; track BScale){
+                  <mat-option [value]="BScale.value">{{
+                    BScale.name
+                  }}</mat-option>
+                  }
                 </mat-select>
               </mat-form-field>
-            </form>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="details-section-two">
-        <div class="staring-section">
-          <div class="sectionTwo">
-            <form class="form" [formGroup]="companyForm">
+        <div class="details-section-two">
+          <div class="staring-section">
+            <div class="sectionTwo">
               <mat-form-field class="form-field" appearance="outline">
                 <mat-label>Phone Number</mat-label>
                 <input
@@ -100,12 +101,10 @@
                   "
                 />
               </mat-form-field>
-            </form>
+            </div>
           </div>
-        </div>
-        <div class="ending-section">
-          <div class="sectionTwo">
-            <form class="form" [formGroup]="companyForm">
+          <div class="ending-section">
+            <div class="sectionTwo">
               <mat-form-field class="form-field" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input
@@ -115,12 +114,11 @@
                   [value]="company.company_email"
                 />
               </mat-form-field>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-      
-    </div>
+    </form>
 
     <div class="button-section">
       <div class="right-btn">
@@ -142,4 +140,128 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<div class="body">
+  <app-spinner></app-spinner>
+  <mat-card class="card">
+    <div class="heading title">
+      <span class="sectionHeading">{{ company.company_name }}</span>
+    </div>
+    <mat-divider></mat-divider>
+    <form class="form" [formGroup]="companyForm">
+      <!-- Top Section -->
+      <mat-grid-list cols="{{ noOfCols }}" rowHeight="150">
+        <mat-grid-tile>
+          <img src="assets/images/BistechLogo.png" class="md-card-image" />
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field
+            class="form-field company-name-field"
+            appearance="outline"
+          >
+            <mat-label>Company Name</mat-label>
+            <input
+              matInput
+              #companyName
+              placeholder="Enter your Company Name"
+              [value]="company.company_name"
+              (input)="company.company_name = companyName.value"
+              formControlName="company_name"
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="{{ noOfCols }}" rowHeight="200">
+        <mat-grid-tile colspan="2" class="description">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea
+              matInput
+              #companyDescription
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              [value]="company.company_description"
+              (input)="company.company_description = companyDescription.value"
+            ></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+        <mat-grid-list cols="{{ noOfCols }}" rowHeight="150">
+        <mat-grid-tile>
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Web Site</mat-label>
+            <input
+              matInput
+              #companyWebsite
+              placeholder="Enter your Company website"
+              [value]="company.company_website"
+              (input)="company.company_website = companyWebsite.value"
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Bussiness Scale</mat-label>
+            <mat-select
+              name="bussiness_scale"
+              [value]="company.company_business_scale"
+              #bussiness_scale
+              (input)="company.company_business_scale = bussiness_scale.value"
+            >
+              @for(BScale of BusinessScales ; track BScale){
+              <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              #companyPhoneNumber
+              placeholder="Enter your Company phone Number"
+              [value]="company.company_phone_number"
+              (input)="
+                company.company_phone_number = companyPhoneNumber.valueAsNumber
+              "
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              #email
+              placeholder="Enter your email"
+              [value]="company.company_email"
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-divider></mat-divider>
+      <div class="button-section">
+        <div class="right-btn">
+          <button
+            style="margin-right: 10px"
+            class="apply-changes-class"
+            (click)="applyChanges()"
+          >
+            <span class="apply-changes">Apply Changes</span>
+          </button>
+          <button class="discard-changes-class" (click)="discardChanges()">
+            <span class="discard-changes">Discard Changes</span>
+          </button>
+        </div>
+        <div class="left-btn">
+          <button class="delete-account-class" (click)="deleteAccount()">
+            <span class="delete-account">Delete Accoount</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
 </div>

@@ -5,15 +5,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, ReactiveFormsModule,FormGroup, Validators,FormBuilder,FormsModule   } from '@angular/forms';
+import {
+  FormControl,
+  ReactiveFormsModule,
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormsModule,
+} from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { CompanyService } from '../../../services/company.service';
 import { CaNavBarComponent } from '../ca-nav-bar/ca-nav-bar.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
-
-
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
 interface Company {
@@ -29,9 +36,9 @@ interface Company {
   company_business_scale: string;
 }
 
-interface BusinessScale{
-  name: string,
-  value: string
+interface BusinessScale {
+  name: string;
+  value: string;
 }
 
 @Component({
@@ -40,6 +47,7 @@ interface BusinessScale{
   templateUrl: './company-profile-edit.component.html',
   styleUrl: './company-profile-edit.component.css',
   imports: [
+    MatGridListModule,
     NavBarComponent,
     MatInputModule,
     MatFormFieldModule,
@@ -54,6 +62,7 @@ interface BusinessScale{
     NgxSpinnerModule,
     SpinnerComponent,
     CaNavBarComponent,
+    MatCardModule,
   ],
 })
 export class CompanyProfileEditComponent {
@@ -62,19 +71,20 @@ export class CompanyProfileEditComponent {
   selectedProvince = 'company.company_province';
   email = new FormControl('', [Validators.required, Validators.email]);
   company: Company = {} as Company; // Initialize the company property
-
-  BusinessScales : any[] = [
-    {name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro'},
-    {name: 'Small-Sized (10 - 50 Employees)', value: 'small'},
-    {name: 'Medium-Sized (50 - 250 Employees)', value: 'medium'},
-    {name: 'Large-Sized (More Than  250 Employees)', value: 'large'}
+  noOfCols: number = 2;
+  BusinessScales: any[] = [
+    { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
+    { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
+    { name: 'Medium-Sized (50 - 250 Employees)', value: 'medium' },
+    { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
   ];
 
   companyForm: FormGroup = new FormGroup({});
 
   constructor(
     private companyService: CompanyService,
-    private spinner: NgxSpinnerService,private formBuilder: FormBuilder
+    private spinner: NgxSpinnerService,
+    private formBuilder: FormBuilder
   ) {}
 
   async ngOnInit() {
@@ -82,7 +92,10 @@ export class CompanyProfileEditComponent {
       company_name: ['', Validators.required],
       company_email: ['', [Validators.required, Validators.email]],
       company_website: ['', Validators.required],
-      company_phone_number: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      company_phone_number: [
+        '',
+        [Validators.required, Validators.pattern('^[0-9]+$')],
+      ],
       company_logo: ['', Validators.required],
       company_description: ['', Validators.required],
       company_city: ['', Validators.required],
@@ -99,7 +112,7 @@ export class CompanyProfileEditComponent {
     } finally {
       setTimeout(() => {
         this.spinner.hide();
-    }, 5000); 
+      }, 5000);
     }
   }
 
@@ -112,7 +125,7 @@ export class CompanyProfileEditComponent {
     } finally {
       setTimeout(() => {
         this.spinner.hide();
-    }, 5000); 
+      }, 5000);
     }
   }
   async discardChanges() {
