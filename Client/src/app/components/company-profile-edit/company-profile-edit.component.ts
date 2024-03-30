@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule,FormGroup, Validators,FormBuilder,FormsModule   } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { CompanyService } from '../../../services/company.service';
-
+import { CaNavBarComponent } from '../ca-nav-bar/ca-nav-bar.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 
 import { SpinnerComponent } from '../spinner/spinner.component';
 
@@ -53,6 +53,7 @@ interface BusinessScale{
     MatButtonModule,
     NgxSpinnerModule,
     SpinnerComponent,
+    CaNavBarComponent,
   ],
 })
 export class CompanyProfileEditComponent {
@@ -60,7 +61,6 @@ export class CompanyProfileEditComponent {
   selectedCity = 'company.company_city';
   selectedProvince = 'company.company_province';
   email = new FormControl('', [Validators.required, Validators.email]);
-
   company: Company = {} as Company; // Initialize the company property
 
   BusinessScales : any[] = [
@@ -70,12 +70,25 @@ export class CompanyProfileEditComponent {
     {name: 'Large-Sized (More Than  250 Employees)', value: 'large'}
   ];
 
+  companyForm: FormGroup = new FormGroup({});
+
   constructor(
     private companyService: CompanyService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,private formBuilder: FormBuilder
   ) {}
 
   async ngOnInit() {
+    // this.companyForm = this.formBuilder.group({
+    //   company_name: ['', Validators.required],
+    //   company_email: ['', [Validators.required, Validators.email]],
+    //   company_website: ['', Validators.required],
+    //   company_phone_number: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+    //   company_logo: ['', Validators.required],
+    //   company_description: ['', Validators.required],
+    //   company_city: ['', Validators.required],
+    //   company_province: ['', Validators.required],
+    //   company_business_scale: ['', Validators.required],
+    // });
     try {
       this.spinner.show();
 

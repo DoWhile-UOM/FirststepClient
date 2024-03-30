@@ -1,4 +1,4 @@
-<app-nav-bar></app-nav-bar>
+<app-ca-nav-bar></app-ca-nav-bar>
 
 <div class="body">
   <app-spinner></app-spinner>
@@ -7,7 +7,7 @@
     <div class="top-section">
       <img src="assets/images/BistechLogo.png" class="md-card-image" />
       <div class="image-side-section">
-        <form class="form">
+        <form class="form" [formGroup]="companyForm">
           <mat-form-field
             class="form-field company-name-field"
             appearance="outline"
@@ -27,7 +27,7 @@
 
     <div class="bottom-section">
       <div class="sectionTwo" style="width: 100%">
-        <form class="form">
+        <form class="form" [formGroup]="companyForm">
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Description</mat-label>
             <textarea
@@ -46,7 +46,7 @@
       <div class="details-section-two">
         <div class="staring-section">
           <div class="sectionTwo">
-            <form class="form">
+            <form class="form" [formGroup]="companyForm">
               <mat-form-field class="form-field" appearance="outline">
                 <mat-label>Web Site</mat-label>
                 <input
@@ -62,13 +62,31 @@
         </div>
         <div class="ending-section">
           <div class="sectionTwo">
-            <form class="form">
-              <mat-form-field appearance="outline" class="form-field">
+            <form class="form" [formGroup]="companyForm">
+              <!-- <mat-form-field class="form-field" appearance="outline">
+                <mat-label>Bussiness Scale</mat-label> 
+
+                <mat-select
+                  [value]="selected"
+                  #bussiness_scale
+                  (input)="
+                    company.company_business_scale = bussiness_scale.value
+                  "
+                  required
+                >
+                  <mat-option value="option1">Small Scale</mat-option>
+                  <mat-option value="option2">Medium Scale</mat-option>
+                  <mat-option value="option3">Large Scale</mat-option>
+                </mat-select>
+                <mat-label>Bussiness Scale</mat-label>
+              </mat-form-field> -->
+
+              <mat-form-field appearance="outline">
                 <mat-label>Bussiness Scale</mat-label>
                 <mat-select
                   name="bussiness_scale"
                   [value]="company.company_business_scale"
-                  ngModel
+                  
                   #bussiness_scale
                   (input)="company.company_business_scale = bussiness_scale.value">
                     @for(BScale of BusinessScales ; track BScale){
@@ -83,7 +101,7 @@
       <div class="details-section-two">
         <div class="staring-section">
           <div class="sectionTwo">
-            <form class="form">
+            <form class="form" [formGroup]="companyForm">
               <mat-form-field class="form-field" appearance="outline">
                 <mat-label>Phone Number</mat-label>
                 <input
@@ -102,7 +120,7 @@
         </div>
         <div class="ending-section">
           <div class="sectionTwo">
-            <form class="form">
+            <form class="form" [formGroup]="companyForm">
               <mat-form-field class="form-field" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input
@@ -116,45 +134,7 @@
           </div>
         </div>
       </div>
-      <div class="details-section-two">
-        <div class="staring-section">
-          <div class="sectionTwo">
-            <form class="form">
-              <mat-form-field class="form-field" appearance="outline">
-                <mat-label>City</mat-label>
-                <mat-select
-                  [value]="selectedCity"
-                  #city
-                  (input)="company.company_city = city.value"
-                >
-                  <mat-option value="option1">Colombo 07</mat-option>
-                  <mat-option value="option2">Wellawatta</mat-option>
-                  <mat-option value="option3">Boralesgamuwa</mat-option>
-                  <mat-option value="Moratuwa">Moratuwa</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </form>
-          </div>
-        </div>
-        <div class="ending-section">
-          <div class="sectionTwo">
-            <form class="form">
-              <mat-form-field class="form-field" appearance="outline">
-                <mat-label>Province</mat-label>
-                <mat-select
-                  [value]="selectedProvince"
-                  #province
-                  (input)="company.company_province = province.value"
-                >
-                  <mat-option value="option1">Colombo</mat-option>
-                  <mat-option value="option2">Matara</mat-option>
-                  <mat-option value="option3">Kegalle</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </form>
-          </div>
-        </div>
-      </div>
+      
     </div>
 
     <div class="button-section">

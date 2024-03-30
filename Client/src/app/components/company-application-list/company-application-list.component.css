@@ -28,3 +28,12 @@ th.mat-header-cell .nu-header{
 .emptymsg div{
   margin: 0 auto;
 }
+.adTable, .emptymsg{
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
+}
+.material-icons {
+  font-size: 22px !important;
+}
