@@ -16,7 +16,3 @@ import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
 export class AppComponent {
   user = "seeker"
 }
-
-
-
-
