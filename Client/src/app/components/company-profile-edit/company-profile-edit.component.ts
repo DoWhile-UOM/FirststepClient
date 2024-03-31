@@ -67,8 +67,6 @@ interface BusinessScale {
 })
 export class CompanyProfileEditComponent {
   selected = 'company.company_business_scale';
-  selectedCity = 'company.company_city';
-  selectedProvince = 'company.company_province';
   email = new FormControl('', [Validators.required, Validators.email]);
   company: Company = {} as Company; // Initialize the company property
   noOfCols: number = 2;
@@ -116,10 +114,24 @@ export class CompanyProfileEditComponent {
     }
   }
 
-  async applyChanges() {
+  // async applyChanges() {
+  //   try {
+  //     console.log('Company : ', this.company);
+  //     this.spinner.show();
+  //     console.log(this.company);
+  //     await this.companyService.updateCompanyDetails(this.company, 7); // 7 for bistec
+  //     console.log('updated');
+  //   } finally {
+  //     setTimeout(() => {
+  //       this.spinner.hide();
+  //     }, 5000);
+  //   }
+  // }
+  async onSubmit() {
     try {
       console.log('Company : ', this.company);
       this.spinner.show();
+      console.log(this.company);
       await this.companyService.updateCompanyDetails(this.company, 7); // 7 for bistec
       console.log('updated');
     } finally {
@@ -128,6 +140,7 @@ export class CompanyProfileEditComponent {
       }, 5000);
     }
   }
+
   async discardChanges() {
     this.company = {} as Company;
     this.company = await this.companyService.getCompanyDetails(7);

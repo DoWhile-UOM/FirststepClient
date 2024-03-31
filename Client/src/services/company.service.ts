@@ -45,8 +45,8 @@ export class CompanyService {
       .then(function (response) {
         try {
           companyDetails = response.data;
-          
-          console.log()
+
+          console.log();
         } catch (error) {
           console.log('No company details found for the given id');
         }
@@ -89,6 +89,7 @@ export class CompanyService {
 
   async updateCompanyDetails(company: Company, company_id: number) {
     company.company_id = company_id; // should be chnaged
+    console.log('from service', company);
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
@@ -128,7 +129,6 @@ export class CompanyService {
     let companyList: CompanyList[] = [];
 
     try {
-      
       const response = await axios.get(Apipaths.getAllComapanyList);
       companyList = response.data;
       console.log('company list was received');
