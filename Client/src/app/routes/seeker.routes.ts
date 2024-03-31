@@ -5,6 +5,7 @@ import { SeekerHomePageComponent } from '../components/seeker-home-page/seeker-h
 import { SavedAdvertisementListComponent } from '../components/saved-advertisement-list/saved-advertisement-list.component';
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
+import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 
 
 export const routes: Routes = [

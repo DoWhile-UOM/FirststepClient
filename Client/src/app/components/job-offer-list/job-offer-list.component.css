@@ -12,18 +12,18 @@
   justify-content: center;
 }
 
-.page-title{
+.page-title{            
   margin-top: 4em;
   margin-left: 4em;
 }
 
-.page-title p{
+.page-title p{           
   color: #008080;
   font-family: Lato;
   font-size: 30px;
 }
 
-.pagetitle-content{
+.pagetitle-content{         
   margin-top: 2em;
   width: 97.5%;
   display: flex;

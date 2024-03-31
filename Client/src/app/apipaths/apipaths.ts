@@ -4,7 +4,13 @@ export class Apipaths {
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
     static readonly addNewHRAssistant: string = this.baseUrl + 'Employee/AddNewHRAssistant';
-
+    static readonly editemployee: string = this.baseUrl + 'Employee/UpdateEmployee/';
+    static readonly getEmployeeDetails: string = this.baseUrl + 'Employee/GetEmployeeById/';
+    static readonly getEmployeeList: string = this.baseUrl + 'Employee/GetAllEmployees/';
+    static readonly deleteEmployee: string = this.baseUrl + 'Employee/DeleteEmployee/'; // + employee_id
+    static readonly getAllHRMs: string = this.baseUrl + 'Employee/GetAllHRManagers/'; // + company_id
+    static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
+    
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
     static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
@@ -34,4 +40,7 @@ export class Apipaths {
     // external
     static readonly getCountryNames: string = 'https://api.first.org/v1/get-countries';
     static readonly getCityNames: string = 'https://countriesnow.space/api/v0.1/countries/cities';
+
+    // seeker
+    static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeekerById/';
 }

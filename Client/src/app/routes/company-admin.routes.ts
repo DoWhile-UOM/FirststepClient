@@ -8,7 +8,7 @@ import { NewJobUploadedComponent } from '../components/new-job-uploaded/new-job-
 
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
-  { path: 'ManageRoles', component: ManageRolesComponent },
+  { path: 'manageRoles', component: ManageRolesComponent },
   { path: 'jobOfferList', component: JobOfferListComponent },
   { path: 'jobOfferList/newJob', component: NewJobComponent },
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },

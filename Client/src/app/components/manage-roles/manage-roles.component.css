@@ -1,71 +1,60 @@
+.container {
+  margin-top: 4em;
+  margin-left: 4em;
+  margin-right: 4em;
+}
 
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    
-    margin: 0% 5% 0% 5%;
-    padding: 0;
-  }
-  
-  .section {
-    flex: 1;
-  }
-  
-  #TitlePart {
-   /* background-color: orange;*/
-    display: flex;
-    flex: 0.5;
-  }
-  
-  .topic {
-   /* background-color: cadetblue;*/
-    width: 100%;
-    color:teal;
-    font-size: 3vw;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    display: flex;
-    justify-content: flex-start;
+.page-title p {
+  color: #008080;
+  font-family: Lato;
+  font-size: 30px;
+}
 
-  }
-  .button {
-    width: 50%;
-   /*background-color: coral;*/
-    color: #008080;
-    font-family: Lato;
-    font-style: normal;
-    line-height: normal;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  
-  #role {
-  /*  background-color: blueviolet;*/
-    flex: 3;
-  }
+.page-title {
+  display: flex;
+  flex-direction: column;
+}
 
-  .demo-table {
-    width: 100%;
-  }
-  
- 
+.pagetitle-content {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
-  .mat-column-symbol {
-    text-align: right;
-  }
+table, mat-card{
+  margin: 0 auto;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
+}
 
-  .demo-button-container {
-    padding-bottom: 16px;
-  }
-  
-  .demo-button + .demo-button {
-    margin-left: 8px;
-  }
 
-  mat-icon{
-    font-family:'Material Icons';
-  }
+mat-card div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height:65vh;
+}
 
+.center-text{
+  color:#008080;
+  font-family: Lato;
+  font-size: xx-large;
+}
+
+.mat-column-symbol {
+  text-align: right;
+}
+
+.demo-button-container {
+  padding-bottom: 16px;
+}
+
+.demo-button + .demo-button {
+  margin-left: 8px;
+}
+
+mat-icon {
+  font-family: "Material Icons";
+}

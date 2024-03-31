@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+
 import {
   MatDialog,
   MatDialogActions,
@@ -15,7 +19,6 @@ import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 
-
 export interface RolesData {
   id: number;
   name: string;
@@ -25,22 +28,27 @@ export interface RolesData {
 }
 
 @Component({
-  selector: 'app-manage-roles',
-  standalone: true,
-  templateUrl: './manage-roles.component.html',
-  styleUrl: './manage-roles.component.css',
-  imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    AddrolesPopupComponent,
-  ],
+    selector: 'app-manage-roles',
+    standalone: true,
+    templateUrl: './manage-roles.component.html',
+    styleUrl: './manage-roles.component.css',
+    imports: [
+      MatIconModule,
+      MatButtonModule,
+      MatTableModule,
+      AddrolesPopupComponent,
+      MatCardModule,
+      MatChipsModule,
+      CommonModule
+    ]
 })
 export class ManageRolesComponent {
   displayedColumns: string[] = ['position', 'name','email', 'Role', 'symbol'];
   rolesData: RolesData[] = [];
+  
 
   company_id: number = 7; // sample company_id
+  selected: string = "all";
 
   @ViewChild(MatTable)
   table!: MatTable<RolesData>;
@@ -53,24 +61,43 @@ export class ManageRolesComponent {
 
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
-    this.fetchData();
+    this.fetchData(this.selected);
   }
 
-  async fetchData() {
-    await this.employeeService
-      .getEmployeeList(this.company_id)
-      .then((data: any[]) => {
-        this.rolesData = data.map((item, index) => ({
-          id: item.user_id, // Use user_id
-          position: index + 1, // Increment position
-          name: `${item.first_name} ${item.last_name}`, 
-          email:item.email,
-          Role: (item.user_type) == 'HRM' ? 'HR Manager': 'HR Assistant', // Use user_type
-        }));
-      })
-      .catch((error) => {
-        error('Error fetching data:', error);
-      });
+  async fetchData(type: string) {
+    let dataSet: any[] = [];
+
+    if (type == "HRA") {
+      await this.employeeService.getAllHRAs(this.company_id)
+        .then((data: any[]) => {
+          dataSet = data;
+        }); 
+    }
+    else if (type == "HRM"){
+      await this.employeeService.getAllHRMs(this.company_id)
+        .then((data: any[]) => {
+          dataSet = data;
+        }); 
+    }
+    else {
+      await this.employeeService.getEmployeeList(this.company_id)
+        .then((data: any[]) => {
+          dataSet = data;
+        });  
+    }
+    
+    if (dataSet.length > 0){
+      this.rolesData = dataSet.map((item, index) => ({
+        id: item.user_id, // Use user_id
+        position: index + 1, // Increment position
+        name: `${item.first_name} ${item.last_name}`, 
+        email:item.email,
+        Role: (item.user_type) == 'HRA' ? 'HR Assistant': 'HR Manager', // Use user_type
+      }));
+    }
+    else{
+      this.rolesData = [];
+    }
   }
   //end of fetch data
  
@@ -82,7 +109,7 @@ export class ManageRolesComponent {
           (employee) => employee.id !== id
         );
         this.table.renderRows();
-        this.fetchData();
+        this.fetchData(this.selected);
       })
       .catch((error) => {
         console.error('Error deleting data:', error);
@@ -93,8 +120,7 @@ export class ManageRolesComponent {
       const dialog=this.dialog.open(AddrolesPopupComponent); 
       dialog.afterClosed().subscribe(result => {
         if(result=true){
-          this.fetchData();
-          window.location.reload();
+          this.fetchData(this.selected);
         }
       });
     }
@@ -104,10 +130,14 @@ export class ManageRolesComponent {
      
       dialog.afterClosed().subscribe(result => {
         if (result === true) {
-          this.fetchData();
-          window.location.reload();
+          this.fetchData(this.selected);
         }
       });
-    }  
-}
+    }
+     
+    async filter(selected: any){
+      this.selected = selected.value;
+      await this.fetchData(selected.value);
+    }
+  }
   
