@@ -27,6 +27,7 @@ import { NgxCurrencyDirective } from 'ngx-currency';
 import { RichTextEditorModule, ToolbarService, LinkService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 
+
 interface Field {
 	field_name: string;
 	field_id: number;
@@ -157,7 +158,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	separatorKeysCodes: number[] = [ COMMA, ENTER ];
 	keywordCtrl = new FormControl('');
 	filteredkeywords: Observable<string[]>;
-	filteredkeywordslength: number = 0;
 	keywords: string[] = [];
 	allkeywords: string[] = [];
 	@ViewChild('keywordInput') keywordInput!: ElementRef<HTMLInputElement>;
@@ -207,7 +207,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			this.isUpdate = true;
 			this.adData = adData;
 			this.locationCountryControl.setValue(adData.country);
-			this.skills = adData.reqSkills;
+			this.skills = this.removeDuplicates(adData.reqSkills);
 			this.description = adData.job_description;
 
 			await this.onChangeField(Number(adData.field_id));
@@ -227,7 +227,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		await this.jobFieldService.getAll()
 			.then((response) => {
 				this.fields = response;
-				console.log(this.fields);
 			});
 
 		// get all country names using an external API
@@ -247,7 +246,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	ngAfterViewInit() {
 		//this.onResize();
 
-		this.skills = this.addSkillsComponent.skills;
+		this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
 	}
 
 	@HostListener('window:resize', ['$event'])
@@ -276,18 +275,19 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
 		if (countryCode == undefined){
-			this.snackBar.open("Error Updating City Lsit")._dismissAfter(3000);
+			//this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			this.snackBar.open(selectedCountry)._dismissAfter(5000);
 			return;
 		}
 		
 		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
 
-		this.snackBar.open("Update City List")._dismissAfter(3000);
+		this.snackBar.open("Cities Loaded", "", {panelClass: ['app-notification-normal']})._dismissAfter(1500);
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
-		addAdvertisement.keywords = this.keywords;
-		addAdvertisement.reqSkills = this.skills;
+		addAdvertisement.keywords = this.removeDuplicates(this.keywords);
+		addAdvertisement.reqSkills = this.removeDuplicates(this.skills);
 		
 		addAdvertisement.hrManager_id = 10; // sample hrManager_id
 
@@ -310,8 +310,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
   	}
 
 	async updateJob(adData: UpdateJob){
-		adData.reqKeywords = this.keywords;
-		adData.reqSkills = this.skills;
+		adData.reqKeywords = this.removeDuplicates(this.keywords);
+		adData.reqSkills = this.removeDuplicates(this.skills);
 
 		adData.city = this.locationCityControl.value ?? '';
 		adData.country = this.locationCountryControl.value ?? '';
@@ -358,9 +358,9 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	changeSkillsArray($event: Event){
 		var skills = $event;
 		if (skills != null){
-			this.skills = skills as unknown as string[];
+			let skillArray = skills as unknown as string[];
+			this.skills = this.removeDuplicates(skillArray);
 		}
-		alert("Skills: " + this.skills);
 	}
 
 	add(event: MatChipInputEvent): void {
@@ -401,10 +401,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	private _filterKeyword(value: string): string[] {
 		const filterValue = value.toLowerCase();
 
-		var filtered = this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
-		this.filteredkeywordslength = filtered.length;
-
-		return filtered;
+		return this.allkeywords.filter(keyword => keyword.toLowerCase().includes(filterValue));
 	}
 
 	private _filterCountry(value: string): string[] {
@@ -417,5 +414,15 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		const filterValue = value.toLowerCase();
 
 		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	removeDuplicates(arr: string[]) {
+		let uniqueArr = Array.from(new Set(arr));
+
+		if (uniqueArr.length != arr.length){
+			this.snackBar.open("Removed Duplicate Keywords and Skills", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+		}
+
+		return uniqueArr;
 	}
 }

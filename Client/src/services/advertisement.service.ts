@@ -36,6 +36,51 @@ export class AdvertisementServices {
     return jobList;
   }
 
+  async getSeekerHomePage(seeker: string, pageLength: string){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getAdvertisements + '/seekerID=' + seeker + '/pageLength=' + pageLength)
+      .then(function (response) {
+        jobList = response.data;
+
+        for (let i = 0; i < jobList.firstPageAdvertisements.length; i++) {
+          var postDate = new Date(jobList.firstPageAdvertisements[i].posted_date);
+          jobList.firstPageAdvertisements[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
+  }
+
+  async getAllAdvertisementsWithPaginator(seekerID: string, jobIdList: number[]) {
+    let jobList: any = [];
+
+    // convert jobIdList into single string
+    let jobIdString = jobIdList.join(',');
+
+    await axios.get(Apipaths.getAdvertisements + '/seekerID=' + seekerID + '/advertisements=' + jobIdString)
+      .then(function (response) {
+        jobList = response.data;
+
+        for (let i = 0; i < jobList.length; i++) {
+          var postDate = new Date(jobList[i].posted_date);
+          jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+        }
+      })
+      .catch(
+        function (error) {
+          alert('Network Error: ' + error);
+        }
+      );
+
+    return jobList;
+  }
+
   async addNewJob(job: any) {
     let response: any = null;
 

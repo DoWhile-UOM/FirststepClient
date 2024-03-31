@@ -36,6 +36,8 @@ export class AdvertisementCardComponent implements OnInit{
   }
 
   onClickMoreDetails() {
+    // open in new tab
+    //window.open('/seeker/home/jobdetails;jobID=' + this.job.advertisement_id, '_blank');
     this.router.navigate(['seeker/home/jobdetails', {jobID: this.job.advertisement_id}]);
   }
 

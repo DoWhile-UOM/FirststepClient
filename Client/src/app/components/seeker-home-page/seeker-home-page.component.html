@@ -1,5 +1,19 @@
-<app-search-basic (newItemEvent)="changeJobList($event)"></app-search-basic>
+<app-search-basic (newItemEvent)="changeJobList($event)" (changePaginatorLengthEvent)="changePaginatorSize($event)" [pageSize]="pageSize"></app-search-basic>
 
 <div class="card-container">
     <app-advertisement-card *ngFor="let job of jobList" [job]="job"></app-advertisement-card>
+</div>
+
+<div *ngIf="paginatorLength >= 5" class="paginator">
+    <mat-paginator 
+        #paginator
+        class="demo-paginator"
+        (page)="handlePageEvent($event)"
+        [length]="paginatorLength"
+        [pageSize]="pageSize"
+        [showFirstLastButtons]="true"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        aria-label="Select page">
+    </mat-paginator>
 </div>
