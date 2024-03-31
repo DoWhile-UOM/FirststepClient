@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -56,7 +56,10 @@ interface SearchData{
   styleUrl: './search-basic.component.css'
 })
 export class SearchBasicComponent implements OnInit{
+  @Input() pageSize: number = 10;
+  
   jobList: any = [];
+  jobIdList: number[] = [];
 
   empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
 	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
@@ -64,6 +67,7 @@ export class SearchBasicComponent implements OnInit{
   seekerID: string = "3"; // sample seekerID
 
   @Output() newItemEvent = new EventEmitter<Job[]>();
+  @Output() changePaginatorLengthEvent = new EventEmitter<number>();
 
   // for location country autocomplete
 	locationCountryControl = new FormControl('');
@@ -92,15 +96,17 @@ export class SearchBasicComponent implements OnInit{
   async ngOnInit() {
     this.countries = Country.getAllCountries().map(country => country.name);
 
-    await this.advertisementService.getAllAdvertisements(String(this.seekerID))
+    await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {
-        this.jobList = response;
+        this.jobList = response.firstPageAdvertisements;
+        this.jobIdList = response.allAdvertisementIds;
 
         if (this.jobList.length == 0) {
           console.log("No advertisements found");
         }
 
         this.newItemEvent.emit(this.jobList);
+        this.changePaginatorLengthEvent.emit(this.jobIdList.length);
       });
   }
 
@@ -117,6 +123,12 @@ export class SearchBasicComponent implements OnInit{
     this.newItemEvent.emit(this.jobList);
   }
 
+  public async changePaginator(startIndex: number, endIndex: number){
+    this.jobList = await this.advertisementService.getAllAdvertisementsWithPaginator(this.seekerID, this.jobIdList.slice(startIndex, endIndex));
+
+    this.newItemEvent.emit(this.jobList);
+  }
+
   onSelectedCountryChanged(selectedCountry: string){
 		this.locationCityControl.setValue('');
 		//this.locationCityFilteredOptions = new Observable<string[]>();
@@ -128,8 +140,7 @@ export class SearchBasicComponent implements OnInit{
       this.cities = City.getCitiesOfCountry('LK')?.map(city => city.name) ?? [];
 
       this.snackBar.open("Update City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-			//this.snackBar.open("Error Updating City Lsit", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
-      
+			
 			return;
 		}
     //alert(countryCode);

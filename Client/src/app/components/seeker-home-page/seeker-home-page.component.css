@@ -6,3 +6,8 @@
     margin-top: 1em;
     /*background-color: rgba(0, 128, 128);*/
 }
+
+.paginator{
+    width: 95%;
+    margin: 0 auto;
+}
