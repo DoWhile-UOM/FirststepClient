@@ -14,5 +14,5 @@ import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
     imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent ]
 })
 export class AppComponent {
-  user = "seeker"
+  user = "ca"
 }
