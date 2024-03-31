@@ -22,7 +22,8 @@ export class Apipaths {
     static readonly unsaveJob: string = this.baseUrl + 'Advertisement/UnsaveAdvertisement/'; // + advertisement_id
     static readonly getSavedAdvertisements: string = this.baseUrl + 'Advertisement/GetSavedAdvertisements/seekerID='; // + seeker_id
     static readonly basicSearch: string = this.baseUrl + 'Advertisement/SearchAdvertisementsBasic/seekerID='; // + seeker_id
-    static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'GetAdvertisementByIdWithKeywords/'; // + advertisement_id
+    static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'Advertisement/GetAdvertisementById/update/'; // + advertisement_id
+    static readonly updateAdvertisement= this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
 
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id

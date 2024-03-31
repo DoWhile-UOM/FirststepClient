@@ -14,12 +14,7 @@ export class JobfieldService {
 
     await axios.get(Apipaths.getAllFields)
       .then(function (response) {
-        try {
-          fieldList = response.data;
-        }
-        catch (error) {
-          console.log("No fields found");
-        }
+        fieldList = response.data;
       })
       .catch(
         function (error) {

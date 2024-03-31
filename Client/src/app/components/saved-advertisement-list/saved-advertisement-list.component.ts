@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 interface Job {
   advertisement_id: number;
@@ -21,7 +20,7 @@ interface Job {
 @Component({
   selector: 'app-saved-advertisement-list',
   standalone: true,
-  imports: [NavBarComponent, AdvertisementCardComponent, CommonModule],
+  imports: [AdvertisementCardComponent, CommonModule],
   templateUrl: './saved-advertisement-list.component.html',
   styleUrl: './saved-advertisement-list.component.css'
 })

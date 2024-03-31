@@ -18,7 +18,6 @@ import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.compone
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
-import { CaNavBarComponent } from "../ca-nav-bar/ca-nav-bar.component";
 
 export interface RolesData {
   id: number;
@@ -38,7 +37,6 @@ export interface RolesData {
       MatButtonModule,
       MatTableModule,
       AddrolesPopupComponent,
-      CaNavBarComponent,
       MatCardModule,
       MatChipsModule,
       CommonModule
