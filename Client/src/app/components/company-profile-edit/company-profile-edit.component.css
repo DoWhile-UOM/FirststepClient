@@ -261,7 +261,15 @@ mat-grid-tile {
   font-weight: 700;
   word-wrap: break-word;
 }
-
+.description-text-editor {
+  padding-left: 1em;
+  width: calc(100% - 2.2em);
+  margin-bottom: 1.2em;
+  padding-top: 1em;
+}
+mat-form-field {
+  width: 100%;
+}
 .right-btn,
 .left-btn {
   width: 100%;

@@ -172,23 +172,21 @@
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
-      <mat-grid-list cols="{{ noOfCols }}" rowHeight="200">
-        <mat-grid-tile colspan="2" class="description">
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Description</mat-label>
-            <textarea
-              matInput
-              #companyDescription
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="1"
-              [value]="company.company_description"
-              (input)="company.company_description = companyDescription.value"
-            ></textarea>
-          </mat-form-field>
-        </mat-grid-tile>
-      </mat-grid-list>
-        <mat-grid-list cols="{{ noOfCols }}" rowHeight="150">
+      <div class="description-text-editor">
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            #companyDescription
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            [value]="company.company_description"
+            (input)="company.company_description = companyDescription.value"
+          ></textarea>
+        </mat-form-field>
+      </div>
+      <mat-grid-list cols="{{ noOfCols }}" rowHeight="150">
         <mat-grid-tile>
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Web Site</mat-label>
