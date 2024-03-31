@@ -20,7 +20,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
 import { AddSkillsComponent } from "../add-skills/add-skills.component";
-
+import { SeekerService } from '../../../services/seeker.service';
 
 interface seekerData {
   Firstname: string;
@@ -62,6 +62,7 @@ onselectFile(event: any) {
   }
 }
 
+//form groups for the seeker
 firstFormGroup = this._formBuilder.group({
   firstCtrl: ['', Validators.required],
 });
@@ -78,10 +79,15 @@ fifthFormGroup = this._formBuilder.group({
   fifthCtrl: ['', Validators.required],
 });
 
-constructor(private _formBuilder: FormBuilder) {}
+//Inject seeker service
+constructor(private _formBuilder: FormBuilder ,private seekerService: SeekerService) {}
+
+
+
+
+
 
 ngOnInit(): void {
-  // You can keep this method empty or add any additional initialization if needed
 }
 
 
