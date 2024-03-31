@@ -84,9 +84,6 @@ constructor(private _formBuilder: FormBuilder ,private seekerService: SeekerServ
 
 
 
-
-
-
 ngOnInit(): void {
 }
 
