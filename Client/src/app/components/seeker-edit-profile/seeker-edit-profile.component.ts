@@ -11,13 +11,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-//import { NavBarComponent } from "../../shared/nav-bar/nav-bar.component";
 import { FormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SeekerService } from '../../../services/seeker.service';
-import { CommonModule } from '@angular/common';
 
 
 // seeker edit profile interface
