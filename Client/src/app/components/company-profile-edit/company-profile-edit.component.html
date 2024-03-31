@@ -290,7 +290,10 @@
               placeholder="Enter your Company Name"
               name="company_name"
               [(ngModel)]="company.company_name"
+              (input)="updateErrorMessage()"
+              required
             />
+            <mat-error>{{ errorMessage }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
@@ -305,7 +308,10 @@
             cdkAutosizeMinRows="1"
             [(ngModel)]="company.company_description"
             name="company_description"
+            (input)="updateErrorMessage()"
+            required
           ></textarea>
+          <mat-error>{{ errorMessage }}</mat-error>
         </mat-form-field>
       </div>
       <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
@@ -317,7 +323,10 @@
               placeholder="Enter your Company website"
               name="company_website"
               [(ngModel)]="company.company_website"
+              (input)="updateErrorMessage()"
+              required
             />
+            <mat-error>{{ errorMessage }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -327,11 +336,14 @@
               name="bussiness_scale"
               [(ngModel)]="company.company_business_scale"
               #bussiness_scale
+              (input)="updateErrorMessage()"
+              required
             >
               @for(BScale of BusinessScales ; track BScale){
               <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
               }
             </mat-select>
+            <mat-error>{{ errorMessage }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -343,7 +355,9 @@
               placeholder="Enter your Company phone Number"
               name="company_phone_number"
               [(ngModel)]="company.company_phone_number"
-            />
+              (input)="updateErrorMessage()"
+              required
+            /><mat-error>{{ errorMessage }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -355,7 +369,10 @@
               placeholder="Enter your email"
               name="company_email"
               [(ngModel)]="company.company_email"
+              (input)="updateErrorMessage()"
+              required
             />
+            <mat-error>{{ errorMessage }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
@@ -367,7 +384,9 @@
             class="apply-changes-class"
             type="submit"
           >
-            <span class="apply-changes">Apply Changes</span>
+            <span class="apply-changes" (click)="updateErrorMessage()"
+              >Apply Changes</span
+            >
           </button>
           <button class="discard-changes-class" (click)="discardChanges()">
             <span class="discard-changes">Discard Changes</span>

@@ -22,6 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { CommonModule } from '@angular/common';
 
 interface Company {
   company_id: number;
@@ -63,6 +64,7 @@ interface BusinessScale {
     SpinnerComponent,
     CaNavBarComponent,
     MatCardModule,
+    CommonModule,
   ],
 })
 export class CompanyProfileEditComponent {
@@ -78,7 +80,8 @@ export class CompanyProfileEditComponent {
   ];
 
   companyForm: FormGroup = new FormGroup({});
-
+  errorMessage = '';
+  errorMessageForCompanyName = '';
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
@@ -114,19 +117,6 @@ export class CompanyProfileEditComponent {
     }
   }
 
-  // async applyChanges() {
-  //   try {
-  //     console.log('Company : ', this.company);
-  //     this.spinner.show();
-  //     console.log(this.company);
-  //     await this.companyService.updateCompanyDetails(this.company, 7); // 7 for bistec
-  //     console.log('updated');
-  //   } finally {
-  //     setTimeout(() => {
-  //       this.spinner.hide();
-  //     }, 5000);
-  //   }
-  // }
   async onSubmit() {
     try {
       console.log('Company : ', this.company);
@@ -154,6 +144,43 @@ export class CompanyProfileEditComponent {
       console.log('deleted');
     } finally {
       this.spinner.hide(); // Hide spinner after request (even on errors)
+    }
+  }
+
+  //errorMessage
+  updateErrorMessage(){
+    if(this.company.company_email.length==0){
+      this.errorMessage = "Email is required";
+    }
+    else if(this.company.company_email.length>0 && !this.company.company_email.includes("@")){
+      this.errorMessage = "Email is invalid";
+    }
+    else if(this.company.company_phone_number.toString().length==0){
+      this.errorMessage = "Phone number is required";
+    }
+    else if(this.company.company_phone_number.toString().length>0 && this.company.company_phone_number.toString().length<10){
+      this.errorMessage = "Phone number is invalid";
+    }
+    else if(this.company.company_website.length==0){
+      this.errorMessage = "Website is required";
+    }
+    else if(this.company.company_description.length==0){
+      this.errorMessage = "Description is required";
+    }
+    else if(this.company.company_city.length==0){
+      this.errorMessage = "City is required";
+    }
+    else if(this.company.company_province.length==0){
+      this.errorMessage = "Province is required";
+    }
+    else if(this.company.company_business_scale.length==0){
+      this.errorMessage = "Business scale is required";
+    }
+    else if(this.company.company_name.length==0){
+      this.errorMessage = "Company name is required";
+    }
+    else{
+      this.errorMessage = "";
     }
   }
 }
