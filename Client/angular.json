@@ -27,7 +27,9 @@
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
-              "src/assets/custom-theme.scss"
+              "src/assets/custom-theme.scss",
+              "node_modules/ngx-spinner/animations/ball-scale-multiple.css" ,
+              "node_modules/ngx-spinner/animations/ball-spin-clockwise.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

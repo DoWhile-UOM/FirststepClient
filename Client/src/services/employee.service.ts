@@ -1,10 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import axios from 'axios';
-import { response } from 'express';
+
+interface Employee {
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password_hash: string;
+  company_id: number;
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
   
@@ -21,8 +31,17 @@ export class EmployeeService {
 
     return empData;
   }
-
-  //all employee details
+  async updateEmployeeDetails(employee: Employee) {
+    await axios
+      .put(Apipaths.editemployee + 7, employee) // tem solution
+      .then((response) => {
+        console.log('Emlpoyee details updated successfully');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  
   async getEmployeeList(company_id: number) {
     let empData: any;
 

@@ -1,0 +1,58 @@
+<app-spinner></app-spinner>
+<div class="page-title">
+  <p>Company Registration Application List</p>
+
+  <div class="pageTitleContent">
+    <span>
+      <mat-chip-listbox
+        aria-label="Filter"
+        #filterByStatus
+        (change)="filter(filterByStatus.selected)"
+      >
+        <mat-chip-option selected value="all">All</mat-chip-option>
+        <mat-chip-option  value="registered"
+          >Registered Companies</mat-chip-option
+        >
+        <mat-chip-option value="unregistered">Unregistered Companies</mat-chip-option>
+      </mat-chip-listbox>
+    </span>
+  </div>
+</div>
+
+<mat-card class="emptymsg" *ngIf="companyListLength <= 0">
+  <div>
+    <p class="center-text">Can't Find Any Results!</p>
+  </div>
+</mat-card>
+<div class="adTable mat-elevation-z8" *ngIf="companyListLength > 0">
+  <table mat-table [dataSource]="companyList" class="mat-elevation-z8">
+ 
+
+    <!--ComanyList name-->
+    <ng-container matColumnDef="company_name">
+      <th mat-header-cell *matHeaderCellDef>Company Name</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.company_name }}
+      </td></ng-container
+    >
+  
+    <!--ComapnyList verification stauts-->
+    <ng-container matColumnDef="verification_status">
+      <th mat-header-cell *matHeaderCellDef>Verification Status</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.verification_status}}
+      </td></ng-container
+    >
+    <!--Coloumn that has view that links to its application-->
+    <ng-container matColumnDef="view">
+      <th mat-header-cell *matHeaderCellDef>View</th>
+      <td mat-cell *matCellDef="let element">
+        <!-- {{ element.view}} -->
+        {{element.view}}
+        
+      </td></ng-container
+    >
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

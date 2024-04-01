@@ -1,0 +1,370 @@
+/* .body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bodySection {
+  padding: 100px;
+  width: 60%;
+}
+
+.sectionHeading {
+  font-size: 30px;
+  font-weight: 800;
+  font-family: Lato, Helvetica, sans-serif;
+  color: #008080;
+}
+span {
+  font-family: Lato, Helvetica, sans-serif;
+  font-weight: 700;
+}
+.top-section {
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sectionName {
+  font-size: 24px;
+  font-weight: 500;
+  font-family: Lato, Helvetica, sans-serif;
+  color: #008080;
+}
+.details-section-two {
+  display: flex;
+}
+.md-card-image {
+  padding: 15px;
+}
+img {
+  width: 200px;
+  height: auto;
+  margin-right: 10px;
+  padding: 70px;
+}
+.image-side-section {
+  margin-left: 0px;
+  width: 100%;
+}
+.detail-name {
+  margin-left: 5px;
+  min-width: 150px;
+}
+.staring-section {
+  justify-content: flex-start;
+  display: flex;
+  width: 100%;
+}
+.ending-section {
+  justify-content: flex-end;
+  display: flex;
+  width: 100%;
+}
+.sectionOne {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.company-name-field {
+  min-width: 150px;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+/* ::ng-deep .mat-mdc-text-field-wrapper {
+    height: 40px !important;
+  } 
+.sectionTwo {
+  margin-top: 20px;
+  width: 85%;
+  margin-right: 10px;
+}
+
+.button-section {
+  display: flex;
+  margin-top: 40px;
+}
+.right-btn {
+  justify-content: flex-start;
+  width: 50%;
+  display: flex;
+  padding: 5px;
+}
+.left-btn {
+  justify-content: flex-end;
+  width: 50%;
+  display: flex;
+}
+button {
+  width: 25%;
+}
+.apply-changes,
+.discard-changes,
+.delete-account {
+  font-weight: 400;
+}
+.apply-changes-class {
+  background-color: #008080;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.apply-changes-class:hover {
+  background-color: #ffffff;
+  color: #008080;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+}
+.discard-changes-class {
+  background-color: #ffffff;
+  color: #008080;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.discard-changes-class:hover {
+  background-color: #008080;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+button:hover {
+  cursor: pointer;
+}
+.delete-account-class {
+  background-color: #d73434;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+}
+.delete-account-class:hover {
+  background-color: #ffffff;
+  color: #d73434;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+}
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+  margin: 8px 8px 8px 0;
+}
+@media screen and (max-width: 480px) {
+  .bodySection {
+    font-size: medium;
+    padding: 10px;
+  }
+  .sectionHeading {
+    font-size: large;
+  }
+  .top-section,
+  .details-section-two,
+  .button-section,
+  .right-btn,
+  .staring-section,
+  .ending-section {
+    display: block;
+  }
+  .form-field {
+    width: 100%;
+  }
+  .sectionTwo {
+    margin-top: 20px;
+    width: 100%;
+    margin-right: 0 px;
+  }
+  .staring-section,
+  .ending-section {
+    width: 100%;
+  }
+  .right-btn,
+  .left-btn {
+    width: 100%;
+  }
+  .left-btn {
+    justify-content: flex-start;
+  }
+  button {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .apply-changes,
+  .discard-changes,
+  .delete-account {
+    padding: 5px;
+  }
+  .bodySection {
+    width: 80%;
+  }
+} */
+
+.body {
+  padding: 3em;
+  width: 60%;
+  min-width: 400px;
+  margin: 0 auto;
+}
+.card {
+  padding: 2em;
+}
+
+.form-container {
+  margin-top: 2em;
+}
+
+mat-grid-tile mat-form-field {
+  width: 100%;
+  margin: 0.75em;
+}
+
+mat-grid-tile {
+  height: auto;
+}
+.title {
+  color: #008080;
+  font-size: 25px;
+  font-family: Lato;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+.description-text-editor {
+  padding-left: 1em;
+  width: calc(100% - 2.2em);
+  margin-bottom: 1.2em;
+  padding-top: 1em;
+}
+mat-form-field {
+  width: 100%;
+}
+.right-btn,
+.left-btn {
+  width: 100%;
+}
+.left-btn {
+  justify-content: flex-start;
+}
+
+.button-section,
+.right-btn {
+  display: block;
+}
+.button-section {
+  display: flex;
+  margin-top: 40px;
+}
+.right-btn {
+  justify-content: flex-start;
+  width: 50%;
+  display: flex;
+  padding: 5px;
+}
+.left-btn {
+  justify-content: flex-end;
+  width: 50%;
+  display: flex;
+}
+button {
+  width: 25%;
+}
+.apply-changes,
+.discard-changes,
+.delete-account {
+  font-weight: 400;
+}
+.apply-changes-class {
+  background-color: #008080;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.apply-changes-class:hover {
+  background-color: #ffffff;
+  color: #008080;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+}
+.discard-changes-class {
+  background-color: #ffffff;
+  color: #008080;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.discard-changes-class:hover {
+  background-color: #008080;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+button:hover {
+  cursor: pointer;
+}
+.delete-account-class {
+  background-color: #d73434;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+}
+.delete-account-class:hover {
+  background-color: #ffffff;
+  color: #d73434;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+}
