@@ -17,6 +17,7 @@ export interface CmpyData {
   company_city: string;
   company_province: string;
   company_business_scale: string;
+  comment:string;
 }
 
 
@@ -29,7 +30,7 @@ export interface CmpyData {
 })
 export class RegCmpStateCheckComponent {
 
-  company_id: number = 8; // sample company_id
+  company_id: string = 'nmIkuA6ZIO'; // sample company_id
   //cmpData: CmpyData[] = [];
 
   cmpData:CmpyData={} as CmpyData
@@ -41,7 +42,7 @@ export class RegCmpStateCheckComponent {
     this.route.queryParamMap.subscribe(params =>{
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
-        this.company_id = parseInt(id, 10); // convert string to integer 10 is base
+        this.company_id = id; // convert string to integer 10 is base
         console.log('Company ID:', this.company_id);
         this.fetchData(this.company_id);
       }
@@ -51,7 +52,7 @@ export class RegCmpStateCheckComponent {
     
   }
 
-  async fetchData(company_id:number) {
+  async fetchData(company_id:string) {
     console.log('Calling getCompnayRegState with company_id:', company_id);
     try {
       this.cmpData = await this.company.getCompnayRegState(company_id);

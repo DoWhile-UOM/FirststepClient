@@ -18,7 +18,7 @@ export class CompanyService {
   }
 
   //Get company Registration state details---Start
-  async getCompnayRegStateOld(id: number): Promise<any | null> {
+  async getCompnayRegStateOld(id:string): Promise<any | null> {
     try {
       const response = await this.http.get<any>(`https://localhost:7213/api/Company/GetCompanyById/${id}`);
       return response;
@@ -29,10 +29,10 @@ export class CompanyService {
   }
   //Get company Registration state details---End
 
-  async getCompnayRegState(id: number) {
+  async getCompnayRegState(id: string) {
     let cmpData: any;
     try{
-      await axios.get('https://localhost:7213/api/Company/GetCompanyById/' + id)
+      await axios.get('https://localhost:7213/api/Company/GetRegCheckByID/' + id)
         .then((response) => {
           cmpData = response.data;
           //console.log('Company Data:', cmpData);

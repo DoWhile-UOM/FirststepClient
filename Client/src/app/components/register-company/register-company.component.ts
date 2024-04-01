@@ -46,13 +46,11 @@ export class RegisterCompanyComponent{
     company_email: ['', Validators.required],
     //otp: ['', Validators.required],
     //pNumber: ['', Validators.required]
-  });
-  secondFormGroup = this._formBuilder.group({
     business_reg_certificate: ['', Validators.required],
     company_applied_date: ['', Validators.required],
     certificate_of_incorporation: ['', Validators.required],
     company_phone_number: ['', Validators.required],
-    business_reg_no: ['', Validators.required]
+    business_reg_no: ['', Validators.required],
   });
 
   constructor(private company:CompanyService,private _formBuilder: FormBuilder,private http: HttpClient) { }
