@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apipaths } from '../app/apipaths/apipaths';
+import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import axios from 'axios';

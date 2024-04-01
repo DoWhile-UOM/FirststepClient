@@ -14,6 +14,6 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList/newJob', component: NewJobComponent },
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
   { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent},
-  { path: 'editCompanyProfile', component: CompanyProfileEditComponent },
+  { path: 'companyProfile', component: CompanyProfileEditComponent },
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
 ];
