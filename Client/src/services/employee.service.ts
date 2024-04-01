@@ -33,7 +33,7 @@ export class EmployeeService {
   }
   async updateEmployeeDetails(employee: Employee) {
     await axios
-      .put(Apipaths.updateEmployeeDetails + 7, employee) // tem solution
+      .put(Apipaths.editemployee + 7, employee) // tem solution
       .then((response) => {
         console.log('Emlpoyee details updated successfully');
       })

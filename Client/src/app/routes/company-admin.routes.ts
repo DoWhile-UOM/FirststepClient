@@ -6,6 +6,7 @@ import { JobOfferListComponent } from '../components/job-offer-list/job-offer-li
 import { NewJobUploadedComponent } from '../components/new-job-uploaded/new-job-uploaded.component';
 import { CompanyProfileEditComponent } from '../components/company-profile-edit/company-profile-edit.component';
 import { RoleProfileEditComponent } from '../components/role-profile-edit/role-profile-edit.component';
+
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
   { path: 'manageRoles', component: ManageRolesComponent },
