@@ -1,6 +1,6 @@
 export class Apipaths {
     static readonly baseUrl: string = 'https://localhost:7213/api/';
-    
+
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
     static readonly addNewHRAssistant: string = this.baseUrl + 'Employee/AddNewHRAssistant';
@@ -33,4 +33,8 @@ export class Apipaths {
     // external
     static readonly getCountryNames: string = 'https://api.first.org/v1/get-countries';
     static readonly getCityNames: string = 'https://countriesnow.space/api/v0.1/countries/cities';
+
+    //Authentication
+    static readonly register: string = this.baseUrl + 'User/register';
+    static readonly authenticate: string = this.baseUrl + 'User/authenticate';
 }
