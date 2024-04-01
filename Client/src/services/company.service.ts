@@ -93,10 +93,7 @@ export class CompanyService {
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
-        console.log('Company details updated successfully');
-        this.snackBar.open('Company details updated successfully', 'Close', {
-          duration: 3000,
-        });
+        this.snackBar.open('Company details updated successfully', "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
       })
       .catch((error) => {
         this.snackBar.open('Network error occurred. Try Again', 'Close', {

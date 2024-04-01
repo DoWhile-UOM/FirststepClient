@@ -99,9 +99,7 @@ export class CompanyProfileEditComponent {
       this.cName = this.company.company_name;
       console.log('got details');
     } finally {
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
     }
   }
 
@@ -114,9 +112,7 @@ export class CompanyProfileEditComponent {
       this.cName = this.company.company_name;
       console.log('updated');
     } finally {
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
     }
   }
 
