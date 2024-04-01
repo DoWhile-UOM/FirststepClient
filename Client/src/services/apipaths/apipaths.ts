@@ -47,4 +47,7 @@ export class Apipaths {
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
     static readonly authenticate: string = this.baseUrl + 'User/authenticate';
+
+    // user
+    static readonly UserBaseUrl: string = this.baseUrl + 'User/';
 }
