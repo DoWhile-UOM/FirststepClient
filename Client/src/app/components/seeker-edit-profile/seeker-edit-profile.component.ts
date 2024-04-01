@@ -66,8 +66,7 @@ export class SeekerEditProfileComponent {
   seekerDetails: Seeker = {} as Seeker;
 
   constructor(private seekerService: SeekerService) {}
-  user_id: number = 3;
-  field_id: number = 1;
+  user_id: number = 1083;
 
   async ngOnInit() {
     this.fetchSeekerDetails();
@@ -92,6 +91,22 @@ export class SeekerEditProfileComponent {
     } catch (error) {
       console.error('error updating profile',error);
     }
-   }
+  }
+
+ //Delete
+
+  async onDelete(user_id: number){
+    try{
+       await this.seekerService.deleteseeker(this.user_id)
+       .then(() => {
+        this.seekerDetails = {} as Seeker; // This effectively clears the form.
+    })
+    }
+    catch(error){
+      console.error('Error deleting seeker:', error);
+    }
+  }
+
+  
 
 }

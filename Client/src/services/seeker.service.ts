@@ -20,8 +20,6 @@ export class SeekerService {
       //console.error(error);
     }
 
-    //alert(seekerData);
-
     return seekerData;
   }
 
@@ -41,9 +39,9 @@ export class SeekerService {
   //delete method
   async deleteseeker(seekerID: number) {
     try {
-      await axios.delete('https://localhost:7213/api/Seeker/DeleteSeeker/1059' + seekerID);
+      await axios.delete('https://localhost:7213/api/Seeker/DeleteSeeker/' + seekerID);
     } catch (error) {
-      console.error(error);
+      ///console.error(error);
     }
   }
 
