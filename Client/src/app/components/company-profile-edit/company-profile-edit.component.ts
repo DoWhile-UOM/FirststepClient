@@ -71,6 +71,7 @@ export class CompanyProfileEditComponent {
   selected = 'company.company_business_scale';
   email = new FormControl('', [Validators.required, Validators.email]);
   company: Company = {} as Company; // Initialize the company property
+  cName = ''; // to store Comapny Name that is on the top
   noOfCols: number = 2;
   BusinessScales: any[] = [
     { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
@@ -80,8 +81,14 @@ export class CompanyProfileEditComponent {
   ];
 
   companyForm: FormGroup = new FormGroup({});
-  errorMessage = '';
+
   errorMessageForCompanyName = '';
+  errorMessageForDescription = '';
+  errorMessageForWebsite = '';
+  errorMessageForPhoneNumber = '';
+  errorMessageForEmail = '';
+  emailControl = new FormControl('', [Validators.required, Validators.email]);
+
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
@@ -89,26 +96,11 @@ export class CompanyProfileEditComponent {
   ) {}
 
   async ngOnInit() {
-    this.companyForm = this.formBuilder.group({
-      company_name: ['', Validators.required],
-      company_email: ['', [Validators.required, Validators.email]],
-      company_website: ['', Validators.required],
-      company_phone_number: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]+$')],
-      ],
-      company_logo: ['', Validators.required],
-      company_description: ['', Validators.required],
-      company_city: ['', Validators.required],
-      company_province: ['', Validators.required],
-      company_business_scale: ['', Validators.required],
-    });
     try {
       this.spinner.show();
 
       this.company = await this.companyService.getCompanyDetails(7);
-
-      // let selected = 'company.company_business_scale';
+      this.cName = this.company.company_name;
       console.log('got details');
     } finally {
       setTimeout(() => {
@@ -123,6 +115,7 @@ export class CompanyProfileEditComponent {
       this.spinner.show();
       console.log(this.company);
       await this.companyService.updateCompanyDetails(this.company, 7); // 7 for bistec
+      this.cName = this.company.company_name;
       console.log('updated');
     } finally {
       setTimeout(() => {
@@ -143,44 +136,68 @@ export class CompanyProfileEditComponent {
       await this.companyService.deleteAccount(7);
       console.log('deleted');
     } finally {
-      this.spinner.hide(); // Hide spinner after request (even on errors)
+      this.spinner.hide();
     }
   }
 
-  //errorMessage
-  updateErrorMessage(){
-    if(this.company.company_email.length==0){
-      this.errorMessage = "Email is required";
+  //errorMessages
+
+  comapnyNameErrorMessage() {
+    if (this.company.company_name.length == 0) {
+      this.errorMessageForCompanyName = 'Company name is required';
+    } else {
+      this.errorMessageForCompanyName = '';
     }
-    else if(this.company.company_email.length>0 && !this.company.company_email.includes("@")){
-      this.errorMessage = "Email is invalid";
+  }
+  descriptionErrorMessage() {
+    if (this.company.company_description.length == 0) {
+      this.errorMessageForDescription = 'Description is required';
+    } else {
+      this.errorMessageForDescription = '';
     }
-    else if(this.company.company_phone_number.toString().length==0){
-      this.errorMessage = "Phone number is required";
+  }
+  websiteErrorMessage() {
+    if (this.company.company_website.length == 0) {
+      this.errorMessageForWebsite = 'Website is required';
+    } else {
+      this.errorMessageForWebsite = '';
     }
-    else if(this.company.company_phone_number.toString().length>0 && this.company.company_phone_number.toString().length<10){
-      this.errorMessage = "Phone number is invalid";
+  }
+  phoneNumberErrorMessage() {
+    if (this.company.company_phone_number.toString().length == 0) {
+      this.errorMessageForPhoneNumber = 'Phone number is required';
+    } else if (
+      this.company.company_phone_number.toString().length > 0 &&
+      this.company.company_phone_number.toString().length < 10
+    ) {
+      this.errorMessageForPhoneNumber = 'Phone number is invalid';
+    } else {
+      this.errorMessageForPhoneNumber = '';
     }
-    else if(this.company.company_website.length==0){
-      this.errorMessage = "Website is required";
-    }
-    else if(this.company.company_description.length==0){
-      this.errorMessage = "Description is required";
-    }
-    else if(this.company.company_city.length==0){
-      this.errorMessage = "City is required";
-    }
-    else if(this.company.company_province.length==0){
-      this.errorMessage = "Province is required";
-    }
-    else if(this.company.company_business_scale.length==0){
-      this.errorMessage = "Business scale is required";
-    }
-    else if(this.company.company_name.length==0){
-      this.errorMessage = "Company name is required";
-    }
-    else{
-      this.errorMessage = "";
+  }
+  // emailErrorMessage() {
+  //   let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  //   if (this.company.company_email.length == 0) {
+  //     this.errorMessageForEmail = 'Email is required';
+  //   }
+  //   if (!emailRegex.test(this.company.company_email)) {
+  //     console.log(!emailRegex.test(this.company.company_email));
+  //     this.errorMessageForEmail = 'Email is invalid';
+  //     console.log(this.errorMessageForEmail);
+  //   } else {
+  //     console.log(!emailRegex.test(this.company.company_email));
+  //     this.errorMessageForEmail = '';
+  //   }
+  // }
+  emailErrorMessage() {
+    this.emailControl.setValue(this.company.company_email);
+
+    if (this.emailControl.hasError('required')) {
+      this.errorMessageForEmail = 'Email is required';
+    } else if (this.emailControl.hasError('email')) {
+      this.errorMessageForEmail = 'Email is invalid';
+    } else {
+      this.errorMessageForEmail = '';
     }
   }
 }

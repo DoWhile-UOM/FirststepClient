@@ -267,7 +267,7 @@
   <app-spinner></app-spinner>
   <mat-card class="card">
     <div class="heading title">
-      <span class="sectionHeading">{{ company.company_name }}</span>
+      <span class="sectionHeading">{{ cName }}</span>
     </div>
     <form
       class="form"
@@ -290,10 +290,10 @@
               placeholder="Enter your Company Name"
               name="company_name"
               [(ngModel)]="company.company_name"
-              (input)="updateErrorMessage()"
+              (blur)="comapnyNameErrorMessage()"
               required
             />
-            <mat-error>{{ errorMessage }}</mat-error>
+            <mat-error>{{ errorMessageForCompanyName }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
@@ -308,10 +308,11 @@
             cdkAutosizeMinRows="1"
             [(ngModel)]="company.company_description"
             name="company_description"
-            (input)="updateErrorMessage()"
+            placeholder="Enter your Company Description"
+            (blur)="descriptionErrorMessage()"
             required
           ></textarea>
-          <mat-error>{{ errorMessage }}</mat-error>
+          <mat-error>{{ errorMessageForDescription }}</mat-error>
         </mat-form-field>
       </div>
       <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
@@ -323,10 +324,10 @@
               placeholder="Enter your Company website"
               name="company_website"
               [(ngModel)]="company.company_website"
-              (input)="updateErrorMessage()"
+              (blur)="websiteErrorMessage()"
               required
             />
-            <mat-error>{{ errorMessage }}</mat-error>
+            <mat-error>{{ errorMessageForWebsite }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -336,14 +337,12 @@
               name="bussiness_scale"
               [(ngModel)]="company.company_business_scale"
               #bussiness_scale
-              (input)="updateErrorMessage()"
               required
             >
               @for(BScale of BusinessScales ; track BScale){
               <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
               }
             </mat-select>
-            <mat-error>{{ errorMessage }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -355,9 +354,9 @@
               placeholder="Enter your Company phone Number"
               name="company_phone_number"
               [(ngModel)]="company.company_phone_number"
-              (input)="updateErrorMessage()"
+              (blur)="phoneNumberErrorMessage()"
               required
-            /><mat-error>{{ errorMessage }}</mat-error>
+            /><mat-error>{{ errorMessageForPhoneNumber }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -369,10 +368,12 @@
               placeholder="Enter your email"
               name="company_email"
               [(ngModel)]="company.company_email"
-              (input)="updateErrorMessage()"
+              (blur)="emailErrorMessage()"
               required
             />
-            <mat-error>{{ errorMessage }}</mat-error>
+            <mat-error *ngIf="errorMessageForEmail">{{
+              errorMessageForEmail
+            }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
@@ -384,9 +385,7 @@
             class="apply-changes-class"
             type="submit"
           >
-            <span class="apply-changes" (click)="updateErrorMessage()"
-              >Apply Changes</span
-            >
+            <span class="apply-changes">Apply Changes</span>
           </button>
           <button class="discard-changes-class" (click)="discardChanges()">
             <span class="discard-changes">Discard Changes</span>
