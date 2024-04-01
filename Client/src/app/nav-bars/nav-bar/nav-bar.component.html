@@ -7,11 +7,10 @@
     <span>FirstStep</span>
     <span class="flex-spacer"></span>
     <div class="right-buttons">
-      <a mat-button color="{{colorList[0]}}" (click)="navigateToHomePage()">Search</a>
-      <a mat-button color="{{colorList[1]}}" (click)="navigateToSavedListPage()">Saved List</a>
-      <a mat-button color="{{colorList[2]}}">Applications</a>
-      <a mat-button color="{{colorList[3]}}">My Profile</a>
+      <a routerLink="/seeker/home" routerLinkActive="active">Search</a>
+      <a routerLink="/seeker/saved" routerLinkActive="active">Saved List</a>
+      <a routerLink="/seeker/applications" routerLinkActive="active">Applications</a>
+      <a routerLink="/seeker/profile" routerLinkActive="active">My Profile</a>
       <img src="assets/images/dp.png" alt="Profile Picture" class="profile-image">
-
     </div>
 </mat-toolbar>  

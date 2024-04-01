@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { CommonModule } from '@angular/common';
-import { AdvertisementServices } from '../../../services/advertisement.service';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { SearchBasicComponent } from '../search-basic/search-basic.component';
-import { ApiService } from '../../services/api.service';
-import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Job {
   advertisement_id: number;
@@ -24,28 +22,39 @@ interface Job {
 @Component({
   selector: 'app-seeker-home-page',
   standalone: true,
-  imports: [ AdvertisementCardComponent, CommonModule, NavBarComponent, SearchBasicComponent],
+  imports: [ AdvertisementCardComponent, CommonModule, SearchBasicComponent, MatPaginatorModule],
   templateUrl: './seeker-home-page.component.html',
   styleUrl: './seeker-home-page.component.css'
 })
+
 export class SeekerHomePageComponent{
   jobList: Job[] = [];
 
-  constructor(private advertisementService: AdvertisementServices, private api: ApiService,private authService:AuthService) {
+  @ViewChild(SearchBasicComponent) searchComponent: SearchBasicComponent | undefined;
 
+  paginatorLength = 10;
+  pageSize = 5;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 15];
+
+  constructor(private snackBar: MatSnackBar) {}
+
+  async handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+
+    let startIndex = this.pageIndex * this.pageSize;
+    let endIndex = startIndex + this.pageSize;
+
+    this.snackBar.open("Loading...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+    await this.searchComponent?.changePaginator(startIndex, endIndex);
   }
-
-  seekerID: number = 3; // sample seekerID
 
   changeJobList(newJobList: Job[]){
     this.jobList = newJobList;
   }
 
-  signOut(){
-    this.authService.signOut()
-    //this.auth.signup(this.myForm.value)
+  changePaginatorSize(newLen: number){
+    this.paginatorLength = newLen;
   }
-
-
-
 }

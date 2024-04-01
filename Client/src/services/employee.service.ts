@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apipaths } from '../app/apipaths/apipaths';
+import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import axios from 'axios';
@@ -17,56 +17,41 @@ interface Employee {
   providedIn: 'root',
 })
 export class EmployeeService {
-  constructor(private snackBar: MatSnackBar) {}
-
-  async getEmployeeDetails(employeeId: number) {
-    let employeeDetails: any = {};
-
-    await axios
-      .get(Apipaths.getEmployeeDetails + employeeId)
-      .then(function (response) {
-        try {
-          employeeDetails = response.data;
-        } catch (error) {
-          console.log('No employee details found for the given id');
-        }
+  
+  async getEmployeeDetails(id : number) {
+    let empData: any;
+    
+    await axios.get(Apipaths.getEmployeeDetails + id)
+      .then((response) => {
+        empData = response.data;
       })
-      .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
-      });
+      .catch (function (error) {
+        alert("Network Error: " + error);
+      });;
 
-    console.log(employeeDetails);
-    return employeeDetails;
+    return empData;
   }
   async updateEmployeeDetails(employee: Employee) {
     await axios
       .put(Apipaths.updateEmployeeDetails + 7, employee) // tem solution
       .then((response) => {
         console.log('Emlpoyee details updated successfully');
-        this.snackBar.open('Employee details updated successfully', 'Close', {
-          duration: 3000,
-        });
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
+        console.error(error);
       });
   }
   
   async getEmployeeList(company_id: number) {
     let empData: any;
-    try{
-      await axios.get('https://localhost:7213/api/Employee/GetAllEmployees/' + company_id)
-        .then((response) => {
-          empData = response.data;
-        });
-    }
-    catch (error) {
-      //console.error(error);
-    }
+
+    await axios.get(Apipaths.getEmployeeList + company_id)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch (function (error) {
+        alert("Network Error: " + error);
+      });
 
     return empData;
   }
@@ -74,8 +59,7 @@ export class EmployeeService {
   async addNewHRManager(employee: any) {
     try{
       employee.company_id = 7; // sample company_id
-      
-      await axios.post('https://localhost:7213/api/Employee/AddNewHRManager', employee)
+      await axios.post(Apipaths.addNewHRManager, employee)
         .then((response) => {
           console.log(response);
         });
@@ -89,7 +73,7 @@ export class EmployeeService {
     try{
       employee.company_id = 7; // sample company_id
       
-      await axios.post('https://localhost:7213/api/Employee/AddNewHRAssistant', employee)
+      await axios.post(Apipaths.addNewHRAssistant, employee)
         .then((response) => {
           console.log(response);
         });
@@ -101,7 +85,7 @@ export class EmployeeService {
 
   async editemployee(employee: any, employeeID: number) {
     try{      
-      await axios.put("https://localhost:7213/api/Employee/UpdateEmployee/" + employeeID, employee)
+      await axios.put( Apipaths.editemployee+ employeeID, employee)
         .then((response) => {
           console.log(response);
         });
@@ -114,10 +98,38 @@ export class EmployeeService {
 
   async deleteEmployee(employeeID:number){
     try{
-      await axios.delete("https://localhost:7213/api/Employee/DeleteEmployee/"+employeeID)
+      await axios.delete(Apipaths.deleteEmployee+employeeID)
     }
     catch (error) {
       console.error(error);
     }
+  }
+
+  async getAllHRMs(companyID: number){
+    let empData: any;
+    
+    await axios.get(Apipaths.getAllHRMs + companyID)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch(function (error) {
+        alert("Network Error: " + error);
+      });
+    
+    return empData;
+  }
+
+  async getAllHRAs(companyID: number){
+    let empData: any;
+
+    await axios.get(Apipaths.getAllHRAs + companyID)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch(function (error) {
+        alert("Network Error: " + error);
+      });
+    
+    return empData;
   }
 }

@@ -1,3 +1,10 @@
+.container{
+   height: calc(100% - 102px);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+} 
 
 .image {
     margin-bottom: 1.25em;

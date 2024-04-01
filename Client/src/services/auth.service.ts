@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router} from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { LocalService } from '../../services/local.service';
+import { LocalService } from './local.service';
+import { Apipaths } from './apipaths/apipaths';
 
 
 @Injectable({
@@ -18,11 +19,11 @@ export class AuthService {
    }
 
   signup(userObj:any){
-    return this.http.post<any>(this.baseUrl+"/register",userObj)
+    return this.http.post<any>(Apipaths.register,userObj)
   }
 
   login(loginObj:any){
-    return this.http.post<any>(this.baseUrl+"/authenticate",loginObj)
+    return this.http.post<any>(Apipaths.authenticate,loginObj)
   }
 
   storeToken(token:string){
