@@ -109,7 +109,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	adData: UpdateJob = {} as UpdateJob;
 
 	noOfCols: number = 3;
-	maxTextareaCharLimit: number = 2500;
+	maxTextareaCharLimit: number = 4000;
 	maxTextareaHeight: number = 15;
 
 	isUpdate: boolean = false;

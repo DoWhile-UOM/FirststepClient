@@ -114,11 +114,17 @@ export class SearchBasicComponent implements OnInit{
     data.country = this.locationCountryControl.value!;
     data.city = this.locationCityControl.value!;
     
-    this.jobList = await this.advertisementService.searchAdsBasicAlgo(this.seekerID, data);
+    var response = await this.advertisementService.searchAdsBasicAlgo(this.seekerID, data, String(this.pageSize));
 
-    if (this.jobList.length == 0) {
+    if (response == null) {
       this.snackBar.open("No advertisements found", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+      return;
     }
+
+    this.snackBar.open("Loading Search Results", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+    
+    this.jobList = response.firstPageAdvertisements;
+    this.jobIdList = response.allAdvertisementIds;
 
     this.newItemEvent.emit(this.jobList);
   }

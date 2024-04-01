@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from '../app/apipaths/apipaths';
 import axios from 'axios';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import axios from 'axios';
 
 export class AdvertisementServices {
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   async getAllAdvertisements(seekerID: string) {
     let jobList: any = [];
@@ -28,8 +29,8 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+         (error) => {
+          this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -49,8 +50,8 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -73,8 +74,8 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -89,10 +90,11 @@ export class AdvertisementServices {
         response = res;
         return true;
       })
-      .catch(function (error) {
-        alert('Network Error: ' + error);
-        return false;
-      });
+      .catch(
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
 
     return true;
   }
@@ -119,8 +121,8 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -146,8 +148,8 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -173,8 +175,8 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -208,8 +210,8 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -234,7 +236,7 @@ export class AdvertisementServices {
     // validate status
     var validStatus = ["active", "hold", "closed"];
     if (!validStatus.includes(status)) {
-      alert("Invalid status")
+      this.snackBar.open("Invalid Status", "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
       return response;
     }
 
@@ -242,9 +244,11 @@ export class AdvertisementServices {
       .then(function (res) {
         response = res;
       })
-      .catch(function (error) {
-        alert('Network Error: ' + error);
-      });
+      .catch(
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
 
     return response;
   }
@@ -256,9 +260,11 @@ export class AdvertisementServices {
       .then(function (res) {
         response = res;
       })
-      .catch(function (error) {
-        alert('Network Error: ' + error);
-      });
+      .catch(
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
 
     return response;
   }
@@ -270,9 +276,11 @@ export class AdvertisementServices {
       .then(function (res) {
         response = res;
       })
-      .catch(function (error) {
-        alert('Network Error: ' + error);
-      });
+      .catch(
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
 
     return response;
   }
@@ -295,34 +303,29 @@ export class AdvertisementServices {
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
     return jobList;
   }
 
-  async searchAdsBasicAlgo(seekerID: string, searchData: any){
+  async searchAdsBasicAlgo(seekerID: string, searchData: any, pageLength: string){
     let jobList: any = [];
 
-    await axios.post(Apipaths.basicSearch + seekerID, searchData)
+    await axios.post(Apipaths.basicSearch + seekerID + '/pageLength=' + pageLength, searchData)
       .then(function (response) {
-        try {
-          jobList = response.data;
+        jobList = response.data;
 
-          for (let i = 0; i < jobList.length; i++) {
-            var postDate = new Date(jobList[i].posted_date);
-            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
-          }
-        }
-        catch (error) {
-          console.log("No advertisements found");
+        for (let i = 0; i < jobList.firstPageAdvertisements.length; i++) {
+          var postDate = new Date(jobList.firstPageAdvertisements[i].posted_date);
+          jobList.firstPageAdvertisements[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
         }
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+        this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -354,9 +357,11 @@ export class AdvertisementServices {
       .then(function (res) {
         response = res;
       })
-      .catch(function (error) {
-        alert('Network Error: ' + error);
-      });
+      .catch(
+        (error) => {
+         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
 
     return response;
   }

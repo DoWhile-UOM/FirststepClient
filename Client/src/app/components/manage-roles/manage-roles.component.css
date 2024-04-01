@@ -1,18 +1,13 @@
 .container {
   margin-top: 4em;
   margin-left: 4em;
-  margin-right: 4em;
+  margin-right: 3em;
 }
 
 .page-title p {
   color: #008080;
   font-family: Lato;
   font-size: 30px;
-}
-
-.page-title {
-  display: flex;
-  flex-direction: column;
 }
 
 .pagetitle-content {
@@ -27,7 +22,6 @@ table, mat-card{
   margin-top: 3em;
   margin-bottom: 0.5em;
 }
-
 
 mat-card div{
   display: flex;
