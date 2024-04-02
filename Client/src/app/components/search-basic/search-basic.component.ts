@@ -127,6 +127,7 @@ export class SearchBasicComponent implements OnInit{
     this.jobIdList = response.allAdvertisementIds;
 
     this.newItemEvent.emit(this.jobList);
+    this.changePaginatorLengthEvent.emit(this.jobIdList.length);
   }
 
   public async changePaginator(startIndex: number, endIndex: number){
