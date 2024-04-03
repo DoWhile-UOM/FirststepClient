@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import axios from 'axios';
 
 @Injectable({
@@ -7,7 +8,7 @@ import axios from 'axios';
 })
 export class JobfieldService {
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   async getAll(){
     let fieldList: any = [];
@@ -17,8 +18,8 @@ export class JobfieldService {
         fieldList = response.data;
       })
       .catch(
-        function (error) {
-          alert('Network Error: ' + error);
+        (error) => {
+          this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 

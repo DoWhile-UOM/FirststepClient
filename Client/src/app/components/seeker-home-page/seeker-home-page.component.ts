@@ -46,7 +46,6 @@ export class SeekerHomePageComponent{
     let startIndex = this.pageIndex * this.pageSize;
     let endIndex = startIndex + this.pageSize;
 
-    this.snackBar.open("Loading...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
     await this.searchComponent?.changePaginator(startIndex, endIndex);
   }
 

@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { AdvertisementActionsComponent } from '../advertisement-actions/advertisement-actions.component';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 interface Job {
   advertisement_id: number;
@@ -21,7 +22,7 @@ interface Job {
 @Component({
   selector: 'app-advertisement-card',
   standalone: true,
-  imports: [ MatCardModule, AdvertisementActionsComponent, MatButtonModule ],
+  imports: [ MatCardModule, AdvertisementActionsComponent, MatButtonModule, MatIconModule ],
   templateUrl: './advertisement-card.component.html',
   styleUrl: './advertisement-card.component.css'
 })

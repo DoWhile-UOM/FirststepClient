@@ -4,15 +4,18 @@
         <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{job.company_name}}</mat-card-subtitle>
         <p class="job-field">{{job.field_name}}</p>
     </div>
-    <div class="job-details-outer">
+    <div class="job-summery-outer">
         <p class="job-details-section">
-            <i class="fas fa-briefcase"></i>{{job.employeement_type}}
+            <mat-icon>work</mat-icon>
+            <span class="summery-detail-text">{{job.employeement_type}}</span>
         </p>
         <p class="job-details-section">
-            <i class="fa-solid fa-building"></i>{{job.arrangement}}
+            <mat-icon>home</mat-icon>
+            <span class="summery-detail-text">{{job.arrangement}}</span>
         </p>
         <p class="job-details-section">
-            <i class="fas fa-map-marker-alt"></i>{{job.country}}, {{job.city}}
+            <mat-icon>location_on</mat-icon>
+            <span class="summery-detail-text">{{job.country}}, {{job.city}}</span>
         </p>
     </div> 
     <div class="job-details-outer">
