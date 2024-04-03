@@ -20,6 +20,6 @@ export class AppComponent implements OnInit{
   constructor(private documentService: DocumentServiceService) {}
 
   ngOnInit() {
-    this.documentService.downloadBlob("0x8DC3CBBBB23D9BA");
+    //this.documentService.downloadBlob("0x8DC3CBBBB23D9BA");
   }
 }
