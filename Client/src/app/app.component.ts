@@ -15,7 +15,7 @@ import { DocumentServiceService } from '../services/document-service.service';
     imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent ]
 })
 export class AppComponent implements OnInit{
-  user = "ca"
+  user = "seeker"
 
   constructor(private documentService: DocumentServiceService) {}
 

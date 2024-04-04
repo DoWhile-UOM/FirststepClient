@@ -336,14 +336,15 @@ export class AdvertisementServices {
     let adData: any = {};
 
     await axios.get(Apipaths.getAdvertisementByIDwithKeywords + jobID)
-      .then(function (response) {
-        adData = response.data;
-      })
-      .catch(
-        function (error) {
-          alert('Network Error: ' + error);
-        }
-      );
+    .then(function (response) {
+      adData = response.data;
+    })
+    .catch(
+        (error) => {
+        this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        return null;
+      }
+    );
 
     return adData;
   }

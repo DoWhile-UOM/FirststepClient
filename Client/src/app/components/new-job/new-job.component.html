@@ -137,8 +137,8 @@
 				</mat-grid-tile>
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
-						<mat-label>Salary</mat-label>
-						<input matInput placeholder="Salary in {{unitOfSalary}}" name="salary" [(ngModel)]="adData.salary">
+						<mat-label>Salary {{unitOfSalary != '' ? 'in ' + unitOfSalary : ''}}</mat-label>
+						<input matInput placeholder="Salary {{unitOfSalary != '' ? 'in ' + unitOfSalary : ''}}" name="salary" [(ngModel)]="adData.salary">
 					</mat-form-field>
 				</mat-grid-tile>
 			</mat-grid-list>
@@ -165,3 +165,5 @@
 		</form>
 	</mat-card>
 </div>
+
+<app-spinner></app-spinner>

@@ -26,6 +26,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { RichTextEditorModule, ToolbarService, LinkService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { countries } from 'country-data';
 
 
 interface Field {
@@ -34,7 +37,7 @@ interface Field {
 }
 
 interface AddJob {
-	ob_number: number;
+	job_number: number;
     title: string;
     country: string;
     city: string;
@@ -48,28 +51,6 @@ interface AddJob {
     field_id: number;
     keywords: string[];
 	reqSkills: string[];
-}
-
-interface Skill {
-	skill_id: number;
-	skill_name: string;
-}
-
-interface Job{
-	job_number: number;
-	title: string;
-	country: string;
-	city: string;
-	employeement_type: string;
-	arrangement: string;
-	is_experience_required: string;
-	salary: string;
-	submission_deadline: string;
-	posted_date: string;
-	job_description: string;
-	field_name: string;
-	company_name: string;
-	skills: Skill[];
 }
 
 interface UpdateJob{
@@ -100,7 +81,8 @@ interface UpdateJob{
 		MatSelectModule, MatChipsModule, RichTextEditorModule,
 		MatIconModule, MatAutocompleteModule, ReactiveFormsModule,
 		AsyncPipe, MatButtonModule, FormsModule, 
-		NgxCurrencyDirective, CommonModule, AddSkillsComponent],
+		NgxCurrencyDirective, CommonModule, AddSkillsComponent,
+		SpinnerComponent],
 	templateUrl: './new-job.component.html',
 	styleUrl: './new-job.component.css'
 })
@@ -116,7 +98,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	jobID: string = '';
 
 	currentDate = new FormControl(new Date());
-	unitOfSalary: string = 'LKR';
+	unitOfSalary: string = '';
 
 	fields: Field[] = [];
 
@@ -148,12 +130,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	cities: string[] = []; 
 	locationCityFilteredOptions: Observable<string[]>;
 
-	// for dropdown
-	employeeTypeFormControl = new FormControl('');
-	jobArrangementFormControl = new FormControl('');
-	experienceFormControl = new FormControl('');
-	fieldFormControl = new FormControl('');
-
 	// for keywords
 	separatorKeysCodes: number[] = [ COMMA, ENTER ];
 	keywordCtrl = new FormControl('');
@@ -180,7 +156,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		private router: Router, 
 		private acRouter: ActivatedRoute,
 		private snackBar: MatSnackBar,
-		private fb: FormBuilder) {
+		private spinner: NgxSpinnerService) {
 
 		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
 			startWith(null),
@@ -199,11 +175,9 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
 	async setupForUpdate(jobID: string){
-		this.snackBar.open("Loading...", "", {panelClass: ['app-notification-normal']})._dismissAfter(1500);
-
-		var adData: UpdateJob = await this.advertisementService.getAdvertisementByIDwithKeywords(jobID);		
-
-		if (adData != null || adData != undefined){
+		var adData: UpdateJob = await this.advertisementService.getAdvertisementByIDwithKeywords(jobID);
+		
+		if (adData.title != undefined){
 			this.isUpdate = true;
 			this.adData = adData;
 			this.locationCountryControl.setValue(adData.country);
@@ -217,12 +191,17 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			this.locationCityControl.setValue(adData.city);
 		}
 		else{
-			this.snackBar.open("Can't Load Job Advertisement Data.", "", {panelClass: ['app-notification-error']})._dismissAfter(1500);
-			window.history.back();
+			this.router.navigate(['notfound']);
 		}
 	}
 
 	async ngOnInit() {
+		await this.loadData();
+	}
+
+	async loadData(){
+		this.spinner.show();
+
 		// get all fields from the database
 		await this.jobFieldService.getAll()
 			.then((response) => {
@@ -241,11 +220,11 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		else{
 			this.isUpdate = false;
 		}
+
+		this.spinner.hide();
 	}
 
 	ngAfterViewInit() {
-		//this.onResize();
-
 		this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
 	}
 
@@ -262,30 +241,37 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 	async onChangeField(selectedField: number) {
 		// load the keywords for the selected field
-		// put loading animation
+		this.spinner.show();
+
 		this.keywords = [];
 		this.allkeywords = await this.keywordService.getAllKeywords(selectedField);
+
+		this.spinner.hide();
 	}
 
 	onSelectedCountryChanged(selectedCountry: string){
+		this.spinner.show();
+
 		this.locationCityControl.setValue('');
-		//this.locationCityFilteredOptions = new Observable<string[]>();
 		this.cities = [];
+		this.unitOfSalary = '';
 
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
 		if (countryCode == undefined){
-			//this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
-			this.snackBar.open(selectedCountry)._dismissAfter(5000);
+			this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 			return;
 		}
-		
+
+		this.unitOfSalary = countries[countryCode].currencies[0];
 		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
 
-		this.snackBar.open("Cities Loaded", "", {panelClass: ['app-notification-normal']})._dismissAfter(1500);
+		this.spinner.hide();
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
+		this.spinner.show();
+
 		addAdvertisement.keywords = this.removeDuplicates(this.keywords);
 		addAdvertisement.reqSkills = this.removeDuplicates(this.skills);
 		
@@ -307,9 +293,13 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		else{
 			this.snackBar.open("Error Uploading Job", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 		}	
+
+		this.spinner.hide();
   	}
 
 	async updateJob(adData: UpdateJob){
+		this.spinner.show();
+
 		adData.reqKeywords = this.removeDuplicates(this.keywords);
 		adData.reqSkills = this.removeDuplicates(this.skills);
 
@@ -324,12 +314,13 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		let response: boolean = await this.advertisementService.updateAdvertisement(adData, this.jobID);
 
 		if (response){
-			this.snackBar.open("Updated Job Details", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
 			this.router.navigate(['ca/jobOfferList/Uploaded']);
 		}
 		else{
 			this.snackBar.open("Error Updating Job Details", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 		}
+
+		this.spinner.hide();
 	}
 
 	validateInput(adData: any){
@@ -411,9 +402,14 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
 	private _filterCity(value: string): string[] {
-		const filterValue = value.toLowerCase();
+		this.spinner.show();
 
-		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+		const filterValue = value.toLowerCase();
+		const cityArr = this.cities.filter(option => option.toLowerCase().includes(filterValue));
+
+		this.spinner.hide();
+
+		return cityArr;
 	}
 
 	removeDuplicates(arr: string[]) {
