@@ -48,14 +48,24 @@
         <input matInput name="linkedin" [(ngModel)]="seekerDetails.linkedin" placeholder="Enter LinkedIn" />
       </mat-form-field>
 
-      <mat-form-field class="elem" appearance="outline">
+      <!-- <mat-form-field class="elem" appearance="outline">
         <mat-label>Field of Work</mat-label>
         <mat-select >
           <mat-option value="1">Information Technology and Computer Science</mat-option>
           <mat-option value="2">Engineering</mat-option>
           <mat-option value="3">Business</mat-option>
         </mat-select>
+      </mat-form-field> -->
+
+      <mat-form-field class="elem" appearance="outline">
+        <mat-label>Field of Work</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let field of fieldOptions" [value]="field.field_id">{{ field.field_name }}</mat-option>
+        </mat-select>
       </mat-form-field>
+      
+
+
 
       <mat-form-field class="elem" appearance="outline">
         <mat-label>Phone Number</mat-label>
