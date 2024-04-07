@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bars/nav-bar/nav-bar.component';
 import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
-import { DocumentServiceService } from '../services/document-service.service';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 
 
 @Component({
@@ -12,14 +12,9 @@ import { DocumentServiceService } from '../services/document-service.service';
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent ]
+    imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent, PdfViewerComponent ]
 })
-export class AppComponent implements OnInit{
-  user = "seeker"
+export class AppComponent {
+  user = "seeker";
 
-  constructor(private documentService: DocumentServiceService) {}
-
-  ngOnInit() {
-    //this.documentService.downloadBlob("0x8DC3CBBBB23D9BA");
-  }
 }
