@@ -55,4 +55,9 @@ export class Apipaths {
 
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
+
+    // Azure Blob Service
+    static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststepstore;AccountKey=qUox5eMVpzqMQQE1d4WiXLJwupm8aHeab+Q8GD/xCDVSBFfa03wsrm6JFIOFrCG3hI9gxjEDrFn4+ASt2hRkmg==;EndpointSuffix=core.windows.net';
+    static readonly BlobContainerName = 'apiimages';
+    static readonly BlobName = 'firststepstore';
 }

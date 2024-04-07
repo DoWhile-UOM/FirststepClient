@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
-import axios from 'axios';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class AdvertisementServices {
     let jobList: any = [];
 
     await axios.get(Apipaths.getAdvertisements + '/seekerID=' + seekerID)
-      .then(function (response) {
+      .then( (response) => {
         try {
           jobList = response.data;
 
@@ -25,12 +25,12 @@ export class AdvertisementServices {
           }
         }
         catch (error) {
-          console.log("No advertisements found");
+          this.snackBar.open(String(error), "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       })
       .catch(
-         (error) => {
-          this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        (error) => {
+          this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -51,7 +51,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -75,7 +75,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -92,7 +92,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -122,7 +122,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -149,7 +149,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -176,7 +176,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -211,7 +211,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -246,7 +246,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -262,7 +262,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -278,7 +278,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -304,7 +304,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -325,7 +325,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-        this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
@@ -336,14 +336,15 @@ export class AdvertisementServices {
     let adData: any = {};
 
     await axios.get(Apipaths.getAdvertisementByIDwithKeywords + jobID)
-      .then(function (response) {
-        adData = response.data;
-      })
-      .catch(
-        function (error) {
-          alert('Network Error: ' + error);
-        }
-      );
+    .then(function (response) {
+      adData = response.data;
+    })
+    .catch(
+        (error) => {
+        this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        return null;
+      }
+    );
 
     return adData;
   }
@@ -359,7 +360,7 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 

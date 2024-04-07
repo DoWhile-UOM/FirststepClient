@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bars/nav-bar/nav-bar.component';
 import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
+import { DocumentServiceService } from '../services/document-service.service';
 
 
 @Component({
@@ -13,6 +14,12 @@ import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
     styleUrl: './app.component.css',
     imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent ]
 })
-export class AppComponent {
-  user = "ca"
+export class AppComponent implements OnInit{
+  user = "seeker"
+
+  constructor(private documentService: DocumentServiceService) {}
+
+  ngOnInit() {
+    //this.documentService.downloadBlob("0x8DC3CBBBB23D9BA");
+  }
 }
