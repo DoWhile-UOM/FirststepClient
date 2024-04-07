@@ -29,7 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
           </span>
 
           <span class="action-buttons">
-            <button mat-raised-button color="primary">
+            <button mat-raised-button color="primary" (click)="downloadFile()">
               <mat-icon>cloud_download</mat-icon> Download
             </button>
             <button mat-raised-button color="primary" mat-dialog-close>Close</button>
@@ -146,14 +146,49 @@ class PdfViewerDialog {
   title: string = ''; 
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private snackBar: MatSnackBar) {
-    if (data.src == undefined || data.title == undefined) {
+    if (data.src == undefined) {
       this.pdfSrc = '';
       this.title = '';
       return;
     }
 
-    this.pdfSrc = data.src;
-    this.title = data.title;
+    this.pdfSrc = this.validatePdfSrc(data.src);
+    this.title = data.src.split('/').pop() ?? '';
+
+    if (this.title == '') {
+      this.snackBar.open("Error downloading pdf...", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      this.pdfSrc = '';
+      return;
+    }
+  }
+
+  validatePdfSrc(src: string): string {
+    // Add a return statement to ensure the function returns a value
+
+    // For Nethma
+    // validate the src here
+    // send request to the backend using document service
+    // when it is successful, return the src
+    // else return an empty string
+    
+    return src;
+  }
+
+  downloadFile(): void {
+    const url = this.pdfSrc;
+    const fileName = this.title;
+
+    fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const newBlob = new Blob([blob], { type: 'application/octet-stream' });
+        const data = window.URL.createObjectURL(newBlob);
+        const link = document.createElement('a');
+        link.href = data;
+        link.download = fileName;
+        link.click();
+      })
+      .catch((error) => console.error('Error downloading file:', error));
   }
 }
 
@@ -169,14 +204,12 @@ class PdfViewerDialog {
 
 export class PdfViewerComponent{
   @Input() pdfSrc: string | undefined;
-  @Input() title: string | undefined; 
 
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   openDialog() {
     this.dialog.open(PdfViewerDialog, {
       data: {
-        title: this.title,
         src: this.pdfSrc
       },
     });
