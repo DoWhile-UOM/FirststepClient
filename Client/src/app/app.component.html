@@ -1,6 +1,6 @@
 <app-nav-bar *ngIf="user == 'seeker'"></app-nav-bar>
 <app-ca-nav-bar *ngIf="user == 'ca'"></app-ca-nav-bar>
 
-<app-pdf-viewer></app-pdf-viewer>
+<app-pdf-viewer [pdfSrc]="'assets/T - Table.pdf'" [title]="'sample.pdf'"></app-pdf-viewer>
 
 <router-outlet></router-outlet>
