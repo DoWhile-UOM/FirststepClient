@@ -33,7 +33,7 @@ interface requestOTP {
   email: string | null | undefined;
 }
 
-interface verifyOTP { 
+interface verifyOTP {
   email: string | null | undefined;
   otp: string | null | undefined;
 }
@@ -46,6 +46,12 @@ interface verifyOTP {
   styleUrl: './register-company.component.css'
 })
 export class RegisterCompanyComponent {
+
+  isEmailVerified: boolean = false;
+  isOTPRequestSent: boolean = false;
+  remainingTime = 0;
+  reqOTPbtntxt = "Request OTP";
+
 
   //form group for the stepper
   companyReg = this._formBuilder.group({
@@ -66,25 +72,12 @@ export class RegisterCompanyComponent {
 
 
   async requestOTP() {
-    console.log("Pressed");
-    
+    this.printTextAfterFiveMinutes();
     const userData: requestOTP = {
       email: this.companyReg.get('company_email')?.value
     }
-
     const verificationResult = await this.auth.requestOTP(userData);
-
-    //const response = this.http.post<any>(Apipaths.requestOTP, userData);
-
-    console.log(verificationResult);
-    /*
-        if (this.companyReg.get('company_email')?.value) {
-          console.log("requestOTP:OTP verification successful!");
-          // Perform actions after successful verification (optional)
-        } else {
-          console.error("requestOTP:OTP verification failed.");
-          // Handle failed verification (e.g., display error message)
-        }*/
+    //console.log(verificationResult);
   }
 
 
@@ -97,29 +90,47 @@ export class RegisterCompanyComponent {
     }
 
     const verificationResult = await this.auth.verifyOTP(userData);
+    if (verificationResult == true) {
+      this.isEmailVerified = true;
+    }
 
-    /*
-    const verificationResult = await this.auth.verifyOTP(this.otpVerify.value);
-    if (verificationResult) {
-      console.log("VerifyOTP:OTP verification successful!");
-      // Perform actions after successful verification (optional)
-    } else {
-      console.error("VerifyOTP:OTP verification failed.");
-      // Handle failed verification (e.g., display error message)
-    }*/
   }
 
+  async printTextAfterFiveMinutes() {
+
+    this.isOTPRequestSent = true;
+    this.remainingTime = 5 * 60; // Initialize remaining time in seconds
+    this.reqOTPbtntxt = this.remainingTime.toString();
+
+    const intervalId = setInterval(() => {
+      this.remainingTime--;
+      if (this.remainingTime <= 0) {
+        clearInterval(intervalId); // Stop the timer when time is up
+        console.log("Timer off");
+        this.isOTPRequestSent = false;
+        this.reqOTPbtntxt = "Request OTP";
+      }
+    }, 1000); // Update every second
+  }
+
+
   onRegister() {
-    this.company.CompanyRegister(this.companyReg.value)
-      .subscribe({
-        next: (res) => {
-          console.log(res)
-        },
-        error: (err) => {
-          alert(err.message)
-          console.log(err)
-        }
-      });
+    if (!this.isEmailVerified) {
+      alert("Please verify your email first");
+      return;
+    } else {
+      this.company.CompanyRegister(this.companyReg.value)
+        .subscribe({
+          next: (res) => {
+            console.log(res)
+          },
+          error: (err) => {
+            alert(err.message)
+            console.log(err)
+          }
+        });
+    }
+
 
   }
 }

@@ -30,7 +30,7 @@
               </mat-form-field>
 
               <button mat-button class="custom-stepper1-button" style="color: white; margin-left: 20px;"
-                (click)="requestOTP()">Request OTP</button>
+                (click)="requestOTP()" [disabled]="isOTPRequestSent" id="otpreqbtn" >Request OTP {{ remainingTime }}</button>
 
               <mat-form-field>
                 <mat-label>OTP</mat-label>

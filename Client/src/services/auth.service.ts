@@ -38,24 +38,15 @@ export class AuthService {
       this.http.post<any>(Apipaths.requestOTP, emailObj)
         .subscribe(response => {
           // Here you can access the actual response data in the 'response' variable
-          console.log(response);  // This will log the actual data you expect
-          return response;
+          console.log(response);
+          if(response.status === 200){
+            return true;
+          }  // This will log the actual data you expect
+          return false;
+
         });
-        return true;
-
-
-      /*
-      console.log("service ", response)
-
-      if (response != null) {
-        // Success! Handle successful OTP request here (optional)
-        console.log("service: OTP request successful!");
-        return true;
-      } else {
-        // Error handling: Log the error and return false
-        console.error("service: Error verifying OTP:", response);
         return false;
-      }*/
+
     } catch (error) {
       // Unexpected error during HTTP request
       console.error("Unexpected error during OTP request:", error);
@@ -70,10 +61,12 @@ export class AuthService {
       this.http.post<any>(Apipaths.verifyOTP, emailObj)
         .subscribe(response => {
           // Here you can access the actual response data in the 'response' variable
-          console.log(response);  // This will log the actual data you expect
-          return response;
+          if(response.status === 200){
+            return true;
+          }  // This will log the actual data you expect
+          return false;
         });
-        return true;
+        return false;
     }catch (error) {
       // Unexpected error during HTTP request
       console.error("Unexpected error during OTP request:", error);
@@ -84,7 +77,7 @@ export class AuthService {
 
 
 
-  
+
   storeToken(token: string) {
     //console.log('Token Stored')
     this.local.saveData('token', token)
