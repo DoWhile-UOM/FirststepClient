@@ -8,11 +8,9 @@ import { Apipaths } from '../app/apipaths/apipaths';
 /*
 Handles Authetication and Authorization
 Store and decrypt JWT token
-
-
-
-
 */
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,6 +29,62 @@ export class AuthService {
     return this.http.post<any>(Apipaths.authenticate, loginObj)
   }
 
+  //-----OTP Service----------------------------------
+
+  async requestOTP(emailObj: any) {
+    try {
+      console.log("service ", emailObj);
+
+      this.http.post<any>(Apipaths.requestOTP, emailObj)
+        .subscribe(response => {
+          // Here you can access the actual response data in the 'response' variable
+          console.log(response);  // This will log the actual data you expect
+          return response;
+        });
+        return true;
+
+
+      /*
+      console.log("service ", response)
+
+      if (response != null) {
+        // Success! Handle successful OTP request here (optional)
+        console.log("service: OTP request successful!");
+        return true;
+      } else {
+        // Error handling: Log the error and return false
+        console.error("service: Error verifying OTP:", response);
+        return false;
+      }*/
+    } catch (error) {
+      // Unexpected error during HTTP request
+      console.error("Unexpected error during OTP request:", error);
+      return false;
+    }
+
+
+  }
+
+  async verifyOTP(emailObj: any){
+    try {
+      this.http.post<any>(Apipaths.verifyOTP, emailObj)
+        .subscribe(response => {
+          // Here you can access the actual response data in the 'response' variable
+          console.log(response);  // This will log the actual data you expect
+          return response;
+        });
+        return true;
+    }catch (error) {
+      // Unexpected error during HTTP request
+      console.error("Unexpected error during OTP request:", error);
+      return false;
+    }
+  }
+  //-----OTP Service End here---------------------------
+
+
+
+  
   storeToken(token: string) {
     //console.log('Token Stored')
     this.local.saveData('token', token)

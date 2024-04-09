@@ -26,18 +26,26 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CompanyService } from '../../../services/company.service';
 
+import { AuthService } from '../../../services/auth.service';
+import { Apipaths } from '../../apipaths/apipaths';
+
+interface requestOTP {
+  email: string | null | undefined;
+}
+
+interface verifyOTP { 
+  email: string | null | undefined;
+  otp: string | null | undefined;
+}
 
 @Component({
   selector: 'app-register-company',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule,NavBarComponent],
+  imports: [FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, NavBarComponent],
   templateUrl: './register-company.component.html',
   styleUrl: './register-company.component.css'
 })
-export class RegisterCompanyComponent{
-
-
-
+export class RegisterCompanyComponent {
 
   //form group for the stepper
   companyReg = this._formBuilder.group({
@@ -51,103 +59,70 @@ export class RegisterCompanyComponent{
     certificate_of_incorporation: ['', Validators.required],
     company_phone_number: ['', Validators.required],
     business_reg_no: ['', Validators.required],
+    otp_in: ['', Validators.required]
   });
 
-  constructor(private company:CompanyService,private _formBuilder: FormBuilder,private http: HttpClient) { }
+  constructor(private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
 
-  apiUrl='https://localhost:7093/api/Attachment';
 
-  selectedFile: File | null = null;
-
-  //image
-  ngOnInit(): void {
-  }
-  url = "./assets/images/SeekerEdit.jpg";
-  
-
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
-
-  uploadFile() {
-    if (!this.selectedFile) {
-      return; // Handle no file selected case
+  async requestOTP() {
+    console.log("Pressed");
+    
+    const userData: requestOTP = {
+      email: this.companyReg.get('company_email')?.value
     }
 
-    const fileData = new FormData();
-    fileData.append('files', this.selectedFile, this.selectedFile.name);
+    const verificationResult = await this.auth.requestOTP(userData);
 
-    const headers = new HttpHeaders()
-      .set('Accept', '*/*')
-      .set('Content-Type', 'multipart/form-data');
+    //const response = this.http.post<any>(Apipaths.requestOTP, userData);
 
-    this.http.post(this.apiUrl, fileData, { headers })
-      .subscribe(response => {
-        console.log('Upload successful:', response);
-        this.selectedFile = null; // Clear selection after successful upload
-      }, error => {
-        console.error('Upload error:', error);
-      });
-  }
-
-
-
-
-  onselectFile(event: any) {
-    if (event.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-      }
-
-    }
-  }
-
-  onRegister(){
-    //console.log(this.loginForm.value);
-    //this.auth.signup(this.myForm.value)
-    this.company.CompanyRegister(this.companyReg.value)
-    .subscribe({
-      next:(res)=>{
-        //this.auth.storeToken(res.token)
-        //alert(res.message)
-        console.log(res.token)
-
-        //console.log(res.message);
-        //this.loginForm.reset();
-        //this.auth.storeToken(res.accessToken);
-        //this.auth.storeRefreshToken(res.refreshToken);
-
-        //const tokenPayload = this.auth.decodedToken();
-        //console.log(tokenPayload);
-
-        //this.userStore.setFullNameForStore(tokenPayload.unique_name);
-        //.userStore.setRoleForStore(tokenPayload.role);
-        //console.log(tokenPayload);
-        //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
-        //this.router.navigate(['seeker'])
-        /*
-        switch(tokenPayload.role){
-          case "Seeker":{
-            this.router.navigate(['seeker'])
-            break;
-          }
-          case "Cadmin":{
-            this.router.navigate(['ca'])
-            break;
-          }
+    console.log(verificationResult);
+    /*
+        if (this.companyReg.get('company_email')?.value) {
+          console.log("requestOTP:OTP verification successful!");
+          // Perform actions after successful verification (optional)
+        } else {
+          console.error("requestOTP:OTP verification failed.");
+          // Handle failed verification (e.g., display error message)
         }*/
+  }
 
 
-      },
-      error:(err)=>{
-        alert(err.message)
-        console.log(err)
-      }
-  });
-  
-}}
+  async VerifyOTP() {
+    console.log(this.companyReg.get('otp_in')?.value);
+
+    const userData: verifyOTP = {
+      email: this.companyReg.get('company_email')?.value,
+      otp: this.companyReg.get('otp_in')?.value
+    }
+
+    const verificationResult = await this.auth.verifyOTP(userData);
+
+    /*
+    const verificationResult = await this.auth.verifyOTP(this.otpVerify.value);
+    if (verificationResult) {
+      console.log("VerifyOTP:OTP verification successful!");
+      // Perform actions after successful verification (optional)
+    } else {
+      console.error("VerifyOTP:OTP verification failed.");
+      // Handle failed verification (e.g., display error message)
+    }*/
+  }
+
+  onRegister() {
+    this.company.CompanyRegister(this.companyReg.value)
+      .subscribe({
+        next: (res) => {
+          console.log(res)
+        },
+        error: (err) => {
+          alert(err.message)
+          console.log(err)
+        }
+      });
+
+  }
+}
 
 
 

@@ -11,7 +11,7 @@
             <a>Ashan</a>
             <div class="left">
               <img src="\assets\images\signup1.png" alt="Seeker" class="seeker" />
-              
+
             </div>
 
             <div class="right">
@@ -28,10 +28,18 @@
                 <mat-label>Email Address</mat-label>
                 <input matInput placeholder="Enter Email" formControlName="company_email" required />
               </mat-form-field>
+
+              <button mat-button class="custom-stepper1-button" style="color: white; margin-left: 20px;"
+                (click)="requestOTP()">Request OTP</button>
+
               <mat-form-field>
                 <mat-label>OTP</mat-label>
-                <input matInput placeholder="Enter OTP" />
+                <input matInput placeholder="Enter Email" formControlName="otp_in" required />
               </mat-form-field>
+
+              <button mat-button class="custom-stepper1-button" style="color: white; margin-left: 20px;"
+                (click)="VerifyOTP()">Verify OTP</button>
+
               <div>
                 <button mat-button matStepperNext class="custom-stepper1-button"
                   style="color: white; margin-left: 20px;">Next</button>
@@ -62,7 +70,8 @@
 
               <mat-form-field>
                 <mat-label>Business Registration Number</mat-label>
-                <input type="number" matInput placeholder="Business Registration Number" formControlName="business_reg_no" required />
+                <input type="number" matInput placeholder="Business Registration Number"
+                  formControlName="business_reg_no" required />
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Date of Registartion</mat-label>
@@ -80,7 +89,7 @@
                 <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation"
                   required />
 
-                <input type="file" (change)="onFileSelected($event)">
+
                 <button>Upload File</button>
 
               </mat-form-field>

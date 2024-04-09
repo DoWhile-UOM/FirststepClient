@@ -5,6 +5,9 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatLabel } from '@angular/material/form-field';
 import { CompanyService } from '../../../services/company.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -24,7 +27,7 @@ export interface CmpyData {
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [MatButtonModule,MatInputModule,ReactiveFormsModule,MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
@@ -37,6 +40,8 @@ export class RegCmpStateCheckComponent {
 
   constructor(private route:ActivatedRoute,private company: CompanyService) { }
 
+
+
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params =>{
@@ -46,9 +51,7 @@ export class RegCmpStateCheckComponent {
         console.log('Company ID:', this.company_id);
         this.fetchData(this.company_id);
       }
-    }); // output:
-    //this.fetchData();
-    //console.log(this.cmpData);
+    }); 
     
   }
 
@@ -61,6 +64,10 @@ export class RegCmpStateCheckComponent {
       console.error('Error:', error);
     }
   //end of fetch data
+  }
+
+  OnResubmit(){
+
   }
 
 }
