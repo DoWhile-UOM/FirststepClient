@@ -6,7 +6,7 @@ import { Apipaths } from './apipaths/apipaths';
   providedIn: 'root'
 })
 
-export class DocumentServiceService {
+export class DocumentService {
 
   constructor() { }
 

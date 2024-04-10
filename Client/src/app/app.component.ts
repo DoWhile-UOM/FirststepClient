@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bars/nav-bar/nav-bar.component';
 import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
-import { DocumentServiceService } from '../services/document-service.service';
+import { DocumentService } from '../services/document.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { DocumentServiceService } from '../services/document-service.service';
 export class AppComponent implements OnInit{
   user = "ca"
 
-  constructor(private documentService: DocumentServiceService) {}
+  constructor(private documentService: DocumentService) {}
 
   ngOnInit() {
     //this.documentService.downloadBlob("0x8DC3CBBBB23D9BA");
