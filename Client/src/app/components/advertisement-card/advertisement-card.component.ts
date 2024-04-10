@@ -4,6 +4,8 @@ import { AdvertisementActionsComponent } from '../advertisement-actions/advertis
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { AdvertisementViewPageComponent } from '../advertisement-view-page/advertisement-view-page.component';
 
 interface Job {
   advertisement_id: number;
@@ -30,7 +32,7 @@ export class AdvertisementCardComponent implements OnInit{
   @Input() job!: Job;
   icon: string = 'bookmark_border'; 
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private jobDetailsDialog: MatDialog) { 
   }
 
   ngOnInit() : void{ 
@@ -39,7 +41,10 @@ export class AdvertisementCardComponent implements OnInit{
   onClickMoreDetails() {
     // open in new tab
     //window.open('/seeker/home/jobdetails;jobID=' + this.job.advertisement_id, '_blank');
-    this.router.navigate(['seeker/home/jobdetails', {jobID: this.job.advertisement_id}]);
+    //this.router.navigate(['seeker/home/jobdetails', {jobID: this.job.advertisement_id}]);
+    this.jobDetailsDialog.open(AdvertisementViewPageComponent, {
+      data: {jobID: this.job.advertisement_id},
+    });
   }
 
   onClickCompanyName() {
