@@ -1,7 +1,12 @@
 <mat-card class="job-card">
     <div class="job-heading">
-        <mat-card-title class="job-title">{{job.title}}</mat-card-title>
-        <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{job.company_name}}</mat-card-subtitle>
+        <div class="title-container">
+            <img class="company-logo" src="../../../assets/BistechLogo.png" alt="Company Logo">
+            <div class="title">
+                <mat-card-title class="job-title">{{job.title}}</mat-card-title>
+                <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{job.company_name}}</mat-card-subtitle>
+            </div>
+        </div>
         <p class="job-field">{{job.field_name}}</p>
     </div>
     <div class="job-summery-outer">

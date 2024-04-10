@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AdvertisementHeaderComponent } from '../advertisement-header/advertisement-header.component';
-import { AdvertisementViewComponent } from '../advertisement-view/advertisement-view.component';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 
 interface Skill{
   skill_name: string;
@@ -30,25 +32,26 @@ interface Job{
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, MatCardModule],
+  imports: [AdvertisementHeaderComponent, MatCardModule, CommonModule, MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })
 export class AdvertisementViewPageComponent {
   adData: Job = {} as Job;
 
-  constructor(private router: ActivatedRoute, private adService: AdvertisementServices) {
-    
-  }
+  constructor(
+    private router: ActivatedRoute, 
+    private adService: AdvertisementServices,
+    public dialogRef: MatDialogRef<AdvertisementViewPageComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+      if (data.jobID == null) {
+        console.log("No job ID found");
+        return;
+      }
+
+      console.log("Job ID: " + data.jobID);
   
-  async ngOnInit() {
-    let jobID: string | null = this.router.snapshot.paramMap.get('jobID');
-
-    if (jobID == null) {
-      console.log("No job ID found");
-      return;
-    }
-
-    this.adData = await this.adService.getAdvertisementById(jobID);
-  }
+      (async () => {
+        this.adData = await this.adService.getAdvertisementById(data.jobID);
+      })();
+  } 
 }
