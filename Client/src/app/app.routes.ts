@@ -10,6 +10,7 @@ export const routes: Routes = [
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},
   
+  
   {
     path: 'ca',
     loadChildren: () => import('./routes/company-admin.routes').then(m => m.caRoutes),

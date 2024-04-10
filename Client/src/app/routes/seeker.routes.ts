@@ -6,6 +6,7 @@ import { SavedAdvertisementListComponent } from '../components/saved-advertiseme
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
 import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
+import { FileDownloadComponent } from '../components/file-download/file-download.component';
 
 
 export const routes: Routes = [
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'saved', component: SavedAdvertisementListComponent },
   { path: 'home/company-profile', component: CompanyProfileComponent },
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
-  { path: 'home/applicationFormconfirm', component: SeekerApplicationFormComponent },
+  { path: 'home/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
+  {path:'fileDownload',component:FileDownloadComponent},
 ];
