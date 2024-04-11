@@ -143,9 +143,17 @@
 					</mat-form-field>
 				</mat-grid-tile>
 				<mat-grid-tile>
-					<mat-form-field appearance="outline">
-						<mat-label>Salary {{unitOfSalary != '' ? 'in ' + unitOfSalary : ''}}</mat-label>
-						<input matInput placeholder="Salary {{unitOfSalary != '' ? 'in ' + unitOfSalary : ''}}" name="salary" [(ngModel)]="adData.salary">
+					<mat-form-field appearance="outline" class="salary-currency-input">
+						<mat-label>Unit</mat-label>
+						<mat-select #selectField name="currency_unit" [(ngModel)]="adData.currency_unit">
+						@for (unit of currencyUnits; track unit) {
+							<mat-option [value]="unit">{{unit}}</mat-option>
+						}
+						</mat-select>
+					</mat-form-field>
+					<mat-form-field appearance="outline" class="salary-input">
+						<mat-label>Salary {{adData.currency_unit != '' ? 'in ' + adData.currency_unit : ''}}</mat-label>
+						<input matInput placeholder="Salary {{adData.currency_unit != '' ? 'in ' + adData.currency_unit : ''}}" name="salary" [(ngModel)]="adData.salary">
 					</mat-form-field>
 				</mat-grid-tile>
 			</mat-grid-list>

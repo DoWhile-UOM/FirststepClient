@@ -110,3 +110,11 @@ mat-hint{
     flex-direction: column;
     margin-left: 1em;
 }
+
+.salary-currency-input{
+    width: 35% !important;
+}
+
+.salary-input{
+    width: 65% !important;
+}
