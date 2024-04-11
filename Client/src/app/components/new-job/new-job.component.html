@@ -1,8 +1,15 @@
 <div class="container">
 	<mat-card class="card">
 		<div class="heading">
-			<p class="title">{{(isUpdate) ? 'Update' : 'Create New'}} Job Advertisement {{(isUpdate) ? ': ' + adData.title: ''}}</p>
-			<p class="companyname">BISTECH GLOBAL SERVICES</p>
+			<div class="back-button">
+				<button mat-icon-button (click)="onBackButtonClick()">
+					<mat-icon>arrow_back</mat-icon>
+				</button>
+			</div>
+			<div class="heading-container">
+				<p class="title">{{(isUpdate) ? 'Update' : 'Create New'}} Job Advertisement {{(isUpdate) ? ': ' + adData.title: ''}}</p>
+				<p class="companyname">BISTECH GLOBAL SERVICES</p>
+			</div>
 		</div>
 		<mat-divider></mat-divider>
 		<form class="form-container" #createJobForm="ngForm" (ngSubmit)="(isUpdate) ? updateJob(createJobForm.value) :createNewJob(createJobForm.value)">

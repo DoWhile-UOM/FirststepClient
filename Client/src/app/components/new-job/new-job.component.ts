@@ -224,6 +224,10 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		this.spinner.hide();
 	}
 
+	onBackButtonClick(){
+		window.history.back();
+	}
+
 	ngAfterViewInit() {
 		this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
 	}
