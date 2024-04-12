@@ -41,7 +41,7 @@
                 (click)="VerifyOTP()">Verify OTP</button>
 
               <div>
-                <button mat-button matStepperNext class="custom-stepper1-button"
+                <button mat-button [disabled]="!isEmailVerified" matStepperNext class="custom-stepper1-button"
                   style="color: white; margin-left: 20px;">Next</button>
               </div>
             </div>
@@ -94,7 +94,7 @@
 
               </mat-form-field>
               <div>
-                <button mat-button matStepperNext class="custom-stepper1-button"
+                <button mat-button [disabled]="!isEmailVerified" matStepperNext class="custom-stepper1-button"
                   style="color: white; margin-left: 20px;" (click)="onRegister()">Register</button>
               </div>
 

@@ -57,7 +57,7 @@ export class RegisterCompanyComponent {
   companyReg = this._formBuilder.group({
     company_name: ['', Validators.required],
     company_website: ['', Validators.required],
-    company_email: ['', Validators.required],
+    company_email: ['', [Validators.required,Validators.email]],
     //otp: ['', Validators.required],
     //pNumber: ['', Validators.required]
     business_reg_certificate: ['', Validators.required],
@@ -90,8 +90,12 @@ export class RegisterCompanyComponent {
     }
 
     const verificationResult = await this.auth.verifyOTP(userData);
+    //console.log("Verficaiton result is "+verificationResult);
     if (verificationResult == true) {
       this.isEmailVerified = true;
+      //console.log("Email verified");
+    } else {
+      console.log("Email verification failed");
     }
 
   }

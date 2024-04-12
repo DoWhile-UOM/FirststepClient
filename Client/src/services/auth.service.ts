@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalService } from './local.service';
 import { Apipaths } from '../app/apipaths/apipaths';
+import { catchError, firstValueFrom, map, of } from 'rxjs';
 
 /*
 Handles Authetication and Authorization
@@ -39,13 +40,13 @@ export class AuthService {
         .subscribe(response => {
           // Here you can access the actual response data in the 'response' variable
           console.log(response);
-          if(response.status === 200){
+          if (response.status === 200) {
             return true;
           }  // This will log the actual data you expect
           return false;
 
         });
-        return false;
+      return false;
 
     } catch (error) {
       // Unexpected error during HTTP request
@@ -56,20 +57,22 @@ export class AuthService {
 
   }
 
-  async verifyOTP(emailObj: any){
+  async verifyOTP(userData: any): Promise<boolean> {
     try {
-      this.http.post<any>(Apipaths.verifyOTP, emailObj)
-        .subscribe(response => {
-          // Here you can access the actual response data in the 'response' variable
-          if(response.status === 200){
-            return true;
-          }  // This will log the actual data you expect
-          return false;
-        });
-        return false;
-    }catch (error) {
-      // Unexpected error during HTTP request
-      console.error("Unexpected error during OTP request:", error);
+      const response = await firstValueFrom(
+        this.http.post<any>(Apipaths.verifyOTP, userData)
+          .pipe(
+            map(response => response.status === 200), // Check for successful response
+            catchError(error => {
+              console.error('Error during OTP verification:', error);
+              return of(false); // Return false on error
+            })
+          )
+      );
+
+      return true;
+    } catch (error) {
+      console.error('Unexpected error during OTP request:', error);
       return false;
     }
   }
