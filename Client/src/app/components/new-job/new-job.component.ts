@@ -289,7 +289,21 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		addAdvertisement.keywords = this.removeDuplicates(this.keywords);
 		addAdvertisement.reqSkills = this.removeDuplicates(this.skills);
 		
-		addAdvertisement.hrManager_id = 10; // sample hrManager_id
+		try {
+			addAdvertisement.hrManager_id = sessionStorage.getItem('user_id') == null ? 0 : Number(sessionStorage.getItem('user_id'));
+		
+			if (addAdvertisement.hrManager_id == 0){
+				this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+	
+				// code to signout the user
+				return;
+			}
+		} catch (error) {
+			//console.log(error); //raises the error
+			this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+			this.router.navigate(['/notfound']);
+			return;
+		}
 
 		addAdvertisement.city = this.locationCityControl.value ?? '';
 		addAdvertisement.country = this.locationCountryControl.value ?? '';

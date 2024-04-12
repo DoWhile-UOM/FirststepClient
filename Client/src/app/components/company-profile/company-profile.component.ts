@@ -6,7 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { AdvertisementServices } from '../../../services/advertisement.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Job {
   advertisement_id: number;
@@ -49,13 +50,41 @@ export class CompanyProfileComponent {
   company: Company = {} as Company;
   jobList: Job[] = [];
 
-  seekerID: number = 3; // sample seekerID
+  seekerID: number = 0;
 
-  constructor(private advertisementService: AdvertisementServices, private router: ActivatedRoute) { }
+  constructor(
+    private advertisementService: AdvertisementServices, 
+    private a_router: ActivatedRoute, 
+    private router: Router, 
+    private snackBar: MatSnackBar) { 
+
+  }
 
   async ngOnInit(){
-    //alert(this.company_id);
-    let company_id: string = this.router.snapshot.paramMap.get('company_id') ?? '';
+    try {
+      var seekerID = String(sessionStorage.getItem('user_id'));
+      var user_type = String(sessionStorage.getItem('user_type'));
+
+      if (this.seekerID == null && user_type != 'seeker'){
+        this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+        // navigate to 404 page
+        this.router.navigate(['/notfound']);
+        // code to signout
+        return;
+      }
+
+      this.seekerID = Number(seekerID);
+    } catch (error) {
+      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+      // navigate to 404 page
+      this.router.navigate(['/notfound']);
+      // code to signout
+      return;
+    }
+
+    let company_id: string = this.a_router.snapshot.paramMap.get('company_id') ?? '';
 
     if (company_id == '') {
       alert("Invalid company");

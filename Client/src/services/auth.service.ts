@@ -14,7 +14,7 @@ export class AuthService {
 
   private baseUrl:string="https://localhost:7213/api/User"
 
-  constructor(private local:LocalService,private http:HttpClient,private route:Router) {
+  constructor(private local:LocalService, private http:HttpClient, private route:Router) {
     this.userPayload = this.decodedToken() //call decodedToken() to get payload data
    }
 

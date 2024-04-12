@@ -16,6 +16,7 @@ import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 interface Job {
   advertisement_id: number;
@@ -67,7 +68,7 @@ export class SearchBasicComponent implements OnInit{
   empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
 	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
 
-  seekerID: string = "3"; // sample seekerID
+  seekerID: string = ''; 
 
   @Output() newItemEvent = new EventEmitter<Job[]>();
   @Output() changePaginatorLengthEvent = new EventEmitter<number>();
@@ -85,7 +86,8 @@ export class SearchBasicComponent implements OnInit{
   constructor(
     private advertisementService: AdvertisementServices, 
     private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService) { 
+    private spinner: NgxSpinnerService,
+    private router: Router) { 
     this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filterCountry(value || '')),
@@ -98,6 +100,27 @@ export class SearchBasicComponent implements OnInit{
   }
 
   async ngOnInit() {
+    try {
+      this.seekerID = String(sessionStorage.getItem('user_id'));
+      var user_type = String(sessionStorage.getItem('user_type'));
+
+      if (this.seekerID == null && user_type != 'seeker'){
+        this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+        // navigate to 404 page
+        this.router.navigate(['/notfound']);
+        // code to signout
+        return;
+      }
+    } catch (error) {
+      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+      // navigate to 404 page
+      this.router.navigate(['/notfound']);
+      // code to signout
+      return;
+    }
+
     this.countries = Country.getAllCountries().map(country => country.name);
 
     this.spinner.show();
