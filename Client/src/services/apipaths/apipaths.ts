@@ -32,7 +32,7 @@ export class Apipaths {
     static readonly deleteCompany: string = this.baseUrl + 'Company/DeleteCompany/';
     static readonly getAllComapanyList: string = this.baseUrl + 'Company/GetAllComapanyList';
     static readonly getCompanyApplicationById: string = this.baseUrl + 'Company/GetCompanyApplicationById/'; //+companyId
-
+    static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateComapanyApplicationById/';//+companyId
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 

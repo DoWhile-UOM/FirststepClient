@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerComponent } from '../spinner/spinner.component';
@@ -12,11 +13,9 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Inject } from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 interface CompanyApplication {
   company_id: number;
@@ -29,12 +28,21 @@ interface CompanyApplication {
   certificate_of_incorporation: string;
   comment: string;
 }
+interface EvaluatedCompanyDetails {
+  company_id: number;
+  verification_status: boolean;
+  comment: string;
+}
+export interface DialogData {
+  comment: string;
+}
 
 @Component({
   selector: 'app-company-application',
   standalone: true,
   imports: [
     NgxSpinnerModule,
+    CommonModule,
     SpinnerComponent,
     MatCardModule,
     MatGridListModule,
@@ -53,11 +61,13 @@ export class CompanyApplicationComponent {
   evaluated_staus: string = '';
   companyID = 7; // temporary company id
   companyApplication: CompanyApplication = {} as CompanyApplication; // this is the object that will be used to store the company application details
-
+  evaluatedCompanyDetails: EvaluatedCompanyDetails =
+    {} as EvaluatedCompanyDetails;
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
-    private route: Router,public dialog: MatDialog
+    private route: Router,
+    public dialog: MatDialog
   ) {}
   //getCompanyApplicationById
   async ngOnInit() {
@@ -77,13 +87,45 @@ export class CompanyApplicationComponent {
   approve() {
     this.companyApplication.verification_status = true;
     this.evaluated_staus = 'Evaluated';
+    const dialogRef = this.dialog.open(CompanyApprovalConfirmationPopup);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == 'Approval Confirmed') {
+        this.evaluatedCompanyDetails.company_id =
+          this.companyApplication.company_id;
+        this.evaluatedCompanyDetails.verification_status =
+          this.companyApplication.verification_status;
+        this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
+        this.updateEvaluatedStatus();
+      }
+    })
   }
-  reject(){
+  reject() {
     this.evaluated_staus = 'Not Evaluated';
-    const dialogRef = this.dialog.open(CommentInCompanyEvaluation, {
-      data: this.companyApplication.comment,
+    const dialogRef = this.dialog.open(CommentInCompanyEvaluation);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.companyApplication.comment = result;
+      if (this.companyApplication.comment) {
+        this.evaluatedCompanyDetails.company_id =
+          this.companyApplication.company_id;
+        this.evaluatedCompanyDetails.verification_status =
+          this.companyApplication.verification_status;
+        this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
+        this.updateEvaluatedStatus();
+      }
     });
-    
+  }
+  async updateEvaluatedStatus() {
+    try {
+      this.spinner.show();
+      await this.companyService.updateCompanyApplicationById(
+        this.evaluatedCompanyDetails,
+        this.companyID
+      );
+    } finally {
+      this.spinner.hide();
+    }
   }
 }
 
@@ -95,5 +137,33 @@ export class CompanyApplicationComponent {
   imports: [MatFormFieldModule, FormsModule, MatButtonModule],
 })
 export class CommentInCompanyEvaluation {
-  companyApplication: CompanyApplication = {} as CompanyApplication;
+  comment: string = '';
+
+  constructor(public dialogRef: MatDialogRef<CommentInCompanyEvaluation>) {}
+
+  closeDialog() {
+    this.dialogRef.close(this.comment);
+  }
+  onNoClick(): void {
+    this.dialogRef.close('');
+  }
+}
+//comapany-approval-confirmation-popup
+@Component({
+  selector: 'company-approval-confirmation-popup',
+  standalone: true,
+  templateUrl: 'company-approval-confirmation-popup.html',
+  imports: [MatFormFieldModule, FormsModule, MatButtonModule],
+})
+export class CompanyApprovalConfirmationPopup {
+  constructor(
+    public dialogRef: MatDialogRef<CompanyApprovalConfirmationPopup>
+  ) {}
+
+  closeDialog() {
+    this.dialogRef.close('Approval Confirmed');
+  }
+  onNoClick(): void {
+    this.dialogRef.close('Approval Cancelled');
+  }
 }

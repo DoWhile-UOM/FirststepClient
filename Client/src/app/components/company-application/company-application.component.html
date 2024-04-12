@@ -69,7 +69,7 @@
       </mat-grid-tile>
     </mat-grid-list>
     <mat-divider></mat-divider>
-    <div *ngIf="companyApplication.verification_status == 'true'">
+    <div *ngIf="!companyApplication.verification_status">
       <button
         mat-raised-button
         class="apply-button"

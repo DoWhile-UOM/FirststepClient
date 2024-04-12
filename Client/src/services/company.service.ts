@@ -31,6 +31,11 @@ interface CompanyApplication {
   certificate_of_incorporation: string;
   comment: string;
 }
+interface EvaluatedCompanyDetails {
+  company_id: number;
+  verification_status: boolean;
+  comment: string;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -96,7 +101,34 @@ export class CompanyService {
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
-        this.snackBar.open('Company details updated successfully', "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+        this.snackBar
+          .open('Company details updated successfully', '', {
+            panelClass: ['app-notification-normal'],
+          })
+          ._dismissAfter(3000);
+      })
+      .catch((error) => {
+        this.snackBar.open('Network error occurred. Try Again', 'Close', {
+          duration: 3000,
+        });
+      });
+  }
+  async updateCompanyApplicationById(
+    evaluatedCompanyDetails: EvaluatedCompanyDetails,
+    companyId: number
+  ) {
+    evaluatedCompanyDetails.company_id = companyId; // should be changed
+    await axios
+      .put(
+        Apipaths.updateCompanyApplicationById + companyId,
+        evaluatedCompanyDetails
+      )
+      .then((response) => {
+        this.snackBar
+          .open('Company application was succcessfully evaluated', '', {
+            panelClass: ['app-notification-normal'],
+          })
+          ._dismissAfter(3000);
       })
       .catch((error) => {
         this.snackBar.open('Network error occurred. Try Again', 'Close', {
