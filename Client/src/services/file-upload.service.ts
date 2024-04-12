@@ -18,12 +18,7 @@ export class FileUploadService {
     await axios.post(`${this.baseUrl}/Attachment`, formData);
 
     alert('File uploaded successfully');
-/*
-    const req = new HttpRequest('POST', `${this.baseUrl}/Attachment`, formData, {
-      responseType: 'json',
-    });
-*/
-    //return this.http.request(req);
+
   }
 
   getFiles(): Observable<any> {

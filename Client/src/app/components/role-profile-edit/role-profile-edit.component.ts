@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,7 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
-
 import { EmployeeService } from '../../../services/employee.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -29,7 +27,6 @@ interface Employee {
   templateUrl: './role-profile-edit.component.html',
   styleUrl: './role-profile-edit.component.css',
   imports: [
-    NavBarComponent,
     MatCardModule,
     MatGridListModule,
     MatFormFieldModule,

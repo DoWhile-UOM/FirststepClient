@@ -4,17 +4,16 @@ import { AdvertisementViewPageComponent } from '../components/advertisement-view
 import { SeekerHomePageComponent } from '../components/seeker-home-page/seeker-home-page.component';
 import { SavedAdvertisementListComponent } from '../components/saved-advertisement-list/saved-advertisement-list.component';
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
-import { NewJobUploadedComponent } from '../components/new-job-uploaded/new-job-uploaded.component';
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
+import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'jobdetails', component: AdvertisementViewPageComponent },
+  { path: 'home/jobdetails', component: AdvertisementViewPageComponent },
   { path: 'home', component: SeekerHomePageComponent },
-  { path: 'home/saved', component: SavedAdvertisementListComponent },
-  { path: 'company-profile', component: CompanyProfileComponent },
-  { path: 'newJobUploaded', component: NewJobUploadedComponent },
-  { path: 'applicationForm', component: SeekerApplicationFormComponent },
-  { path: 'applicationFormconfirm', component: SeekerApplicationFormComponent },
+  { path: 'saved', component: SavedAdvertisementListComponent },
+  { path: 'home/company-profile', component: CompanyProfileComponent },
+  { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
+  { path: 'home/applicationFormconfirm', component: SeekerApplicationFormComponent },
 ];

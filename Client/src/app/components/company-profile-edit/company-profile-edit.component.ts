@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
@@ -16,7 +15,6 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { CompanyService } from '../../../services/company.service';
-import { CaNavBarComponent } from '../ca-nav-bar/ca-nav-bar.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatCardModule } from '@angular/material/card';
@@ -49,7 +47,6 @@ interface BusinessScale {
   styleUrl: './company-profile-edit.component.css',
   imports: [
     MatGridListModule,
-    NavBarComponent,
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
@@ -62,7 +59,6 @@ interface BusinessScale {
     MatButtonModule,
     NgxSpinnerModule,
     SpinnerComponent,
-    CaNavBarComponent,
     MatCardModule,
     CommonModule,
   ],
@@ -103,9 +99,7 @@ export class CompanyProfileEditComponent {
       this.cName = this.company.company_name;
       console.log('got details');
     } finally {
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
     }
   }
 
@@ -118,9 +112,7 @@ export class CompanyProfileEditComponent {
       this.cName = this.company.company_name;
       console.log('updated');
     } finally {
-      setTimeout(() => {
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
     }
   }
 

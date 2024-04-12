@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apipaths } from '../app/apipaths/apipaths';
+import { Apipaths } from './apipaths/apipaths';
 import axios from 'axios';
 
 @Injectable({
@@ -14,12 +14,7 @@ export class JobfieldService {
 
     await axios.get(Apipaths.getAllFields)
       .then(function (response) {
-        try {
-          fieldList = response.data;
-        }
-        catch (error) {
-          console.log("No fields found");
-        }
+        fieldList = response.data;
       })
       .catch(
         function (error) {
