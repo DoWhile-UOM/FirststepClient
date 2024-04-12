@@ -70,10 +70,13 @@ export class CompanyService {
         } catch (error) {
           console.log('No company application found for the given id');
         }
+      })
+      .catch((error) => {
+        this.snackBar.open('Network error occurred. Try Again', 'Close', {
+          duration: 3000,
+        });
       });
-    // .then((response) => {
-    //   companyApplication = response.data;
-    // })
+    return companyApplication;
   }
 
   // async updateCompanyDetails(company: Company) {

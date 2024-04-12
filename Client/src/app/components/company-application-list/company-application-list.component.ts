@@ -20,17 +20,7 @@ interface CompanyList {
   company_name: string;
   verification_status: string;
 }
-interface CompanyApplication {
-  company_id: number;
-  company_name: string;
-  verification_status: boolean;
-  company_email: string;
-  company_website: string;
-  company_phone_number: number;
-  business_reg_certificate: string;
-  certificate_of_incorporation: string;
-  comment: string;
-}
+
 
 
 @Component({
@@ -58,7 +48,7 @@ export class CompanyApplicationListComponent {
  
 
   @ViewChild(MatTable)
-  table!: MatTable<CompanyApplication>;
+  table!: MatTable<CompanyList>;
 
   companyList: CompanyList[] = [];
   companyListLength: number = 0;

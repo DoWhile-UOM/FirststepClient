@@ -1,1 +1,86 @@
-<p>company-application works!</p>
+<div class="body">
+  <app-spinner> </app-spinner>
+  <mat-card class="card">
+    <!--Top Section-->
+    <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
+      <mat-grid-tile>
+        <span class="sectionHeading heading title">{{
+          companyApplication.company_name
+        }}</span>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <button mat-raised-button class="apply-button" color="primary">
+          {{ evaluated_staus }}
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider></mat-divider>
+
+    <!--Company Details-->
+    <mat-grid-list cols="1" rowHeight="100">
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Company Name</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_name"
+            [(ngModel)]="companyApplication.company_name"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>URL of the website</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_url"
+            [(ngModel)]="companyApplication.company_website"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_email"
+            [(ngModel)]="companyApplication.company_email"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <!--company phone number-->
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_phone"
+            [(ngModel)]="companyApplication.company_phone_number"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider></mat-divider>
+    <div *ngIf="companyApplication.verification_status == 'true'">
+      <button
+        mat-raised-button
+        class="apply-button"
+        color="primary"
+        (click)="approve()"
+      >
+        Approve
+      </button>
+      <button mat-raised-button class="apply-button" color="primary">
+        Reject
+      </button>
+    </div>
+  </mat-card>
+</div>
