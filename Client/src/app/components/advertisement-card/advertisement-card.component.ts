@@ -44,6 +44,7 @@ export class AdvertisementCardComponent implements OnInit{
     //this.router.navigate(['seeker/home/jobdetails', {jobID: this.job.advertisement_id}]);
     this.jobDetailsDialog.open(AdvertisementViewPageComponent, {
       data: {jobID: this.job.advertisement_id},
+      maxWidth: '100em'
     });
   }
 
