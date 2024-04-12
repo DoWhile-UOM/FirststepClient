@@ -3,11 +3,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { LogOutMenuComponent } from '../log-out-menu/log-out-menu.component';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [MatSlideToggleModule,MatToolbarModule,MatButtonModule],
+  imports: [MatSlideToggleModule,MatToolbarModule,MatButtonModule,LogOutMenuComponent],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
