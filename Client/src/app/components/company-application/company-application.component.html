@@ -4,7 +4,9 @@
     <!--Top Section-->
     <mat-grid-list cols="6" rowHeight="140">
       <mat-grid-tile [colspan]="1">
-        <img src="assets/arrow.png" alt="Company Logo" class="company-logo" />
+        <a (click)="goBack()">
+          <img src="assets/arrow.png" alt="Company Logo" class="company-logo" />
+        </a>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="2">
         <span class="sectionHeading heading title">{{

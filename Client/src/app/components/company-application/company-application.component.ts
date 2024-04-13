@@ -80,7 +80,8 @@ export class CompanyApplicationComponent implements OnInit {
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
   //getCompanyApplicationById
   ngOnInit() {
@@ -152,6 +153,10 @@ export class CompanyApplicationComponent implements OnInit {
     } finally {
       this.spinner.hide();
     }
+  }
+  //go back to the company application list
+  goBack() {
+    this.router.navigate(['/sa/company-application']);
   }
 }
 
