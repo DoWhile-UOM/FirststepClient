@@ -13,7 +13,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { SaNavBarComponent } from '../../nav-bars/sa-nav-bar/sa-nav-bar.component';
 
 interface CompanyList {
   company_id: number;
@@ -35,7 +35,7 @@ interface CompanyList {
     MatSortModule,
     NgxSpinnerModule,
     SpinnerComponent,
-    CommonModule,
+    CommonModule,SaNavBarComponent
   ],
   templateUrl: './company-application-list.component.html',
   styleUrl: './company-application-list.component.css',
@@ -116,7 +116,7 @@ export class CompanyApplicationListComponent {
   }
 
   viewCompanyApplication(companyID:string){
-    this.route.navigate(['/application',companyID]);
+    this.route.navigate(['/company-application',companyID]);
   }
   
   

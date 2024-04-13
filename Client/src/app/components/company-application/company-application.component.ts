@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -22,6 +22,8 @@ import {
   MatDialogClose,
 } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute } from '@angular/router';
+
 interface CompanyApplication {
   company_id: number;
   company_name: string;
@@ -66,25 +68,35 @@ export interface DialogData {
   templateUrl: './company-application.component.html',
   styleUrl: './company-application.component.css',
 })
-export class CompanyApplicationComponent {
+export class CompanyApplicationComponent implements OnInit {
   noOfCols: number = 2;
   evaluated_staus: string = '';
-  companyID = 1026; // temporary company id
+  //
+  companyID: number = 0;
   companyApplication: CompanyApplication = {} as CompanyApplication; // this is the object that will be used to store the company application details
   evaluatedCompanyDetails: EvaluatedCompanyDetails =
     {} as EvaluatedCompanyDetails;
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
-    private route: Router,
+    private route: ActivatedRoute,
     public dialog: MatDialog
   ) {}
   //getCompanyApplicationById
-  async ngOnInit() {
+  ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.loadCompanyApplication(params['id']);
+    });
+  }
+
+  async loadCompanyApplication(id: string) {
+    this.companyID = +id;
+
     try {
       this.spinner.show();
       this.companyApplication =
         await this.companyService.getCompanyApplicationById(this.companyID);
+
       if (this.companyApplication.verification_status == true) {
         this.evaluated_staus = 'Evaluated';
       } else {
