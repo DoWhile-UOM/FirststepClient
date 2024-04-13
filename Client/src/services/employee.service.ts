@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Apipaths } from '../app/apipaths/apipaths';
+import { Apipaths } from './apipaths/apipaths';
 import axios from 'axios';
 import { response } from 'express';
 

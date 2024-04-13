@@ -27,7 +27,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CompanyService } from '../../../services/company.service';
 
 import { AuthService } from '../../../services/auth.service';
-import { Apipaths } from '../../apipaths/apipaths';
+import { Apipaths } from '../../../services/apipaths/apipaths';
 
 interface requestOTP {
   email: string | null | undefined;

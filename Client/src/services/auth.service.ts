@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalService } from './local.service';
-import { Apipaths } from '../app/apipaths/apipaths';
+import { Apipaths } from './apipaths/apipaths';
 import { catchError, firstValueFrom, map, of } from 'rxjs';
 
 /*
