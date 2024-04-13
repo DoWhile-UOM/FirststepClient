@@ -14,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { MatDialog } from '@angular/material/dialog';
 
+
 interface CompanyList {
   company_id: number;
  
@@ -114,7 +115,9 @@ export class CompanyApplicationListComponent {
 
   }
 
- 
+  viewCompanyApplication(companyID:string){
+    this.route.navigate(['/application',companyID]);
+  }
   
   
 }

@@ -11,6 +11,10 @@ mat-grid-tile mat-form-field {
   width: 75%;
   margin: 0.75em;
 }
+.company-logo {
+  width: 20px;
+  height: auto;
+}
 
 mat-grid-tile {
   height: auto;
@@ -32,6 +36,3 @@ button {
   width: 32px !important;
   height: 32px !important;
 }
-
-
-

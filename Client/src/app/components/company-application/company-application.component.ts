@@ -13,10 +13,15 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
-  MatDialog,
-  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
 } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 interface CompanyApplication {
   company_id: number;
   company_name: string;
@@ -52,6 +57,11 @@ export interface DialogData {
     MatFormFieldModule,
     FormsModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatTooltipModule,
   ],
   templateUrl: './company-application.component.html',
   styleUrl: './company-application.component.css',
@@ -59,7 +69,7 @@ export interface DialogData {
 export class CompanyApplicationComponent {
   noOfCols: number = 2;
   evaluated_staus: string = '';
-  companyID = 7; // temporary company id
+  companyID = 1026; // temporary company id
   companyApplication: CompanyApplication = {} as CompanyApplication; // this is the object that will be used to store the company application details
   evaluatedCompanyDetails: EvaluatedCompanyDetails =
     {} as EvaluatedCompanyDetails;
@@ -85,34 +95,38 @@ export class CompanyApplicationComponent {
     }
   }
   approve() {
-    this.companyApplication.verification_status = true;
-    this.evaluated_staus = 'Evaluated';
     const dialogRef = this.dialog.open(CompanyApprovalConfirmationPopup);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result == 'Approval Confirmed') {
+        this.companyApplication.verification_status = true;
+        this.evaluated_staus = 'Evaluated';
         this.evaluatedCompanyDetails.company_id =
           this.companyApplication.company_id;
         this.evaluatedCompanyDetails.verification_status =
           this.companyApplication.verification_status;
         this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
         this.updateEvaluatedStatus();
+      } else {
+        this.companyApplication.verification_status = false;
       }
-    })
+    });
   }
   reject() {
-    this.evaluated_staus = 'Not Evaluated';
     const dialogRef = this.dialog.open(CommentInCompanyEvaluation);
 
     dialogRef.afterClosed().subscribe((result) => {
       this.companyApplication.comment = result;
       if (this.companyApplication.comment) {
+        this.evaluated_staus = 'Not Evaluated';
         this.evaluatedCompanyDetails.company_id =
           this.companyApplication.company_id;
         this.evaluatedCompanyDetails.verification_status =
           this.companyApplication.verification_status;
         this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
         this.updateEvaluatedStatus();
+      } else {
+        this.dialog.open(CannotRejectWithoutCommentPopup);
       }
     });
   }
@@ -134,7 +148,17 @@ export class CompanyApplicationComponent {
   selector: 'comment-in-company-evaluation',
   standalone: true,
   templateUrl: 'comment-in-company-evaluation.html',
-  imports: [MatFormFieldModule, FormsModule, MatButtonModule],
+  imports: [
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
 })
 export class CommentInCompanyEvaluation {
   comment: string = '';
@@ -148,12 +172,39 @@ export class CommentInCompanyEvaluation {
     this.dialogRef.close('');
   }
 }
+//cannot-reject-without-comment-popup
+@Component({
+  selector: 'cannot-reject-without-comment-popup',
+  standalone: true,
+  templateUrl: 'cannot-reject-without-comment-popup.html',
+  imports: [
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
+})
+export class CannotRejectWithoutCommentPopup {}
+
 //comapany-approval-confirmation-popup
 @Component({
   selector: 'company-approval-confirmation-popup',
   standalone: true,
   templateUrl: 'company-approval-confirmation-popup.html',
-  imports: [MatFormFieldModule, FormsModule, MatButtonModule],
+  imports: [
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
 })
 export class CompanyApprovalConfirmationPopup {
   constructor(

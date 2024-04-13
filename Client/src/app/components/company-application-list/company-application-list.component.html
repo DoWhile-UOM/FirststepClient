@@ -47,8 +47,8 @@
     <ng-container matColumnDef="view">
       <th mat-header-cell *matHeaderCellDef>View</th>
       <td mat-cell *matCellDef="let element">
-        <!-- {{ element.view}} -->
-        {{element.view}}
+        <a (click)="viewCompanyApplication(element.company_id)">{{element.view}}</a>
+        
         
       </td></ng-container
     >

@@ -2,14 +2,17 @@
   <app-spinner> </app-spinner>
   <mat-card class="card">
     <!--Top Section-->
-    <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
-      <mat-grid-tile>
+    <mat-grid-list cols="6" rowHeight="140">
+      <mat-grid-tile [colspan]="1">
+        <img src="assets/arrow.png" alt="Company Logo" class="company-logo" />
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2">
         <span class="sectionHeading heading title">{{
           companyApplication.company_name
         }}</span>
       </mat-grid-tile>
-      <mat-grid-tile>
-        <button mat-raised-button class="apply-button" color="primary">
+      <mat-grid-tile [colspan]="3">
+        <button mat-raised-button class="apply-button" color="primary" matTooltip="Evaluation status of the application">
           {{ evaluated_staus }}
         </button>
       </mat-grid-tile>
@@ -70,17 +73,52 @@
     </mat-grid-list>
     <mat-divider></mat-divider>
     <div *ngIf="!companyApplication.verification_status">
-      <button
-        mat-raised-button
-        class="apply-button"
-        color="primary"
-        (click)="approve()"
+      <mat-grid-list
+        cols="2"
+        rowHeight="140"
+        style="display: flex; justify-content: space-between"
       >
-        Approve
-      </button>
-      <button mat-raised-button class="apply-button" color="primary">
-        Reject
-      </button>
+        <mat-grid-tile style="width: 20%">
+          <button
+            mat-raised-button
+            class="apply-button"
+            color="primary"
+            (click)="approve()"
+            style="width: 50%"
+          >
+            Approve
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile style="width: 20%">
+          <button
+            mat-raised-button
+            class="apply-button"
+            color="primary"
+            (click)="reject()"
+            style="width: 50%"
+          >
+            Reject
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div *ngIf="companyApplication.verification_status">
+      <mat-grid-list
+        cols="1"
+        rowHeight="140"
+        style="display: flex; justify-content: center; align-items: center"
+      >
+        <mat-grid-tile>
+          <button
+            mat-raised-button
+            class="apply-button"
+            color="primary"
+            style="text-align: left"
+          >
+            {{ evaluated_staus == "Evaluated" ? "Approved" : "Rejected" }}
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
     </div>
   </mat-card>
 </div>
