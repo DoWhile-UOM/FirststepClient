@@ -15,7 +15,7 @@ export class AdvertisementServices {
     let jobList: any = [];
 
     await axios.get(Apipaths.getAdvertisements + '/seekerID=' + seekerID)
-      .then(function (response) {
+      .then( (response) => {
         try {
           jobList = response.data;
 
@@ -25,11 +25,11 @@ export class AdvertisementServices {
           }
         }
         catch (error) {
-          console.log("No advertisements found");
+          this.snackBar.open(String(error), "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       })
       .catch(
-         (error) => {
+        (error) => {
           this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
@@ -336,14 +336,15 @@ export class AdvertisementServices {
     let adData: any = {};
 
     await axios.get(Apipaths.getAdvertisementByIDwithKeywords + jobID)
-      .then(function (response) {
-        adData = response.data;
-      })
-      .catch(
-        function (error) {
-          alert('Network Error: ' + error);
-        }
-      );
+    .then(function (response) {
+      adData = response.data;
+    })
+    .catch(
+        (error) => {
+        this.snackBar.open(error, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        return null;
+      }
+    );
 
     return adData;
   }

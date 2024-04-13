@@ -1,18 +1,109 @@
 mat-card{
     height: auto;
-    padding: 4%;
-    box-shadow: 
-        0px 0px 10px 0px #9b9b9b,
-        0 1px 1px 0 #9b9b9b,
-        0 1px 3px 0 #9b9b9b;
-}
-
-.container{
-    margin: 0 auto;
-    width: 65%;
-    margin-top: 2em;
+    padding: 3%;
 }
 
 hr{
+    width: 99%;
+}
+
+mat-dialog-content{
     width: 100%;
+}
+
+.detail{
+    display: flex;
+    flex-direction: row;
+    width: 99%;
+    margin: 0 auto;
+}
+
+.detail-outer, .detail-outer-left{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 27em;
+}
+
+.detail-inner{
+    padding: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    width: 23em;
+}
+
+.detail-head, .detail-head-left {
+    color: black;
+    font-size: 17px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: 700;
+    word-wrap: break-word;
+    text-align: right;
+    width: 8em;
+}
+
+.detail-head-left {
+    width: 6em;
+}
+
+.detail-data {
+    font-size: 17px;
+    font-family: Lato;
+    font-weight: 700;
+    word-wrap: break-word;
+    padding-left: 2em;
+    text-align: left;
+    width: 12em;
+    color: #008080;
+}
+
+.section{
+    margin-top: 1em;
+    margin-bottom: 2.5em;
+    font-family: Lato;
+}
+
+.skill-set{
+    margin-top: 1em;
+}
+
+.heading {
+    color: black;
+    font-size: 23px;
+    font-family: Lato;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+.content {
+    color: #4A4A4A;
+    font-size: 19px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: 700;
+    word-wrap: break-word;
+    margin-top: 0.25em;
+}
+
+.skill-chip{
+    background-color: #0a9a8d;
+    color: white;
+    padding: 0.6em 1em;
+    margin-right: 1em;
+    border-radius: 20px;
+    font-size: 13.5px;
+    margin-bottom: 0.5em;
+}
+
+.skill-set{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 2em;
+}
+
+.apply-button{
+    width: 12.5em;
 }

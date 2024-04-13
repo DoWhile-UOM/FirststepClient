@@ -14,6 +14,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Country, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 interface Job {
   advertisement_id: number;
@@ -51,7 +53,8 @@ interface SearchData{
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
-    CommonModule,],
+    CommonModule,
+    SpinnerComponent],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
@@ -81,7 +84,8 @@ export class SearchBasicComponent implements OnInit{
 
   constructor(
     private advertisementService: AdvertisementServices, 
-    private snackBar: MatSnackBar) { 
+    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService) { 
     this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filterCountry(value || '')),
@@ -96,6 +100,8 @@ export class SearchBasicComponent implements OnInit{
   async ngOnInit() {
     this.countries = Country.getAllCountries().map(country => country.name);
 
+    this.spinner.show();
+
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {
         this.jobList = response.firstPageAdvertisements;
@@ -108,9 +114,13 @@ export class SearchBasicComponent implements OnInit{
         this.newItemEvent.emit(this.jobList);
         this.changePaginatorLengthEvent.emit(this.jobIdList.length);
       });
+
+    this.spinner.hide();
   }
 
   async search(data: SearchData){
+    this.spinner.show();
+
     data.country = this.locationCountryControl.value!;
     data.city = this.locationCityControl.value!;
     
@@ -127,18 +137,26 @@ export class SearchBasicComponent implements OnInit{
     this.jobIdList = response.allAdvertisementIds;
 
     this.newItemEvent.emit(this.jobList);
+    this.changePaginatorLengthEvent.emit(this.jobIdList.length);
+
+    this.spinner.hide();
   }
 
   public async changePaginator(startIndex: number, endIndex: number){
-    this.jobList = await this.advertisementService.getAllAdvertisementsWithPaginator(this.seekerID, this.jobIdList.slice(startIndex, endIndex));
+    this.spinner.show();
 
+    this.jobList = await this.advertisementService.getAllAdvertisementsWithPaginator(this.seekerID, this.jobIdList.slice(startIndex, endIndex));
     this.newItemEvent.emit(this.jobList);
+
+    this.spinner.hide();
   }
 
   onSelectedCountryChanged(selectedCountry: string){
 		this.locationCityControl.setValue('');
 		//this.locationCityFilteredOptions = new Observable<string[]>();
 		this.cities = [];
+
+    this.spinner.show();
 
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
@@ -154,6 +172,8 @@ export class SearchBasicComponent implements OnInit{
 		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
 
     this.snackBar.open("Update City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+
+    this.spinner.hide();
 	}
 
   private _filterCountry(value: string): string[] {
