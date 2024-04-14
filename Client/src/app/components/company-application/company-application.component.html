@@ -14,7 +14,12 @@
         }}</span>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="3">
-        <button mat-raised-button class="apply-button" color="primary" matTooltip="Evaluation status of the application">
+        <button
+          mat-raised-button
+          class="apply-button"
+          color="primary"
+          matTooltip="Evaluation status of the application"
+        >
           {{ evaluated_staus }}
         </button>
       </mat-grid-tile>
@@ -74,7 +79,7 @@
       </mat-grid-tile>
     </mat-grid-list>
     <mat-divider></mat-divider>
-    <div *ngIf="!companyApplication.verification_status">
+    <div *ngIf="evaluatedCompanyDetails.verified_system_admin_id === undefined">
       <mat-grid-list
         cols="2"
         rowHeight="140"
@@ -104,7 +109,9 @@
         </mat-grid-tile>
       </mat-grid-list>
     </div>
-    <div *ngIf="companyApplication.verification_status">
+
+    <!--Approved or Rejected button -->
+    <div *ngIf="evaluated_staus == 'Evaluated'">
       <mat-grid-list
         cols="1"
         rowHeight="140"
@@ -117,7 +124,14 @@
             color="primary"
             style="text-align: left"
           >
-            {{ evaluated_staus == "Evaluated" ? "Approved" : "Rejected" }}
+            {{
+              evaluated_staus == "Evaluated" &&
+              companyApplication.verification_status
+                ? "Approved"
+                :evaluated_staus == "Evaluated" &&
+              !companyApplication.verification_status
+                ?"Rejected":''
+            }}
           </button>
         </mat-grid-tile>
       </mat-grid-list>

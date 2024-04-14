@@ -30,11 +30,14 @@ interface CompanyApplication {
   business_reg_certificate: string;
   certificate_of_incorporation: string;
   comment: string;
+  verified_system_admin_id: number;
 }
 interface EvaluatedCompanyDetails {
   company_id: number;
   verification_status: boolean;
-  comment: string;
+  comment: string | null;
+  company_registered_date: Date;
+  verified_system_admin_id: number;
 }
 @Injectable({
   providedIn: 'root',

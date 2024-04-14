@@ -34,11 +34,14 @@ interface CompanyApplication {
   business_reg_certificate: string;
   certificate_of_incorporation: string;
   comment: string;
+  verified_system_admin_id: number;
 }
 interface EvaluatedCompanyDetails {
   company_id: number;
   verification_status: boolean;
-  comment: string;
+  comment: string|null;
+  company_registered_date: Date;
+  verified_system_admin_id: number;
 }
 export interface DialogData {
   comment: string;
@@ -71,11 +74,12 @@ export interface DialogData {
 export class CompanyApplicationComponent implements OnInit {
   noOfCols: number = 2;
   evaluated_staus: string = '';
-  //
+  systemAdminID: number = 5; //temporary value
   companyID: number = 0;
   companyApplication: CompanyApplication = {} as CompanyApplication; // this is the object that will be used to store the company application details
   evaluatedCompanyDetails: EvaluatedCompanyDetails =
     {} as EvaluatedCompanyDetails;
+
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
@@ -88,6 +92,8 @@ export class CompanyApplicationComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.loadCompanyApplication(params['id']);
     });
+    
+
   }
 
   async loadCompanyApplication(id: string) {
@@ -112,14 +118,18 @@ export class CompanyApplicationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result == 'Approval Confirmed') {
-        this.companyApplication.verification_status = true;
-        this.evaluated_staus = 'Evaluated';
+        this.companyApplication.verification_status = true; // denotes that the company is registered
+
+        this.evaluatedCompanyDetails.verified_system_admin_id = this.systemAdminID; // denotes that the company is evaluated
+
         this.evaluatedCompanyDetails.company_id =
           this.companyApplication.company_id;
         this.evaluatedCompanyDetails.verification_status =
           this.companyApplication.verification_status;
         this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
+        this.evaluatedCompanyDetails.company_registered_date = new Date();
         this.updateEvaluatedStatus();
+        this.evaluated_staus = 'Evaluated';
       } else {
         this.companyApplication.verification_status = false;
       }
@@ -127,18 +137,24 @@ export class CompanyApplicationComponent implements OnInit {
   }
   reject() {
     const dialogRef = this.dialog.open(CommentInCompanyEvaluation);
-
+    
     dialogRef.afterClosed().subscribe((result) => {
       this.companyApplication.comment = result;
-      if (this.companyApplication.comment) {
-        this.evaluated_staus = 'Not Evaluated';
-        this.evaluatedCompanyDetails.company_id =
-          this.companyApplication.company_id;
-        this.evaluatedCompanyDetails.verification_status =
-          this.companyApplication.verification_status;
+      if (
+        this.companyApplication.comment &&
+        this.companyApplication.comment != 'close'
+      ) {
+        // this.companyApplication.verification_status = false;
+
+        this.evaluatedCompanyDetails.verified_system_admin_id = this.systemAdminID; // denotes that the company is evaluated
+
+        this.evaluatedCompanyDetails.company_id = this.companyApplication.company_id;
+        this.evaluatedCompanyDetails.verification_status = this.companyApplication.verification_status;
         this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
+        this.evaluatedCompanyDetails.company_registered_date = new Date();
         this.updateEvaluatedStatus();
-      } else {
+        this.evaluated_staus = 'Evaluated';
+      } else if (!this.companyApplication.comment) {
         this.dialog.open(CannotRejectWithoutCommentPopup);
       }
     });
@@ -150,6 +166,7 @@ export class CompanyApplicationComponent implements OnInit {
         this.evaluatedCompanyDetails,
         this.companyID
       );
+      
     } finally {
       this.spinner.hide();
     }
@@ -185,8 +202,8 @@ export class CommentInCompanyEvaluation {
   closeDialog() {
     this.dialogRef.close(this.comment);
   }
-  onNoClick(): void {
-    this.dialogRef.close('');
+  onNoClick() {
+    this.dialogRef.close('close');
   }
 }
 //cannot-reject-without-comment-popup
@@ -231,7 +248,7 @@ export class CompanyApprovalConfirmationPopup {
   closeDialog() {
     this.dialogRef.close('Approval Confirmed');
   }
-  onNoClick(): void {
+  onNoClick() {
     this.dialogRef.close('Approval Cancelled');
   }
 }
