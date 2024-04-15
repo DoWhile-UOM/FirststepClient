@@ -21,10 +21,11 @@ import { SaNavBarComponent } from '../../nav-bars/sa-nav-bar/sa-nav-bar.componen
 
 interface CompanyList {
   company_id: number;
-
   company_name: string;
-  verification_status: string;
+  verification_status: boolean;
+  verified_system_admin_id: number;
 }
+
 
 @Component({
   selector: 'app-company-application-list',

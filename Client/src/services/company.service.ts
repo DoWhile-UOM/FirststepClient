@@ -19,6 +19,7 @@ interface CompanyList {
   company_id: number;
   company_name: string;
   verification_status: boolean;
+  verified_system_admin_id: number;
 }
 interface CompanyApplication {
   company_id: number;
