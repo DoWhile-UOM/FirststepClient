@@ -22,8 +22,8 @@ import { SaNavBarComponent } from '../../nav-bars/sa-nav-bar/sa-nav-bar.componen
 interface CompanyList {
   company_id: number;
   company_name: string;
-  verification_status: boolean;
-  verified_system_admin_id: number;
+  verification_status: string;
+  evaluated_status: string;
 }
 
 
@@ -81,18 +81,17 @@ export class CompanyApplicationListComponent {
         this.companyList = data.map((item, index) => ({
           company_id: item.company_id, // Use company_id
           company_name: item.company_name,
-          verification_status: item.verification_status
-            ? 'Registered'
-            : 'Pending...',
+          verification_status: item.verification_status?'Registered':'Unregistered',
+          evaluated_status: item.verified_system_admin_id,
           view: item.verification_status ? 'Review' : 'Evaluate',
         }));
         if (status == 'registered') {
           this.companyList = this.companyList.filter(
-            (company) => company.verification_status === 'Registered'
+            (company) => company.verified_system_admin_id !== null && company.verified_system_admin_id !== undefined
           );
         } else if (status == 'unregistered') {
           this.companyList = this.companyList.filter(
-            (company) => company.verification_status === 'Pending...'
+            (company) => company.verified_system_admin_id == null && company.verified_system_admin_id == undefined
           );
         }
         console.log('Company List', data);
