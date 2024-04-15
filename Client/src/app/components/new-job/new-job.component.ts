@@ -104,8 +104,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	fields: Field[] = [];
 	currencyUnits: string[] = [];
 
-	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
-	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
+	empTypes: string[] = AdvertisementServices.employment_types;
+	jobArrangement: string[] = AdvertisementServices.job_arrangement;
 
 	// sample content for description
 	description: string = `
@@ -261,6 +261,14 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
 	async onSelectedCountryChanged(selectedCountry: string){
+		// check whether the selected country is valid
+		if (selectedCountry == undefined || selectedCountry == ''){
+			return;
+		}
+		else if (this.countries.indexOf(selectedCountry) == -1){
+			return;
+		}
+
 		this.spinner.show();
 
 		this.locationCityControl.setValue('');
@@ -270,7 +278,10 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
 		if (countryCode == undefined){
-			this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+			this.locationCountryControl.setValue('');
+			
+			this.spinner.hide();
 			return;
 		}
 
@@ -279,6 +290,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		}
 
 		this.cities = this.removeDuplicates(City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? []);
+
+		this.snackBar.open("Reset City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
 
 		this.spinner.hide();
 	}

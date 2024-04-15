@@ -119,7 +119,7 @@
 							matInput #countryInput
 							[formControl]="locationCountryControl"
 							[matAutocomplete]="autocountry" (change)="onSelectedCountryChanged(countryInput.value)">
-						<mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
+						<mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
 						@for (option of locationCountryFilteredOptions | async; track option) {
 							<mat-option [value]="option">{{option}}</mat-option>
 						}
