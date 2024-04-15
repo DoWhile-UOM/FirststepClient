@@ -8,15 +8,14 @@ export class SeekerService {
 
 async getSeekerDetails(id : number) {
   let seekerData: any;
-  try{
-    await axios.get(Apipaths.getSeekerDetails + id)
-      .then((response) => {
-        seekerData = response.data;
-      });
-  }
-  catch (error) {
-    console.error(error);
-  }
+  
+  await axios.get(Apipaths.getSeekerDetails  + id)
+    .then((response) => {
+      seekerData = response.data;
+    })
+    .catch (function (error) {
+      alert("Network Error: " + error);
+    });;
 
   return seekerData;
 }

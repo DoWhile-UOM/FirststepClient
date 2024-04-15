@@ -47,7 +47,7 @@ export class Apipaths {
     static readonly getCityNames: string = 'https://countriesnow.space/api/v0.1/countries/cities';
 
     // seeker
-    static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeekerById/';
+    static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
