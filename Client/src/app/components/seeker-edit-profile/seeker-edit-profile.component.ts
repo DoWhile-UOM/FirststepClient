@@ -16,7 +16,6 @@ import {MatSelectModule} from '@angular/material/select';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SeekerService } from '../../../services/seeker.service';
-import { CommonModule } from '@angular/common';
 
 
 // seeker edit profile interface
@@ -44,7 +43,7 @@ interface Seeker {
     standalone: true,
     templateUrl: './seeker-edit-profile.component.html',
     styleUrl: './seeker-edit-profile.component.css',
-    imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, AddSkillsComponent, NavBarComponent, CommonModule]
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, AddSkillsComponent, NavBarComponent]
 })
 export class SeekerEditProfileComponent {
 
@@ -71,8 +70,6 @@ export class SeekerEditProfileComponent {
 
   async ngOnInit() {
     this.fetchSeekerDetails();
-    this.fetchFieldOptions();
-
     //console.log(this.data);
   }
   data(data: any) {
@@ -107,18 +104,6 @@ export class SeekerEditProfileComponent {
     }
     catch(error){
       console.error('Error deleting seeker:', error);
-    }
-  }
-
-  //field options
-
-  fieldOptions: any[] = [];
-
-  async fetchFieldOptions() {
-    try {
-      this.fieldOptions = await this.seekerService.getFieldOfWorkOptions();
-    } catch (error) {
-      console.error(error);
     }
   }
 

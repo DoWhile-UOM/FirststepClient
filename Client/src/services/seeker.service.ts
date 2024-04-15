@@ -57,16 +57,4 @@ export class SeekerService {
       console.error(error);
     }
   }
-
-  async getFieldOfWorkOptions() {
-    try {
-      const response = await axios.get('https://localhost:7213/api/Seeker/GetSeeker/1083'); // Adjust the user id
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching field options:', error);
-      throw error;
-    }
-  }
-
-  
 }
