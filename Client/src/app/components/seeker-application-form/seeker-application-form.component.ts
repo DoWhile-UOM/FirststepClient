@@ -33,10 +33,19 @@ export class SeekerApplicationFormComponent {
     }
     
     async fetchEmployeeDetails() {
-      this.seekerService = await this.seekerService.getSeekerDetails(this.user_id);
-    }
 
-};
+      try {
+        const seekerData = await this.seekerService.getSeekerDetails(this.user_id);
+        this.SeekerDetails = seekerData; // Assign fetched data only after successful retrieval
+      } catch (error) {
+        console.error('Error fetching seeker details:', error);
+        // Handle errors gracefully, e.g., display an error message to the user
+      }
+    /*  this.seekerService = await this.seekerService.getSeekerDetails(this.user_id);
+    }*/
+
+}
+}
 
 
    
