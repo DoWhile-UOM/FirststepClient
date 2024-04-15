@@ -15,7 +15,8 @@ import { Country, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerComponent } from '../spinner/spinner.component';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
 
 interface Job {
@@ -55,7 +56,8 @@ interface SearchData{
     ReactiveFormsModule,
     AsyncPipe,
     CommonModule,
-    SpinnerComponent],
+    SpinnerComponent,
+    MatSliderModule],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
@@ -82,6 +84,8 @@ export class SearchBasicComponent implements OnInit{
 	locationCityControl = new FormControl('');
 	cities: string[] = []; 
 	locationCityFilteredOptions: Observable<string[]>;
+
+  distance: number = 0;
 
   constructor(
     private advertisementService: AdvertisementServices, 
@@ -219,6 +223,14 @@ export class SearchBasicComponent implements OnInit{
 
     this.spinner.hide();
 	}
+
+  distanceStepper(value: number): string {
+    if (value > 100){
+      return '100km+';
+    }
+
+    return String(value) + 'km';
+  }
 
   private _filterCountry(value: string): string[] {
 		const filterValue = value.toLowerCase();

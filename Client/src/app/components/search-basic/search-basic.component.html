@@ -58,7 +58,16 @@
                 <mat-icon>search</mat-icon>
             </button>    
         </div>
-        
+
+        <mat-slider
+            max="110"
+            min="0"
+            step="10"
+            showTickMarks
+            discrete
+            [displayWith]="distanceStepper">
+            <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
+        </mat-slider>
     </form>
 </mat-card>
 <app-spinner></app-spinner>
