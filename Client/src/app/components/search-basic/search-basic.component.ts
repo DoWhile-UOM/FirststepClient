@@ -232,7 +232,7 @@ export class SearchBasicComponent implements OnInit{
 
   distanceStepper(value: number): string {
     if (value > 100){
-      return '100km+';
+      return 'Any';
     }
 
     return String(value) + 'km';

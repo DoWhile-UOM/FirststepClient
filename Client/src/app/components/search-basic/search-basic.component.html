@@ -59,39 +59,42 @@
             </mat-expansion-panel-header>
 
             <div class="advance-search-section">
-                <mat-chip-set>
-                    <h3>Employeement Type</h3>
+                <div class="advance-search-field" style="width: 55%;">
+                    <h3 class="advance-search-field-name">Employeement Type</h3>
                     <mat-chip-listbox name="employeement_type" aria-label="employeement_type" multiple>
                         @for (emptype of empTypes; track emptype) {
                             <mat-chip-option color="accent" [value]="emptype">{{emptype}}</mat-chip-option>
                         }
                     </mat-chip-listbox>
-                </mat-chip-set>
-            </div>
-
-            <div class="advance-search-section">
-                <mat-chip-set>
-                    <h3>Job Arrangement</h3>
+                </div>
+    
+                <div class="advance-search-field" style="width: 25%;">
+                    <h3 class="advance-search-field-name">Job Arrangement</h3>
                     <mat-chip-listbox name="arrangement" aria-label="arrangement" multiple>
                         @for (arrangement of jobArrangement; track arrangement) {
                             <mat-chip-option color="accent" [value]="arrangement">{{arrangement}}</mat-chip-option>
                         }
                     </mat-chip-listbox>
-                </mat-chip-set>
+                </div>
+    
+                <div class="advance-search-field" style="width: 20%;">
+                    <h3 class="advance-search-field-name">Distance From {{locationCityControl.value?.trim() == "" ? 'City' : locationCityControl.value }}</h3>
+                    <span class="distance-content">
+                        <mat-slider
+                            max="110"
+                            min="0"
+                            step="10"
+                            showTickMarks
+                            discrete
+                            [displayWith]="distanceStepper">
+                            <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
+                        </mat-slider>
+                        <h2>{{distanceStepper(distance)}}</h2>
+                    </span>
+                </div>
             </div>
 
-            <div class="advance-search-section">
-                <h3>Distance From {{locationCityControl.value}}</h3>
-                <mat-slider
-                    max="110"
-                    min="0"
-                    step="10"
-                    showTickMarks
-                    discrete
-                    [displayWith]="distanceStepper">
-                    <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
-                </mat-slider>
-            </div>
+            
         </mat-expansion-panel>
     </mat-accordion>
 </mat-card>
