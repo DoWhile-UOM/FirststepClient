@@ -14,5 +14,5 @@ import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component
     imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent, PdfViewerComponent ]
 })
 export class AppComponent {
-  user = 'ca';
+  user = 'seeker';
 }

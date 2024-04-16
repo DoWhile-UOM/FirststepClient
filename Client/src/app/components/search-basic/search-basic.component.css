@@ -1,5 +1,5 @@
 .search-card{
-    width: 80%;
+    max-width: 80%;
     height: fit-content;
     margin: 0 auto;
     margin-top: 3em;
@@ -24,12 +24,13 @@
 }
 
 .title{
-    width: 45%;
+    width: 50%;
     margin-left: 1em;
     margin-right: 1.5em;
 }
 
 .location{
+    width: 20%;
     margin-right: 0.5em;
 }
 
@@ -44,6 +45,14 @@
     justify-content: center;
 }
 
+mat-form-field mat-icon{
+    margin-left: 0.3em;
+}
+
+mat-icon{
+    font-size: 1.25em;
+}
+
 .advance-search-section{
     width: 100%;
     display: flex;
@@ -54,6 +63,18 @@
 .advance-search-field{
     display: flex;
     flex-direction: column;
+}
+
+.advance-search-title{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.4em;
+    margin-top: 0.6em;
+}
+
+.advance-search-title mat-icon{
+    margin-left: 0.75em;
+    margin-right: 0.5em;
 }
 
 .distance-content{
@@ -67,6 +88,6 @@
     margin-right: 0.5em;
 }
 
-.advance-search-field .advance-search-field-name{
-    margin-left: 0.75em;
+.advance-search-field-name{
+    font-size: larger;
 }

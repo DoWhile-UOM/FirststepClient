@@ -2,13 +2,17 @@
     <form class="container" #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
         <mat-form-field appearance="outline" class="search-element title">
             <mat-label>Job Title</mat-label>
-            <mat-icon matPrefix color="primary">work</mat-icon>
+            <mat-icon matPrefix color="primary">
+                <i class="fa-solid fa-person-walking"></i>
+            </mat-icon>
             <input matInput placeholder="What do you looking for..." name="title" ngModel>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="search-element location">
             <mat-label>Country</mat-label>
-            <mat-icon matPrefix color="primary">location_one</mat-icon>
+            <mat-icon matPrefix color="primary">
+                <i class="fa-solid fa-earth-americas"></i>
+            </mat-icon>
             <input type="text"
                 placeholder="Pick a Country"
                 aria-label="Country"
@@ -24,7 +28,9 @@
     
         <mat-form-field appearance="outline" class="search-element location">
             <mat-label>City</mat-label>
-            <mat-icon matPrefix color="primary">location_city</mat-icon>
+            <mat-icon matPrefix color="primary">
+                <i class="fa-solid fa-location-dot"></i>
+            </mat-icon>
             <input type="text"
                 placeholder="Pick a City"
                 aria-label="City"
@@ -60,7 +66,12 @@
 
             <div class="advance-search-section">
                 <div class="advance-search-field" style="width: 55%;">
-                    <h3 class="advance-search-field-name">Employeement Type</h3>
+                    <span class="advance-search-title">
+                        <mat-icon>
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </mat-icon>
+                        <p class="advance-search-field-name">Employeement Type</p>
+                    </span>
                     <mat-chip-listbox name="employeement_type" aria-label="employeement_type" multiple>
                         @for (emptype of empTypes; track emptype) {
                             <mat-chip-option color="accent" [value]="emptype">{{emptype}}</mat-chip-option>
@@ -69,7 +80,12 @@
                 </div>
     
                 <div class="advance-search-field" style="width: 25%;">
-                    <h3 class="advance-search-field-name">Job Arrangement</h3>
+                    <span class="advance-search-title">
+                        <mat-icon>
+                            <i class="fa-solid fa-briefcase"></i>
+                        </mat-icon>
+                        <p class="advance-search-field-name">Job Arrangement</p>
+                    </span>
                     <mat-chip-listbox name="arrangement" aria-label="arrangement" multiple>
                         @for (arrangement of jobArrangement; track arrangement) {
                             <mat-chip-option color="accent" [value]="arrangement">{{arrangement}}</mat-chip-option>
@@ -78,7 +94,12 @@
                 </div>
     
                 <div class="advance-search-field" style="width: 20%;">
-                    <h3 class="advance-search-field-name">Distance From {{locationCityControl.value?.trim() == "" ? 'City' : locationCityControl.value }}</h3>
+                    <span class="advance-search-title">
+                        <mat-icon>
+                            <i class="fa-solid fa-map-location"></i>
+                        </mat-icon>
+                        <p class="advance-search-field-name">Distance From {{locationCityControl.value?.trim() == "" ? 'City' : locationCityControl.value }}</p>
+                    </span>
                     <span class="distance-content">
                         <mat-slider
                             max="110"
