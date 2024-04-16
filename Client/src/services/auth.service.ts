@@ -83,10 +83,24 @@ export class AuthService {
     return this.userPayload.role
   }
 
-  getFullName(){
+  getFirstName(){//Get First Name from token
     if(this.userPayload)
-    return this.userPayload.unique_name
+    return this.userPayload.given_name
   }
 
+  getLastName(){//Get Last Name from token
+    if(this.userPayload)
+    return this.userPayload.family_name
+  }
+
+  getOragnizationName(){//Get Organization from token 
+    if(this.userPayload)
+    return this.userPayload.website
+  }
+
+  getUserId(){//Get UserID from token 
+    if(this.userPayload)
+    return this.userPayload.nameid
+  }
 
 }
