@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -27,7 +28,7 @@ export interface CmpyData {
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatButtonModule,MatInputModule,ReactiveFormsModule,MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [MatCardModule,MatButtonModule,MatInputModule,ReactiveFormsModule,MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })

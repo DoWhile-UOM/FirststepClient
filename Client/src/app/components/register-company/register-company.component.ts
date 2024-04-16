@@ -28,6 +28,7 @@ import { CompanyService } from '../../../services/company.service';
 
 import { AuthService } from '../../../services/auth.service';
 import { Apipaths } from '../../../services/apipaths/apipaths';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface requestOTP {
   email: string | null | undefined;
@@ -68,7 +69,7 @@ export class RegisterCompanyComponent {
     otp_in: ['', Validators.required]
   });
 
-  constructor(private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private snackbar:MatSnackBar,private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
 
 
   async requestOTP() {
