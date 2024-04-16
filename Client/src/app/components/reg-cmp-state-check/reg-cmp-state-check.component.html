@@ -1,26 +1,94 @@
-<p>Register your Company</p>
+<div class="state-check">
 
-<form>
-    <h2>Contact Us</h2>
-    <div class="form-group">
-        <label for="companyName">Company Name</label>
-        <input type="text" class="form-control" value={{cmpData.company_name}} id="companyName" name="companyName" required>
+    <h2>Register your Company</h2>
+
+    <hr>
+
+    <div class="stateBar">
+
+        <div class="container">
+            <div class="circle-box">
+                <a>Application Submission</a>
+                <div class="circle">
+                    <div class="checkmark"></div>
+                </div>
+                <a>Dec 15, 2023</a>
+            </div>
+
+            <hr>
+
+            <div class="circle-box">
+                <a>Application Screening</a>
+                <div class="circle-red">
+                    <div class="number-two">2</div>
+                </div>
+                <a>Rejected</a>
+            </div>
+
+
+
+        </div>
+
+
     </div>
-    <div class="form-group">
-        <label for="websiteUrl">URL of the Website</label>
-        <input type="url" class="form-control" value={{cmpData.company_website}} id="websiteUrl" name="websiteUrl" required>
+
+
+    <mat-form-field>
+        <mat-label>Comment</mat-label>
+        <textarea disabled matInput>{{cmpData.comment}}</textarea>
+    </mat-form-field>
+
+
+
+    <hr>
+
+    <div class="input-form">
+        <h2>Contact Us</h2>
+
+        <div class="box">
+            <mat-form-field>
+                <mat-label>Company Name</mat-label>
+                <input matInput placeholder="Your input here" type="text" class="form-control"
+                    value={{cmpData.company_name}} id="companyName" name="companyName" required>
+            </mat-form-field>
+        </div>
+
+        <div class="box">
+            <mat-form-field>
+                <mat-label>URL of the Website</mat-label>
+                <input matInput placeholder="Your input here" type="url" class="form-control"
+                    value={{cmpData.company_website}} id="websiteUrl" name="websiteUrl" required>
+            </mat-form-field>
+        </div>
+
+        <div class="box">
+
+            <mat-form-field>
+                <mat-label>Email Address</mat-label>
+                <input matInput placeholder="Your input here" type="email" class="form-control"
+                    value={{cmpData.company_email}} id="emailAddress" name="emailAddress" required>
+            </mat-form-field>
+        </div>
+
+        <div class="box">
+
+            <mat-form-field>
+                <mat-label>Contact No</mat-label>
+                <input matInput placeholder="Your input here" type="email" class="form-control"
+                    value={{cmpData.company_phone_number}} id="emailAddress" name="emailAddress" required>
+            </mat-form-field>
+        </div>
+
+        <div class="box">
+
+            <mat-form-field>
+                <mat-label>Company Logo</mat-label>
+                <input matInput placeholder="Your input here" type="email" class="form-control"
+                    value={{cmpData.company_logo}} id="emailAddress" name="emailAddress" required>
+            </mat-form-field>
+        </div>
+
+        <button mat-button class="btn btn-primary">Resubmit</button>
+
     </div>
-    <div class="form-group">
-        <label for="emailAddress">Email Address</label>
-        <input type="email" class="form-control" value={{cmpData.company_email}} id="emailAddress" name="emailAddress" required>
-    </div>
-    <div class="form-group">
-        <label for="emailAddress">Contact No</label>
-        <input type="email" class="form-control" value={{cmpData.company_phone_number}} id="emailAddress" name="emailAddress" required>
-    </div>
-    <div class="form-group">
-        <label for="emailAddress">Company Logo</label>
-        <input type="email" class="form-control" value={{cmpData.company_logo}} id="emailAddress" name="emailAddress" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>

@@ -35,7 +35,7 @@ interface CompanyApplication {
   providedIn: 'root',
 })
 export class CompanyService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar) { }
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -93,7 +93,7 @@ export class CompanyService {
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
-        this.snackBar.open('Company details updated successfully', "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+        this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
         this.snackBar.open('Network error occurred. Try Again', 'Close', {
@@ -138,21 +138,21 @@ export class CompanyService {
     return companyList;
   }
 
-  /*
-  async getCompnayRegState(id: number) {
+  //Registration company state view Start here
+  async getCompnayRegState(id: string) {
     let cmpData: any;
-
-    this.http.get('https://localhost:7213/api/Company/GetCompanyById/'+id)
-      .subscribe(data => {
-        // Handle successful response with the data
-        //console.log(data);
-      }, error => {
-        // Handle error scenario
-        console.error(error);
-      });
+    try{
+      await axios.get(Apipaths.getCompanyRegState+id)
+        .then((response) => {
+          cmpData = response.data;
+          //console.log('Company Data:', cmpData);
+        });
+    }
+    catch (error) {
+      //console.error(error);
+    }
 
     return cmpData;
-  }
-  */
-  //Get company Registration state details---End
+ }
+  //Registration company state view ends here
 }

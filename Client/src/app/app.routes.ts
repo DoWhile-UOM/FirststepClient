@@ -1,14 +1,15 @@
 import { Routes } from '@angular/router';
-
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RegCmpStateCheckComponent } from './components/reg-cmp-state-check/reg-cmp-state-check.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   {path:'login',component:LoginComponent},
   {path:'signup',component:SignupComponent},
+  {path:'RegCheck',component:RegCmpStateCheckComponent},
   
   {
     path: 'ca',
