@@ -95,7 +95,7 @@
     <section>
       <div class="example-button-row">
         <button type="submit" mat-raised-button color="primary">Update Profile</button>
-        <button mat-raised-button id="discard">Discard Changes</button>
+        <button mat-raised-button id="discard" (click)="fetchSeekerDetails()" >Discard Changes</button>
         <button mat-raised-button color="warn" id="delete" (click)="onDelete(seekerDetails.user_id)">
           Delete Profile
         </button>

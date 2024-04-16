@@ -66,7 +66,7 @@ export class SeekerEditProfileComponent {
   seekerDetails: Seeker = {} as Seeker;
 
   constructor(private seekerService: SeekerService) {}
-  user_id: number = 1083;
+  user_id: number = 1087;
 
   async ngOnInit() {
     this.fetchSeekerDetails();
@@ -75,7 +75,7 @@ export class SeekerEditProfileComponent {
   data(data: any) {
     throw new Error('Method not implemented.');
   }
-  
+  //get
   async fetchSeekerDetails() {
     try {
       const response = await this.seekerService.getSeekerDetails(this.user_id);
@@ -84,7 +84,7 @@ export class SeekerEditProfileComponent {
       console.error('Error fetching seeker details:', error);
     }
   }
-
+  //update
   async onApply() {
     try{    
       await this.seekerService.editseeker( this.seekerDetails , this.user_id);
