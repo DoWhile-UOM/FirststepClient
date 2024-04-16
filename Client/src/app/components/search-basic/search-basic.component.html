@@ -57,26 +57,41 @@
                 </mat-panel-description>
                 -->
             </mat-expansion-panel-header>
-            
-            <mat-grid-list cols="2" rowHeight="5:1">
-                <mat-grid-tile>
-                        <mat-chip-set>
-                            <mat-chip-listbox name="employeement_type" aria-label="employeement_type" multiple>
-                                @for (emptype of empTypes; track emptype) {
-                                    <mat-chip-option color="accent" [value]="emptype">{{emptype}}</mat-chip-option>
-                                }
-                            </mat-chip-listbox>
-                        </mat-chip-set>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                        <mat-button-toggle-group name="arrangement" aria-label="arrangement" multiple>
-                            @for (arrangement of jobArrangement; track arrangement) {
-                                <mat-button-toggle [value]="arrangement">{{arrangement}}</mat-button-toggle>
-                            }
-                        </mat-button-toggle-group>
-                </mat-grid-tile>
-            </mat-grid-list>
 
+            <div class="advance-search-section">
+                <mat-chip-set>
+                    <h3>Employeement Type</h3>
+                    <mat-chip-listbox name="employeement_type" aria-label="employeement_type" multiple>
+                        @for (emptype of empTypes; track emptype) {
+                            <mat-chip-option color="accent" [value]="emptype">{{emptype}}</mat-chip-option>
+                        }
+                    </mat-chip-listbox>
+                </mat-chip-set>
+            </div>
+
+            <div class="advance-search-section">
+                <mat-chip-set>
+                    <h3>Job Arrangement</h3>
+                    <mat-chip-listbox name="arrangement" aria-label="arrangement" multiple>
+                        @for (arrangement of jobArrangement; track arrangement) {
+                            <mat-chip-option color="accent" [value]="arrangement">{{arrangement}}</mat-chip-option>
+                        }
+                    </mat-chip-listbox>
+                </mat-chip-set>
+            </div>
+
+            <div class="advance-search-section">
+                <h3>Distance From {{locationCityControl.value}}</h3>
+                <mat-slider
+                    max="110"
+                    min="0"
+                    step="10"
+                    showTickMarks
+                    discrete
+                    [displayWith]="distanceStepper">
+                    <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
+                </mat-slider>
+            </div>
         </mat-expansion-panel>
     </mat-accordion>
 </mat-card>

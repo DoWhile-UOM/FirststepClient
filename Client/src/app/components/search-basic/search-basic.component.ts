@@ -20,8 +20,6 @@ import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 interface Job {
   advertisement_id: number;
@@ -63,9 +61,7 @@ interface SearchData{
     SpinnerComponent,
     MatSliderModule,
     MatExpansionModule,
-    MatChipsModule,
-    MatGridListModule,
-    MatButtonToggleModule],
+    MatChipsModule],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
@@ -233,6 +229,14 @@ export class SearchBasicComponent implements OnInit{
 
     this.spinner.hide();
 	}
+
+  distanceStepper(value: number): string {
+    if (value > 100){
+      return '100km+';
+    }
+
+    return String(value) + 'km';
+  }
 
   private _filterCountry(value: string): string[] {
 		const filterValue = value.toLowerCase();

@@ -44,6 +44,12 @@
     justify-content: center;
 }
 
-.mat-button-toggle-checked{
-    background-color: #008040;
+.advance-search-section{
+    display: flex;
+    flex-direction: row;
+    justify-content:left;
+}
+mat-chip-set{
+    display: flex;
+    flex-direction: column;
 }
