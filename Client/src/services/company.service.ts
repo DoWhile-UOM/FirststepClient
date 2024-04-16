@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 interface Company {
   company_id: number;
@@ -35,7 +35,7 @@ interface CompanyApplication {
   providedIn: 'root',
 })
 export class CompanyService {
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar,private http:HttpClient) { }
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -74,6 +74,10 @@ export class CompanyService {
     // .then((response) => {
     //   companyApplication = response.data;
     // })
+  }
+
+  CompanyRegister(companyObj:any){
+    return this.http.post<any>(Apipaths.registerCompany,companyObj)
   }
 
   // async updateCompanyDetails(company: Company) {
