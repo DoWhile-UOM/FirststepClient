@@ -43,11 +43,41 @@
                 <mat-icon>search</mat-icon>
             </button> 
         </div>
-        <div class="allFiltersBtn">
-            <button mat-icon-button type="button" color="primary" (click)="showAllFilters()">
-                <mat-icon>more_horiz</mat-icon>
-            </button> 
-        </div>
     </form>
+
+    <mat-accordion>
+        <mat-expansion-panel class="mat-elevation-z1">
+            <mat-expansion-panel-header>
+                <mat-panel-title>All Filters</mat-panel-title>
+                <!--
+                <mat-panel-description>
+                    <mat-chip-set>
+                        <mat-chip *ngFor="let filter of filters">{{filter}}</mat-chip>
+                    </mat-chip-set>
+                </mat-panel-description>
+                -->
+            </mat-expansion-panel-header>
+            
+            <mat-grid-list cols="2" rowHeight="5:1">
+                <mat-grid-tile>
+                        <mat-chip-set>
+                            <mat-chip-listbox name="employeement_type" aria-label="employeement_type" multiple>
+                                @for (emptype of empTypes; track emptype) {
+                                    <mat-chip-option color="accent" [value]="emptype">{{emptype}}</mat-chip-option>
+                                }
+                            </mat-chip-listbox>
+                        </mat-chip-set>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                        <mat-button-toggle-group name="arrangement" aria-label="arrangement" multiple>
+                            @for (arrangement of jobArrangement; track arrangement) {
+                                <mat-button-toggle [value]="arrangement">{{arrangement}}</mat-button-toggle>
+                            }
+                        </mat-button-toggle-group>
+                </mat-grid-tile>
+            </mat-grid-list>
+
+        </mat-expansion-panel>
+    </mat-accordion>
 </mat-card>
 <app-spinner></app-spinner>

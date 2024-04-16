@@ -1,6 +1,6 @@
 .search-card{
-    width: 82%;
-    height: 8em;
+    width: 80%;
+    height: fit-content;
     margin: 0 auto;
     margin-top: 3em;
     margin-bottom: 2em;
@@ -10,6 +10,8 @@
 }
 
 .container{
+    margin-top: 1em;
+    padding: 1.5em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,7 +24,7 @@
 }
 
 .title{
-    width: 40%;
+    width: 45%;
     margin-left: 1em;
     margin-right: 1.5em;
 }
@@ -33,6 +35,7 @@
 
 .searchBtn{
     margin-left: 0.5em;
+    margin-right: 1em;
     width: 4em;
     height: 4em;
     cursor: pointer;
@@ -41,12 +44,6 @@
     justify-content: center;
 }
 
-.allFiltersBtn{
-    margin-right: 1em;
-    width: 4em;
-    height: 4em;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.mat-button-toggle-checked{
+    background-color: #008040;
 }

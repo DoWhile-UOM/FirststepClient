@@ -18,6 +18,10 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 interface Job {
   advertisement_id: number;
@@ -57,7 +61,11 @@ interface SearchData{
     AsyncPipe,
     CommonModule,
     SpinnerComponent,
-    MatSliderModule],
+    MatSliderModule,
+    MatExpansionModule,
+    MatChipsModule,
+    MatGridListModule,
+    MatButtonToggleModule],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
@@ -66,6 +74,8 @@ export class SearchBasicComponent implements OnInit{
   
   jobList: any = [];
   jobIdList: number[] = [];
+
+  filters: string[] = ['Employment Type', 'Job Arrangement', 'Country', 'City', 'Distance', 'Posted Date', 'Company Name', 'Field Name', 'Title'];
 
   empTypes: string[] = AdvertisementServices.employment_types;
 	jobArrangement: string[] = AdvertisementServices.job_arrangement;
@@ -237,6 +247,6 @@ export class SearchBasicComponent implements OnInit{
 	}
 
   showAllFilters(){
-    
+
   }
 }
