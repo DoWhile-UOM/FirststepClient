@@ -68,7 +68,7 @@ export class JobOfferListComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
-  company_id: string = "7";
+  company_id: string = '';
 
   jobList: JobOffer[] = [];
   selectedFilter: string = 'active';
@@ -134,6 +134,16 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   ngAfterViewInit() {
+    // get the compnay id from the session storage
+    try {
+      this.company_id = sessionStorage.getItem('companyId') || '';
+    } catch (error) {
+      //console.log(error); //raises the error
+      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+      this.router.navigate(['/notfound']);
+      return;
+    }
+
     this.refreshTable(this.selectedFilter, "");
   }
 

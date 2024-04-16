@@ -11,6 +11,10 @@ mat-dialog-content{
     width: 100%;
 }
 
+.full-width-dialog .mat-dialog-container {
+    max-width: 60% !important;
+}
+
 .detail{
     display: flex;
     flex-direction: row;
@@ -63,6 +67,9 @@ mat-dialog-content{
     margin-top: 1em;
     margin-bottom: 2.5em;
     font-family: Lato;
+    color: black !important;
+    /*increase the font size by 5points*/
+    
 }
 
 .skill-set{

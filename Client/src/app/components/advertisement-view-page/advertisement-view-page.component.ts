@@ -6,6 +6,8 @@ import { AdvertisementServices } from '../../../services/advertisement.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { countries } from 'country-data';
+import { Country } from 'country-state-city';
 
 interface Skill{
   skill_name: string;
@@ -21,6 +23,7 @@ interface Job{
 	arrangement: string;
 	is_experience_required: string;
 	salary: string;
+  currency_unit: string;
 	submission_deadline: string;
 	posted_date: string;
 	job_description: string;
@@ -47,11 +50,21 @@ export class AdvertisementViewPageComponent {
         console.log("No job ID found");
         return;
       }
-
-      console.log("Job ID: " + data.jobID);
   
       (async () => {
         this.adData = await this.adService.getAdvertisementById(data.jobID);
+
+        if (this.adData.currency_unit == null) {
+          const countryCode = Country.getAllCountries().find(country => country.name === this.adData.country)?.isoCode;
+  
+          if (countryCode == undefined){
+            //this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+            this.adData.currency_unit = '';
+            return;
+          }
+  
+          this.adData.currency_unit = countries[countryCode].currencies[0];
+        }
       })();
   } 
 }
