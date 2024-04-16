@@ -7,13 +7,13 @@ export class LocalService {
 
   constructor() { }
   public saveData(key: string, value: string) {
-    localStorage.setItem(key, value);
+    sessionStorage.setItem(key, value);
   }
 
   public getData(key: string) {
     //return localStorage.getItem(key)
     try{
-      return localStorage.getItem(key);
+      return sessionStorage.getItem(key);
     }
     catch(error){
       //console.log(error);
@@ -21,10 +21,10 @@ export class LocalService {
     }
   }
   public removeData(key: string) {
-    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
   }
 
   public clearData() {
-    localStorage.clear();
+    sessionStorage.clear();
   }
 }

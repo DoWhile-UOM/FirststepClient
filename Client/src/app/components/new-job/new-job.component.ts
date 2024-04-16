@@ -45,6 +45,7 @@ interface AddJob {
     arrangement: string;
     is_experience_required: boolean;
     salary: number;
+	currency_unit: string;
     submission_deadline: string;
 	job_description: string;
     hrManager_id: number;
@@ -62,6 +63,7 @@ interface UpdateJob{
 	arrangement: string;
 	is_experience_required: string;
 	salary: string;
+	currency_unit: string;
 	submission_deadline: string;
 	posted_date: string;
 	job_description: string;
@@ -98,12 +100,12 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	jobID: string = '';
 
 	currentDate = new FormControl(new Date());
-	unitOfSalary: string = '';
 
 	fields: Field[] = [];
+	currencyUnits: string[] = [];
 
-	empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
-	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
+	empTypes: string[] = AdvertisementServices.employment_types;
+	jobArrangement: string[] = AdvertisementServices.job_arrangement;
 
 	// sample content for description
 	description: string = `
@@ -210,6 +212,11 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 		// get all country names using an external API
 		this.countries = Country.getAllCountries().map(country => country.name);
+		
+		if (!this.isUpdate){
+			// get all currency units of the world
+			this.currencyUnits = countries.all.map(country => country.currencies[0]).filter((value, index, self) => self.indexOf(value) === index);
+		}
 
 		let jobID: string | null = this.acRouter.snapshot.paramMap.get('jobID');
 
@@ -222,6 +229,10 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		}
 
 		this.spinner.hide();
+	}
+
+	onBackButtonClick(){
+		window.history.back();
 	}
 
 	ngAfterViewInit() {
@@ -249,22 +260,38 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		this.spinner.hide();
 	}
 
-	onSelectedCountryChanged(selectedCountry: string){
+	async onSelectedCountryChanged(selectedCountry: string){
+		// check whether the selected country is valid
+		if (selectedCountry == undefined || selectedCountry == ''){
+			return;
+		}
+		else if (this.countries.indexOf(selectedCountry) == -1){
+			return;
+		}
+
 		this.spinner.show();
 
 		this.locationCityControl.setValue('');
 		this.cities = [];
-		this.unitOfSalary = '';
+		this.adData.currency_unit = (this.isUpdate) ? this.adData.currency_unit : '';
 
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
 		if (countryCode == undefined){
-			this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+			this.locationCountryControl.setValue('');
+			
+			this.spinner.hide();
 			return;
 		}
 
-		this.unitOfSalary = countries[countryCode].currencies[0];
-		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
+		if (!this.isUpdate){
+			this.adData.currency_unit = countries[countryCode].currencies[0];
+		}
+
+		this.cities = this.removeDuplicates(City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? []);
+
+		this.snackBar.open("Reset City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
 
 		this.spinner.hide();
 	}
@@ -275,7 +302,21 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		addAdvertisement.keywords = this.removeDuplicates(this.keywords);
 		addAdvertisement.reqSkills = this.removeDuplicates(this.skills);
 		
-		addAdvertisement.hrManager_id = 10; // sample hrManager_id
+		try {
+			addAdvertisement.hrManager_id = sessionStorage.getItem('user_id') == null ? 0 : Number(sessionStorage.getItem('user_id'));
+		
+			if (addAdvertisement.hrManager_id == 0){
+				this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+	
+				// code to signout the user
+				return;
+			}
+		} catch (error) {
+			//console.log(error); //raises the error
+			this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+			this.router.navigate(['/notfound']);
+			return;
+		}
 
 		addAdvertisement.city = this.locationCityControl.value ?? '';
 		addAdvertisement.country = this.locationCountryControl.value ?? '';

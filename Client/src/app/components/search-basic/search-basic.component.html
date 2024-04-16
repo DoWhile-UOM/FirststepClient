@@ -2,7 +2,7 @@
     <form class="container" #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
         <mat-form-field appearance="outline" class="search-element title">
             <mat-label>Job Title</mat-label>
-            <input matInput placeholder="Placeholder" name="title" ngModel>
+            <input matInput placeholder="What do you looking for..." name="title" ngModel>
         </mat-form-field>
     
         <mat-form-field appearance="outline" class="search-element">
@@ -12,8 +12,8 @@
                 aria-label="Country"
                 matInput #countryInput
                 [formControl]="locationCountryControl"
-                [matAutocomplete]="autocountry" (change)="onSelectedCountryChanged(countryInput.value)">
-            <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
+                [matAutocomplete]="autocountry" (change)="validateSelectedCountry(countryInput.value)">
+            <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
             @for (option of locationCountryFilteredOptions | async; track option) {
                 <mat-option [value]="option">{{option}}</mat-option>
             }
@@ -58,7 +58,16 @@
                 <mat-icon>search</mat-icon>
             </button>    
         </div>
-        
+
+        <mat-slider
+            max="110"
+            min="0"
+            step="10"
+            showTickMarks
+            discrete
+            [displayWith]="distanceStepper">
+            <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
+        </mat-slider>
     </form>
 </mat-card>
 <app-spinner></app-spinner>

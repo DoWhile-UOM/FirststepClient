@@ -16,11 +16,12 @@
                     </div>
                     <div class="detail-inner">
                         <div class="detail-head-left">Location</div>
-                        <div class="detail-data">{{adData.country}}, {{adData.city}}</div>
+                        <div class="detail-data">{{adData.city}}, {{adData.country}}</div>
                     </div>
                     <div class="detail-inner">
                         <div class="detail-head-left">Salary</div>
-                        <div class="detail-data">LKR {{adData.salary}}</div>
+                        <div class="detail-data" *ngIf="adData.salary">{{adData.currency_unit}} {{adData.salary}}</div>
+                        <div class="detail-data" *ngIf="!adData.salary">-</div>
                     </div>
                 </div>
             
@@ -39,7 +40,8 @@
                     </div>
                     <div class="detail-inner">
                         <div class="detail-head">Deadline</div>
-                        <div class="detail-data">{{adData.submission_deadline}}</div>
+                        <div class="detail-data" *ngIf="adData.submission_deadline">{{adData.submission_deadline}}</div>
+                        <div class="detail-data" *ngIf="!adData.submission_deadline">-</div>
                     </div>
                 </div>
             </div>

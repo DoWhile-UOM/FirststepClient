@@ -6,7 +6,6 @@ import { NavBarComponent } from './nav-bars/nav-bar/nav-bar.component';
 import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
 import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 
-
 @Component({
     selector: 'app-root',
     standalone: true,
@@ -15,6 +14,5 @@ import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component
     imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent, PdfViewerComponent ]
 })
 export class AppComponent {
-  user = "seeker";
-
+  user = 'ca';
 }

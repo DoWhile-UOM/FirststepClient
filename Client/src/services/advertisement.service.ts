@@ -8,6 +8,8 @@ import axios from 'axios';
 })
 
 export class AdvertisementServices {
+  public static employment_types: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship', 'Temporary', 'Volunteer'];
+  public static job_arrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
 
   constructor(private snackBar: MatSnackBar) { }
 

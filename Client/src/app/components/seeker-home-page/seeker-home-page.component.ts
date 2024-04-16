@@ -47,6 +47,13 @@ export class SeekerHomePageComponent{
     let endIndex = startIndex + this.pageSize;
 
     await this.searchComponent?.changePaginator(startIndex, endIndex);
+
+    // scroll to the top of the page
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   changeJobList(newJobList: Job[]){
