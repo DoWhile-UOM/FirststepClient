@@ -224,14 +224,6 @@ export class SearchBasicComponent implements OnInit{
     this.spinner.hide();
 	}
 
-  distanceStepper(value: number): string {
-    if (value > 100){
-      return '100km+';
-    }
-
-    return String(value) + 'km';
-  }
-
   private _filterCountry(value: string): string[] {
 		const filterValue = value.toLowerCase();
 
@@ -243,4 +235,8 @@ export class SearchBasicComponent implements OnInit{
 
 		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
 	}
+
+  showAllFilters(){
+    
+  }
 }

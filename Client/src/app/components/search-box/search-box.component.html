@@ -1,3 +1,61 @@
 <mat-card>
+    <form class="container" #searchJobForm="ngForm" (ngSubmit)="''">
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>Country</mat-label>
+            <input type="text"
+                placeholder="Pick a Country"
+                aria-label="Country"
+                matInput #countryInput
+                [formControl]="locationCountryControl"
+                [matAutocomplete]="autocountry" (change)="validateSelectedCountry(countryInput.value)">
+            <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
+            @for (option of locationCountryFilteredOptions | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+            }
+            </mat-autocomplete>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>City</mat-label>
+            <input type="text"
+                placeholder="Pick a City"
+                aria-label="City"
+                matInput
+                [formControl]="locationCityControl"
+                [matAutocomplete]="autocity">
+            <mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
+            @for (option of locationCityFilteredOptions | async; track option) {
+                <mat-option [value]="option">{{option}}</mat-option>
+            }
+            </mat-autocomplete>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>Employment Type</mat-label>
+            <mat-select name="employeement_type" ngModel>
+                @for (emptype of empTypes; track emptype) {
+                    <mat-option [value]="emptype">{{emptype}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" class="search-element">
+            <mat-label>Job Arrangement</mat-label>
+            <mat-select name="arrangement" ngModel>
+                @for (arrangement of jobArrangement; track arrangement) {
+                    <mat-option [value]="arrangement">{{arrangement}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
 
+        <mat-slider
+            max="110"
+            min="0"
+            step="10"
+            showTickMarks
+            discrete
+            [displayWith]="distanceStepper">
+            <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
+        </mat-slider>
+    </form>
 </mat-card>

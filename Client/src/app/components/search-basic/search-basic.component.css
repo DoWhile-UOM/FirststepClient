@@ -22,11 +22,26 @@
 }
 
 .title{
-    width: 30em;
+    width: 40%;
+    margin-left: 1em;
+    margin-right: 1.5em;
+}
+
+.location{
+    margin-right: 0.5em;
 }
 
 .searchBtn{
-    margin-left: 1em;
+    margin-left: 0.5em;
+    width: 4em;
+    height: 4em;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.allFiltersBtn{
     margin-right: 1em;
     width: 4em;
     height: 4em;

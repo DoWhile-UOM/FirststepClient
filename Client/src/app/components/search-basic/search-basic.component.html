@@ -2,11 +2,13 @@
     <form class="container" #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
         <mat-form-field appearance="outline" class="search-element title">
             <mat-label>Job Title</mat-label>
+            <mat-icon matPrefix color="primary">work</mat-icon>
             <input matInput placeholder="What do you looking for..." name="title" ngModel>
         </mat-form-field>
-    
-        <mat-form-field appearance="outline" class="search-element">
+
+        <mat-form-field appearance="outline" class="search-element location">
             <mat-label>Country</mat-label>
+            <mat-icon matPrefix color="primary">location_one</mat-icon>
             <input type="text"
                 placeholder="Pick a Country"
                 aria-label="Country"
@@ -20,8 +22,9 @@
             </mat-autocomplete>
         </mat-form-field>
     
-        <mat-form-field appearance="outline" class="search-element">
+        <mat-form-field appearance="outline" class="search-element location">
             <mat-label>City</mat-label>
+            <mat-icon matPrefix color="primary">location_city</mat-icon>
             <input type="text"
                 placeholder="Pick a City"
                 aria-label="City"
@@ -35,39 +38,16 @@
             </mat-autocomplete>
         </mat-form-field>
     
-        <mat-form-field appearance="outline" class="search-element">
-            <mat-label>Employment Type</mat-label>
-            <mat-select name="employeement_type" ngModel>
-                @for (emptype of empTypes; track emptype) {
-                    <mat-option [value]="emptype">{{emptype}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    
-        <mat-form-field appearance="outline" class="search-element">
-            <mat-label>Job Arrangement</mat-label>
-            <mat-select name="arrangement" ngModel>
-                @for (arrangement of jobArrangement; track arrangement) {
-                    <mat-option [value]="arrangement">{{arrangement}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    
         <div class="searchBtn">
-            <button mat-icon-button color="primary">
+            <button mat-icon-button type="submit" color="primary">
                 <mat-icon>search</mat-icon>
-            </button>    
+            </button> 
         </div>
-
-        <mat-slider
-            max="110"
-            min="0"
-            step="10"
-            showTickMarks
-            discrete
-            [displayWith]="distanceStepper">
-            <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
-        </mat-slider>
+        <div class="allFiltersBtn">
+            <button mat-icon-button type="button" color="primary" (click)="showAllFilters()">
+                <mat-icon>more_horiz</mat-icon>
+            </button> 
+        </div>
     </form>
 </mat-card>
 <app-spinner></app-spinner>

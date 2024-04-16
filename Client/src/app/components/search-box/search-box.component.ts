@@ -14,6 +14,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Country, City } from 'country-state-city';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSliderModule } from '@angular/material/slider';
+import { AdvertisementServices } from '../../../services/advertisement.service';
 
 @Component({
   selector: 'app-search-box',
@@ -36,5 +37,88 @@ import { MatSliderModule } from '@angular/material/slider';
 })
 
 export class SearchBoxComponent{
-  
+  empTypes: string[] = AdvertisementServices.employment_types;
+	jobArrangement: string[] = AdvertisementServices.job_arrangement;
+
+  // for location country autocomplete
+	locationCountryControl = new FormControl('');
+	countries: string[] = [];
+	locationCountryFilteredOptions: Observable<string[]>;
+
+	// for city autocomplete
+	locationCityControl = new FormControl('');
+	cities: string[] = []; 
+	locationCityFilteredOptions: Observable<string[]>;
+
+  distance: number = 0;
+
+  constructor(
+    private advertisementService: AdvertisementServices, 
+    private snackBar: MatSnackBar,) { 
+    this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCountry(value || '')),
+		);
+
+		this.locationCityFilteredOptions = this.locationCityControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCity(value || '')),
+		);
+  }
+
+  validateSelectedCountry(selectedCountry: string){
+    if (selectedCountry == undefined || selectedCountry == ''){
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      return;
+    }
+    else if (this.countries.indexOf(selectedCountry) == -1){
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      return;
+    }
+  }
+
+  onSelectedCountryChanged(selectedCountry: string){
+    // check whether the selected country is valid
+    if (selectedCountry == undefined || selectedCountry == ''){
+      return;
+    }
+    else if (this.countries.indexOf(selectedCountry) == -1){
+      return;
+    }
+
+		this.locationCityControl.setValue('');
+		this.cities = [];
+
+		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
+
+		if (countryCode == undefined){
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      this.locationCountryControl.setValue('');
+			return;
+		}
+		
+		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
+
+    this.snackBar.open("Reset City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+	}
+
+  distanceStepper(value: number): string {
+    if (value > 100){
+      return '100km+';
+    }
+
+    return String(value) + 'km';
+  }
+
+  private _filterCountry(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.countries.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	private _filterCity(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
 }
