@@ -21,18 +21,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
 import { AddSkillsComponent } from "../add-skills/add-skills.component";
 import { SeekerService } from '../../../services/seeker.service';
+import axios, { AxiosError } from 'axios';
+
 
 interface seekerData {
-  Firstname: string;
-  Lastname: string;
-  EmailAddress: string;
-  ContactNumber: string;
-  University: string;
-  LinkedIn: string;
-  Field: string;
-  Bio: string;
-  Description: string;
-  Password: string;
+  first_name: string;
+  last_name: string;
+  phone_number: number;
+  email: string;
+  university: string;
+  cVurl: string;
+  linkedin: string; 
+  //field_name: string,
+  bio: string;
+  description: string;
+  profile_picture: string;
+  password_hash: string; //pop up
   
 }
 
@@ -85,6 +89,40 @@ constructor(private _formBuilder: FormBuilder ,private seekerService: SeekerServ
 
 
 ngOnInit(): void {
+}
+
+
+//new
+async submitForm() {
+  const seekerData = {
+    first_name: this.firstFormGroup.value.firstCtrl,
+    last_name: this.firstFormGroup.value.firstCtrl,
+    phone_number: this.firstFormGroup.value.firstCtrl,
+    email: this.secondFormGroup.value.secondCtrl,
+    university: this.thirdFormGroup.value.thirdCtrl,
+    cVurl: this.thirdFormGroup.value.thirdCtrl,
+    linkedin: this.thirdFormGroup.value.thirdCtrl,
+    bio:this.fifthFormGroup.value.fifthCtrl,
+    description: this.fifthFormGroup.value.fifthCtrl
+  };
+
+  try {
+    const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker');
+    console.log('Seeker added successfully:', response.data);
+    return response.data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      // The server responded with a status other than 2xx.
+      console.error('Error data:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+      console.error('Error headers:', error.response?.headers);
+    } else {
+      // The request was made but no response was received or an error occurred in setting up the request.
+      console.error('Error message:', error.message);
+    }
+    console.error('Error config:', error.config);
+    throw error;  // Re-throwing the error after logging (adjust based on how you want to handle failures)
+  }
 }
 
 
