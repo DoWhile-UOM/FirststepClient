@@ -13,11 +13,14 @@ import { catchError, firstValueFrom, map, of } from 'rxjs';
 export class AuthService {
   private userPayload:any; //store payload data get from token
 
-  private baseUrl:string="https://localhost:7213/api/User"
+  private baseUrl: string = Apipaths.user;
 
-  constructor(private local:LocalService, private http:HttpClient, private route:Router) {
+  constructor(
+    private local:LocalService, 
+    private http:HttpClient, 
+    private route:Router) {
     this.userPayload = this.decodedToken() //call decodedToken() to get payload data
-   }
+  }
 
   signup(userObj:any){
     return this.http.post<any>(Apipaths.register,userObj)
@@ -27,53 +30,47 @@ export class AuthService {
     return this.http.post<any>(Apipaths.authenticate,loginObj)
   }
 
-    //-----OTP Service----------------------------------
+  async requestOTP(emailObj: any) {
+    try {
+      console.log("service ", emailObj);
 
-    async requestOTP(emailObj: any) {
-      try {
-        console.log("service ", emailObj);
-  
-        this.http.post<any>(Apipaths.requestOTP, emailObj)
-          .subscribe(response => {
-            // Here you can access the actual response data in the 'response' variable
-            console.log(response);
-            if (response.status === 200) {
-              return true;
-            }  // This will log the actual data you expect
-            return false;
-  
-          });
-        return false;
-  
-      } catch (error) {
-        // Unexpected error during HTTP request
-        console.error("Unexpected error during OTP request:", error);
-        return false;
-      }
-  
-  
+      this.http.post<any>(Apipaths.requestOTP, emailObj)
+        .subscribe(response => {
+          // Here you can access the actual response data in the 'response' variable
+          console.log(response);
+          if (response.status === 200) {
+            return true;
+          }  // This will log the actual data you expect
+          return false;
+
+        });
+      return false;
+    } catch (error) {
+      // Unexpected error during HTTP request
+      console.error("Unexpected error during OTP request:", error);
+      return false;
     }
+  }
   
-    async verifyOTP(userData: any): Promise<boolean> {
-      try {
-        const response = await firstValueFrom(
-          this.http.post<any>(Apipaths.verifyOTP, userData)
-            .pipe(
-              map(response => response.status === 200), // Check for successful response
-              catchError(error => {
-                console.error('Error during OTP verification:', error);
-                return of(false); // Return false on error
-              })
-            )
-        );
-  
-        return true;
-      } catch (error) {
-        console.error('Unexpected error during OTP request:', error);
-        return false;
-      }
+  async verifyOTP(userData: any): Promise<boolean> {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<any>(Apipaths.verifyOTP, userData)
+          .pipe(
+            map(response => response.status === 200), // Check for successful response
+            catchError(error => {
+              console.error('Error during OTP verification:', error);
+              return of(false); // Return false on error
+            })
+          )
+      );
+
+      return true;
+    } catch (error) {
+      console.error('Unexpected error during OTP request:', error);
+      return false;
     }
-    //-----OTP Service End here---------------------------
+  }
 
   storeToken(token:string){
     //console.log('Token Stored')
@@ -93,7 +90,6 @@ export class AuthService {
     return this.local.getData('token');
   }
 
-
   getrefToken(){
     //console.log("Test");
     //localStorage.setItem('token', '')
@@ -101,7 +97,6 @@ export class AuthService {
   }
 
   isLoggedIn(){
-    
     try {
       return !!this.local.getData('token');
     } catch (error) {
@@ -115,9 +110,7 @@ export class AuthService {
     this.route.navigate(['login'])
   }
 
-
   decodedToken(){
-    
     const jwtHelper = new JwtHelperService();
     const token = this.getToken()!;
     const rtoken=this.getrefToken()!;
@@ -151,5 +144,4 @@ export class AuthService {
     if(this.userPayload)
     return this.userPayload.nameid
   }
-
 }
