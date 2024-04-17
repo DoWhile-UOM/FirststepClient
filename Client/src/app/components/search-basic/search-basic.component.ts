@@ -110,7 +110,8 @@ export class SearchBasicComponent implements OnInit{
   }
 
   async ngOnInit() {
-    /*
+    this.spinner.show();
+
     try {
       this.seekerID = String(sessionStorage.getItem('user_id'));
       var user_type = String(sessionStorage.getItem('user_type'));
@@ -121,6 +122,8 @@ export class SearchBasicComponent implements OnInit{
         // navigate to 404 page
         this.router.navigate(['/notfound']);
         // code to signout
+
+        this.spinner.hide();
         return;
       }
     } catch (error) {
@@ -129,15 +132,12 @@ export class SearchBasicComponent implements OnInit{
       // navigate to 404 page
       this.router.navigate(['/notfound']);
       // code to signout
-      return;
-    }
-    */
 
-    this.seekerID = '3';
+      this.spinner.hide();
+      return;
+    }    
 
     this.countries = Country.getAllCountries().map(country => country.name);
-
-    //this.spinner.show();
 
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {

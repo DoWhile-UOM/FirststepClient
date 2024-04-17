@@ -101,22 +101,22 @@ export class AdvertisementServices {
     return true;
   }
 
-  async getCompanyProfile(company_id: string, seekerID: string) {
+  async getCompanyProfile(company_id: string, seekerID: string, pageLength: string) {
     let company: any;
     let jobList: any = [];
 
-    await axios.get(Apipaths.getCompanyProfile + company_id + "/seekerID=" + seekerID)
+    await axios.get(Apipaths.getCompanyProfile + company_id + "/seekerID=" + seekerID + "/pageLength=" + pageLength)
       .then(function (response) {
         try {
           company = response.data;
-          jobList = company.advertisementUnderCompany;
+          jobList = company.companyAdvertisements.firstPageAdvertisements;
 
           for (let i = 0; i < jobList.length; i++) {
             var postDate = new Date(jobList[i].posted_date);
             jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
           }
 
-          company.advertisementUnderCompany = jobList;
+          company.companyAdvertisements.firstPageAdvertisements = jobList;
         }
         catch (error) {
           console.log("No advertisements found");
