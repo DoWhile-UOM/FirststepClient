@@ -4,6 +4,7 @@ import {Router} from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalService } from './local.service';
 import { Apipaths } from './apipaths/apipaths';
+import { catchError, firstValueFrom, map, of } from 'rxjs';
 
 
 @Injectable({
@@ -25,6 +26,54 @@ export class AuthService {
   login(loginObj:any){
     return this.http.post<any>(Apipaths.authenticate,loginObj)
   }
+
+    //-----OTP Service----------------------------------
+
+    async requestOTP(emailObj: any) {
+      try {
+        console.log("service ", emailObj);
+  
+        this.http.post<any>(Apipaths.requestOTP, emailObj)
+          .subscribe(response => {
+            // Here you can access the actual response data in the 'response' variable
+            console.log(response);
+            if (response.status === 200) {
+              return true;
+            }  // This will log the actual data you expect
+            return false;
+  
+          });
+        return false;
+  
+      } catch (error) {
+        // Unexpected error during HTTP request
+        console.error("Unexpected error during OTP request:", error);
+        return false;
+      }
+  
+  
+    }
+  
+    async verifyOTP(userData: any): Promise<boolean> {
+      try {
+        const response = await firstValueFrom(
+          this.http.post<any>(Apipaths.verifyOTP, userData)
+            .pipe(
+              map(response => response.status === 200), // Check for successful response
+              catchError(error => {
+                console.error('Error during OTP verification:', error);
+                return of(false); // Return false on error
+              })
+            )
+        );
+  
+        return true;
+      } catch (error) {
+        console.error('Unexpected error during OTP request:', error);
+        return false;
+      }
+    }
+    //-----OTP Service End here---------------------------
 
   storeToken(token:string){
     //console.log('Token Stored')
@@ -83,10 +132,24 @@ export class AuthService {
     return this.userPayload.role
   }
 
-  getFullName(){
+  getFirstName(){//Get First Name from token
     if(this.userPayload)
-    return this.userPayload.unique_name
+    return this.userPayload.given_name
   }
 
+  getLastName(){//Get Last Name from token
+    if(this.userPayload)
+    return this.userPayload.family_name
+  }
+
+  getOragnizationName(){//Get Organization from token 
+    if(this.userPayload)
+    return this.userPayload.website
+  }
+
+  getUserId(){//Get UserID from token 
+    if(this.userPayload)
+    return this.userPayload.nameid
+  }
 
 }
