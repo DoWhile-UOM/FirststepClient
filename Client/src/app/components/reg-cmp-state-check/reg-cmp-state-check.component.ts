@@ -9,6 +9,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDividerModule } from '@angular/material/divider';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -28,7 +30,7 @@ export interface CmpyData {
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatCardModule,MatButtonModule,MatInputModule,ReactiveFormsModule,MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [MatDividerModule,MatGridListModule,MatCardModule,MatButtonModule,MatInputModule,ReactiveFormsModule,MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
