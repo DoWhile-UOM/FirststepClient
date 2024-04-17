@@ -48,7 +48,6 @@ export class SeekerService {
   //add method
   async addseeker(seeker: any) {
     try {
-      //seeker.seeker_id= 13; //sample company id
       await axios.post('https://localhost:7213/api/Seeker/AddSeeker', seeker)
        .then((response) => {
          console.log(response);
