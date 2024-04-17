@@ -14,14 +14,32 @@
         }}</span>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="3">
-        <button
+        <!-- <button
           mat-raised-button
           class="apply-button"
           color="primary"
           matTooltip="Evaluation status of the application"
         >
-          {{ evaluated_staus }}
-        </button>
+          {{ evaluated_status }}
+        </button> -->
+        <mat-chip
+          class="apply-button"
+          color="primary"
+          matTooltip="Evaluation status of the application"
+        >
+          <img
+            matChipAvatar
+            src="https://material.angular.io/assets/img/examples/shiba1.jpg"
+            alt="Photo of a Shiba Inu"
+          />{{ evaluated_status }}</mat-chip
+        >
+        <!-- <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Example icon button with a delete icon"
+        >
+          <mat-icon>delete</mat-icon>
+        </button> -->
       </mat-grid-tile>
     </mat-grid-list>
     <mat-divider></mat-divider>
@@ -79,7 +97,7 @@
       </mat-grid-tile>
     </mat-grid-list>
     <mat-divider></mat-divider>
-    <div *ngIf="evaluatedCompanyDetails.verified_system_admin_id === undefined">
+    <div *ngIf="evaluated_status == 'Not Evaluated'">
       <mat-grid-list
         cols="2"
         rowHeight="140"
@@ -111,7 +129,7 @@
     </div>
 
     <!--Approved or Rejected button -->
-    <div *ngIf="evaluated_staus == 'Evaluated'">
+    <div *ngIf="evaluated_status == 'Evaluated'">
       <mat-grid-list
         cols="1"
         rowHeight="140"
@@ -125,12 +143,13 @@
             style="text-align: left"
           >
             {{
-              evaluated_staus == "Evaluated" &&
+              evaluated_status == "Evaluated" &&
               companyApplication.verification_status
                 ? "Approved"
-                :evaluated_staus == "Evaluated" &&
-              !companyApplication.verification_status
-                ?"Rejected":''
+                : evaluated_status == "Evaluated" &&
+                  !companyApplication.verification_status
+                ? "Rejected"
+                : ""
             }}
           </button>
         </mat-grid-tile>

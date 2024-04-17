@@ -16,19 +16,20 @@
   flex-direction: row;
   justify-content: space-between;
 }
-.emptymsg{
+.emptymsg {
   height: 65%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-th.mat-header-cell .nu-header{
+th.mat-header-cell .nu-header {
   text-align: center !important;
 }
-.emptymsg div{
+.emptymsg div {
   margin: 0 auto;
 }
-.adTable, .emptymsg{
+.adTable,
+.emptymsg {
   width: 95%;
   margin: 0 auto;
   margin-top: 3em;
@@ -36,4 +37,7 @@ th.mat-header-cell .nu-header{
 }
 .material-icons {
   font-size: 22px !important;
+}
+.view-section {
+  cursor: pointer;
 }

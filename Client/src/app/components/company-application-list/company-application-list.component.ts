@@ -18,14 +18,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SaNavBarComponent } from '../../nav-bars/sa-nav-bar/sa-nav-bar.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface CompanyList {
   company_id: number;
   company_name: string;
   verification_status: string;
   evaluated_status: string;
+  view: string;
 }
-
 
 @Component({
   selector: 'app-company-application-list',
@@ -40,6 +41,7 @@ interface CompanyList {
     SpinnerComponent,
     CommonModule,
     SaNavBarComponent,
+    MatTooltipModule,
   ],
   templateUrl: './company-application-list.component.html',
   styleUrl: './company-application-list.component.css',
@@ -81,17 +83,32 @@ export class CompanyApplicationListComponent {
         this.companyList = data.map((item, index) => ({
           company_id: item.company_id, // Use company_id
           company_name: item.company_name,
-          verification_status: item.verification_status?'Registered':'Unregistered',
-          evaluated_status: item.verified_system_admin_id,
-          view: item.verification_status ? 'Review' : 'Evaluate',
+          verification_status:
+            item.verified_system_admin_id !== 0
+              ? item.verification_status
+                ? 'Registered'
+                : 'Unregistered'
+              : 'Pending...',
+          evaluated_status:
+            item.verified_system_admin_id !== 0 ? 'Evaluated' : 'Not Evaluated',
+          view: item.verified_system_admin_id !== 0 ? 'Review' : 'Evaluate',
         }));
+
         if (status == 'registered') {
           this.companyList = this.companyList.filter(
-            (company) => company.verified_system_admin_id !== null && company.verified_system_admin_id !== undefined
+            (company) =>
+              company.evaluated_status == 'Evaluated' &&
+              company.verification_status == 'Registered'
           );
         } else if (status == 'unregistered') {
           this.companyList = this.companyList.filter(
-            (company) => company.verified_system_admin_id == null && company.verified_system_admin_id == undefined
+            (company) =>
+              company.evaluated_status == 'Evaluated' &&
+              company.verification_status == 'Unregistered'
+          );
+        } else if (status == 'pending') {
+          this.companyList = this.companyList.filter(
+            (company) => company.evaluated_status == 'Not Evaluated'
           );
         }
         console.log('Company List', data);
