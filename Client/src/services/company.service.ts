@@ -60,6 +60,7 @@ export class CompanyService {
     console.log(companyDetails);
     return companyDetails;
   }
+  
   async getCompanyApplicationById(companyId: number) {
     let companyApplication: any = {};
     await axios

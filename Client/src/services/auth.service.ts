@@ -4,7 +4,8 @@ import {Router} from '@angular/router'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalService } from './local.service';
 import { Apipaths } from './apipaths/apipaths';
-import { catchError, firstValueFrom, map, of } from 'rxjs';
+import { catchError, firstValueFrom, lastValueFrom, map, of, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Injectable({
@@ -29,29 +30,25 @@ export class AuthService {
 
     //-----OTP Service----------------------------------
 
-    async requestOTP(emailObj: any) {
+    async requestOTP(userData: any,object:MatSnackBar) {
       try {
-        console.log("service ", emailObj);
+        const response = await lastValueFrom(
+          this.http.post<any>(Apipaths.requestOTP, userData)
+            .pipe(
+              tap(response => console.log('Full response:', response)), // Log the entire response
+              map(response => response.status === 200), // Check for successful response status
+              catchError(error => {
+                console.error('Error during OTP verification:', error);
+                return of(false); // Return false on error
+              })
+            )
+        );
   
-        this.http.post<any>(Apipaths.requestOTP, emailObj)
-          .subscribe(response => {
-            // Here you can access the actual response data in the 'response' variable
-            console.log(response);
-            if (response.status === 200) {
-              return true;
-            }  // This will log the actual data you expect
-            return false;
-  
-          });
-        return false;
-  
+        return true;
       } catch (error) {
-        // Unexpected error during HTTP request
-        console.error("Unexpected error during OTP request:", error);
+        console.error('Unexpected error during OTP request:', error);
         return false;
       }
-  
-  
     }
   
     async verifyOTP(userData: any): Promise<boolean> {

@@ -9,6 +9,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { MatCheckbox, MatCheckboxModule } from '@angular/material/checkbox';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ElementRef, ViewChild, inject } from '@angular/core';
@@ -21,6 +22,8 @@ import { AsyncPipe } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -29,6 +32,8 @@ import { CompanyService } from '../../../services/company.service';
 import { AuthService } from '../../../services/auth.service';
 import { Apipaths } from '../../../services/apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 
 interface requestOTP {
   email: string | null | undefined;
@@ -42,7 +47,7 @@ interface verifyOTP {
 @Component({
   selector: 'app-register-company',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule],
+  imports: [FlexLayoutServerModule,MatCardModule,MatGridListModule,FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule],
   templateUrl: './register-company.component.html',
   styleUrl: './register-company.component.css'
 })
@@ -77,8 +82,10 @@ export class RegisterCompanyComponent {
     const userData: requestOTP = {
       email: this.companyReg.get('company_email')?.value
     }
-    const verificationResult = await this.auth.requestOTP(userData);
-    //console.log(verificationResult);
+    const verificationResult = await this.auth.requestOTP(userData,this.snackbar)
+    this.reqOTPbtntxt = "";
+
+    console.log("otp request "+verificationResult);
   }
 
 
@@ -91,12 +98,14 @@ export class RegisterCompanyComponent {
     }
 
     const verificationResult = await this.auth.verifyOTP(userData);
-    //console.log("Verficaiton result is "+verificationResult);
+    console.log("Verficaiton result is "+verificationResult);
     if (verificationResult == true) {
       this.isEmailVerified = true;
+      this.snackbar.open("OTP verification successful","Close",{duration:2000});
       //console.log("Email verified");
     } else {
       console.log("Email verification failed");
+      this.snackbar.open("OTP verification failed","Close",{duration:2000});
     }
 
   }
@@ -122,6 +131,7 @@ export class RegisterCompanyComponent {
   onRegister() {
     if (!this.isEmailVerified) {
       alert("Please verify your email first");
+      
       return;
     } else {
       this.company.CompanyRegister(this.companyReg.value)

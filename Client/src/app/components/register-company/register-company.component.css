@@ -9,23 +9,6 @@
   margin-left: 130px;
 }
 
-.up-container {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: space-between; */
-}
-
-.up-container .left {
-  flex: 1;
-  padding: 10px;
-  align-items: center;
-}
-.right {
-  flex: 1;
-  padding: 10px;
-  align-items: right;
-}
-
 .seeker {
   width: 400px;
   height: auto;
@@ -95,76 +78,46 @@ p {
 
 }
 
-
-/* 
-.mat-stepper-header-icon-foreground-color {
-  color: white;
+.body {
+  padding: 3em;
+  width: 60%;
+  min-width: 400px;
+  margin: 0 auto;
 }
 
-.mat-stepper-header-selected-state-icon-background-color {
-  background-color: white;
+.card {
+  padding: 2em;
 }
 
-.mat-stepper-header-selected-state-icon-foreground-color {
+mat-grid-tile mat-form-field {
+  width: 75%;
+  margin: 0.75em;
+}
+
+.company-logo {
+  width: 20px;
+  height: auto;
+}
+
+
+.title {
   color: #008080;
+  font-size: 25px;
+  font-family: Lato;
+  font-weight: 700;
+  word-wrap: break-word;
 }
 
-.mat-stepper-header-done-state-icon-background-color {
-  background-color: #009688;
+
+.mat-mdc-button-touch-target {
+  width: 32px !important;
+  height: 32px !important;
 }
 
-.mat-stepper-header-done-state-icon-foreground-color {
-  color: white;
+.button-with-inputbox mat-form-field{
+  width: 55%;
 }
 
-.mat-stepper-header-edit-state-icon-background-color {
-  background-color: #009688;
+.button-with-inputbox button{
+  width: 20%;
 }
-
-.mat-stepper-header-edit-state-icon-foreground-color {
-  color: white;
-}
-
-.mat-stepper-container-color {
-  background-color: white;
-}
-
-.mat-stepper-line-color {
-  border-color: rgba(0, 0, 0, 0.12);
-}
-
-.mat-stepper-header-hover-state-layer-color {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
-.mat-stepper-header-focus-state-layer-color {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-
-.mat-stepper-header-label-text-color {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-.mat-stepper-header-optional-label-text-color {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-.mat-stepper-header-selected-state-label-text-color {
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mat-stepper-header-error-state-label-text-color {
-  color: #f44336;
-}
-
-.mat-stepper-header-icon-background-color {
-  background-color: rgba(0, 0, 0, 0.54);
-}
-
-.mat-stepper-header-error-state-icon-foreground-color {
-  color: #f44336;
-}
-
-.mat-stepper-header-error-state-icon-background-color {
-  background-color: transparent;
-} */

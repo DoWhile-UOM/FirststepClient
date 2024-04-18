@@ -1,89 +1,118 @@
-<div class="page">
-  <section class="navbar"></section>
-  <div class="form-popup" id="myForm">
-    <mat-stepper labelPosition="bottom" #stepper color="primary">
+<div class="body">
+
+  <mat-card class="card">
+    <!--Top Section-->
+    <mat-grid-list cols="6" rowHeight="140">
+      <mat-grid-tile [colspan]="1">
+
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2">
+        <span class="sectionHeading heading title">
+          <h2>Company Registration Status</h2>
+        </span>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-divider></mat-divider>
+
+    <!--Company Details-->
+    <mat-stepper labelPosition="bottom" #stepper color="primary" class="stepper-with-wider-nav">
+
       <form [formGroup]="companyReg">
         <mat-step>
 
-          <ng-template matStepLabel style="width: 100px;"></ng-template>
+          <mat-grid-list cols="1" rowHeight="100">
 
-          <div class="up-container">
-            <a>Ashan</a>
-            <div class="left">
-              <img src="\assets\images\signup1.png" alt="Seeker" class="seeker" />
-
-            </div>
-
-            <div class="right">
+            <mat-grid-tile>
               <h3>Register Your Company</h3>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Company Name</mat-label>
                 <input matInput placeholder="Company Name" formControlName="company_name" required />
               </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Company Web site</mat-label>
                 <input matInput placeholder="Company Web site" formControlName="company_website" required />
               </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile class="button-with-inputbox">
               <mat-form-field>
                 <mat-label>Email Address</mat-label>
                 <input matInput placeholder="Enter Email" formControlName="company_email" required />
               </mat-form-field>
+              <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
+                [disabled]="isOTPRequestSent" id="otpreqbtn">{{ reqOTPbtntxt }} {{ remainingTime
+                }}</button>
+            </mat-grid-tile>
 
-              <button mat-button class="custom-stepper1-button" style="color: white; margin-left: 20px;"
-                (click)="requestOTP()" [disabled]="isOTPRequestSent" id="otpreqbtn" >Request OTP {{ remainingTime }}</button>
 
-              <mat-form-field>
+            <mat-grid-tile class="button-with-inputbox">
+              <mat-form-field >
                 <mat-label>OTP</mat-label>
                 <input matInput placeholder="Enter Email" formControlName="otp_in" required />
               </mat-form-field>
-
-              <button mat-button class="custom-stepper1-button" style="color: white; margin-left: 20px;"
+              <button mat-raised-button class="apply-button" color="primary"
                 (click)="VerifyOTP()">Verify OTP</button>
+            </mat-grid-tile>
 
-              <div>
+
+            <mat-grid-tile class="button-with-inputbox">
                 <button mat-button [disabled]="!isEmailVerified" matStepperNext class="custom-stepper1-button"
-                  style="color: white; margin-left: 20px;">Next</button>
-              </div>
-            </div>
-          </div>
+                color="primary">Next</button>
+            </mat-grid-tile>
+
+          </mat-grid-list>
         </mat-step>
-        <mat-step>company_applied_date
-          <ng-template matStepLabel style="width: 100px;"></ng-template>
 
-          <div class="up-container">
-            <div class="left">
-            </div>
 
-            <div class="right">
+        <mat-step>
+          <mat-grid-list cols="1" rowHeight="100">
+            <ng-template matStepLabel style="width: 100px;"></ng-template>
 
-              <h3>Register Your Company</h3>
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Business Scale</mat-label>
                 <input matInput placeholder="Business Scale" formControlName="business_reg_certificate" required />
               </mat-form-field>
+            </mat-grid-tile>
 
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Business Phone No</mat-label>
                 <input matInput placeholder="Business Phone No" formControlName="company_phone_number" required />
               </mat-form-field>
+            </mat-grid-tile>
 
-
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Business Registration Number</mat-label>
                 <input type="number" matInput placeholder="Business Registration Number"
                   formControlName="business_reg_no" required />
               </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Date of Registartion</mat-label>
                 <input type="date" matInput placeholder="Enter Email" formControlName="company_applied_date" required />
               </mat-form-field>
+            </mat-grid-tile>
 
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Documnet 1</mat-label>
                 <input matInput placeholder="Enter Email" formControlName="business_reg_certificate" required />
               </mat-form-field>
+            </mat-grid-tile>
 
 
+            <mat-grid-tile>
               <mat-form-field>
                 <mat-label>Documnet 2</mat-label>
                 <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation"
@@ -93,40 +122,28 @@
                 <button>Upload File</button>
 
               </mat-form-field>
-              <div>
-                <button mat-button [disabled]="!isEmailVerified" matStepperNext class="custom-stepper1-button"
-                  style="color: white; margin-left: 20px;" (click)="onRegister()">Register</button>
-              </div>
+            </mat-grid-tile>
 
-
-            </div>
-          </div>
-
-
-
-
+          </mat-grid-list>
         </mat-step>
+
       </form>
     </mat-stepper>
-  </div>
+
+    <mat-divider></mat-divider>
+    <div>
+      <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
+        <mat-grid-tile style="width: 20%">
+          <button mat-raised-button [disabled]="!isEmailVerified" class="apply-button" color="primary"
+            style="width: 50%" (click)="onRegister()">
+            Register
+          </button>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+    </div>
+
+    <!--Approved or Rejected button -->
+
+  </mat-card>
 </div>
-
-<!----
-{
-  "business_reg_no": 0,
-  //"company_name": "string",
-  //"company_email": "user@example.com",
-  //"company_website": "string",
-  //"company_phone_number": 0,
-  //"business_reg_certificate": "string",
-  //"certificate_of_incorporation": "string",
-  //"company_applied_date": "2024-03-25T11:10:08.012Z"
-}
-
-
-
-
-
-
-
--->
