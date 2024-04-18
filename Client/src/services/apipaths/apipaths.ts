@@ -32,6 +32,8 @@ export class Apipaths {
     static readonly deleteCompany: string = this.baseUrl + 'Company/DeleteCompany/';
     static readonly getAllComapanyList: string = this.baseUrl + 'Company/GetAllComapanyList';
     static readonly getCompanyApplicationById: string = this.baseUrl + 'Company/GetCompanyApplicationById/'; //+companyId
+    static readonly getCompanyRegState:string=this.baseUrl+'Company/GetRegCheckByID/';//+regurl id
+    static readonly registerCompany:string=this.baseUrl+'Company/AddCompany';
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
@@ -42,16 +44,16 @@ export class Apipaths {
     // fields
     static readonly getAllFields: string = this.baseUrl + 'JobField/GetAllJobFields';
 
-    // external
-    static readonly getCountryNames: string = 'https://api.first.org/v1/get-countries';
-    static readonly getCityNames: string = 'https://countriesnow.space/api/v0.1/countries/cities';
-
     // seeker
     static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeekerById/';
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
     static readonly authenticate: string = this.baseUrl + 'User/authenticate';
+    static readonly user: string = this.baseUrl + 'User';
+
+    static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
+    static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
 
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';

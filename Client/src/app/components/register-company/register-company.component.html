@@ -1,97 +1,101 @@
-
-
 <div class="page">
   <section class="navbar"></section>
   <div class="form-popup" id="myForm">
     <mat-stepper labelPosition="bottom" #stepper color="primary">
+      <form [formGroup]="companyReg">
+        <mat-step>
 
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel style="width: 100px;"></ng-template>
 
           <div class="up-container">
             <a>Ashan</a>
             <div class="left">
               <img src="\assets\images\signup1.png" alt="Seeker" class="seeker" />
-              <h2 style="padding-left: 70px; padding-top: 40px;">Find Your Future With FirstStep </h2>
+
             </div>
 
             <div class="right">
-
-              <h3>Create your FirstStep Account</h3>
+              <h3>Register Your Company</h3>
               <mat-form-field>
                 <mat-label>Company Name</mat-label>
-                <input matInput placeholder="Enter First name" formControlName="fName" required />
+                <input matInput placeholder="Company Name" formControlName="company_name" required />
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Company Web site</mat-label>
-                <input matInput placeholder="Enter Last name" formControlName="lName" required />
+                <input matInput placeholder="Company Web site" formControlName="company_website" required />
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Email Address</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="email" required />
+                <input matInput placeholder="Enter Email" formControlName="company_email" required />
               </mat-form-field>
+
+              <button mat-button class="custom-stepper1-button" style="color: white; margin-left: 20px;"
+                (click)="requestOTP()" [disabled]="isOTPRequestSent" id="otpreqbtn" >Request OTP {{ remainingTime }}</button>
 
               <mat-form-field>
                 <mat-label>OTP</mat-label>
-                <input matInput placeholder="Enter OTP" formControlName="otp" required />
+                <input matInput placeholder="Enter Email" formControlName="otp_in" required />
               </mat-form-field>
 
-              <mat-form-field>
-                <mat-label>Contact Number</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="pNumber" required />
-              </mat-form-field>
+              <button mat-button class="custom-stepper1-button" style="color: white; margin-left: 20px;"
+                (click)="VerifyOTP()">Verify OTP</button>
+
               <div>
-                <button mat-button matStepperNext class="custom-stepper1-button"
+                <button mat-button [disabled]="!isEmailVerified" matStepperNext class="custom-stepper1-button"
                   style="color: white; margin-left: 20px;">Next</button>
               </div>
-
-
             </div>
           </div>
-
-
-        </form>
-
-      </mat-step>
-
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
+        </mat-step>
+        <mat-step>company_applied_date
           <ng-template matStepLabel style="width: 100px;"></ng-template>
 
           <div class="up-container">
-            <a>Ashan</a>
             <div class="left">
-              <img src="\assets\images\signup1.png" alt="Seeker" class="seeker" />
-              <h2 style="padding-left: 70px; padding-top: 40px;">Find Your Future With FirstStep </h2>
             </div>
 
             <div class="right">
 
-              <h3>Create your FirstStep Account</h3>
+              <h3>Register Your Company</h3>
               <mat-form-field>
                 <mat-label>Business Scale</mat-label>
-                <input matInput placeholder="Enter First name" formControlName="businessScl" required />
+                <input matInput placeholder="Business Scale" formControlName="business_reg_certificate" required />
               </mat-form-field>
-              <mat-form-field>
-                <mat-label>Default Location</mat-label>
-                <input matInput placeholder="Enter Last name" formControlName="location" required />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Description</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="des" required />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Company Logo</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="logo" required />
 
-                <input type="file" (change)="onFileSelected($event)">
-                <button (click)="uploadFile()">Upload File</button>
+              <mat-form-field>
+                <mat-label>Business Phone No</mat-label>
+                <input matInput placeholder="Business Phone No" formControlName="company_phone_number" required />
+              </mat-form-field>
+
+
+              <mat-form-field>
+                <mat-label>Business Registration Number</mat-label>
+                <input type="number" matInput placeholder="Business Registration Number"
+                  formControlName="business_reg_no" required />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Date of Registartion</mat-label>
+                <input type="date" matInput placeholder="Enter Email" formControlName="company_applied_date" required />
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Documnet 1</mat-label>
+                <input matInput placeholder="Enter Email" formControlName="business_reg_certificate" required />
+              </mat-form-field>
+
+
+              <mat-form-field>
+                <mat-label>Documnet 2</mat-label>
+                <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation"
+                  required />
+
+
+                <button>Upload File</button>
 
               </mat-form-field>
               <div>
-                <button mat-button matStepperNext class="custom-stepper1-button"
-                  style="color: white; margin-left: 20px;">Register</button>
+                <button mat-button [disabled]="!isEmailVerified" matStepperNext class="custom-stepper1-button"
+                  style="color: white; margin-left: 20px;" (click)="onRegister()">Register</button>
               </div>
 
 
@@ -99,10 +103,30 @@
           </div>
 
 
-        </form>
 
-      </mat-step>
 
+        </mat-step>
+      </form>
     </mat-stepper>
   </div>
 </div>
+
+<!----
+{
+  "business_reg_no": 0,
+  //"company_name": "string",
+  //"company_email": "user@example.com",
+  //"company_website": "string",
+  //"company_phone_number": 0,
+  //"business_reg_certificate": "string",
+  //"certificate_of_incorporation": "string",
+  //"company_applied_date": "2024-03-25T11:10:08.012Z"
+}
+
+
+
+
+
+
+
+-->
