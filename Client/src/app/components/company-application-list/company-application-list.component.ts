@@ -87,7 +87,7 @@ export class CompanyApplicationListComponent {
             item.verified_system_admin_id !== 0
               ? item.verification_status
                 ? 'Registered'
-                : 'Unregistered'
+                : 'Rejected'
               : 'Pending...',
           evaluated_status:
             item.verified_system_admin_id !== 0 ? 'Evaluated' : 'Not Evaluated',
@@ -100,11 +100,11 @@ export class CompanyApplicationListComponent {
               company.evaluated_status == 'Evaluated' &&
               company.verification_status == 'Registered'
           );
-        } else if (status == 'unregistered') {
+        } else if (status == 'rejected') {
           this.companyList = this.companyList.filter(
             (company) =>
               company.evaluated_status == 'Evaluated' &&
-              company.verification_status == 'Unregistered'
+              company.verification_status == 'Rejected'
           );
         } else if (status == 'pending') {
           this.companyList = this.companyList.filter(
