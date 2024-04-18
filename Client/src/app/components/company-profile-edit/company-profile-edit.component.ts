@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component ,OnInit} from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
@@ -69,6 +69,7 @@ export class CompanyProfileEditComponent {
   company: Company = {} as Company; // Initialize the company property
   cName = ''; // to store Comapny Name that is on the top
   noOfCols: number = 2;
+  companyId: number = 7; // temp
   BusinessScales: any[] = [
     { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
     { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
@@ -95,7 +96,9 @@ export class CompanyProfileEditComponent {
     try {
       this.spinner.show();
 
-      this.company = await this.companyService.getCompanyDetails(7);
+      this.company = await this.companyService.getCompanyDetails(
+        this.companyId
+      );
       this.cName = this.company.company_name;
       console.log('got details');
     } finally {
@@ -108,7 +111,10 @@ export class CompanyProfileEditComponent {
       console.log('Company : ', this.company);
       this.spinner.show();
       console.log(this.company);
-      await this.companyService.updateCompanyDetails(this.company, 7); // 7 for bistec
+      await this.companyService.updateCompanyDetails(
+        this.company,
+        this.companyId
+      ); // 7 for bistec
       this.cName = this.company.company_name;
       console.log('updated');
     } finally {
@@ -118,14 +124,14 @@ export class CompanyProfileEditComponent {
 
   async discardChanges() {
     this.company = {} as Company;
-    this.company = await this.companyService.getCompanyDetails(7);
+    this.company = await this.companyService.getCompanyDetails(this.companyId);
     console.log('discarded changes');
   }
 
   async deleteAccount() {
     try {
       this.spinner.show();
-      await this.companyService.deleteAccount(7);
+      await this.companyService.deleteAccount(this.companyId);
       console.log('deleted');
     } finally {
       this.spinner.hide();
@@ -182,14 +188,22 @@ export class CompanyProfileEditComponent {
   //   }
   // }
   emailErrorMessage() {
-    this.emailControl.setValue(this.company.company_email);
-
-    if (this.emailControl.hasError('required')) {
-      this.errorMessageForEmail = 'Email is required';
-    } else if (this.emailControl.hasError('email')) {
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(this.company.company_email)) {
       this.errorMessageForEmail = 'Email is invalid';
     } else {
       this.errorMessageForEmail = '';
     }
   }
+  // emailErrorMessage() {
+  //   this.emailControl.setValue(this.company.company_email);
+
+  //   if (this.emailControl.hasError('required')) {
+  //     this.errorMessageForEmail = 'Email is required';
+  //   } else if (this.emailControl.hasError('email')) {
+  //     this.errorMessageForEmail = 'Email is invalid';
+  //   } else {
+  //     this.errorMessageForEmail = '';
+  //   }
+  // }
 }
