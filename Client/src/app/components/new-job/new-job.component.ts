@@ -43,7 +43,7 @@ interface AddJob {
     city: string;
     employeement_type: string;
     arrangement: string;
-    is_experience_required: boolean;
+    experience: string;
     salary: number;
 	currency_unit: string;
     submission_deadline: string;
@@ -61,7 +61,7 @@ interface UpdateJob{
 	city: string;
 	employeement_type: string;
 	arrangement: string;
-	is_experience_required: string;
+	experience: string;
 	salary: string;
 	currency_unit: string;
 	submission_deadline: string;
@@ -106,6 +106,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 	empTypes: string[] = AdvertisementServices.employment_types;
 	jobArrangement: string[] = AdvertisementServices.job_arrangement;
+	experiences: string[] = AdvertisementServices.experiences;
 
 	// sample content for description
 	description: string = `

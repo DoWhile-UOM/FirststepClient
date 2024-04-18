@@ -104,9 +104,10 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Experience</mat-label>
-						<mat-select name="is_experience_required" [(ngModel)]="adData.is_experience_required">
-							<mat-option [value]="false">Not Required</mat-option>
-							<mat-option [value]="true">Required</mat-option>
+						<mat-select name="is_experience_required" [(ngModel)]="adData.experience">
+							@for (exp of experiences; track exp) {
+								<mat-option [value]="exp">{{exp}}</mat-option>
+							}
 						</mat-select>
 					</mat-form-field>
 				</mat-grid-tile>

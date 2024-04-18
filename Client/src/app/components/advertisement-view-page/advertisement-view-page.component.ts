@@ -21,7 +21,7 @@ interface Job{
 	city: string;
 	employeement_type: string;
 	arrangement: string;
-	is_experience_required: string;
+	experience: string;
 	salary: string;
   currency_unit: string;
 	submission_deadline: string;
