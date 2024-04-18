@@ -81,8 +81,9 @@ button {
   border-color: #008080;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding: 10px;
 }
-.apply-changes-class:hover {
+/* .apply-changes-class:hover {
   background-color: #ffffff;
   color: #008080;
   border-width: 1px;
@@ -90,7 +91,7 @@ button {
   outline: none;
   border-radius: 5px;
   border-color: #008080;
-}
+} */
 .discard-changes-class {
   background-color: #ffffff;
   color: #008080;
@@ -99,11 +100,11 @@ button {
   outline: none;
   border-radius: 5px;
   border-color: #008080;
-
+  padding: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.discard-changes-class:hover {
+/* .discard-changes-class:hover {
   background-color: #008080;
   color: #ffffff;
   border-width: 1px;
@@ -112,7 +113,7 @@ button {
   border-radius: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
-}
+} */
 button:hover {
   cursor: pointer;
 }
@@ -124,8 +125,9 @@ button:hover {
   outline: none;
   border-radius: 5px;
   padding: 2px 0;
+  padding: 10px;
 }
-.delete-account-class:hover {
+/* .delete-account-class:hover {
   background-color: #ffffff;
   color: #d73434;
   border-width: 1px;
@@ -133,4 +135,4 @@ button:hover {
   outline: none;
   border-radius: 5px;
   padding: 2px 0;
-}
+} */
