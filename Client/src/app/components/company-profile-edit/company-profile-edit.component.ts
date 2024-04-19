@@ -1,4 +1,4 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
@@ -28,11 +28,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
-import {merge} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-
-import { HrManagerNavBarComponent } from '../../nav-bars/hr-manager-nav-bar/hr-manager-nav-bar.component';;
-
+import { merge } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface Company {
   company_id: number;
@@ -72,7 +69,10 @@ interface BusinessScale {
     NgxSpinnerModule,
     SpinnerComponent,
     MatCardModule,
-    CommonModule,MatDialogTitle,MatDialogContent,MatDialogActions, HrManagerNavBarComponent
+    CommonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
   ],
 })
 export class CompanyProfileEditComponent {
@@ -125,7 +125,13 @@ export class CompanyProfileEditComponent {
 
   async onSubmit() {
     try {
-      if(this.company.company_name.length!=0&&this.company.company_description.length!=0&&this.company.company_website.length!=0&&this.company.company_phone_number.toString().length==9&&this.email.hasError('email')!=true){
+      if (
+        this.company.company_name.length != 0 &&
+        this.company.company_description.length != 0 &&
+        this.company.company_website.length != 0 &&
+        this.company.company_phone_number.toString().length == 9 &&
+        this.email.hasError('email') != true
+      ) {
         console.log('Company : ', this.company);
         this.spinner.show();
         console.log(this.company);
@@ -135,11 +141,9 @@ export class CompanyProfileEditComponent {
         ); // 7 for bistec
         this.cName = this.company.company_name;
         console.log('updated');
-      }
-      else{
+      } else {
         this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       }
-     
     } finally {
       this.spinner.hide();
     }
@@ -211,12 +215,12 @@ export class CompanyProfileEditComponent {
   //   }
   // }
   emailErrorMessage() {
-    if(this.email.hasError('required')){
-      this.errorMessageForEmail='Email is required.';
-    }else if(this.email.hasError('email')){
-      this.errorMessageForEmail='Email is invalid.';
-    }else{
-      this.errorMessageForEmail='';
+    if (this.email.hasError('required')) {
+      this.errorMessageForEmail = 'Email is required.';
+    } else if (this.email.hasError('email')) {
+      this.errorMessageForEmail = 'Email is invalid.';
+    } else {
+      this.errorMessageForEmail = '';
     }
   }
   // emailErrorMessage() {
@@ -237,9 +241,12 @@ export class CompanyProfileEditComponent {
   selector: 'cannot-submit-without-all-inputs-are-valid-pop-up',
   standalone: true,
   templateUrl: 'cannot-submit-without-all-inputs-are-valid-pop-up.html',
-  imports:[
+  imports: [
     MatDialogTitle,
     MatDialogContent,
-    MatDialogActions,MatDialogClose,MatButtonModule,
-  ],  
-})export class CannotSubmitWithoutAllInputsAreValidPopUp {}
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
+})
+export class CannotSubmitWithoutAllInputsAreValidPopUp {}
