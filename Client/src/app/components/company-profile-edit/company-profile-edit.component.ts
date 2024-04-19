@@ -31,6 +31,8 @@ import { CommonModule } from '@angular/common';
 import {merge} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
+import { HrManagerNavBarComponent } from '../../nav-bars/hr-manager-nav-bar/hr-manager-nav-bar.component';;
+
 
 interface Company {
   company_id: number;
@@ -70,7 +72,7 @@ interface BusinessScale {
     NgxSpinnerModule,
     SpinnerComponent,
     MatCardModule,
-    CommonModule,MatDialogTitle,MatDialogContent,MatDialogActions
+    CommonModule,MatDialogTitle,MatDialogContent,MatDialogActions, HrManagerNavBarComponent
   ],
 })
 export class CompanyProfileEditComponent {
