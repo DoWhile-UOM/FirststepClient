@@ -12,6 +12,13 @@ import {
   FormBuilder,
   FormsModule,
 } from '@angular/forms';
+import {
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { CompanyService } from '../../../services/company.service';
@@ -63,7 +70,7 @@ interface BusinessScale {
     NgxSpinnerModule,
     SpinnerComponent,
     MatCardModule,
-    CommonModule,
+    CommonModule,MatDialogTitle,MatDialogContent,MatDialogActions
   ],
 })
 export class CompanyProfileEditComponent {
@@ -92,6 +99,7 @@ export class CompanyProfileEditComponent {
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
+    public dialog: MatDialog,
     private formBuilder: FormBuilder
   ) {
     merge(this.email.statusChanges, this.email.valueChanges)
@@ -125,6 +133,9 @@ export class CompanyProfileEditComponent {
         ); // 7 for bistec
         this.cName = this.company.company_name;
         console.log('updated');
+      }
+      else{
+        this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       }
      
     } finally {
@@ -218,3 +229,15 @@ export class CompanyProfileEditComponent {
   //   }
   // }
 }
+
+//cannot-submit-without-all-inputs-are-valid-pop-up
+@Component({
+  selector: 'cannot-submit-without-all-inputs-are-valid-pop-up',
+  standalone: true,
+  templateUrl: 'cannot-submit-without-all-inputs-are-valid-pop-up.html',
+  imports:[
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,MatDialogClose,MatButtonModule,
+  ],  
+})export class CannotSubmitWithoutAllInputsAreValidPopUp {}
