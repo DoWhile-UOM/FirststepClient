@@ -6,6 +6,14 @@ import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+
+interface ProfileDetails{
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  company_name: string;
+}
+
 @Component({
   selector: 'app-hr-manager-nav-bar',
   standalone: true,
@@ -22,5 +30,12 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './hr-manager-nav-bar.component.css',
 })
 export class HrManagerNavBarComponent {
+  profileDetails: ProfileDetails = {
+    user_id: 1072,
+    first_name: 'Isuranga',
+    last_name: 'Warnasooriya',
+    company_name: 'Bistec Global Services',
+  };
   constructor(private router: Router) {}
+
 }
