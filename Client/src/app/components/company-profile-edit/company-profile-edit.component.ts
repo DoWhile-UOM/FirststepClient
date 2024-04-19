@@ -21,6 +21,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
+import {merge} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+
 
 interface Company {
   company_id: number;
@@ -90,7 +93,11 @@ export class CompanyProfileEditComponent {
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    merge(this.email.statusChanges, this.email.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.emailErrorMessage());
+  }
 
   async ngOnInit() {
     try {
@@ -108,15 +115,18 @@ export class CompanyProfileEditComponent {
 
   async onSubmit() {
     try {
-      console.log('Company : ', this.company);
-      this.spinner.show();
-      console.log(this.company);
-      await this.companyService.updateCompanyDetails(
-        this.company,
-        this.companyId
-      ); // 7 for bistec
-      this.cName = this.company.company_name;
-      console.log('updated');
+      if(this.company.company_name.length!=0&&this.company.company_description.length!=0&&this.company.company_website.length!=0&&this.company.company_phone_number.toString().length==9&&this.email.hasError('email')!=true){
+        console.log('Company : ', this.company);
+        this.spinner.show();
+        console.log(this.company);
+        await this.companyService.updateCompanyDetails(
+          this.company,
+          this.companyId
+        ); // 7 for bistec
+        this.cName = this.company.company_name;
+        console.log('updated');
+      }
+     
     } finally {
       this.spinner.hide();
     }
@@ -188,11 +198,12 @@ export class CompanyProfileEditComponent {
   //   }
   // }
   emailErrorMessage() {
-    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(this.company.company_email)) {
-      this.errorMessageForEmail = 'Email is invalid';
-    } else {
-      this.errorMessageForEmail = '';
+    if(this.email.hasError('required')){
+      this.errorMessageForEmail='Email is required.';
+    }else if(this.email.hasError('email')){
+      this.errorMessageForEmail='Email is invalid.';
+    }else{
+      this.errorMessageForEmail='';
     }
   }
   // emailErrorMessage() {

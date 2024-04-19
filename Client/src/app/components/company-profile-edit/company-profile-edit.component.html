@@ -104,11 +104,12 @@
               name="company_email"
               [(ngModel)]="company.company_email"
               (blur)="emailErrorMessage()"
+              [formControl]="emailControl"
               required
-            />
-            <mat-error *ngIf="errorMessageForEmail">{{
+            /> @if (emailControl.invalid) 
+            {<mat-error >{{
               errorMessageForEmail
-            }}</mat-error>
+            }}</mat-error>}
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
