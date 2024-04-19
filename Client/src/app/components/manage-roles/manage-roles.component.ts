@@ -1,12 +1,11 @@
-import { Component, Inject } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { Component } from '@angular/core';
+import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ViewChild } from '@angular/core';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import {
   MatDialog,
@@ -14,15 +13,11 @@ import {
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-
 } from '@angular/material/dialog';
 import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
-import { AdvertisementServices } from '../../../services/advertisement.service';
-
+import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 
 export interface RolesData {
   id: number;
@@ -51,6 +46,7 @@ export class ManageRolesComponent {
   displayedColumns: string[] = ['position', 'name','email', 'Role', 'symbol'];
   rolesData: RolesData[] = [];
   
+
   company_id: number = 7; // sample company_id
   selected: string = "all";
 
@@ -60,10 +56,10 @@ export class ManageRolesComponent {
   constructor(
     public dialog: MatDialog,
     private employeeService: EmployeeService,
-    private snackBar: MatSnackBar
  
   ) {}
 
+  //Fetch data from the database when the component initializes
   ngOnInit(): void {
     this.fetchData(this.selected);
   }
@@ -92,7 +88,7 @@ export class ManageRolesComponent {
     
     if (dataSet.length > 0){
       this.rolesData = dataSet.map((item, index) => ({
-        id: item.user_id, 
+        id: item.user_id, // Use user_id
         position: index + 1, // Increment position
         name: `${item.first_name} ${item.last_name}`, 
         email:item.email,
@@ -103,6 +99,7 @@ export class ManageRolesComponent {
       this.rolesData = [];
     }
   }
+  //end of fetch data
  
   removeData(id: number): void {
     this.employeeService
@@ -113,7 +110,6 @@ export class ManageRolesComponent {
         );
         this.table.renderRows();
         this.fetchData(this.selected);
-        
       })
       .catch((error) => {
         console.error('Error deleting data:', error);
@@ -123,7 +119,7 @@ export class ManageRolesComponent {
     openDialog(){
       const dialog=this.dialog.open(AddrolesPopupComponent); 
       dialog.afterClosed().subscribe(result => {
-        if(result===true){
+        if(result=true){
           this.fetchData(this.selected);
         }
       });
@@ -142,63 +138,6 @@ export class ManageRolesComponent {
     async filter(selected: any){
       this.selected = selected.value;
       await this.fetchData(selected.value);
-    }
-  }
-
-
-  
-  @Component({
-    selector: 'confirm',
-    templateUrl: 'confirm.html',
-    standalone: true,
-    imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
-  })
-  export class ConfirmDialog {
-    title: string = "";
-    id: number = 0;
-    dialogtitle: string = "";
-    rolesData: any;
-    table: any;
-
-    constructor(
-      public dialogRef: MatDialogRef<ConfirmDialog>,
-      private employeeService: EmployeeService,
-      private snackBar: MatSnackBar,
-      @Inject(MAT_DIALOG_DATA) public data: any) {
-  
-      
-      this.id = data.id;
-      this.dialogtitle = data.dialogtitle;
-    }
-  
-    onNoClick(): void {
-      this.dialogRef.close();
-    }
-  
-    async onYesClick() {
-
-      this.employeeService
-      .deleteEmployee(this.id)
-      .then(() => {
-        this.rolesData = this.rolesData.filter(
-          (employee) => employee.id !== id
-        );
-        this.table.renderRows();
-        this.fetchData(this.selected);
-        
-      })
-      .catch((error) => {
-        console.error('Error deleting data:', error);
-      });
-      
-  
-      this.dialogRef.close();
-    }
-    fetchData(selected: any) {
-      throw new Error('Method not implemented.');
-    }
-    selected(selected: any) {
-      throw new Error('Method not implemented.');
     }
   }
   
