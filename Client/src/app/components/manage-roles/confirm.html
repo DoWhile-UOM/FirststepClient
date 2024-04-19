@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{dialogtitle}} Job Advertisement</h2>
+<mat-dialog-content>
+  Would you like to {{dialogtitle.toLowerCase()}} {{title}}? 
+  <br>
+  {{dialogtitle == 'Close' ? 'When you close the job advertisement, it will no longer be visible to the job seekers.' : ''}}
+  {{dialogtitle == 'Activate' ? 'When you activate the job advertisement, it will be visible to the job seekers.' : ''}}
+</mat-dialog-content>
+<mat-dialog-actions>
+  <span style="display: flex; flex-direction: row-reverse;">
+    <button mat-button mat-dialog-close cdkFocusInitial (click)="onYesClick()">Yes</button>
+    <button mat-button mat-dialog-close (click)="onNoClick()">No</button>
+  </span>
+</mat-dialog-actions>
