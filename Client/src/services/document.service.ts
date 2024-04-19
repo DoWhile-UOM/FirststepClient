@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BlobServiceClient } from '@azure/storage-blob';
 import { Apipaths } from './apipaths/apipaths';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class DocumentService {
+  private apiUrl = 'https://localhost:7213/api/Document';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   async downloadBlob(eTag: string) {
     const blobServiceClient = new BlobServiceClient(Apipaths.BlobConnectionString);
@@ -26,4 +28,14 @@ export class DocumentService {
       console.error('Error downloading blob:', error);
     }
   }
+
+  uploadFile(file: File) {
+    const fileData = new FormData();
+    fileData.append('files', file, file.name);
+
+    const headers = new HttpHeaders().set('Accept', '*/*');
+
+    return this.http.post(this.apiUrl, fileData, { headers });
+  }
+
 }
