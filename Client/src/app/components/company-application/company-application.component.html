@@ -14,32 +14,16 @@
         }}</span>
       </mat-grid-tile>
       <mat-grid-tile [colspan]="3">
-        <!-- <button
-          mat-raised-button
-          class="apply-button"
-          color="primary"
-          matTooltip="Evaluation status of the application"
-        >
-          {{ evaluated_status }}
-        </button> -->
         <mat-chip
           class="apply-button"
-          color="primary"
+          color="warn"
           matTooltip="Evaluation status of the application"
         >
-          <img
-            matChipAvatar
-            src="https://material.angular.io/assets/img/examples/shiba1.jpg"
-            alt="Photo of a Shiba Inu"
-          />{{ evaluated_status }}</mat-chip
-        >
-        <!-- <button
-          mat-mini-fab
-          color="primary"
-          aria-label="Example icon button with a delete icon"
-        >
-          <mat-icon>delete</mat-icon>
-        </button> -->
+          <div class="chip-content">
+            <mat-icon *ngIf="evaluated_status=='Evaluated'">checkcircleicon</mat-icon>
+          {{ evaluated_status }}
+          </div>
+          </mat-chip>
       </mat-grid-tile>
     </mat-grid-list>
     <mat-divider></mat-divider>
