@@ -55,7 +55,14 @@
         </mat-dialog-content>
 
         <mat-dialog-actions>
-            <button mat-raised-button class="apply-button" title="ApplyJob" color="primary">Apply To This Job</button>  
+            <button 
+                mat-raised-button 
+                class="apply-button" 
+                color="primary"
+                matBadge="{{expired? '!' : ''}}"
+                matBadgeColor="warn"
+                [disabled]="expired"
+                disabledInteractive>Apply To This Job</button>  
         </mat-dialog-actions>      
     </mat-card>
 </div>
