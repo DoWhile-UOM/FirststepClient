@@ -27,7 +27,7 @@ import axios, { AxiosError } from 'axios';
 interface seekerData {
   first_name: string;
   last_name: string;
-  phone_number: number;
+  phone_number: string;
   email: string;
   university: string;
   cVurl: string;
@@ -105,7 +105,7 @@ async submitForm() {
   };
 
   try {
-    const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker');
+    const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker', seekerData);
     console.log('Seeker added successfully:', response.data);
     return response.data;
   } catch (error: any) {
