@@ -59,9 +59,9 @@
                 mat-raised-button 
                 class="apply-button" 
                 color="primary"
-                matBadge="{{expired? '!' : ''}}"
+                matBadge="{{adData.is_expired ? '!': ''}}"
                 matBadgeColor="warn"
-                [disabled]="expired"
+                [disabled]="adData.is_expired"
                 disabledInteractive>Apply To This Job</button>  
         </mat-dialog-actions>      
     </mat-card>

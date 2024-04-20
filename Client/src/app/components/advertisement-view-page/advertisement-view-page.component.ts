@@ -30,6 +30,7 @@ interface Job{
 	job_description: string;
 	field_name: string;
 	company_name: string;
+  is_expired: boolean;
   skills: Skill[];
 }
 
@@ -42,8 +43,6 @@ interface Job{
 })
 export class AdvertisementViewPageComponent {
   adData: Job = {} as Job;
-
-  expired: boolean = false;
 
   constructor(
     private router: ActivatedRoute, 
