@@ -16,6 +16,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SeekerService } from '../../../services/seeker.service';
+import { SkillService } from '../../../services/skill.service';
 
 
 // seeker edit profile interface
@@ -66,7 +67,7 @@ export class SeekerEditProfileComponent {
   seekerDetails: Seeker = {} as Seeker;
 
   constructor(private seekerService: SeekerService) {}
-  user_id: number = 1087;
+  user_id: number = 1089;
 
   async ngOnInit() {
     this.fetchSeekerDetails();
@@ -93,7 +94,7 @@ export class SeekerEditProfileComponent {
     }
   }
 
- //Delete
+  //Delete
 
   async onDelete(user_id: number){
     try{

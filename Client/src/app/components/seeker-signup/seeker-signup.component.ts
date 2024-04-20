@@ -88,11 +88,9 @@ constructor(private _formBuilder: FormBuilder ,private seekerService: SeekerServ
 
 
 
-ngOnInit(): void {
-}
+ngOnInit(): void {}
 
 
-//new
 async submitForm() {
   const seekerData = {
     first_name: this.firstFormGroup.value.firstCtrl,
