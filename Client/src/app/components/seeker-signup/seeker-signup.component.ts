@@ -92,22 +92,13 @@ export class SeekerSignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  async submitForm() {
-    const seekerData: SeekerData = {
-      first_name: this.firstFormGroup.get('first_name')?.value,
-      last_name: this.firstFormGroup.get('last_name')?.value,
-      phone_number: this.firstFormGroup.get('phone_number')?.value,
-      email: this.secondFormGroup.get('email')?.value,
-      university: this.thirdFormGroup.get('university')?.value,
-      linkedin: this.thirdFormGroup.get('linkedin')?.value,
-      bio: this.fifthFormGroup.get('bio')?.value,
-      description: this.fifthFormGroup.get('description')?.value,
-    };
+  seekerData: SeekerData = {} as SeekerData;
 
+  async submitForm() { 
     try {
-      const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker', seekerData);
-      console.log('Seeker added successfully:', response.data);
-      return response.data;
+      await this.seekerService.addseeker(this.seekerData);
+      console.log('Seeker added successfully:');
+      
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         if (error.response) {

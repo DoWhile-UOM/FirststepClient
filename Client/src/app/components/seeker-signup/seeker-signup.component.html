@@ -70,10 +70,10 @@
                 <button mat-button class="custom-stepper1-button" style="background-color: #595959; color: white;">
                   Resend OTP
                 </button>
-                <mat-form-field>
+                <!-- <mat-form-field>
                   <mat-label>OTP</mat-label>
                   <input matInput  placeholder="Enter OTP for verification" required />
-                </mat-form-field>
+                </mat-form-field> -->
                 <div>
                   <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
                     Back
@@ -112,9 +112,9 @@
                   <input matInput placeholder="Enter LinkedIn Profile URL" formControlName="linkedin" />
                 </mat-form-field>
                 <mat-label style="font-size: 15px; font-weight: 500;">CV/Resume</mat-label>
-                <div class="cvupload">
+                <!-- <div class="cvupload">
                   <app-file-upload></app-file-upload>
-                </div>
+                </div> -->
                 <div>
                   <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
                     Back
@@ -144,14 +144,14 @@
             <div class="right">
               <div class="form-container">
                 <h3>Can we know your professional background ?</h3>
-                <mat-form-field>
+                <!-- <mat-form-field>
                   <mat-label>Field of Work</mat-label>
-                  <input matInput placeholder="Enter Field of Work" formControlName="field_name" />
-                </mat-form-field>
+                  <input matInput placeholder="Enter Field of Work" />
+                </mat-form-field> -->
                 <mat-label style="font-size: 15px; font-weight: 500;">Add Your Skills</mat-label>
-                <div class="skillchip">
+                <!-- <div class="skillchip">
                   <app-add-skills></app-add-skills>
-                </div>
+                </div> -->
                 <div>
                   <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
                     Back
@@ -180,10 +180,10 @@
               <div class="form-container">
                 <h3>Let's enter details for your profile</h3>
                 <mat-label style="font-size: 15px; font-weight: 500;">Profile Picture</mat-label>
-                <div class="left">
+                <!-- <div class="left">
                   <img [src]="url" style="height: 100px; width: auto;" /><br />
                   <input type="file" (change)="onselectFile($event)" />
-                </div>
+                </div> -->
                 <mat-form-field>
                   <mat-label>Bio</mat-label>
                   <input matInput placeholder="Enter Bio" formControlName="bio" />
