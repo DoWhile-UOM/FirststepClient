@@ -7,71 +7,37 @@
 </mat-toolbar>
 
 <div class="page">
-  <!-- navigation bar -->
-  <section class="navbar"></section>
-
   <!-- Adding a stepper -->
-  <mat-stepper
-    style="background-color: #a9a9a9"
-    labelPosition="bottom"
-    #stepper
-    color="primary"
-  >
-    <!-- Adding steps to the stepper 
-       Adding first to the stepper -->
-    <mat-step [stepControl]="firstFormGroup">
+  <mat-stepper style="background-color: #a9a9a9" labelPosition="bottom" #stepper color="primary">
+    
+    <!-- Step 1: Personal Information -->
+    <mat-step [stepControl]="firstFormGroup" label="Personal Information">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel style="width: 100px"></ng-template>
-
         <div class="form-popup" id="myForm">
           <div class="up-container">
             <div class="left">
-              <img
-                src="\assets\images\signup1.png"
-                alt="Seeker"
-                class="seeker"
-              />
+              <img src="/assets/images/signup1.png" alt="Seeker" class="seeker" />
               <h2 style="padding-left: 70px; padding-top: 40px">
                 Find Your Future With FirstStep
               </h2>
             </div>
-
             <div class="right">
               <div class="form-container">
-                <h3>Create your FirstStep Account</h3>
+                <h3>Create Your FirstStep Account</h3>
                 <mat-form-field>
                   <mat-label>First Name</mat-label>
-                  <input matInput
-                    placeholder="Enter First name"
-                    formControlName="firstCtrl"
-                    required
-                  />
+                  <input matInput placeholder="Enter First name" formControlName="first_name" required />
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label>Last Name</mat-label>
-                  <input
-                    matInput
-                    placeholder="Enter Last name"
-                    formControlName="firstCtrl"
-                    required
-                  />
+                  <input matInput placeholder="Enter Last name" formControlName="last_name" required />
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label>Contact Number</mat-label>
-                  <input
-                    matInput
-                    placeholder="Enter contact Number"
-                    formControlName="firstCtrl"
-                    required
-                  />
+                  <input matInput placeholder="Enter contact Number" formControlName="phone_number" required />
                 </mat-form-field>
                 <div>
-                  <button
-                    mat-button
-                    matStepperNext
-                    class="custom-stepper1-button"
-                    style="color: white; margin-left: 20px"
-                  >
+                  <button mat-button matStepperNext class="custom-stepper1-button" style="color: white; margin-left: 20px">
                     Next
                   </button>
                 </div>
@@ -82,107 +48,37 @@
       </form>
     </mat-step>
 
-    <!-- Adding second to the stepper -->
-    <mat-step [stepControl]="secondFormGroup">
+    <!-- Step 2: Email Verification -->
+    <mat-step [stepControl]="secondFormGroup" label="Email Verification">
       <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel></ng-template>
-
         <div class="form-popup" id="myForm">
           <div class="up-container">
             <div class="left">
-              <img
-                src="\assets\images\signup2.png"
-                alt="Seeker"
-                class="seeker"
-              />
-              <p
-                style="
-                  padding-left: 25px;
-                  padding-top: 15px;
-                  align-items: center;
-                  font-size: 30px;
-                  font-weight: 550;
-                  align-items: center;
-                  font-style: italic;
-                "
-              >
-                Easily Find the Career Path Meant<br /><br />
-                For You
+              <img src="/assets/images/signup2.png" alt="Seeker" class="seeker" />
+              <p style="padding-left: 25px; padding-top: 15px; align-items: center; font-size: 30px; font-weight: 550; font-style: italic;">
+                Easily Find the Career Path Meant For You
               </p>
             </div>
-
             <div class="right">
               <div class="form-container">
-                <h3>Create your FirstStep Account</h3>
-                <p>
-                  Verify your email<br />Please check your email and enter the
-                  confirmation code.
-                </p>
-                <br />
+                <h3>Create Your FirstStep Account</h3>
+                <p>Verify your email. Please check your email and enter the confirmation code.</p>
                 <mat-form-field>
-                  <mat-label>Email Address </mat-label>
-                  <input
-                    matInput
-                    formControlName="secondCtrl"
-                    placeholder="example@gmail.com"
-                    required
-                  />
+                  <mat-label>Email Address</mat-label>
+                  <input matInput formControlName="email" placeholder="example@gmail.com" required />
                 </mat-form-field>
-                <button
-                  mat-button
-                  class="custom-stepper1-button"
-                  style="
-                    background-color: #595959;
-                    color: white;
-                    margin-left: 20px;
-                    height: 40px;
-                    margin-top: 0;
-                    padding-top: 0;
-                  "
-                >
+                <button mat-button class="custom-stepper1-button" style="background-color: #595959; color: white;">
                   Resend OTP
                 </button>
-
                 <mat-form-field>
                   <mat-label>OTP</mat-label>
-                  <input
-                    matInput
-                    formControlName="secondCtrl"
-                    placeholder="Enter OTP for verification"
-                    required
-                  />
+                  <input matInput formControlName="otp" placeholder="Enter OTP for verification" required />
                 </mat-form-field>
-                <button
-                  mat-button
-                  class="custom-stepper1-button"
-                  style="
-                    background-color: #595959;
-                    color: white;
-                    margin-left: 20px;
-                    height: 40px;
-                    margin-top: 0;
-                    padding-top: 0;
-                  "
-                >
-                  Confirm
-                </button>
-
-                <br /><br /><br />
                 <div>
-                  <button
-                    mat-button
-                    matStepperPrevious
-                    class="custom-stepper-button"
-                    style="color: #008080; margin-left: 15px"
-                  >
+                  <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
                     Back
                   </button>
-                  <button
-                    mat-button
-                    matStepperNext
-                    class="custom-stepper1-button"
-                    style="color: white; margin-left: 20px"
-                  >
+                  <button mat-button matStepperNext class="custom-stepper1-button" style="color: white;">
                     Next
                   </button>
                 </div>
@@ -193,85 +89,37 @@
       </form>
     </mat-step>
 
-    <!-- Adding third to the stepper -->
-    <mat-step [stepControl]="thirdFormGroup">
+    <!-- Step 3: Educational and Professional Background -->
+    <mat-step [stepControl]="thirdFormGroup" label="Educational and Professional Background">
       <form [formGroup]="thirdFormGroup">
-        <ng-template matStepLabel></ng-template>
-
         <div class="form-popup" id="myForm">
           <div class="up-container">
             <div class="left">
-              <img
-                src="\assets\images\signup3.png"
-                alt="Seeker"
-                class="seeker"
-              />
-              <p
-                style="
-                  padding-left: 25px;
-                  padding-top: 15px;
-                  align-items: center;
-                  font-size: 30px;
-                  font-weight: 550;
-                  align-items: center;
-                  font-style: italic;
-                "
-              >
-                Meet Top Companies in <br />
-                <br />
-                Sri Lanka
+              <img src="/assets/images/signup3.png" alt="Seeker" class="seeker" />
+              <p style="padding-left: 25px; padding-top: 15px; align-items: center; font-size: 30px; font-weight: 550; font-style: italic;">
+                Meet Top Companies in Sri Lanka
               </p>
             </div>
-
             <div class="right">
               <div class="form-container">
-                <h3>Create your FirstStep Account</h3>
+                <h3>Create Your FirstStep Account</h3>
                 <mat-form-field>
                   <mat-label>University</mat-label>
-                  <input
-                    matInput
-                    formControlName="thirdCtrl"
-                    placeholder="Enter University"
-                  />
+                  <input matInput placeholder="Enter University" formControlName="university" />
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label>LinkedIn Profile</mat-label>
-                  <input
-                    matInput
-                    formControlName="thirdCtrl"
-                    placeholder="Enter LinkedIn Profile URL"
-                  />
+                  <input matInput placeholder="Enter LinkedIn Profile URL" formControlName="linkedin" />
                 </mat-form-field>
-                <mat-label
-                  style="
-                    font-size: 15px;
-                    font-weight: 500;
-                    padding-left: 15px;
-                    padding-bottom: 10px;
-                    font-family: 'roboto';
-                  "
-                  >CV/Resume</mat-label
-                >
+                <mat-label style="font-size: 15px; font-weight: 500;">CV/Resume</mat-label>
                 <div class="cvupload">
-                <app-file-upload></app-file-upload>
+                  <app-file-upload></app-file-upload>
                 </div>
-                <br /><br />
-
                 <div>
-                  <button
-                    mat-button
-                    matStepperPrevious
-                    class="custom-stepper-button"
-                    style="color: #008080; margin-left: 10px"
-                  >
+                  <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
                     Back
                   </button>
-                  <button
-                    mat-button
-                    matStepperNext
-                    class="custom-stepper1-button"
-                    style="color: white; margin-left: 20px"
-                  >
+                  <button mat-button matStepperNext class="custom-stepper1-button" style="color: white;">
                     Next
                   </button>
                 </div>
@@ -282,78 +130,33 @@
       </form>
     </mat-step>
 
-    <!-- Adding fourth to the stepper -->
-    <mat-step [stepControl]="fourthFormGroup">
+    <!-- Step 4: Field of Work and Skills -->
+    <mat-step [stepControl]="fourthFormGroup" label="Field of Work and Skills">
       <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel></ng-template>
-
         <div class="form-popup" id="myForm">
           <div class="up-container">
             <div class="left">
-              <img
-                src="\assets\images\signup4.png"
-                alt="Seeker"
-                class="seeker"
-              />
-              <p
-                style="
-                  padding-left: 25px;
-                  padding-top: 15px;
-                  align-items: center;
-                  font-size: 30px;
-                  font-weight: 550;
-                  align-items: center;
-                  font-style: italic;
-                "
-              >
-                Start climbing the cooperate Ladder<br /><br />
-                with us
+              <img src="/assets/images/signup4.png" alt="Seeker" class="seeker" />
+              <p style="padding-left: 25px; padding-top: 15px; align-items: center; font-size: 30px; font-weight: 550; font-style: italic;">
+                Start Climbing the Corporate Ladder with Us
               </p>
             </div>
-
             <div class="right">
               <div class="form-container">
-                <h3>Create your FirstStep Account</h3>
+                <h3>Create Your FirstStep Account</h3>
                 <mat-form-field>
                   <mat-label>Field of Work</mat-label>
-                  <input
-                    matInput
-                    formControlName="fourthCtrl"
-                    placeholder="Enter Field of Work"
-                  />
+                  <input matInput placeholder="Enter Field of Work" formControlName="field_name" />
                 </mat-form-field>
-                <mat-label
-                  style="
-                    font-size: 15px;
-                    font-weight: 500;
-                    padding-left: 15px;
-                    padding-bottom: 10px;
-                    font-family: 'roboto';
-                  "
-                  >Add your skills</mat-label
-                >
-                <!-- skills update -->
-                 <div class="skillchip">
+                <mat-label style="font-size: 15px; font-weight: 500;">Add Your Skills</mat-label>
+                <div class="skillchip">
                   <app-add-skills></app-add-skills>
                 </div>
-
-                <br /><br />
-
                 <div>
-                  <button
-                    mat-button
-                    matStepperPrevious
-                    class="custom-stepper-button"
-                    style="color: #008080; margin-left: 15px"
-                  >
+                  <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
                     Back
                   </button>
-                  <button
-                    mat-button
-                    matStepperNext
-                    class="custom-stepper1-button"
-                    style="color: white; margin-left: 20px"
-                  >
+                  <button mat-button matStepperNext class="custom-stepper1-button" style="color: white;">
                     Next
                   </button>
                 </div>
@@ -364,82 +167,36 @@
       </form>
     </mat-step>
 
-    <!-- Adding fifth to the stepper -->
-    <mat-step [stepControl]="fifthFormGroup">
+    <!-- Step 5: Bio, Description, and Profile Picture -->
+    <mat-step [stepControl]="fifthFormGroup" label="Bio, Description, and Profile Picture">
       <form [formGroup]="fifthFormGroup">
-        <ng-template matStepLabel></ng-template>
-
         <div class="form-popup" id="myForm">
-          <div class="up-container" style="padding-left: 10px">
-            <div class="left" style="padding-left: 10px">
-              <img
-                src="\assets\images\signup5.png"
-                alt="Seeker"
-                class="seeker"
-              />
-              <h2
-                style="
-                  padding-left: 150px;
-                  padding-top: 15px;
-                  align-items: center;
-                "
-              >
-                Let’s Get Started !
-              </h2>
+          <div class="up-container" style="padding-left: 10px;">
+            <div class="left">
+              <img src="/assets/images/signup5.png" alt="Seeker" class="seeker" />
+              <h2 style="padding-left: 150px; padding-top: 15px;">Let's Get Started!</h2>
             </div>
-
             <div class="right">
               <div class="form-container">
-                <h3>Create your FirstStep Account</h3>
-
-                <mat-label
-                  style="
-                    font-size: 15px;
-                    font-weight: 500;
-                    padding-left: 15px;
-                    padding-bottom: 10px;
-                    font-family: 'roboto';
-                  "
-                  >Profile Picture</mat-label
-                >
+                <h3>Create Your FirstStep Account</h3>
+                <mat-label style="font-size: 15px; font-weight: 500;">Profile Picture</mat-label>
                 <div class="left">
-                  <img [src]="url" style="height: 100px; width: auto" /><br />
+                  <img [src]="url" style="height: 100px; width: auto;" /><br />
                   <input type="file" (change)="onselectFile($event)" />
-                </div> 
-
+                </div>
                 <mat-form-field>
                   <mat-label>Bio</mat-label>
-                  <input
-                    matInput
-                    formControlName="fifthCtrl"
-                    placeholder="Enter Bio"
-                  />
+                  <input matInput placeholder="Enter Bio" formControlName="bio" />
                 </mat-form-field>
-
                 <mat-form-field>
                   <mat-label>Description</mat-label>
-                  <input
-                    matInput
-                    formControlName="fifthCtrl"
-                    placeholder="Enter Description"
-                  />
+                  <input matInput placeholder="Enter Description" formControlName="description" />
                 </mat-form-field>
-
                 <div>
-                  <button
-                    mat-button
-                    matStepperPrevious
-                    class="custom-stepper-button"
-                    style="color: #008080; margin-left: 15px"
-                  >
+                  <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
                     Back
                   </button>
-                  <button
-                    mat-button
-                    class="custom-stepper1-button"
-                    style="color: white; margin-left: 20px"
-                    (click)="submitForm()"
-                  >
+                  <button mat-button matStepperNext class="custom-stepper1-button" style="color: white;">
                     Submit
                   </button>
                 </div>
@@ -449,5 +206,6 @@
         </div>
       </form>
     </mat-step>
+
   </mat-stepper>
 </div>

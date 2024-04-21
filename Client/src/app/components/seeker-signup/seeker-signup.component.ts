@@ -24,20 +24,15 @@ import { SeekerService } from '../../../services/seeker.service';
 import axios, { AxiosError } from 'axios';
 
 
-interface seekerData {
+interface SeekerData {
   first_name: string;
   last_name: string;
   phone_number: string;
   email: string;
   university: string;
-  cVurl: string;
-  linkedin: string; 
-  //field_name: string,
+  linkedin: string;
   bio: string;
   description: string;
-  profile_picture: string;
-  password_hash: string; //pop up
-  
 }
 
 
@@ -50,79 +45,82 @@ interface seekerData {
 })
 
 
-export class SeekerSignupComponent implements OnInit{
+export class SeekerSignupComponent implements OnInit {
+  url = './assets/images/SeekerEdit.jpg';
 
-  //default image for the profile picture
-url = './assets/images/SeekerEdit.jpg';
-
-//function to select the file
-onselectFile(event: any) {
-  if (event.target.files) {
-    var reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = (event: any) => {
-      this.url = event.target.result;
-    };
-  }
-}
-
-//form groups for the seeker
-firstFormGroup = this._formBuilder.group({
-  firstCtrl: [''],  // Removed Validators
-});
-secondFormGroup = this._formBuilder.group({
-  secondCtrl: [''],  // Removed Validators
-});
-thirdFormGroup = this._formBuilder.group({
-  thirdCtrl: [''],  // Removed Validators
-});
-fourthFormGroup = this._formBuilder.group({
-  fourthCtrl: [''],  // Removed Validators
-});
-fifthFormGroup = this._formBuilder.group({
-  fifthCtrl: [''],  // Removed Validators
-});
-
-
-//Inject seeker service
-constructor(private _formBuilder: FormBuilder ,private seekerService: SeekerService) {}
-
-
-
-ngOnInit(): void {}
-
-
-async submitForm() {
-  const seekerData = {
-    first_name: this.firstFormGroup.value.firstCtrl,
-    last_name: this.firstFormGroup.value.firstCtrl,
-    phone_number: this.firstFormGroup.value.firstCtrl,
-    email: this.secondFormGroup.value.secondCtrl,
-    university: this.thirdFormGroup.value.thirdCtrl,
-    cVurl: this.thirdFormGroup.value.thirdCtrl,
-    linkedin: this.thirdFormGroup.value.thirdCtrl,
-    bio:this.fifthFormGroup.value.fifthCtrl,
-    description: this.fifthFormGroup.value.fifthCtrl
-  };
-
-  try {
-    const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker', seekerData);
-    console.log('Seeker added successfully:', response.data);
-    return response.data;
-  } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      // The server responded with a status other than 2xx.
-      console.error('Error data:', error.response?.data);
-      console.error('Error status:', error.response?.status);
-      console.error('Error headers:', error.response?.headers);
-    } else {
-      // The request was made but no response was received or an error occurred in setting up the request.
-      console.error('Error message:', error.message);
+  onselectFile(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (e: any) => {
+        this.url = e.target.result;
+      };
     }
-    console.error('Error config:', error.config);
-    throw error;  // Re-throwing the error after logging (adjust based on how you want to handle failures)
   }
-}
 
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
+  fourthFormGroup: FormGroup;
+  fifthFormGroup: FormGroup;
 
+  constructor(private _formBuilder: FormBuilder, private seekerService: SeekerService) {
+    this.firstFormGroup = this._formBuilder.group({
+      first_name: [''],
+      last_name: [''],
+      phone_number: [''],
+    });
+
+    this.secondFormGroup = this._formBuilder.group({
+      email: [''],
+    });
+
+    this.thirdFormGroup = this._formBuilder.group({
+      university: [''],
+      linkedin: [''],
+    });
+
+    this.fourthFormGroup = this._formBuilder.group({
+      field_name: [''],
+    });
+
+    this.fifthFormGroup = this._formBuilder.group({
+      bio: [''],
+      description: [''],
+    });
+  }
+
+  ngOnInit(): void {}
+
+  async submitForm() {
+    const seekerData: SeekerData = {
+      first_name: this.firstFormGroup.get('first_name')?.value,
+      last_name: this.firstFormGroup.get('last_name')?.value,
+      phone_number: this.firstFormGroup.get('phone_number')?.value,
+      email: this.secondFormGroup.get('email')?.value,
+      university: this.thirdFormGroup.get('university')?.value,
+      linkedin: this.thirdFormGroup.get('linkedin')?.value,
+      bio: this.fifthFormGroup.get('bio')?.value,
+      description: this.fifthFormGroup.get('description')?.value,
+    };
+
+    try {
+      const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker', seekerData);
+      console.log('Seeker added successfully:', response.data);
+      return response.data;
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          console.error('Error data:', error.response.data);
+          console.error('Error status:', error.response.status);
+          console.error('Error headers:', error.response.headers);
+        } else {
+          console.error('No response received:', error.message);
+        }
+      } else {
+        console.error('Error message:', error.message);
+      }
+      throw error;
+    }
+  }
 }

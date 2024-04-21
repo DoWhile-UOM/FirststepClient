@@ -1,6 +1,5 @@
 .form-popup {
-    width: 1200px;
-    height: 600px;
+  display: flex;
     border: 3px black;
     border-radius: 25px;
     background: #fff;
