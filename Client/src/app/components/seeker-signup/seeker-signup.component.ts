@@ -68,20 +68,21 @@ onselectFile(event: any) {
 
 //form groups for the seeker
 firstFormGroup = this._formBuilder.group({
-  firstCtrl: ['', Validators.required],
+  firstCtrl: [''],  // Removed Validators
 });
 secondFormGroup = this._formBuilder.group({
-  secondCtrl: ['', Validators.required],
+  secondCtrl: [''],  // Removed Validators
 });
 thirdFormGroup = this._formBuilder.group({
-  thirdCtrl: ['', Validators.required],
+  thirdCtrl: [''],  // Removed Validators
 });
 fourthFormGroup = this._formBuilder.group({
-  fourthCtrl: ['', Validators.required],
+  fourthCtrl: [''],  // Removed Validators
 });
 fifthFormGroup = this._formBuilder.group({
-  fifthCtrl: ['', Validators.required],
+  fifthCtrl: [''],  // Removed Validators
 });
+
 
 //Inject seeker service
 constructor(private _formBuilder: FormBuilder ,private seekerService: SeekerService) {}

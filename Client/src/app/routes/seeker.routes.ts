@@ -9,6 +9,7 @@ import { SeekerApplicationFormComponent } from '../components/seeker-application
 import { SeekerEditProfileComponent } from '../components/seeker-edit-profile/seeker-edit-profile.component';
 import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup.component';
 import { Signup2Component } from '../components/signup2/signup2.component';
+import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'applicationFormconfirm', component: SeekerApplicationFormComponent },
   { path: 'editProfile', component: SeekerEditProfileComponent},
   { path: 'signup', component: SeekerSignupComponent},
-  { path: 'signup2', component: Signup2Component}
+  { path: 'signup2', component: Signup2Component},
+  { path: 'profileView', component: SeekerProfileViewComponent}
 ];
