@@ -8,7 +8,7 @@
 
 <div class="page">
   <!-- Adding a stepper -->
-  <mat-stepper style="background-color: #a9a9a9" labelPosition="bottom" #stepper color="primary">
+  <mat-stepper labelPosition="bottom" #stepper color="primary">
     
     <!-- Step 1: Personal Information -->
     <mat-step [stepControl]="firstFormGroup" label="Personal Information">
@@ -72,7 +72,7 @@
                 </button>
                 <mat-form-field>
                   <mat-label>OTP</mat-label>
-                  <input matInput formControlName="otp" placeholder="Enter OTP for verification" required />
+                  <input matInput  placeholder="Enter OTP for verification" required />
                 </mat-form-field>
                 <div>
                   <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
@@ -168,7 +168,7 @@
     </mat-step>
 
     <!-- Step 5: Bio, Description, and Profile Picture -->
-    <mat-step [stepControl]="fifthFormGroup" label="Bio, Description, and Profile Picture">
+    <mat-step [stepControl]="fifthFormGroup" label="Profile Details">
       <form [formGroup]="fifthFormGroup">
         <div class="form-popup" id="myForm">
           <div class="up-container" style="padding-left: 10px;">
