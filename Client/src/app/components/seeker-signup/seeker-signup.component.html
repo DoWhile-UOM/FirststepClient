@@ -11,7 +11,7 @@
   <mat-stepper labelPosition="bottom" #stepper color="primary">
     
     <!-- Step 1: Personal Information -->
-    <mat-step [stepControl]="firstFormGroup" label="Personal Information">
+    <mat-step [stepControl]="firstFormGroup" >
       <form [formGroup]="firstFormGroup">
         <div class="form-popup" id="myForm">
           <div class="up-container">
@@ -49,7 +49,7 @@
     </mat-step>
 
     <!-- Step 2: Email Verification -->
-    <mat-step [stepControl]="secondFormGroup" label="Email Verification">
+    <mat-step [stepControl]="secondFormGroup" >
       <form [formGroup]="secondFormGroup">
         <div class="form-popup" id="myForm">
           <div class="up-container">
@@ -61,7 +61,7 @@
             </div>
             <div class="right">
               <div class="form-container">
-                <h3>Create Your FirstStep Account</h3>
+                <h3>Verify your Email</h3>
                 <p>Verify your email. Please check your email and enter the confirmation code.</p>
                 <mat-form-field>
                   <mat-label>Email Address</mat-label>
@@ -90,7 +90,7 @@
     </mat-step>
 
     <!-- Step 3: Educational and Professional Background -->
-    <mat-step [stepControl]="thirdFormGroup" label="Educational and Professional Background">
+    <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
         <div class="form-popup" id="myForm">
           <div class="up-container">
@@ -102,7 +102,7 @@
             </div>
             <div class="right">
               <div class="form-container">
-                <h3>Create Your FirstStep Account</h3>
+                <h3>Can we know your educational background ?</h3>
                 <mat-form-field>
                   <mat-label>University</mat-label>
                   <input matInput placeholder="Enter University" formControlName="university" />
@@ -131,7 +131,7 @@
     </mat-step>
 
     <!-- Step 4: Field of Work and Skills -->
-    <mat-step [stepControl]="fourthFormGroup" label="Field of Work and Skills">
+    <mat-step [stepControl]="fourthFormGroup">
       <form [formGroup]="fourthFormGroup">
         <div class="form-popup" id="myForm">
           <div class="up-container">
@@ -143,7 +143,7 @@
             </div>
             <div class="right">
               <div class="form-container">
-                <h3>Create Your FirstStep Account</h3>
+                <h3>Can we know your professional background ?</h3>
                 <mat-form-field>
                   <mat-label>Field of Work</mat-label>
                   <input matInput placeholder="Enter Field of Work" formControlName="field_name" />
@@ -168,7 +168,7 @@
     </mat-step>
 
     <!-- Step 5: Bio, Description, and Profile Picture -->
-    <mat-step [stepControl]="fifthFormGroup" label="Profile Details">
+    <mat-step [stepControl]="fifthFormGroup">
       <form [formGroup]="fifthFormGroup">
         <div class="form-popup" id="myForm">
           <div class="up-container" style="padding-left: 10px;">
@@ -178,7 +178,7 @@
             </div>
             <div class="right">
               <div class="form-container">
-                <h3>Create Your FirstStep Account</h3>
+                <h3>Let's enter details for your profile</h3>
                 <mat-label style="font-size: 15px; font-weight: 500;">Profile Picture</mat-label>
                 <div class="left">
                   <img [src]="url" style="height: 100px; width: auto;" /><br />
