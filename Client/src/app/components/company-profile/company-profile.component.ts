@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DocumentService } from '../../../services/document.service';
 
 interface Job {
   advertisement_id: number;
@@ -39,6 +40,7 @@ interface Company{
   company_phone_number: string;
   company_email: string;
   company_website: string;
+  company_logo: string;
   companyAdvertisements: Ad_List;
 }
 
@@ -66,6 +68,7 @@ export class CompanyProfileComponent {
 
   constructor(
     private advertisementService: AdvertisementServices, 
+    private documentService: DocumentService,
     private a_router: ActivatedRoute, 
     private router: Router, 
     private snackBar: MatSnackBar,
@@ -128,6 +131,8 @@ export class CompanyProfileComponent {
       });
 
     this.spinner.hide();
+
+    //this.documentService.downloadBlob(this.company.company_logo);
   }
 
   async handlePageEvent(e: PageEvent) {
