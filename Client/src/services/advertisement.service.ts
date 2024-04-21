@@ -249,7 +249,12 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+          if (error.response.status == 422) {
+            this.snackBar.open("Expired Date must be future date!. Need to update it before active the advertisement!", "", {panelClass: ['app-notification-error']});
+          }
+          else {
+            this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+          }
         }
       );
 
