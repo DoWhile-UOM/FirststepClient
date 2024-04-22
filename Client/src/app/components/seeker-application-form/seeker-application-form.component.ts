@@ -8,6 +8,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SeekerService } from '../../../services/seeker.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FileDownloadComponent } from "../file-download/file-download.component";
 
 
 interface Seeker{
@@ -23,7 +24,7 @@ interface Seeker{
     standalone: true,
     templateUrl: './seeker-application-form.component.html',
     styleUrl: './seeker-application-form.component.css',
-    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent,MatCheckboxModule,FormsModule,CommonModule]
+    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent, MatCheckboxModule, FormsModule, CommonModule, FileDownloadComponent]
 })
 export class SeekerApplicationFormComponent {
     SeekerDetails: Seeker = {} as Seeker;

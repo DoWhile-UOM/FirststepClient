@@ -17,18 +17,23 @@
         <div class="doc">Other Documents</div>
       </div>
       <div class="fieldSection">
-        <div>{{SeekerDetails.first_name}}</div>
+       <!--<div>{{SeekerDetails.first_name}}</div>
         <div>{{SeekerDetails.last_name}}</div>
         <div>{{SeekerDetails.email}}</div>
         <div>{{SeekerDetails.phone_number}}</div>
-        <div>{{SeekerDetails.linkedin}}</div>
-        <div class="doc">
+        <div>{{SeekerDetails.linkedin}}</div>-->
+        <div>Nethma</div>
+        <div>Karunathilaka</div>
+        <div>nethmakarunathilakagmail.com</div>
+        <div>0711253134</div>
+        <div>nethmakarunathilaka.linkedin</div>
+        <div class="document">
             <div *ngIf="!useDefaultCV">
             <app-file-upload></app-file-upload>
           </div>
-          <div *ngIf="useDefaultCV">Default CV</div>
-        
-          <p><mat-checkbox color="primary"  [(ngModel)]="useDefaultCV"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox></p>
+          <div *ngIf="useDefaultCV"><app-file-download></app-file-download></div>
+        <br>
+          <mat-checkbox color="primary"  [(ngModel)]="useDefaultCV"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
         </div>
         <div><app-file-upload></app-file-upload></div>
         <div><button mat-raised-button color="primary">Submit Form</button></div> 

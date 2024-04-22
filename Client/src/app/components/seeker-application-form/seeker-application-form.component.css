@@ -28,11 +28,11 @@
 }
 
 .doc{
- display: flex;
- flex-direction: row;
- height: 46%;
- align-items: center;
-}
+  display: flex;
+  flex-direction: row;
+  height: 46%;
+  align-items: center;
+ }
 
 mat-card-title {
   display: flex;
