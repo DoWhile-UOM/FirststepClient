@@ -464,3 +464,18 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		return uniqueArr;
 	}
 }
+
+@Component({
+	selector: 'app-new-job-uploaded',
+	standalone: true,
+	imports: [ MatButtonModule],
+	templateUrl: './new-job-uploaded.component.html',
+	styleUrl: './new-job-uploaded.component.css'
+  })
+  export class NewJobUploadedComponent {
+	constructor(private router: Router) {}
+  
+	navigateToJobList() {
+	  this.router.navigate(['ca/jobOfferList']);
+	}
+  }
