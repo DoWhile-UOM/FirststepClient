@@ -91,10 +91,13 @@
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button color="primary" *ngIf="joboffer.status == 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Close')" class="small-icon-button">
-            <mat-icon>delete</mat-icon>
+            <mat-icon>visibility_off</mat-icon>
           </button>
           <button mat-icon-button color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Activate')" class="small-icon-button">
             <mat-icon>undo</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Delete')" class="small-icon-button">
+            <mat-icon>delete</mat-icon>
           </button>
         </span>
       </td>
