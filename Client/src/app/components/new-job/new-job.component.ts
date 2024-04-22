@@ -8,7 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
-import { FormControl, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -44,7 +44,7 @@ interface AddJob {
     employeement_type: string;
     arrangement: string;
     experience: string;
-    salary: number;
+    salary: string;
 	currency_unit: string;
     submission_deadline: string;
 	job_description: string;
@@ -99,8 +99,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	isUpdate: boolean = false;
 	jobID: string = '';
 
-	currentDate = new FormControl(new Date());
-
 	fields: Field[] = [];
 	currencyUnits: string[] = [];
 
@@ -124,18 +122,15 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			<br>`;
 
 	// for location country autocomplete
-	locationCountryControl = new FormControl('');
 	countries: string[] = [];
 	locationCountryFilteredOptions: Observable<string[]>;
 
 	// for city autocomplete
-	locationCityControl = new FormControl('');
 	cities: string[] = []; 
 	locationCityFilteredOptions: Observable<string[]>;
 
 	// for keywords
 	separatorKeysCodes: number[] = [ COMMA, ENTER ];
-	keywordCtrl = new FormControl('');
 	filteredkeywords: Observable<string[]>;
 	keywords: string[] = [];
 	allkeywords: string[] = [];
@@ -150,7 +145,17 @@ export class NewJobComponent implements AfterViewInit, OnInit{
         items: ['Bold', 'Italic', 'Underline', 'StrikeThrough', 'LowerCase', 'UpperCase', '|',
 			'Formats', 'Alignments', 'OrderedList', 'UnorderedList', 'Outdent', 'Indent', '|',
 			'CreateLink', '|', 'ClearFormat', '|', 'Undo', 'Redo']
-		};
+	};
+
+	currentDate = new FormControl(new Date());
+
+	createJobFormGroup = new FormGroup({
+		keywordCtrl: new FormControl(''),
+		job_number: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+		salary: new FormControl('', Validators.pattern("^[0-9]*$")),
+		locationCountryControl: new FormControl('', Validators.required),
+		locationCityControl: new FormControl('', Validators.required),
+	});
 
 	constructor(
 		private advertisementService: AdvertisementServices,
@@ -161,17 +166,17 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		private snackBar: MatSnackBar,
 		private spinner: NgxSpinnerService) {
 
-		this.filteredkeywords = this.keywordCtrl.valueChanges.pipe(
+		this.filteredkeywords = this.createJobFormGroup.controls.keywordCtrl.valueChanges.pipe(
 			startWith(null),
 			map((keyword: string | null) => (keyword ? this._filterKeyword(keyword) : this.allkeywords.slice())),
 		);
 
-		this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
+		this.locationCountryFilteredOptions = this.createJobFormGroup.controls.locationCountryControl.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filterCountry(value || '')),
 		);
 
-		this.locationCityFilteredOptions = this.locationCityControl.valueChanges.pipe(
+		this.locationCityFilteredOptions = this.createJobFormGroup.controls.locationCityControl.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filterCity(value || '')),
 		);
@@ -183,15 +188,17 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		if (adData.title != undefined){
 			this.isUpdate = true;
 			this.adData = adData;
-			this.locationCountryControl.setValue(adData.country);
+			this.createJobFormGroup.controls.locationCountryControl.setValue(adData.country);
 			this.skills = this.removeDuplicates(adData.reqSkills);
 			this.description = adData.job_description;
+			this.createJobFormGroup.controls.job_number.setValue(String(adData.job_number));
+			this.createJobFormGroup.controls.salary.setValue(adData.salary);
 
 			await this.onChangeField(Number(adData.field_id));
 			this.keywords = adData.reqKeywords;
 
 			this.onSelectedCountryChanged(adData.country);
-			this.locationCityControl.setValue(adData.city);
+			this.createJobFormGroup.controls.locationCityControl.setValue(adData.city);
 		}
 		else{
 			this.router.navigate(['notfound']);
@@ -272,7 +279,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 		this.spinner.show();
 
-		this.locationCityControl.setValue('');
+		this.createJobFormGroup.controls.locationCityControl.setValue('');
 		this.cities = [];
 		this.adData.currency_unit = (this.isUpdate) ? this.adData.currency_unit : '';
 
@@ -280,7 +287,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 		if (countryCode == undefined){
 			this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
-			this.locationCountryControl.setValue('');
+			//this.createJobFormGroup.controls.locationCountryControl.setValue('');
 			
 			this.spinner.hide();
 			return;
@@ -298,8 +305,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
   	async createNewJob(addAdvertisement: AddJob){
-		this.spinner.show();
-
 		addAdvertisement.keywords = this.removeDuplicates(this.keywords);
 		addAdvertisement.reqSkills = this.removeDuplicates(this.skills);
 		
@@ -319,14 +324,18 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			return;
 		}
 
-		addAdvertisement.city = this.locationCityControl.value ?? '';
-		addAdvertisement.country = this.locationCountryControl.value ?? '';
+		addAdvertisement.city = this.createJobFormGroup.controls.locationCityControl.value?.trim() ?? '';
+		addAdvertisement.country = this.createJobFormGroup.controls.locationCountryControl.value?.trim() ?? '';
 		addAdvertisement.job_description = this.description;
+		addAdvertisement.job_number = parseInt(this.createJobFormGroup.controls.job_number.value ?? '0') || 0;
+		addAdvertisement.salary = this.createJobFormGroup.controls.salary.value ?? '';
 
 		if (this.validateInput(addAdvertisement) == false){
 			return;
 		}
-		
+
+		this.spinner.show();
+
 		let response: boolean = await this.advertisementService.addNewJob(addAdvertisement);
 
 		if (response){
@@ -340,18 +349,20 @@ export class NewJobComponent implements AfterViewInit, OnInit{
   	}
 
 	async updateJob(adData: UpdateJob){
-		this.spinner.show();
-
 		adData.reqKeywords = this.removeDuplicates(this.keywords);
 		adData.reqSkills = this.removeDuplicates(this.skills);
 
-		adData.city = this.locationCityControl.value ?? '';
-		adData.country = this.locationCountryControl.value ?? '';
+		adData.city = this.createJobFormGroup.controls.locationCityControl.value ?? '';
+		adData.country = this.createJobFormGroup.controls.locationCountryControl.value ?? '';
 		adData.job_description = this.description;
+		adData.job_number = parseInt(this.createJobFormGroup.controls.job_number.value ?? '0') || 0;
+		adData.salary = this.createJobFormGroup.controls.salary.value ?? '';
 
 		if (this.validateInput(adData) == false){
 			return;
 		}
+
+		this.spinner.show();
 
 		let response: boolean = await this.advertisementService.updateAdvertisement(adData, this.jobID);
 
@@ -366,8 +377,51 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	}
 
 	validateInput(adData: any){
+		if (adData.field_id == '' || adData.field_id == undefined){
+			this.snackBar.open("Input Error: Field is required", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+
+		if (adData.title == undefined || adData.title == '' || adData.title.length > 100){
+			this.snackBar.open("Input Error: Title is required and should be less than 100 characters", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+
+		if (adData.job_number == '' || adData.job_number == undefined){
+			this.snackBar.open("Input Error: Job Number is required", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+
+		if (adData.employeement_type == '' || adData.employeement_type == undefined){
+			this.snackBar.open("Input Error: Employment type is required", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+
+		if (adData.arrangement == '' || adData.arrangement == undefined){
+			this.snackBar.open("Input Error: Job Arrangement is required", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+
+		if (adData.experience == '' || adData.experience == undefined){
+			this.snackBar.open("Input Error: Experience is required", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+
+		if (adData.salary != undefined && adData.salary != '' && (adData.currency_unit == '' || adData.currency_unit == undefined)){
+			this.snackBar.open("Input Error: Currency unit is required", "", {panelClass: ['app-notification-error']});
+			return false;
+		}		
+
 		if (adData.city == '' || adData.country == ''){
-			this.snackBar.open("Input Error: Location is required", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			this.snackBar.open("Input Error: Location is required", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+		else if (this.countries.indexOf(adData.country) == -1){
+			this.snackBar.open("Input Error: Invalid Country", "", {panelClass: ['app-notification-error']});
+			return false;
+		}
+		else if (this.cities.indexOf(adData.city) == -1){
+			this.snackBar.open("Input Error: Invalid City", "", {panelClass: ['app-notification-error']});
 			return false;
 		}
 
@@ -375,13 +429,13 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			adData.submission_deadline = new Date(adData.submission_deadline).toISOString();
 
 			if (adData.submission_deadline < new Date().toISOString()){
-				this.snackBar.open("Input Error: Submission deadline should be a future date", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+				this.snackBar.open("Input Error: Submission deadline should be a future date", "", {panelClass: ['app-notification-error']});
 				return false;
 			}
 		}
 
 		if (adData.job_description.length > this.maxTextareaCharLimit){
-			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			this.snackBar.open("Error: Description is too long", "", {panelClass: ['app-notification-error']});
 			return false;
 		}
 
@@ -407,7 +461,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		// Clear the input value
 		//event.chipInput!.clear();
 
-		this.keywordCtrl.setValue(null);
+		this.createJobFormGroup.controls.keywordCtrl.setValue(null);
 	}
 
 	remove(keyword: string): void {
@@ -428,7 +482,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 		this.keywords.push(event.option.viewValue);
 		this.keywordInput.nativeElement.value = '';
-		this.keywordCtrl.setValue(null);
+		this.createJobFormGroup.controls.keywordCtrl.setValue(null);
 	}
 
 	private _filterKeyword(value: string): string[] {
@@ -466,7 +520,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 }
 
 @Component({
-	selector: 'app-new-job-uploaded',
 	standalone: true,
 	imports: [ MatButtonModule],
 	templateUrl: './new-job-uploaded.component.html',
