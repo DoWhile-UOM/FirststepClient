@@ -8,6 +8,7 @@ import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialo
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import{FileDownloadComponent} from '../file-download/file-download.component';
 
 @Component({
   selector: 'pdf-viewer-dialog',
@@ -20,7 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule, 
     NgxExtendedPdfViewerModule, 
     CommonModule,
-    MatIconModule],
+    MatIconModule,
+    FileDownloadComponent],
   template: `
     <mat-card class="emptymsg">
       <div class="pdf-viewer-container" *ngIf="pdfSrc !== ''">
@@ -197,9 +199,9 @@ class PdfViewerDialog {
 @Component({
   selector: 'app-pdf-viewer',
   standalone: true,
-  imports: [],
+  imports: [FileDownloadComponent],
   template: `
-    <button mat-raised-button (click)="openDialog()">Open PDF</button>
+    <button mat-raised-button (click)="openDialog()"><app-file-download></app-file-download></button>
   `,
   styles: ``
 })
