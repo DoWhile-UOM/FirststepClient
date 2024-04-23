@@ -36,7 +36,7 @@
           <mat-checkbox color="primary"  [(ngModel)]="useDefaultCV"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
         </div>
         <div><app-file-upload></app-file-upload></div>
-        <div><button mat-raised-button color="primary">Submit Form</button></div> 
+        <div><button mat-raised-button color="primary" (click)="onSubmitForm()">Submit Form</button></div> 
     </div>
     
     </div>

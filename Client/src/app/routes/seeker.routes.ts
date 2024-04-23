@@ -17,5 +17,5 @@ export const routes: Routes = [
   { path: 'home/company-profile', component: CompanyProfileComponent },
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
   { path: 'home/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
-  {path:'fileDownload',component:FileDownloadComponent},
+  
 ];

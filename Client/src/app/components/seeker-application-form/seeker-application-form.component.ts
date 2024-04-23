@@ -9,6 +9,7 @@ import { SeekerService } from '../../../services/seeker.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FileDownloadComponent } from "../file-download/file-download.component";
+import { Router } from '@angular/router';
 
 
 interface Seeker{
@@ -29,7 +30,7 @@ interface Seeker{
 export class SeekerApplicationFormComponent {
     SeekerDetails: Seeker = {} as Seeker;
     useDefaultCV: boolean = false; 
-    constructor(private seekerService:SeekerService) {}
+    constructor(private seekerService:SeekerService, private router: Router) {}
     user_id: number = 2;
     
     async ngOnInit() {
@@ -47,6 +48,10 @@ export class SeekerApplicationFormComponent {
       }
    
 
+}
+
+onSubmitForm(){
+  this.router.navigate(['seeker/home/applicationFormconfirm']);
 }
 }
 

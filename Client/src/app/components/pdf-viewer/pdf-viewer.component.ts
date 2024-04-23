@@ -23,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule],
   template: `
     <mat-card class="emptymsg">
-      <div class="pdf-viewer-container" *ngIf="pdfSrc !== ''">
+    
+   <div class="pdf-viewer-container" *ngIf="pdfSrc !== 'Client/src/assets/cv.pdf'">
         <div class="pdf-header">
           <span class="title">
               <mat-icon class="icon">picture_as_pdf</mat-icon>
@@ -59,7 +60,7 @@ import { MatIconModule } from '@angular/material/icon';
         </ng-template>
       </div>
 
-      <div *ngIf="pdfSrc === ''">
+      <div *ngIf="pdfSrc === 'Client/src/assets/cv.pdf'">
         <img src="../../../assets/images/Document.png" class="empty-img">
         <p class="center-text">Something Went Wrong!</p>
         <p class="center-text">Can't Load Document</p>
