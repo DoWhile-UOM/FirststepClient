@@ -33,6 +33,10 @@ import { AuthService } from '../../../services/auth.service';
 import { Apipaths } from '../../../services/apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { CommonModule } from '@angular/common';
+
+import { MatSelectModule } from '@angular/material/select';
+
 
 
 interface requestOTP {
@@ -47,7 +51,7 @@ interface verifyOTP {
 @Component({
   selector: 'app-register-company',
   standalone: true,
-  imports: [FlexLayoutServerModule,MatCardModule,MatGridListModule,FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule],
+  imports: [MatSelectModule, CommonModule, FlexLayoutServerModule, MatCardModule, MatGridListModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule],
   templateUrl: './register-company.component.html',
   styleUrl: './register-company.component.css'
 })
@@ -57,15 +61,16 @@ export class RegisterCompanyComponent {
   isOTPRequestSent: boolean = false;
   remainingTime = 0;
   reqOTPbtntxt = "Request OTP";
+  isFormVerified: boolean = false;
 
 
   //form group for the stepper
   companyReg = this._formBuilder.group({
     company_name: ['', Validators.required],
-    company_website: ['', Validators.required],
-    company_email: ['', [Validators.required,Validators.email]],
+    company_website: [''],
+    company_email: ['', [Validators.required, Validators.email]],
     //otp: ['', Validators.required],
-    //pNumber: ['', Validators.required]
+    business_scale: ['', Validators.required],
     business_reg_certificate: ['', Validators.required],
     company_applied_date: ['', Validators.required],
     certificate_of_incorporation: ['', Validators.required],
@@ -74,18 +79,33 @@ export class RegisterCompanyComponent {
     otp_in: ['', Validators.required]
   });
 
-  constructor(private snackbar:MatSnackBar,private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
+
+  ngOnInit() {
+
+    // Watch for form validity changes
+    this.companyReg.statusChanges.subscribe(status => {
+      if (this.isEmailVerified) {
+        this.isFormVerified = status === 'VALID';
+      }
+    });
+  }
 
 
   async requestOTP() {
-    this.printTextAfterFiveMinutes();
+
     const userData: requestOTP = {
       email: this.companyReg.get('company_email')?.value
     }
-    const verificationResult = await this.auth.requestOTP(userData,this.snackbar)
-    this.reqOTPbtntxt = "";
 
-    console.log("otp request "+verificationResult);
+    let verificationResult = await this.auth.requestOTP(userData)
+
+    if (verificationResult == true) {
+      this.snackbar.open("OTP Sent successful", "")._dismissAfter(3000);
+      this.printTextAfterFiveMinutes();
+    } else {
+      this.snackbar.open("OTP Request failed Please try Again", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
   }
 
 
@@ -97,15 +117,13 @@ export class RegisterCompanyComponent {
       otp: this.companyReg.get('otp_in')?.value
     }
 
-    const verificationResult = await this.auth.verifyOTP(userData);
-    console.log("Verficaiton result is "+verificationResult);
+    let verificationResult = await this.auth.verifyOTP(userData);
+
     if (verificationResult == true) {
       this.isEmailVerified = true;
-      this.snackbar.open("OTP verification successful","Close",{duration:2000});
-      //console.log("Email verified");
+      this.snackbar.open("OTP verification successful", "", { duration: 2000 });
     } else {
-      console.log("Email verification failed");
-      this.snackbar.open("OTP verification failed","Close",{duration:2000});
+      this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
 
   }
@@ -131,7 +149,7 @@ export class RegisterCompanyComponent {
   onRegister() {
     if (!this.isEmailVerified) {
       alert("Please verify your email first");
-      
+
       return;
     } else {
       this.company.CompanyRegister(this.companyReg.value)

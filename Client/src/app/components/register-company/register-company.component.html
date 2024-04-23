@@ -8,7 +8,7 @@
       </mat-grid-tile>
       <mat-grid-tile [colspan]="2">
         <span class="sectionHeading heading title">
-          <h2>Company Registration Status</h2>
+          <h2>Company Registration</h2>
         </span>
       </mat-grid-tile>
     </mat-grid-list>
@@ -28,24 +28,33 @@
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Company Name</mat-label>
                 <input matInput placeholder="Company Name" formControlName="company_name" required />
+                <mat-error
+                  *ngIf="companyReg.controls['company_name'].touched && companyReg.controls['company_name'].errors">
+                  Company Name is required
+                </mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Company Web site</mat-label>
-                <input matInput placeholder="Company Web site" formControlName="company_website" required />
+                <input matInput placeholder="Company Web site" formControlName="company_website"/>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile class="button-with-inputbox">
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Email Address</mat-label>
                 <input matInput placeholder="Enter Email" formControlName="company_email" required />
+                <mat-error
+                  *ngIf="companyReg.controls['company_email'].touched && companyReg.controls['company_email'].errors">
+                  Valid Email is required
+                </mat-error>
               </mat-form-field>
+
               <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
                 [disabled]="isOTPRequestSent" id="otpreqbtn">{{ reqOTPbtntxt }} {{ remainingTime
                 }}</button>
@@ -53,18 +62,17 @@
 
 
             <mat-grid-tile class="button-with-inputbox">
-              <mat-form-field >
+              <mat-form-field appearance="outline">
                 <mat-label>OTP</mat-label>
                 <input matInput placeholder="Enter Email" formControlName="otp_in" required />
               </mat-form-field>
-              <button mat-raised-button class="apply-button" color="primary"
-                (click)="VerifyOTP()">Verify OTP</button>
+              <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
             </mat-grid-tile>
 
 
             <mat-grid-tile class="button-with-inputbox">
-                <button mat-button [disabled]="!isEmailVerified" matStepperNext class="custom-stepper1-button"
-                color="primary">Next</button>
+              <button mat-raised-button [disabled]="!isEmailVerified" matStepperNext class="apply-button"
+                color="primary" style="width: 30%">Next</button>
             </mat-grid-tile>
 
           </mat-grid-list>
@@ -76,21 +84,31 @@
             <ng-template matStepLabel style="width: 100px;"></ng-template>
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Business Scale</mat-label>
-                <input matInput placeholder="Business Scale" formControlName="business_reg_certificate" required />
+                <mat-select formControlName="business_scale">
+                  <mat-option value="Sp">Sole Proprietorship</mat-option>
+                  <mat-option value="Ps">Partnership</mat-option>
+                  <mat-option value="Pvt">Private Limited Company</mat-option>
+                  <mat-option value="Plc">Public Limited Company</mat-option>
+                  <mat-option value="Clc">Company Limited Guarantee</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="companyReg.controls['business_scale'].touched && companyReg.controls['business_scale'].errors">
+                  Please select a business scale.
+                </mat-error>
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Business Phone No</mat-label>
                 <input matInput placeholder="Business Phone No" formControlName="company_phone_number" required />
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Business Registration Number</mat-label>
                 <input type="number" matInput placeholder="Business Registration Number"
                   formControlName="business_reg_no" required />
@@ -98,14 +116,14 @@
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Date of Registartion</mat-label>
                 <input type="date" matInput placeholder="Enter Email" formControlName="company_applied_date" required />
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Documnet 1</mat-label>
                 <input matInput placeholder="Enter Email" formControlName="business_reg_certificate" required />
               </mat-form-field>
@@ -113,7 +131,7 @@
 
 
             <mat-grid-tile>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <mat-label>Documnet 2</mat-label>
                 <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation"
                   required />
@@ -134,7 +152,7 @@
     <div>
       <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
         <mat-grid-tile style="width: 20%">
-          <button mat-raised-button [disabled]="!isEmailVerified" class="apply-button" color="primary"
+          <button mat-raised-button [disabled]="!isFormVerified" class="apply-button" color="primary"
             style="width: 50%" (click)="onRegister()">
             Register
           </button>
@@ -142,8 +160,6 @@
 
       </mat-grid-list>
     </div>
-
-    <!--Approved or Rejected button -->
 
   </mat-card>
 </div>
