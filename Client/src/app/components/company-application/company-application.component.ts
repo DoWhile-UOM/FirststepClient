@@ -153,8 +153,6 @@ export class CompanyApplicationComponent implements OnInit {
         this.companyApplication.comment &&
         this.companyApplication.comment != 'close'
       ) {
-        // this.companyApplication.verification_status = false;
-
         this.evaluatedCompanyDetails.verified_system_admin_id =
           this.systemAdminID; // denotes that the company is evaluated
 
@@ -193,6 +191,7 @@ export class CompanyApplicationComponent implements OnInit {
   selector: 'comment-in-company-evaluation',
   standalone: true,
   templateUrl: 'comment-in-company-evaluation.html',
+  styleUrl: './company-application.component.css',
   imports: [
     MatFormFieldModule,
     FormsModule,

@@ -53,7 +53,6 @@ export class CompanyService {
       .then(function (response) {
         try {
           companyDetails = response.data;
-
           console.log();
         } catch (error) {
           console.log('No company details found for the given id');
