@@ -90,7 +90,14 @@ export class CompanyApplicationComponent implements OnInit {
     private router: Router
   ) {}
   //getCompanyApplicationById
+  // ngOnInit() {
+  //   console.log('inside ngOnInit');
+  //   this.route.params.subscribe((params) => {
+  //     this.loadCompanyApplication(params['id']);
+  //   });
+  // }
   ngOnInit() {
+    console.log('inside ngOnInit');
     this.route.params.subscribe((params) => {
       this.loadCompanyApplication(params['id']);
     });
@@ -98,8 +105,9 @@ export class CompanyApplicationComponent implements OnInit {
 
   async loadCompanyApplication(id: string) {
     this.companyID = +id;
-
+    console.log('entered load in ts');
     try {
+      console.log('entered try in ts');
       this.spinner.show();
       this.companyApplication =
         await this.companyService.getCompanyApplicationById(this.companyID);

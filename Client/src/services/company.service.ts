@@ -71,33 +71,27 @@ export class CompanyService {
   }
   async getCompanyApplicationById(companyId: number) {
     let companyApplication: any = {};
-    await axios
-      .get(Apipaths.getCompanyApplicationById + companyId)
-      .then(function (response) {
-        try {
-          companyApplication = response.data;
-        } catch (error) {
-          console.log('No company application found for the given id');
-        }
-      })
-      .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
+    console.log('from service', companyId);
+    try {
+      await axios
+        .get(Apipaths.getCompanyApplicationById + companyId)
+        .then(function (response) {
+          try {
+            companyApplication = response.data;
+          } catch (error) {
+            console.log('No company application found for the given id');
+          }
+        })
+        .catch((error) => {
+          this.snackBar.open('Network error occurred. Try Again', 'Close', {
+            duration: 3000,
+          });
         });
-      });
-    return companyApplication;
+      return companyApplication;
+    } catch (error) {
+      console.log('No company application found for the given id');
+    }
   }
-
-  // async updateCompanyDetails(company: Company) {
-  //   await axios
-  //     .put(Apipaths.updateCompanyDetails + company_id, company)
-  //     .then(function (response) {
-  //       console.log('Company details updated successfully');
-  //     })
-  //     .catch(function (error) {
-  //       alert('Network Error: ' + error);
-  //     });
-  // }
 
   async updateCompanyDetails(company: Company, company_id: number) {
     company.company_id = company_id; // should be chnaged
@@ -160,7 +154,6 @@ export class CompanyService {
     return response;
   }
 
-  //get all company list from companyListDto
   async getAllCompanyList() {
     let companyList: CompanyList[] = [];
 
