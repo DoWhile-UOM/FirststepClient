@@ -4,5 +4,13 @@
         {{(currentStatus) ? 'Saved' : 'Save'}}
     </button>
 
-    <button mat-raised-button class="apply-button" title="ApplyJob" color="primary">Apply</button>
+    <button
+        mat-raised-button 
+        class="apply-button"
+        color="primary"
+        matBadge="{{expired? '!' : ''}}"
+        matBadgeColor="warn"
+        [disabled]="expired"
+        disabledInteractive
+        title="Quickly Apply to the Job">Apply</button>
 </div>

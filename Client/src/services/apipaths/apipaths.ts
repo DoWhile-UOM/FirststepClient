@@ -32,8 +32,6 @@ export class Apipaths {
     static readonly deleteCompany: string = this.baseUrl + 'Company/DeleteCompany/';
     static readonly getAllComapanyList: string = this.baseUrl + 'Company/GetAllComapanyList';
     static readonly getCompanyApplicationById: string = this.baseUrl + 'Company/GetCompanyApplicationById/'; //+companyId
-    static readonly getCompanyRegState:string=this.baseUrl+'Company/GetRegCheckByID/';//+regurl id
-    static readonly registerCompany:string=this.baseUrl+'Company/AddCompany';
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
@@ -55,14 +53,11 @@ export class Apipaths {
     static readonly register: string = this.baseUrl + 'User/register';
     static readonly authenticate: string = this.baseUrl + 'User/authenticate';
 
-    static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
-    static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
-
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
 
     // Azure Blob Service
-    static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststepstore;AccountKey=qUox5eMVpzqMQQE1d4WiXLJwupm8aHeab+Q8GD/xCDVSBFfa03wsrm6JFIOFrCG3hI9gxjEDrFn4+ASt2hRkmg==;EndpointSuffix=core.windows.net';
+    static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
-    static readonly BlobName = 'firststepstore';
+    static readonly BlobName = 'firststep';
 }

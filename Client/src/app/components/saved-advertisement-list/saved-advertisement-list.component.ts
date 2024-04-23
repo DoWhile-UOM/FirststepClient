@@ -15,6 +15,7 @@ interface Job {
   arrangement: string;
   posted_date: string;
   is_saved: boolean;
+  is_expired: boolean;
 }
 
 @Component({

@@ -1,165 +1,119 @@
 <div class="body">
 
-  <mat-card class="card">
-    <!--Top Section-->
-    <mat-grid-list cols="6" rowHeight="140">
-      <mat-grid-tile [colspan]="1">
+    <mat-card class="card">
+        <!--Top Section-->
+        <mat-grid-list cols="6" rowHeight="140">
+            <mat-grid-tile [colspan]="1">
 
-      </mat-grid-tile>
-      <mat-grid-tile [colspan]="2">
-        <span class="sectionHeading heading title">
-          <h2>Company Registration</h2>
-        </span>
-      </mat-grid-tile>
-    </mat-grid-list>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2">
+                <span class="sectionHeading heading title">
+                    <h2>Company Registration Status</h2>
+                </span>
+            </mat-grid-tile>
+        </mat-grid-list>
 
-    <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
 
-    <!--Company Details-->
-    <mat-stepper labelPosition="bottom" #stepper color="primary" class="stepper-with-wider-nav">
+        <div class="stateBar">
+            <div class="container">
+                <div class="circle-box">
+                    <a>Application Submission</a>
+                    <div class="circle">
+                        <div class="checkmark"></div>
+                    </div>
+                    <a>Dec 15, 2023</a>
+                </div>
+                <hr>
+                <div class="circle-box">
+                    <a>Application Screening</a>
+                    <div class="circle-red">
+                        <div class="number-two">2</div>
+                    </div>
+                    <a>Rejected</a>
+                </div>
+            </div>
+        </div>
 
-      <form [formGroup]="companyReg">
-        <mat-step>
+        <mat-divider></mat-divider>
+        
+        <mat-grid-list cols="1" rowHeight="100">
+            <mat-grid-tile [colspan]="1">
 
-          <mat-grid-list cols="1" rowHeight="100">
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Comment</mat-label>
+                    <input disabled matInput type="text" class="form-control"
+                    value={{cmpData.comment}} >
 
+                </mat-form-field>
+
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-divider></mat-divider>
+
+        <!--Company Details-->
+        <mat-grid-list cols="1" rowHeight="100">
             <mat-grid-tile>
-              <h3>Register Your Company</h3>
-            </mat-grid-tile>
 
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Company Name</mat-label>
-                <input matInput placeholder="Company Name" formControlName="company_name" required />
-                <mat-error
-                  *ngIf="companyReg.controls['company_name'].touched && companyReg.controls['company_name'].errors">
-                  Company Name is required
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Company Web site</mat-label>
-                <input matInput placeholder="Company Web site" formControlName="company_website"/>
-              </mat-form-field>
-            </mat-grid-tile>
-
-            <mat-grid-tile class="button-with-inputbox">
-              <mat-form-field appearance="outline">
-                <mat-label>Email Address</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="company_email" required />
-                <mat-error
-                  *ngIf="companyReg.controls['company_email'].touched && companyReg.controls['company_email'].errors">
-                  Valid Email is required
-                </mat-error>
-              </mat-form-field>
-
-              <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
-                [disabled]="isOTPRequestSent" id="otpreqbtn">{{ reqOTPbtntxt }} {{ remainingTime
-                }}</button>
-            </mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Company Name</mat-label>
+                    <input matInput placeholder="Your input here" type="text" class="form-control"
+                        value={{cmpData.company_name}} id="companyName" name="companyName" required>
+                </mat-form-field>
 
 
-            <mat-grid-tile class="button-with-inputbox">
-              <mat-form-field appearance="outline">
-                <mat-label>OTP</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="otp_in" required />
-              </mat-form-field>
-              <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
-            </mat-grid-tile>
-
-
-            <mat-grid-tile class="button-with-inputbox">
-              <button mat-raised-button [disabled]="!isEmailVerified" matStepperNext class="apply-button"
-                color="primary" style="width: 30%">Next</button>
-            </mat-grid-tile>
-
-          </mat-grid-list>
-        </mat-step>
-
-
-        <mat-step>
-          <mat-grid-list cols="1" rowHeight="100">
-            <ng-template matStepLabel style="width: 100px;"></ng-template>
-
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Business Scale</mat-label>
-                <mat-select formControlName="business_scale">
-                  <mat-option value="Sp">Sole Proprietorship</mat-option>
-                  <mat-option value="Ps">Partnership</mat-option>
-                  <mat-option value="Pvt">Private Limited Company</mat-option>
-                  <mat-option value="Plc">Public Limited Company</mat-option>
-                  <mat-option value="Clc">Company Limited Guarantee</mat-option>
-                </mat-select>
-                <mat-error
-                  *ngIf="companyReg.controls['business_scale'].touched && companyReg.controls['business_scale'].errors">
-                  Please select a business scale.
-                </mat-error>
-              </mat-form-field>
-            </mat-grid-tile>
-
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Business Phone No</mat-label>
-                <input matInput placeholder="Business Phone No" formControlName="company_phone_number" required />
-              </mat-form-field>
-            </mat-grid-tile>
-
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Business Registration Number</mat-label>
-                <input type="number" matInput placeholder="Business Registration Number"
-                  formControlName="business_reg_no" required />
-              </mat-form-field>
-            </mat-grid-tile>
-
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Date of Registartion</mat-label>
-                <input type="date" matInput placeholder="Enter Email" formControlName="company_applied_date" required />
-              </mat-form-field>
-            </mat-grid-tile>
-
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Documnet 1</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="business_reg_certificate" required />
-              </mat-form-field>
             </mat-grid-tile>
 
 
             <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Documnet 2</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation"
-                  required />
-
-
-                <button>Upload File</button>
-
-              </mat-form-field>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>URL of the Website</mat-label>
+                    <input matInput placeholder="Your input here" type="url" class="form-control"
+                        value={{cmpData.company_website}} id="websiteUrl" name="websiteUrl" required>
+                </mat-form-field>
             </mat-grid-tile>
 
-          </mat-grid-list>
-        </mat-step>
+            <mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Email Address</mat-label>
+                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                        value={{cmpData.company_email}} id="emailAddress" name="emailAddress" required>
+                </mat-form-field>
+            </mat-grid-tile>
 
-      </form>
-    </mat-stepper>
+            <!--company phone number-->
+            <mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Contact No</mat-label>
+                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                        value={{cmpData.company_phone_number}} id="emailAddress" name="emailAddress" required>
+                </mat-form-field>
+            </mat-grid-tile>
 
-    <mat-divider></mat-divider>
-    <div>
-      <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
-        <mat-grid-tile style="width: 20%">
-          <button mat-raised-button [disabled]="!isFormVerified" class="apply-button" color="primary"
-            style="width: 50%" (click)="onRegister()">
-            Register
-          </button>
-        </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Company Logo</mat-label>
+                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                        value={{cmpData.company_logo}} id="emailAddress" name="emailAddress" required>
+                </mat-form-field>
+            </mat-grid-tile>
 
-      </mat-grid-list>
-    </div>
+        </mat-grid-list>
 
-  </mat-card>
+        <mat-divider></mat-divider>
+        <div>
+            <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
+                <mat-grid-tile style="width: 20%">
+                    <button mat-raised-button class="apply-button" color="primary" style="width: 50%">
+                        Approve
+                    </button>
+                </mat-grid-tile>
+
+            </mat-grid-list>
+        </div>
+
+        <!--Approved or Rejected button -->
+
+    </mat-card>
 </div>
