@@ -1,11 +1,8 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { NgForm } from '@angular/forms';
-import {  OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  Validators
-} from '@angular/forms';
+import { OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,20 +18,16 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import { AddSkillsComponent } from "../add-skills/add-skills.component";
+import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerService } from '../../../services/seeker.service';
 import axios, { AxiosError } from 'axios';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { JobfieldService } from '../../../services/jobfield.service';
-import { KeywordService } from '../../../services/keyword.service'; 
-
-
-
 
 interface Field {
-	field_name: string;
-	field_id: number;
+  field_name: string;
+  field_id: number;
 }
 
 interface Seeker {
@@ -46,143 +39,93 @@ interface Seeker {
   linkedin: string;
   bio: string;
   description: string;
-  //skills 
-  seekerSkills: Skill[];
-  keywords: string[];
+  //skills
   field_id: number;
-
 }
-
-interface Skill {
-	skill_id: number;
-	skill_name: string;
-}
-
 
 @Component({
   selector: 'app-sign-up-second-page',
   standalone: true,
-  imports: [MatToolbar, FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatSelectModule, MatOptionModule],
+  imports: [
+    MatToolbar,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatStepperModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatDividerModule,
+    MatCardModule,
+    FileUploadComponent,
+    JobOfferListComponent,
+    AddSkillsComponent,
+    MatSelectModule,
+    MatOptionModule,
+  ],
   templateUrl: './sign-up-second-page.component.html',
-  styleUrl: './sign-up-second-page.component.css'
+  styleUrl: './sign-up-second-page.component.css',
 })
 export class SignUpSecondPageComponent {
-
-
   adData: Seeker = {} as Seeker;
 
   fields: Field[] = [];
 
-  keywords: string[] = [];
-	allkeywords: string[] = [];
-
-  
-  skills: string[] = [];
-	@ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
-
-
-  constructor(private seekerService: SeekerService, private jobFieldService: JobfieldService,		private keywordService: KeywordService) { }
-
+  constructor(
+    private seekerService: SeekerService,
+    private jobFieldService: JobfieldService
+  ) {}
 
   async ngOnInit() {
-// get all fields from the database
-await this.jobFieldService.getAll()
-.then((response) => {
-  this.fields = response;
-  console.log(this.fields);
-});  }
-
-ngAfterViewInit() {
-  //this.onResize();
-
-  this.skills = this.addSkillsComponent.skills;
-}
-
-async onChangeField(selectedField: number) {
-  // load the keywords for the selected field
-  // put loading animation
-  this.keywords = [];
-  this.allkeywords = await this.keywordService.getAllKeywords(selectedField);
-}
-
-
-changeSkillsArray($event: Event){
-  var skills = $event;
-  if (skills != null){
-    this.skills = skills as unknown as string[];
+    await this.jobFieldService.getAll().then((response) => {
+      this.fields = response;
+      console.log(this.fields);
+    });
   }
-  alert("Skills: " + this.skills);
-}
 
-// add(event: MatChipInputEvent): void {
-//   const value = (event.value || '').trim();
-
-//   // Add our keyword
-//   if (value && value.length > 0) {
-//     this.keywords.push(value);
-//   }
-
-//   // Clear the input value
-//   //event.chipInput!.clear();
-
-//   this.keywordCtrl.setValue(null);
-// }
-// remove(keyword: string): void {
-//   const index = this.keywords.indexOf(keyword);
-
-//   if (index >= 0) {
-//     this.keywords.splice(index, 1);
-//   }
-// }
+  first_name = '';
+  last_name = '';
+  phone_number = '';
+  email = '';
+  university = '';
+  linkedin = '';
+  field_id = '';
+  bio = '';
+  description = '';
 
 
+  async submitForm() {
+    const seekerData = {
+      first_name: this.first_name,
+      last_name: this.last_name,
+      phone_number: this.phone_number,
+      email: this.email,
+      university: this.university,
+      linkedin: this.linkedin,
+      bio: this.bio,
+      description: this.description,
+      field_id: this.field_id,
+    };
 
-
-
-
-
-  readonly FIELD_OPTIONS = [
-    { value: 'software', viewValue: 'Software Engineering' },
-    { value: 'mechanical', viewValue: 'Mechanical Engineering' },
-    { value: 'civil', viewValue: 'Civil Engineering' },
-    { value: 'electrical', viewValue: 'Electrical Engineering' },
-    { value: 'other', viewValue: 'Other' },
-  ];
-
-    first_name = '';
-    last_name = '';
-    phone_number = '';
-    email = '';
-    university = '';
-    linkedin = '';
-    field_id= '';
-    bio = '';
-    description = '';
-  
-    private baseUrl = 'https://localhost:7213/api/Seeker/';
-  
-    
-  
-    submitForm(): void {
-      const seekerData = {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        phone_number: this.phone_number,
-        email: this.email,
-        university: this.university,
-        linkedin: this.linkedin,
-        bio: this.bio,
-        description: this.description,
-        field_id: this.field_id,
-      };
-  
-      axios
-        .post(this.baseUrl + 'AddSeeker', seekerData)
-        .then((response) => {
-          console.log('Seeker added successfully:', response.data);
-        })
-        .catch((error) => {
-          console.error('Error adding seeker:', error);
-        });
+    try {
+      const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker');
+      console.log('Seeker added successfully:', response.data);
+      return response.data;
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        // The server responded with a status other than 2xx.
+        console.error('Error data:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        console.error('Error headers:', error.response?.headers);
+      } else {
+        // The request was made but no response was received or an error occurred in setting up the request.
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
+      throw error;  // Re-throwing the error after logging (adjust based on how you want to handle failures)
     }
+  }
 }

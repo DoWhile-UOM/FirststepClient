@@ -231,10 +231,9 @@
                 </mat-label>
                 <mat-form-field>
                   <mat-label>Field of Work</mat-label>
-                  <mat-select #selectField name="field_id" ngModel (valueChange)="onChangeField(selectField.value)">
-                    @for (field of fields; track field) {
-                      <mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
-                    }
+                  <mat-select #selectField name="field_id" [(ngModel)]="field_id">
+                  <mat-option *ngFor="let field of fields" [value]="field.field_id">{{field.field_name}}</mat-option>
+                
                     </mat-select>
                 </mat-form-field>
                 <mat-label class="label-import" style="text-align: left">
