@@ -29,12 +29,18 @@ mat-grid-tile {
 mat-form-field {
   width: 75%;
 }
+.static-input {
+  cursor: default;
+}
 button {
   width: 25%;
 }
 .mat-mdc-button-touch-target {
   width: 32px !important;
   height: 32px !important;
+}
+.approved-status:hover {
+  cursor: default;
 }
 .chip-content {
   display: flex;
@@ -44,4 +50,9 @@ button {
 }
 mat-icon {
   margin-right: 5px;
+}
+
+/* comment html */
+.comment {
+  width: 100%;
 }

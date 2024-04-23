@@ -20,10 +20,12 @@
           matTooltip="Evaluation status of the application"
         >
           <div class="chip-content">
-            <mat-icon *ngIf="evaluated_status=='Evaluated'">checkcircleicon</mat-icon>
-          {{ evaluated_status }}
+            <mat-icon *ngIf="evaluated_status == 'Evaluated'"
+              >checkcircleicon</mat-icon
+            >
+            {{ evaluated_status }}
           </div>
-          </mat-chip>
+        </mat-chip>
       </mat-grid-tile>
     </mat-grid-list>
     <mat-divider></mat-divider>
@@ -66,7 +68,7 @@
           />
         </mat-form-field>
       </mat-grid-tile>
-      <!--company phone number-->
+
       <mat-grid-tile>
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>Phone Number</mat-label>
@@ -75,6 +77,19 @@
             [readonly]="true"
             name="company_phone"
             [(ngModel)]="companyApplication.company_phone_number"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Business Registratin Number</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_brn"
+            [(ngModel)]="companyApplication.business_reg_certificate"
             class="static-input"
           />
         </mat-form-field>
@@ -122,7 +137,7 @@
         <mat-grid-tile>
           <button
             mat-raised-button
-            class="apply-button"
+            class="apply-button approved-status"
             color="primary"
             style="text-align: left"
           >
