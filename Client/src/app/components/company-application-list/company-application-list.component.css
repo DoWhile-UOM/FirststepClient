@@ -38,6 +38,31 @@ th.mat-header-cell .nu-header {
 .material-icons {
   font-size: 22px !important;
 }
+.registered-status-btn {
+  width: 120px;
+  color: white;
+}
+.registered-status-btn:hover {
+  cursor: default;
+}
+.registered-status-btn.registered{
+  background-color: #008080;
+  color: white;
+}
+.registered-status-btn.rejected{
+  background-color: #b12209;
+  color: white;
+}
+.registered-status-btn.pending{
+  background-color: gray;
+  color: white;
+}
+
 .view-section {
   cursor: pointer;
+  display: flex;
+  color: #008080;
+}
+.icon {
+  margin-right: 10px;
 }
