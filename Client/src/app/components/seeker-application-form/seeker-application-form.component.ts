@@ -51,7 +51,7 @@ export class SeekerApplicationFormComponent {
 }
 
 onSubmitForm(){
-  this.router.navigate(['seeker/home/applicationFormconfirm']);
+  this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
 }
 }
 

@@ -1,38 +1,29 @@
-
-
 .example-card {
   margin: 2vw;
   width: 95%;
-  
 }
 
 .detailsField {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  
- 
 }
 
-.textSection .fieldSection{
+.textSection .fieldSection {
   display: flex;
   flex-direction: column;
- 
- 
-  
 }
 
-.fieldSection{
+.fieldSection {
   margin-left: 27px;
-  
 }
 
-.doc{
+.doc {
   display: flex;
   flex-direction: row;
   height: 46%;
   align-items: center;
- }
+}
 
 mat-card-title {
   display: flex;
@@ -47,27 +38,21 @@ mat-card-title {
   line-height: normal;
 }
 
-mat-card-content{
-color: #000;
-font-size: 1vw;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+mat-card-content {
+  color: #000;
+  font-size: 1vw;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .textSection div {
   margin-top: 30px;
-  
 }
-.fieldSection div{
+.fieldSection div {
   margin-top: 30px;
 }
 
-.checkbox-text{
+.checkbox-text {
   color: #008080;
 }
-
-
-
-
-
