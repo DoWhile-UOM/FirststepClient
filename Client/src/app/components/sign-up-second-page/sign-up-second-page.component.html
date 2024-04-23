@@ -231,15 +231,11 @@
                 </mat-label>
                 <mat-form-field>
                   <mat-label>Field of Work</mat-label>
-                  <mat-select
-                    [(ngModel)]="field_id"
-                    name="field_name"
-                    required
-                  >
-                    <mat-option *ngFor="let field of FIELD_OPTIONS" [value]="field.value">
-                      {{ field.viewValue }}
-                    </mat-option>
-                  </mat-select>
+                  <mat-select #selectField name="field_id" ngModel (valueChange)="onChangeField(selectField.value)">
+                    @for (field of fields; track field) {
+                      <mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
+                    }
+                    </mat-select>
                 </mat-form-field>
                 <mat-label class="label-import" style="text-align: left">
                   Add your skills</mat-label

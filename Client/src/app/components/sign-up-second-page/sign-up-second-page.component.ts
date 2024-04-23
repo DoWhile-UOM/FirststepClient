@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { NgForm } from '@angular/forms';
 import {  OnInit } from '@angular/core';
@@ -26,6 +26,38 @@ import { SeekerService } from '../../../services/seeker.service';
 import axios, { AxiosError } from 'axios';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { JobfieldService } from '../../../services/jobfield.service';
+import { KeywordService } from '../../../services/keyword.service'; 
+
+
+
+
+interface Field {
+	field_name: string;
+	field_id: number;
+}
+
+interface Seeker {
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+  university: string;
+  linkedin: string;
+  bio: string;
+  description: string;
+  //skills 
+  seekerSkills: Skill[];
+  keywords: string[];
+  field_id: number;
+
+}
+
+interface Skill {
+	skill_id: number;
+	skill_name: string;
+}
+
 
 @Component({
   selector: 'app-sign-up-second-page',
@@ -35,6 +67,80 @@ import { MatOptionModule } from '@angular/material/core';
   styleUrl: './sign-up-second-page.component.css'
 })
 export class SignUpSecondPageComponent {
+
+
+  adData: Seeker = {} as Seeker;
+
+  fields: Field[] = [];
+
+  keywords: string[] = [];
+	allkeywords: string[] = [];
+
+  
+  skills: string[] = [];
+	@ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
+
+
+  constructor(private seekerService: SeekerService, private jobFieldService: JobfieldService,		private keywordService: KeywordService) { }
+
+
+  async ngOnInit() {
+// get all fields from the database
+await this.jobFieldService.getAll()
+.then((response) => {
+  this.fields = response;
+  console.log(this.fields);
+});  }
+
+ngAfterViewInit() {
+  //this.onResize();
+
+  this.skills = this.addSkillsComponent.skills;
+}
+
+async onChangeField(selectedField: number) {
+  // load the keywords for the selected field
+  // put loading animation
+  this.keywords = [];
+  this.allkeywords = await this.keywordService.getAllKeywords(selectedField);
+}
+
+
+changeSkillsArray($event: Event){
+  var skills = $event;
+  if (skills != null){
+    this.skills = skills as unknown as string[];
+  }
+  alert("Skills: " + this.skills);
+}
+
+// add(event: MatChipInputEvent): void {
+//   const value = (event.value || '').trim();
+
+//   // Add our keyword
+//   if (value && value.length > 0) {
+//     this.keywords.push(value);
+//   }
+
+//   // Clear the input value
+//   //event.chipInput!.clear();
+
+//   this.keywordCtrl.setValue(null);
+// }
+// remove(keyword: string): void {
+//   const index = this.keywords.indexOf(keyword);
+
+//   if (index >= 0) {
+//     this.keywords.splice(index, 1);
+//   }
+// }
+
+
+
+
+
+
+
   readonly FIELD_OPTIONS = [
     { value: 'software', viewValue: 'Software Engineering' },
     { value: 'mechanical', viewValue: 'Mechanical Engineering' },
@@ -55,9 +161,7 @@ export class SignUpSecondPageComponent {
   
     private baseUrl = 'https://localhost:7213/api/Seeker/';
   
-    ngOnInit(): void {
-      // Initialize any additional state or subscriptions here
-    }
+    
   
     submitForm(): void {
       const seekerData = {
