@@ -1,1 +1,193 @@
 <p>signup-first-page works!</p>
+
+   <mat-toolbar class="nav-bar mat-elevation-z4">
+    <span>
+      <a routerLink="/">
+        <img src="assets/images/logo.png" alt="Logo" class="logo" />
+      </a>
+    </span>
+  </mat-toolbar>
+  
+  <div class="page">
+    <!-- Reactive Stepper -->
+    <mat-stepper [linear]="true" labelPosition="bottom" #stepper color="primary">
+      <!-- Step 1: Personal Information -->
+      <mat-step [stepControl]="signupForm">
+        <form [formGroup]="signupForm" (ngSubmit)="submitForm()">
+          <div class="form-popup" id="personalInfo">
+            <div class="up-container">
+              <div class="left">
+                <img src="/assets/images/signup1.png" alt="Seeker" class="seeker" />
+                <h2>Find Your Future With FirstStep</h2>
+              </div>
+              <div class="right">
+                <div class="form-container">
+                  <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input
+                      matInput
+                      placeholder="Enter first name"
+                      formControlName="first_name"
+                      [required]="true"
+                    />
+                    <mat-error *ngIf="signupForm.get('first_name')?.hasError('required')">
+                      First name is required.
+                    </mat-error>
+                  </mat-form-field>
+  
+                  <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input
+                      matInput
+                      placeholder="Enter last name"
+                      formControlName="last_name"
+                      [required]="true"
+                    />
+                    <mat-error *ngIf="signupForm.get('last_name')?.hasError('required')">
+                      Last name is required.
+                    </mat-error>
+                  </mat-form-field>
+  
+                  <mat-form-field appearance="outline">
+                    <mat-label>Phone Number</mat-label>
+                    <input
+                      matInput
+                      placeholder="Enter phone number"
+                      formControlName="phone_number"
+                      [required]="true"
+                    />
+                    <mat-error *ngIf="signupForm.get('phone_number')?.hasError('pattern')">
+                      Phone number must be numeric.
+                    </mat-error>
+                  </mat-form-field>
+  
+                  <button mat-button matStepperNext [disabled]="!signupForm.valid" color="primary">
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-step>
+  
+      <!-- Step 2: Contact Information -->
+      <mat-step>
+        <div class="form-popup" id="contactInfo">
+          <div class="up-container">
+            <div class="left">
+              <img src="/assets/images/signup2.png" alt="Seeker" class="seeker" />
+              <h2>Verify Your Email</h2>
+            </div>
+            <div class="right">
+              <div class="form-container">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email Address</mat-label>
+                  <input
+                    matInput
+                    placeholder="Enter email"
+                    formControlName="email"
+                    [required]="true"
+                  />
+                  <mat-error *ngIf="signupForm.get('email')?.hasError('email')">
+                    Please enter a valid email address.
+                  </mat-error>
+                </mat-form-field>
+  
+                <button mat-button matStepperNext [disabled]="!signupForm.valid" color="primary">
+                  Next
+                </button>
+                <button mat-button matStepperPrevious color="warn">
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+  
+      <!-- Step 3: Education and Links -->
+      <mat-step>
+        <div class="form-popup" id="educationInfo">
+          <div class="up-container">
+            <div class="left">
+              <img src="/assets/images/signup3.png" alt="Seeker" class="seeker" />
+              <h2>Educational Background</h2>
+            </div>
+            <div class="right">
+              <div class="form-container">
+                <mat-form-field appearance="outline">
+                  <mat-label>University</mat-label>
+                  <input
+                    matInput
+                    placeholder="Enter university"
+                    formControlName="university"
+                  />
+                </mat-form-field>
+  
+                <mat-form-field appearance="outline">
+                  <mat-label>LinkedIn Profile</mat-label>
+                  <input
+                    matInput
+                    placeholder="Enter LinkedIn profile URL"
+                    formControlName="linkedin"
+                  />
+                  <mat-error *ngIf="signupForm.get('linkedin')?.hasError('pattern')">
+                    Please enter a valid LinkedIn URL.
+                  </mat-error>
+                </mat-form-field>
+  
+                <button mat-button matStepperNext [disabled]="!signupForm.valid" color="primary">
+                  Next
+                </button>
+                <button mat-button matStepperPrevious color="warn">
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+  
+      <!-- Step 4: Additional Information -->
+      <mat-step>
+        <div class="form-popup" id="additionalInfo">
+          <div class="up-container">
+            <div class="left">
+              <img src="/assets/images/signup4.png" alt="Seeker" class="seeker" />
+              <h2>Additional Information</h2>
+            </div>
+            <div class="right">
+              <div class="form-container">
+                <mat-form-field appearance="outline">
+                  <mat-label>Bio</mat-label>
+                  <input
+                    matInput
+                    placeholder="Enter bio"
+                    formControlName="bio"
+                  />
+                </mat-form-field>
+  
+                <mat-form-field appearance="outline">
+                  <mat-label>Description</mat-label>
+                  <input
+                    matInput
+                    placeholder="Enter description"
+                    formControlName="description"
+                  />
+                </mat-form-field>
+  
+                <button mat-button matStepperNext [disabled]="!signupForm.valid" color="primary">
+                  Submit
+                </button>
+                <button mat-button matStepperPrevious color="warn">
+                  Back
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+  

@@ -1,1 +1,224 @@
 <p>sign-up-second-page works!</p>
+<mat-toolbar class="nav-bar mat-elevation-z4">
+    <span>
+      <a routerLink="/">
+        <img src="assets/images/logo.png" alt="Logo" class="logo" />
+      </a>
+    </span>
+  </mat-toolbar>
+
+
+  <div class="page">
+
+    <mat-stepper labelPosition="bottom" #stepper color="primary">
+        <!-- Step 1: Personal Information -->
+        <mat-step>
+          <form #personalForm="ngForm">
+            <div class="form-popup" id="myForm">
+              <div class="up-container">
+                <div class="left">
+                  <img src="/assets/images/signup1.png" alt="Seeker" class="seeker" />
+                  <h2>Find Your Future With FirstStep</h2>
+                </div>
+                <div class="right">
+                  <div class="form-container">
+                    <mat-label class="heading">Create Your FirstStep Account</mat-label>
+
+                    <mat-form-field>
+                      <mat-label>First Name</mat-label>
+                      <input matInput placeholder="Enter First name" name="first_name" [(ngModel)]="firstName" required />
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Last Name</mat-label>
+                      <input matInput placeholder="Enter Last name" name="last_name" [(ngModel)]="lastName" required />
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Contact Number</mat-label>
+                      <input matInput placeholder="Enter Contact Number" name="phone_number" [(ngModel)]="phoneNumber" required />
+                    </mat-form-field>
+
+                    <div>
+                      <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="!personalForm.valid">Next</button>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            </form>
+        </mat-step>
+      
+        <!-- Additional steps here -->
+        <mat-step>
+            <form #emailForm="ngForm">
+              <div class="form-popup" id="emailStep">
+                <div class="up-container">
+                  <div class="left">
+                    <img src="/assets/images/signup2.png" alt="Seeker" class="seeker" />
+                    <h2>Easily Find the Career Path Meant For You</h2>
+                  </div>
+                  <div class="right">
+                    <div class="form-container">
+                      <mat-label class="heading">Let's verify your Email</mat-label>
+                <p>
+                  Verify your email. Please check your email and enter the
+                  confirmation code.
+                </p>
+                      <mat-form-field>
+                        <mat-label>Email Address</mat-label>
+                        <input matInput placeholder="example@gmail.com" name="email" [(ngModel)]="email" required />
+                      </mat-form-field>
+                      <button mat-button class="custom-stepper1-button" style="background-color: #595959; color: white">Resend OTP</button>
+                      <mat-form-field>
+                        <mat-label>OTP</mat-label>
+                        <input matInput placeholder="Enter OTP for verification" name="otp"  /> 
+                      </mat-form-field>
+                      <div>
+                        <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">Back</button>
+                        <button mat-button matStepperNext class="custom-stepper1-button" style="color: white;" [disabled]="!emailForm.valid">Next</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step>
+            <form #educationForm="ngForm">
+              <div class="form-popup" id="educationStep">
+                <div class="up-container">
+                  <div class="left">
+                    <img src="/assets/images/signup3.png" alt="Seeker" class="seeker" />
+                    <h2>Meet Top Companies in Sri Lanka</h2>
+                  </div>
+                  <div class="right">
+                    <div class="form-container">
+                      <mat-label class="heading"
+                  >Can we know your educational background ?</mat-label
+                >
+                      <mat-form-field>
+                        <mat-label>University</mat-label>
+                        <input matInput placeholder="Enter University" name="university" [(ngModel)]="university" />
+                      </mat-form-field>
+                      <mat-form-field>
+                        <mat-label>LinkedIn Profile</mat-label>
+                        <input matInput placeholder="Enter LinkedIn Profile URL" name="linkedin" [(ngModel)]="linkedin" />
+                      </mat-form-field>
+                      <div>
+                        <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">Back</button>
+                        <button mat-button matStepperNext class="custom-stepper1-button" style="color: white;" [disabled]="!educationForm.valid">Next</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          
+          <mat-step>
+            <form #skillsForm="ngForm">
+              <div class="form-popup" id="skillsStep">
+                <div class="up-container">
+                  <div class="left">
+                    <img src="/assets/images/signup4.png" alt="Seeker" class="seeker" />
+                    <h2>Start Climbing the Corporate Ladder with Us</h2>
+                  </div>
+                  <div class="right">
+                    <div class="form-container">
+                      <mat-label class="heading">
+                        Can we know your professional background ?
+                      </mat-label>
+                      <mat-form-field>
+                        <mat-label>Field of Work</mat-label>
+                        <input matInput placeholder="Enter Field of Work" name="field_name" />
+                      </mat-form-field>
+                      <mat-form-field>
+                        <mat-label>Skills</mat-label>
+                        <input matInput placeholder="Enter Skills" name="skills"  />
+                      </mat-form-field>
+                      <div>
+                        <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">Back</button>
+                        <button mat-button matStepperNext class="custom-stepper1-button" style="color: white;" [disabled]="!skillsForm.valid">Next</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          
+          
+
+
+          
+        <!-- Final step: Submission -->
+        <mat-step>
+          <form #finalForm="ngForm">
+            <div class="form-popup" id="profileStep">
+              <div class="up-container">
+                <div class="left">
+                  <img
+                    src="/assets/images/signup5.png"
+                    alt="Seeker"
+                    class="seeker"
+                  />
+                  <h2>Let's Get Started!</h2>
+                </div>
+                <div class="right">
+                  <div class="form-container">
+                    <mat-label class="heading"
+                      >Let's enter details for your profile</mat-label
+                    >
+                    <mat-label class="label-import">Profile Picture</mat-label>
+                    <!-- <div class="left">
+                      <img [src]="url" style="height: 100px; width: auto" /><br />
+                      <input type="file" (change)="onselectFile($event)" />
+                    </div> -->
+                    <mat-form-field>
+                      <mat-label>Bio</mat-label>
+                      <input
+                        matInput
+                        placeholder="Enter Bio"
+                        formControlName="bio"
+                      />
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Description</mat-label>
+                      <input
+                        matInput
+                        placeholder="Enter Description"
+                        formControlName="description"
+                      />
+                    </mat-form-field>
+                    <div>
+                      <button
+                        mat-button
+                        matStepperPrevious
+                        class="custom-stepper-button"
+                        style="color: #008080"
+                      >
+                        Back
+                      </button>
+                      <button
+                      mat-button (click)="submitForm()" [disabled]="!finalForm.valid"
+                        class="custom-stepper1-button"
+                        style="color: white"
+                    
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button mat-button (click)="submitForm()" [disabled]="!finalForm.valid">Submit</button>
+            </div>
+          </form>
+        </mat-step>
+      </mat-stepper>
+      
+  </div>

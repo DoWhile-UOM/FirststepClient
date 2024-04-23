@@ -1,0 +1,131 @@
+.container {
+    padding: 3em;
+    width: 60%;
+    min-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .mat-toolbar {
+    background-color: #008080; /* Dark teal for consistency */
+  }
+  
+  .card {
+    padding: 2em;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  }
+  
+  .form-popup {
+    padding: 1.5em; /* Consistent padding for form sections */
+  }
+  
+  .left {
+    text-align: center;
+  }
+  
+  .right {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-container {
+    margin-top: 2em;
+  }
+  
+  .mat-form-field {
+    width: 100%; /* Ensure form fields occupy full width */
+    margin: 1em 0; /* Consistent margin for form fields */
+  }
+  
+  .mat-error {
+    color: #ff0000; /* Red for error messages */
+    font-size: 0.85em;
+    margin-top: 0.5em; /* Consistent spacing for error messages */
+  }
+  
+  .mat-chip-list {
+    margin-top: 1em;
+  }
+  
+  .mat-chip {
+    background-color: #f0f0f0; /* Light gray background for chips */
+    color: #333; /* Dark text for contrast */
+  }
+  
+  .mat-button {
+    margin: 1em 0; /* Consistent spacing for buttons */
+  }
+  
+  .mat-stepper {
+    margin-top: 1.5em; /* Add spacing for the stepper */
+  }
+  
+  .mat-toolbar img {
+    height: 40px; /* Consistent height for the logo */
+  }
+  
+  .mat-stepper-horizontal {
+    border-top: 1px solid #e0e0e0; /* Add border to separate steps */
+  }
+  
+  .mat-step-header {
+    padding: 1em; /* Spacing for step headers */
+  }
+  
+  .mat-step-header .mat-step-label {
+    font-weight: bold; /* Bold text for step labels */
+  }
+  
+  .mat-step-header .mat-step-icon {
+    background-color: #008080; /* Dark teal for step icons */
+  }
+  
+  .mat-divider {
+    margin: 1em 0; /* Consistent spacing for dividers */
+  }
+  
+  .button-container {
+    margin-top: 1em;
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+  }
+  
+  .mat-stepper-horizontal-line {
+    background-color: #d0d0d0; /* Light gray line between steps */
+  }
+  
+  .seeker {
+    width: 100px;
+    height: auto;
+    border-radius: 50%; /* Circular images for consistency */
+  }
+  
+  .heading {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold; /* Consistent font style for headings */
+  }
+  
+  h2 {
+    color: #008080; /* Dark teal for section headers */
+  }
+  
+  .mat-form-field .mat-label {
+    color: #008080; /* Consistent teal color for labels */
+  }
+  
+  .mat-select {
+    width: 100%; /* Ensure select fields are full-width */
+  }
+  
+  .page {
+    margin: 2em 0; /* Add vertical spacing to the main page */
+  }
+  
+  .mat-autocomplete {
+    background-color: #f9f9f9; /* Light background for autocomplete */
+  }
+  
+  .mat-icon {
+    color: #008080; /* Teal color for icons */
+  }
+  

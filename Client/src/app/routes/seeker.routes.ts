@@ -10,6 +10,7 @@ import { SeekerEditProfileComponent } from '../components/seeker-edit-profile/se
 import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup.component';
 import { Signup2Component } from '../components/signup2/signup2.component';
 import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
+import { SignUpSecondPageComponent } from '../components/sign-up-second-page/sign-up-second-page.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -23,5 +24,6 @@ export const routes: Routes = [
   { path: 'editProfile', component: SeekerEditProfileComponent},
   { path: 'signup', component: SeekerSignupComponent},
   { path: 'signup2', component: Signup2Component},
-  { path: 'profileView', component: SeekerProfileViewComponent}
+  { path: 'profileView', component: SeekerProfileViewComponent},
+  { path: 'signup-second-page', component: SignUpSecondPageComponent},
 ];
