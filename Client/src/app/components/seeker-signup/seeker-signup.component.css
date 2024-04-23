@@ -28,8 +28,9 @@
   }
 
   img {
-    display: inline-block;
+    display: inline-block;    
   }
+
   .right {
     flex: 1;
     padding: 10px;
@@ -40,6 +41,7 @@
     text-align: center;
     width: 30vw;
     height: auto;
+    padding-bottom: 50px;
 
     /* padding: 60px 100px 30px 100px; */
   }
@@ -47,8 +49,7 @@
   h2 {
     font-size: 30px;
     font-weight: 550;
-    font-family: "roboto";
-    align-items: center;
+    text-align: center;    
     font-style: italic;
   }
   
@@ -73,7 +74,7 @@
     box-shadow: 5px 5px 5px 5px rgba(0.2, 0.2, 0.2, 0.2);
     padding: 25px 25px 25px 25px;
     height:500px ;
-    width: auto;
+    width: 25vw;
     /* width: 500px;
     height: 525px; */
   }
