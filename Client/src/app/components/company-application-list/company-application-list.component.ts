@@ -19,6 +19,9 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SaNavBarComponent } from '../../nav-bars/sa-nav-bar/sa-nav-bar.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { retry } from 'rxjs';
 
 interface CompanyList {
   company_id: number;
@@ -42,6 +45,8 @@ interface CompanyList {
     CommonModule,
     SaNavBarComponent,
     MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './company-application-list.component.html',
   styleUrl: './company-application-list.component.css',
@@ -124,7 +129,6 @@ export class CompanyApplicationListComponent {
       });
   }
   filter(selected: any) {
-    //filter by status of the company list
     this.snackBar
       .open(
         'Refreshing table to show ' + selected.value + 'company list ',
@@ -138,5 +142,21 @@ export class CompanyApplicationListComponent {
 
   viewCompanyApplication(companyID: string) {
     this.route.navigate(['sa/company-application', companyID]);
+  }
+  getColor(status: string): string {
+    if (status === 'Registered') {
+      return 'registered';
+    } else if (status === 'Rejected') {
+      return 'rejected';
+    } else {
+      return 'pending';
+    }
+  }
+  displayToolTip(status: string) {
+    if (status === 'Evaluated') {
+      return 'click to review the application';
+    } else {
+      return 'click to evaluate the application';
+    }
   }
 }
