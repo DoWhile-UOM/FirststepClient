@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { AdvertisementActionsComponent } from '../advertisement-actions/advertisement-actions.component';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 interface Job {
   advertisement_id: number;
@@ -21,13 +22,15 @@ interface Job {
 @Component({
   selector: 'app-advertisement-card',
   standalone: true,
-  imports: [ MatCardModule, AdvertisementActionsComponent, MatButtonModule ],
+  imports: [ MatCardModule, AdvertisementActionsComponent, MatButtonModule, CommonModule ],
   templateUrl: './advertisement-card.component.html',
   styleUrl: './advertisement-card.component.css'
 })
 export class AdvertisementCardComponent implements OnInit{
   @Input() job!: Job;
   icon: string = 'bookmark_border'; 
+
+  page: string = 'applicationStatusTracking';
 
   constructor(private router: Router) { 
   }

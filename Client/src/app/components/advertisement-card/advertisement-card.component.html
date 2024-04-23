@@ -16,7 +16,7 @@
         </p>
     </div> 
     <div class="job-details-outer">
-        <app-advertisement-actions [jobID]="job.advertisement_id" [currentStatus]="job.is_saved"></app-advertisement-actions>
+        <app-advertisement-actions *ngIf="page == 'jobdetails'" [jobID]="job.advertisement_id" [currentStatus]="job.is_saved"></app-advertisement-actions>
         <div class="job-details-inner">
             <p class="post-date">Posted On {{job.posted_date}}</p>
             <button mat-button class="show-details" (click)="onClickMoreDetails()">More Details</button>
