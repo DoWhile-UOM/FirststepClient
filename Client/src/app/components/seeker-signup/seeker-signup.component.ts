@@ -22,6 +22,9 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { AddSkillsComponent } from "../add-skills/add-skills.component";
 import { SeekerService } from '../../../services/seeker.service';
 import axios, { AxiosError } from 'axios';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+
 
 
 interface SeekerData {
@@ -41,7 +44,7 @@ interface SeekerData {
     standalone: true,
     templateUrl: './seeker-signup.component.html',
     styleUrl: './seeker-signup.component.css',
-    imports: [FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatToolbar, FileUploadComponent, JobOfferListComponent, AddSkillsComponent]
+    imports: [FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatToolbar, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatSelectModule, MatOptionModule]
 })
 
 

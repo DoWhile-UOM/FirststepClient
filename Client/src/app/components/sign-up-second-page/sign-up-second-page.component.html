@@ -231,11 +231,15 @@
                 </mat-label>
                 <mat-form-field>
                   <mat-label>Field of Work</mat-label>
-                  <input
-                    matInput
-                    placeholder="Enter Field of Work"
+                  <mat-select
+                    [(ngModel)]="field_id"
                     name="field_name"
-                  />
+                    required
+                  >
+                    <mat-option *ngFor="let field of FIELD_OPTIONS" [value]="field.value">
+                      {{ field.viewValue }}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-label class="label-import" style="text-align: left">
                   Add your skills</mat-label
