@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import axios from 'axios';
 interface Company {
@@ -44,7 +43,7 @@ interface EvaluatedCompanyDetails {
   providedIn: 'root',
 })
 export class CompanyService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor() {}
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -61,9 +60,6 @@ export class CompanyService {
         }
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
       });
 
     console.log(companyDetails);
@@ -83,9 +79,6 @@ export class CompanyService {
           }
         })
         .catch((error) => {
-          this.snackBar.open('Network error occurred. Try Again', 'Close', {
-            duration: 3000,
-          });
         });
       return companyApplication;
     } catch (error) {
@@ -99,16 +92,8 @@ export class CompanyService {
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
-        this.snackBar
-          .open('Company details updated successfully', '', {
-            panelClass: ['app-notification-normal'],
-          })
-          ._dismissAfter(3000);
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
       });
   }
   async updateCompanyApplicationById(
@@ -122,16 +107,8 @@ export class CompanyService {
         evaluatedCompanyDetails
       )
       .then((response) => {
-        this.snackBar
-          .open('Company application was succcessfully evaluated', '', {
-            panelClass: ['app-notification-normal'],
-          })
-          ._dismissAfter(3000);
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
       });
   }
   async deleteAccount(companyId: number) {
@@ -141,14 +118,8 @@ export class CompanyService {
       .delete(Apipaths.deleteCompany + companyId)
       .then((res) => {
         response = res.data;
-        this.snackBar.open('Company account deleted successfully', 'Close', {
-          duration: 3000,
-        });
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
       });
 
     return response;
@@ -162,9 +133,6 @@ export class CompanyService {
       companyList = response.data;
       console.log('company list was received');
     } catch (error) {
-      this.snackBar.open('Network error occurred. Try Again', 'Close', {
-        duration: 3000,
-      });
     }
 
     return companyList;
