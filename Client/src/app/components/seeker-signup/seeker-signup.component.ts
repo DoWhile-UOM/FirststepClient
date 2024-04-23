@@ -24,18 +24,23 @@ import { SeekerService } from '../../../services/seeker.service';
 import axios, { AxiosError } from 'axios';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { JobfieldService } from '../../../services/jobfield.service';
 
-
+interface field {
+  field_name: string;
+  field_id: number;
+}
 
 interface SeekerData {
   first_name: string;
   last_name: string;
-  phone_number: string;
+  phone_number: number;
   email: string;
   university: string;
   linkedin: string;
   bio: string;
   description: string;
+  field_id: number;
 }
 
 
@@ -67,7 +72,7 @@ export class SeekerSignupComponent implements OnInit {
   fourthFormGroup: FormGroup;
   fifthFormGroup: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder, private seekerService: SeekerService) {
+  constructor(private _formBuilder: FormBuilder,private jobFieldService: JobfieldService, private seekerService: SeekerService) {
     this.firstFormGroup = this._formBuilder.group({
       first_name: [''],
       last_name: [''],
@@ -84,7 +89,7 @@ export class SeekerSignupComponent implements OnInit {
     });
 
     this.fourthFormGroup = this._formBuilder.group({
-      field_name: [''],
+      field_id: [''],
     });
 
     this.fifthFormGroup = this._formBuilder.group({
@@ -92,8 +97,17 @@ export class SeekerSignupComponent implements OnInit {
       description: [''],
     });
   }
+  
+  fields: field[] = [];
 
-  ngOnInit(): void {}
+
+  async ngOnInit() {
+    await this.jobFieldService.getAll().then((response) => {
+      this.fields = response;
+      console.log(this.fields);
+    });
+  }
+
 
   async submitForm() {
     const seekerData = {
@@ -103,15 +117,28 @@ export class SeekerSignupComponent implements OnInit {
       email: this.secondFormGroup.get('email')?.value,
       university: this.thirdFormGroup.get('university')?.value,
       linkedin: this.thirdFormGroup.get('linkedin')?.value,
+      field_id: this.fourthFormGroup.get('field_id')?.value,
       bio: this.fifthFormGroup.get('bio')?.value,
       description: this.fifthFormGroup.get('description')?.value,
     };
+    
 
     try {
-      const response = await this.seekerService.addseeker(seekerData);
-      console.log('Seeker added successfully:');
-    } catch (error) {
-      console.error('Error:', error);
+      const response = await axios.post('https://localhost:7213/api/Seeker/AddSeeker');
+      console.log('Seeker added successfully:', response.data);
+      return response.data;
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        // The server responded with a status other than 2xx.
+        console.error('Error data:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        console.error('Error headers:', error.response?.headers);
+      } else {
+        // The request was made but no response was received or an error occurred in setting up the request.
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
+      throw error;  // Re-throwing the error after logging (adjust based on how you want to handle failures)
     }
   }
 

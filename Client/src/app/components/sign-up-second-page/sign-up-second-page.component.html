@@ -163,9 +163,7 @@
             </div>
             <div class="right">
               <div class="form-container">
-                <mat-label class="heading"
-                  >Can we know your educational background ?</mat-label
-                >
+                <mat-label class="heading">Can we know your educational background ?</mat-label>
                 <mat-form-field>
                   <mat-label>University</mat-label>
                   <input
@@ -231,7 +229,7 @@
                 </mat-label>
                 <mat-form-field>
                   <mat-label>Field of Work</mat-label>
-                  <mat-select #selectField name="field_id" [(ngModel)]="field_id">
+                  <mat-select name="field_id" [(ngModel)]="field_id">
                   <mat-option *ngFor="let field of fields" [value]="field.field_id">{{field.field_name}}</mat-option>
                 
                     </mat-select>

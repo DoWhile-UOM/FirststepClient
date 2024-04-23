@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { MatToolbar } from '@angular/material/toolbar';
 import { NgForm } from '@angular/forms';
-import { OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
@@ -24,6 +23,9 @@ import axios, { AxiosError } from 'axios';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { JobfieldService } from '../../../services/jobfield.service';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { C } from '@angular/cdk/keycodes';
 
 interface Field {
   field_name: string;
@@ -64,7 +66,7 @@ interface Seeker {
     JobOfferListComponent,
     AddSkillsComponent,
     MatSelectModule,
-    MatOptionModule,
+    MatOptionModule,CommonModule
   ],
   templateUrl: './sign-up-second-page.component.html',
   styleUrl: './sign-up-second-page.component.css',

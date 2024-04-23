@@ -51,9 +51,9 @@
       <mat-form-field class="elem" appearance="outline">
         <mat-label>Field of Work</mat-label>
         <mat-select >
-          <mat-option value="1">Information Technology and Computer Science</mat-option>
-          <mat-option value="2">Engineering</mat-option>
-          <mat-option value="3">Business</mat-option>
+          @for (field of fields; track field) {
+            <mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
 

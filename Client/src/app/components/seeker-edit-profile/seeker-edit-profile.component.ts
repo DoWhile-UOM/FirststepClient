@@ -15,8 +15,10 @@ import { FormsModule } from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import {FormControl, Validators,ReactiveFormsModule} from '@angular/forms';
 import { SeekerService } from '../../../services/seeker.service';
 import { SkillService } from '../../../services/skill.service';
+import { JobfieldService } from '../../../services/jobfield.service';
 
 
 // seeker edit profile interface
@@ -37,6 +39,13 @@ interface Seeker {
   password_hash: string,
 
 }
+
+
+interface field {
+  field_name: string;
+  field_id: number;
+}
+
 
 
 @Component({
@@ -66,12 +75,18 @@ export class SeekerEditProfileComponent {
 
   seekerDetails: Seeker = {} as Seeker;
 
-  constructor(private seekerService: SeekerService) {}
+  constructor(private seekerService: SeekerService,private jobFieldService: JobfieldService ) {}
   user_id: number = 1089;
+
+  fields: field[] = [];
 
   async ngOnInit() {
     this.fetchSeekerDetails();
     //console.log(this.data);
+    await this.jobFieldService.getAll().then((response) => {
+      this.fields = response;
+      console.log(this.fields);
+    });
   }
   data(data: any) {
     throw new Error('Method not implemented.');

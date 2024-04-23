@@ -225,13 +225,18 @@
                 </mat-label>
                 <mat-form-field>
                   <mat-label>Field of Work</mat-label>
-                  <input matInput placeholder="Enter Field of Work" />
+                  <mat-select formControlName="field_id">
+                  <mat-option *ngFor="let field of fields" [value]="field.field_id">{{field.field_name}}</mat-option>
+                  @for (field of fields; track field) {
+                    <mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
+                  }
+                    </mat-select>
                 </mat-form-field>
                 <div class="skill-part">
                   <mat-label class="label-import">Add Your Skills</mat-label>
-                  <!-- <div class="skillchip">
+                   <div class="skillchip">
                     <app-add-skills></app-add-skills>
-                  </div> -->
+                  </div> 
                 </div>
                 <div>
                   <button
