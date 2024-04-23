@@ -157,10 +157,20 @@ export class SearchBasicComponent implements OnInit{
   }
 
   async search(data: SearchData){
-    this.spinner.show();
-
     data.country = this.locationCountryControl.value!;
     data.city = this.locationCityControl.value!;
+
+    // validate location
+    if (this.countries.indexOf(data.country) == -1){
+			this.snackBar.open("Input Error: Invalid Country", "", {panelClass: ['app-notification-error']});
+			return;
+		}
+		else if (this.cities.indexOf(data.city) == -1){
+			this.snackBar.open("Input Error: Invalid City", "", {panelClass: ['app-notification-error']});
+			return;
+		}
+
+    this.spinner.show();
     
     var response = await this.advertisementService.searchAdsBasicAlgo(this.seekerID, data, String(this.pageSize));
 
@@ -187,17 +197,6 @@ export class SearchBasicComponent implements OnInit{
     this.newItemEvent.emit(this.jobList);
 
     this.spinner.hide();
-  }
-
-  validateSelectedCountry(selectedCountry: string){
-    if (selectedCountry == undefined || selectedCountry == ''){
-      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
-      return;
-    }
-    else if (this.countries.indexOf(selectedCountry) == -1){
-      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
-      return;
-    }
   }
 
   onSelectedCountryChanged(selectedCountry: string){
