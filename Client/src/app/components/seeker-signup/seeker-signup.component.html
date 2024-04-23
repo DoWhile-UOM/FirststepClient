@@ -147,9 +147,11 @@
                   <mat-label>Field of Work</mat-label>
                   <input matInput placeholder="Enter Field of Work" />
                 </mat-form-field>
-                <mat-label style="font-size: 15px; font-weight: 500;">Add Your Skills</mat-label>
+                <div class="skill-part">
+                  <mat-label class="label-import">Add Your Skills</mat-label>
                 <div class="skillchip">
                   <app-add-skills></app-add-skills>
+                </div>
                 </div>
                 <div>
                   <button mat-button matStepperPrevious class="custom-stepper-button" style="color: #008080;">
@@ -178,7 +180,7 @@
             <div class="right">
               <div class="form-container">
                 <h3>Let's enter details for your profile</h3>
-                <mat-label style="font-size: 15px; font-weight: 500;">Profile Picture</mat-label>
+                <mat-label class="label-import">Profile Picture</mat-label>
                 <div class="left">
                   <img [src]="url" style="height: 100px; width: auto;" /><br />
                   <input type="file" (change)="onselectFile($event)" />
