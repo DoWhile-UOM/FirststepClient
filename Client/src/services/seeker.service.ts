@@ -20,4 +20,17 @@ async getSeekerDetails(id : number) {
   return seekerData;
 }
 
+async getSeekerDetailsForApplication(id : number) {
+  let seekerData: any;
+  
+  await axios.get(Apipaths.getSeekerDetailsForApplication  + id)
+    .then((response) => {
+      seekerData = response.data;
+    })
+    .catch (function (error) {
+      alert("Network Error: " + error);
+    });;
+
+  return seekerData;
+}
 }

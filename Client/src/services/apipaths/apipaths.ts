@@ -48,6 +48,7 @@ export class Apipaths {
 
     // seeker
     static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';
+    static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';

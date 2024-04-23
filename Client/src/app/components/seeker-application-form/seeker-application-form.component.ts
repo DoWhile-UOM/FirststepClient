@@ -40,7 +40,7 @@ export class SeekerApplicationFormComponent {
     async fetchEmployeeDetails() {
 
       try {
-        const seekerData = await this.seekerService.getSeekerDetails(this.user_id);
+        const seekerData = await this.seekerService.getSeekerDetailsForApplication(this.user_id);
         this.SeekerDetails = seekerData;
       } catch (error) {
         console.error('Error fetching seeker details:', error);
