@@ -10,7 +10,6 @@ h1 {
     width: 1000px;
     height: fit-content;
     border: 3px black;
-    border-radius: 25px;
     background: #fff;
     box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
     padding: 25px 25px 25px 25px;
