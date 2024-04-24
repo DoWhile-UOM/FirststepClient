@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -43,7 +43,7 @@ interface Seeker {
   password_hash: string,
   job_Field:any,
   job_field_name:string
-  //skills
+  seekerSkills: string[],
 }
 
 interface updateSeeker {
@@ -60,7 +60,7 @@ interface updateSeeker {
   field_id: string,
   user_id: number,
   password_hash: string,
-  skills: string[],
+  seekerSkills: string[],
   //other
   job_field: string[],
 }
@@ -102,6 +102,7 @@ export class SeekerEditProfileComponent {
 
   async ngOnInit() {
     await this.fetchSeekerDetails();
+
     //console.log(this.data);
     await this.jobFieldService.getAll().then((response) => {
       this.fields = response;
@@ -109,6 +110,9 @@ export class SeekerEditProfileComponent {
     });
     this.seekerDetails.job_field_name=this.fields[this.seekerDetails.field_id]['field_name'];
 
+  }
+  async ngAfterViewInit() {
+    this.skills = this.addSkillsComponent.skills;
   }
   data(data: any) {
     throw new Error('Method not implemented.');
@@ -122,6 +126,21 @@ export class SeekerEditProfileComponent {
       console.error('Error fetching seeker details:', error);
     }
   }
+
+  //skills
+
+  skills: string[] = [];
+	@ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
+
+  changeSkillsArray($event: Event){
+		var skills = $event;
+		if (skills != null){
+			this.skills = skills as unknown as string[];
+		}
+		alert("Skills: " + this.skills);
+	}
+
+
   //update
   async onApply() {
     try{    

@@ -51,16 +51,10 @@
       <mat-form-field class="elem" appearance="outline">
         <mat-label>Field of Work</mat-label>
 
-        <!--<mat-select >
-          <mat-option [value]=1>Test</mat-option>
+        <mat-select >
           @for (field of fields; track field) {
             <mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
           }
-        </mat-select>-->
-
-        <mat-select [(ngModel)]="seekerDetails.field_id">
-          <mat-option value="1">test</mat-option>
-          <mat-option value="2">test</mat-option>
         </mat-select>
 
       </mat-form-field>
@@ -83,7 +77,7 @@
 
     <!-- skills update -->
     <div class="skillchip">
-      <app-add-skills></app-add-skills>
+      <app-add-skills [hint]="''" [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
     </div>
 
     <br /><br />
