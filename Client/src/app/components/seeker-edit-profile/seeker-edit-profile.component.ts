@@ -22,6 +22,10 @@ import { JobfieldService } from '../../../services/jobfield.service';
 
 
 // seeker edit profile interface
+interface job_field {
+  field_name: string;
+  field_id: number;
+}
 
 interface Seeker {
   first_name: string;
@@ -34,15 +38,12 @@ interface Seeker {
   cVurl: string,
   profile_picture: string,
   linkedin: string,  
-  field_id: string,
+  field_id: any,
   user_id: number,
   password_hash: string,
+  job_Field:any,
+  job_field_name:string
   //skills
-}
-
-interface job_field {
-  field_name: string;
-  field_id: number;
 }
 
 interface updateSeeker {
@@ -100,12 +101,14 @@ export class SeekerEditProfileComponent {
   fields: job_field[] = [];
 
   async ngOnInit() {
-    this.fetchSeekerDetails();
+    await this.fetchSeekerDetails();
     //console.log(this.data);
     await this.jobFieldService.getAll().then((response) => {
       this.fields = response;
-      console.log(this.fields);
+      //console.log(this.fields);
     });
+    this.seekerDetails.job_field_name=this.fields[this.seekerDetails.field_id]['field_name'];
+
   }
   data(data: any) {
     throw new Error('Method not implemented.');

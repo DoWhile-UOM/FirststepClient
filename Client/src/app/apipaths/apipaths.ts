@@ -18,6 +18,9 @@ export class Apipaths {
     static readonly basicSearch: string = this.baseUrl + 'Advertisement/SearchAdvertisementsBasic/seekerID='; // + seeker_id
     static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'GetAdvertisementByIdWithKeywords/'; // + advertisement_id
 
+    // applications
+    static readonly getAllApplications: string = this.baseUrl + 'GetApplicationsByAdvertisementId/'; // + advertisement_id
+
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
 

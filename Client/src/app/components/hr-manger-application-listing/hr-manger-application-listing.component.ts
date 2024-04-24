@@ -23,6 +23,17 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
 import { MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { ApplicationService } from '../../../services/application.service';
+
+interface applicationListing {
+  application_Id:number;
+  status: string;
+  first_name: string;
+  last_name: string;
+}
+
+
+
 
 
 export interface PeriodicElement {
@@ -55,18 +66,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './hr-manger-application-listing.component.css'
 })
 export class HrMangerApplicationListingComponent {
+  advertisement_id: number = 1;//temp
+  applicationDetails: applicationListing = {} as applicationListing;
+
+
   //navbar
   selected: number = 3;
   colorList = ['black', 'back', 'black', 'black']
 
-  constructor() { }
+  constructor(private applicationService:ApplicationService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    //nav bar
     this.colorList.forEach(element => {
       element = 'black';
     });
     
     this.colorList[this.selected] = 'primary';
+
+    //table
+    await this.applicationService.getAllApplicationsbyAdvertisementID(this.advertisement_id).then((response) => {
+      this.applicationDetails = response;
+      console.log(this.applicationDetails);
+    });
   }
 
    //table
@@ -78,5 +100,10 @@ applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value;
   this.dataSource.filter = filterValue.trim().toLowerCase();
 }
+
+
+//new
+
+
 
 }
