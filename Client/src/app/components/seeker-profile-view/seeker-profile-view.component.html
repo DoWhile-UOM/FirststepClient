@@ -1,18 +1,18 @@
-<div class="upper-section">
 
+<div class="body">
+  <div class="upper-section">
     <button mat-button>
-    <mat-icon>keyboard_backspace</mat-icon>
+      <mat-icon>keyboard_backspace</mat-icon>
     </button>
-    
-    <div class="profileimage">
-    </div>
+  
+    <img src="assets/images/dp.png" alt="Profile Picture" class="profileimage">    
     <div class="info">
-        <h3>{{ seekerDetails.first_name }}</h3>
-        <label>{{ seekerDetails.bio }}</label>
-      </div>
+      <h3>{{ seekerDetails.first_name }} {{ seekerDetails.last_name }}</h3>      
+      <label>{{ seekerDetails.bio }}</label>
     </div>
-
-<div class="personalInfo">
+  </div>
+  
+  <div class="personalInfo">
     <div>
       <mat-label class="head">First Name</mat-label>
       <span>{{ seekerDetails.first_name }}</span>
@@ -49,16 +49,9 @@
     </div>
   
     <div>
-      <mat-label class="head">Skills</mat-label>
-      <!-- <span>{{ seekerDetails.skills }}</span> -->
-    </div>
-  
-    <div>
       <mat-label class="head">Description</mat-label>
       <span>{{ seekerDetails.description }}</span>
     </div>
   </div>
-
-
-
-
+  
+</div>

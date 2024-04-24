@@ -26,12 +26,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
 
 interface applicationListing {
-  application_Id:number;
+  application_Id: number;
   status: string;
-  first_name: string;
-  last_name: string;
+  submitted_date: Date;
+  advertisement_id: number;
+  advertisement: Advertisement; // assuming you have an Advertisement interface
+  seeker: Seeker; // assuming you have a Seeker interface
+  user_id: number;
 }
 
+interface Advertisement {
+  advertisement_id: number;
+}
+interface Seeker {
+  user_id: number;
+}
 
 
 
