@@ -7,8 +7,8 @@
   
     <img src="assets/images/dp.png" alt="Profile Picture" class="profileimage">    
     <div class="info">
-      <h3>{{ seekerDetails.first_name }} {{ seekerDetails.last_name }}</h3>      
-      <label>{{ seekerDetails.bio }}</label>
+      <label class="name"> {{seekerDetails.first_name }} {{ seekerDetails.last_name }}</label>     
+      <label class="bio">{{ seekerDetails.bio }}</label>
     </div>
   </div>
   
@@ -53,5 +53,12 @@
       <span>{{ seekerDetails.description }}</span>
     </div>
   </div>
+  <br>
+  
+  <div class="buttons">
+    <button mat-button class="Open" style="color: white;">Open CV</button>
+    <button mat-button class="Download" style="color: teal;">Download CV</button>
+  </div>
+  
   
 </div>

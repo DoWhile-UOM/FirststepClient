@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
 import { SeekerService } from '../../../services/seeker.service';
 import { MatToolbar } from '@angular/material/toolbar';
+import { MatButton } from '@angular/material/button';
 
 interface Seeker {
   first_name: string;
@@ -23,7 +24,7 @@ interface Seeker {
 @Component({
   selector: 'app-seeker-profile-view',
   standalone: true,
-  imports: [MatIconModule,MatButtonModule,MatLabel,MatToolbar],
+  imports: [MatIconModule,MatButtonModule,MatLabel,MatToolbar,MatButton],
   templateUrl: './seeker-profile-view.component.html',
   styleUrl: './seeker-profile-view.component.css'
 })

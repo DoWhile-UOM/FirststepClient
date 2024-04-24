@@ -11,7 +11,15 @@
     margin-top: 100px;
     font-family: "roboto";
 }
-
+.name{
+    font-size: 30px;
+    font-weight: 450;
+    margin-bottom: 10px;
+}
+.bio{
+    font-size: 20px;
+    margin-bottom: 10px;
+}
 .upper-section {
     display: flex;
     align-items: center;
@@ -27,7 +35,7 @@
     margin-left: 10px; /* adjust this value to increase or decrease the space */
     height: auto;
     width: 75px;
-    margin-right: 10px;
+    margin-right: 40px;
   }
   
   .info {
@@ -54,4 +62,20 @@
   
   span {
     text-align: left;
+  }
+  
+  .buttons{
+    margin-left: 80px;
+
+  }
+  .Open {
+    background-color: teal;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .Download {
+    background-color: white;
+    color: teal;
+    border: 3px solid teal;
   }
