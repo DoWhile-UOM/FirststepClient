@@ -62,7 +62,6 @@ export class RegisterCompanyComponent {
   remainingTime = 0;
   reqOTPbtntxt = "Request OTP";
   isFormVerified: boolean = false;
-  
 
 
   //form group for the stepper

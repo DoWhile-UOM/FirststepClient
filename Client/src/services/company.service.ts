@@ -3,6 +3,7 @@ import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 interface Company {
   company_id: number;
   company_name: string;
@@ -35,7 +36,7 @@ interface CompanyApplication {
   providedIn: 'root',
 })
 export class CompanyService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -90,7 +91,7 @@ export class CompanyService {
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
-        this.snackBar.open('Company details updated successfully', "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+        this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
         this.snackBar.open('Network error occurred. Try Again', 'Close', {
@@ -153,4 +154,26 @@ export class CompanyService {
   }
   */
   //Get company Registration state details---End
+  
+  CompanyRegister(companyObj:any){
+    return this.http.post<any>(Apipaths.registerCompany,companyObj)
+  }
+
+  //Registration company state view Start here
+  async getCompnayRegState(id: string) {
+    let cmpData: any;
+    try {
+      await axios.get(Apipaths.getCompanyRegState + id)
+        .then((response) => {
+          cmpData = response.data;
+          //console.log('Company Data:', cmpData);
+        });
+    }
+    catch (error) {
+      //console.error(error);
+    }
+
+    return cmpData;
+  }
+  //Registration company state view ends here
 }
