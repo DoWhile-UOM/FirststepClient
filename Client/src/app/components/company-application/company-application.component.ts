@@ -155,7 +155,6 @@ export class CompanyApplicationComponent implements OnInit {
       ) {
         this.evaluatedCompanyDetails.verified_system_admin_id =
           this.systemAdminID; // denotes that the company is evaluated
-
         this.evaluatedCompanyDetails.company_id =
           this.companyApplication.company_id;
         this.evaluatedCompanyDetails.verification_status =

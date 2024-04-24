@@ -49,6 +49,14 @@ interface BusinessScale {
   value: string;
 }
 
+interface requestOTP {
+  email: string ;
+}
+interface verifyOTP {
+  email: string ;
+  otp: string | null | undefined;
+}
+
 @Component({
   selector: 'app-company-profile-edit',
   standalone: true,
@@ -89,25 +97,24 @@ export class CompanyProfileEditComponent {
     { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
   ];
 
-  companyForm: FormGroup = new FormGroup({});
-
   errorMessageForCompanyName = '';
   errorMessageForDescription = '';
   errorMessageForWebsite = '';
   errorMessageForPhoneNumber = '';
   errorMessageForEmail = '';
-  emailControl = new FormControl('', [Validators.required, Validators.email]);
 
+  isEmailVerified: boolean = false;
+  isOTPRequsteSent: boolean = false;
+  reamingTime: number = 0;
+  reqOTPbtntext: string = 'Request OTP';
+  isFormVerified: boolean = false;
+  //commayForm
+  companyForm!: FormGroup;
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
-    private formBuilder: FormBuilder
-  ) {
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.emailErrorMessage());
-  }
+  ) {}
 
   async ngOnInit() {
     try {
@@ -126,11 +133,11 @@ export class CompanyProfileEditComponent {
   async onSubmit() {
     try {
       if (
-        this.company.company_name.length != 0 &&
-        this.company.company_description.length != 0 &&
-        this.company.company_website.length != 0 &&
-        this.company.company_phone_number.toString().length == 9 &&
-        this.email.hasError('email') != true
+        this.errorMessageForCompanyName == '' &&
+        this.errorMessageForDescription == '' &&
+        this.errorMessageForWebsite == '' &&
+        this.errorMessageForPhoneNumber == '' &&
+        this.errorMessageForEmail == ''
       ) {
         console.log('Company : ', this.company);
         this.spinner.show();
@@ -189,14 +196,16 @@ export class CompanyProfileEditComponent {
     }
   }
   phoneNumberErrorMessage() {
-    if (this.company.company_phone_number.toString().length == 0) {
+    let phoneNumberRegex = /^[0-9]{10}$/;
+    let testResult = phoneNumberRegex.test(this.company.company_phone_number.toString());
+    if (this.company.company_phone_number.toString().length == 0) { 
+      console.log('should print required');
       this.errorMessageForPhoneNumber = 'Phone number is required';
-    } else if (
-      this.company.company_phone_number.toString().length > 0 &&
-      this.company.company_phone_number.toString().length < 10
-    ) {
+    } else if (testResult == false) {
+      console.log('should print invalid');
       this.errorMessageForPhoneNumber = 'Phone number is invalid';
     } else {
+      console.log('should print empty');
       this.errorMessageForPhoneNumber = '';
     }
   }
@@ -215,13 +224,19 @@ export class CompanyProfileEditComponent {
   //   }
   // }
   emailErrorMessage() {
-    if (this.email.hasError('required')) {
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let testResult = emailRegex.test(this.company.company_email.toString());
+    if (this.company.company_email.length == 0) {
       this.errorMessageForEmail = 'Email is required.';
-    } else if (this.email.hasError('email')) {
+    } else if (testResult == false) {
+      console.log('should print ivalid');
       this.errorMessageForEmail = 'Email is invalid.';
+      console.log(this.errorMessageForEmail);
     } else {
+      console.log('should print empty');
       this.errorMessageForEmail = '';
     }
+    console.log(this.errorMessageForEmail);
   }
   // emailErrorMessage() {
   //   this.emailControl.setValue(this.company.company_email);

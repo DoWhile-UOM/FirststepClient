@@ -101,16 +101,14 @@
             <input
               matInput
               #email
+              type="email"
               placeholder="Enter your email"
               name="company_email"
               [(ngModel)]="company.company_email"
               (blur)="emailErrorMessage()"
-              [formControl]="emailControl"
               required
-            /> @if (emailControl.invalid) 
-            {<mat-error >{{
-              errorMessageForEmail
-            }}</mat-error>}
+            /> 
+            <mat-error >{{errorMessageForEmail}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>

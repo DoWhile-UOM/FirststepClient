@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
-
 import axios from 'axios';
+
 interface Company {
   company_id: number;
   company_name: string;
