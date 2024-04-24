@@ -5,6 +5,7 @@ import { NewJobComponent } from '../components/new-job/new-job.component';
 import { JobOfferListComponent } from '../components/job-offer-list/job-offer-list.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { HrAssistantApplicationListingComponent } from '../components/hr-assistant-application-listing/hr-assistant-application-listing.component';
+import { HrMangerApplicationListingComponent } from '../components/hr-manger-application-listing/hr-manger-application-listing.component';
 
 
 export const caRoutes: Routes = [
@@ -15,5 +16,6 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
   { path: 'adminDashboard', component: AdminDashboardComponent},
   { path: 'hrAssistantApplicationListing', component: HrAssistantApplicationListingComponent},
+  { path: 'hrMangerApplicationListing', component: HrMangerApplicationListingComponent}
 
 ];
