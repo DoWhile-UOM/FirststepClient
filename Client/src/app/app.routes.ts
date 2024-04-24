@@ -29,4 +29,5 @@ export const routes: Routes = [
   },
 
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
+  { path: 'notfound', component: PageNotFoundComponent}
 ];

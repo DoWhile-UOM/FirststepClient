@@ -1,5 +1,3 @@
-
-
 import { Component, Input, Inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
@@ -23,8 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule],
   template: `
     <mat-card class="emptymsg">
-    
-   <div class="pdf-viewer-container" *ngIf="pdfSrc !== 'Client/src/assets/cv.pdf'">
+      <div class="pdf-viewer-container" *ngIf="pdfSrc !== ''">
         <div class="pdf-header">
           <span class="title">
               <mat-icon class="icon">picture_as_pdf</mat-icon>
@@ -60,7 +57,7 @@ import { MatIconModule } from '@angular/material/icon';
         </ng-template>
       </div>
 
-      <div *ngIf="pdfSrc === 'Client/src/assets/cv.pdf'">
+      <div *ngIf="pdfSrc === ''">
         <img src="../../../assets/images/Document.png" class="empty-img">
         <p class="center-text">Something Went Wrong!</p>
         <p class="center-text">Can't Load Document</p>
@@ -218,7 +215,3 @@ export class PdfViewerComponent{
     });
   }
 }
-
-
-
-

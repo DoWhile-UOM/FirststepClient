@@ -23,6 +23,7 @@ export class DocumentService {
     try {
       const response = await blobClient.download(0, undefined, requestOptions);
       const blobContent = await response.blobBody;
+
       console.log('Blob downloaded successfully:', blobContent);
     } catch (error) {
       console.error('Error downloading blob:', error);

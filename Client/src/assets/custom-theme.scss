@@ -1,8 +1,33 @@
 @use '@angular/material' as mat;
 
+$teal-palette: (
+  50: #e0f2f1,
+  100: #b2dfdb,
+  200: #80cbc4,
+  300: #4db6ac,
+  400: #26a69a,
+  500: #009688,
+  600: #00897b,
+  700: #00796b,
+  800: #00695c,
+  900: #008080,
+ contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #FFFFFF,
+    500: #FFFFFF,
+    600: #FFFFFF,
+    700: #FFFFFF,
+    800: #FFFFFF,
+    900: #FFFFFF,
+  )
+);
+
 // Define the new primary and accent palettes
-$my-primary: mat.define-palette(mat.$teal-palette, 500);
-$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$my-primary: mat.define-palette($teal-palette, 900);
+$my-accent: mat.define-palette($teal-palette, 400);
 $my-second: mat.define-palette(mat.$grey-palette, A200, A100, A400);
 
 // Define the warn palette (optional)

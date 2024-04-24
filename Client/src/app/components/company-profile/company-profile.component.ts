@@ -6,7 +6,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { AdvertisementServices } from '../../../services/advertisement.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { DocumentService } from '../../../services/document.service';
 
 interface Job {
   advertisement_id: number;
@@ -20,6 +25,12 @@ interface Job {
   arrangement: string;
   posted_date: string;
   is_saved: boolean;
+  is_expired: boolean;
+}
+
+interface Ad_List{
+  firstPageAdvertisements: Job[];
+  allAdvertisementIds: number[];
 }
 
 interface Company{
@@ -29,7 +40,8 @@ interface Company{
   company_phone_number: string;
   company_email: string;
   company_website: string;
-  advertisementUnderCompany: Job[];
+  company_logo: string;
+  companyAdvertisements: Ad_List;
 }
 
 @Component({
@@ -41,32 +53,75 @@ interface Company{
     MatDividerModule, 
     MatGridListModule, 
     MatIconModule, 
-    CommonModule],
+    CommonModule,
+    MatPaginatorModule,
+    SpinnerComponent],
   templateUrl: './company-profile.component.html',
   styleUrl: './company-profile.component.css'
 })
 export class CompanyProfileComponent {
   company: Company = {} as Company;
   jobList: Job[] = [];
+  jobIdList: number[] = [];
 
-  seekerID: number = 3; // sample seekerID
+  seekerID: number = 0;
 
-  constructor(private advertisementService: AdvertisementServices, private router: ActivatedRoute) { }
+  constructor(
+    private advertisementService: AdvertisementServices, 
+    private documentService: DocumentService,
+    private a_router: ActivatedRoute, 
+    private router: Router, 
+    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,) { 
+
+  }
+
+  paginatorLength = 10;
+  pageSize = 5;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 15];
 
   async ngOnInit(){
-    //alert(this.company_id);
-    let company_id: string = this.router.snapshot.paramMap.get('company_id') ?? '';
+    this.spinner.show();
+
+    try {
+      var seekerID = String(sessionStorage.getItem('user_id'));
+      var user_type = String(sessionStorage.getItem('user_type'));
+
+      if (this.seekerID == null && user_type != 'seeker'){
+        this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+        // navigate to 404 page
+        this.router.navigate(['/notfound']);
+        // code to signout
+        return;
+      }
+
+      this.seekerID = Number(seekerID);
+    } catch (error) {
+      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+      // navigate to 404 page
+      this.router.navigate(['/notfound']);
+      // code to signout
+      return;
+    }
+
+    let company_id: string = this.a_router.snapshot.paramMap.get('company_id') ?? '';
 
     if (company_id == '') {
       alert("Invalid company");
       return;
     }
 
-    this.advertisementService.getCompanyProfile(company_id, String(this.seekerID))
+    await this.advertisementService.getCompanyProfile(company_id, String(this.seekerID), String(this.pageSize))
       .then((response) => {
         this.company = response;
 
-        this.jobList = this.company.advertisementUnderCompany;
+        this.jobList = this.company.companyAdvertisements.firstPageAdvertisements;
+        this.jobIdList = this.company.companyAdvertisements.allAdvertisementIds;
+
+        //this.jobList = this.company.advertisementUnderCompany;
 
         if (this.jobList.length == 0) {
           // no advertisements found under the company id
@@ -75,6 +130,32 @@ export class CompanyProfileComponent {
         }
       });
 
+    this.spinner.hide();
+
+    //this.documentService.downloadBlob(this.company.company_logo);
+  }
+
+  async handlePageEvent(e: PageEvent) {
+    this.spinner.show();
+
+    this.pageSize = e.pageSize;
+    this.pageIndex = e.pageIndex;
+
+    let startIndex = this.pageIndex * this.pageSize;
+    let endIndex = startIndex + this.pageSize;
+
+    this.jobList = 
+      await this.advertisementService
+        .getAllAdvertisementsWithPaginator(String(this.seekerID), this.jobIdList.slice(startIndex, endIndex));
+
+    // scroll to the top of the page
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
+    this.spinner.hide();
   }
 
   goBack() {

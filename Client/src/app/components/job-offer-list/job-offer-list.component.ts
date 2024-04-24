@@ -68,7 +68,7 @@ export class JobOfferListComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
-  company_id: string = "7";
+  company_id: string = '';
 
   jobList: JobOffer[] = [];
   selectedFilter: string = 'active';
@@ -134,6 +134,16 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   ngAfterViewInit() {
+    // get the compnay id from the session storage
+    try {
+      this.company_id = sessionStorage.getItem('companyId') || '';
+    } catch (error) {
+      //console.log(error); //raises the error
+      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+      this.router.navigate(['/notfound']);
+      return;
+    }
+
     this.refreshTable(this.selectedFilter, "");
   }
 
@@ -225,11 +235,15 @@ export class ConfirmDialog {
   async onYesClick() {
     if (this.dialogtitle == "Close") {
       await this.advertisementService.closeAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      this.snackBar.open(this.title + " job offer successfully closed!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
     else if (this.dialogtitle == "Activate") {
       await this.advertisementService.activateAdvertisement(this.id.toString());
       this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+    }
+    else if (this.dialogtitle == "Delete") {
+      await this.advertisementService.deleteAdvertisement(this.id.toString());
+      this.snackBar.open(this.title + " job successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
 
     this.dialogRef.close();

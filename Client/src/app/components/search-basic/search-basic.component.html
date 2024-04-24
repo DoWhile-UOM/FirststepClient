@@ -1,63 +1,124 @@
 <mat-card class="search-card mat-elevation-4z">
-    <form class="container" #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
-        <mat-form-field appearance="outline" class="search-element title">
-            <mat-label>Job Title</mat-label>
-            <input matInput placeholder="Placeholder" name="title" ngModel>
-        </mat-form-field>
-    
-        <mat-form-field appearance="outline" class="search-element">
-            <mat-label>Country</mat-label>
-            <input type="text"
-                placeholder="Pick a Country"
-                aria-label="Country"
-                matInput #countryInput
-                [formControl]="locationCountryControl"
-                [matAutocomplete]="autocountry" (change)="onSelectedCountryChanged(countryInput.value)">
-            <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete">
-            @for (option of locationCountryFilteredOptions | async; track option) {
-                <mat-option [value]="option">{{option}}</mat-option>
-            }
-            </mat-autocomplete>
-        </mat-form-field>
-    
-        <mat-form-field appearance="outline" class="search-element">
-            <mat-label>City</mat-label>
-            <input type="text"
-                placeholder="Pick a City"
-                aria-label="City"
-                matInput
-                [formControl]="locationCityControl"
-                [matAutocomplete]="autocity">
-            <mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
-            @for (option of locationCityFilteredOptions | async; track option) {
-                <mat-option [value]="option">{{option}}</mat-option>
-            }
-            </mat-autocomplete>
-        </mat-form-field>
-    
-        <mat-form-field appearance="outline" class="search-element">
-            <mat-label>Employment Type</mat-label>
-            <mat-select name="employeement_type" ngModel>
-                @for (emptype of empTypes; track emptype) {
-                    <mat-option [value]="emptype">{{emptype}}</mat-option>
+    <form #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
+        <div class="container">
+            <mat-form-field appearance="outline" class="search-element title">
+                <mat-label>Job Title</mat-label>
+                <mat-icon matPrefix color="primary">
+                    <i class="fa-solid fa-person-walking"></i>
+                </mat-icon>
+                <input matInput placeholder="What do you looking for..." name="title" ngModel>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="search-element location">
+                <mat-label>Country</mat-label>
+                <mat-icon matPrefix color="primary">
+                    <i class="fa-solid fa-earth-americas"></i>
+                </mat-icon>
+                <input type="text"
+                    placeholder="Pick a Country"
+                    aria-label="Country"
+                    matInput #countryInput
+                    [formControl]="locationCountryControl"
+                    [matAutocomplete]="autocountry" (change)="validateSelectedCountry(countryInput.value)">
+                <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
+                @for (option of locationCountryFilteredOptions | async; track option) {
+                    <mat-option [value]="option">{{option}}</mat-option>
                 }
-            </mat-select>
-        </mat-form-field>
-    
-        <mat-form-field appearance="outline" class="search-element">
-            <mat-label>Job Arrangement</mat-label>
-            <mat-select name="arrangement" ngModel>
-                @for (arrangement of jobArrangement; track arrangement) {
-                    <mat-option [value]="arrangement">{{arrangement}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    
-        <div class="searchBtn">
-            <button mat-icon-button color="primary">
-                <mat-icon>search</mat-icon>
-            </button>    
-        </div>
+                </mat-autocomplete>
+            </mat-form-field>
         
+            <mat-form-field appearance="outline" class="search-element location">
+                <mat-label>City</mat-label>
+                <mat-icon matPrefix color="primary">
+                    <i class="fa-solid fa-location-dot"></i>
+                </mat-icon>
+                <input type="text"
+                    placeholder="Pick a City"
+                    aria-label="City"
+                    matInput
+                    [formControl]="locationCityControl"
+                    [matAutocomplete]="autocity">
+                <mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
+                @for (option of locationCityFilteredOptions | async; track option) {
+                    <mat-option [value]="option">{{option}}</mat-option>
+                }
+                </mat-autocomplete>
+            </mat-form-field>
+        
+            <div class="searchBtn">
+                <button mat-icon-button type="submit" color="primary">
+                    <mat-icon>search</mat-icon>
+                </button> 
+            </div>
+        </div>
+
+        <mat-accordion>
+            <mat-expansion-panel class="mat-elevation-z1">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>All Filters</mat-panel-title>
+                    <!--
+                    <mat-panel-description>
+                        <mat-chip-set>
+                            <mat-chip *ngFor="let filter of filters">{{filter}}</mat-chip>
+                        </mat-chip-set>
+                    </mat-panel-description>
+                    -->
+                </mat-expansion-panel-header>
+
+                <div class="advance-search-section">
+                    <div class="advance-search-field" style="width: 55%;">
+                        <span class="advance-search-title">
+                            <mat-icon>
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </mat-icon>
+                            <p class="advance-search-field-name">Employeement Type</p>
+                        </span>
+                        <mat-chip-listbox name="employeement_type" aria-label="employeement_type" ngModel multiple>
+                            @for (emptype of empTypes; track emptype) {
+                                <mat-chip-option color="accent" [value]="emptype">{{emptype}}</mat-chip-option>
+                            }
+                        </mat-chip-listbox>
+                    </div>
+        
+                    <div class="advance-search-field" style="width: 25%;">
+                        <span class="advance-search-title">
+                            <mat-icon>
+                                <i class="fa-solid fa-briefcase"></i>
+                            </mat-icon>
+                            <p class="advance-search-field-name">Job Arrangement</p>
+                        </span>
+                        <mat-chip-listbox name="arrangement" aria-label="arrangement" ngModel multiple>
+                            @for (arrangement of jobArrangement; track arrangement) {
+                                <mat-chip-option color="accent" [value]="arrangement">{{arrangement}}</mat-chip-option>
+                            }
+                        </mat-chip-listbox>
+                    </div>
+        
+                    <div class="advance-search-field" style="width: 20%;">
+                        <span class="advance-search-title">
+                            <mat-icon>
+                                <i class="fa-solid fa-map-location"></i>
+                            </mat-icon>
+                            <p class="advance-search-field-name">Travel From {{locationCityControl.value?.trim() == "" ? 'City' : locationCityControl.value }}</p>
+                        </span>
+                        <span class="distance-content">
+                            <mat-slider
+                                max="110"
+                                min="0"
+                                step="10"
+                                showTickMarks
+                                discrete
+                                [displayWith]="distanceStepper">
+                                <input matSliderThumb [(ngModel)]="distance" name="distance" #slider>
+                            </mat-slider>
+                            <h2>{{distanceStepper(distance)}}</h2>
+                        </span>
+                    </div>
+                </div>
+
+                
+            </mat-expansion-panel>
+        </mat-accordion>
     </form>
 </mat-card>
+<app-spinner></app-spinner>

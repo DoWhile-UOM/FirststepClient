@@ -47,3 +47,19 @@
 <div class="adcard-container">
     <app-advertisement-card *ngFor="let job of jobList" [job]="job"></app-advertisement-card>
 </div>
+
+<div *ngIf="paginatorLength >= 5" class="paginator">
+    <mat-paginator 
+        #paginator
+        class="demo-paginator"
+        (page)="handlePageEvent($event)"
+        [length]="paginatorLength"
+        [pageSize]="pageSize"
+        [showFirstLastButtons]="true"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        aria-label="Select page">
+    </mat-paginator>
+</div>
+
+<app-spinner></app-spinner>

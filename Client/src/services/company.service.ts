@@ -71,9 +71,6 @@ export class CompanyService {
           console.log('No company application found for the given id');
         }
       });
-    // .then((response) => {
-    //   companyApplication = response.data;
-    // })
   }
 
   // async updateCompanyDetails(company: Company) {
@@ -101,6 +98,7 @@ export class CompanyService {
         });
       });
   }
+
   async deleteAccount(companyId: number) {
     let response: any;
 

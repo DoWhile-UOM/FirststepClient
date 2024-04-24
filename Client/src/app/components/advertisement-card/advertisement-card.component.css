@@ -12,12 +12,6 @@
     flex-direction: column;
 }
 
-.job-details-outer{
-    display: flex;
-    width: 25%;
-    flex-direction: column;
-}
-
 .job-details-inner{
     display: flex;
     flex-direction: row;
@@ -51,15 +45,8 @@
 .job-field {
     color: black; 
     font-family: Lato;
-    margin-top: 1.75em;
-}
-
-.job-details-section{
-    color: black; 
-    font-family: Lato;
-    font-size: 18px;
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
+    font-weight: 700;
+    margin-top: 1em;
 }
 
 .post-date{
@@ -68,4 +55,54 @@
     font-size: 15px;
     margin-top: 1em;
     margin-right: 5em;
+}
+
+.job-details-outer{
+    display: flex;
+    width: 30%;
+    height: 1em;
+    flex-direction: column;
+}
+
+.job-summery-outer{
+    display: flex;
+    width: 20%;
+    height: 1em;
+    flex-direction: column;
+
+}
+
+.job-details-section{
+    color: black; 
+    font-family: Lato;
+    font-size: 20px;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: row;
+}
+
+mat-icon {
+    font-size: 20px;
+}
+
+.summery-detail-text{
+    font-weight: bolder;
+    margin-left: 0.5em;
+}
+
+.title-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.title{
+    display: flex;
+    flex-direction: column;
+    padding-left: 2em;
+}
+
+.title-container img{
+    width: 80px; 
+    height: 80px;
 }
