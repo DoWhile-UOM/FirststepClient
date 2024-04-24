@@ -25,6 +25,8 @@ import axios, { AxiosError } from 'axios';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { JobfieldService } from '../../../services/jobfield.service';
+import { C, S } from '@angular/cdk/keycodes';
+import { profile } from 'console';
 
 interface field {
   field_name: string;
@@ -41,6 +43,10 @@ interface SeekerData {
   bio: string;
   description: string;
   field_id: number;
+  cVurl: string;
+  password_hash: string;
+  profile_picture: string;
+  seekerSkills: string [];
 }
 
 
@@ -55,6 +61,7 @@ interface SeekerData {
 
 export class SeekerSignupComponent implements OnInit {
   url = './assets/images/SeekerEdit.jpg';
+  password_hash = 'password';
 
   onselectFile(event: any) {
     if (event.target.files && event.target.files.length > 0) {
@@ -86,15 +93,18 @@ export class SeekerSignupComponent implements OnInit {
     this.thirdFormGroup = this._formBuilder.group({
       university: [''],
       linkedin: [''],
+      CVurl: [''],
     });
 
     this.fourthFormGroup = this._formBuilder.group({
       field_id: [''],
+      seekerSkills: [''],
     });
 
     this.fifthFormGroup = this._formBuilder.group({
       bio: [''],
       description: [''],
+      profile_picture: [''],
     });
   }
   
@@ -111,15 +121,19 @@ export class SeekerSignupComponent implements OnInit {
 
   async submitForm() {
     const seekerData = {
+
       first_name: this.firstFormGroup.get('first_name')?.value,
       last_name: this.firstFormGroup.get('last_name')?.value,
       phone_number: this.firstFormGroup.get('phone_number')?.value,
       email: this.secondFormGroup.get('email')?.value,
       university: this.thirdFormGroup.get('university')?.value,
       linkedin: this.thirdFormGroup.get('linkedin')?.value,
+      cVurl: this.thirdFormGroup.get('CVurl')?.value,
       field_id: this.fourthFormGroup.get('field_id')?.value,
+      seekerSkills: this.fourthFormGroup.get('seekerSkills')?.value,
       bio: this.fifthFormGroup.get('bio')?.value,
       description: this.fifthFormGroup.get('description')?.value,
+      profile_picture: this.fifthFormGroup.get('profile_picture')?.value,
     };
     
 

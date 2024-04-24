@@ -34,17 +34,36 @@ interface Seeker {
   cVurl: string,
   profile_picture: string,
   linkedin: string,  
-  field_name: string,
+  field_id: string,
   user_id: number,
   password_hash: string,
-
+  //skills
 }
 
-
-interface field {
+interface job_field {
   field_name: string;
   field_id: number;
 }
+
+interface updateSeeker {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: number,
+  bio: string,
+  description: string,
+  university: string,
+  cVurl: string,
+  profile_picture: string,
+  linkedin: string,  
+  field_id: string,
+  user_id: number,
+  password_hash: string,
+  skills: string[],
+  //other
+  job_field: string[],
+}
+
 
 
 
@@ -78,7 +97,7 @@ export class SeekerEditProfileComponent {
   constructor(private seekerService: SeekerService,private jobFieldService: JobfieldService ) {}
   user_id: number = 1089;
 
-  fields: field[] = [];
+  fields: job_field[] = [];
 
   async ngOnInit() {
     this.fetchSeekerDetails();
