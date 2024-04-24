@@ -12,43 +12,22 @@
 </mat-toolbar> 
 
 <div class="container">
-  <div class="up-container">
-    <div class="left">
-      <h2 style="font-weight: 650; font-size: 30px; font-style : 'Times New Roman'; ">ASP.NET Developer</h2>
-      <div class="no" style="color: teal;  font-size: 15px; font-weight: 800;">Job Number : 2752669</div> <br>
-      <div class="field"  style=" font-size: 15px; font-weight: 500;">Information Technology and Computer Science</div>
+   <section class="table-container">
+
+    <div class="page-title">
+        <p>Applicant List</p>
+        <div class="pagetitle-content">
+            <span>
+            <mat-chip-listbox aria-label="Filter" #filterByStatus >
+                <mat-chip-option value="estatus">Evaluation Status</mat-chip-option>
+                <mat-chip-option selected value="astatus">Application status</mat-chip-option>
+                <mat-chip-option value="assigned">Assigned</mat-chip-option>
+            </mat-chip-listbox>
+            </span>
+        </div>
     </div>
-    <div class="right">
-      <div class="assigned" >
-        <mat-label style="align-items: center;">  <mat-icon class="large-icon" style="color: teal; ">assignment_turned_in</mat-icon> <br> Assigned<br> <div class="num" style="align-items: center;" >85</div>  </mat-label>
-      </div>
-      <div class="assigned">
-        <mat-label style="align-items: center;">  <mat-icon class="large-icon" style="color: teal; ">assignment_late</mat-icon> <br> Not Evaluated<br> <div class="num" style="align-items: center;">69</div>  </mat-label>
 
-      </div>
-      <div class="assigned">
-        <mat-label style="align-items: center;">  <mat-icon class="large-icon" style="color: teal; ">check_circle</mat-icon> <br> Selected<br> <div class="num" style="align-items: center;">16</div>  </mat-label>
 
-      </div>
-    </div>
-  </div>
-  <section></section>
-  <br >
-  <br >
-
-  <section class="table-container">
-
-    <h2 style="font-weight: 500; font-size: 25px; color: teal; ">Applicant List</h2>
-
-    <mat-form-field>
-      <mat-label style="color: gray">Search</mat-label>
-      <input
-        matInput
-        (keyup)="applyFilter($event)"
-        placeholder="Ex. Software"
-        #input
-      />
-    </mat-form-field>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <!-- id Column -->
@@ -100,7 +79,6 @@
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell" colspan="1">
-          No data matching the filter "{{ input.value }}"
         </td>
       </tr>
     </table>

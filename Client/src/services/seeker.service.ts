@@ -30,7 +30,7 @@ export class SeekerService {
         .put('https://localhost:7213/api/Seeker/UpdateSeeker/' + seekerID, seeker)
         .then((response) => {
           console.log(response);
-        });
+        });console.log("seeker updated successfully");
     } catch (error) {
       console.error(error);
     }
