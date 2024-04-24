@@ -154,10 +154,28 @@ export class CompanyService {
   }
   */
   //Get company Registration state details---End
-  
-  CompanyRegister(companyObj:any){
-    return this.http.post<any>(Apipaths.registerCompany,companyObj)
+
+
+  CompanyRegister(companyObj: any) {
+    let action: boolean = false;
+    axios.post(Apipaths.registerCompany, companyObj)
+      .then(function (response) {
+        console.log(response.status);
+        if (response.status == 200) {
+          action = true;
+        }
+      })
+      .catch(
+        (error) => {
+          console.log("Error Occured" + error);
+        }
+      );
+    return action;
   }
+
+
+
+
 
   //Registration company state view Start here
   async getCompnayRegState(id: string) {

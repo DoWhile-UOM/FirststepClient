@@ -152,16 +152,15 @@ export class RegisterCompanyComponent {
 
       return;
     } else {
-      this.company.CompanyRegister(this.companyReg.value)
-        .subscribe({
-          next: (res) => {
-            console.log(res)
-          },
-          error: (err) => {
-            alert(err.message)
-            console.log(err)
-          }
-        });
+
+      let verificationResult = this.company.CompanyRegister(this.companyReg.value);
+
+      if (verificationResult == true) {
+        this.isEmailVerified = true;
+        this.snackbar.open("Company Registration Application Sent successfully", "", { duration: 2000 });
+      } else {
+        this.snackbar.open("An error Occured"+verificationResult, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      }
     }
 
 
