@@ -21,7 +21,6 @@ import { SkillService } from '../../../services/skill.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 
 
-// seeker edit profile interface
 interface job_field {
   field_name: string;
   field_id: number;
@@ -96,17 +95,14 @@ export class SeekerEditProfileComponent {
   seekerDetails: Seeker = {} as Seeker;
 
   constructor(private seekerService: SeekerService,private jobFieldService: JobfieldService ) {}
-  user_id: number = 1089;
+  user_id: number = 2095;
 
   fields: job_field[] = [];
 
   async ngOnInit() {
     await this.fetchSeekerDetails();
-
-    //console.log(this.data);
     await this.jobFieldService.getAll().then((response) => {
       this.fields = response;
-      //console.log(this.fields);
     });
     this.seekerDetails.job_field_name=this.fields[this.seekerDetails.field_id]['field_name'];
 
@@ -117,6 +113,7 @@ export class SeekerEditProfileComponent {
   data(data: any) {
     throw new Error('Method not implemented.');
   }
+
   //get
   async fetchSeekerDetails() {
     try {
@@ -156,7 +153,7 @@ export class SeekerEditProfileComponent {
     try{
        await this.seekerService.deleteseeker(this.user_id)
        .then(() => {
-        this.seekerDetails = {} as Seeker; // This effectively clears the form.
+        this.seekerDetails = {} as Seeker; 
     })
     }
     catch(error){

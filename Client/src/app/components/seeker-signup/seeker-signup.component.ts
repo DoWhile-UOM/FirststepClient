@@ -25,8 +25,7 @@ import axios, { AxiosError } from 'axios';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { JobfieldService } from '../../../services/jobfield.service';
-import { C, S } from '@angular/cdk/keycodes';
-import { profile } from 'console';
+
 
 interface field {
   field_name: string;
@@ -143,16 +142,14 @@ export class SeekerSignupComponent implements OnInit {
       return response.data;
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
-        // The server responded with a status other than 2xx.
         console.error('Error data:', error.response?.data);
         console.error('Error status:', error.response?.status);
         console.error('Error headers:', error.response?.headers);
       } else {
-        // The request was made but no response was received or an error occurred in setting up the request.
         console.error('Error message:', error.message);
       }
       console.error('Error config:', error.config);
-      throw error;  // Re-throwing the error after logging (adjust based on how you want to handle failures)
+      throw error
     }
   }
 

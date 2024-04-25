@@ -14,8 +14,6 @@ interface Seeker {
   bio: string,
   description: string,
   university: string,
-  //cVurl: string,
-  //profile_picture: string,
   linkedin: string,  
   field_name: string,
   user_id: number
@@ -33,11 +31,10 @@ export class SeekerProfileViewComponent {
   seekerDetails: Seeker = {} as Seeker;
 
   constructor(private seekerService: SeekerService) {}
-  user_id: number = 1089;
+  user_id: number = 2095;
 
   async ngOnInit() {
     this.fetchSeekerDetails();
-    //console.log(this.data);
   }
 
   //get

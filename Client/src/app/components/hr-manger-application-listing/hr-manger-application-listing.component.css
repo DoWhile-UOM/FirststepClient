@@ -94,30 +94,11 @@
     margin-right: 0.5em;
     width: 18em;
   }
-  
-  .search-box{
-    margin-right: 5em;
-    display: flex;
-    flex-direction: row;
-  }
+
   
   .add-new-button{
     display: flex;
     flex-direction: row;
-  }
-  
-  .search::placeholder {
-    color: #888; 
-  }
-  
-  .search:focus {
-    border-color: #008080; 
-    width: 25em;
-  }
-  
-  .search:hover{
-    border-color: #008080;
-    width: 25em;
   }
   
   .small-icon-button {

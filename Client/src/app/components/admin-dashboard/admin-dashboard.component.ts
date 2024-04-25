@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router'; 
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { MatListModule } from '@angular/material/list';
-//import * as CanvasJS from 'canvasjs'; // Assuming CanvasJS is a default export
+import { CaNavBarComponent } from "../ca-nav-bar/ca-nav-bar.component";
 
 export interface PeriodicElement {
   title: string;
@@ -39,11 +39,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-admin-dashboard',
-  standalone: true,
-  imports: [MatSidenavModule, MatIconModule, MatInputModule, MatSelectModule, MatMenuModule, MatGridListModule, MatTableModule, MatFormFieldModule, CommonModule, CanvasJSAngularChartsModule, MatListModule],
-  templateUrl: './admin-dashboard.component.html',
-  styleUrl: './admin-dashboard.component.css'
+    selector: 'app-admin-dashboard',
+    standalone: true,
+    templateUrl: './admin-dashboard.component.html',
+    styleUrl: './admin-dashboard.component.css',
+    imports: [MatSidenavModule, MatIconModule, MatInputModule, MatSelectModule, MatMenuModule, MatGridListModule, MatTableModule, MatFormFieldModule, CommonModule, CanvasJSAngularChartsModule, MatListModule, CaNavBarComponent]
 })
 export class AdminDashboardComponent {
   
