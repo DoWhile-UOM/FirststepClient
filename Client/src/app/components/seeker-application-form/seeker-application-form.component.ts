@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FileDownloadComponent } from "../file-download/file-download.component";
 import { Router } from '@angular/router';
+import { ApplicationService } from '../../../services/application.service';
 
 
 interface Seeker{
@@ -30,7 +31,7 @@ interface Seeker{
 export class SeekerApplicationFormComponent {
     SeekerDetails: Seeker = {} as Seeker;
     useDefaultCV: boolean = false; 
-    constructor(private seekerService:SeekerService, private router: Router) {}
+    constructor(private seekerService:SeekerService,private applicationService:ApplicationService, private router: Router) {}
     user_id: number = 2;
     
     async ngOnInit() {
@@ -47,13 +48,24 @@ export class SeekerApplicationFormComponent {
        
       }
    
-
 }
 
-onSubmitForm(){
+toggleDefaultCV() {
+  this.useDefaultCV = !this.useDefaultCV;
+}
+
+async onSubmitForm(){
+  const applicationData = {
+    application_Id: 1,
+    status: 'string',
+    submitted_date: new Date().toISOString(),
+    advertisement_id: 1,
+    user_id: 2};
+  await this.applicationService.submitSeekerApplication(applicationData);
   this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
 }
 }
+
 
 
    

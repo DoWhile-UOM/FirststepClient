@@ -67,6 +67,9 @@ interface SearchData{
   styleUrl: './search-basic.component.css'
 })
 export class SearchBasicComponent implements OnInit{
+validateSelectedCountry(arg0: string) {
+throw new Error('Method not implemented.');
+}
   @Input() pageSize: number = 10;
   
   jobList: any = [];

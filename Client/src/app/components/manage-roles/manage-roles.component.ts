@@ -21,7 +21,7 @@ import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 import { MatInputModule } from '@angular/material/input';
-import { ConfirmDialog } from '../job-offer-list/job-offer-list.component';
+
 
 export interface RolesData {
   id: number;
@@ -105,17 +105,9 @@ export class ManageRolesComponent {
   }
  
   removeData(id: number): void {
-    const dialogRef = this.dialog.open(ConfirmDialog, {
-      data: {id: id},
-    });
+  
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.table.renderRows();
-      this.fetchData(this.selected);
-    });
-
-  /*this.employeeService
+  this.employeeService
       .deleteEmployee(id)
       .then(() => {
         this.rolesData = this.rolesData.filter(
@@ -126,7 +118,7 @@ export class ManageRolesComponent {
       })
       .catch((error) => {
         console.error('Error deleting data:', error);
-      });*/
+      });
     }
     
   
@@ -155,31 +147,6 @@ export class ManageRolesComponent {
     }
   }
 
-  @Component({
-    selector: 'confirm-dialog',
-    templateUrl: 'confirm.html',
-    standalone: true,
-    imports: [
-      MatInputModule,
-      MatButtonModule,
-      MatDialogTitle,
-      MatDialogContent,
-      MatDialogActions,
-      MatDialogClose,
-    ],
-  })
-  export class DialogOverviewExampleDialog {
-    constructor(
-      public dialogRef: MatDialogRef<ConfirmDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: RolesData,
-    ) {}
-  
-    Clickcancel(): void {
-      this.dialogRef.close();
-    }
 
-    Clickdelete(): void {
-      this.dialogRef.close();
-    }
-  }  
+
   

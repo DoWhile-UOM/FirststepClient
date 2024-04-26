@@ -46,6 +46,7 @@ interface Employee {
   ],
 })
 export class AddrolesPopupComponent {
+  hide=true;
   employee: Employee = {} as Employee;
   selectedRole: string = 'HRM';
   constructor(private employeeService: EmployeeService, private _snackBar: MatSnackBar) {}

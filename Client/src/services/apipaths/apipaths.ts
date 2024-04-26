@@ -1,4 +1,10 @@
 export class Apipaths {
+    static requestOTP(requestOTP: any, userData: any) {
+      throw new Error('Method not implemented.');
+    }
+    static verifyOTP(verifyOTP: any, userData: any) {
+      throw new Error('Method not implemented.');
+    }
     static readonly baseUrl: string = 'https://localhost:7213/api/';
     
     // employee
@@ -61,4 +67,7 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
+
+    //application
+    static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
 }
