@@ -14,18 +14,28 @@
         <div>phone number</div>
         <div>Linkedin</div>
         <div>CV</div>
-        <div classs="doc">Other Documents</div>
+        <div class="doc">Other Documents</div>
       </div>
       <div class="fieldSection">
-        <div>Nethma</div><!--{{SeekerDetails.first_name}}-->
-        <div>Karunathilaka</div>
-        <div>Nethmakarunathilagmail.com</div>
-        <div>0711253134</div>
-        <div>https://www.linkedin.com/in/nethma-karunathilaka</div>
+       <div>{{SeekerDetails.first_name}}</div>
+        <div>{{SeekerDetails.last_name}}</div>
+        <div>{{SeekerDetails.email}}</div>
+        <div>{{SeekerDetails.phone_number}}</div>
+        <div>{{SeekerDetails.linkedin}}</div><!--change in backend-->
+        <div class="document">
+            <div *ngIf="!useDefaultCV">
+            <app-file-upload></app-file-upload>
+          </div>
+          <div *ngIf="useDefaultCV"><app-file-download></app-file-download></div>
+        <br>
+          <mat-checkbox color="primary"  [(ngModel)]="useDefaultCV"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
+        </div>
         <div><app-file-upload></app-file-upload></div>
-        <div><app-file-upload></app-file-upload></div>
-        <div><button mat-raised-button color="primary">Submit Form</button></div> 
+        <div><button mat-raised-button color="primary" (click)="onSubmitForm()">Submit Form</button></div> 
     </div>
+    
     </div>
   </mat-card-content>
 </mat-card>
+
+

@@ -6,9 +6,11 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-
+import {Inject} from '@angular/core';
 import {
   MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -18,6 +20,8 @@ import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.compone
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
+import { MatInputModule } from '@angular/material/input';
+import { ConfirmDialog } from '../job-offer-list/job-offer-list.component';
 
 export interface RolesData {
   id: number;
@@ -88,21 +92,30 @@ export class ManageRolesComponent {
     
     if (dataSet.length > 0){
       this.rolesData = dataSet.map((item, index) => ({
-        id: item.user_id, // Use user_id
+        id: item.user_id, 
         position: index + 1, // Increment position
         name: `${item.first_name} ${item.last_name}`, 
         email:item.email,
-        Role: (item.user_type) == 'HRA' ? 'HR Assistant': 'HR Manager', // Use user_type
+        Role: (item.user_type) == 'HRA' ? 'HR Assistant': 'HR Manager',
       }));
     }
     else{
       this.rolesData = [];
     }
   }
-  //end of fetch data
  
   removeData(id: number): void {
-    this.employeeService
+    const dialogRef = this.dialog.open(ConfirmDialog, {
+      data: {id: id},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.table.renderRows();
+      this.fetchData(this.selected);
+    });
+
+  /*this.employeeService
       .deleteEmployee(id)
       .then(() => {
         this.rolesData = this.rolesData.filter(
@@ -113,9 +126,10 @@ export class ManageRolesComponent {
       })
       .catch((error) => {
         console.error('Error deleting data:', error);
-      });
+      });*/
     }
-
+    
+  
     openDialog(){
       const dialog=this.dialog.open(AddrolesPopupComponent); 
       dialog.afterClosed().subscribe(result => {
@@ -140,4 +154,32 @@ export class ManageRolesComponent {
       await this.fetchData(selected.value);
     }
   }
+
+  @Component({
+    selector: 'confirm-dialog',
+    templateUrl: 'confirm.html',
+    standalone: true,
+    imports: [
+      MatInputModule,
+      MatButtonModule,
+      MatDialogTitle,
+      MatDialogContent,
+      MatDialogActions,
+      MatDialogClose,
+    ],
+  })
+  export class DialogOverviewExampleDialog {
+    constructor(
+      public dialogRef: MatDialogRef<ConfirmDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: RolesData,
+    ) {}
+  
+    Clickcancel(): void {
+      this.dialogRef.close();
+    }
+
+    Clickdelete(): void {
+      this.dialogRef.close();
+    }
+  }  
   

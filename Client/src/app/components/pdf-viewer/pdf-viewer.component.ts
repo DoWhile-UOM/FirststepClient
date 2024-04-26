@@ -195,9 +195,9 @@ class PdfViewerDialog {
 @Component({
   selector: 'app-pdf-viewer',
   standalone: true,
-  imports: [],
+  imports: [MatIconModule],
   template: `
-    <button mat-raised-button (click)="openDialog()">Open PDF</button>
+    <button mat-raised-button (click)="openDialog()"><mat-icon class="uploadicon" >open_in_new</mat-icon> </button>
   `,
   styles: ``
 })
