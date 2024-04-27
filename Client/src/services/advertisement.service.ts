@@ -243,7 +243,7 @@ export class AdvertisementServices {
       return response;
     }
 
-    await axios.put(Apipaths.changeStatusOfJob + jobID + "/status=" + status)
+    await axios.patch(Apipaths.changeStatusOfJob + jobID + "/status=" + status)
       .then(function (res) {
         response = res;
       })
@@ -280,7 +280,7 @@ export class AdvertisementServices {
   async saveAdvertisement(jobID: string, seekerID: string, isSave: boolean) {
     let response: any = null;
 
-    await axios.put(Apipaths.saveJob + jobID + "/save=" + isSave + "/seekerId=" + seekerID)
+    await axios.patch(Apipaths.saveJob + jobID + "/save=" + isSave + "/seekerId=" + seekerID)
       .then(function (res) {
         response = res;
       })
