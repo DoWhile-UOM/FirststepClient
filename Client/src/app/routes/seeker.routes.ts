@@ -8,8 +8,8 @@ import { SeekerApplicationFormComponent } from '../components/seeker-application
 import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 import { SeekerApplicationStatusComponent } from '../components/seeker-application-status/seeker-application-status.component';
 import { SeekerSubmitedApplicationsComponent } from '../components/seeker-submited-applications/seeker-submited-applications.component';
-import { AdvertisementCardComponent } from '../components/advertisement-card/advertisement-card.component';
-import { AdvertisementCardReviewComponent } from '../components/advertisement-card-review/advertisement-card-review.component';
+
+
 
 
 export const routes: Routes = [
@@ -22,6 +22,6 @@ export const routes: Routes = [
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
   { path: 'home/submitedApplications', component:SeekerSubmitedApplicationsComponent},
   { path: 'home/applicationReview', component:SeekerApplicationStatusComponent },
-  {path: 'advertismentcardReview',component:AdvertisementCardReviewComponent}
+
   
 ];

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdvertisementCardComponent } from "../advertisement-card/advertisement-card.component";
 
 
 @Component({
@@ -6,7 +7,7 @@ import { Component } from '@angular/core';
     standalone: true,
     templateUrl: './seeker-submited-applications.component.html',
     styleUrl: './seeker-submited-applications.component.css',
-    imports: []
+    imports: [AdvertisementCardComponent]
 })
 export class SeekerSubmitedApplicationsComponent {
 

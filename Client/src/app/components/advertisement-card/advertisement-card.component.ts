@@ -30,7 +30,21 @@ interface Job {
   styleUrl: './advertisement-card.component.css'
 })
 export class AdvertisementCardComponent implements OnInit{
-  @Input() job!: Job;
+  @Input() job={
+      company_id: 1234,
+      title: 'Software Engineer',
+      company_name: 'Bistech Solutions',
+      field_name: 'Technology',
+      employeement_type: 'Full Time',
+      arrangement: 'Remote',
+      country: 'USA',
+      city: 'California',
+      advertisement_id: 1234,
+      is_saved: false,
+      is_expired: false,
+      posted_date: '2024-04-28'
+    
+  };
   icon: string = 'bookmark_border'; 
 
   constructor(private router: Router, private jobDetailsDialog: MatDialog) { 
