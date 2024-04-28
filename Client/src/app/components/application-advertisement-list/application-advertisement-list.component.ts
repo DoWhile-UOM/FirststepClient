@@ -17,8 +17,8 @@ interface Job {
   employeement_type: string;
   arrangement: string;
   posted_date: string;
-  is_saved: boolean;
-  is_expired: boolean;
+  application_id: number;
+  application_status: string;
 }
 
 @Component({
@@ -41,7 +41,7 @@ export class ApplicationAdvertisementListComponent {
   async ngOnInit(){
     this.spinner.show();
 
-    await this.advertisementService.getSavedAdvertisements(String(this.seekerID))
+    await this.advertisementService.getAppliedAdvertisements(String(this.seekerID))
       .then((response) => {
         this.jobList = response;
 

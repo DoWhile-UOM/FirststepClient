@@ -22,7 +22,6 @@ export class AdvertisementActionsComponent {
   @Input() applicationStatus: string = 'accepted';
 
   icon: string = 'bookmark_border'; // bookmark
-  statusClass = '.status-chip-accepted';
   isApplicationPage: boolean = false;
 
   seekerId: number = 0; 
@@ -65,18 +64,6 @@ export class AdvertisementActionsComponent {
 
     if (this.router.url == '/seeker/applied'){
       this.isApplicationPage = true;
-
-      switch (this.applicationStatus) {
-        case 'accepted':
-          this.statusClass = '.status-chip-accepted';
-          break;
-        case 'rejected':
-          this.statusClass = '.status-chip-rejected';
-          break;
-        case 'pending':
-          this.statusClass = '.status-chip-pending';
-          break;
-      }
     }
   }
 
