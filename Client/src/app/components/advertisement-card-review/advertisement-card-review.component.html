@@ -3,23 +3,23 @@
         <div class="title-container">
             <img class="company-logo" src="../../../assets/BistechLogo.png" alt="Company Logo">
             <div class="title">
-                <mat-card-title class="job-title">{{job.title}}</mat-card-title>
-                <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{job.company_name}}</mat-card-subtitle>
+                <mat-card-title class="job-title"><!--{{job.title}}--></mat-card-title>
+                <mat-card-subtitle class="company-name" (click)="onClickCompanyName()"><!--{{job.company_name}}--></mat-card-subtitle>
             </div>
         </div>
-        <p class="job-field">{{job.field_name}}</p>
+        <p class="job-field"><!--{{job.field_name}}--></p>
     </div>
     <div class="job-summery-outer">
         <p class="job-details-section">
-           <mat-icon>work</mat-icon>
+           <!--<mat-icon>work</mat-icon>--> <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="work"></mat-icon>
             <span class="summery-detail-text">{{job.employeement_type}}</span>
         </p>
         <p class="job-details-section">
-            <mat-icon>home</mat-icon>
+            <!--<mat-icon>home</mat-icon>--><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
             <span class="summery-detail-text">{{job.arrangement}}</span>
         </p>
         <p class="job-details-section">
-             <mat-icon>location_on</mat-icon>
+             <!--<mat-icon>location_on</mat-icon>--><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="location_on"></mat-icon>
             <span class="summery-detail-text">{{job.country}}, {{job.city}}</span>
         </p>
     </div> 
@@ -31,7 +31,3 @@
         </div>
     </div>
 </mat-card>
-
-
-
-  

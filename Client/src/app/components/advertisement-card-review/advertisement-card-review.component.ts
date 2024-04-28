@@ -1,3 +1,4 @@
+
 import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { AdvertisementActionsComponent } from '../advertisement-actions/advertisement-actions.component';
@@ -23,13 +24,13 @@ interface Job {
 }
 
 @Component({
-  selector: 'app-advertisement-card',
+  selector: 'app-advertisement-card-review',
   standalone: true,
-  imports: [ MatCardModule, AdvertisementActionsComponent, MatButtonModule, MatIconModule ],
-  templateUrl: './advertisement-card.component.html',
-  styleUrl: './advertisement-card.component.css'
+  imports: [MatCardModule, AdvertisementActionsComponent, MatButtonModule, MatIconModule],
+  templateUrl: './advertisement-card-review.component.html',
+  styleUrl: './advertisement-card-review.component.css'
 })
-export class AdvertisementCardComponent implements OnInit{
+export class AdvertisementCardReviewComponent  implements OnInit{
   @Input() job!: Job;
   icon: string = 'bookmark_border'; 
 
