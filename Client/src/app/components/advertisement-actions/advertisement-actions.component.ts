@@ -77,8 +77,6 @@ export class AdvertisementActionsComponent {
           this.statusClass = '.status-chip-pending';
           break;
       }
-
-      alert(this.statusClass);
     }
   }
 
