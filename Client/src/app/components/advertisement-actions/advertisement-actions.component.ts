@@ -5,11 +5,13 @@ import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
+import { CommonModule } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-advertisement-actions',
   standalone: true,
-  imports: [ MatButtonModule, MatIconModule, MatBadgeModule],
+  imports: [ MatButtonModule, MatIconModule, MatBadgeModule, CommonModule, MatChipsModule],
   templateUrl: './advertisement-actions.component.html',
   styleUrl: './advertisement-actions.component.css'
 })
@@ -17,8 +19,11 @@ export class AdvertisementActionsComponent {
   @Input() currentStatus: boolean = false;
   @Input() expired: boolean = false;
   @Input() jobID: number = 0;
+  @Input() applicationStatus: string = 'accepted';
 
   icon: string = 'bookmark_border'; // bookmark
+  statusClass = '.status-chip-accepted';
+  isApplicationPage: boolean = false;
 
   seekerId: number = 0; 
 
@@ -57,6 +62,24 @@ export class AdvertisementActionsComponent {
     else{
       this.icon = 'bookmark_border';
     }
+
+    if (this.router.url == '/seeker/applied'){
+      this.isApplicationPage = true;
+
+      switch (this.applicationStatus) {
+        case 'accepted':
+          this.statusClass = '.status-chip-accepted';
+          break;
+        case 'rejected':
+          this.statusClass = '.status-chip-rejected';
+          break;
+        case 'pending':
+          this.statusClass = '.status-chip-pending';
+          break;
+      }
+
+      alert(this.statusClass);
+    }
   }
 
   async saveAdvertisement(){
@@ -72,7 +95,7 @@ export class AdvertisementActionsComponent {
     this.snackbar.open("Unsaved job...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
     this.currentStatus = false;
 
-    if (this.router.url == '/home/saved'){
+    if (this.router.url == '/seeker/saved'){
       window.location.reload();
     }
   }

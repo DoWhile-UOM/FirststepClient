@@ -9,3 +9,19 @@
 .save-button{
     margin-right: 1em;
 }
+
+.status-chip{
+    margin-right: 2em;
+}
+
+.status-chip-accepted{
+    background-color: green !important;
+}
+
+.status-chip-rejected{
+    background-color: red !important;
+}
+
+.status-chip-pending{
+    background-color: orange !important;
+}

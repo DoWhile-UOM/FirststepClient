@@ -19,13 +19,13 @@ interface Job {
 }
 
 @Component({
-  selector: 'app-saved-advertisement-list',
+  selector: 'app-application-advertisement-list',
   standalone: true,
   imports: [AdvertisementCardComponent, CommonModule],
-  templateUrl: './saved-advertisement-list.component.html',
-  styleUrl: './saved-advertisement-list.component.css'
+  templateUrl: './application-advertisement-list.component.html',
+  styleUrl: './application-advertisement-list.component.css'
 })
-export class SavedAdvertisementListComponent {
+export class ApplicationAdvertisementListComponent {
   jobList: Job[] = [];
 
   seekerID: number = 3; // sample seekerID

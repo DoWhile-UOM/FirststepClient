@@ -1,10 +1,13 @@
 <div class="job-actions">
-    <button mat-button class="save-button" (click)="(currentStatus) ? unsaveAdvertisement() : saveAdvertisement()">
+    <button mat-button *ngIf="!isApplicationPage" class="save-button" (click)="(currentStatus) ? unsaveAdvertisement() : saveAdvertisement()">
         <mat-icon color="primary">{{icon}}</mat-icon>
         {{(currentStatus) ? 'Saved' : 'Save'}}
     </button>
 
+    <mat-chip *ngIf="isApplicationPage" class="status-chip {{statusClass}}" color="primary">{{applicationStatus}}</mat-chip>
+
     <button
+        *ngIf="!isApplicationPage"
         mat-raised-button 
         class="apply-button"
         color="primary"
@@ -13,4 +16,11 @@
         [disabled]="expired"
         disabledInteractive
         title="Quickly Apply to the Job">Apply</button>
+
+    <button
+        *ngIf="isApplicationPage"
+        mat-raised-button 
+        class="apply-button"
+        color="primary"
+        title="Track the applicatin status">View Status</button>
 </div>
