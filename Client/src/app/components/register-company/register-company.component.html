@@ -1,108 +1,119 @@
+<div class="body">
 
+    <mat-card class="card">
+        <!--Top Section-->
+        <mat-grid-list cols="6" rowHeight="140">
+            <mat-grid-tile [colspan]="1">
 
-<div class="page">
-  <section class="navbar"></section>
-  <div class="form-popup" id="myForm">
-    <mat-stepper labelPosition="bottom" #stepper color="primary">
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2">
+                <span class="sectionHeading heading title">
+                    <h2>Company Registration Status</h2>
+                </span>
+            </mat-grid-tile>
+        </mat-grid-list>
 
-      <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-          <ng-template matStepLabel style="width: 100px;"></ng-template>
+        <mat-divider></mat-divider>
 
-          <div class="up-container">
-            <a>Ashan</a>
-            <div class="left">
-              <img src="\assets\images\signup1.png" alt="Seeker" class="seeker" />
-              <h2 style="padding-left: 70px; padding-top: 40px;">Find Your Future With FirstStep </h2>
+        <div class="stateBar">
+            <div class="container">
+                <div class="circle-box">
+                    <a>Application Submission</a>
+                    <div class="circle">
+                        <div class="checkmark"></div>
+                    </div>
+                    <a>Dec 15, 2023</a>
+                </div>
+                <hr>
+                <div class="circle-box">
+                    <a>Application Screening</a>
+                    <div class="circle-red">
+                        <div class="number-two">2</div>
+                    </div>
+                    <a>Rejected</a>
+                </div>
             </div>
+        </div>
 
-            <div class="right">
+        <mat-divider></mat-divider>
+        
+        <mat-grid-list cols="1" rowHeight="100">
+            <mat-grid-tile [colspan]="1">
 
-              <h3>Create your FirstStep Account</h3>
-              <mat-form-field>
-                <mat-label>Company Name</mat-label>
-                <input matInput placeholder="Enter First name" formControlName="fName" required />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Company Web site</mat-label>
-                <input matInput placeholder="Enter Last name" formControlName="lName" required />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Email Address</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="email" required />
-              </mat-form-field>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Comment</mat-label>
+                    <input disabled matInput type="text" class="form-control"
+                    value={{cmpData.comment}} >
 
-              <mat-form-field>
-                <mat-label>OTP</mat-label>
-                <input matInput placeholder="Enter OTP" formControlName="otp" required />
-              </mat-form-field>
+                </mat-form-field>
 
-              <mat-form-field>
-                <mat-label>Contact Number</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="pNumber" required />
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperNext class="custom-stepper1-button"
-                  style="color: white; margin-left: 20px;">Next</button>
-              </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-divider></mat-divider>
+
+        <!--Company Details-->
+        <mat-grid-list cols="1" rowHeight="100">
+            <mat-grid-tile>
+
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Company Name</mat-label>
+                    <input matInput placeholder="Your input here" type="text" class="form-control"
+                        value={{cmpData.company_name}} id="companyName" name="companyName" required>
+                </mat-form-field>
 
 
-            </div>
-          </div>
+            </mat-grid-tile>
 
 
-        </form>
+            <mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>URL of the Website</mat-label>
+                    <input matInput placeholder="Your input here" type="url" class="form-control"
+                        value={{cmpData.company_website}} id="websiteUrl" name="websiteUrl" required>
+                </mat-form-field>
+            </mat-grid-tile>
 
-      </mat-step>
+            <mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Email Address</mat-label>
+                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                        value={{cmpData.company_email}} id="emailAddress" name="emailAddress" required>
+                </mat-form-field>
+            </mat-grid-tile>
 
-      <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-          <ng-template matStepLabel style="width: 100px;"></ng-template>
+            <!--company phone number-->
+            <mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Contact No</mat-label>
+                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                        value={{cmpData.company_phone_number}} id="emailAddress" name="emailAddress" required>
+                </mat-form-field>
+            </mat-grid-tile>
 
-          <div class="up-container">
-            <a>Ashan</a>
-            <div class="left">
-              <img src="\assets\images\signup1.png" alt="Seeker" class="seeker" />
-              <h2 style="padding-left: 70px; padding-top: 40px;">Find Your Future With FirstStep </h2>
-            </div>
+            <mat-grid-tile>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Company Logo</mat-label>
+                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                        value={{cmpData.company_logo}} id="emailAddress" name="emailAddress" required>
+                </mat-form-field>
+            </mat-grid-tile>
 
-            <div class="right">
+        </mat-grid-list>
 
-              <h3>Create your FirstStep Account</h3>
-              <mat-form-field>
-                <mat-label>Business Scale</mat-label>
-                <input matInput placeholder="Enter First name" formControlName="businessScl" required />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Default Location</mat-label>
-                <input matInput placeholder="Enter Last name" formControlName="location" required />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Description</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="des" required />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Company Logo</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="logo" required />
+        <mat-divider></mat-divider>
+        <div>
+            <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
+                <mat-grid-tile style="width: 20%">
+                    <button mat-raised-button class="apply-button" color="primary" style="width: 50%">
+                        Approve
+                    </button>
+                </mat-grid-tile>
 
-                <input type="file" (change)="onFileSelected($event)">
-                <button (click)="uploadFile()">Upload File</button>
+            </mat-grid-list>
+        </div>
 
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperNext class="custom-stepper1-button"
-                  style="color: white; margin-left: 20px;">Register</button>
-              </div>
+        <!--Approved or Rejected button -->
 
-
-            </div>
-          </div>
-
-
-        </form>
-
-      </mat-step>
-
-    </mat-stepper>
-  </div>
+    </mat-card>
 </div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seeker-application-form-confirm',
@@ -9,5 +10,9 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './seeker-application-form-confirm.component.css'
 })
 export class SeekerApplicationFormConfirmComponent {
+  constructor(private router: Router) {}
 
+  viewapplication(){
+    this.router.navigate(['seeker/home/applicationReview']);
+  }
 }

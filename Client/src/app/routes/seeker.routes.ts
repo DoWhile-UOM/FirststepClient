@@ -6,8 +6,8 @@ import { SavedAdvertisementListComponent } from '../components/saved-advertiseme
 import { ApplicationAdvertisementListComponent } from '../components/application-advertisement-list/application-advertisement-list.component';
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
-
-
+import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
+import { SeekerApplicationStatusComponent } from '../components/seeker-application-status/seeker-application-status.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,5 +17,7 @@ export const routes: Routes = [
   { path: 'applied', component: ApplicationAdvertisementListComponent },
   { path: 'home/company-profile', component: CompanyProfileComponent },
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
-  { path: 'home/applicationFormconfirm', component: SeekerApplicationFormComponent },
+  { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
+  { path: 'home/applicationReview', component:SeekerApplicationStatusComponent}
+  
 ];
