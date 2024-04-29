@@ -1,4 +1,4 @@
-<app-nav-bar *ngIf="user == 'seeker'"></app-nav-bar>
-<app-ca-nav-bar *ngIf="user == 'ca'"></app-ca-nav-bar>
+<app-nav-bar *ngIf="url.includes('/seeker')"></app-nav-bar>
+<app-ca-nav-bar *ngIf="url.includes('/ca')"></app-ca-nav-bar>
 
 <router-outlet></router-outlet>
