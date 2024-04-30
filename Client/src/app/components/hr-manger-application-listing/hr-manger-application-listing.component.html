@@ -35,7 +35,7 @@
 
     <!-- name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>name</th>
+      <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let element">{{ element.name }}</td>
     </ng-container>
 
@@ -63,7 +63,7 @@
 
     <!-- Assigned Column -->
     <ng-container matColumnDef="assigned">
-      <th mat-header-cell *matHeaderCellDef></th>
+      <th mat-header-cell *matHeaderCellDef>Assigned to</th>
       <td mat-cell *matCellDef="let element">{{ element.assigned }}</td>
     </ng-container>
 
@@ -75,7 +75,7 @@
       </ng-container>
   
 
-    <!-- Actions Column -->
+    <!-- Actions Column
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
@@ -84,7 +84,7 @@
         <mat-icon class="icons">deleteicon</mat-icon>
 
     </td>
-    </ng-container>
+    </ng-container> -->
 
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
