@@ -5,8 +5,13 @@
     margin-bottom: 0.5em;
   }
 
+  .num ,.field {
+    font-size: 15px;
+    font-weight: 550;
+  }
+
   .page{
-    margin: 3em 10em 10em 10em;
+    margin: 6em 10em 10em 10em;
     position: relative;
   }
   
@@ -18,7 +23,7 @@
   
   .pagetitle-content{
     margin-top: 2em;
-    margin-left: 2em;
+    margin-left: 4.5em;
     width: 97.5%;
     display: flex;
     flex-direction: row;
@@ -67,4 +72,7 @@
     margin-right: 10px; /* adjust this value to increase or decrease the space */
 
   }
-  
+  button:hover {
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+  }
