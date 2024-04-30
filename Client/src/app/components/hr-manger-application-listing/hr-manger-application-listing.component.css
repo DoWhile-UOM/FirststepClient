@@ -6,14 +6,11 @@
   }
 
   .page{
-    margin: 10em 10em 10em 10em;
+    margin: 3em 10em 10em 10em;
+    position: relative;
   }
   
-  .page-title{
-    margin-top: 4em;
-  }
-  
-  .page-title p{
+  p{
     color: #008080;
     font-family: Lato;
     font-size: 30px;
@@ -21,10 +18,30 @@
   
   .pagetitle-content{
     margin-top: 2em;
+    margin-left: 2em;
     width: 97.5%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 10px; /* adjust this value to increase or decrease the space */
+
+  }
+
+  .job-title {
+    display: flex;
+    align-items: center;
+  }
+
+  .job-title-content{
+    display: flex;
+    flex-direction: column;
+  }
+  .mat-chip-listbox {
+    display: flex;
+    flex-direction: row;
+  }
+  .num,.field {
+    color: black;
   }
   
     
@@ -39,6 +56,15 @@
     color: #008080;
     padding: auto;
     width: 10em;
+
+  }
+
+  
+  button.mat-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-right: 10px; /* adjust this value to increase or decrease the space */
 
   }
   
