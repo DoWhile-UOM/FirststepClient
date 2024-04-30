@@ -25,47 +25,13 @@ import { MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
 
-interface applicationListing {
+export interface HRManagerApplicationListDto {
   application_Id: number;
+  seekerName: string;
   status: string;
+  is_evaluated: boolean;
   submitted_date: Date;
-  advertisement_id: number;
-  advertisement: Advertisement; // assuming you have an Advertisement interface
-  seeker: Seeker; // assuming you have a Seeker interface
-  user_id: number;
 }
-
-interface Advertisement {
-  advertisement_id: number;
-}
-interface Seeker {
-  user_id: number;
-}
-
-
-
-
-export interface PeriodicElement {
-  id: number;
-  name: string;
-  dropdownOptions: string[];  
-  status: string;
-  assigned: string;
-  review: string;
-  
-
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, name: 'Lakmina Gamage', dropdownOptions: ['Yes', 'No','Pending..'], status: 'Selected',assigned:'Gayuni Basnayake', review: 'Review Again'} ,
-  {id: 2, name: 'Dimuth Asalanka', dropdownOptions: ['Yes', 'No','Pending..'], status: '',assigned:'Gayuni Basnayake', review: 'Evaluate'},
-  {id: 3, name: 'Dineth Wellalagamage', dropdownOptions: ['Yes', 'No','Pending..'], status: 'Passed',assigned:'Gayuni Basnayake', review: 'Review Again'}, 
-  
-];
-
-
-
 
 @Component({
   selector: 'app-hr-manger-application-listing',
@@ -75,15 +41,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './hr-manger-application-listing.component.css'
 })
 export class HrMangerApplicationListingComponent {
-  advertisement_id: number = 1;//temp
-  applicationDetails: applicationListing = {} as applicationListing;
-
-
   //navbar
   selected: number = 3;
   colorList = ['black', 'back', 'black', 'black']
 
-  constructor(private applicationService:ApplicationService) { }
+  //Table
+  
+  displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated', 'submitted_date'];
+  dataSource!: MatTableDataSource<HRManagerApplicationListDto>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+
+  job_id: number = 1;//temp
+
+  applications: HRManagerApplicationListDto[] = [];
+  selectedFilter: string = 'assigned';
+  applicationsLength: number = 0;
+
+
+
+  constructor(private applicationService:ApplicationService) {
+    this.applicationsLength=1;
+   }
 
   async ngOnInit() {
     //nav bar
@@ -94,16 +74,16 @@ export class HrMangerApplicationListingComponent {
     this.colorList[this.selected] = 'primary';
 
     //table
-    await this.applicationService.getAllApplicationsbyAdvertisementID(this.advertisement_id).then((response) => {
-      this.applicationDetails = response;
-      console.log(this.applicationDetails);
+    await this.applicationService.getAllApplicationsbyAdvertisementID(this.job_id).then((response) => {
+      this.applications = response;
+      console.log(this.applications);
     });
   }
 
+  async refreshTable(status:string,) {}
+
    //table
 
-displayedColumns: string[] = ['id', 'name', 'actions', 'status','assigned', 'review'];
-dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 applyFilter(event: Event) {
   const filterValue = (event.target as HTMLInputElement).value;
