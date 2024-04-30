@@ -1,5 +1,4 @@
 <app-search-basic (newItemEvent)="changeJobList($event)" (changePaginatorLengthEvent)="changePaginatorSize($event)" [pageSize]="pageSize"></app-search-basic>
-
 <div class="card-container">
     <app-advertisement-card *ngFor="let job of jobList" [job]="job"></app-advertisement-card>
 </div>

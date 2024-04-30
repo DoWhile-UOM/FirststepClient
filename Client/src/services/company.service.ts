@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
 
 interface Company {
@@ -43,7 +45,8 @@ interface EvaluatedCompanyDetails {
   providedIn: 'root',
 })
 export class CompanyService {
-  constructor() {}
+  
+  constructor(private snackBar: MatSnackBar,private http:HttpClient) { }
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -64,6 +67,7 @@ export class CompanyService {
     console.log(companyDetails);
     return companyDetails;
   }
+  
   async getCompanyApplicationById(companyId: number) {
     let companyApplication: any = {};
     console.log('from service', companyId);
@@ -85,12 +89,30 @@ export class CompanyService {
     }
   }
 
+
+  CompanyRegister(companyObj:any){
+    return this.http.post<any>(Apipaths.registerCompany,companyObj)
+  }
+
+  // async updateCompanyDetails(company: Company) {
+  //   await axios
+  //     .put(Apipaths.updateCompanyDetails + company_id, company)
+  //     .then(function (response) {
+  //       console.log('Company details updated successfully');
+  //     })
+  //     .catch(function (error) {
+  //       alert('Network Error: ' + error);
+  //     });
+  // }
+
   async updateCompanyDetails(company: Company, company_id: number) {
     company.company_id = company_id; // should be chnaged
     console.log('from service', company);
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
+
+        this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
       });
@@ -137,21 +159,21 @@ export class CompanyService {
     return companyList;
   }
 
-  /*
-  async getCompnayRegState(id: number) {
+  //Registration company state view Start here
+  async getCompnayRegState(id: string) {
     let cmpData: any;
-
-    this.http.get('https://localhost:7213/api/Company/GetCompanyById/'+id)
-      .subscribe(data => {
-        // Handle successful response with the data
-        //console.log(data);
-      }, error => {
-        // Handle error scenario
-        console.error(error);
-      });
+    try{
+      await axios.get(Apipaths.getCompanyRegState+id)
+        .then((response) => {
+          cmpData = response.data;
+          //console.log('Company Data:', cmpData);
+        });
+    }
+    catch (error) {
+      //console.error(error);
+    }
 
     return cmpData;
-  }
-  */
-  //Get company Registration state details---End
+ }
+  //Registration company state view ends here
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import axios from 'axios';
 
 @Injectable({
@@ -7,19 +8,18 @@ import axios from 'axios';
 })
 export class SkillService {
 
-  constructor() { }
+  constructor(private snackBar: MatSnackBar) { }
 
   async getAllSkills() {
     let skills: string[] = [];
     await axios.get(Apipaths.getAllSkills)
       .then(function (response) {
-        try {
-          skills = response.data;
-        }
-        catch (error) {
-          console.log("No skills found");
-        }
-      });
+        skills = response.data;
+      }).catch(
+        (error) => {
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+       }
+     );
 
     return skills;
   }

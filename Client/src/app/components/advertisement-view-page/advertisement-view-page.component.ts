@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AdvertisementHeaderComponent } from '../advertisement-header/advertisement-header.component';
-import { AdvertisementViewComponent } from '../advertisement-view/advertisement-view.component';
 import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { countries } from 'country-data';
+import { Country } from 'country-state-city';
 
 interface Skill{
   skill_name: string;
@@ -19,6 +23,7 @@ interface Job{
 	arrangement: string;
 	is_experience_required: string;
 	salary: string;
+  currency_unit: string;
 	submission_deadline: string;
 	posted_date: string;
 	job_description: string;
@@ -30,25 +35,36 @@ interface Job{
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, AdvertisementViewComponent, MatCardModule],
+  imports: [AdvertisementHeaderComponent, MatCardModule, CommonModule, MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })
 export class AdvertisementViewPageComponent {
   adData: Job = {} as Job;
 
-  constructor(private router: ActivatedRoute, private adService: AdvertisementServices) {
-    
-  }
+  constructor(
+    private router: ActivatedRoute, 
+    private adService: AdvertisementServices,
+    public dialogRef: MatDialogRef<AdvertisementViewPageComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+      if (data.jobID == null) {
+        console.log("No job ID found");
+        return;
+      }
   
-  async ngOnInit() {
-    let jobID: string | null = this.router.snapshot.paramMap.get('jobID');
+      (async () => {
+        this.adData = await this.adService.getAdvertisementById(data.jobID);
 
-    if (jobID == null) {
-      console.log("No job ID found");
-      return;
-    }
-
-    this.adData = await this.adService.getAdvertisementById(jobID);
-  }
+        if (this.adData.currency_unit == null) {
+          const countryCode = Country.getAllCountries().find(country => country.name === this.adData.country)?.isoCode;
+  
+          if (countryCode == undefined){
+            //this.snackBar.open("Error: Country not found", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+            this.adData.currency_unit = '';
+            return;
+          }
+  
+          this.adData.currency_unit = countries[countryCode].currencies[0];
+        }
+      })();
+  } 
 }

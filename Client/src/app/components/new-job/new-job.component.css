@@ -62,7 +62,7 @@ mat-grid-tile{
     font-style: italic;
     font-weight: 700;
     word-wrap: break-word;
-    margin-top: 0.75em;
+    margin-top: 0.5em;
     margin-bottom: 1em;
 }
 
@@ -98,4 +98,23 @@ mat-hint{
 
 .button-container{
     margin: 2em 1em 1em 1em;
+}
+
+.heading{
+    display: flex;
+    flex-direction: row;
+}
+
+.heading-container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 1em;
+}
+
+.salary-currency-input{
+    width: 35% !important;
+}
+
+.salary-input{
+    width: 65% !important;
 }

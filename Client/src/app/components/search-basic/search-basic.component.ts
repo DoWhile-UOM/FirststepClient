@@ -14,6 +14,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Country, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSliderModule } from '@angular/material/slider';
+import { Router } from '@angular/router';
 
 interface Job {
   advertisement_id: number;
@@ -51,7 +55,9 @@ interface SearchData{
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
-    CommonModule,],
+    CommonModule,
+    SpinnerComponent,
+    MatSliderModule],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
@@ -61,10 +67,10 @@ export class SearchBasicComponent implements OnInit{
   jobList: any = [];
   jobIdList: number[] = [];
 
-  empTypes: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship'];
-	jobArrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
+  empTypes: string[] = AdvertisementServices.employment_types;
+	jobArrangement: string[] = AdvertisementServices.job_arrangement;
 
-  seekerID: string = "3"; // sample seekerID
+  seekerID: string = ''; 
 
   @Output() newItemEvent = new EventEmitter<Job[]>();
   @Output() changePaginatorLengthEvent = new EventEmitter<number>();
@@ -79,9 +85,13 @@ export class SearchBasicComponent implements OnInit{
 	cities: string[] = []; 
 	locationCityFilteredOptions: Observable<string[]>;
 
+  distance: number = 0;
+
   constructor(
     private advertisementService: AdvertisementServices, 
-    private snackBar: MatSnackBar) { 
+    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,
+    private router: Router) { 
     this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filterCountry(value || '')),
@@ -94,7 +104,34 @@ export class SearchBasicComponent implements OnInit{
   }
 
   async ngOnInit() {
+    /*
+    try {
+      this.seekerID = String(sessionStorage.getItem('user_id'));
+      var user_type = String(sessionStorage.getItem('user_type'));
+
+      if (this.seekerID == null && user_type != 'seeker'){
+        this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+        // navigate to 404 page
+        this.router.navigate(['/notfound']);
+        // code to signout
+        return;
+      }
+    } catch (error) {
+      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+  
+      // navigate to 404 page
+      this.router.navigate(['/notfound']);
+      // code to signout
+      return;
+    }
+    */
+
+    this.seekerID = '3';
+
     this.countries = Country.getAllCountries().map(country => country.name);
+
+    //this.spinner.show();
 
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {
@@ -108,9 +145,13 @@ export class SearchBasicComponent implements OnInit{
         this.newItemEvent.emit(this.jobList);
         this.changePaginatorLengthEvent.emit(this.jobIdList.length);
       });
+
+    this.spinner.hide();
   }
 
   async search(data: SearchData){
+    this.spinner.show();
+
     data.country = this.locationCountryControl.value!;
     data.city = this.locationCityControl.value!;
     
@@ -127,34 +168,69 @@ export class SearchBasicComponent implements OnInit{
     this.jobIdList = response.allAdvertisementIds;
 
     this.newItemEvent.emit(this.jobList);
+    this.changePaginatorLengthEvent.emit(this.jobIdList.length);
+
+    this.spinner.hide();
   }
 
   public async changePaginator(startIndex: number, endIndex: number){
-    this.jobList = await this.advertisementService.getAllAdvertisementsWithPaginator(this.seekerID, this.jobIdList.slice(startIndex, endIndex));
+    this.spinner.show();
 
+    this.jobList = await this.advertisementService.getAllAdvertisementsWithPaginator(this.seekerID, this.jobIdList.slice(startIndex, endIndex));
     this.newItemEvent.emit(this.jobList);
+
+    this.spinner.hide();
+  }
+
+  validateSelectedCountry(selectedCountry: string){
+    if (selectedCountry == undefined || selectedCountry == ''){
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      return;
+    }
+    else if (this.countries.indexOf(selectedCountry) == -1){
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      return;
+    }
   }
 
   onSelectedCountryChanged(selectedCountry: string){
+    // check whether the selected country is valid
+    if (selectedCountry == undefined || selectedCountry == ''){
+      return;
+    }
+    else if (this.countries.indexOf(selectedCountry) == -1){
+      return;
+    }
+
 		this.locationCityControl.setValue('');
-		//this.locationCityFilteredOptions = new Observable<string[]>();
 		this.cities = [];
+
+    this.spinner.show();
 
 		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
 
 		if (countryCode == undefined){
-      this.cities = City.getCitiesOfCountry('LK')?.map(city => city.name) ?? [];
-
-      this.snackBar.open("Update City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-			
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      this.locationCountryControl.setValue('');
+      
+      this.spinner.hide();
 			return;
 		}
-    //alert(countryCode);
 		
 		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
 
-    this.snackBar.open("Update City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+    this.snackBar.open("Reset City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+
+    this.spinner.hide();
 	}
+
+  distanceStepper(value: number): string {
+    if (value > 100){
+      return '100km+';
+    }
+
+    return String(value) + 'km';
+  }
 
   private _filterCountry(value: string): string[] {
 		const filterValue = value.toLowerCase();

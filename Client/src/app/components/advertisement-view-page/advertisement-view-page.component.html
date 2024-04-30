@@ -2,6 +2,60 @@
     <mat-card class="mat-elevation-z8">
         <app-advertisement-header [company_name]="adData.company_name" [job_field]="adData.field_name" [job_title]="adData.title"></app-advertisement-header>
         <hr>
-        <app-advertisement-view [adData]="adData"></app-advertisement-view>
+
+        <mat-dialog-content>
+            <div class="detail">
+                <div class="detail-outer">
+                    <div class="detail-inner">
+                        <div class="detail-head-left">Job Number</div>
+                        <div class="detail-data">{{adData.job_number}}</div>
+                    </div>
+                    <div class="detail-inner">
+                        <div class="detail-head-left">Date Posted</div>
+                        <div class="detail-data">{{adData.posted_date}}</div>
+                    </div>
+                    <div class="detail-inner">
+                        <div class="detail-head-left">Location</div>
+                        <div class="detail-data">{{adData.city}}, {{adData.country}}</div>
+                    </div>
+                    <div class="detail-inner">
+                        <div class="detail-head-left">Salary</div>
+                        <div class="detail-data" *ngIf="adData.salary">{{adData.currency_unit}} {{adData.salary}}</div>
+                        <div class="detail-data" *ngIf="!adData.salary">-</div>
+                    </div>
+                </div>
+            
+                <div class="detail-outer-left">
+                    <div class="detail-inner">
+                        <div class="detail-head">Employment Type</div>
+                        <div class="detail-data">{{adData.employeement_type}}</div>
+                    </div>
+                    <div class="detail-inner">
+                        <div class="detail-head">Arrangement</div>
+                        <div class="detail-data">{{adData.arrangement}}</div>
+                    </div>
+                    <div class="detail-inner">
+                        <div class="detail-head">Experience Level</div>
+                        <div class="detail-data">{{adData.is_experience_required}}</div>
+                    </div>
+                    <div class="detail-inner">
+                        <div class="detail-head">Deadline</div>
+                        <div class="detail-data" *ngIf="adData.submission_deadline">{{adData.submission_deadline}}</div>
+                        <div class="detail-data" *ngIf="!adData.submission_deadline">-</div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            
+            <div class="skill-set">
+                <div *ngFor="let skill of adData.skills" class="" class="skill-chip">{{skill.skill_name[0].toUpperCase() + skill.skill_name.slice(1)}}</div>
+            </div>
+            
+            <div class="section" [innerHTML]="adData.job_description"></div>
+        </mat-dialog-content>
+
+        <mat-dialog-actions>
+            <button mat-raised-button class="apply-button" title="ApplyJob" color="primary">Apply To This Job</button>  
+        </mat-dialog-actions>      
     </mat-card>
 </div>

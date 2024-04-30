@@ -21,7 +21,20 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 })
 export class LoginComponent {
   hide = true;
-  constructor(private router: Router,private auth:AuthService,private userStore:UserStoreService){}
+
+  user = "ca"; 
+  userID = 0;
+
+  username = "sample";
+  companyid = 0;
+  companyname = "";
+
+  constructor(
+    private router: Router,
+    private auth:AuthService,
+    private userStore:UserStoreService){
+
+  }
 
   loginForm = new FormGroup({
     password: new FormControl('', [Validators.required]),
@@ -43,9 +56,38 @@ export class LoginComponent {
 
         this.userStore.setFullNameForStore(tokenPayload.unique_name);
         this.userStore.setRoleForStore(tokenPayload.role);
-        console.log(tokenPayload);
+        
         //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
+        
+        sessionStorage.clear();
+
+
+        ////// temporary code to be removed
+        if (tokenPayload.role == 'seeker'){
+          this.userID = 3;
+        }
+        else{
+          this.userID = 10;
+          this.companyname = "BISTEC GLOBAL SERVICES";
+          this.companyid = 7;
+        }
+        ////// temporary code to be removed
+
         sessionStorage.setItem('user', tokenPayload.role);
+        sessionStorage.setItem('user_id', this.userID.toString());  
+        sessionStorage.setItem('name', this.username);
+
+        switch(tokenPayload.role){
+          case 'seeker':
+            //sessionStorage.setItem('name', userData.name);
+            break;
+          case 'ca':
+            sessionStorage.setItem('companyId', this.companyid.toString());
+            sessionStorage.setItem('companyName', this.companyname);
+            break;
+        }
+
+
         this.router.navigate(['/' + tokenPayload.role]);
       },
       error:(err)=>{
