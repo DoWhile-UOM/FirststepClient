@@ -15,11 +15,10 @@
   <div class="pagetitle-content">
     <span>
       <mat-chip-listbox aria-label="Filter" #filterByStatus>
-        <mat-chip-option value="estatus">Evaluation Status</mat-chip-option>
-        <mat-chip-option selected value="astatus"
-          >Application status</mat-chip-option
-        >
-        <mat-chip-option value="assigned">Assigned</mat-chip-option>
+        <mat-chip-option value="estatus">Not Evaluated</mat-chip-option>
+        <mat-chip-option selected value="astatus">Accepted</mat-chip-option>
+        <mat-chip-option value="assigned">Rejected</mat-chip-option>
+        <mat-chip-option value="assigned">Passed</mat-chip-option>
       </mat-chip-listbox>
     </span>
   </div>
@@ -42,7 +41,7 @@
 
     <!-- Evaluation Status Column -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Evaluation Status</th>
+      <th mat-header-cell *matHeaderCellDef>Application Evaluation Status</th>
       <td mat-cell *matCellDef="let element">
         <mat-form-field>
           <mat-select>
@@ -58,13 +57,20 @@
 
     <!-- Posted status Column -->
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Selected/Rejected/Passed</th>
+      <th mat-header-cell *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let element">{{ element.status }}</td>
     </ng-container>
 
+    <!-- Assigned Column -->
+    <ng-container matColumnDef="assigned">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">{{ element.assigned }}</td>
+    </ng-container>
+
+
     <!-- Review Column -->
     <ng-container matColumnDef="review">
-        <th mat-header-cell *matHeaderCellDef>Selected/Rejected/Passed</th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">{{ element.review }}</td>
       </ng-container>
   

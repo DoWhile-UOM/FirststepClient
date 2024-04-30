@@ -50,6 +50,7 @@ export interface PeriodicElement {
   name: string;
   dropdownOptions: string[];  
   status: string;
+  assigned: string;
   review: string;
   icon: string;
   
@@ -58,9 +59,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, name: 'Lakmina Gamage', dropdownOptions: ['Yes', 'No','Pending..'], status: 'Selected', review: 'Review Again', icon: 'check'} ,
-  {id: 2, name: 'Dimuth Asalanka', dropdownOptions: ['Yes', 'No','Pending..'], status: '', review: 'Evaluate', icon: 'check'},
-  {id: 3, name: 'Dineth Wellalagamage', dropdownOptions: ['Yes', 'No','Pending..'], status: 'Passed', review: 'Review Again', icon: 'check'}, 
+  {id: 1, name: 'Lakmina Gamage', dropdownOptions: ['Yes', 'No','Pending..'], status: 'Selected',assigned:'Gayuni Basnayake', review: 'Review Again', icon: 'check'} ,
+  {id: 2, name: 'Dimuth Asalanka', dropdownOptions: ['Yes', 'No','Pending..'], status: '',assigned:'Gayuni Basnayake', review: 'Evaluate', icon: 'check'},
+  {id: 3, name: 'Dineth Wellalagamage', dropdownOptions: ['Yes', 'No','Pending..'], status: 'Passed',assigned:'Gayuni Basnayake', review: 'Review Again', icon: 'check'}, 
   
 ];
 
@@ -102,7 +103,7 @@ export class HrMangerApplicationListingComponent {
 
    //table
 
-displayedColumns: string[] = ['id', 'name', 'actions', 'status', 'review','action'];
+displayedColumns: string[] = ['id', 'name', 'actions', 'status','assigned', 'review','action'];
 dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 applyFilter(event: Event) {
