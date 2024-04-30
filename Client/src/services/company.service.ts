@@ -3,6 +3,7 @@ import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import axios from 'axios';
+
 interface Company {
   company_id: number;
   company_name: string;
@@ -19,6 +20,7 @@ interface CompanyList {
   company_id: number;
   company_name: string;
   verification_status: boolean;
+  verified_system_admin_id: number;
 }
 interface CompanyApplication {
   company_id: number;
@@ -30,11 +32,20 @@ interface CompanyApplication {
   business_reg_certificate: string;
   certificate_of_incorporation: string;
   comment: string;
+  verified_system_admin_id: number;
+}
+interface EvaluatedCompanyDetails {
+  company_id: number;
+  verification_status: boolean;
+  comment: string | null;
+  company_registered_date: Date;
+  verified_system_admin_id: number;
 }
 @Injectable({
   providedIn: 'root',
 })
 export class CompanyService {
+  
   constructor(private snackBar: MatSnackBar,private http:HttpClient) { }
 
   async getCompanyDetails(companyId: number) {
@@ -45,16 +56,12 @@ export class CompanyService {
       .then(function (response) {
         try {
           companyDetails = response.data;
-
           console.log();
         } catch (error) {
           console.log('No company details found for the given id');
         }
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
       });
 
     console.log(companyDetails);
@@ -63,19 +70,25 @@ export class CompanyService {
   
   async getCompanyApplicationById(companyId: number) {
     let companyApplication: any = {};
-    await axios
-      .get(Apipaths.getCompanyApplicationById + companyId)
-      .then(function (response) {
-        try {
-          companyApplication = response.data;
-        } catch (error) {
-          console.log('No company application found for the given id');
-        }
-      });
-    // .then((response) => {
-    //   companyApplication = response.data;
-    // })
+    console.log('from service', companyId);
+    try {
+      await axios
+        .get(Apipaths.getCompanyApplicationById + companyId)
+        .then(function (response) {
+          try {
+            companyApplication = response.data;
+          } catch (error) {
+            console.log('No company application found for the given id');
+          }
+        })
+        .catch((error) => {
+        });
+      return companyApplication;
+    } catch (error) {
+      console.log('No company application found for the given id');
+    }
   }
+
 
   CompanyRegister(companyObj:any){
     return this.http.post<any>(Apipaths.registerCompany,companyObj)
@@ -98,12 +111,25 @@ export class CompanyService {
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
+
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
+      });
+  }
+  async updateCompanyApplicationById(
+    evaluatedCompanyDetails: EvaluatedCompanyDetails,
+    companyId: number
+  ) {
+    evaluatedCompanyDetails.company_id = companyId; // should be changed
+    await axios
+      .put(
+        Apipaths.updateCompanyApplicationById + companyId,
+        evaluatedCompanyDetails
+      )
+      .then((response) => {
+      })
+      .catch((error) => {
       });
   }
   async deleteAccount(companyId: number) {
@@ -113,20 +139,13 @@ export class CompanyService {
       .delete(Apipaths.deleteCompany + companyId)
       .then((res) => {
         response = res.data;
-        this.snackBar.open('Company account deleted successfully', 'Close', {
-          duration: 3000,
-        });
       })
       .catch((error) => {
-        this.snackBar.open('Network error occurred. Try Again', 'Close', {
-          duration: 3000,
-        });
       });
 
     return response;
   }
 
-  //get all company list from companyListDto
   async getAllCompanyList() {
     let companyList: CompanyList[] = [];
 
@@ -135,9 +154,6 @@ export class CompanyService {
       companyList = response.data;
       console.log('company list was received');
     } catch (error) {
-      this.snackBar.open('Network error occurred. Try Again', 'Close', {
-        duration: 3000,
-      });
     }
 
     return companyList;

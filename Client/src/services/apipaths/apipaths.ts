@@ -1,4 +1,5 @@
 export class Apipaths {
+  
     static readonly baseUrl: string = 'https://localhost:7213/api/';
     
     // employee
@@ -34,6 +35,7 @@ export class Apipaths {
     static readonly getCompanyApplicationById: string = this.baseUrl + 'Company/GetCompanyApplicationById/'; //+companyId
     static readonly getCompanyRegState:string=this.baseUrl+'Company/GetRegCheckByID/';//+regurl id
     static readonly registerCompany:string=this.baseUrl+'Company/AddCompany';
+    static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
