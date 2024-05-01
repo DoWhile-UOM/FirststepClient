@@ -115,6 +115,7 @@ export class CompanyService {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
+        console.log('Network Error: ' + error);
       });
   }
   async updateCompanyApplicationById(
