@@ -17,7 +17,7 @@
     </button>
     <div class="job-title-content">
       <p>ASP.NETCore Developer</p>
-      <mat-label class="num">Job Number : 2752669</mat-label><br />
+      <mat-label class="num">Advertisement ID: 2752669</mat-label><br />
       <mat-label class="field"
         >Information Technology and Computer Science</mat-label
       >
@@ -68,6 +68,14 @@
       </td>
     </ng-container>
 
+    <!-- Assigned Column -->
+    <ng-container matColumnDef="assigned">
+      <th mat-header-cell *matHeaderCellDef>Assigned to</th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.submitted_date }}
+      </td>
+    </ng-container>
+
     <!-- Submitted Date Column -->
     <ng-container matColumnDef="submitted_date">
       <th mat-header-cell *matHeaderCellDef>Submitted Date</th>
@@ -79,11 +87,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  <br>
   <mat-paginator
     [pageSizeOptions]="[10, 15, 20]"
     showFirstLastButtons
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
-  <div class="footer">..</div>
 </div>

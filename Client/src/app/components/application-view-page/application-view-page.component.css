@@ -1,0 +1,118 @@
+.body {
+  width: 1000px;
+  height: fit-content;
+  border: 3px black;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  padding: 25px 25px 25px 25px;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-bottom: auto;
+  margin-top: 50px;
+  font-family: "roboto";
+}
+hr {
+  margin-left: 60px;
+  margin-top: 15px;
+}
+.info-container {
+    display: flex;
+    justify-content: space-between;
+  }
+.name {
+  font-size: 22px;
+  font-weight: 450;
+  margin-bottom: 10px;
+}
+.bio {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.upper-section {
+  display: flex;
+  align-items: center;
+}
+
+button.mat-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.profileimage {
+  margin-left: 10px; /* adjust this value to increase or decrease the space */
+  height: auto;
+  width: 75px;
+  margin-right: 40px;
+}
+
+.info {
+  margin-left: 10px; /* adjust this value to increase or decrease the space */
+  display: flex;
+  flex-direction: column;
+}
+
+.personalInfo > div,
+.lower-section > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 15px;
+  margin: 30px 0px 30px 0px;
+  padding-left: 80px;
+}
+
+.head {
+  text-align: left;
+  width: 180px;
+  font-weight: 550;
+}
+
+span {
+  text-align: left;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px; /* Add some space between the buttons */
+    margin-top: 30px;  
+}
+.button-container{
+    padding-right: 30px;
+}
+.Open {
+  background-color: teal;
+  color: white;
+  margin-right: 10px;
+}
+
+.Download {
+  background-color: white;
+  color: teal;
+  border: 3px solid teal;
+}
+.reject {
+  background-color: white;
+  color: red;
+  border: 3px solid red;
+}
+
+textarea {
+  width: 250px; /* Set the width of the textarea */
+  height: 60px; /* Set the height of the textarea */
+  padding: 10px; /* Add some padding inside the textarea */
+  box-sizing: border-box; /* Make sure the padding and border are included in the total width and height */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Round the corners */
+  background-color: #f8f8f8; /* Set a background color */
+  font-size: 16px; /* Increase the font size */
+  transition: all 0.3s ease; /* Add a transition for smooth effects */
+  resize: none;
+}
+
+textarea:focus {
+  border-color: teal; /* Change the border color when the textarea is focused */
+  background-color: #fff; /* Change the background color when the textarea is focused */
+  outline: none; /* Remove the default browser outline */
+}

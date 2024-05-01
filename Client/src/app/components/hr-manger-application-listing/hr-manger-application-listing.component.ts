@@ -30,6 +30,7 @@ export interface HRManagerApplicationListDto {
   seekerName: string;
   status: string;
   is_evaluated: boolean;
+  assigned:string;
   submitted_date: Date;
 }
 
@@ -47,7 +48,7 @@ export class HrMangerApplicationListingComponent {
 
   //Table
   
-  displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated', 'submitted_date'];
+  displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated','assigned', 'submitted_date'];
   dataSource!: MatTableDataSource<HRManagerApplicationListDto>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
