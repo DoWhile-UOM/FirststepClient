@@ -69,5 +69,5 @@ export class Apipaths {
     static readonly BlobName = 'firststep';
 
     //application
-    static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
+    static readonly submitApplication: string = this.baseUrl + 'Advertisement/SendApplication/';
 }
