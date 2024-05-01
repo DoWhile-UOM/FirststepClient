@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +13,6 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
   templateUrl: './company-admin-registrtion-form.component.html',
   styleUrl: './company-admin-registrtion-form.component.css',
   imports: [
-    NavBarComponent,
     HttpClientModule,
     MatCardModule,
     MatFormFieldModule,
