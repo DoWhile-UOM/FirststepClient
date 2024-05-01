@@ -58,6 +58,10 @@ export class Apipaths {
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
 
+    // OTP
+    static readonly requestOTP: string = this.baseUrl + 'Email/requestOTP';
+    static readonly verifyOTP: string = this.baseUrl + 'Email/verifyOTP';
+
     // Azure Blob Service
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
