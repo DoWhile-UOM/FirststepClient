@@ -19,6 +19,11 @@ interface Seeker {
   user_id: number
 }
 
+interface HRAssistant {
+  name: string;
+  company: string;
+}
+
 
 @Component({
   selector: 'app-application-view-page',
@@ -29,6 +34,7 @@ interface Seeker {
 })
 export class ApplicationViewPageComponent {
   seekerDetails: Seeker = {} as Seeker;
+  
 
   constructor(private seekerService: SeekerService) {}
   user_id: number = 2095;
