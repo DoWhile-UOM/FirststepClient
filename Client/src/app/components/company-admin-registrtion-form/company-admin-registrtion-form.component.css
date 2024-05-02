@@ -1,40 +1,32 @@
 
 .body {
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  background-color: #f7f7f7;
-  text-align: center;
+  padding: 3em;
+  width: 60%;
+  min-width: 400px;
+  margin: 0 auto;
 }
-.body-card {
-  box-shadow: 2px 2px 5px #888888;
-  width: 80%;
-  text-align: center;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+
+.card {
+  padding: 2em;
 }
+
 mat-card {
   width: 80%;
 }
-
-mat-card-content {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  margin-top: 30px;
-  margin-bottom: 30px;
+mat-grid-tile mat-form-field {
+  width: 75%;
+  margin: 0.75em;
+}
+mat-grid-tile {
+  height: auto;
 }
 
-.heading {
-  font-family: "Lato", sans-serif;
+.title {
+  color: #008080;
+  font-size: 25px;
+  font-family: Lato;
   font-weight: 700;
-  font-size: 1.5rem;
-  text-align: center;
-  margin-bottom: 30px;
+  word-wrap: break-word;
 }
 
 button {
@@ -43,9 +35,4 @@ button {
 .create-btn-name {
   color: #fff;
 }
-::ng-deep .mat-mdc-text-field-wrapper {
-  height: 40px !important;
-}
-::ng-deep .mat-mdc-form-field-flex {
-  margin-top: -7px !important;
-}
+

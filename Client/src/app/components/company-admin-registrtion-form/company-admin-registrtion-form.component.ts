@@ -10,6 +10,8 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from '../../../services/company.service';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDividerModule } from '@angular/material/divider';
 interface CmpAdminReg {
   email: string;
   password_hash: string;
@@ -30,7 +32,7 @@ interface CmpAdminReg {
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    FlexLayoutServerModule, CommonModule, FormsModule,
+    FlexLayoutServerModule, CommonModule, FormsModule, MatGridListModule, MatDividerModule
   ],
 })
 export class CompanyAdminRegistrtionFormComponent {
