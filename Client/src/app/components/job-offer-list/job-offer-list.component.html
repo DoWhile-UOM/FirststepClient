@@ -6,7 +6,8 @@
       <mat-chip-listbox aria-label="Filter" #filterByStatus (change)="filter(filterByStatus.selected)" >
         <mat-chip-option value="all">All</mat-chip-option>
         <mat-chip-option selected value="active">Active</mat-chip-option>
-        <mat-chip-option value="closed">In-active</mat-chip-option>
+        <mat-chip-option value="hold">Evaluating</mat-chip-option>
+        <mat-chip-option value="closed">Closed</mat-chip-option>
       </mat-chip-listbox>  
     </span>
     
@@ -90,11 +91,14 @@
           <button mat-icon-button color="primary" (click)="editAd(joboffer.advertisement_id)" class="small-icon-button">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Close')" class="small-icon-button">
-            <mat-icon>visibility_off</mat-icon>
+          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Hold')" class="small-icon-button">
+            <mat-icon>pause</mat-icon>
           </button>
-          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Activate')" class="small-icon-button">
+          <button mat-icon-button color="primary" *ngIf="joboffer.status != 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Activate')" class="small-icon-button">
             <mat-icon>undo</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'hold'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Close')" class="small-icon-button">
+            <mat-icon>close</mat-icon>
           </button>
           <button mat-icon-button color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Delete')" class="small-icon-button">
             <mat-icon>delete</mat-icon>
