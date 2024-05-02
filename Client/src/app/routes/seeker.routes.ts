@@ -9,6 +9,7 @@ import { CompanyProfileComponent } from '../components/company-profile/company-p
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
 import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 import { SeekerApplicationStatusComponent } from '../components/seeker-application-status/seeker-application-status.component';
+import { ImageViewerComponent } from '../components/image-viewer/image-viewer.component';
 
 
 export const routes: Routes = [
@@ -23,4 +24,6 @@ export const routes: Routes = [
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
   { path: 'home/applicationReview', component:SeekerApplicationStatusComponent },
   
+  //only to test
+  {path:'image', component: ImageViewerComponent},
 ];
