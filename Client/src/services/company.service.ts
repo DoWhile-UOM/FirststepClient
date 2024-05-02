@@ -41,12 +41,19 @@ interface EvaluatedCompanyDetails {
   company_registered_date: Date;
   verified_system_admin_id: number;
 }
+interface CmpAdminReg {
+  email: string;
+  password_hash: string;
+  first_name: string;
+  last_name: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class CompanyService {
-  
-  constructor(private snackBar: MatSnackBar,private http:HttpClient) { }
+
+  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -67,7 +74,7 @@ export class CompanyService {
     console.log(companyDetails);
     return companyDetails;
   }
-  
+
   async getCompanyApplicationById(companyId: number) {
     let companyApplication: any = {};
     console.log('from service', companyId);
@@ -90,8 +97,8 @@ export class CompanyService {
   }
 
 
-  CompanyRegister(companyObj:any){
-    return this.http.post<any>(Apipaths.registerCompany,companyObj)
+  CompanyRegister(companyObj: any) {
+    return this.http.post<any>(Apipaths.registerCompany, companyObj)
   }
 
   // async updateCompanyDetails(company: Company) {
@@ -163,8 +170,8 @@ export class CompanyService {
   //Registration company state view Start here
   async getCompnayRegState(id: string) {
     let cmpData: any;
-    try{
-      await axios.get(Apipaths.getCompanyRegState+id)
+    try {
+      await axios.get(Apipaths.getCompanyRegState + id)
         .then((response) => {
           cmpData = response.data;
           //console.log('Company Data:', cmpData);
@@ -175,6 +182,30 @@ export class CompanyService {
     }
 
     return cmpData;
- }
+  }
   //Registration company state view ends here
+
+
+
+  //post company admin registration
+  // async postCompanyAdminReg(adminRegData: CmpAdminReg, type:string, cmpID:string) {
+  //   try {
+  //     const response = await axios.post(Apipaths.postCompanyAdminReg, adminRegData);
+  //     console.log('Company Admin Registration Successful');
+  //   } catch (error) {
+  //     console.log('Network Error: ' + error);
+  //   }
+  // }
+  async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
+    try {
+      const response = await axios.post(Apipaths.postCompanyAdminReg, {
+        ...adminRegData,
+        type: type,
+        company_id: companyId
+      });
+      console.log('Company Admin Registration Successful');
+    } catch (error) {
+      console.log('Network Error: ' + error);
+    }
+  }
 }

@@ -1,15 +1,11 @@
-body {
-  background-color: #f7f7f7;
 
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
 .body {
   width: 100%;
   justify-content: center;
   align-items: center;
   display: flex;
+  background-color: #f7f7f7;
+  text-align: center;
 }
 .body-card {
   box-shadow: 2px 2px 5px #888888;
@@ -41,14 +37,8 @@ mat-card-content {
   margin-bottom: 30px;
 }
 
-.create-button {
-  background-color: #008080;
-  color: #fff;
-  font-weight: 700;
-  width: 10%;
-  font-family: "Lato", sans-serif;
-  margin-top: 20px;
-  padding: 0px 50px;
+button {
+  width: 25%;
 }
 .create-btn-name {
   color: #fff;
