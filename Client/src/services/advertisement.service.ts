@@ -270,7 +270,28 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+          if (error.response.status == 406) {
+            this.snackBar.open("Advertisement cannot be deleted because it has been applied by some applicants!", "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+          }
+          else{
+            this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+          }
+        }
+      );
+
+    return response;
+  }
+
+  async deleteAdvertisementWithApplication(jobID: string) {
+    let response: any = null;
+
+    await axios.delete(Apipaths.deleteJob + jobID + "/isDeleteApplications=" + true)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(
+        (error) => {
+          this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 

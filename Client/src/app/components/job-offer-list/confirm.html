@@ -6,7 +6,10 @@
   {{dialogtitle == 'Hold' ? 'When the job advertisement change as a hold one, it will no longer be visible to the job seekers.' : ''}}
   {{dialogtitle == 'Close' ? 'When you close the job advertisement, it will no longer be visible to the job seekers.' : ''}}
   {{dialogtitle == 'Activate' ? 'When you activate the job advertisement, it will be visible to the job seekers.' : ''}}
-  {{dialogtitle == 'Delete' ? 'When you delete the job advertisement, it will be permanently removed from the system. You can\'t activate it again!' : ''}}
+
+  {{(dialogtitle == 'Delete' && canDelete) ? 'When you delete the job advertisement, it will be permanently removed from the system. You can\'t activate it again!' : ''}}
+  {{(dialogtitle == 'Delete' && !canDelete) ? 'You can\'t delete the job advertisement because it has applications. \nAre you sure you want to delete the job advertisement?' : ''}}
+
 </mat-dialog-content>
 <mat-dialog-actions>
   <span style="display: flex; flex-direction: row-reverse;">
