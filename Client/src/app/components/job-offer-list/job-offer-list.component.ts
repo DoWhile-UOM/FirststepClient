@@ -236,7 +236,7 @@ export class ConfirmDialog {
 
   async onYesClick() {
     if (this.dialogtitle == "Delete" && !this.canDelete) {
-      await this.advertisementService.deleteAdvertisementWithApplication(this.id.toString());
+      await this.advertisementService.deleteAdvertisementWithConfirm(this.id.toString());
       this.snackBar.open(this.title + " job successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
 

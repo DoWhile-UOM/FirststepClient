@@ -282,10 +282,10 @@ export class AdvertisementServices {
     return response;
   }
 
-  async deleteAdvertisementWithApplication(jobID: string) {
+  async deleteAdvertisementWithConfirm(jobID: string) {
     let response: any = null;
 
-    await axios.delete(Apipaths.deleteJob + jobID + "/isDeleteApplications=" + true)
+    await axios.delete(Apipaths.deleteJob + 'confirm=true/' + jobID)
       .then(function (res) {
         response = res;
       })
