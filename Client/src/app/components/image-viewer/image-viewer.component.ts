@@ -1,52 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
-
-
+import{NgIf} from '@angular/common';
 
 
 
 @Component({
   selector: 'app-image-viewer',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './image-viewer.component.html',
   styleUrl: './image-viewer.component.css'
 })
-export class ImageViewerComponent  {
+
+export class ImageViewerComponent implements OnInit {
+
+blobName: string = 'angry.jpeg';
 imageUrl: any;
 
 constructor(private documentService:DocumentService) { }
 
 ngOnInit(): void {
-  const blobName = 'angry.jpeg'; // Replace with the actual blob name
-
-  this.documentService.getBlobUrl(blobName).subscribe(
-    imageUrl => {
-      this.imageUrl = imageUrl; // Set the fetched image URL
+  this.documentService.generateSasToken(this.blobName).subscribe(
+    (token:string) => {
+      this.imageUrl= this.documentService.getBlobUrl(this.blobName, token);
+      
     },
     error => {
-      console.error('Error fetching image URL:', error);
+      console.error('Error fetching SAS token:', error);
     }
   );
-
 }
 
-
-/*  imageUrl: string;
-
-  constructor(private documentService:DocumentService) { }
-
-  ngOnInit(): void {
-    const blobName = 'angry.jpeg'; // Replace with the actual blob name
-
-    this.documentService.get(blobName).subscribe(
-      imageUrl => {
-        this.imageUrl = imageUrl; // Set the fetched image URL
-      },
-      error => {
-        console.error('Error fetching image URL:', error);
-      }
-    );*/
   }
 
 
