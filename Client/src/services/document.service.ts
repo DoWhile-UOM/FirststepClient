@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BlobClient, BlobServiceClient, ContainerClient } from '@azure/storage-blob';
+import { BlobServiceClient } from '@azure/storage-blob';
 import { Apipaths } from './apipaths/apipaths';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,14 +10,12 @@ import { Observable } from 'rxjs';
 
 export class DocumentService {
   private apiUrl = 'https://localhost:7213/api/Document';
-  private storageAccountName = 'firststep';
-  private containerName = 'firststep';
+  private fetchUrl= 'https://localhost:7213/api/Document/url/'
 
-  constructor(private http: HttpClient) { 
-   
-  }
 
- async downloadBlob(eTag: string) {
+  constructor(private http: HttpClient) { }
+
+  async downloadBlob(eTag: string) {
     const blobServiceClient = new BlobServiceClient(Apipaths.BlobConnectionString);
     const containerClient = blobServiceClient.getContainerClient(Apipaths.BlobContainerName);
     const blobClient = containerClient.getBlobClient(Apipaths.BlobName);
@@ -44,14 +42,12 @@ export class DocumentService {
     return this.http.post(this.apiUrl, fileData, { headers });
   }
 
+getBlobUrl(blobName: string): Observable<string> {
+   /* return this.http.get<string>(`${this.fetchUrl}${blobName}`);*/
+    return this.http.get(this.fetchUrl + blobName, { responseType: 'text' });
+  }
+  
 
-
-
-
-
-
+   
 }
-
-
-
 

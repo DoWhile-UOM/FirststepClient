@@ -65,10 +65,8 @@ export class Apipaths {
 
     // Azure Blob Service
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
-    static readonly BlobContainerName = 'public';//api-images
-    static readonly BlobName = '1.png';
- 
-  
+    static readonly BlobContainerName = 'apiimages';
+    static readonly BlobName = 'firststep';
 
     //application
     static readonly submitApplication: string = this.baseUrl + 'Advertisement/SendApplication/';
