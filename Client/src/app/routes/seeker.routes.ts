@@ -25,6 +25,6 @@ export const routes: Routes = [
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
   { path: 'home/applicationReview', component:SeekerApplicationStatusComponent },
   
-  //only to test
+  //only for testing
   {path:'image', component: ImageViewerComponent},
 ];
