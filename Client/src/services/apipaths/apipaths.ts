@@ -28,7 +28,7 @@ export class Apipaths {
 
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
-    static readonly getCompanyDetails: string = this.baseUrl + 'Company/GetCompanyById/';
+    static readonly getCompanyDetails: string = this.baseUrl + 'Company/GetCompanyProfile/update=true/';
     static readonly updateCompanyDetails: string = this.baseUrl + 'Company/UpdateRegisteredCompany/';
     static readonly deleteCompany: string = this.baseUrl + 'Company/DeleteCompany/';
     static readonly getAllComapanyList: string = this.baseUrl + 'Company/GetAllComapanyList';
