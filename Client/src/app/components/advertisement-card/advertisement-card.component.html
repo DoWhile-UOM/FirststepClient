@@ -3,30 +3,32 @@
         <div class="title-container">
             <img class="company-logo" src="../../../assets/BistechLogo.png" alt="Company Logo">
             <div class="title">
-                <mat-card-title class="job-title">{{job.title}}</mat-card-title>
-                <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{job.company_name}}</mat-card-subtitle>
+                <mat-card-title class="job-title">{{(isApplicationPage) ? appliedJob.title : job.title}}</mat-card-title>
+                <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{(isApplicationPage) ? appliedJob.company_name : job.company_name}}</mat-card-subtitle>
             </div>
         </div>
-        <p class="job-field">{{job.field_name}}</p>
+        <p class="job-field">{{(isApplicationPage) ? appliedJob.field_name : job.field_name}}</p>
     </div>
     <div class="job-summery-outer">
         <p class="job-details-section">
             <mat-icon>work</mat-icon>
-            <span class="summery-detail-text">{{job.employeement_type}}</span>
+            <span class="summery-detail-text">{{(isApplicationPage) ? appliedJob.employeement_type : job.employeement_type}}</span>
         </p>
         <p class="job-details-section">
             <mat-icon>home</mat-icon>
-            <span class="summery-detail-text">{{job.arrangement}}</span>
+            <span class="summery-detail-text">{{(isApplicationPage) ? appliedJob.arrangement : job.arrangement}}</span>
         </p>
         <p class="job-details-section">
             <mat-icon>location_on</mat-icon>
-            <span class="summery-detail-text">{{job.country}}, {{job.city}}</span>
+            <span class="summery-detail-text">{{(isApplicationPage) ? appliedJob.country : job.country}}, {{(isApplicationPage) ? appliedJob.city : job.city}}</span>
         </p>
     </div> 
     <div class="job-details-outer">
-        <app-advertisement-actions [jobID]="job.advertisement_id" [currentStatus]="job.is_saved" [expired]="job.is_expired"></app-advertisement-actions>
+        <app-advertisement-actions *ngIf="!isApplicationPage" [jobID]="job.advertisement_id" [currentStatus]="job.is_saved" [expired]="job.is_expired"></app-advertisement-actions>
+        <app-advertisement-actions *ngIf="isApplicationPage" [jobID]="appliedJob.advertisement_id" [applicationStatus]="appliedJob.application_status"></app-advertisement-actions>
         <div class="job-details-inner">
-            <p class="post-date">{{(job.is_expired ? 'Job Expired' : 'Posted On ' + job.posted_date)}}</p>
+            <p class="post-date" *ngIf="!isApplicationPage">{{(job.is_expired ? 'Job Expired' : 'Posted On ' + job.posted_date)}}</p>
+            <p class="post-date" *ngIf="isApplicationPage">{{'Posted On ' + appliedJob.posted_date}}</p>
             <button mat-button class="show-details" (click)="onClickMoreDetails()">More Details</button>
         </div>
     </div>

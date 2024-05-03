@@ -27,6 +27,7 @@ export class Apipaths {
     static readonly saveJob: string = this.baseUrl + 'Advertisement/SaveAdvertisement/'; // + advertisement_id
     static readonly unsaveJob: string = this.baseUrl + 'Advertisement/UnsaveAdvertisement/'; // + advertisement_id
     static readonly getSavedAdvertisements: string = this.baseUrl + 'Advertisement/GetSavedAdvertisements/seekerID='; // + seeker_id
+    static readonly getAppliedAdvertisements: string = this.baseUrl + 'Advertisement/GetAppliedAdvertisements/seekerID='; // + seeker_id
     static readonly basicSearch: string = this.baseUrl + 'Advertisement/SearchAdvertisementsBasic/seekerID='; // + seeker_id
     static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'Advertisement/GetAdvertisementById/update/'; // + advertisement_id
     static readonly updateAdvertisement= this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
@@ -62,6 +63,10 @@ export class Apipaths {
 
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
+
+    // OTP
+    static readonly requestOTP: string = this.baseUrl + 'Email/requestOTP';
+    static readonly verifyOTP: string = this.baseUrl + 'Email/verifyOTP';
 
     // Azure Blob Service
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';

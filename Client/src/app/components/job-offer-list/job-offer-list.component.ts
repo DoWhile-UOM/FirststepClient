@@ -106,7 +106,7 @@ export class JobOfferListComponent implements AfterViewInit{
     }
 
     if (this.jobList.length == 0) {
-      console.log("No advertisements found");
+      this.snackBar.open("No job advertisements found!", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
     }
 
     Table_data = [];

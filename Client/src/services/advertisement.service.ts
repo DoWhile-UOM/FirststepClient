@@ -243,14 +243,14 @@ export class AdvertisementServices {
       return response;
     }
 
-    await axios.put(Apipaths.changeStatusOfJob + jobID + "/status=" + status)
+    await axios.patch(Apipaths.changeStatusOfJob + jobID + "/status=" + status)
       .then(function (res) {
         response = res;
       })
       .catch(
         (error) => {
-          if (error.response.status == 422) {
-            this.snackBar.open("Expired Date must be future date!. Need to update it before active the advertisement!", "", {panelClass: ['app-notification-error']});
+          if (error.response.status == 400) {
+            this.snackBar.open("Expired Date must be future date!. Need to update it before active the advertisement!", "", {panelClass: ['app-notification-error']})._dismissAfter(15000);
           }
           else {
             this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
@@ -280,7 +280,7 @@ export class AdvertisementServices {
   async saveAdvertisement(jobID: string, seekerID: string, isSave: boolean) {
     let response: any = null;
 
-    await axios.put(Apipaths.saveJob + jobID + "/save=" + isSave + "/seekerId=" + seekerID)
+    await axios.patch(Apipaths.saveJob + jobID + "/save=" + isSave + "/seekerId=" + seekerID)
       .then(function (res) {
         response = res;
       })
@@ -297,6 +297,32 @@ export class AdvertisementServices {
     let jobList: any = [];
 
     await axios.get(Apipaths.getSavedAdvertisements + seekerID)
+      .then(function (response) {
+        try {
+          jobList = response.data;
+
+          for (let i = 0; i < jobList.length; i++) {
+            var postDate = new Date(jobList[i].posted_date);
+            jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+          }
+        }
+        catch (error) {
+          console.log("No advertisements found");
+        }
+      })
+      .catch(
+        (error) => {
+         this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
+
+    return jobList;
+  }
+
+  async getAppliedAdvertisements(seekerID: string) {
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getAppliedAdvertisements + seekerID)
       .then(function (response) {
         try {
           jobList = response.data;
