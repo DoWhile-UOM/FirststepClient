@@ -1,13 +1,19 @@
-<h2 mat-dialog-title>{{dialogtitle}} Job Advertisement</h2>
+<h2 mat-dialog-title>{{!canDelete ? 'Are you sure you want to delete the job advertisement?' : dialogtitle + ' Job Advertisement'}}</h2>
 <mat-dialog-content>
-  Would you like to {{dialogtitle.toLowerCase()}} {{title}}? 
+  {{dialogtitle != 'Hold' || canDelete ? 'Would you like to ' + dialogtitle.toLowerCase() + ' ' + title : '' }} 
+  {{dialogtitle == 'Hold' ? 'Do you need to hold advertisement for evaluating the applications?' : ''}}
   <br>
+  {{dialogtitle == 'Hold' ? 'When the job advertisement change as a hold one, it will no longer be visible to the job seekers.' : ''}}
   {{dialogtitle == 'Close' ? 'When you close the job advertisement, it will no longer be visible to the job seekers.' : ''}}
   {{dialogtitle == 'Activate' ? 'When you activate the job advertisement, it will be visible to the job seekers.' : ''}}
+
+  {{(dialogtitle == 'Delete' && canDelete) ? 'When you delete the job advertisement, it will be permanently removed from the system. You can\'t activate it again!' : ''}}
+  {{(dialogtitle == 'Delete' && !canDelete) ? 'You can\'t delete the job advertisement because it has applications.' : ''}}
+
 </mat-dialog-content>
 <mat-dialog-actions>
   <span style="display: flex; flex-direction: row-reverse;">
-    <button mat-button mat-dialog-close cdkFocusInitial (click)="onYesClick()">Yes</button>
+    <button mat-button cdkFocusInitial (click)="onYesClick()">Yes</button>
     <button mat-button mat-dialog-close (click)="onNoClick()">No</button>
   </span>
 </mat-dialog-actions>

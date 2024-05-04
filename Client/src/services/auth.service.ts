@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import axios from 'axios';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +34,7 @@ export class AuthService {
 
   async requestOTP(userData: any) {
     let action: boolean = false;
-    await axios.post(Apipaths.requestOTP, userData)
+    await axios.post("https://example.com/api/requestOTP", userData)
       .then(function (response) {
         console.log(response.status);
         if (response.status == 200) {
@@ -52,7 +53,7 @@ export class AuthService {
 
   async verifyOTP(userData: any) {
     let action: boolean = false;
-    await axios.post(Apipaths.verifyOTP, userData)
+    await axios.post("https://example.com/api/verifyOTP", userData)
       .then(function (response) {
         console.log(response.status);
         if (response.status == 200) {

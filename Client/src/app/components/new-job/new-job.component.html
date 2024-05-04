@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<mat-divider></mat-divider>
-		<form class="form-container" #createJobForm="ngForm" (ngSubmit)="(isUpdate) ? updateJob(createJobForm.value) :createNewJob(createJobForm.value)">
+		<form class="form-container" #createJobForm="ngForm" (ngSubmit)="(isUpdate) ? updateJob(createJobForm.value) : createNewJob(createJobForm.value)">
 			<mat-grid-list cols="{{noOfCols}}" rowHeight="90">
 				<mat-grid-tile>
 					<mat-form-field color="primary" appearance="outline">
@@ -25,7 +25,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Target Job Field</mat-label>
-						<mat-select #selectField name="field_id" [(ngModel)]="adData.field_id" (valueChange)="onChangeField(selectField.value)">
+						<mat-select #selectField name="field_id" [(ngModel)]="adData.field_id" (valueChange)="onChangeField(selectField.value)" required>
 						@for (field of fields; track field) {
 							<mat-option [value]="field.field_id">{{field.field_name}}</mat-option>
 						}
@@ -43,13 +43,13 @@
 				<mat-grid-tile colspan="{{((noOfCols - 1 > 0) ? (noOfCols - 1) : 1)}}">
 					<mat-form-field appearance="outline">
 						<mat-label>Job Title</mat-label>
-						<input matInput placeholder="Job Title" name="title" [(ngModel)]="adData.title">
+						<input matInput placeholder="Job Title" name="title" [(ngModel)]="adData.title" required>
 					</mat-form-field>
 				</mat-grid-tile>
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Job Number</mat-label>
-						<input matInput placeholder="Job Number" name="job_number" [(ngModel)]="adData.job_number">
+						<input matInput placeholder="Job Number" name="job_number" [formControl]="createJobFormGroup.controls.job_number">
 					</mat-form-field>
 				</mat-grid-tile>
 			</mat-grid-list>
@@ -67,7 +67,7 @@
 						</mat-chip-row>
 					}
 					</mat-chip-grid>
-					<input placeholder="New keyword..." #keywordInput [formControl]="keywordCtrl"
+					<input placeholder="New keyword..." #keywordInput [formControl]="createJobFormGroup.controls.keywordCtrl"
 						[matChipInputFor]="chipGrid" [matAutocomplete]="auto"
 						[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
 						(matChipInputTokenEnd)="add($event)"/>
@@ -84,7 +84,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Employment Type</mat-label>
-						<mat-select name="employeement_type" [(ngModel)]="adData.employeement_type">
+						<mat-select name="employeement_type" [(ngModel)]="adData.employeement_type" required>
 							@for (emptype of empTypes; track emptype) {
 								<mat-option [value]="emptype">{{emptype}}</mat-option>
 							}
@@ -94,7 +94,7 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Job Arrangement</mat-label>
-						<mat-select name="arrangement" [(ngModel)]="adData.arrangement">
+						<mat-select name="arrangement" [(ngModel)]="adData.arrangement" required>
 							@for (arrangement of jobArrangement; track arrangement) {
 								<mat-option [value]="arrangement">{{arrangement}}</mat-option>
 							}
@@ -104,9 +104,10 @@
 				<mat-grid-tile>
 					<mat-form-field appearance="outline">
 						<mat-label>Experience</mat-label>
-						<mat-select name="is_experience_required" [(ngModel)]="adData.is_experience_required">
-							<mat-option [value]="false">Not Required</mat-option>
-							<mat-option [value]="true">Required</mat-option>
+						<mat-select name="experience" [(ngModel)]="adData.experience" required>
+							@for (exp of experiences; track exp) {
+								<mat-option [value]="exp">{{exp}}</mat-option>
+							}
 						</mat-select>
 					</mat-form-field>
 				</mat-grid-tile>
@@ -117,7 +118,7 @@
 							placeholder="Pick a Country"
 							aria-label="Country"
 							matInput #countryInput
-							[formControl]="locationCountryControl"
+							[formControl]="createJobFormGroup.controls.locationCountryControl"
 							[matAutocomplete]="autocountry" (change)="onSelectedCountryChanged(countryInput.value)">
 						<mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
 						@for (option of locationCountryFilteredOptions | async; track option) {
@@ -133,7 +134,7 @@
 							placeholder="Pick a City"
 							aria-label="City"
 							matInput
-							[formControl]="locationCityControl"
+							[formControl]="createJobFormGroup.controls.locationCityControl"
 							[matAutocomplete]="autocity">
 						<mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
 						@for (option of locationCityFilteredOptions | async; track option) {
@@ -152,8 +153,8 @@
 						</mat-select>
 					</mat-form-field>
 					<mat-form-field appearance="outline" class="salary-input">
-						<mat-label>Salary {{adData.currency_unit != '' ? 'in ' + adData.currency_unit : ''}}</mat-label>
-						<input matInput placeholder="Salary {{adData.currency_unit != '' ? 'in ' + adData.currency_unit : ''}}" name="salary" [(ngModel)]="adData.salary">
+						<mat-label>Salary{{(adData.currency_unit != undefined) ? ' in ' + adData.currency_unit : ''}}</mat-label>
+						<input matInput placeholder="Salary{{(adData.currency_unit != undefined) ? ' in ' + adData.currency_unit : ''}}" name="salary" [formControl]="createJobFormGroup.controls.salary">
 					</mat-form-field>
 				</mat-grid-tile>
 			</mat-grid-list>

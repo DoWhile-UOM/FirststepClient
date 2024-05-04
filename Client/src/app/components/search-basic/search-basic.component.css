@@ -1,6 +1,6 @@
 .search-card{
-    width: 82%;
-    height: 8em;
+    max-width: 80%;
+    height: fit-content;
     margin: 0 auto;
     margin-top: 3em;
     margin-bottom: 2em;
@@ -10,6 +10,8 @@
 }
 
 .container{
+    margin-top: 1em;
+    padding: 1.5em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,11 +24,18 @@
 }
 
 .title{
-    width: 30em;
+    width: 50%;
+    margin-left: 1em;
+    margin-right: 1.5em;
+}
+
+.location{
+    width: 20%;
+    margin-right: 0.5em;
 }
 
 .searchBtn{
-    margin-left: 1em;
+    margin-left: 0.5em;
     margin-right: 1em;
     width: 4em;
     height: 4em;
@@ -34,4 +43,51 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+mat-form-field mat-icon{
+    margin-left: 0.3em;
+}
+
+mat-icon{
+    font-size: 1.25em;
+}
+
+.advance-search-section{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.advance-search-field{
+    display: flex;
+    flex-direction: column;
+}
+
+.advance-search-title{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.4em;
+    margin-top: 0.6em;
+}
+
+.advance-search-title mat-icon{
+    margin-left: 0.75em;
+    margin-right: 0.5em;
+}
+
+.distance-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.distance-content mat-slider{
+    width: 72%;
+    margin-right: 0.5em;
+}
+
+.advance-search-field-name{
+    font-size: larger;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpClient } from '@angular/common/http';
+
 import axios from 'axios';
 
 interface Company {
@@ -44,9 +44,8 @@ interface EvaluatedCompanyDetails {
 @Injectable({
   providedIn: 'root',
 })
-export class CompanyService {
-  
-  constructor(private snackBar: MatSnackBar,private http:HttpClient) { }
+export class CompanyService {  
+  constructor(private snackBar: MatSnackBar, private http:HttpClient) { }
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -89,7 +88,6 @@ export class CompanyService {
     }
   }
 
-
   CompanyRegister(companyObj:any){
     return this.http.post<any>(Apipaths.registerCompany,companyObj)
   }
@@ -111,7 +109,6 @@ export class CompanyService {
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
-
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
@@ -132,6 +129,7 @@ export class CompanyService {
       .catch((error) => {
       });
   }
+
   async deleteAccount(companyId: number) {
     let response: any;
 
@@ -159,21 +157,21 @@ export class CompanyService {
     return companyList;
   }
 
-  //Registration company state view Start here
-  async getCompnayRegState(id: string) {
+  /*
+  async getCompnayRegState(id: number) {
     let cmpData: any;
-    try{
-      await axios.get(Apipaths.getCompanyRegState+id)
-        .then((response) => {
-          cmpData = response.data;
-          //console.log('Company Data:', cmpData);
-        });
-    }
-    catch (error) {
-      //console.error(error);
-    }
+
+    this.http.get('https://localhost:7213/api/Company/GetCompanyById/'+id)
+      .subscribe(data => {
+        // Handle successful response with the data
+        //console.log(data);
+      }, error => {
+        // Handle error scenario
+        console.error(error);
+      });
 
     return cmpData;
- }
-  //Registration company state view ends here
+  }
+  */
+  //Get company Registration state details---End
 }

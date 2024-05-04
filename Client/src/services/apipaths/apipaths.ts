@@ -1,5 +1,4 @@
 export class Apipaths {
-  
     static readonly baseUrl: string = 'https://localhost:7213/api/';
     
     // employee
@@ -22,6 +21,7 @@ export class Apipaths {
     static readonly saveJob: string = this.baseUrl + 'Advertisement/SaveAdvertisement/'; // + advertisement_id
     static readonly unsaveJob: string = this.baseUrl + 'Advertisement/UnsaveAdvertisement/'; // + advertisement_id
     static readonly getSavedAdvertisements: string = this.baseUrl + 'Advertisement/GetSavedAdvertisements/seekerID='; // + seeker_id
+    static readonly getAppliedAdvertisements: string = this.baseUrl + 'Advertisement/GetAppliedAdvertisements/seekerID='; // + seeker_id
     static readonly basicSearch: string = this.baseUrl + 'Advertisement/SearchAdvertisementsBasic/seekerID='; // + seeker_id
     static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'Advertisement/GetAdvertisementById/update/'; // + advertisement_id
     static readonly updateAdvertisement= this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
@@ -51,12 +51,14 @@ export class Apipaths {
     static readonly getCityNames: string = 'https://countriesnow.space/api/v0.1/countries/cities';
 
     // seeker
-    static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeekerById/';
+    static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';
+    static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
     static readonly authenticate: string = this.baseUrl + 'User/authenticate';
 
+    // OTP
     static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
     static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
 
@@ -64,7 +66,10 @@ export class Apipaths {
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
 
     // Azure Blob Service
-    static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststepstore;AccountKey=qUox5eMVpzqMQQE1d4WiXLJwupm8aHeab+Q8GD/xCDVSBFfa03wsrm6JFIOFrCG3hI9gxjEDrFn4+ASt2hRkmg==;EndpointSuffix=core.windows.net';
+    static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
-    static readonly BlobName = 'firststepstore';
+    static readonly BlobName = 'firststep';
+
+    //application
+    static readonly submitApplication: string = this.baseUrl + 'Advertisement/SendApplication/';
 }

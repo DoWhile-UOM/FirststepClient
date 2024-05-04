@@ -36,7 +36,7 @@
                     </div>
                     <div class="detail-inner">
                         <div class="detail-head">Experience Level</div>
-                        <div class="detail-data">{{adData.is_experience_required}}</div>
+                        <div class="detail-data">{{adData.experience}}</div>
                     </div>
                     <div class="detail-inner">
                         <div class="detail-head">Deadline</div>
@@ -55,7 +55,14 @@
         </mat-dialog-content>
 
         <mat-dialog-actions>
-            <button mat-raised-button class="apply-button" title="ApplyJob" color="primary">Apply To This Job</button>  
+            <button 
+                mat-raised-button 
+                class="apply-button" 
+                color="primary"
+                matBadge="{{adData.is_expired ? '!': ''}}"
+                matBadgeColor="warn"
+                [disabled]="adData.is_expired"
+                disabledInteractive>Apply To This Job</button>  
         </mat-dialog-actions>      
     </mat-card>
 </div>

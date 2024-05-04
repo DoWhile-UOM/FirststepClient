@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -14,7 +15,6 @@ export const routes: Routes = [
   { path: 'CompanyReg', component: RegisterCompanyComponent },
   { path: 'RegCheck', component: RegCmpStateCheckComponent },
   { path: 'RegCompanyAdmin', component: CompanyAdminRegistrtionFormComponent },
-
   {
     path: 'ca',
     loadChildren: () => import('./routes/company-admin.routes').then(m => m.caRoutes),
