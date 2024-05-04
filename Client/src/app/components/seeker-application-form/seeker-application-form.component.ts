@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FileDownloadComponent } from "../file-download/file-download.component";
 import { Router } from '@angular/router';
+import { ApplicationService } from '../../../services/application.service';
 
 
 interface Seeker{
@@ -18,6 +19,14 @@ interface Seeker{
     last_name:string;
     phone_number:string;
     linkedin:string;
+  }
+
+  interface Application{
+  "advertisement_id": number,
+  "seeker_id": number,
+  "cVurl": "string",
+  "doc1_url": "string",
+  "doc2_url": "string"
   }
 
 @Component({
@@ -29,9 +38,19 @@ interface Seeker{
 })
 export class SeekerApplicationFormComponent {
     SeekerDetails: Seeker = {} as Seeker;
+    applicationData: Application = {
+      "advertisement_id": 1056,
+      "seeker_id": 2,
+      "cVurl": "string",
+      "doc1_url": "string",
+      "doc2_url": "string"
+  
+    };
     useDefaultCV: boolean = false; 
-    constructor(private seekerService:SeekerService, private router: Router) {}
+    constructor(private seekerService:SeekerService,private applicationService:ApplicationService, private router: Router) {}
+
     user_id: number = 2;
+    
     
     async ngOnInit() {
       this.fetchEmployeeDetails(); 
@@ -47,13 +66,18 @@ export class SeekerApplicationFormComponent {
        
       }
    
-
 }
 
-onSubmitForm(){
+toggleDefaultCV() {
+  this.useDefaultCV = !this.useDefaultCV;
+}
+
+async onSubmitForm(){
+  await this.applicationService.submitSeekerApplication(this.applicationData);
   this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
 }
 }
+
 
 
    

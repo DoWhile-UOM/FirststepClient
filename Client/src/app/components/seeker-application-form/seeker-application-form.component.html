@@ -24,11 +24,11 @@
         <div>{{SeekerDetails.linkedin}}</div><!--change in backend-->
         <div class="document">
             <div *ngIf="!useDefaultCV">
-            <app-file-upload></app-file-upload>
+              <app-file-upload></app-file-upload>  
           </div>
           <div *ngIf="useDefaultCV"><app-file-download></app-file-download></div>
         <br>
-          <mat-checkbox color="primary"  [(ngModel)]="useDefaultCV"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
+          <mat-checkbox color="primary"  [(ngModel)]="useDefaultCV" (change)="toggleDefaultCV()"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
         </div>
         <div><app-file-upload></app-file-upload></div>
         <div><button mat-raised-button color="primary" (click)="onSubmitForm()">Submit Form</button></div> 

@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
+import { SeekerApplicationFormComponent } from '../seeker-application-form/seeker-application-form.component';
 
 @Component({
   selector: 'app-advertisement-actions',
@@ -16,6 +18,7 @@ import { MatChipsModule } from '@angular/material/chips';
   styleUrl: './advertisement-actions.component.css'
 })
 export class AdvertisementActionsComponent {
+
   @Input() currentStatus: boolean = false;
   @Input() expired: boolean = false;
   @Input() jobID: number = 0;
@@ -29,7 +32,8 @@ export class AdvertisementActionsComponent {
   constructor(
     private advertisementServices: AdvertisementServices,
     private snackbar: MatSnackBar,
-    private router: Router) { }
+    private router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     try {
@@ -84,4 +88,8 @@ export class AdvertisementActionsComponent {
       window.location.reload();
     }
   }
+
+ async onClickApply() {
+  const dialog=this.dialog.open(SeekerApplicationFormComponent); 
+    }
 }
