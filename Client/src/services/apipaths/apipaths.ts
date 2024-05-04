@@ -1,10 +1,4 @@
 export class Apipaths {
-    static requestOTP(requestOTP: any, userData: any) {
-      throw new Error('Method not implemented.');
-    }
-    static verifyOTP(verifyOTP: any, userData: any) {
-      throw new Error('Method not implemented.');
-    }
     static readonly baseUrl: string = 'https://localhost:7213/api/';
     
     // employee
@@ -39,6 +33,9 @@ export class Apipaths {
     static readonly deleteCompany: string = this.baseUrl + 'Company/DeleteCompany/';
     static readonly getAllComapanyList: string = this.baseUrl + 'Company/GetAllComapanyList';
     static readonly getCompanyApplicationById: string = this.baseUrl + 'Company/GetCompanyApplicationById/'; //+companyId
+    static readonly getCompanyRegState:string=this.baseUrl+'Company/GetRegCheckByID/';//+regurl id
+    static readonly registerCompany:string=this.baseUrl+'Company/AddCompany';
+    static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
@@ -61,12 +58,12 @@ export class Apipaths {
     static readonly register: string = this.baseUrl + 'User/register';
     static readonly authenticate: string = this.baseUrl + 'User/authenticate';
 
+    // OTP
+    static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
+    static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
+
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
-
-    // OTP
-   /* static readonly requestOTP: string = this.baseUrl + 'Email/requestOTP';
-    static readonly verifyOTP: string = this.baseUrl + 'Email/verifyOTP';*/
 
     // Azure Blob Service
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';

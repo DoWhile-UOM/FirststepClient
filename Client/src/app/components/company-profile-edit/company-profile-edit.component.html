@@ -1,3 +1,4 @@
+
 <div class="body">
   <app-spinner></app-spinner>
   <mat-card class="card">
@@ -100,15 +101,14 @@
             <input
               matInput
               #email
+              type="email"
               placeholder="Enter your email"
               name="company_email"
               [(ngModel)]="company.company_email"
               (blur)="emailErrorMessage()"
               required
-            />
-            <mat-error *ngIf="errorMessageForEmail">{{
-              errorMessageForEmail
-            }}</mat-error>
+            /> 
+            <mat-error >{{errorMessageForEmail}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>

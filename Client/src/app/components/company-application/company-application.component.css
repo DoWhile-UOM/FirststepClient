@@ -1,0 +1,58 @@
+.body {
+  padding: 3em;
+  width: 60%;
+  min-width: 400px;
+  margin: 0 auto;
+}
+.card {
+  padding: 2em;
+}
+mat-grid-tile mat-form-field {
+  width: 75%;
+  margin: 0.75em;
+}
+.company-logo {
+  width: 20px;
+  height: auto;
+}
+
+mat-grid-tile {
+  height: auto;
+}
+.title {
+  color: #008080;
+  font-size: 25px;
+  font-family: Lato;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+mat-form-field {
+  width: 75%;
+}
+.static-input {
+  cursor: default;
+}
+button {
+  width: 25%;
+}
+.mat-mdc-button-touch-target {
+  width: 32px !important;
+  height: 32px !important;
+}
+.approved-status:hover {
+  cursor: default;
+}
+.chip-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+mat-icon {
+  margin-right: 5px;
+}
+
+/* comment html */
+.comment {
+  width: 100%;
+}
