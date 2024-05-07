@@ -37,8 +37,14 @@ interface CmpAdminReg {
 })
 export class CompanyAdminRegistrtionFormComponent {
   hide = true;
-  cmpID: string = 'tmNBrgAyfM'; // sample company_id
-  type: string = 'CA'; // or whatever the type should be
+  cmpID: string = '';
+  type: string = 'CA';
+  errorMessageForFName = '';
+  errorMessageForLName = '';
+  errorMessageForPassword = '';
+  errorMessageForConfirmedPassword = '';
+  errorMessageForEmail = '';
+
 
   constructor(private route: ActivatedRoute, private companyService: CompanyService) { }
 
@@ -68,4 +74,13 @@ export class CompanyAdminRegistrtionFormComponent {
       console.error(error);
     }
   }
+
+  validateFirstName(value: string) {
+    if (value === '') {
+      this.errorMessageForFName = 'First Name is required';
+    } else {
+      this.errorMessageForFName = '';
+    }
+  }
+
 }

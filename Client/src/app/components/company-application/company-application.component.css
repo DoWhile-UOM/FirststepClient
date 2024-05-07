@@ -56,3 +56,15 @@ mat-icon {
 .comment {
   width: 100%;
 }
+.labelName{
+  width: 30%; flex: none;
+
+  display: flex !important;
+   
+}
+.lName{
+  width:100%;
+  text-align: right;
+  display: flex; 
+  justify-content: flex-end;
+}
