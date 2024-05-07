@@ -41,11 +41,19 @@ interface EvaluatedCompanyDetails {
   company_registered_date: Date;
   verified_system_admin_id: number;
 }
+interface CmpAdminReg {
+  email: string;
+  password_hash: string;
+  first_name: string;
+  last_name: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
-export class CompanyService {  
-  constructor(private snackBar: MatSnackBar, private http:HttpClient) { }
+
+export class CompanyService {
+  constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
@@ -66,7 +74,7 @@ export class CompanyService {
     console.log(companyDetails);
     return companyDetails;
   }
-  
+
   async getCompanyApplicationById(companyId: number) {
     let companyApplication: any = {};
     console.log('from service', companyId);
@@ -88,8 +96,8 @@ export class CompanyService {
     }
   }
 
-  CompanyRegister(companyObj:any){
-    return this.http.post<any>(Apipaths.registerCompany,companyObj)
+  CompanyRegister(companyObj: any) {
+    return this.http.post<any>(Apipaths.registerCompany, companyObj)
   }
 
   // async updateCompanyDetails(company: Company) {
@@ -112,8 +120,10 @@ export class CompanyService {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
+        console.log('Network Error: ' + error);
       });
   }
+  
   async updateCompanyApplicationById(
     evaluatedCompanyDetails: EvaluatedCompanyDetails,
     companyId: number
@@ -157,10 +167,49 @@ export class CompanyService {
     return companyList;
   }
 
-  /*
+  
   async getCompnayRegState(id: number) {
     let cmpData: any;
+    try {
+      await axios.get(Apipaths.getCompanyRegState + id)
+        .then((response) => {
+          cmpData = response.data;
+          //console.log('Company Data:', cmpData);
+        });
+    }
+    catch (error) {
+      //console.error(error);
+    }
 
+    return cmpData;
+  }
+  //Registration company state view ends here
+
+
+
+  //post company admin registration
+  // async postCompanyAdminReg(adminRegData: CmpAdminReg, type:string, cmpID:string) {
+  //   try {
+  //     const response = await axios.post(Apipaths.postCompanyAdminReg, adminRegData);
+  //     console.log('Company Admin Registration Successful');
+  //   } catch (error) {
+  //     console.log('Network Error: ' + error);
+  //   }
+  // }
+  async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
+    try {
+      const response = await axios.post(Apipaths.postCompanyAdminReg, {
+        ...adminRegData,
+        type: type,
+        company_id: companyId
+      });
+      console.log('Company Admin Registration Successful');
+    } catch (error) {
+      console.log('Network Error: ' + error);
+    }
+  }
+
+  /*
     this.http.get('https://localhost:7213/api/Company/GetCompanyById/'+id)
       .subscribe(data => {
         // Handle successful response with the data
@@ -175,3 +224,4 @@ export class CompanyService {
   */
   //Get company Registration state details---End
 }
+

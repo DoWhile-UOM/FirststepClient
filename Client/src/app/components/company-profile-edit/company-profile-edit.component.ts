@@ -16,7 +16,7 @@ import {
   MatDialogTitle,
   MatDialogContent,
   MatDialogActions,
-  MatDialogClose,
+  MatDialogClose,MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -28,6 +28,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { ChangeDetectorRef } from '@angular/core';
+
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -84,6 +89,8 @@ interface verifyOTP {
   ],
 })
 export class CompanyProfileEditComponent {
+hasDataLoaded: boolean = false;
+emailcaptuered='';
   selected = 'company.company_business_scale';
   email = new FormControl('', [Validators.required, Validators.email]);
   company: Company = {} as Company; // Initialize the company property
@@ -103,17 +110,18 @@ export class CompanyProfileEditComponent {
   errorMessageForPhoneNumber = '';
   errorMessageForEmail = '';
 
-  isEmailVerified: boolean = false;
-  isOTPRequsteSent: boolean = false;
-  reamingTime: number = 0;
-  reqOTPbtntext: string = 'Request OTP';
+  isOTPRequestSent: boolean = false;
+  remainingTime: number = 0;
+  reqOTPbtntxt: string = 'Request OTP';
   isFormVerified: boolean = false;
+  isConfrimedToChangeEmail: boolean = false;
+  otp: string = '';
   //commayForm
   companyForm!: FormGroup;
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog,
+    public dialog: MatDialog, private auth: AuthService,private snackbar: MatSnackBar,private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -124,20 +132,26 @@ export class CompanyProfileEditComponent {
         this.companyId
       );
       this.cName = this.company.company_name;
+      this.emailcaptuered=this.company.company_email;
       console.log('got details');
-    } finally {
+      this.hasDataLoaded = true;
+      this.spinner.hide();
+    } catch(error) {
+      console.log(error);
       this.spinner.hide();
     }
   }
 
   async onSubmit() {
+    console.log("onSubmit function is called");
     try {
       if (
         this.errorMessageForCompanyName == '' &&
         this.errorMessageForDescription == '' &&
         this.errorMessageForWebsite == '' &&
         this.errorMessageForPhoneNumber == '' &&
-        this.errorMessageForEmail == ''
+        this.errorMessageForEmail == ''&& (this.emailcaptuered==this.company.company_email)
+        
       ) {
         console.log('Company : ', this.company);
         this.spinner.show();
@@ -148,7 +162,11 @@ export class CompanyProfileEditComponent {
         ); // 7 for bistec
         this.cName = this.company.company_name;
         console.log('updated');
-      } else {
+      }
+      else if(!(this.emailcaptuered==this.company.company_email)){
+        this.dialog.open(InformEmailShouldBeVerifiedPopUp);
+      }
+      else {
         this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       }
     } finally {
@@ -209,20 +227,6 @@ export class CompanyProfileEditComponent {
       this.errorMessageForPhoneNumber = '';
     }
   }
-  // emailErrorMessage() {
-  //   let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  //   if (this.company.company_email.length == 0) {
-  //     this.errorMessageForEmail = 'Email is required';
-  //   }
-  //   if (!emailRegex.test(this.company.company_email)) {
-  //     console.log(!emailRegex.test(this.company.company_email));
-  //     this.errorMessageForEmail = 'Email is invalid';
-  //     console.log(this.errorMessageForEmail);
-  //   } else {
-  //     console.log(!emailRegex.test(this.company.company_email));
-  //     this.errorMessageForEmail = '';
-  //   }
-  // }
   emailErrorMessage() {
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     let testResult = emailRegex.test(this.company.company_email.toString());
@@ -235,20 +239,83 @@ export class CompanyProfileEditComponent {
     } else {
       console.log('should print empty');
       this.errorMessageForEmail = '';
+      this.confirmTOChangeEmail();
     }
     console.log(this.errorMessageForEmail);
   }
-  // emailErrorMessage() {
-  //   this.emailControl.setValue(this.company.company_email);
+   //OTP handling
+  confirmTOChangeEmail(){
+    const dialogRef = this.dialog.open(ApprovingChangingEmailPopUp);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
+        this.isConfrimedToChangeEmail=true;
+        console.log(this.isConfrimedToChangeEmail);
+        }
+    });
+  }
 
-  //   if (this.emailControl.hasError('required')) {
-  //     this.errorMessageForEmail = 'Email is required';
-  //   } else if (this.emailControl.hasError('email')) {
-  //     this.errorMessageForEmail = 'Email is invalid';
-  //   } else {
-  //     this.errorMessageForEmail = '';
-  //   }
-  // }
+
+ 
+  async requestOTP() {
+  
+        const userData: requestOTP = {
+          email: this.company.company_email,
+        };
+        let verificationResult = await this.auth.requestOTP(userData);
+        console.log('otp request sent');
+        console.log(verificationResult);
+        if (verificationResult == true) {
+          this.snackbar.open('OTP Sent successful', '')._dismissAfter(3000);
+          this.printTextAfterFiveMinutes();
+          console.log('otp sent');
+        } else {
+          this.snackbar
+            .open('OTP Request failed Please try Again', '', {
+              panelClass: ['app-notification-error'],
+            })
+            ._dismissAfter(3000);
+        }
+  }
+  async VerifyOTP() {
+    console.log(this.company.company_email);
+    const userData: verifyOTP = {
+      email: this.company.company_email,
+      otp: this.otp,
+    };
+    let verificationResult = await this.auth.verifyOTP(userData);
+    console.log(userData);
+    console.log('otp verification request was sent');
+    if (verificationResult == true) {
+      // this.isEmailVerified = true;
+      this.emailcaptuered=this.company.company_email;
+      this.snackbar.open('OTP verification successful', '', { duration: 2000 });
+      console.log('otp verified');
+    } else {
+      this.snackbar
+        .open('OTP verification failed', '', {
+          panelClass: ['app-notification-error'],
+        })
+        ._dismissAfter(3000);
+    }
+  }
+
+  printTextAfterFiveMinutes(){
+    this.isOTPRequestSent = true;
+    this.remainingTime = 300;//60*5
+    this.reqOTPbtntxt = this.remainingTime.toString();
+    const intervalId = setInterval(() => {
+      this.remainingTime--;
+      this.cdr.detectChanges();
+      if (this.remainingTime <= 0) {
+        clearInterval(intervalId); // Stop the timer when time is up
+        console.log("Timer off");
+        this.isOTPRequestSent = false;
+        this.reqOTPbtntxt = "Request OTP";
+      }
+      console.log(this.remainingTime);
+    }, 1000);
+  }
+
 }
 
 //cannot-submit-without-all-inputs-are-valid-pop-up
@@ -265,3 +332,44 @@ export class CompanyProfileEditComponent {
   ],
 })
 export class CannotSubmitWithoutAllInputsAreValidPopUp {}
+
+//approving-changing0email-pop-up
+@Component({
+  selector: 'approvaing-changing-email-pop-up',
+  standalone: true,
+  templateUrl: 'approvaing-changing-email-pop-up.html',
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
+})
+export class ApprovingChangingEmailPopUp {
+  givenPermissionToChangeEmail: boolean = false;
+  constructor(public dialogRef: MatDialogRef<ApprovingChangingEmailPopUp>) {}
+
+  closeDialog() {
+    this.dialogRef.close(this.givenPermissionToChangeEmail);
+  }
+  yesAction(){
+    this.givenPermissionToChangeEmail = true;
+    this.dialogRef.close(this.givenPermissionToChangeEmail);
+  }
+}
+
+//inform-email-should-be-verified-pop-up
+@Component({
+  selector: 'inform-email-should-be-verified-pop-up',
+  standalone: true,
+  templateUrl: 'inform-email-should-be-verified-pop-up.html',
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
+})
+export class InformEmailShouldBeVerifiedPopUp{}

@@ -82,6 +82,7 @@ button {
   padding-top: 10px;
   padding-bottom: 10px;
   padding: 10px;
+  margin-right: 10px;
 }
 /* .apply-changes-class:hover {
   background-color: #ffffff;
@@ -136,3 +137,8 @@ button:hover {
   border-radius: 5px;
   padding: 2px 0;
 } */
+
+.container-otp{
+  display: flex;
+  flex-direction: column;
+}
