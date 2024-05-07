@@ -90,6 +90,10 @@ export class AdvertisementActionsComponent {
   }
 
  async onClickApply() {
-  const dialog=this.dialog.open(SeekerApplicationFormComponent); 
+  const dialog=this.dialog.open(SeekerApplicationFormComponent,{
+    maxWidth: '100em',
+    data: {jobID: this.jobID}
+  }); 
     }
 }
+

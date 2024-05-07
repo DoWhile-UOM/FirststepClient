@@ -1,6 +1,10 @@
-.example-card {
+/*.example-card {
   margin: 2vw;
   width: 95%;
+}*/
+mat-card{
+  height: auto;
+  padding: 3%;
 }
 
 .detailsField {
@@ -30,8 +34,8 @@ mat-card-title {
   align-items: center;
   justify-content: center;
   color: #008080;
-  margin-bottom: 40px;
-  margin-top: 50px;
+  margin-bottom: 20px;
+  margin-top: 30px;
   font-size: 2vw;
   font-style: normal;
   font-weight: 700;
@@ -47,10 +51,10 @@ mat-card-content {
 }
 
 .textSection div {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 .fieldSection div {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .checkbox-text {
