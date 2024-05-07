@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
 import { countries } from 'country-data';
 import { Country } from 'country-state-city';
+import { MatBadgeModule } from '@angular/material/badge';
 
 interface Skill{
   skill_name: string;
@@ -21,7 +22,7 @@ interface Job{
 	city: string;
 	employeement_type: string;
 	arrangement: string;
-	is_experience_required: string;
+	experience: string;
 	salary: string;
   currency_unit: string;
 	submission_deadline: string;
@@ -29,13 +30,14 @@ interface Job{
 	job_description: string;
 	field_name: string;
 	company_name: string;
+  is_expired: boolean;
   skills: Skill[];
 }
 
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, MatCardModule, CommonModule, MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent],
+  imports: [AdvertisementHeaderComponent, MatCardModule, CommonModule, MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent, MatBadgeModule],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })

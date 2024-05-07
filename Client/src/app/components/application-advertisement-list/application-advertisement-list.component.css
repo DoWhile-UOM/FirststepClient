@@ -1,0 +1,21 @@
+.title{
+    width: 93.5%;
+    margin-bottom: 2em;
+    padding-top: 4em;
+    margin: 0 auto;
+}
+
+.title p{
+    font-size: 30px;
+    font-weight: bold;
+    color: #008080;
+    font-family: Lato;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 1em;
+}

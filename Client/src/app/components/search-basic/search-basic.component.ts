@@ -18,6 +18,8 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
 
 interface Job {
   advertisement_id: number;
@@ -31,6 +33,7 @@ interface Job {
   arrangement: string;
   posted_date: string;
   is_saved: boolean;
+  is_expired: boolean;
 }
 
 interface SearchData{
@@ -57,15 +60,22 @@ interface SearchData{
     AsyncPipe,
     CommonModule,
     SpinnerComponent,
-    MatSliderModule],
+    MatSliderModule,
+    MatExpansionModule,
+    MatChipsModule],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
 export class SearchBasicComponent implements OnInit{
+validateSelectedCountry(arg0: string) {
+throw new Error('Method not implemented.');
+}
   @Input() pageSize: number = 10;
   
   jobList: any = [];
   jobIdList: number[] = [];
+
+  filters: string[] = ['Employment Type', 'Job Arrangement', 'Country', 'City', 'Distance', 'Posted Date', 'Company Name', 'Field Name', 'Title'];
 
   empTypes: string[] = AdvertisementServices.employment_types;
 	jobArrangement: string[] = AdvertisementServices.job_arrangement;
@@ -104,7 +114,8 @@ export class SearchBasicComponent implements OnInit{
   }
 
   async ngOnInit() {
-    /*
+    this.spinner.show();
+
     try {
       this.seekerID = String(sessionStorage.getItem('user_id'));
       var user_type = String(sessionStorage.getItem('user_type'));
@@ -115,6 +126,8 @@ export class SearchBasicComponent implements OnInit{
         // navigate to 404 page
         this.router.navigate(['/notfound']);
         // code to signout
+
+        this.spinner.hide();
         return;
       }
     } catch (error) {
@@ -123,15 +136,12 @@ export class SearchBasicComponent implements OnInit{
       // navigate to 404 page
       this.router.navigate(['/notfound']);
       // code to signout
-      return;
-    }
-    */
 
-    this.seekerID = '3';
+      this.spinner.hide();
+      return;
+    }    
 
     this.countries = Country.getAllCountries().map(country => country.name);
-
-    //this.spinner.show();
 
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {
@@ -150,10 +160,20 @@ export class SearchBasicComponent implements OnInit{
   }
 
   async search(data: SearchData){
-    this.spinner.show();
-
     data.country = this.locationCountryControl.value!;
     data.city = this.locationCityControl.value!;
+
+    // validate location
+    if (this.countries.indexOf(data.country) == -1){
+			this.snackBar.open("Input Error: Invalid Country", "", {panelClass: ['app-notification-error']});
+			return;
+		}
+		else if (this.cities.indexOf(data.city) == -1){
+			this.snackBar.open("Input Error: Invalid City", "", {panelClass: ['app-notification-error']});
+			return;
+		}
+
+    this.spinner.show();
     
     var response = await this.advertisementService.searchAdsBasicAlgo(this.seekerID, data, String(this.pageSize));
 
@@ -180,17 +200,6 @@ export class SearchBasicComponent implements OnInit{
     this.newItemEvent.emit(this.jobList);
 
     this.spinner.hide();
-  }
-
-  validateSelectedCountry(selectedCountry: string){
-    if (selectedCountry == undefined || selectedCountry == ''){
-      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
-      return;
-    }
-    else if (this.countries.indexOf(selectedCountry) == -1){
-      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
-      return;
-    }
   }
 
   onSelectedCountryChanged(selectedCountry: string){
@@ -226,7 +235,7 @@ export class SearchBasicComponent implements OnInit{
 
   distanceStepper(value: number): string {
     if (value > 100){
-      return '100km+';
+      return 'Any';
     }
 
     return String(value) + 'km';
@@ -243,4 +252,8 @@ export class SearchBasicComponent implements OnInit{
 
 		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
 	}
+
+  showAllFilters(){
+
+  }
 }

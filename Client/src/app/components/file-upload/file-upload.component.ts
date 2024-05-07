@@ -8,9 +8,10 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { NgIf } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
+import { DocumentService } from '../../../services/document.service';
 
 
-const apiUrl = 'https://localhost:7213/api/Document';
+
 @Component({
   selector: 'app-file-upload',
   standalone: true,
@@ -22,7 +23,7 @@ const apiUrl = 'https://localhost:7213/api/Document';
 export class FileUploadComponent implements OnInit {
   selectedFile: File | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private documentService:DocumentService) {}
 
   ngOnInit(): void {}
 
@@ -33,21 +34,15 @@ export class FileUploadComponent implements OnInit {
 
   uploadFile() {
     if (!this.selectedFile) {
-      return; // Handle no file selected case
+      return;
     }
-
-    const fileData = new FormData();
-    fileData.append('files', this.selectedFile, this.selectedFile.name);
-
-    const headers = new HttpHeaders()
-      .set('Accept', '*/*');
-
-    this.http.post(apiUrl, fileData, { headers })
-      .subscribe(response => {
-        console.log('Upload successful:', response);
-        this.selectedFile = null; // Clear selection after successful upload
-      }, error => {
-        console.error('Upload error:', error);
-      });
+    this.documentService.uploadFile(this.selectedFile)
+    .subscribe(response => {
+      console.log('Upload successful:', response);
+      this.selectedFile = null; 
+    }, error => {
+      console.error('Upload error:', error);
+    });
+  
   }
 }

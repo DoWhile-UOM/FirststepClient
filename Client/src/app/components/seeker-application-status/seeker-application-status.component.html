@@ -1,0 +1,51 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <app-advertisement-header></app-advertisement-header>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+
+  <mat-stepper labelPosition="bottom" #stepper class="stepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Application Submission</ng-template>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Application Screening</ng-template>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Finalize</ng-template>
+    </mat-step>
+  </mat-stepper>
+
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-card-title>Application Form</mat-card-title>
+    <div class="detailsField">
+      <div class="textSection">
+        <div>First Name</div>
+        <div>Last Name</div>
+        <div>Email</div>
+        <div>phone number</div>
+        <div>Linkedin</div>
+        <div>CV</div>
+        <div class="doc">Other Documents</div>
+      </div>
+      <div class="fieldSection">
+        <div>{{ SeekerDetails.first_name }}</div>
+        <div>{{ SeekerDetails.last_name }}</div>
+        <div>{{ SeekerDetails.email }}</div>
+        <div>{{ SeekerDetails.phone_number }}</div>
+        <div>{{ SeekerDetails.linkedin }}</div>
+        <div>
+          <button mat-stroked-button color="primary">View Document</button>
+        </div>
+        <div>
+          <button mat-stroked-button color="primary">View Document</button>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

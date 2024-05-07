@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bars/nav-bar/nav-bar.component';
@@ -14,5 +14,13 @@ import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component
     imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent, PdfViewerComponent ]
 })
 export class AppComponent {
-  user = 'ca';
+  url = this.router.url;
+  
+  constructor (private router: Router) { 
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.url = event.url;
+      }
+  });
+  }
 }

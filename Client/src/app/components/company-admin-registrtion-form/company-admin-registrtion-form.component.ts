@@ -25,7 +25,6 @@ interface CmpAdminReg {
   templateUrl: './company-admin-registrtion-form.component.html',
   styleUrl: './company-admin-registrtion-form.component.css',
   imports: [
-
     HttpClientModule,
     MatCardModule,
     MatFormFieldModule,
