@@ -46,6 +46,9 @@
   }
   .forgot-password {
     margin-bottom: 20px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
   }
   
   matInput {

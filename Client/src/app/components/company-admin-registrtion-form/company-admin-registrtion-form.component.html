@@ -1,66 +1,67 @@
-<header></header>
-<body>
-  <app-nav-bar></app-nav-bar>
-  <div class="body">
-    <mat-card class="body-card">
-      <mat-card-content>
-        <span class="heading">Create Compnay Admin Account</span>
+<div class="body">
+  <mat-card class="card">
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>First Name</mat-label>
-          <input matInput placeholder="Enter your first name" />
-        </mat-form-field>
+    <mat-grid-list cols="1" rowHeight="200">
+      <mat-grid-tile>
+        <span class="heading title">Create Compnay Admin Account</span>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider />
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Last Name</mat-label>
-          <input matInput placeholder="Enter your last name" />
-        </mat-form-field>
+    <mat-grid-list cols="1" rowHeight="100">
+      <form class="form" #form="ngForm" (ngSubmit)="onSubmit(form.value)">
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="Enter your first name" name="firstName" ngModel required />
+          </mat-form-field>
+        </mat-grid-tile>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Email Address</mat-label>
-          <input matInput placeholder="Enter your email address" />
-        </mat-form-field>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Enter your last name" name="lastName" ngModel />
+          </mat-form-field>
+        </mat-grid-tile>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            placeholder="Enter your password"
-            [type]="hide ? 'password' : 'text'"
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide"
-          >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Email Address</mat-label>
+            <input matInput placeholder="Enter your email address" name="email" ngModel />
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Enter your password" name="password" [type]="hide ? 'password' : 'text'"
+              ngModel />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Confrim Password</mat-label>
+            <input matInput placeholder="Re-enter your password" [type]="hide ? 'password' : 'text'" />
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <button mat-raised-button class="apply-button" color="primary" type="submit">
+            <span class="create-btn-name">Create</span>
           </button>
-        </mat-form-field>
+        </mat-grid-tile>
+        <mat-divider />
+      </form>
+    </mat-grid-list>
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Confrim Password</mat-label>
-          <input
-            matInput
-            placeholder="Re-enter your password"
-            [type]="hide ? 'password' : 'text'"
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide"
-          >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-          </button>
-        </mat-form-field>
-
-        <button mat-button class="create-button">
-          <span class="create-btn-name">Create</span>
-        </button>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</body>
+  </mat-card>
+</div>

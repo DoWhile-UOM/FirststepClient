@@ -1,1 +1,166 @@
-<p>company-application works!</p>
+<div class="body">
+  <app-spinner> </app-spinner>
+  <mat-card class="card">
+    <!--Top Section-->
+    <mat-grid-list cols="6" rowHeight="140">
+      <mat-grid-tile [colspan]="1">
+        <a (click)="goBack()">
+          <img src="assets/arrow.png" alt="Company Logo" class="company-logo" />
+        </a>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2">
+        <span class="sectionHeading heading title">{{
+          companyApplication.company_name
+          }}</span>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="3">
+        <mat-chip class="apply-button" color="warn" matTooltip="Evaluation status of the application">
+          <div class="chip-content">
+            <mat-icon *ngIf="evaluated_status == 'Evaluated'">checkcircleicon</mat-icon>
+            {{ evaluated_status }}
+          </div>
+        </mat-chip>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider></mat-divider>
+
+    <!--Company Details-->
+    <!-- <mat-grid-list cols="1" rowHeight="100">
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Company Name</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_name"
+            [(ngModel)]="companyApplication.company_name"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>URL of the website</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_url"
+            [(ngModel)]="companyApplication.company_website"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_email"
+            [(ngModel)]="companyApplication.company_email"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_phone"
+            [(ngModel)]="companyApplication.company_phone_number"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field class="form-field" appearance="outline">
+          <mat-label>Business Registratin Number</mat-label>
+          <input
+            matInput
+            [readonly]="true"
+            name="company_brn"
+            [(ngModel)]="companyApplication.business_reg_certificate"
+            class="static-input"
+          />
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list> -->
+
+    <mat-grid-list cols="2" rowHeight="100">
+      <mat-grid-tile class="labelName">
+        <mat-label class="lName">Company Name:</mat-label>
+        <!-- <label >Company Name:</label> -->
+      </mat-grid-tile>
+      <mat-grid-tile style="display: flex; justify-content: flex-start;">
+        <mat-label>{{ companyApplication.company_name }}</mat-label>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="labelName">
+        <mat-label class="lName">URL of the website:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-label>{{ companyApplication.company_website }}</mat-label>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="labelName">
+        <mat-label class="lName">Email:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-label>{{ companyApplication.company_email }}</mat-label>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="labelName">
+        <mat-label class="lName">Phone Number:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-label>{{ companyApplication.company_phone_number }}</mat-label>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="labelName">
+        <mat-label class="lName">Business Registratin Number:</mat-label>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-label>{{ companyApplication.business_reg_certificate }}</mat-label>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-divider></mat-divider>
+    <div *ngIf="evaluated_status == 'Not Evaluated'">
+      <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
+        <mat-grid-tile style="width: 20%">
+          <button mat-raised-button class="apply-button" color="primary" (click)="approve()" style="width: 50%">
+            Approve
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile style="width: 20%">
+          <button mat-raised-button class="apply-button" color="primary" (click)="reject()" style="width: 50%">
+            Reject
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+
+    <!--Approved or Rejected button -->
+    <div *ngIf="evaluated_status == 'Evaluated'">
+      <mat-grid-list cols="1" rowHeight="140" style="display: flex; justify-content: center; align-items: center">
+        <mat-grid-tile>
+          <button mat-raised-button class="apply-button approved-status" color="primary" style="text-align: left">
+            {{
+            evaluated_status == "Evaluated" &&
+            companyApplication.verification_status
+            ? "Approved"
+            : evaluated_status == "Evaluated" &&
+            !companyApplication.verification_status
+            ? "Rejected"
+            : ""
+            }}
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </mat-card>
+</div>

@@ -366,14 +366,15 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 		let response: boolean = await this.advertisementService.updateAdvertisement(adData, this.jobID);
 
+		this.spinner.hide();
+
 		if (response){
-			this.router.navigate(['ca/jobOfferList/Uploaded']);
+			this.snackBar.open("Job Details Updated Successfully!", "", {panelClass: ['app-notification-success']})._dismissAfter(3000);
+			window.history.back();
 		}
 		else{
 			this.snackBar.open("Error Updating Job Details", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 		}
-
-		this.spinner.hide();
 	}
 
 	validateInput(adData: any){
