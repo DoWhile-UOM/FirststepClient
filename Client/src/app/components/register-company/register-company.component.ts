@@ -149,20 +149,9 @@ export class RegisterCompanyComponent {
   onRegister() {
     if (!this.isEmailVerified) {
       alert("Please verify your email first");
-
       return;
     } else {
-
-      let verificationResult = this.company.CompanyRegister(this.companyReg.value);
-
-      if (verificationResult == true) {
-        this.isEmailVerified = true;
-        this.snackbar.open("Company Registration Application Sent successfully", "", { duration: 2000 });
-      } else {
-        this.snackbar.open("An error Occured"+verificationResult, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-      }
+      this.company.CompanyRegister(this.companyReg.value);
     }
-
-
   }
 }

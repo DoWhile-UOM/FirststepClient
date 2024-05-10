@@ -97,8 +97,12 @@ export class CompanyService {
     }
   }
 
-  CompanyRegister(companyObj: any) {
-    return this.http.post<any>(Apipaths.registerCompany, companyObj)
+  async CompanyRegister(companyObj: any) {
+    await axios.post(Apipaths.registerCompany, companyObj).then((response) => {
+      this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    }).catch((error) => {
+      console.log('Network Error: ' + error);
+    });
   }
 
   // async updateCompanyDetails(company: Company) {
@@ -184,47 +188,10 @@ export class CompanyService {
 
     return cmpData;
   }
-  */
+  
   //Get company Registration state details---End
 
-
-  CompanyRegister(companyObj: any) {
-    let action: boolean = false;
-    axios.post(Apipaths.registerCompany, companyObj)
-      .then(function (response) {
-        console.log(response.status);
-        if (response.status == 200) {
-          action = true;
-        }
-      })
-      .catch(
-        (error) => {
-          console.log("Error Occured" + error);
-        }
-      );
-    return action;
-  }
-
-
-
-
-
   //Registration company state view Start here
-  async getCompnayRegState(id: string) {
-    let cmpData: any;
-    try {
-      await axios.get(Apipaths.getCompanyRegState + id)
-        .then((response) => {
-          cmpData = response.data;
-          //console.log('Company Data:', cmpData);
-        });
-    }
-    catch (error) {
-      //console.error(error);
-    }
-
-    return cmpData;
-  }
   //Registration company state view ends here
 
 
@@ -238,6 +205,7 @@ export class CompanyService {
   //     console.log('Network Error: ' + error);
   //   }
   // }
+  
   async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
     try {
       const response = await axios.post(Apipaths.postCompanyAdminReg, {
@@ -250,5 +218,6 @@ export class CompanyService {
       console.log('Network Error: ' + error);
     }
   }
+
 }
 
