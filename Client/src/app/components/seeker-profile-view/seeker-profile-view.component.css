@@ -1,217 +1,87 @@
-.page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .form-popup {
-    justify-content: center;
-    align-items: center;
+.body{
+    width: 1000px;
+    height: fit-content;
     border: 3px black;
-    border-radius: 25px;
     background: #fff;
-  }
-  
-  .up-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .left {
-    flex: 1;
-    padding: 10px;
-    align-items: center;
-    text-align: center;
-  }
-  
-  img {
-    display: inline-block;
-  }
-  
-  .right {
-    flex: 1;
-    padding: 10px;
-    align-items: right;
-  }
-  
-  .seeker {
-    text-align: center;
-    width: 30vw;
-    height: auto;
-    padding-bottom: 50px;
-  
-    /* padding: 60px 100px 30px 100px; */
-  }
-  
-  h2 {
-    font-size: 30px;
-    font-weight: 550;
-    text-align: center;
-    font-style: italic;
-  }
-  
-  .heading {
-    text-align: center;
-    font-size: 25px;
-    font-weight: 550;
-    margin-bottom: 50px;
-    line-height: 1.5;
-  }
-  
-  .label-import {
-    text-align: left;
-    font-size: 17px;
-    font-weight: 500;
-    color: #7a7a7a;
-  }
-  
-  p {
-    text-align: center;
-    font-size: 17px;
-    margin: 2vw;
-  }
-  .form-container {
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0.2, 0.2, 0.2, 0.2);
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
     padding: 25px 25px 25px 25px;
-    height: 35vw;
-    width: 30vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* width: 500px;
-      height: 525px; */
-  }
-  .form-container-one {
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0.2, 0.2, 0.2, 0.2);
-    padding: 25px 25px 25px 25px;
-    height: 45vw;
-    width: 30vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* width: 500px;
-      height: 525px; */
-  }
-  .form-container-two {
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0.2, 0.2, 0.2, 0.2);
-    padding: 25px 25px 25px 25px;
-    height: 25vw;
-    width: 30vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* width: 500px;
-      height: 525px; */
-  }
-  
-  
-  
-  .mat-mdc-form-field {
-    margin-top: 16px;
-    display: grid;
-    width: 20vw;
-    align-items: center;
-    padding-left: 15px;
-    padding-bottom: 0;
-  }
-  
-  /* Adjusting the distance between steps */
-  .mat-horizontal-stepper .mat-step-header {
-    margin-right: 20px; /* Increase or decrease this value to adjust the distance */
-  }
-  
-  .custom-stepper-button {
-    background-color: white;
-    color: #008080;
-    border: 3px solid #008080;
-  }
-  .custom-stepper1-button {
-    background-color: #008080;
-    color: white;
-  }
-  
-  .mat-button {
-    padding-left: 10px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between; /* Positions elements at opposite ends */
-    width: 100%; /* Ensures full-width for the container */
-    gap: 10px;
-  }
-  
-  .custom-stepper-button,
-  .custom-stepper1-button {
-    padding: 10px 20px; /* Padding to add space within the button */
-    margin-right: 10px; /* Adds margin on the right of each button */
-  }
-  
-  mat-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .nav-bar {
-    height: 4em;
-    background-color: white;
-    position: absolute;
-    z-index: 2;
-    margin-top: 0;
-  }
-  
-  .mat-toolbar {
-    position: relative;
-    z-index: 2;
-  }
-  
-  .logo {
-    height: 2.5em;
-    width: 2.5em;
-    margin-right: 0.5em;
-  }
-  
-  .flex-spacer {
-    flex: 1 1 auto;
-  }
-  
-  .profile-image {
-    height: 2em;
-    width: 2em;
-    border-radius: 50%;
-    margin-right: 16px;
-    margin-left: 5px;
-  }
-  
-  .skill-part{
-    margin: 2vw;
-    
-  }
-  
-  .skillchip {
-    width: 20vw;
-    display: grid;
-    align-items: center;
-  }
-  
-  .cvupload {
-    width: min-content;
-    display: grid;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-bottom: auto;
+    margin-top: 100px;
+    font-family: "roboto";
+}
+
+hr {
+  margin-left: 60px;
+  margin-top: 15px;
+
+}
+.name{
+    font-size: 22px;
+    font-weight: 450;
     margin-bottom: 10px;
+}
+.bio{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.upper-section {
+    display: flex;
+    align-items: center;
   }
   
+  button.mat-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .profileimage {
+    margin-left: 10px; /* adjust this value to increase or decrease the space */
+    height: auto;
+    width: 75px;
+    margin-right: 40px;
+  }
+  
+  .info {
+    margin-left: 10px; /* adjust this value to increase or decrease the space */
+    display: flex;
+    flex-direction: column;
+  }
+
+.personalInfo > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+    margin: 30px 0px 30px 0px;
+    padding-left: 80px;
+  }
+  
+  .head {
+    text-align: left;
+    width: 150px;
+    font-weight: 550;
+  }
+  
+  span {
+    text-align: left;
+  }
+  
+  .buttons{
+    margin-left: 80px;
+
+  }
+  .Open {
+    background-color: teal;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .Download {
+    background-color: white;
+    color: teal;
+    border: 3px solid teal;
+  }
