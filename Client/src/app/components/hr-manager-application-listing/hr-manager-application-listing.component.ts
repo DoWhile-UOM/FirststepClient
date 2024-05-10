@@ -42,5 +42,59 @@ export interface HRManagerApplicationListDto {
   styleUrl: './hr-manager-application-listing.component.css'
 })
 export class HrManagerApplicationListingComponent {
+    //navbar
+    selected: number = 3;
+    colorList = ['black', 'back', 'black', 'black']
+  
+    //Table
+    
+    displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated','assigned', 'submitted_date'];
+    dataSource!: MatTableDataSource<HRManagerApplicationListDto>;
+  
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort = new MatSort();
+  
+    job_id: number = 1;//temp
+  
+    applications: HRManagerApplicationListDto[] = [];
+    selectedFilter: string = 'assigned';
+    applicationsLength: number = 0;
+  
+  
+  
+    constructor(private applicationService:ApplicationService) {
+      this.applicationsLength=1;
+     }
+  
+    async ngOnInit() {
+      //nav bar
+      this.colorList.forEach(element => {
+        element = 'black';
+      });
+      
+      this.colorList[this.selected] = 'primary';
+  
+  //     //table
+  //     await this.applicationService.getAllApplicationsbyAdvertisementID(this.job_id).then((response) => {
+  //       this.applications = response;
+  //       console.log(this.applications);
+  //     });
+  //   }
+  
+  //   async refreshTable(status:string,) {}
+  
+  //    //table
+  
+  
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  
+  
+  //new
+  
+  
+  
 
 }
