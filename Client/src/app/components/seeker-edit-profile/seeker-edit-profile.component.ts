@@ -146,27 +146,27 @@ export class SeekerEditProfileComponent {
  }
 
  //update
-//  async onApply() {
-//    //this.seekerUpdate.field_id = this.selectedFieldId; //fetch the selected field id
-//    // this.seekerUpdate.seekerSkills = this.skills;
-//    // this.seekerUpdate.seekerSkills = this.skills;
-//    try {
-//      await this.seekerService.editseeker(this.seekerUpdate, this.user_id);
-//    } catch (error) {
-//      console.error('error updating profile', error);
-//    }
-//  }
+ async onApply() {
+   //this.seekerUpdate.field_id = this.selectedFieldId; //fetch the selected field id
+   // this.seekerUpdate.seekerSkills = this.skills;
+   // this.seekerUpdate.seekerSkills = this.skills;
+   try {
+     await this.seekerService.editseeker(this.seekerUpdate, this.user_id);
+   } catch (error) {
+     console.error('error updating profile', error);
+   }
+ }
 
-//  //Delete
+ //Delete
 
-//  async onDelete(user_id: number) {
-//    try {
-//      await this.seekerService.deleteseeker(this.user_id).then(() => {
-//        this.seekerDetails = {} as Seeker;
-//      });
-//    } catch (error) {
-//      console.error('Error deleting seeker:', error);
-//    }
-//  }
+ async onDelete(user_id: number) {
+   try {
+     await this.seekerService.deleteseeker(this.user_id).then(() => {
+       this.seekerDetails = {} as Seeker;
+     });
+   } catch (error) {
+     console.error('Error deleting seeker:', error);
+   }
+ }
 
 }
