@@ -66,11 +66,11 @@ interface updateSeeker {
 } 
 
 @Component({
-  selector: 'app-seeker-edit-profile',
-  standalone: true,
-  imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, MatRadioModule, ReactiveFormsModule, CommonModule, MatFormField],
-  templateUrl: './seeker-edit-profile.component.html',
-  styleUrl: './seeker-edit-profile.component.css'
+    selector: 'app-seeker-edit-profile',
+    standalone: true,
+    templateUrl: './seeker-edit-profile.component.html',
+    styleUrl: './seeker-edit-profile.component.css',
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, MatRadioModule, ReactiveFormsModule, CommonModule, MatFormField, AddSkillsComponent]
 })
 export class SeekerEditProfileComponent {
    // The image url of the default image
