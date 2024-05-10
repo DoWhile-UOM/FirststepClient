@@ -6,6 +6,7 @@ import { SavedAdvertisementListComponent } from '../components/saved-advertiseme
 import { ApplicationAdvertisementListComponent } from '../components/application-advertisement-list/application-advertisement-list.component';
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { SeekerEditProfileComponent } from '../components/seeker-edit-profile/seeker-edit-profile.component';
+import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup.component';
 
 // need to be verified
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'applied', component: ApplicationAdvertisementListComponent },
   { path: 'home/company-profile', component: CompanyProfileComponent },
   { path: 'home/edit-profile', component: SeekerEditProfileComponent },
+  { path: 'home/signup', component: SeekerSignupComponent },
 
   // need to be verified
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
