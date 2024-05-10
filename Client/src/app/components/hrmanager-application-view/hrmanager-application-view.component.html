@@ -1,1 +1,75 @@
-<p>hrmanager-application-view works!</p>
+<div class="body">
+    <div class="upper-section">
+      <button mat-button>
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+  
+      <img
+        src="assets/images/dp.png"
+        alt="Profile Picture"
+        class="profileimage"
+      />
+      <div class="info">
+        <label class="name">
+          {{ seekerDetails.first_name }} {{ seekerDetails.last_name }}</label
+        >
+        <label class="bio">{{ seekerDetails.bio }}</label>
+      </div>
+    </div>
+  
+    <hr />
+  
+    <div class="info-container">
+      <div class="personalInfo">
+        <div>
+          <mat-label class="head">First Name</mat-label>
+          <span>{{ seekerDetails.first_name }}</span>
+        </div>
+    
+        <div>
+          <mat-label class="head">Last Name</mat-label>
+          <span>{{ seekerDetails.last_name }}</span>
+        </div>
+    
+        <div>
+          <mat-label class="head">Phone Number</mat-label>
+          <span>{{ seekerDetails.phone_number }}</span>
+        </div>
+    
+        <div>
+          <mat-label class="head">Email Address</mat-label>
+          <span>{{ seekerDetails.email }}</span>
+        </div>
+      </div>
+      <div class="button-container">
+        <div class="buttons">
+          <button mat-button class="Open" style="color: white">Open CV</button>
+          <button mat-button class="Download" style="color: teal">
+            Download CV
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <hr>
+    <div class="lower-section">
+      <div>
+        <mat-label class="head">Evaluated By</mat-label>
+        <span>Sankha Abepitiya, HR Assitant, BISTECH GLOBAL</span>
+      </div>
+      <div>
+        <mat-label class="head">Comment</mat-label>
+        <span>
+          <textarea></textarea>
+        </span>
+      </div>
+      <div>
+        <mat-label class="head">Change the decision</mat-label>
+        <span>
+          <button mat-button class="reject" style="color: red;" >Reject</button>
+  
+        </span>
+      </div>
+    </div>
+  </div>
+  
