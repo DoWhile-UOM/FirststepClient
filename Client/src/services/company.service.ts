@@ -3,6 +3,7 @@ import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 
 interface Company {
   company_id: number;
@@ -168,6 +169,47 @@ export class CompanyService {
   }
 
 
+  async getCompnayRegState(id: string) {
+    let cmpData: any;
+    try {
+      await axios.get(Apipaths.getCompanyRegState + id)
+        .then((response) => {
+          cmpData = response.data;
+          //console.log('Company Data:', cmpData);
+        });
+    }
+    catch (error) {
+      //console.error(error);
+    }
+
+    return cmpData;
+  }
+  */
+  //Get company Registration state details---End
+
+
+  CompanyRegister(companyObj: any) {
+    let action: boolean = false;
+    axios.post(Apipaths.registerCompany, companyObj)
+      .then(function (response) {
+        console.log(response.status);
+        if (response.status == 200) {
+          action = true;
+        }
+      })
+      .catch(
+        (error) => {
+          console.log("Error Occured" + error);
+        }
+      );
+    return action;
+  }
+
+
+
+
+
+  //Registration company state view Start here
   async getCompnayRegState(id: string) {
     let cmpData: any;
     try {

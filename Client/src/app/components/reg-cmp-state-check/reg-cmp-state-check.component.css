@@ -1,0 +1,155 @@
+.state-check {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+
+
+.circle-box {
+    margin: 5px;
+}
+
+.circle {
+    position: relative;
+    background-color: #008080;
+    /* Green color for the circle */
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    margin: 10px;
+}
+
+.checkmark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    /* Center the checkmark */
+    height: 60px;
+    width: 25px;
+    border-bottom: 5px solid #fff;
+    /* White color for the checkmark */
+    border-right: 5px solid #fff;
+    /* White color for the checkmark */
+}
+
+.circle-red {
+    position: relative;
+    background-color: #ffffff;
+    /* Red color for the circle */
+    border: 3px solid #FF0000;
+    /* Red border */
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.number-two {
+    font-size: 56px;
+    color: #ff0000;
+    /* White color for the number */
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    /* Vertically center the items */
+    justify-content: space-between;
+    /* Distribute items evenly along the main axis */
+    height: 250px;
+    width: 450px;
+}
+
+
+.container hr {
+    width: 120px;
+    height: 6px;
+    background-color: #008080;
+    border: none;
+}
+
+div.container>div {
+    flex-grow: 1;
+}
+
+hr {
+    width: 900px;
+    height: 1px;
+    background-color: #AEAEAE;
+    border: none;
+}
+
+.stateBar {
+    display: flex;
+    justify-content: center;
+
+    /* Distribute elements evenly */
+}
+
+.input-form {
+    width: 900px;
+    /* Adjust width as needed */
+    margin: 0 auto;
+    /* Center the container horizontally */
+}
+
+.box {
+    padding: 15px;
+    margin-bottom: 15px;
+    /* Add spacing between boxes */
+}
+
+
+.body {
+    padding: 3em;
+    width: 60%;
+    min-width: 400px;
+    margin: 0 auto;
+}
+
+.card {
+    padding: 2em;
+}
+
+mat-grid-tile mat-form-field {
+    width: 75%;
+    margin: 0.75em;
+}
+
+.company-logo {
+    width: 20px;
+    height: auto;
+}
+
+mat-grid-tile {
+    height: auto;
+}
+
+.title {
+    color: #008080;
+    font-size: 25px;
+    font-family: Lato;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+mat-form-field {
+    width: 75%;
+}
+
+button {
+    width: 25%;
+}
+
+.mat-mdc-button-touch-target {
+    width: 32px !important;
+    height: 32px !important;
+}
