@@ -22,6 +22,26 @@ export class ApplicationService {
       console.error(error);
     }
   }
+
+  // async getAllApplicationsbyAdvertisementID(job_id: number) {
+  //   let applicationList: any = [];
+  
+  //   await axios.get(Apipaths.getAllApplications + job_id)
+  //     .then(function (response) {
+  //       try {
+  //         applicationList = response.data;
+  //       }
+  //       catch (error) {
+  //         console.log("No applications found");
+  //       }
+  //     })
+  //     .catch(
+  //       function (error) {
+  //         alert('Network Error: ' + error);
+  //       }
+  //     );
+  
+  //   return applicationList;
 }
 
 
