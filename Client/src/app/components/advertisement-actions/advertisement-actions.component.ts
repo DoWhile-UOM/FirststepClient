@@ -89,7 +89,7 @@ export class AdvertisementActionsComponent {
     }
   }
 
- async onClickApply() {
-  const dialog=this.dialog.open(SeekerApplicationFormComponent); 
-    }
+  async onClickApply() {
+    this.dialog.open(SeekerApplicationFormComponent); 
+  }
 }
