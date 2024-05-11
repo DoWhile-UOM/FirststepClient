@@ -1,0 +1,18 @@
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Comment</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="comment"
+      name="comment"
+      class="comment"
+      cdkTextareaAutosize
+      required
+    ></textarea>
+  </mat-form-field>
+</div>
+<h3 mat-dialog-title>ABC will notify about rejection with your comments</h3>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()" cdkFocusInitial>Confirm</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SignupFirstPageComponent } from './signup-first-page.component';
+import { HrManagerNavBarComponent } from './hr-manager-nav-bar.component';
 
-describe('SignupFirstPageComponent', () => {
-  let component: SignupFirstPageComponent;
-  let fixture: ComponentFixture<SignupFirstPageComponent>;
+describe('HrManagerNavBarComponent', () => {
+  let component: HrManagerNavBarComponent;
+  let fixture: ComponentFixture<HrManagerNavBarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SignupFirstPageComponent]
+      imports: [HrManagerNavBarComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SignupFirstPageComponent);
+    fixture = TestBed.createComponent(HrManagerNavBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

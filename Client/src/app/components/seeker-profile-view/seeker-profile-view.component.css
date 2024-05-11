@@ -1,0 +1,87 @@
+.body{
+    width: 1000px;
+    height: fit-content;
+    border: 3px black;
+    background: #fff;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+    padding: 25px 25px 25px 25px;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-bottom: auto;
+    margin-top: 100px;
+    font-family: "roboto";
+}
+
+hr {
+  margin-left: 60px;
+  margin-top: 15px;
+
+}
+.name{
+    font-size: 22px;
+    font-weight: 450;
+    margin-bottom: 10px;
+}
+.bio{
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+.upper-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  button.mat-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .profileimage {
+    margin-left: 10px; /* adjust this value to increase or decrease the space */
+    height: auto;
+    width: 75px;
+    margin-right: 40px;
+  }
+  
+  .info {
+    margin-left: 10px; /* adjust this value to increase or decrease the space */
+    display: flex;
+    flex-direction: column;
+  }
+
+.personalInfo > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 15px;
+    margin: 30px 0px 30px 0px;
+    padding-left: 80px;
+  }
+  
+  .head {
+    text-align: left;
+    width: 150px;
+    font-weight: 550;
+  }
+  
+  span {
+    text-align: left;
+  }
+  
+  .buttons{
+    margin-left: 80px;
+
+  }
+  .Open {
+    background-color: teal;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .Download {
+    background-color: white;
+    color: teal;
+    border: 3px solid teal;
+  }

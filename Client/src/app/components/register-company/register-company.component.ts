@@ -62,7 +62,6 @@ export class RegisterCompanyComponent {
   remainingTime = 0;
   reqOTPbtntxt = "Request OTP";
   isFormVerified: boolean = false;
-  
 
 
   //form group for the stepper
@@ -150,21 +149,9 @@ export class RegisterCompanyComponent {
   onRegister() {
     if (!this.isEmailVerified) {
       alert("Please verify your email first");
-
       return;
     } else {
-      this.company.CompanyRegister(this.companyReg.value)
-        .subscribe({
-          next: (res) => {
-            console.log(res)
-          },
-          error: (err) => {
-            alert(err.message)
-            console.log(err)
-          }
-        });
+      this.company.CompanyRegister(this.companyReg.value);
     }
-
-
   }
 }

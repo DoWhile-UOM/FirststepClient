@@ -217,6 +217,8 @@ export class ConfirmDialog {
   id: number = 0;
   dialogtitle: string = "";
 
+  canDelete: boolean = true;
+
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialog>,
     private advertisementService: AdvertisementServices,
@@ -233,17 +235,32 @@ export class ConfirmDialog {
   }
 
   async onYesClick() {
+    if (this.dialogtitle == "Delete" && !this.canDelete) {
+      await this.advertisementService.deleteAdvertisementWithConfirm(this.id.toString());
+      this.snackBar.open(this.title + " job successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+    }
+
     if (this.dialogtitle == "Close") {
       await this.advertisementService.closeAdvertisement(this.id.toString());
       this.snackBar.open(this.title + " job offer successfully closed!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+    }
+    else if (this.dialogtitle == "Hold") {
+      await this.advertisementService.holdAdvertisement(this.id.toString());
+      this.snackBar.open(this.title + " job offer successfully evaluating!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
     else if (this.dialogtitle == "Activate") {
       await this.advertisementService.activateAdvertisement(this.id.toString());
       this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
-    else if (this.dialogtitle == "Delete") {
-      await this.advertisementService.deleteAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+    else if (this.dialogtitle == "Delete" && this.canDelete) {
+      var res = await this.advertisementService.deleteAdvertisement(this.id.toString());
+      if (res == null) {
+        this.canDelete = false;
+        return;
+      }
+      else{
+        this.snackBar.open(this.title + " job successfully deleted!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      }
     }
 
     this.dialogRef.close();

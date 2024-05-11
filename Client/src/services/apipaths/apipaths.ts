@@ -1,12 +1,6 @@
 export class Apipaths {
-    static requestOTP(requestOTP: any, userData: any) {
-      throw new Error('Method not implemented.');
-    }
-    static verifyOTP(verifyOTP: any, userData: any) {
-      throw new Error('Method not implemented.');
-    }
     static readonly baseUrl: string = 'https://localhost:7213/api/';
-    
+
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
     static readonly addNewHRAssistant: string = this.baseUrl + 'Employee/AddNewHRAssistant';
@@ -16,7 +10,7 @@ export class Apipaths {
     static readonly deleteEmployee: string = this.baseUrl + 'Employee/DeleteEmployee/'; // + employee_id
     static readonly getAllHRMs: string = this.baseUrl + 'Employee/GetAllHRManagers/'; // + company_id
     static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
-    
+
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
     static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
@@ -30,15 +24,19 @@ export class Apipaths {
     static readonly getAppliedAdvertisements: string = this.baseUrl + 'Advertisement/GetAppliedAdvertisements/seekerID='; // + seeker_id
     static readonly basicSearch: string = this.baseUrl + 'Advertisement/SearchAdvertisementsBasic/seekerID='; // + seeker_id
     static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'Advertisement/GetAdvertisementById/update/'; // + advertisement_id
-    static readonly updateAdvertisement= this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
+    static readonly updateAdvertisement = this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
 
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
-    static readonly getCompanyDetails: string = this.baseUrl + 'Company/GetCompanyById/';
+    static readonly getCompanyDetails: string = this.baseUrl + 'Company/GetCompanyProfile/update=true/';
     static readonly updateCompanyDetails: string = this.baseUrl + 'Company/UpdateRegisteredCompany/';
     static readonly deleteCompany: string = this.baseUrl + 'Company/DeleteCompany/';
     static readonly getAllComapanyList: string = this.baseUrl + 'Company/GetAllComapanyList';
     static readonly getCompanyApplicationById: string = this.baseUrl + 'Company/GetCompanyApplicationById/'; //+companyId
+    static readonly getCompanyRegState: string = this.baseUrl + 'Company/GetRegCheckByID/';//+regurl id
+    static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
+    static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
+    static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
@@ -61,12 +59,11 @@ export class Apipaths {
     static readonly register: string = this.baseUrl + 'User/register';
     static readonly authenticate: string = this.baseUrl + 'User/authenticate';
 
+    static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
+    static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
+
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
-
-    // OTP
-   /* static readonly requestOTP: string = this.baseUrl + 'Email/requestOTP';
-    static readonly verifyOTP: string = this.baseUrl + 'Email/verifyOTP';*/
 
     // Azure Blob Service
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
