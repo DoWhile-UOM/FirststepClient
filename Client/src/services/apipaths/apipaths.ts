@@ -47,10 +47,6 @@ export class Apipaths {
     // fields
     static readonly getAllFields: string = this.baseUrl + 'JobField/GetAllJobFields';
 
-    // external
-    static readonly getCountryNames: string = 'https://api.first.org/v1/get-countries';
-    static readonly getCityNames: string = 'https://countriesnow.space/api/v0.1/countries/cities';
-
     // seeker
     static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';
     static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';
@@ -71,5 +67,5 @@ export class Apipaths {
     static readonly BlobName = 'firststep';
 
     //application
-    static readonly submitApplication: string = this.baseUrl + 'Advertisement/SendApplication/';
+    static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
 }

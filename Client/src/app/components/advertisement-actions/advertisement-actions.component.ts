@@ -18,11 +18,15 @@ import { SeekerApplicationFormComponent } from '../seeker-application-form/seeke
   styleUrl: './advertisement-actions.component.css'
 })
 export class AdvertisementActionsComponent {
-
   @Input() currentStatus: boolean = false;
   @Input() expired: boolean = false;
   @Input() jobID: number = 0;
   @Input() applicationStatus: string = 'accepted';
+
+  // for send data to the advertisement header
+  @Input() company_name: string = "";
+  @Input() job_title: string = "";
+  @Input() job_field: string = "";
 
   icon: string = 'bookmark_border'; // bookmark
   isApplicationPage: boolean = false;
@@ -89,11 +93,16 @@ export class AdvertisementActionsComponent {
     }
   }
 
- async onClickApply() {
-  const dialog=this.dialog.open(SeekerApplicationFormComponent,{
-    maxWidth: '100em',
-    data: {jobID: this.jobID}
-  }); 
-    }
+   async onClickApply() {
+    const dialog=this.dialog.open(SeekerApplicationFormComponent,{
+      maxWidth: '100em',
+      data: {
+        jobID: this.jobID, 
+        seekerID: this.seekerId, 
+        company_name: this.company_name, 
+        job_title: this.job_title, 
+        job_field: this.job_field}
+    }); 
+  }
 }
 

@@ -4,42 +4,43 @@
     <app-advertisement-header [company_name]="jobData.company_name" [job_field]="jobData.field_name" [job_title]="jobData.title"></app-advertisement-header>
   </mat-card-header>
   <mat-divider></mat-divider>
+
   <mat-dialog-content>
-  <mat-card-content>
-    <mat-card-title>Application Form</mat-card-title>
-    <div class="detailsField">
-      <div class="textSection">
-        <div>First Name</div>
-        <div>Last Name</div>
-        <div>Email</div>
-        <div>phone number</div>
-        <div>Linkedin</div>
-        <div>CV</div>
-        <div class="doc">Other Documents</div>
-      </div>
-      <div class="fieldSection">
-       <div>{{SeekerDetails.first_name}}</div>
-        <div>{{SeekerDetails.last_name}}</div>
-        <div>{{SeekerDetails.email}}</div>
-        <div>{{SeekerDetails.phone_number}}</div>
-        <div>{{SeekerDetails.linkedin}}</div><!--change in backend-->
-        <div class="document">
-            <div *ngIf="!useDefaultCV">
-              <app-file-upload></app-file-upload>  
-          </div>
-          <div *ngIf="useDefaultCV"><app-file-download></app-file-download></div>
-        <br>
-          <mat-checkbox color="primary"  [(ngModel)]="useDefaultCV" (change)="toggleDefaultCV()"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
+    <mat-card-content>
+      <mat-card-title>Application Form</mat-card-title>
+      <div class="detailsField">
+        <div class="textSection">
+          <div>First Name</div>
+          <div>Last Name</div>
+          <div>Email</div>
+          <div>phone number</div>
+          <div>Linkedin</div>
+          <div>CV</div>
+          <div class="doc">Other Documents</div>
         </div>
-        <div><app-file-upload></app-file-upload></div>
-        <mat-dialog-actions>
-        <div><button mat-raised-button color="primary" (click)="onSubmitForm()">Submit Form</button></div> 
-      </mat-dialog-actions>
-    </div>
-    
-    </div>
-  </mat-card-content>
-</mat-dialog-content>
+        <div class="fieldSection">
+        <div>{{SeekerDetails.first_name}}</div>
+          <div>{{SeekerDetails.last_name}}</div>
+          <div>{{SeekerDetails.email}}</div>
+          <div>{{SeekerDetails.phone_number}}</div>
+          <div>{{SeekerDetails.linkedin}}</div><!--change in backend-->
+          <div class="document">
+              <div *ngIf="!useDefaultCV">
+                <app-file-upload></app-file-upload>  
+            </div>
+            <div *ngIf="useDefaultCV"><app-file-download></app-file-download></div>
+          <br>
+            <mat-checkbox color="primary"  [(ngModel)]="useDefaultCV" (change)="toggleDefaultCV()"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
+          </div>
+          <div><app-file-upload></app-file-upload></div>
+      </div>
+      </div>
+    </mat-card-content>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div><button mat-raised-button color="primary" (click)="onSubmitForm()">Submit Application</button></div> 
+  </mat-dialog-actions>
 </mat-card>
 
 
