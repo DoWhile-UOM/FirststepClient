@@ -47,7 +47,7 @@ export class SeekerApplicationFormComponent {
   
     };
     useDefaultCV: boolean = false; 
-    constructor(private seekerService:SeekerService,private applicationService:ApplicationService, private router: Router) {}
+    constructor(private seekerService:SeekerService, private applicationService:ApplicationService, private router: Router) {}
 
     user_id: number = 2;
     
@@ -57,25 +57,22 @@ export class SeekerApplicationFormComponent {
     }
     
     async fetchEmployeeDetails() {
-
       try {
         const seekerData = await this.seekerService.getSeekerDetailsForApplication(this.user_id);
         this.SeekerDetails = seekerData;
       } catch (error) {
-        console.error('Error fetching seeker details:', error);
-       
+        console.error('Error fetching seeker details:', error);   
       }
-   
-}
+    }
 
-toggleDefaultCV() {
-  this.useDefaultCV = !this.useDefaultCV;
-}
+  toggleDefaultCV() {
+    this.useDefaultCV = !this.useDefaultCV;
+  }
 
-async onSubmitForm(){
-  await this.applicationService.submitSeekerApplication(this.applicationData);
-  this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
-}
+  async onSubmitForm(){
+    await this.applicationService.submitSeekerApplication(this.applicationData);
+    this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
+  }
 }
 
 
