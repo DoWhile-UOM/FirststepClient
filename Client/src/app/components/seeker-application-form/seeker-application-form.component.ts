@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { AdvertisementHeaderComponent } from "../advertisement-header/advertisement-header.component";
@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { FileDownloadComponent } from "../file-download/file-download.component";
 import { Router } from '@angular/router';
 import { ApplicationService } from '../../../services/application.service';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { AdvertisementServices } from '../../../services/advertisement.service';
 
 
 interface Seeker{
@@ -29,14 +31,28 @@ interface Seeker{
   "doc2_url": "string"
   }
 
+  interface Job{
+    job_number: number;
+    title: string;
+    country: string;
+    city: string;
+    employeement_type: string;
+    posted_date: string;
+    job_description: string;
+    field_name: string;
+    company_name: string;
+   
+    
+  } 
+
 @Component({
     selector: 'app-seeker-application-form',
     standalone: true,
     templateUrl: './seeker-application-form.component.html',
     styleUrl: './seeker-application-form.component.css',
-    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent, MatCheckboxModule, FormsModule, CommonModule, FileDownloadComponent]
+    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent, MatCheckboxModule, FormsModule, CommonModule, FileDownloadComponent,MatDialogModule]
 })
-export class SeekerApplicationFormComponent {
+export class SeekerApplicationFormComponent implements OnInit {
     SeekerDetails: Seeker = {} as Seeker;
     applicationData: Application = {
       "advertisement_id": 1056,
@@ -46,14 +62,17 @@ export class SeekerApplicationFormComponent {
       "doc2_url": "string"
   
     };
+    jobData: Job = {} as Job;
     useDefaultCV: boolean = false; 
-    constructor(private seekerService:SeekerService, private applicationService:ApplicationService, private router: Router) {}
+
+    constructor(private adService:AdvertisementServices,private seekerService:SeekerService,private applicationService:ApplicationService, private router: Router, @Inject(MAT_DIALOG_DATA)public data:any) {}
 
     user_id: number = 2;
     
     
     async ngOnInit() {
       this.fetchEmployeeDetails(); 
+      this.jobData = await this.adService.getAdvertisementById(this.data.jobID);
     }
     
     async fetchEmployeeDetails() {
