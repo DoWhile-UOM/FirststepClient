@@ -1,58 +1,63 @@
 .container {
     font-family: Arial, sans-serif;
     text-align: center;
-    max-width: 60%;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-  }
-  
-  header {
+}
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-  }
-  
-  header .logo {
+    
+}
+
+header .logo {
     display: flex;
     align-items: center;
-  }
-  
-  header .logo img {
+}
+
+header .logo img {
     width: 50px;
     height: 50px;
-  }
-  
-  header .logo span {
+}
+
+header .logo span {
     font-size: 1.5em;
     font-weight: bold;
     margin-left: 10px;
-  }
-  
-  header nav a {
+}
+
+header nav a {
     margin: 0 10px;
+    color: #007bff;
     text-decoration: none;
-  }
-  
-  
-  main .hero {
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+main .hero {
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-  }
-  
-  main .hero h1 {
+}
+
+main .hero h1 {
     font-size: 2em;
     margin-bottom: 10px;
-  }
-  
-  main .hero p {
+}
+
+main .hero p {
     font-size: 1em;
     margin: 5px 0;
-  }
-  
-  main .hero .sign-up-btn {
+}
+
+main .hero .sign-up-btn {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -61,25 +66,33 @@
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-  }
-  
-  main .hero .sign-up-btn:hover {
+}
+
+main .hero .sign-up-btn:hover {
     background-color: #0056b3;
-  }
-  
-  main .info {
+}
+
+main .info {
+    display: flex;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-  }
-  
-  main .info p {
+    justify-content: space-between;
+    align-items: center;
+}
+
+main .info-text {
+    flex: 1;
+    margin-right: 20px;
+}
+
+main .info-text p {
     font-size: 1em;
     margin: 10px 0;
-  }
-  
-  main .info .register-company-btn {
+}
+
+main .info-text .register-company-btn {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -88,23 +101,42 @@
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-  }
-  
-  main .info .register-company-btn:hover {
+}
+
+main .info-text .register-company-btn:hover {
     background-color: #0056b3;
-  }
-  
-  footer {
+}
+
+main .info-image {
+    flex: 1;
+    max-width: 300px;
+}
+
+main .info-image img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+footer {
     margin-top: 20px;
-  }
-  
-  footer p {
+}
+
+footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .footer-text {
+    text-align: left;
+}
+
+footer .footer-text p {
     font-size: 0.9em;
     margin: 5px 0;
-  }
-  
-  footer .sponsor-logo img {
+}
+
+footer .sponsor-logo img {
     width: 100px;
     margin: 10px 0;
-  }
-  
+}
