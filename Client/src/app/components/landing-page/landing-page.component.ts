@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css',
   imports: [
-    NavBarComponent,
     MatSlideToggleModule,
     MatToolbarModule,
     MatButtonModule,
