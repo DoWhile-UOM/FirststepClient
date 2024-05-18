@@ -11,11 +11,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule,FormsModule,HttpClientModule,MatCardModule,MatIconModule,MatInputModule,MatFormFieldModule,MatButtonModule,FlexLayoutServerModule],
+  imports: [ReactiveFormsModule, FormsModule, HttpClientModule, MatCardModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, FlexLayoutServerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -31,8 +32,9 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private auth:AuthService,
-    private userStore:UserStoreService){
+    private auth: AuthService,
+    private userStore: UserStoreService,
+    private snackBar: MatSnackBar){
 
   }
 
@@ -91,8 +93,7 @@ export class LoginComponent {
         this.router.navigate(['/' + tokenPayload.role]);
       },
       error:(err)=>{
-        alert(err.message)
-        console.log(err)
+        this.snackBar.open("Login Error! Error Code " + err.status, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
       }
   });
   

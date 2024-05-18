@@ -6,15 +6,15 @@
     <section class="inputFields">
   <mat-form-field appearance="outline" id="firstchild">
     <mat-label>First Name</mat-label>
-    <input matInput name="first_name"   [(ngModel)]="employeeDetails.first_name" />
+    <input matInput name="first_name"   [(ngModel)]="employeeDetails.first_name" required/>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Last Name</mat-label>
-    <input matInput name="last_name" [(ngModel)]="employeeDetails.last_name" />
+    <input matInput name="last_name" [(ngModel)]="employeeDetails.last_name" required/>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Email</mat-label>
-    <input matInput name="email" [(ngModel)]="employeeDetails.email" />
+    <input matInput name="email" [(ngModel)]="employeeDetails.email" required/>
   </mat-form-field>
  
   </section>

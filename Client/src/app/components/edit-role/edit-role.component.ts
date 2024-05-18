@@ -50,7 +50,7 @@ export class EditRoleComponent implements OnInit {
   employeeDetails: Employee = {} as Employee;
   selectedRole: string = 'HRM';
 
-  constructor(private employeeService: EmployeeService,@Inject(MAT_DIALOG_DATA)public data:any) {}
+  constructor(private employeeService: EmployeeService, @Inject(MAT_DIALOG_DATA)public data:any) {}
   user_id: number = this.data.id;
   
   async ngOnInit() {

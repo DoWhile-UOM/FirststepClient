@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
 
 import { ManageRolesComponent } from '../components/manage-roles/manage-roles.component';
-import { NewJobComponent } from '../components/new-job/new-job.component';
+import { NewJobComponent, NewJobUploadedComponent } from '../components/new-job/new-job.component';
 import { JobOfferListComponent } from '../components/job-offer-list/job-offer-list.component';
-import { NewJobUploadedComponent } from '../components/new-job-uploaded/new-job-uploaded.component';
 import { CompanyProfileEditComponent } from '../components/company-profile-edit/company-profile-edit.component';
 import { RoleProfileEditComponent } from '../components/role-profile-edit/role-profile-edit.component';
 

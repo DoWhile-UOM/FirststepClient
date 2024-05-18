@@ -1,34 +1,20 @@
-
 <div class="body">
   <app-spinner></app-spinner>
-  <mat-card class="card">
+  <mat-card class="card" *ngIf="hasDataLoaded==true">
     <div class="heading title">
       <span class="sectionHeading">{{ cName }}</span>
     </div>
-    <form
-      class="form"
-      #updateCompanyDetailsForm="ngForm"
-      (ngSubmit)="onSubmit()"
-    >
+    <form class="form" #updateCompanyDetailsForm="ngForm" (ngSubmit)="onSubmit()">
       <!-- Top Section -->
       <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
         <mat-grid-tile>
           <img src="assets/images/BistechLogo.png" class="md-card-image" />
         </mat-grid-tile>
         <mat-grid-tile>
-          <mat-form-field
-            class="form-field company-name-field"
-            appearance="outline"
-          >
+          <mat-form-field class="form-field company-name-field" appearance="outline">
             <mat-label>Company Name</mat-label>
-            <input
-              matInput
-              placeholder="Enter your Company Name"
-              name="company_name"
-              [(ngModel)]="company.company_name"
-              (blur)="comapnyNameErrorMessage()"
-              required
-            />
+            <input matInput placeholder="Enter your Company Name" name="company_name" [(ngModel)]="company.company_name"
+              (blur)="comapnyNameErrorMessage()" required />
             <mat-error>{{ errorMessageForCompanyName }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
@@ -36,18 +22,9 @@
       <div class="description-text-editor">
         <mat-form-field class="form-field" appearance="outline">
           <mat-label>Description</mat-label>
-          <textarea
-            matInput
-            #companyDescription
-            cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="1"
-            [(ngModel)]="company.company_description"
-            name="company_description"
-            placeholder="Enter your Company Description"
-            (blur)="descriptionErrorMessage()"
-            required
-          ></textarea>
+          <textarea matInput #companyDescription cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1" [(ngModel)]="company.company_description" name="company_description"
+            placeholder="Enter your Company Description" (blur)="descriptionErrorMessage()" required></textarea>
           <mat-error>{{ errorMessageForDescription }}</mat-error>
         </mat-form-field>
       </div>
@@ -55,26 +32,15 @@
         <mat-grid-tile>
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Web Site</mat-label>
-            <input
-              matInput
-              placeholder="Enter your Company website"
-              name="company_website"
-              [(ngModel)]="company.company_website"
-              (blur)="websiteErrorMessage()"
-              required
-            />
+            <input matInput placeholder="Enter your Company website" name="company_website"
+              [(ngModel)]="company.company_website" (blur)="websiteErrorMessage()" required />
             <mat-error>{{ errorMessageForWebsite }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Bussiness Scale</mat-label>
-            <mat-select
-              name="bussiness_scale"
-              [(ngModel)]="company.company_business_scale"
-              #bussiness_scale
-              required
-            >
+            <mat-select name="bussiness_scale" [(ngModel)]="company.company_business_scale" #bussiness_scale required>
               @for(BScale of BusinessScales ; track BScale){
               <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
               }
@@ -84,42 +50,51 @@
         <mat-grid-tile>
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Phone Number</mat-label>
-            <input
-              matInput
-              #companyPhoneNumber
-              placeholder="Enter your Company phone Number"
-              name="company_phone_number"
-              [(ngModel)]="company.company_phone_number"
-              (blur)="phoneNumberErrorMessage()"
-              required
-            /><mat-error>{{ errorMessageForPhoneNumber }}</mat-error>
+            <input matInput #companyPhoneNumber placeholder="Enter your Company phone Number"
+              name="company_phone_number" [(ngModel)]="company.company_phone_number" (blur)="phoneNumberErrorMessage()"
+              required /><mat-error>{{ errorMessageForPhoneNumber }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Email</mat-label>
-            <input
-              matInput
-              #email
-              type="email"
-              placeholder="Enter your email"
-              name="company_email"
-              [(ngModel)]="company.company_email"
-              (blur)="emailErrorMessage()"
-              required
-            /> 
-            <mat-error >{{errorMessageForEmail}}</mat-error>
+            <input matInput #email type="email" placeholder="Enter your email" name="company_email"
+              [(ngModel)]="company.company_email" (blur)="emailErrorMessage()" required />
+            <mat-error>{{errorMessageForEmail}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
+
+      <div *ngIf="isConfrimedToChangeEmail==true">
+        <mat-grid-list cols="{{ 1 }}" rowHeight="300">
+          <mat-grid-tile>
+            <div class="container-otp">
+              <span class="mat-typography"> Click send otp button
+              </span>
+              <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
+                [disabled]="isOTPRequestSent" id="otpreqbtn">{{reqOTPbtntxt }} {{remainingTime
+                }}</button>
+
+              <span class="mat-typography"> Once that button is clicked, enter the otp(one time password)
+                recived in
+                the provided email
+                address.
+              </span>
+              <mat-form-field appearance="outline">
+                <mat-label>OTP</mat-label>
+                <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
+                  required />
+              </mat-form-field>
+              <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
       <mat-divider></mat-divider>
       <div class="button-section">
         <div class="right-btn">
-          <button
-            style="margin-right: 10px"
-            class="apply-changes-class"
-            type="submit"
-          >
+          <button class="apply-changes-class" (click)="onSubmit()">
             <span class="apply-changes">Apply Changes</span>
           </button>
           <button class="discard-changes-class" (click)="discardChanges()">

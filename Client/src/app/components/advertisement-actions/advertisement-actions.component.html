@@ -1,8 +1,29 @@
 <div class="job-actions">
-    <button mat-button class="save-button" (click)="(currentStatus) ? unsaveAdvertisement() : saveAdvertisement()">
+    <button mat-button *ngIf="!isApplicationPage" class="save-button" (click)="(currentStatus) ? unsaveAdvertisement() : saveAdvertisement()">
         <mat-icon color="primary">{{icon}}</mat-icon>
         {{(currentStatus) ? 'Saved' : 'Save'}}
     </button>
 
-    <button mat-raised-button class="apply-button" title="ApplyJob" color="primary">Apply</button>
+    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'NotEvaluated'" class="status-chip-pending"> Screening </mat-chip>
+    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'Accepted'" class="status-chip-accepted"> Accepted </mat-chip>
+    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'Rejected'" class="status-chip-rejected"> Rejected </mat-chip>
+
+    <button
+        *ngIf="!isApplicationPage"
+        mat-raised-button 
+        class="apply-button"
+        color="primary"
+        matBadge="{{expired? '!' : ''}}"
+        matBadgeColor="warn"
+        [disabled]="expired"
+        disabledInteractive
+        (click)="onClickApply()"
+        title="Quickly Apply to the Job">Apply</button>
+
+    <button
+        *ngIf="isApplicationPage"
+        mat-raised-button 
+        class="apply-button"
+        color="primary"
+        title="Track the applicatin status">View Status</button>
 </div>
