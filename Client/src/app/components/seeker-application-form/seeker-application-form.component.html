@@ -26,7 +26,7 @@
           <div>{{SeekerDetails.linkedin}}</div><!--change in backend-->
           <div class="document">
               <div *ngIf="!useDefaultCV">
-                <app-file-upload></app-file-upload>  
+               <app-seeker-application-file-upload  (fileSelected)="onCVSelected($event)"></app-seeker-application-file-upload>
             </div>
             <div *ngIf="useDefaultCV"><app-file-download></app-file-download></div>
           <br>

@@ -1,0 +1,9 @@
+<div class="fileupload">
+    <div id="Documentsubmissioncontainer" class="formchild">
+      <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" />
+      <span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
+      <button class="fileuploadbtn" mat-button (click)="fileInput.click()">Upload Document</button>
+      <span *ngIf="selectedFileName">{{ selectedFileName }}</span>
+    </div>
+  </div>
+  
