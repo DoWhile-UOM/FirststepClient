@@ -12,7 +12,6 @@ import { FileDownloadComponent } from "../file-download/file-download.component"
 import { Router } from '@angular/router';
 import { ApplicationService } from '../../../services/application.service';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { SeekerApplicationFileUploadComponent } from "../seeker-application-file-upload/seeker-application-file-upload.component";
 
 interface Seeker{
   email:string;
@@ -41,15 +40,20 @@ interface Job{
     standalone: true,
     templateUrl: './seeker-application-form.component.html',
     styleUrl: './seeker-application-form.component.css',
-    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent, MatCheckboxModule, FormsModule, CommonModule, FileDownloadComponent, MatDialogModule, SeekerApplicationFileUploadComponent]
+    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent, MatCheckboxModule, FormsModule, CommonModule, FileDownloadComponent,MatDialogModule]
 })
 export class SeekerApplicationFormComponent implements OnInit {
   SeekerDetails: Seeker = {} as Seeker;
-  applicationData: Application = {} as Application;
+  applicationData: Application = {
+    "advertisement_id": 0,
+    "seeker_id": 0,
+    "cVurl": "string",
+    "doc1_url": "string",
+    "doc2_url": "string"
+  };
   jobData: Job = {} as Job;
   user_id: number = 0;
-  useDefaultCV: boolean = false;
-  selectedCV: File | null = null; 
+  useDefaultCV: boolean = false; 
 
 
   constructor(
@@ -83,30 +87,8 @@ export class SeekerApplicationFormComponent implements OnInit {
     this.useDefaultCV = !this.useDefaultCV;
   }
 
-  onCVSelected(event: any) {//see code in the chatgpt
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedCV = file;
-    }
-  }
-
   async onSubmitForm(){
-    const formData = new FormData();
-
-    formData.append('advertisement_id', this.applicationData.advertisement_id.toString());
-    formData.append('seeker_id', this.user_id.toString());
-
-    if (!this.useDefaultCV && this.selectedCV) {
-      formData.append('cv', this.selectedCV, this.selectedCV.name);
-    }
-
-
-    try {
-      await this.applicationService.submitSeekerApplication(formData);
-      this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
-    } catch (error) {
-      console.error('Error submitting application:', error);
-    }
+    await this.applicationService.submitSeekerApplication(this.applicationData);
+    this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
   }
-    
-  }
+}
