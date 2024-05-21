@@ -1,0 +1,12 @@
+<div class="fileupload">
+  <div id="Documentsubmissioncontainer" class="formchild">
+
+<input type="file" #file style="display: none" (change)="onFileSelected($event)" />
+
+<span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
+
+<button class="fileuploadbtn" mat-button (click)="file.click()">
+  Upload Document
+</button>
+  </div>
+</div>

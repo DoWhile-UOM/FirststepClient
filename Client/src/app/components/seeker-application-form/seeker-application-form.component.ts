@@ -44,13 +44,7 @@ interface Job{
 })
 export class SeekerApplicationFormComponent implements OnInit {
   SeekerDetails: Seeker = {} as Seeker;
-  applicationData: Application = {
-    "advertisement_id": 0,
-    "seeker_id": 0,
-    "cVurl": "string",
-    "doc1_url": "string",
-    "doc2_url": "string"
-  };
+  applicationData: Application = {} as Application;
   jobData: Job = {} as Job;
   user_id: number = 0;
   useDefaultCV: boolean = false; 
