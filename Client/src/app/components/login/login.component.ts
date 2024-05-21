@@ -69,9 +69,9 @@ export class LoginComponent {
           this.userID = 3;
         }
         else{
-          this.userID = 2;
-          this.companyname = "BISTEC GLOBAL SERVICES";
-          this.companyid = 1;
+          this.userID = 10; // 10 or 2
+          this.companyname = "BISTEC Global Services";
+          this.companyid = 7; // 7 or 1
         }
         ////// temporary code to be removed
 
