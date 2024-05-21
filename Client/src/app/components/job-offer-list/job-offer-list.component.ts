@@ -69,6 +69,7 @@ export class JobOfferListComponent implements AfterViewInit{
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   company_id: string = '';
+  company_name: string = '';
 
   jobList: JobOffer[] = [];
   selectedFilter: string = 'active';
@@ -86,7 +87,7 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   async ngOnInit() {
-
+    
   }
 
   async refreshTable(status: string, title: string){
@@ -137,6 +138,7 @@ export class JobOfferListComponent implements AfterViewInit{
     // get the compnay id from the session storage
     try {
       this.company_id = sessionStorage.getItem('companyId') || '';
+      this.company_name = sessionStorage.getItem('companyName') || '';
     } catch (error) {
       //console.log(error); //raises the error
       this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
