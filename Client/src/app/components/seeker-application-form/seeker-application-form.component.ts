@@ -23,11 +23,11 @@ interface Seeker{
 }
 
 interface Application{
-advertisement_id: number,
-seeker_id: number,
-cv:File,
-doc1_url?: string,
-doc2_url?: string
+"advertisement_id": number,
+"seeker_id": number,
+"cVurl": string,
+"doc1_url": string,
+"doc2_url": string
 }
 
 interface Job{
