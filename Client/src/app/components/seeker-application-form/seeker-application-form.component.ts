@@ -83,8 +83,11 @@ export class SeekerApplicationFormComponent implements OnInit {
     this.useDefaultCV = !this.useDefaultCV;
   }
 
-  onCVSelected(file:File) {//see code in the chatgpt
-   this.selectedCV = file;
+  onCVSelected(event: any) {//see code in the chatgpt
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedCV = file;
+    }
   }
 
   async onSubmitForm(){

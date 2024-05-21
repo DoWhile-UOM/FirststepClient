@@ -11,22 +11,17 @@ export class ApplicationService {
 
   constructor() { }
 
-  async submitSeekerApplication(formData:FormData) {
+  async submitSeekerApplication(applications: any) {
     try{
-      const response= await axios.post(Apipaths.submitApplication, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      
-      console.log(response.data);
-      return response.data;
-
-    }catch(error){
-      console.error('Error submitting application:', error);
-    }   
+      await axios.post(Apipaths.submitApplication, applications)
+        .then((response) => {
+          console.log(response);
+        });
     }
-  
+    catch (error) {
+      console.error(error);
+    }
+  }
 
   // async getAllApplicationsbyAdvertisementID(job_id: number) {
   //   let applicationList: any = [];
