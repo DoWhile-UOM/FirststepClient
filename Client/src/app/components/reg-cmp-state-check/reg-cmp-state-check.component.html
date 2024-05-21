@@ -22,7 +22,7 @@
                     <div class="circle">
                         <div class="checkmark"></div>
                     </div>
-                    <a>Dec 15, 2023</a>
+                    <a>{{cmpData.company_registered_date}}</a>
                 </div>
                 <hr>
                 <div class="circle-box">
@@ -30,7 +30,7 @@
                     <div class="circle-red">
                         <div class="number-two">2</div>
                     </div>
-                    <a>Rejected</a>
+                    <a>{{regState}}</a>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 
                 <mat-form-field class="form-field" appearance="outline">
                     <mat-label>Company Name</mat-label>
-                    <input matInput placeholder="Your input here" type="text" class="form-control"
+                    <input [disabled]="isNoInput" matInput placeholder="Your input here" type="text" class="form-control"
                         value={{cmpData.company_name}} id="companyName" name="companyName" required>
                 </mat-form-field>
 
@@ -69,7 +69,7 @@
             <mat-grid-tile>
                 <mat-form-field class="form-field" appearance="outline">
                     <mat-label>URL of the Website</mat-label>
-                    <input matInput placeholder="Your input here" type="url" class="form-control"
+                    <input [disabled]="isNoInput" matInput placeholder="Your input here" type="url" class="form-control"
                         value={{cmpData.company_website}} id="websiteUrl" name="websiteUrl" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -77,7 +77,7 @@
             <mat-grid-tile>
                 <mat-form-field class="form-field" appearance="outline">
                     <mat-label>Email Address</mat-label>
-                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                    <input [disabled]="isNoInput" matInput placeholder="Your input here" type="email" class="form-control"
                         value={{cmpData.company_email}} id="emailAddress" name="emailAddress" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -86,7 +86,7 @@
             <mat-grid-tile>
                 <mat-form-field class="form-field" appearance="outline">
                     <mat-label>Contact No</mat-label>
-                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                    <input [disabled]="isNoInput" matInput placeholder="Your input here" type="email" class="form-control"
                         value={{cmpData.company_phone_number}} id="emailAddress" name="emailAddress" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -94,7 +94,7 @@
             <mat-grid-tile>
                 <mat-form-field class="form-field" appearance="outline">
                     <mat-label>Company Logo</mat-label>
-                    <input matInput placeholder="Your input here" type="email" class="form-control"
+                    <input [disabled]="isNoInput" matInput placeholder="Your input here" type="email" class="form-control"
                         value={{cmpData.company_logo}} id="emailAddress" name="emailAddress" required>
                 </mat-form-field>
             </mat-grid-tile>
@@ -105,8 +105,8 @@
         <div>
             <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
                 <mat-grid-tile style="width: 20%">
-                    <button mat-raised-button class="apply-button" color="primary" style="width: 50%">
-                        Approve
+                    <button [disabled]="isNoInput" mat-raised-button class="apply-button" color="primary" style="width: 50%">
+                        Resubmit
                     </button>
                 </mat-grid-tile>
 

@@ -24,6 +24,8 @@ export interface CmpyData {
   company_province: string;
   company_business_scale: string;
   comment:string;
+  verification_status:any;
+  company_registered_date: string;
 }
 
 
@@ -37,6 +39,8 @@ export interface CmpyData {
 export class RegCmpStateCheckComponent {
 
   company_id: string = 'nmIkuA6ZIO'; // sample company_id
+  regState: string = 'Pending'; // sample registration state
+  isNoInput: boolean = true;
   //cmpData: CmpyData[] = [];
 
   cmpData:CmpyData={} as CmpyData
@@ -62,15 +66,37 @@ export class RegCmpStateCheckComponent {
     console.log('Calling getCompnayRegState with company_id:', company_id);
     try {
       this.cmpData = await this.company.getCompnayRegState(company_id);
-      console.log('Fetched data:', this.cmpData);
+
+      if(this.cmpData){
+        this.cmpData.company_registered_date=this.cmpData.company_registered_date.split('T')[0];
+        let evalstate=this.cmpData.verification_status;
+        let approvelstate=this.cmpData.comment;
+  
+        if(evalstate ){
+          this.onApproved();
+        }else if (approvelstate){
+          this.onRejected();
+        }
+      }
     } catch (error) {
       console.error('Error:', error);
     }
   //end of fetch data
   }
 
-  OnResubmit(){
+  onRejected(){
+    console.log('Company Rejected');
+    this.regState = 'Rejected';
+    this.isNoInput = false;
+  }
 
+  onApproved(){
+    console.log('Company Approved');
+    this.regState = 'Already Approved';
+  }
+
+  OnResubmit(){
+    this.isNoInput = true;
   }
 
 }
