@@ -12,6 +12,7 @@ import { FileDownloadComponent } from "../file-download/file-download.component"
 import { Router } from '@angular/router';
 import { ApplicationService } from '../../../services/application.service';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { SeekerApplicationFileUploadComponent } from "../seeker-application-file-upload/seeker-application-file-upload.component";
 
 interface Seeker{
   email:string;
@@ -40,7 +41,7 @@ interface Job{
     standalone: true,
     templateUrl: './seeker-application-form.component.html',
     styleUrl: './seeker-application-form.component.css',
-    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent, MatCheckboxModule, FormsModule, CommonModule, FileDownloadComponent,MatDialogModule]
+    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent, MatButtonModule, FileUploadComponent, MatCheckboxModule, FormsModule, CommonModule, FileDownloadComponent, MatDialogModule, SeekerApplicationFileUploadComponent]
 })
 export class SeekerApplicationFormComponent implements OnInit {
   SeekerDetails: Seeker = {} as Seeker;
