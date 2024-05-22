@@ -11,6 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
+import { StylemanageService } from '../../../services/stylemanage.service';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -45,8 +46,8 @@ export class RegCmpStateCheckComponent {
 
   cmpData:CmpyData={} as CmpyData
 
-  constructor(private route:ActivatedRoute,private company: CompanyService) { }
-
+  constructor(private styleService:StylemanageService,private route:ActivatedRoute,private company: CompanyService) { }
+  
 
 
   //Fetch data from the database when the component initializes
@@ -68,6 +69,8 @@ export class RegCmpStateCheckComponent {
       this.cmpData = await this.company.getCompnayRegState(company_id);
 
       if(this.cmpData){
+        this.styleService.setStyle('circle-border-color', '#ffbf00');
+        this.styleService.setStyle('number-color', '#ffbf00');
         this.cmpData.company_registered_date=this.cmpData.company_registered_date.split('T')[0];
         let evalstate=this.cmpData.verification_status;
         let approvelstate=this.cmpData.comment;
@@ -85,17 +88,22 @@ export class RegCmpStateCheckComponent {
   }
 
   onRejected(){
-    console.log('Company Rejected');
+    this.styleService.setStyle('circle-border-color', '#ff0000');
+    this.styleService.setStyle('number-color', '#ff0000');
     this.regState = 'Rejected';
     this.isNoInput = false;
   }
 
   onApproved(){
+    this.styleService.setStyle('circle-border-color', '#00ff1a');
+    this.styleService.setStyle('number-color', '#00ff1a');
     console.log('Company Approved');
     this.regState = 'Already Approved';
   }
 
   OnResubmit(){
+    this.styleService.setStyle('circle-border-color', '#ffbf00');
+    this.styleService.setStyle('number-color', '#ffbf00');
     this.isNoInput = true;
   }
 
