@@ -11,7 +11,18 @@ export class ApplicationService {
 
   constructor() { }
 
-  async submitSeekerApplication(applications: any) {
+  async submitSeekerApplication(applicationData: FormData) {
+    try {
+      await axios.post(Apipaths.submitApplication, applicationData)
+        .then((response) => {
+          console.log(response);
+        });
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+ /* async submitSeekerApplication(applications: any) {
     try{
       await axios.post(Apipaths.submitApplication, applications)
         .then((response) => {
@@ -21,7 +32,7 @@ export class ApplicationService {
     catch (error) {
       console.error(error);
     }
-  }
+  }*///comment by nethma
 
   // async getAllApplicationsbyAdvertisementID(job_id: number) {
   //   let applicationList: any = [];

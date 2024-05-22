@@ -25,7 +25,7 @@
           <div>{{SeekerDetails.phone_number}}</div>
           <div>{{SeekerDetails.linkedin}}</div><!--change in backend-->
           <div class="document">
-            <app-seeker-application-file-upload></app-seeker-application-file-upload> </div>
+            <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload> </div>
             <!-- <div *ngIf="!useDefaultCV">
                 <app-seeker-application-file-upload></app-seeker-application-file-upload> 
             </div>

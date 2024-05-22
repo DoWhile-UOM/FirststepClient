@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -10,9 +10,11 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './seeker-application-file-upload.component.css'
 })
 export class SeekerApplicationFileUploadComponent {
-
+  @Output() fileSelected = new EventEmitter<File>();
+  
 onFileSelected($event: Event) {
-throw new Error('Method not implemented.');
+  const file = ($event.target as HTMLInputElement).files![0];
+  this.fileSelected.emit(file);
 }
 
 }
