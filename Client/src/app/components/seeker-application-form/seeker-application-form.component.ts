@@ -23,11 +23,11 @@ interface Seeker{
 }
 
 interface Application{
-"advertisement_id": number,
-"seeker_id": number,
-"cVurl": string,
-"doc1_url": string,
-"doc2_url": string
+advertisement_id: number,
+seeker_id: number,
+cVurl: File,
+doc1_url: string,
+doc2_url: string
 }
 
 interface Job{
@@ -48,7 +48,7 @@ export class SeekerApplicationFormComponent implements OnInit {
   applicationData: Application = {} as Application;
   jobData: Job = {} as Job;
   user_id: number = 0;
-  useDefaultCV: boolean = false; 
+ 
 
 
   constructor(
@@ -78,9 +78,7 @@ export class SeekerApplicationFormComponent implements OnInit {
     }
   }
 
-  toggleDefaultCV() {
-    this.useDefaultCV = !this.useDefaultCV;
-  }
+ 
 
   async onSubmitForm(){
     await this.applicationService.submitSeekerApplication(this.applicationData);
