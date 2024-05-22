@@ -5,6 +5,7 @@ import { SavedAdvertisementListComponent } from '../components/saved-advertiseme
 import { ApplicationAdvertisementListComponent } from '../components/application-advertisement-list/application-advertisement-list.component';
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { SeekerEditProfileComponent } from '../components/seeker-edit-profile/seeker-edit-profile.component';
+import { HrManagerApplicationListingComponent } from '../components/hr-manager-application-listing/hr-manager-application-listing.component';
 
 // need to be verified
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
@@ -27,4 +28,5 @@ export const routes: Routes = [
   
   //only for testing
   {path:'image', component: ImageViewerComponent},
+  { path: 'home/hr-manager-application-listing', component: HrManagerApplicationListingComponent }
 ];

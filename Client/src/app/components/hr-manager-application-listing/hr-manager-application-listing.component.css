@@ -1,0 +1,79 @@
+.adTable{
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 3em;
+    margin-bottom: 0.5em;
+  }
+
+  .num ,.field {
+    font-size: 15px;
+    font-weight: 550;
+  }
+
+  .page{
+    margin: 6em 10em 10em 10em;
+    position: relative;
+  }
+  
+  p{
+    color: #008080;
+    font-family: Lato;
+    font-size: 30px;
+  }
+  
+  .pagetitle-content{
+    margin-top: 2em;
+    margin-left: 4.5em;
+    width: 97.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px; /* adjust this value to increase or decrease the space */
+
+  }
+
+  .job-title {
+    display: flex;
+    align-items: center;
+  }
+
+  .job-title-content{
+    display: flex;
+    flex-direction: column;
+  }
+  .mat-chip-listbox {
+    display: flex;
+    flex-direction: row;
+  }
+  .num,.field {
+    color: black;
+  }
+  
+    
+  th.mat-header-cell {
+    text-align: center !important;
+  }
+
+  
+
+
+  .icons{
+    color: #008080;
+    padding: auto;
+    width: 10em;
+
+  }
+
+  
+  button.mat-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-right: 10px; /* adjust this value to increase or decrease the space */
+
+  }
+  button:hover {
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+  }
+

@@ -42,9 +42,7 @@ export interface HRManagerApplicationListDto {
   styleUrl: './hr-manager-application-listing.component.css'
 })
 export class HrManagerApplicationListingComponent {
-    //navbar
-    selected: number = 3;
-    colorList = ['black', 'back', 'black', 'black']
+    
   
     //Table
     
@@ -67,12 +65,7 @@ export class HrManagerApplicationListingComponent {
      }
   
     async ngOnInit() {
-      //nav bar
-      this.colorList.forEach(element => {
-        element = 'black';
-      });
       
-      this.colorList[this.selected] = 'primary';
   
   //     //table
   //     await this.applicationService.getAllApplicationsbyAdvertisementID(this.job_id).then((response) => {
