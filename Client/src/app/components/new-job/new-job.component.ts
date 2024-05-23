@@ -29,6 +29,7 @@ import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { countries } from 'country-data';
+import { AuthService } from '../../../services/auth.service';
 
 
 interface Field {
@@ -164,7 +165,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		private router: Router, 
 		private acRouter: ActivatedRoute,
 		private snackBar: MatSnackBar,
-		private spinner: NgxSpinnerService) {
+		private spinner: NgxSpinnerService,
+		private auth: AuthService) {
 
 		this.filteredkeywords = this.createJobFormGroup.controls.keywordCtrl.valueChanges.pipe(
 			startWith(null),
@@ -307,23 +309,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
   	async createNewJob(addAdvertisement: AddJob){
 		addAdvertisement.keywords = this.removeDuplicates(this.keywords);
 		addAdvertisement.reqSkills = this.removeDuplicates(this.skills);
-		
-		try {
-			addAdvertisement.hrManager_id = sessionStorage.getItem('user_id') == null ? 0 : Number(sessionStorage.getItem('user_id'));
-		
-			if (addAdvertisement.hrManager_id == 0){
-				this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
-	
-				// code to signout the user
-				return;
-			}
-		} catch (error) {
-			//console.log(error); //raises the error
-			this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-			this.router.navigate(['/notfound']);
-			return;
-		}
-
+		addAdvertisement.hrManager_id = Number(this.auth.getUserId());
 		addAdvertisement.city = this.createJobFormGroup.controls.locationCityControl.value?.trim() ?? '';
 		addAdvertisement.country = this.createJobFormGroup.controls.locationCountryControl.value?.trim() ?? '';
 		addAdvertisement.job_description = this.description;

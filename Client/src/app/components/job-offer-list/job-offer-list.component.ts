@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -16,6 +16,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { AuthService } from '../../../services/auth.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 interface JobOffer{
   advertisement_id: number;
@@ -63,7 +67,7 @@ var Table_data: JobOfferTable[] = [];
   styleUrl: './job-offer-list.component.css'
 })
 
-export class JobOfferListComponent implements AfterViewInit{
+export class JobOfferListComponent implements OnInit{
   displayedColumns: string[] = ['Job Number', 'Title', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
   dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
 
@@ -84,12 +88,9 @@ export class JobOfferListComponent implements AfterViewInit{
     private advertisementService: AdvertisementServices,
     public dialog: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar){
+    private snackBar: MatSnackBar,
+    private auth: AuthService) { 
       this.jobListLength = 1;
-  }
-
-  async ngOnInit() {
-    
   }
 
   async refreshTable(status: string, title: string){
@@ -136,16 +137,13 @@ export class JobOfferListComponent implements AfterViewInit{
     this.jobListLength = this.jobList.length;
   }
 
-  ngAfterViewInit() {
-    // get the compnay id from the session storage
-    try {
-      this.company_id = sessionStorage.getItem('companyId') || '';
-      this.company_name = sessionStorage.getItem('companyName') || '';
-    } catch (error) {
-      //console.log(error); //raises the error
-      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-      this.router.navigate(['/notfound']);
-      return;
+  async ngOnInit() {
+    try{
+      this.company_id = this.auth.getCompanyID() || '';
+      this.company_name = this.auth.getCompanyName() || '';
+    }
+    catch (error){
+      console.error(error);
     }
 
     this.refreshTable(this.selectedFilter, "");
@@ -226,6 +224,7 @@ export class ConfirmDialog {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialog>,
     private advertisementService: AdvertisementServices,
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -250,11 +249,28 @@ export class ConfirmDialog {
     }
     else if (this.dialogtitle == "Hold") {
       await this.advertisementService.holdAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully evaluating!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      this.snackBar.open(this.title + " job offer successfully set as evaluating job!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
     else if (this.dialogtitle == "Activate") {
-      await this.advertisementService.activateAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      let res = await this.advertisementService.activateAdvertisement(this.id.toString());
+
+      if (res === "Invalid Deadline"){
+        let dialogRef = this.dialog.open(JobActivateDialog, {
+          width: '400px',
+          enterAnimationDuration: '50ms',
+          exitAnimationDuration: '50ms',
+          disableClose: true,
+          data: { title: this.title, id: this.id}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          this.dialogRef.close();
+          return;
+        });
+      }
+      else{
+        this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      }
     }
     else if (this.dialogtitle == "Delete" && this.canDelete) {
       var res = await this.advertisementService.deleteAdvertisement(this.id.toString());
@@ -268,5 +284,61 @@ export class ConfirmDialog {
     }
 
     this.dialogRef.close();
+  }
+}
+
+
+@Component({
+  selector: 'job-activate-dialog',
+  templateUrl: 'job-activate-dialog.html',
+  standalone: true,
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    MatInputModule, MatButtonModule, MatDialogActions, 
+    MatDialogClose, FormsModule, MatDialogTitle, 
+    MatDialogContent, MatFormFieldModule, MatDatepickerModule, MatCheckboxModule],
+})
+export class JobActivateDialog{
+  title: string = "";
+  id: number = 0;
+  submission_deadline: string = '';
+  is_ignore_deadline: boolean = false;
+
+  constructor(
+    public dialogRef: MatDialogRef<JobActivateDialog>,
+    private snackBar: MatSnackBar,
+    private advertisementService: AdvertisementServices,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+
+    this.title = data.title;
+    this.id = data.id;
+    this.submission_deadline = String(new Date(Date.now()));
+  }
+
+  async onConfirmClick() {
+    if (this.is_ignore_deadline == true){
+      this.submission_deadline = '';
+    }
+    else if (this.submission_deadline != ''){
+      if (new Date(this.submission_deadline) < new Date(Date.now())){
+        this.snackBar.open("Application deadline must be a future date!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        return;
+      }
+    }
+    else if (this.submission_deadline == null){ 
+      this.snackBar.open("Please select a valid date!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      return;
+    }
+
+    let res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), this.submission_deadline);
+
+    if (res){
+      this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      this.dialogRef.close();
+    }
+    else{
+      this.snackBar.open("Failed to activate!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      return;
+    }
   }
 }

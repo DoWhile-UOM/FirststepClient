@@ -112,7 +112,6 @@ export class AuthService {
 
 
   decodedToken() {
-
     const jwtHelper = new JwtHelperService();
     const token = this.getToken()!;
     const rtoken = this.getrefToken()!;
@@ -127,24 +126,24 @@ export class AuthService {
       return this.userPayload.role
   }
 
-  getFirstName() {//Get First Name from token
+  getName() {//Get First Name from token
     if (this.userPayload)
       return this.userPayload.given_name
   }
 
-  getLastName() {//Get Last Name from token
+  getCompanyName() {//Get Organization from token 
     if (this.userPayload)
-      return this.userPayload.family_name
-  }
-
-  getOragnizationName() {//Get Organization from token 
-    if (this.userPayload)
-      return this.userPayload.website
+      return this.userPayload.CompanyName
   }
 
   getUserId() {//Get UserID from token 
     if (this.userPayload)
       return this.userPayload.nameid
+  }
+
+  getCompanyID() {//Get Organization ID from token
+    if (this.userPayload)
+      return this.userPayload.CompanyID
   }
 
 }

@@ -1,0 +1,25 @@
+<form (ngSubmit)="onConfirmClick()">
+    <mat-dialog-content>
+        <h2 mat-dialog-title>Reactivate {{title}}</h2>
+        <span>
+            Application Submission Date for the job advertisement must be future date!. Need to update it before active the advertisement!
+            <br>
+            After expiration of the submission deadline, the job advertisement will be automatically closed.
+            <br><br>
+            Also you can ignore submission deadline for the advertisement if you want.
+            <br>
+            <mat-checkbox name="ignore_deadline" [(ngModel)]="is_ignore_deadline">Ignore Submission Deadline</mat-checkbox>
+        </span>
+        <mat-form-field style="display: flex; margin: 0 auto; margin-top: 2em;" color="primary" appearance="outline">
+            <mat-label>New Submission Deadline</mat-label>
+            <input matInput [matDatepicker]="picker2" name="submission_deadline" [(ngModel)]="submission_deadline">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <div tyle="width: 400px; display: flex; margin: 0 auto; margin-bottom: 1em; margin-top: 2em">
+            <button mat-raised-button color="primary" type="submit">Confirm Activation</button>
+            <button mat-button color="primary" style="margin-left: 1em;" [mat-dialog-close]>Cancel</button>
+        </div>
+    </mat-dialog-content>
+</form>

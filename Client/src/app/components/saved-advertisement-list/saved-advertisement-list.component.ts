@@ -6,6 +6,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 interface Job {
   advertisement_id: number;
@@ -38,35 +39,13 @@ export class SavedAdvertisementListComponent {
     private advertisementService: AdvertisementServices, 
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
-    private router: Router) {}
+    private router: Router,
+    private auth: AuthService) {}
 
   async ngOnInit(){
     this.spinner.show();
 
-    try {
-      this.seekerID = Number(sessionStorage.getItem('user_id'));
-      var user_type = String(sessionStorage.getItem('user_type'));
-
-      if (this.seekerID == null && user_type != 'seeker'){
-        this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-        // navigate to 404 page
-        this.router.navigate(['/notfound']);
-        // code to signout
-
-        this.spinner.hide();
-        return;
-      }
-    } catch (error) {
-      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-      // navigate to 404 page
-      this.router.navigate(['/notfound']);
-      // code to signout
-
-      this.spinner.hide();
-      return;
-    }    
+    this.seekerID = Number(this.auth.getUserId());
 
     await this.advertisementService.getSavedAdvertisements(String(this.seekerID))
       .then((response) => {
