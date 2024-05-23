@@ -23,6 +23,20 @@ export class ApplicationService {
     }
   }
 
+  async getHRMListing(job_number: number , status: string) {
+    let HRMListing: any = {};
+    try {
+      await axios.get( 'https://localhost:7213/api/Application/GetApplicationList/JobID=1/status=selected')
+        .then((response) => {
+          HRMListing = response.data;
+        });
+    }
+    catch (error) {
+      console.error(error);
+    }
+    return HRMListing;
+  }
+
   // async getAllApplicationsbyAdvertisementID(job_id: number) {
   //   let applicationList: any = [];
   
