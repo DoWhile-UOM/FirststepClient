@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AfterViewInit, Inject, ViewChild } from '@angular/core';
@@ -25,7 +26,8 @@ import { MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
 
-export interface HRMListing {
+
+interface HRMListing {
   title: string;
   job_number: number;
   field_name:string;
@@ -41,7 +43,7 @@ interface HRMApplicationList{
   submitted_date: Date;
 
 }
-var table_data: HRMApplicationList[] = [];
+var Table_data: HRMApplicationList[] = [];
 
 @Component({
   selector: 'app-hr-manager-application-listing',
@@ -50,33 +52,49 @@ var table_data: HRMApplicationList[] = [];
   templateUrl: './hr-manager-application-listing.component.html',
   styleUrl: './hr-manager-application-listing.component.css'
 })
-export class HrManagerApplicationListingComponent {
-    
-  
-    //Table
-    
-    displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated','assigned_hrAssistant_id', 'submitted_date'];
-    dataSource!: MatTableDataSource<HRMApplicationList>;
-  
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort = new MatSort();
-  
-    job_id: number = 1;//temp
-  
-    applications: HRMApplicationList[] = [];
-    selectedFilter: string = 'assigned';
-    applicationsLength: number = 0;
-  
-  
-  
-    constructor(private applicationService:ApplicationService) {
-      this.applicationsLength=1;
-    }
 
-    //Getting details
-    HRMListing: HRMListing = {} as HRMListing;
-  
-    async ngOnInit() {
+export class HrManagerApplicationListingComponent implements OnInit {
+  displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated', 'assigned_hrAssistant_id', 'submitted_date'];
+  dataSource: MatTableDataSource<HRMApplicationList>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+
+  job_number: number = 1; //temp
+
+  applications: HRMApplicationList[] = []; //check
+  selectedFilter: string = 'assigned';
+  applicationsLength: number = 0;
+
+  title: string = ""; 
+
+  constructor(private applicationService: ApplicationService, private snackBar: MatSnackBar) { //to add service
+    this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applications);
+  }
+
+  //Getting details
+  HRMListing: HRMListing = {} as HRMListing;
+
+  ngOnInit() {
+    this.refreshTable(this.selectedFilter, this.title);
+  }
+
+  refreshTable(status: string, title: string) {
+    this.applicationService.getHRMListing(this.job_number,status)
+  .then((applications: HRMApplicationList[]) => {
+    this.applications = applications;
+    this.dataSource.data = this.applications;
+    this.applicationsLength = this.applications.length;
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  }
+}
+
+
+
+
       
   
   //     //table
@@ -94,7 +112,6 @@ export class HrManagerApplicationListingComponent {
   // applyFilter(event: Event) {
   //   const filterValue = (event.target as HTMLInputElement).value;
   //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
   
   
   //new
@@ -102,4 +119,3 @@ export class HrManagerApplicationListingComponent {
   
   
 
-}
