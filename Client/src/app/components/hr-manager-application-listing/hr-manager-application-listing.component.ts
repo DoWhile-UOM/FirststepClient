@@ -41,6 +41,7 @@ interface HRMApplicationList{
   submitted_date: Date;
 
 }
+var table_data: HRMApplicationList[] = [];
 
 @Component({
   selector: 'app-hr-manager-application-listing',
@@ -63,7 +64,7 @@ export class HrManagerApplicationListingComponent {
     job_id: number = 1;//temp
   
     applications: HRMApplicationList[] = [];
-    //selectedFilter: string = 'assigned';
+    selectedFilter: string = 'assigned';
     applicationsLength: number = 0;
   
   
