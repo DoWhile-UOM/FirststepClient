@@ -21,7 +21,7 @@
 
   <div class="pagetitle-content">
     <span>
-      <mat-chip-listbox aria-label="Filter" #filterByStatus>
+      <mat-chip-listbox aria-label="Filter" #filterByStatus (change)="filter(filterByStatus.selected)">
         <mat-chip-option value="estatus">Not Evaluated</mat-chip-option>
         <mat-chip-option value="astatus">Accepted</mat-chip-option>
         <mat-chip-option value="rejected">Rejected</mat-chip-option>
