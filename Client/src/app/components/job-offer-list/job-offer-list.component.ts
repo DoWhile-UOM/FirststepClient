@@ -316,21 +316,28 @@ export class JobActivateDialog{
   }
 
   async onConfirmClick() {
+    let res;
+
     if (this.is_ignore_deadline == true){
-      this.submission_deadline = '';
-    }
-    else if (this.submission_deadline != ''){
-      if (new Date(this.submission_deadline) < new Date(Date.now())){
-        this.snackBar.open("Application deadline must be a future date!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
-        return;
-      }
+      res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), "-1");
     }
     else if (this.submission_deadline == null){ 
       this.snackBar.open("Please select a valid date!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
       return;
     }
+    else if (this.submission_deadline != ''){
+      let deadline = new Date(this.submission_deadline).toUTCString();
 
-    let res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), this.submission_deadline);
+      if (new Date(this.submission_deadline) < new Date(Date.now())){
+        this.snackBar.open("Application deadline must be a future date!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        return;
+      }
+      
+      res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), deadline);
+    }
+    else{
+      res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), "-1");
+    }
 
     if (res){
       this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
