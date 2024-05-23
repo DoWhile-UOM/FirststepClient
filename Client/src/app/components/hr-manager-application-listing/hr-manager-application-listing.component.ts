@@ -37,7 +37,7 @@ interface HRMApplicationList{
   seekerName: string;
   status: string;
   is_evaluated: boolean;
-  assigned: string;
+  assigned_hrAssistant_id: string;
   submitted_date: Date;
 
 }
@@ -54,7 +54,7 @@ export class HrManagerApplicationListingComponent {
   
     //Table
     
-    displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated','assigned', 'submitted_date'];
+    displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated','assigned_hrAssistant_id', 'submitted_date'];
     dataSource!: MatTableDataSource<HRMApplicationList>;
   
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,7 +63,7 @@ export class HrManagerApplicationListingComponent {
     job_id: number = 1;//temp
   
     applications: HRMApplicationList[] = [];
-    selectedFilter: string = 'assigned';
+    //selectedFilter: string = 'assigned';
     applicationsLength: number = 0;
   
   
