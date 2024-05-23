@@ -1,7 +1,11 @@
 <h2 mat-dialog-title>{{!canDelete ? 'Are you sure you want to delete the job advertisement?' : dialogtitle + ' Job Advertisement'}}</h2>
 <mat-dialog-content>
-  {{dialogtitle != 'Hold' || canDelete ? 'Would you like to ' + dialogtitle.toLowerCase() + ' ' + title : '' }} 
+  <b>
+  {{dialogtitle != 'Hold' || canDelete ? 'Would you like to ' + dialogtitle.toLowerCase() + ' ' + title + '?': '' }} 
   {{dialogtitle == 'Hold' ? 'Do you need to hold advertisement for evaluating the applications?' : ''}}
+  </b>
+  
+  <br>
   <br>
   {{dialogtitle == 'Hold' ? 'When the job advertisement change as a hold one, it will no longer be visible to the job seekers.' : ''}}
   {{dialogtitle == 'Close' ? 'When you close the job advertisement, it will no longer be visible to the job seekers.' : ''}}

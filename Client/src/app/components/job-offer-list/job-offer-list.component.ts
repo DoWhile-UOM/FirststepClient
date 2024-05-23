@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 
 interface JobOffer{
   advertisement_id: number;
@@ -56,7 +57,8 @@ var Table_data: JobOfferTable[] = [];
     CommonModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule],
+    MatInputModule,
+    MatMenuModule],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })

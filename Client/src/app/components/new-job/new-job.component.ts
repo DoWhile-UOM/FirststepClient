@@ -369,7 +369,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		this.spinner.hide();
 
 		if (response){
-			this.snackBar.open("Job Details Updated Successfully!", "", {panelClass: ['app-notification-success']})._dismissAfter(3000);
+			this.snackBar.open("Job Details Updated Successfully!", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
 			window.history.back();
 		}
 		else{
