@@ -11,17 +11,20 @@ export class ApplicationService {
 
   constructor() { }
 
-  async submitSeekerApplication(applicationData: FormData) {
-    try {
-      await axios.post(Apipaths.submitApplication, applicationData)
-        .then((response) => {
-          console.log(response);
-        });
-    }
+  async submitSeekerApplication(applicationData: FormData): Promise<void> {
+   try{
+    const response = await axios.post(Apipaths.submitApplication, applicationData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    console.log(response.data);
+   }
     catch (error) {
-      console.error(error);
-    }
+      console.error('Error submiting application: ', error);
   }
+}
+}
  /* async submitSeekerApplication(applications: any) {
     try{
       await axios.post(Apipaths.submitApplication, applications)
@@ -53,6 +56,6 @@ export class ApplicationService {
   //     );
   
   //   return applicationList;
-}
+
 
 

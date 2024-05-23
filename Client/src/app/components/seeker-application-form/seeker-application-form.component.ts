@@ -22,6 +22,15 @@ interface Seeker{
   linkedin:string;
 }
 
+interface Application{
+  user_id: number;
+  advertisement_id: number;
+  seeker_id: number;
+  cv: File;
+  doc1_url?: string;
+  doc2_url?: string;
+}
+
 
 interface Job{
   title: string;
@@ -39,6 +48,7 @@ interface Job{
 export class SeekerApplicationFormComponent implements OnInit {
 
   SeekerDetails: Seeker = {} as Seeker;
+  applicationData: Application = {} as Application;
   jobData: Job = {} as Job;
   user_id: number = 0;
   selectedCvFile: File | null = null;
@@ -52,7 +62,7 @@ export class SeekerApplicationFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)public data:any) {
 
       // assign data from application card
-      
+      this.applicationData.advertisement_id = data.jobID;
       this.user_id = data.seekerID;
       this.jobData.company_name = data.company_name;
       this.jobData.title = data.job_title;
@@ -81,11 +91,19 @@ export class SeekerApplicationFormComponent implements OnInit {
   async onSubmitForm(){
    if(this.selectedCvFile){
     const applicationData = new FormData();
+    applicationData.append('advertisement_id', this.applicationData.advertisement_id.toString());
+    applicationData.append('seeker_id', this.user_id.toString());
     applicationData.append('cv', this.selectedCvFile);
-    applicationData.append('user_id', this.user_id.toString());
-    applicationData.append('advertisement_id', this.data.jobID);
+   
+    
+
+    try{
     await this.applicationService.submitSeekerApplication(applicationData);
     this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
+    }
+    catch (error) {
+      console.error('Error submiting application with cv: ', error);
+    }
    }
    
   }
