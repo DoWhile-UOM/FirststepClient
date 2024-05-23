@@ -25,13 +25,21 @@ import { MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
 
-export interface HRManagerApplicationListDto {
+export interface HRMListing {
+  title: string;
+  job_number: number;
+  field_name:string;
+  current_status: string;
+  applicationList: HRMApplicationList[];
+}
+interface HRMApplicationList{
   application_Id: number;
   seekerName: string;
   status: string;
   is_evaluated: boolean;
-  assigned:string;
+  assigned: string;
   submitted_date: Date;
+
 }
 
 @Component({
@@ -47,14 +55,14 @@ export class HrManagerApplicationListingComponent {
     //Table
     
     displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated','assigned', 'submitted_date'];
-    dataSource!: MatTableDataSource<HRManagerApplicationListDto>;
+    dataSource!: MatTableDataSource<HRMApplicationList>;
   
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort: MatSort = new MatSort();
   
     job_id: number = 1;//temp
   
-    applications: HRManagerApplicationListDto[] = [];
+    applications: HRMApplicationList[] = [];
     selectedFilter: string = 'assigned';
     applicationsLength: number = 0;
   
@@ -62,7 +70,10 @@ export class HrManagerApplicationListingComponent {
   
     constructor(private applicationService:ApplicationService) {
       this.applicationsLength=1;
-     }
+    }
+
+    //Getting details
+    HRMListing: HRMListing = {} as HRMListing;
   
     async ngOnInit() {
       
