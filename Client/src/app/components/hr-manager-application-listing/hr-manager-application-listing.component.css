@@ -17,7 +17,7 @@
   
   p{
     color: #008080;
-    font-family: Lato;
+    /* font-family: Lato; */
     font-size: 30px;
   }
   
@@ -57,12 +57,12 @@
   
 
 
-  .icons{
+  /* .icons{
     color: #008080;
     padding: auto;
     width: 10em;
 
-  }
+  } */
 
   
   button.mat-button {
@@ -70,10 +70,35 @@
     top: 0;
     left: 0;
     margin-right: 10px; /* adjust this value to increase or decrease the space */
+    color: white !important;
 
   }
-  button:hover {
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
+  button.mat-button:hover {
+    background-color: #008080; /* darker shade of teal */
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
   }
+
+  .buttons-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .custom-button {
+    display: block;
+    background-color: teal;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    width: 250px;
+  }
+  
+  .custom-button:hover {
+    background-color: #008080; /* darker shade of teal */
+  }
+
 

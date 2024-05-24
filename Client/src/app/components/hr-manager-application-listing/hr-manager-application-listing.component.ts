@@ -38,6 +38,7 @@ import { MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
 import { Table } from '@syncfusion/ej2-angular-richtexteditor';
+import { MatButton } from '@angular/material/button';
 
 interface HRMListing {
   title: string;
@@ -78,6 +79,7 @@ var Table_data: HRMApplicationList[] = [];
     MatIcon,
     MatLabel,
     MatSelectModule,
+    MatButton,
   ],
   templateUrl: './hr-manager-application-listing.component.html',
   styleUrl: './hr-manager-application-listing.component.css',
