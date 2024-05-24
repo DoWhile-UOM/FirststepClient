@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -299,6 +299,8 @@ export class ConfirmDialog {
     MatDialogContent, MatFormFieldModule, MatDatepickerModule, MatCheckboxModule],
 })
 export class JobActivateDialog{
+  @ViewChild('defulatButton') confirmBtn: ElementRef | undefined;
+
   title: string = "";
   id: number = 0;
   submission_deadline: string = '';
@@ -313,6 +315,7 @@ export class JobActivateDialog{
     this.title = data.title;
     this.id = data.id;
     this.submission_deadline = String(new Date(Date.now()));
+    this.confirmBtn?.nativeElement.focus();
   }
 
   async onConfirmClick() {
