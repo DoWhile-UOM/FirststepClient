@@ -12,6 +12,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { StylemanageService } from '../../../services/stylemanage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PopUpComponent } from '../pop-up/pop-up.component';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -46,7 +48,7 @@ export class RegCmpStateCheckComponent {
 
   cmpData:CmpyData={} as CmpyData
 
-  constructor(private styleService:StylemanageService,private route:ActivatedRoute,private company: CompanyService) { }
+  constructor(private popup:MatDialog,private styleService:StylemanageService,private route:ActivatedRoute,private company: CompanyService) { }
   
 
 
@@ -95,6 +97,7 @@ export class RegCmpStateCheckComponent {
   }
 
   onApproved(){
+    this.popup.open(PopUpComponent);
     this.styleService.setStyle('circle-border-color', '#00ff1a');
     this.styleService.setStyle('number-color', '#00ff1a');
     console.log('Company Approved');
