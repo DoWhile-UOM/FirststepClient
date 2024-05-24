@@ -94,15 +94,43 @@
           <button mat-icon-button color="primary" *ngIf="joboffer.status == 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Hold')" class="small-icon-button">
             <mat-icon>pause</mat-icon>
           </button>
-          <button mat-icon-button color="primary" *ngIf="joboffer.status != 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Activate')" class="small-icon-button">
-            <mat-icon>undo</mat-icon>
-          </button>
           <button mat-icon-button color="primary" *ngIf="joboffer.status == 'hold'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Close')" class="small-icon-button">
             <mat-icon>close</mat-icon>
           </button>
           <button mat-icon-button color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Delete')" class="small-icon-button">
             <mat-icon>delete</mat-icon>
           </button>
+          
+          <button mat-icon-button color="primary" [matMenuTriggerFor]="menu" class="small-icon-button">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item color="primary" (click)="exploreAd(joboffer.advertisement_id)">
+              <mat-icon>explore</mat-icon>
+              <span>Explore</span>
+            </button>
+            <button mat-menu-item color="primary" (click)="editAd(joboffer.advertisement_id)">
+              <mat-icon>edit</mat-icon>
+              <span>Edit Details</span>
+            </button>
+            <button mat-menu-item color="primary" *ngIf="joboffer.status == 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Hold')">
+              <mat-icon>pause</mat-icon>
+              <span>Hold</span>
+            </button>
+            <button mat-menu-item color="primary" *ngIf="joboffer.status != 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Activate')">
+              <mat-icon>undo</mat-icon>
+              <span>Activate</span>
+            </button>
+            <button mat-menu-item color="primary" *ngIf="joboffer.status == 'hold'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Close')">
+              <mat-icon>close</mat-icon>
+              <span>Close</span>
+            </button>
+            <button mat-menu-item color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Delete')">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+          
         </span>
       </td>
     </ng-container>

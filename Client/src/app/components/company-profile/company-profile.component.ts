@@ -12,6 +12,7 @@ import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentService } from '../../../services/document.service';
+import { AuthService } from '../../../services/auth.service';
 
 interface Job {
   advertisement_id: number;
@@ -68,13 +69,9 @@ export class CompanyProfileComponent {
 
   constructor(
     private advertisementService: AdvertisementServices, 
-    private documentService: DocumentService,
     private a_router: ActivatedRoute, 
-    private router: Router, 
-    private snackBar: MatSnackBar,
-    private spinner: NgxSpinnerService,) { 
-
-  }
+    private spinner: NgxSpinnerService,
+    private auth: AuthService) { }
 
   paginatorLength = 10;
   pageSize = 5;
@@ -84,29 +81,7 @@ export class CompanyProfileComponent {
   async ngOnInit(){
     this.spinner.show();
 
-    try {
-      var seekerID = String(sessionStorage.getItem('user_id'));
-      var user_type = String(sessionStorage.getItem('user_type'));
-
-      if (this.seekerID == null && user_type != 'seeker'){
-        this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-        // navigate to 404 page
-        this.router.navigate(['/notfound']);
-        // code to signout
-        return;
-      }
-
-      this.seekerID = Number(seekerID);
-    } catch (error) {
-      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-      // navigate to 404 page
-      this.router.navigate(['/notfound']);
-      // code to signout
-      return;
-    }
-
+    this.seekerID = Number(this.auth.getUserId());
     let company_id: string = this.a_router.snapshot.paramMap.get('company_id') ?? '';
 
     if (company_id == '') {

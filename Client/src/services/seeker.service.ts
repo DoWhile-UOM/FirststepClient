@@ -20,7 +20,7 @@ async getSeekerDetails(id : number) {
       seekerData = response.data;
     })
     .catch (function (error) {
-      alert("Network Error: " + error);
+      console.log("Network Error: " + error);
     });;
 
   return seekerData;
@@ -34,7 +34,7 @@ async getSeekerDetailsForApplication(id : number) {
       seekerData = response.data;
     })
     .catch (function (error) {
-      alert("Network Error: " + error);
+      console.log("Network Error: " + error);
     });;
 
   return seekerData;

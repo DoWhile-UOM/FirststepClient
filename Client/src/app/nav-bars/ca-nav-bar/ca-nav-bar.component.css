@@ -32,10 +32,6 @@ mat-toolbar {
   gap: 16px;
 }
 
-.right-buttons a{
-  font-size: 20px;
-}
-
 .profile-image {
   height: 2em;
   width: 2em; 
@@ -49,16 +45,40 @@ mat-toolbar {
   gap: 16px;
 }
 
+a{
+  text-decoration: none;
+  color: black;
+  display: block;
+}
+
 .right-buttons a{
   font-size: 20px;
   display: block;
-  text-decoration: none;
-  color: black;
   padding: 0.2em 0.6em;
   border-radius: 0.35em;
 }
 
 .active {
   color: #008080 !important;
+}
+
+.menu-header{
+  display: flex;
+  flex-direction: row;
+  padding: 0.5em 1em;
+}
+
+.menu-header .icon{
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+  justify-content: center;
+  padding-right: 0.9em;
+}
+
+.user-name{
+  font-weight: bold;
+  color: #008080;
+  font-size: large;
 }
   

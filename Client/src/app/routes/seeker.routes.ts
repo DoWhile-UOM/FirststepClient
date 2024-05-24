@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'saved', component: SavedAdvertisementListComponent },
   { path: 'applied', component: ApplicationAdvertisementListComponent },
   { path: 'home/company-profile', component: CompanyProfileComponent },
-  { path: 'home/edit-profile', component: SeekerEditProfileComponent },
+  { path: 'edit-profile', component: SeekerEditProfileComponent },
 
   // need to be verified
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },

@@ -5,6 +5,7 @@ import { AdvertisementServices } from '../../../services/advertisement.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../../services/auth.service';
 
 interface Job {
   advertisement_id: number;
@@ -31,17 +32,18 @@ interface Job {
 export class ApplicationAdvertisementListComponent {
   jobList: Job[] = [];
 
-  seekerID: number = 3; // sample seekerID
-
   constructor(
     private advertisementService: AdvertisementServices, 
     private spinner: NgxSpinnerService,
-    private snackBar: MatSnackBar) {}
+    private snackBar: MatSnackBar, 
+    private auth: AuthService) {}
 
   async ngOnInit(){
     this.spinner.show();
 
-    await this.advertisementService.getAppliedAdvertisements(String(this.seekerID))
+    var seekerID = this.auth.getUserId();
+
+    await this.advertisementService.getAppliedAdvertisements(String(seekerID))
       .then((response) => {
         this.jobList = response;
 
