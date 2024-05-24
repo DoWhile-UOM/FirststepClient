@@ -52,6 +52,7 @@ export class SeekerApplicationFormComponent implements OnInit {
   jobData: Job = {} as Job;
   user_id: number = 0;
   selectedCvFile: File | null = null;
+  useDefaultCv: boolean = false;
  
 
 
