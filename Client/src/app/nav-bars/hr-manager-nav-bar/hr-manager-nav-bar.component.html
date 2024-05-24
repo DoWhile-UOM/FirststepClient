@@ -1,33 +1,40 @@
 <mat-toolbar class="nav-bar mat-elevation-z4">
   <span>
     <a routerLink="/">
-      <img src="assets/images/logo.png" alt="Logo" class="logo" />
+      <img src="assets/images/logo.png" alt="Logo" class="logo">
     </a>
   </span>
   <span>FirstStep</span>
   <span class="flex-spacer"></span>
   <div class="right-buttons">
-    <div class="profile-info">
-        <span class="name">{{profileDetails.first_name + ' ' +profileDetails.last_name}}</span>
-        <span class="company">{{profileDetails.company_name}}</span>
-    </div>
-        <img
-          src="assets/images/dp.png"
-          alt="Profile Picture"
-          class="profile-image"
-        />
-  </div>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="medium-icon-button">
+      <mat-icon>menu</mat-icon>
+    </button>
     <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>personicon</mat-icon>
-          <span>Edit Profile</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>logouticon</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
-</mat-toolbar>
+      <span class="menu-header">
+        <div class="icon">
+          <mat-icon class="large-mat-icon"><i class="fa-solid fa-circle-user"></i></mat-icon>
+        </div>
+        <div class="menu-header-container">
+          <div class="user-name">
+            {{name}}
+          </div>
+          <div class="company-name">
+            {{company}}
+          </div>
+        </div>
+      </span>
+      <hr>
+      <button mat-menu-item>
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-user-gear"></i></mat-icon>
+        <span>
+          <a routerLink="/ca/editRoleProfile">My Account Settings</a>
+        </span>
+      </button>
+      <button mat-menu-item (click)="onSignoutClick()">
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>      
+  </div>
+</mat-toolbar>  
