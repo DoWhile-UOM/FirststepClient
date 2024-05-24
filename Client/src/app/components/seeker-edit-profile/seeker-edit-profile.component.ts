@@ -23,7 +23,6 @@ import { NgModule } from '@angular/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatFormField } from '@angular/material/form-field';
-import { NavBarComponent } from "../../nav-bars/nav-bar/nav-bar.component";
 
 interface job_Field {
   field_name: string;
@@ -70,7 +69,7 @@ interface updateSeeker {
     standalone: true,
     templateUrl: './seeker-edit-profile.component.html',
     styleUrl: './seeker-edit-profile.component.css',
-    imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, MatRadioModule, ReactiveFormsModule, CommonModule, MatFormField, AddSkillsComponent, NavBarComponent]
+    imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, MatRadioModule, ReactiveFormsModule, CommonModule, MatFormField, AddSkillsComponent]
 })
 export class SeekerEditProfileComponent {
    // The image url of the default image
