@@ -7,8 +7,8 @@ import { HrmanagerApplicationViewComponent } from '../hrmanager-application-view
   standalone: true,
   imports: [CommonModule, HrmanagerApplicationViewComponent],
   templateUrl: './hrassistant-application-view.component.html',
-  styleUrl: './hrassistant-application-view.component.css'
+  styleUrls: ['./hrassistant-application-view.component.css']
 })
 export class HrassistantApplicationViewComponent {
-  showComments: boolean = false;
+  showComments: boolean = false; // This should hide comments
 }
