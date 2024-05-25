@@ -116,4 +116,19 @@
     background-color: #fff; /* Change the background color when the textarea is focused */
     outline: none; /* Remove the default browser outline */
   }
+
+  .upper-section {
+    position: relative;
+  }
+
+  .right-button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: teal;
+    color: white;
+    margin-right:100px ;
+  }
+
   

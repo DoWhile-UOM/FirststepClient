@@ -19,6 +19,7 @@ interface Seeker {
   field_name: string;
   user_id: number;
 }
+//Evaluation status should be added
 //HR Adss removed
 
 @Component({

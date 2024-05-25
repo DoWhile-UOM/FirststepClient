@@ -4,11 +4,29 @@
       <mat-icon>keyboard_backspace</mat-icon>
     </button>
 
-    <img src="assets/images/dp.png" alt="Profile Picture" class="profileimage" />
+    <img
+      src="assets/images/dp.png"
+      alt="Profile Picture"
+      class="profileimage"
+    />
     <div class="info">
-      <label class="name">{{ seekerDetails.first_name }} {{ seekerDetails.last_name }}</label>
+      <div style="display: flex; align-items: center">
+        <label class="name"
+          >{{ seekerDetails.first_name }} {{ seekerDetails.last_name }}</label
+        >
+        <!-- New button -->
+        <button mat-button class="View" style="background-color:  #e8e8e8; margin-left: 10px; font-size: 13px;">
+          View Profile
+          <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
+        </button>
+      </div>
       <label class="bio">{{ seekerDetails.bio }}</label>
     </div>
+
+    <!-- New button -->
+    <button mat-button class="right-button" style="color: white">
+      Button Text
+    </button>
   </div>
 
   <hr />
@@ -35,13 +53,16 @@
     <div class="button-container">
       <div class="buttons">
         <button mat-button class="Open" style="color: white">Open CV</button>
-        <button mat-button class="Download" style="color: teal">Download CV</button>
+        <button mat-button class="Download" style="color: teal">
+          Download CV
+        </button>
       </div>
     </div>
   </div>
 
-  <hr />
   <div class="comment-section" *ngIf="showComments">
+    <hr />
+
     <div>
       <mat-label class="head">Evaluated By</mat-label>
       <span>Sankha Abepitiya, HR Assistant, BISTECH GLOBAL</span>
@@ -55,7 +76,7 @@
     <div>
       <mat-label class="head">Change the decision</mat-label>
       <span>
-        <button mat-button class="reject" style="color: red;">Reject</button>
+        <button mat-button class="reject" style="color: red">Reject</button>
       </span>
     </div>
   </div>
