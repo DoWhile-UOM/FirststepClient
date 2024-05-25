@@ -36,8 +36,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
 import { Table } from '@syncfusion/ej2-angular-richtexteditor';
 import { MatButton } from '@angular/material/button';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 
 interface HRMListing {
   title: string;
@@ -67,7 +68,6 @@ interface HRMApplicationList {
     MatIconModule,
     MatButtonModule,
     MatChipsModule,
-    FormsModule,
     CommonModule,
     MatCardModule,
     MatFormFieldModule,
@@ -78,11 +78,13 @@ interface HRMApplicationList {
     MatLabel,
     MatSelectModule,
     MatButton,
-    NgxSpinnerModule,
+    SpinnerComponent,
+    FormsModule,
   ],
   templateUrl: './hr-manager-application-listing.component.html',
   styleUrl: './hr-manager-application-listing.component.css',
 })
+
 export class HrManagerApplicationListingComponent implements OnInit {
   displayedColumns: string[] = [
     'application_Id',
@@ -111,6 +113,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.spinner.show();
     this.getApplicationList('all', '');
   }
 
@@ -125,19 +128,14 @@ export class HrManagerApplicationListingComponent implements OnInit {
         this.jobID,
         status
       );
-
-      
-    this.snackBar.open('This is a test snackbar', 'Close', {
-      duration: 3000, // 3 seconds
-    });
-
-      
+      console.log(this.applicationList);      
       // Check if there are any applications
-      if (this.applicationList.length === 0) {
+      if (this.applicationList.length === 0) { // Not working
         this.snackBar.open('No applications found', 'Close', {
           duration: 2000,
         });
       } else {
+    
         // Update the data source for the table
         this.dataSource = new MatTableDataSource<HRMApplicationList>(
           this.applicationList
@@ -156,9 +154,4 @@ export class HrManagerApplicationListingComponent implements OnInit {
     }
   }
 
-  showSnackbar() {
-    this.snackBar.open('This is a test snackbar', 'Close', {
-      duration: 3000, // 3 seconds
-    });
-  }
 }
