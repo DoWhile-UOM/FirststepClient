@@ -34,6 +34,7 @@
   <div class="pagetitle-content">
     <span>
       <mat-chip-listbox aria-label="Filter" #filterByStatus >
+        <mat-chip-option selected value="all">All</mat-chip-option>
         <mat-chip-option value="notevaluated">Not Evaluated</mat-chip-option>
         <mat-chip-option value="selected">Selected</mat-chip-option>
         <mat-chip-option value="rejected">Rejected</mat-chip-option>
@@ -42,6 +43,12 @@
     </span>
   </div>
   <br /><br />
+
+  <mat-card class="emptymsg" *ngIf="applicationListLength <= 0">
+    <div>
+      <p class="center-text">Can't Find Any Results!</p>
+    </div>
+  </mat-card>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- ID Column -->

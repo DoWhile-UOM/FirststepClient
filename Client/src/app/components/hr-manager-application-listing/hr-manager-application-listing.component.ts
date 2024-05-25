@@ -55,6 +55,7 @@ interface HRMApplicationList {
   assigned_hrAssistant_id: string;
   submitted_date: Date;
 }
+//check
 var Table_data: HRMApplicationList[] = [];
 
 @Component({
@@ -85,6 +86,7 @@ var Table_data: HRMApplicationList[] = [];
   styleUrl: './hr-manager-application-listing.component.css',
 })
 export class HrManagerApplicationListingComponent implements OnInit {
+
   displayedColumns: string[] = [
     'application_Id',
     'seekerName',
@@ -94,15 +96,17 @@ export class HrManagerApplicationListingComponent implements OnInit {
     'submitted_date',
     'icon'
   ];
-  dataSource = new MatTableDataSource<HRMApplicationList>(Table_data);
+  
+  @ViewChild(MatTable) table!: MatTable<HRMApplicationList>;
 
+  dataSource = new MatTableDataSource<HRMApplicationList>(Table_data);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort = new MatSort();
+  // @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   job_number: number = 1; //temp
 
-  applicationList: HRMListing[] = []; //check
-  selectedFilter: string = 'passed';
+  applicationList: HRMApplicationList[] = []; //check
+  selectedFilter: string = 'all';
   applicationListLength: number = 0;
 
   title: string = ''; //check
@@ -133,20 +137,18 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
     for (let i = 0; i < this.applicationListLength; i++) {
       Table_data.push({
-        application_Id:
-          this.applicationList[i].applicationList[i].application_Id,
-        seekerName: this.applicationList[i].applicationList[i].seekerName,
-        status: this.applicationList[i].applicationList[i].status,
-        is_evaluated: this.applicationList[i].applicationList[i].is_evaluated,
-        assigned_hrAssistant_id:
-          this.applicationList[i].applicationList[i].assigned_hrAssistant_id,
-        submitted_date:
-          this.applicationList[i].applicationList[i].submitted_date,
+        application_Id: this.applicationList[i].application_Id,
+        seekerName: this.applicationList[i].seekerName,
+        status: this.applicationList[i].status,
+        is_evaluated: this.applicationList[i].is_evaluated,
+        assigned_hrAssistant_id: this.applicationList[i].assigned_hrAssistant_id,
+        submitted_date: this.applicationList[i].submitted_date,
+       
       });
     }
     this.dataSource = new MatTableDataSource<HRMApplicationList>(Table_data);
     this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
     this.applicationListLength = this.applicationList.length;
   }
 
