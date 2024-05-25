@@ -37,6 +37,20 @@ export class ApplicationService {
     return HRMListing;
   }
 
+  async getApplicationList(jobID: number , status: string) {
+    let applicationList: any = {};
+    try {
+      await axios.get( 'https://localhost:7213/api/Application/GetApplicationList/JobID=${jobID}/status=${status}')//edit the id and status
+        .then((response) => {
+          applicationList = response.data;
+        });
+    }
+    catch (error) {
+      console.error(error);
+    }
+    return applicationList;
+  }
+
   // async getAllApplicationsbyAdvertisementID(job_id: number) {
   //   let applicationList: any = [];
   
