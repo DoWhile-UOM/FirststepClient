@@ -115,12 +115,12 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   async getApplicationList(status: string, title: string) {
-    //testing
 
-    this.snackBar.open('This is a test snackbar foe meee', 'Close', {
+    this.snackBar.open('This is a test snackbar', 'Close', {
       duration: 3000, // 3 seconds
     });
 
+    this.spinner.show();
     console.log('Fetching data');
 
     try {
@@ -129,8 +129,6 @@ export class HrManagerApplicationListingComponent implements OnInit {
         this.jobID,
         status
       );
-          //testing
-      this.snackBar.open('This is a test snackbar foe to test length', 'Close', { duration: 3000});
 
       // Check if there are any applications
       if (this.applicationList.length === 0) {
@@ -152,10 +150,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
       });
       console.error('Error fetching applications:', error);
     } finally {
-      //testing
-      this.snackBar.open('This is a test snackbar foe endingggg', 'Close', {
-        duration: 3000, // 3 seconds
-      });
+      this.spinner.hide();
     }
   }
 
