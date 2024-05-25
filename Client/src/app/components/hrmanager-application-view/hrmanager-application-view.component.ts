@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit,Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
@@ -6,6 +6,8 @@ import { SeekerService } from '../../../services/seeker.service';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
 
 interface Seeker {
   first_name: string;
@@ -33,14 +35,17 @@ interface HRAssistant {
   styleUrl: './hrmanager-application-view.component.css',
 })
 export class HrmanagerApplicationViewComponent {
-  showComments: boolean = true;
+  @Input() showComments: boolean = true;
 
   seekerDetails: Seeker = {} as Seeker;
 
-  constructor(private seekerService: SeekerService) {}
-  user_id: number = 1;
+  constructor(private seekerService: SeekerService ,private route: ActivatedRoute ) {}
+  user_id: number = 2095;
 
   async ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.showComments = params['showComments'] !== 'false';
+    });
     this.fetchSeekerDetails();
   }
 
