@@ -20,6 +20,8 @@ import { AuthService } from '../../../services/auth.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface JobOffer{
   advertisement_id: number;
@@ -62,7 +64,8 @@ var Table_data: JobOfferTable[] = [];
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatMenuModule],
+    MatMenuModule,
+    SpinnerComponent],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
@@ -86,7 +89,8 @@ export class JobOfferListComponent implements OnInit{
   constructor(
     private liveAnnouncer: LiveAnnouncer,
     private advertisementService: AdvertisementServices,
-    public dialog: MatDialog,
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
     private auth: AuthService) { 
@@ -94,6 +98,7 @@ export class JobOfferListComponent implements OnInit{
   }
 
   async refreshTable(status: string, title: string){
+    this.spinner.show();
     this.jobListLength = 1;
 
     if (title == ""){
@@ -135,6 +140,8 @@ export class JobOfferListComponent implements OnInit{
     this.dataSource.paginator = this.paginator;
 
     this.jobListLength = this.jobList.length;
+
+    this.spinner.hide();
   }
 
   async ngOnInit() {
