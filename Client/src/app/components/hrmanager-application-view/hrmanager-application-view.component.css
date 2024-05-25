@@ -53,7 +53,7 @@
   }
   
   .personalInfo > div,
-  .lower-section > div {
+  .comment-section > div {
     display: flex;
     justify-content: flex-start;
     align-items: center;

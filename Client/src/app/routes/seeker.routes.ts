@@ -7,6 +7,8 @@ import { CompanyProfileComponent } from '../components/company-profile/company-p
 import { SeekerEditProfileComponent } from '../components/seeker-edit-profile/seeker-edit-profile.component';
 import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup.component';
 import { HrManagerApplicationListingComponent } from '../components/hr-manager-application-listing/hr-manager-application-listing.component';
+import { HrassistantApplicationViewComponent } from '../components/hrassistant-application-view/hrassistant-application-view.component';
+import { HrmanagerApplicationViewComponent } from '../components/hrmanager-application-view/hrmanager-application-view.component';
 
 // need to be verified
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
@@ -30,5 +32,8 @@ export const routes: Routes = [
   
   //only for testing
   {path:'image', component: ImageViewerComponent},
-  { path: 'home/hr-manager-application-listing', component: HrManagerApplicationListingComponent }
+  { path: 'home/hr-manager-application-listing', component: HrManagerApplicationListingComponent },
+  { path: 'home/hr-manager-application-view', component: HrmanagerApplicationViewComponent },
+  { path: 'home/hr-assistant-application-view', component: HrassistantApplicationViewComponent },
+
 ];

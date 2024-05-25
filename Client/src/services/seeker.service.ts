@@ -15,7 +15,7 @@ constructor(private http: HttpClient) { }
 async getSeekerDetails(id : number) {
   let seekerData: any;
   
-  await axios.get(Apipaths.getSeekerDetails  + id)
+  await axios.get('https://localhost:7213/api/Seeker/GetSeeker/' + id)
     .then((response) => {
       seekerData = response.data;
     })
