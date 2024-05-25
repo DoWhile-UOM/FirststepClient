@@ -6,6 +6,8 @@ import { RegCmpStateCheckComponent } from './components/reg-cmp-state-check/reg-
 import { RegisterCompanyComponent } from './components/register-company/register-company.component';
 import { CompanyAdminRegistrtionFormComponent } from './components/company-admin-registrtion-form/company-admin-registrtion-form.component';
 import { SeekerSignupComponent } from './components/seeker-signup/seeker-signup.component';
+import { HrmanagerApplicationViewComponent } from './components/hrmanager-application-view/hrmanager-application-view.component';
+import { HrassistantApplicationViewComponent } from './components/hrassistant-application-view/hrassistant-application-view.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,12 +16,13 @@ export const routes: Routes = [
   { path: 'CompanyReg', component: RegisterCompanyComponent },
   { path: 'RegCheck', component: RegCmpStateCheckComponent },
   { path: 'RegCompanyAdmin', component: CompanyAdminRegistrtionFormComponent },
+  { path: 'hrmanager-view', component: HrmanagerApplicationViewComponent },
+  { path: 'hrassistant-view', component: HrassistantApplicationViewComponent },
   {
     path: 'ca',
     loadChildren: () => import('./routes/company-admin.routes').then(m => m.caRoutes),
     // example link: http://localhost:4200/ca/jobOfferList
   },
-
   {
     path: 'seeker',
     loadChildren: () => import('./routes/seeker.routes').then(m => m.routes),
@@ -30,7 +33,6 @@ export const routes: Routes = [
     loadChildren: () => import('./routes/system-admin.routes').then(m => m.saRoutes),
     // example link: http://localhost:4200/sa/applicationList
   },
-
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
   { path: 'notfound', component: PageNotFoundComponent }
 ];
