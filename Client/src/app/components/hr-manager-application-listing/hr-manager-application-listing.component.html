@@ -7,21 +7,26 @@
 <div class="page">
   <div class="job-title">
     <button mat-button>
-      <mat-icon class="keyboard" style=" font-size: 30px; /* adjust this value to increase or decrease the size */
-      vertical-align: middle; padding: 5px 10px 5px 5px;">keyboard_backspace</mat-icon>
+      <mat-icon class="keyboard" style=" font-size: 30px; vertical-align: middle; padding: 5px 10px 5px 5px;">keyboard_backspace</mat-icon>
     </button>
     <div class="job-title-content">
-      <p>ASP.NETCore Developer</p>
+      <div class="title-with-new-button">
+        <p>ASP.NETCore Developer</p>
+        <button mat-button class="new-button">Edit Advertisement <mat-icon class="edit" style="margin-left: 5px;">edit</mat-icon></button>
+      </div>
       <mat-label class="num"> Job Number: 2752669</mat-label><br />
-      <mat-label class="field"
-        >Information Technology and Computer Science</mat-label
-      >
+      <mat-label class="field">Information Technology and Computer Science</mat-label>
     </div>
     <div class="buttons-right">
-      <button mat-button class="custom-button" style="color: white;">Edit Advertisement</button>
-      <button mat-button class="custom-button" style="color: white; ">Change Status </button>
-      <button mat-button class="custom-button" style="color: white;">Task Delegation</button>
-      <button mat-button class="custom-button" style="color: white;">Interview Scheduling</button>
+      <div>
+        <button mat-button class="custom-button" style="color: white;">Change Status <mat-icon class="icon" style="margin-left: 10px;">launch</mat-icon></button>
+      </div>
+      <div>
+        <button mat-button class="custom-button" style="color: white;">Task Delegation <mat-icon class="icon" style="margin-left: 10px;" >launch</mat-icon></button>
+      </div>
+      <div>
+        <button mat-button class="custom-button" style="color: white;">Interview Scheduling <mat-icon class="icon" style="margin-left: 5px;">launch</mat-icon></button>
+      </div>
     </div>
   </div>
   <br /><br />
@@ -82,6 +87,18 @@
       <th mat-header-cell *matHeaderCellDef>Submitted Date</th>
       <td mat-cell *matCellDef="let application">
         {{ application.submitted_date }}
+      </td>
+    </ng-container>
+
+    <!-- Icon column -->
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let application">
+        <button mat-button>
+          <mat-icon class="icon-col" style="color: teal;">visibility</mat-icon>
+          <mat-icon class="icon-col" style="color: teal;">edit</mat-icon>
+          <mat-icon class="icon-col" style="color: teal;">delete</mat-icon>
+        </button>
       </td>
     </ng-container>
 

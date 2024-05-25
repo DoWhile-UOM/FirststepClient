@@ -19,6 +19,7 @@
     color: #008080;
     /* font-family: Lato; */
     font-size: 30px;
+    margin-right: 15px;
   }
   
   .pagetitle-content{
@@ -85,14 +86,16 @@
   }
   
   .custom-button {
-    display: block;
+    display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row-reverse;
     background-color: teal;
     color: white;
     padding: 10px 20px;
     margin: 10px 0;
-    text-align: center;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     width: 250px;
   }
@@ -101,4 +104,33 @@
     background-color: #008080; /* darker shade of teal */
   }
 
+  /* Edit Profile button */
+  /* .new-button {
+    background-color: teal;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: auto;  push the button to the right */
+  
+    .new-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row-reverse;
+      background-color:#e0e0e0;
+      padding: 5px 5px 5px 10px ;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    }
+
+  
+  .title-with-new-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 

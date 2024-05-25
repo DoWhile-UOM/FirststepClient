@@ -92,6 +92,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
     'is_evaluated',
     'assigned_hrAssistant_id',
     'submitted_date',
+    'icon'
   ];
   dataSource = new MatTableDataSource<HRMApplicationList>(Table_data);
 
