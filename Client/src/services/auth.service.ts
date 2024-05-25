@@ -146,4 +146,22 @@ export class AuthService {
       return this.userPayload.CompanyID
   }
 
+  getLocation(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      try{
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(position => {
+            resolve({longitude: position.coords.longitude, latitude: position.coords.latitude});
+          }, err => {
+            reject(err);
+          });
+        } else {
+          reject(null);
+        }
+      }
+      catch(err){
+        reject(null);
+      }
+    });
+  }
 }
