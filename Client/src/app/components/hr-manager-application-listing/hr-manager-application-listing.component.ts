@@ -102,7 +102,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   job_number: number = 1; //temp
 
   applicationList: HRMListing[] = []; //check
-  selectedFilter: string = 'assigned';
+  selectedFilter: string = 'passed';
   applicationListLength: number = 0;
 
   title: string = ''; //check
