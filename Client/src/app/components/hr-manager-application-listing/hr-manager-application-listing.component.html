@@ -64,13 +64,17 @@
     </span>
   </div>
   <br /><br />
+  <div>
+    <button (click)="showSnackbar()">Show Snackbar</button>
+  </div>
+  
 
   <mat-card class="emptymsg" *ngIf="applicationListLength <= 0">
     <div>
       <p class="center-text">Can't Find Any Results!</p>
     </div>
   </mat-card>
-
+  <div *ngIf="applicationListLength > 0">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- ID Column -->
     <ng-container matColumnDef="application_Id">
@@ -140,4 +144,6 @@
     aria-label="Select page of periodic elements"
   >
   </mat-paginator>
+</div>
+
 </div>

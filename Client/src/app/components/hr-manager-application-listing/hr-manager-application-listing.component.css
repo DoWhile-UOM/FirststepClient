@@ -46,6 +46,16 @@ p {
   display: flex;
   flex-direction: row;
 }
+
+.emptymsg div {
+  margin: 0 auto;
+}
+.emptymsg {
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
+}
 .num,
 .field {
   color: black;
@@ -54,6 +64,7 @@ p {
 th.mat-header-cell {
   text-align: center !important;
 }
+
 
 /* .icons{
     color: #008080;
