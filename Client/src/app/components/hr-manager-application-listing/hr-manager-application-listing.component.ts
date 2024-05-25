@@ -99,7 +99,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   @ViewChild(MatTable) table!: MatTable<HRMApplicationList>;
 
   dataSource = new MatTableDataSource<HRMApplicationList>([]);
-  jobID: number = 1; //temp
+  JobID: number = 1; //temp
   applicationList: HRMApplicationList[] = [];
   selectedFilter: string = 'all';
   applicationListLength: number = 0;
@@ -114,10 +114,10 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    this.getApplicationList('all', '');
+    this.getApplicationList(this.JobID, this.selectedFilter);
   }
 
-  async getApplicationList(status: string, title: string) {
+  async getApplicationList(jobID: number,status: string) {
     this.spinner.show();
     console.log('Fetching data');
     
@@ -125,7 +125,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
       
       // Call the getApplicationList method in the service to fetch the data
       this.applicationList = await this.applicationService.getApplicationList(
-        this.jobID,
+        this.JobID,
         status
       );
       console.log(this.applicationList);      

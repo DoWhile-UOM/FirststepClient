@@ -23,10 +23,10 @@ export class ApplicationService {
     }
   }
 
-  async getHRMListing(job_number: number , status: string) {
+  async getHRMListing(jobID: number , status: string) {
     let HRMListing: any = {};
     try {
-      await axios.get( 'https://localhost:7213/api/Application/GetApplicationList/JobID=1/status=selected')
+      await axios.get( 'https://localhost:7213/api/Application/GetApplicationList' +'/JobID=' +jobID +'/status=' +status)
         .then((response) => {
           HRMListing = response.data;
         });
