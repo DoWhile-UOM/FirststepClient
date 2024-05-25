@@ -115,21 +115,23 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   async getApplicationList(status: string, title: string) {
-
-    this.snackBar.open('This is a test snackbar', 'Close', {
-      duration: 3000, // 3 seconds
-    });
-
     this.spinner.show();
     console.log('Fetching data');
-
+    
     try {
+      
       // Call the getApplicationList method in the service to fetch the data
       this.applicationList = await this.applicationService.getApplicationList(
         this.jobID,
         status
       );
 
+      
+    this.snackBar.open('This is a test snackbar', 'Close', {
+      duration: 3000, // 3 seconds
+    });
+
+      
       // Check if there are any applications
       if (this.applicationList.length === 0) {
         this.snackBar.open('No applications found', 'Close', {
