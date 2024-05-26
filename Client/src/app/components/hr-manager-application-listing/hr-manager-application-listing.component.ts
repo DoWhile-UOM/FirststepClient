@@ -53,7 +53,7 @@ interface HRMApplicationList {
   seekerName: string;
   status: string;
   is_evaluated: boolean;
-  assigned_hrAssistant_id: string;
+  assigned_hrAssistant_id: string ;
   submitted_date: Date;
 }
 
@@ -97,14 +97,15 @@ export class HrManagerApplicationListingComponent implements OnInit {
     'icon',
   ];
 
-  @ViewChild(MatTable) table!: MatTable<HRMApplicationList>;
 
   dataSource = new MatTableDataSource<HRMApplicationList>([]);
-  job_number: number = 1; //temp
+  job_number: number = 1057; //temp
   applicationList: HRMApplicationList[] = [];
   selectedFilter: string = 'all';
   applicationListLength: number = 0;
   title: string = '';
+  field_name: string = '';
+  current_status: string = '';
 
   constructor(
     private applicationService: ApplicationService,
@@ -119,31 +120,29 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   async getApplicationList(job_number: number,status: string) {
-    this.spinner.show();
-    console.log('Fetching data');
-    
+   
     try {
+      const listing: HRMListing = await this.applicationService.getApplicationList(job_number, status);
       
-      // Call the getApplicationList method in the service to fetch the data
-      this.applicationList = await this.applicationService.getApplicationList(
-        this.job_number,
-        status
-      );
-      console.log(this.applicationList);      
-      // Check if there are any applications
-      if (this.applicationList.length === 0) { // Not working
+      if (!listing) {
+        throw new Error('Listing data is undefined or null');
+      }
+
+      this.title = listing.title;
+      this.job_number = listing.job_number; 
+      this.field_name = listing.field_name;
+      this.current_status = listing.current_status;
+
+      this.applicationList = listing.applicationList || [];
+      
+
+      this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applicationList);
+      this.applicationListLength = this.applicationList.length;
+
+      if (this.applicationList.length === 0) {
         this.snackBar.open('No applications found', 'Close', {
           duration: 2000,
         });
-      } else {
-    
-        // Update the data source for the table
-        this.dataSource = new MatTableDataSource<HRMApplicationList>(
-          this.applicationList
-        );
-
-        // Update the application list length
-        this.applicationListLength = this.applicationList.length;
       }
     } catch (error) {
       this.snackBar.open('Failed to fetch applications', 'Close', {

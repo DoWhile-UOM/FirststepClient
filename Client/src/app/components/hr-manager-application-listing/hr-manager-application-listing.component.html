@@ -18,16 +18,15 @@
     </button>
     <div class="page-title-content">
       <div class="title-with-new-button">
-        <p>ASP.NETCore Developer</p>
+        <p>{{ title }}</p>
         <button mat-button class="new-button">
           Edit Advertisement
           <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
         </button>
       </div>
-      <mat-label class="num"> Job Number: 2752669</mat-label><br />
-      <mat-label class="field"
-        >Information Technology and Computer Science</mat-label
-      >
+      <mat-label class="num"> Job Number: {{ job_number }}</mat-label><br />
+      <mat-label class="field">{{ field_name }}</mat-label>
+
     </div>
     <div class="buttons-right">
       <div>
