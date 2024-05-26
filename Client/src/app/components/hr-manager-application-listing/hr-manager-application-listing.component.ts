@@ -47,6 +47,7 @@ interface HRMListing {
   current_status: string;
   applicationList: HRMApplicationList[];
 }
+
 interface HRMApplicationList {
   application_Id: number;
   seekerName: string;
@@ -99,7 +100,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   @ViewChild(MatTable) table!: MatTable<HRMApplicationList>;
 
   dataSource = new MatTableDataSource<HRMApplicationList>([]);
-  JobID: number = 1; //temp
+  job_number: number = 1; //temp
   applicationList: HRMApplicationList[] = [];
   selectedFilter: string = 'all';
   applicationListLength: number = 0;
@@ -114,10 +115,10 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    this.getApplicationList(this.JobID, this.selectedFilter);
+    this.getApplicationList(this.job_number, this.selectedFilter);
   }
 
-  async getApplicationList(jobID: number,status: string) {
+  async getApplicationList(job_number: number,status: string) {
     this.spinner.show();
     console.log('Fetching data');
     
@@ -125,7 +126,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
       
       // Call the getApplicationList method in the service to fetch the data
       this.applicationList = await this.applicationService.getApplicationList(
-        this.JobID,
+        this.job_number,
         status
       );
       console.log(this.applicationList);      

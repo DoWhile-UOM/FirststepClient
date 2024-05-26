@@ -23,53 +23,20 @@ export class ApplicationService {
     }
   }
 
-  async getHRMListing(jobID: number , status: string) {
-    let HRMListing: any = {};
-    try {
-      await axios.get( 'https://localhost:7213/api/Application/GetApplicationList' +'/JobID=' +jobID +'/status=' +status)
-        .then((response) => {
-          HRMListing = response.data;
-        });
-    }
-    catch (error) {
-      console.error(error);
-    }
-    return HRMListing;
-  }
-
-  async getApplicationList(jobID: number , status: string) {
+  async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};
     try {
-      await axios.get(`https://localhost:7213/api/Application/GetApplicationList/JobID=${jobID}/status=${status}`)
-      .then((response) => {
-          applicationList = response.data;
+        const response = await axios.get('https://localhost:7213/api/Application/GetApplicationList', {
+            params: { JobID: job_number, status: status }
         });
-    }
-    catch (error) {
-      console.error(error);
+        applicationList = response.data;
+    } catch (error) {
+        console.error("Error fetching application list:", error);
     }
     return applicationList;
-  }
+}
 
-  // async getAllApplicationsbyAdvertisementID(job_id: number) {
-  //   let applicationList: any = [];
-  
-  //   await axios.get(Apipaths.getAllApplications + job_id)
-  //     .then(function (response) {
-  //       try {
-  //         applicationList = response.data;
-  //       }
-  //       catch (error) {
-  //         console.log("No applications found");
-  //       }
-  //     })
-  //     .catch(
-  //       function (error) {
-  //         alert('Network Error: ' + error);
-  //       }
-  //     );
-  
-  //   return applicationList;
+
 }
 
 
