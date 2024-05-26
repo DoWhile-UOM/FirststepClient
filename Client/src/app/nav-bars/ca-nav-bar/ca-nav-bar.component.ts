@@ -26,4 +26,8 @@ export class CaNavBarComponent {
   onSignoutClick() {
     this.auth.signOut();
   }
+
+  roleProfileEdit(){
+    this.router.navigate(['/ca/editRoleProfile']);
+  }
 }

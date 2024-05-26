@@ -33,7 +33,11 @@ export const routes: Routes = [
   {
     path: 'hrm',
     loadChildren: () => import('./routes/hrm.routes').then(m => m.hrmRoutes),
-    // example link: http://localhost:4200/seeker/home
+  },
+
+  {
+    path: 'hra',
+    loadChildren: () => import('./routes/hra.routes').then(m => m.hraRoutes),
   },
 
   {

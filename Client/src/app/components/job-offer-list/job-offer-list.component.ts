@@ -42,6 +42,7 @@ interface JobOfferTable{
   title: string;
   status: string;
   posted_date: string;
+  field_name: string;
   no_of_applications: number;
   no_of_evaluated_applications: number;
   no_of_accepted_applications: number;
@@ -71,7 +72,7 @@ var Table_data: JobOfferTable[] = [];
 })
 
 export class JobOfferListComponent implements OnInit{
-  displayedColumns: string[] = ['Job Number', 'Title', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
+  displayedColumns: string[] = ['Job Number', 'Title', 'Target Field', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
   dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -127,6 +128,7 @@ export class JobOfferListComponent implements OnInit{
         title: this.jobList[i].title,
         status: this.jobList[i].current_status.toLowerCase(),
         posted_date: this.jobList[i].posted_date,
+        field_name: this.jobList[i].field_name,
         no_of_applications: this.jobList[i].no_of_applications,
         no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
         no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,

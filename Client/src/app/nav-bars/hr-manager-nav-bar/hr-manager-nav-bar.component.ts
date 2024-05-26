@@ -26,4 +26,8 @@ export class HrManagerNavBarComponent {
   onSignoutClick() {
     this.auth.signOut();
   }
+
+  roleProfileEdit(){
+    this.router.navigate(['' + this.auth.getRole() + '/editRoleProfile']);
+  }
 }

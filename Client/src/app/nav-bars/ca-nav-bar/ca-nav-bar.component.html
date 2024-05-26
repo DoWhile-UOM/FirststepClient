@@ -29,11 +29,9 @@
           </div>
         </span>
         <hr>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="roleProfileEdit()">
           <mat-icon class="medium-mat-icon"><i class="fa-solid fa-user-gear"></i></mat-icon>
-          <span>
-            <a routerLink="/ca/editRoleProfile">My Account Settings</a>
-          </span>
+          <span>My Account Settings</span>
         </button>
         <button mat-menu-item (click)="onSignoutClick()">
           <mat-icon class="medium-mat-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></mat-icon>

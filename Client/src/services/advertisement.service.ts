@@ -438,4 +438,25 @@ export class AdvertisementServices {
 
     return response;
   }
+
+  async getAssignedAdvertisementsByHRA(hraID: string){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getAdvertisementsByHRA + hraID)
+      .then(function (response) {
+        jobList = response.data;
+
+        for (let i = 0; i < jobList.length; i++) {
+          var postDate = new Date(jobList[i].posted_date);
+          jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+        }
+      })
+      .catch(
+        (error) => {
+        this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
+
+    return jobList;
+  }
 }
