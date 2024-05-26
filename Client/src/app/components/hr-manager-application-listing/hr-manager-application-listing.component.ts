@@ -97,16 +97,14 @@ export class HrManagerApplicationListingComponent implements OnInit {
     'icon',
   ];
 
-  //@ViewChild(MatTable) table!: MatTable<HRMApplicationList>;
+  @ViewChild(MatTable) table!: MatTable<HRMApplicationList>;
 
   dataSource = new MatTableDataSource<HRMApplicationList>([]);
-  job_number: number = 1057; //temp
+  job_number: number = 1; //temp
   applicationList: HRMApplicationList[] = [];
   selectedFilter: string = 'all';
   applicationListLength: number = 0;
   title: string = '';
-  field_name: string = '';
-  current_status: string = '';
 
   constructor(
     private applicationService: ApplicationService,
@@ -121,6 +119,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   async getApplicationList(job_number: number,status: string) {
+    this.spinner.show();
+    console.log('Fetching data');
     
     try {
       
