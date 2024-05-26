@@ -1,18 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AfterViewInit, Inject } from '@angular/core';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import {
-  MatTable,
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   MatDialog,
   MatDialogRef,
@@ -34,7 +32,6 @@ import { MatIcon } from '@angular/material/icon';
 import { MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
-import { Table } from '@syncfusion/ej2-angular-richtexteditor';
 import { MatButton } from '@angular/material/button';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -97,13 +94,13 @@ export class HrManagerApplicationListingComponent implements OnInit {
     'icon',
   ];
 
-
   dataSource = new MatTableDataSource<HRMApplicationList>([]);
-  job_number: number = 1057; //temp
+  jobID: number = 0;
   applicationList: HRMApplicationList[] = [];
   selectedFilter: string = 'all';
   applicationListLength: number = 0;
   title: string = '';
+  job_number: number = 0;
   field_name: string = '';
   current_status: string = '';
 
@@ -111,30 +108,32 @@ export class HrManagerApplicationListingComponent implements OnInit {
     private applicationService: ApplicationService,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private acRouter: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.spinner.show();
-    this.getApplicationList(this.job_number, this.selectedFilter);
+
+    this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
+    this.getApplicationList(this.jobID, this.selectedFilter);
+
+    this.spinner.hide();
   }
 
-  async getApplicationList(job_number: number,status: string) {
-   
+  async getApplicationList(jobID: number,status: string) {
     try {
-      const listing: HRMListing = await this.applicationService.getApplicationList(job_number, status);
+      const listing: HRMListing = await this.applicationService.getApplicationList(jobID, status);
       
       if (!listing) {
-        throw new Error('Listing data is undefined or null');
+        throw new Error('Not applications found for the job id');
       }
 
       this.title = listing.title;
       this.job_number = listing.job_number; 
       this.field_name = listing.field_name;
       this.current_status = listing.current_status;
-
       this.applicationList = listing.applicationList || [];
-      
 
       this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applicationList);
       this.applicationListLength = this.applicationList.length;
@@ -149,9 +148,6 @@ export class HrManagerApplicationListingComponent implements OnInit {
         duration: 2000,
       });
       console.error('Error fetching applications:', error);
-    } finally {
-      this.spinner.hide();
     }
   }
-
 }

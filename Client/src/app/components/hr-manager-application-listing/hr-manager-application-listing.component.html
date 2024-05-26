@@ -30,17 +30,17 @@
     </div>
     <div class="buttons-right">
       <div>
-        <button mat-button class="custom-button" style="color: white">
+        <button mat-button class="custom-button">
           Change Status
         </button>
       </div>
       <div>
-        <button mat-button class="custom-button" style="color: white">
+        <button mat-button class="custom-button">
           Task Delegation
         </button>
       </div>
       <div>
-        <button mat-button class="custom-button" style="color: white">
+        <button mat-button class="custom-button">
           Interview Scheduling
         </button>
       </div>
@@ -128,14 +128,13 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <mat-paginator
+      [pageSizeOptions]="[10, 15, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
   </table>
-  <br />
-  <mat-paginator
-    [pageSizeOptions]="[10, 15, 20]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
-  >
-  </mat-paginator>
 </div>
 
 </div>
