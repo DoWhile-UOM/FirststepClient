@@ -39,7 +39,6 @@ import { MatButton } from '@angular/material/button';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
 interface HRMListing {
   title: string;
   job_number: number;
@@ -85,7 +84,6 @@ interface HRMApplicationList {
   templateUrl: './hr-manager-application-listing.component.html',
   styleUrl: './hr-manager-application-listing.component.css',
 })
-
 export class HrManagerApplicationListingComponent implements OnInit {
   displayedColumns: string[] = [
     'application_Id',
@@ -120,30 +118,33 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.getApplicationList(this.job_number, this.selectedFilter);
   }
 
-  async getApplicationList(job_number: number,status: string) {
-    
+  async getApplicationList(job_number: number, status: string) {
     try {
-      
-      // Call the getApplicationList method in the service to fetch the data
-      this.applicationList = await this.applicationService.getApplicationList(
-        this.job_number,
-        status
+      // Fetch the data from the service
+      const listing: HRMListing =
+        await this.applicationService.getApplicationList(job_number, status);
+
+      // Set the job details
+      this.title = listing.title;
+      this.job_number = listing.job_number;
+      this.field_name = listing.field_name;
+      this.current_status = listing.current_status;
+
+      // Set the application list
+      this.applicationList = listing.applicationList;
+
+      // Update the data source for the table
+      this.dataSource = new MatTableDataSource<HRMApplicationList>(
+        this.applicationList
       );
-      console.log(this.applicationList);      
-      // Check if there are any applications
-      if (this.applicationList.length === 0) { // Not working
+
+      // Update the application list length
+      this.applicationListLength = this.applicationList.length;
+
+      if (this.applicationListLength === 0) {
         this.snackBar.open('No applications found', 'Close', {
           duration: 2000,
         });
-      } else {
-    
-        // Update the data source for the table
-        this.dataSource = new MatTableDataSource<HRMApplicationList>(
-          this.applicationList
-        );
-
-        // Update the application list length
-        this.applicationListLength = this.applicationList.length;
       }
     } catch (error) {
       this.snackBar.open('Failed to fetch applications', 'Close', {
@@ -154,5 +155,4 @@ export class HrManagerApplicationListingComponent implements OnInit {
       this.spinner.hide();
     }
   }
-
 }
