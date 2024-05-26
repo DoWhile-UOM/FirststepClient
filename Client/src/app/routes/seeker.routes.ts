@@ -22,18 +22,10 @@ export const routes: Routes = [
   { path: 'saved', component: SavedAdvertisementListComponent },
   { path: 'applied', component: ApplicationAdvertisementListComponent },
   { path: 'home/company-profile', component: CompanyProfileComponent },
-  { path: 'home/edit-profile', component: SeekerEditProfileComponent },
-  { path: 'signup', component: SeekerSignupComponent },
+  { path: 'edit-profile', component: SeekerEditProfileComponent },
 
   // need to be verified
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
   { path: 'home/applicationReview', component:SeekerApplicationStatusComponent },
-  
-  //only for testing
-  {path:'image', component: ImageViewerComponent},
-  { path: 'home/hr-manager-application-listing', component: HrManagerApplicationListingComponent },
-  { path: 'home/hr-manager-application-view', component: HrmanagerApplicationViewComponent },
-  { path: 'home/hr-assistant-application-view', component: HrassistantApplicationViewComponent },
-
 ];

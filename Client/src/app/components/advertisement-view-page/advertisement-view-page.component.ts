@@ -43,6 +43,7 @@ interface Job{
 })
 export class AdvertisementViewPageComponent {
   adData: Job = {} as Job;
+  isNullDeadline: boolean = false;
 
   constructor(
     private router: ActivatedRoute, 
@@ -55,6 +56,10 @@ export class AdvertisementViewPageComponent {
   
       (async () => {
         this.adData = await this.adService.getAdvertisementById(data.jobID);
+
+        if (this.adData.submission_deadline == "Jan 1, 1970"){
+          this.isNullDeadline = true;
+        }
 
         if (this.adData.currency_unit == null) {
           const countryCode = Country.getAllCountries().find(country => country.name === this.adData.country)?.isoCode;

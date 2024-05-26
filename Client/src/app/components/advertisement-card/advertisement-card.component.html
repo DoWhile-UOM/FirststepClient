@@ -24,7 +24,7 @@
         </p>
     </div> 
     <div class="job-details-outer">
-        <app-advertisement-actions *ngIf="!isApplicationPage" [jobID]="job.advertisement_id" [currentStatus]="job.is_saved" [expired]="job.is_expired"></app-advertisement-actions>
+        <app-advertisement-actions *ngIf="!isApplicationPage" [jobID]="job.advertisement_id" [currentStatus]="job.is_saved" [expired]="job.is_expired" [company_name]="job.company_name" [job_title]="job.title" [job_field]="job.field_name"></app-advertisement-actions>
         <app-advertisement-actions *ngIf="isApplicationPage" [jobID]="appliedJob.advertisement_id" [applicationStatus]="appliedJob.application_status"></app-advertisement-actions>
         <div class="job-details-inner">
             <p class="post-date" *ngIf="!isApplicationPage">{{(job.is_expired ? 'Job Expired' : 'Posted On ' + job.posted_date)}}</p>

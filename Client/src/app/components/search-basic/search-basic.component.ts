@@ -20,6 +20,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
+import { AuthService } from '../../../services/auth.service';
 
 interface Job {
   advertisement_id: number;
@@ -98,10 +99,11 @@ throw new Error('Method not implemented.');
   distance: number = 0;
 
   constructor(
-    private advertisementService: AdvertisementServices, 
+    private advertisementService: AdvertisementServices,
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
-    private router: Router) { 
+    private router: Router,
+    private auth: AuthService) { 
     this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filterCountry(value || '')),
@@ -116,40 +118,25 @@ throw new Error('Method not implemented.');
   async ngOnInit() {
     this.spinner.show();
 
-    try {
-      this.seekerID = String(sessionStorage.getItem('user_id'));
-      var user_type = String(sessionStorage.getItem('user_type'));
-
-      if (this.seekerID == null && user_type != 'seeker'){
-        this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-        // navigate to 404 page
-        this.router.navigate(['/notfound']);
-        // code to signout
-
-        this.spinner.hide();
-        return;
-      }
-    } catch (error) {
-      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-      // navigate to 404 page
-      this.router.navigate(['/notfound']);
-      // code to signout
-
-      this.spinner.hide();
-      return;
-    }    
-
+    this.seekerID = String(this.auth.getUserId());
+    
     this.countries = Country.getAllCountries().map(country => country.name);
+
+    let res = this.auth.getLocation();
+
+    if (res != undefined && res != null){
+      // get user's location
+      //alert(res.longitude + " " + res.latitude);
+    }
 
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {
         this.jobList = response.firstPageAdvertisements;
         this.jobIdList = response.allAdvertisementIds;
 
-        if (this.jobList.length == 0) {
-          console.log("No advertisements found");
+        if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
+          this.spinner.hide();
+          return;
         }
 
         this.newItemEvent.emit(this.jobList);

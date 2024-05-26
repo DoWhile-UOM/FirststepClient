@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { SeekerApplicationFormComponent } from '../seeker-application-form/seeker-application-form.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-advertisement-actions',
@@ -18,11 +19,15 @@ import { SeekerApplicationFormComponent } from '../seeker-application-form/seeke
   styleUrl: './advertisement-actions.component.css'
 })
 export class AdvertisementActionsComponent {
-
   @Input() currentStatus: boolean = false;
   @Input() expired: boolean = false;
   @Input() jobID: number = 0;
   @Input() applicationStatus: string = 'accepted';
+
+  // for send data to the advertisement header
+  @Input() company_name: string = "";
+  @Input() job_title: string = "";
+  @Input() job_field: string = "";
 
   icon: string = 'bookmark_border'; // bookmark
   isApplicationPage: boolean = false;
@@ -33,31 +38,11 @@ export class AdvertisementActionsComponent {
     private advertisementServices: AdvertisementServices,
     private snackbar: MatSnackBar,
     private router: Router,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private auth: AuthService) { }
 
   ngOnInit() {
-    try {
-      var seekerID = String(sessionStorage.getItem('user_id'));
-      var user_type = String(sessionStorage.getItem('user_type'));
-
-      if (this.seekerId == null && user_type != 'seeker'){
-        this.snackbar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-        // navigate to 404 page
-        this.router.navigate(['/notfound']);
-        // code to signout
-        return;
-      }
-
-      this.seekerId = Number(seekerID);
-    } catch (error) {
-      this.snackbar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-      // navigate to 404 page
-      this.router.navigate(['/notfound']);
-      // code to signout
-      return;
-    }
+    this.seekerId = Number(this.auth.getUserId());
     
     if (this.currentStatus){
       this.icon = 'bookmark';
@@ -89,7 +74,16 @@ export class AdvertisementActionsComponent {
     }
   }
 
-  async onClickApply() {
-    this.dialog.open(SeekerApplicationFormComponent); 
+   async onClickApply() {
+    const dialog=this.dialog.open(SeekerApplicationFormComponent,{
+      maxWidth: '100em',
+      data: {
+        jobID: this.jobID, 
+        seekerID: this.seekerId, 
+        company_name: this.company_name, 
+        job_title: this.job_title, 
+        job_field: this.job_field}
+    }); 
   }
 }
+

@@ -1,21 +1,60 @@
-<mat-toolbar class="nav-bar mat-elevation-z4">
-  <span>
-    <a routerLink="/">
-      <img src="assets/images/logo.png" alt="Logo" class="logo" />
-    </a>
-  </span>
-  <span>FirstStep</span>
-  <span class="flex-spacer"></span>
-  <div class="right-buttons">
-    <a
-      mat-button
-      routerLink="/company-registration-1"
-      color="{{ colorList[0] }}"
-      >Register your Company</a
-    >
-    <a mat-button routerLink="/login">Login</a>
+<header>
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="FirstStep Logo" />
+    <span>FirstStep</span>
   </div>
-</mat-toolbar>
+  <nav>
+    <a href="#" class="signUp">Register your company</a>
+    <a href="#" class="signUp">Login</a>
+  </nav>
+</header>
+<div class="container">
+  <main>
+    <section class="hero">
+      <div class="hero-image">
+        <img src="assets/images/landing/upimage.png" alt="Bistec Global Logo" />
+      </div>
+      <div class="hero-text">
+        <h1>Skills speak louder than words</h1>
+        <p>We help students to find their dream job while guiding companies to find their perfect team</p>
+        <p>To begin your journey register as a seeker</p>
+        <button mat-raised-button color="primary" type="submit">Sign Up</button>
+        <button mat-button class="login">
+          <span class="Login-btn-name" type="submit">Login</span>
+        </button>
+      </div>
+    </section>
 
-<!--body starts here-->
-<div class="body"></div>
+    <section class="info">
+      <div class="info-text">
+        <p>
+          FirstStep is an initiative dedicated to paving the way for fresh graduates to secure their first professional
+          opportunities. We offer a personalized approach for an effective job search.
+        </p>
+        <p>
+          FirstStep not only simplifies the application process but also offers real-time application tracking,
+          providing graduates with invaluable insights into their progress and facilitating direct engagement with
+          employers. FirstStep is not just a job search tool; it's a confidence-building companion that empowers
+          graduates to take their crucial first step towards a successful and fulfilling career.
+        </p>
+      </div>
+      <div class="info-image">
+        <img src="assets/images/landing/Next_steps.png" alt="Info Image" />
+      </div>
+    </section>
+    <div class="register-company-container">
+      <button mat-raised-button color="primary">Register your company</button>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      
+      <div class="sponsor-logo">
+        <p>Brought to you by</p>
+        <img src="assets/images/bistec-logo.png" alt="Bistec Global Logo" />
+      </div>
+      <p>&copy; 2024 FirstStep. All rights reserved.</p>
+    </div>
+  </footer>
+</div>

@@ -1,4 +1,5 @@
 <app-nav-bar *ngIf="url.includes('/seeker')"></app-nav-bar>
 <app-ca-nav-bar *ngIf="url.includes('/ca')"></app-ca-nav-bar>
+<app-hr-manager-nav-bar *ngIf="url.includes('/hrm') || url.includes('/hra')"></app-hr-manager-nav-bar>
 
 <router-outlet></router-outlet>

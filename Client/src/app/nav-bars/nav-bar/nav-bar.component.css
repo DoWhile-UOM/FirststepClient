@@ -4,6 +4,11 @@ mat-toolbar {
   align-items: center;
 }
 
+a{
+  text-decoration: none;
+  color: black;
+}
+
 .nav-bar {
   height: 4em; 
   background-color: white;
@@ -35,8 +40,6 @@ mat-toolbar {
 .right-buttons a{
   font-size: 20px;
   display: block;
-  text-decoration: none;
-  color: black;
   padding: 0.2em 0.6em;
   border-radius: 0.35em;
 }
@@ -57,3 +60,27 @@ mat-toolbar {
 .active {
   color: #008080 !important;
 }
+
+.menu-header{
+  display: flex;
+  flex-direction: row;
+  padding: 0.5em 1em;
+}
+
+.menu-header .icon{
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+  justify-content: center;
+  padding-right: 0.9em;
+}
+
+.user-name{
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+  justify-content: center;
+  font-weight: bold;
+  font-size: large;
+}
+  
