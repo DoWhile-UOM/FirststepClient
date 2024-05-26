@@ -34,19 +34,17 @@
               ></app-seeker-application-file-upload>
             </div>
             <div *ngIf="useDefaultCv">
-              <app-file-download
-                ></app-file-download>
-              </div>
-           <br>
-              <mat-checkbox color="primary"  [(ngModel)]="useDefaultCv"><span class="checkbox-text">Use default CV in profile</span></mat-checkbox>
-                
-              
-              </div>
-          
-          
+              <app-file-download></app-file-download>
+            </div>
+            <br />
+            <mat-checkbox color="primary" [(ngModel)]="useDefaultCv"
+              ><span class="checkbox-text"
+                >Use default CV in profile</span
+              ></mat-checkbox
+            >
           </div>
         </div>
-     
+      </div>
     </mat-card-content>
   </mat-dialog-content>
 
@@ -58,10 +56,3 @@
     </div>
   </mat-dialog-actions>
 </mat-card>
-
-<!-- <div *ngIf="!useDefaultCV">
-                <app-seeker-application-file-upload></app-seeker-application-file-upload> 
-            </div>
-            <div *ngIf="useDefaultCV"><app-file-download></app-file-download></div>
-          
-          [(ngModel)]="useDefaultCV" (change)="toggleDefaultCV()"-->

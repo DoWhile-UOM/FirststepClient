@@ -26,7 +26,8 @@ interface Application{
   user_id: number;
   advertisement_id: number;
   seeker_id: number;
-  cv: File;
+  cv?: File;
+  UseDefaultCv: boolean;
   doc1_url?: string;
   doc2_url?: string;
 }
@@ -51,7 +52,6 @@ export class SeekerApplicationFormComponent implements OnInit {
   applicationData: Application = {} as Application;
   jobData: Job = {} as Job;
   user_id: number = 0;
-  selectedCvFile: File | null = null;
   useDefaultCv: boolean = false;
  
 
@@ -84,28 +84,35 @@ export class SeekerApplicationFormComponent implements OnInit {
   }
 
   onCvSelected(file: File) {
-    this.selectedCvFile = file;   
+    this.applicationData.cv = file;
+    this.useDefaultCv = false; 
     }
 
  
 
   async onSubmitForm(){
-   if(this.selectedCvFile){
+    this.applicationData.UseDefaultCv= this.useDefaultCv;
     const applicationData = new FormData();
     applicationData.append('advertisement_id', this.applicationData.advertisement_id.toString());
     applicationData.append('seeker_id', this.user_id.toString());
-    applicationData.append('cv', this.selectedCvFile);
-   
-    
+    applicationData.append('useDefaultCv', this.applicationData.UseDefaultCv.toString());
+
+    if(!this.applicationData.UseDefaultCv && this.applicationData.cv){
+      applicationData.append('cv', this.applicationData.cv);
+    }
 
     try{
-    await this.applicationService.submitSeekerApplication(applicationData);
-    this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
+      await this.applicationService.submitSeekerApplication(applicationData);
+      this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm']);
     }
     catch (error) {
       console.error('Error submiting application with cv: ', error);
     }
-   }
-   
+
+
+
   }
 }
+   
+
+
