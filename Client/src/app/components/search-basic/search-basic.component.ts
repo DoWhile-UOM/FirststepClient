@@ -99,7 +99,7 @@ throw new Error('Method not implemented.');
   distance: number = 0;
 
   constructor(
-    private advertisementService: AdvertisementServices, 
+    private advertisementService: AdvertisementServices,
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private router: Router,
@@ -122,13 +122,21 @@ throw new Error('Method not implemented.');
     
     this.countries = Country.getAllCountries().map(country => country.name);
 
+    let res = this.auth.getLocation();
+
+    if (res != undefined && res != null){
+      // get user's location
+      //alert(res.longitude + " " + res.latitude);
+    }
+
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {
         this.jobList = response.firstPageAdvertisements;
         this.jobIdList = response.allAdvertisementIds;
 
-        if (this.jobList.length == 0) {
-          console.log("No advertisements found");
+        if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
+          this.spinner.hide();
+          return;
         }
 
         this.newItemEvent.emit(this.jobList);

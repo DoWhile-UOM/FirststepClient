@@ -4,14 +4,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bars/nav-bar/nav-bar.component';
 import { CaNavBarComponent } from './nav-bars/ca-nav-bar/ca-nav-bar.component';
-import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
+import { HrManagerNavBarComponent } from './nav-bars/hr-manager-nav-bar/hr-manager-nav-bar.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent, PdfViewerComponent ]
+    imports: [RouterOutlet, ReactiveFormsModule, CommonModule, NavBarComponent, CaNavBarComponent, HrManagerNavBarComponent ]
 })
 export class AppComponent {
   url = this.router.url;

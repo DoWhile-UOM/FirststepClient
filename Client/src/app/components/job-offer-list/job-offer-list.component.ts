@@ -20,6 +20,8 @@ import { AuthService } from '../../../services/auth.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface JobOffer{
   advertisement_id: number;
@@ -40,6 +42,7 @@ interface JobOfferTable{
   title: string;
   status: string;
   posted_date: string;
+  field_name: string;
   no_of_applications: number;
   no_of_evaluated_applications: number;
   no_of_accepted_applications: number;
@@ -62,13 +65,14 @@ var Table_data: JobOfferTable[] = [];
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatMenuModule],
+    MatMenuModule,
+    SpinnerComponent],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
 
 export class JobOfferListComponent implements OnInit{
-  displayedColumns: string[] = ['Job Number', 'Title', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
+  displayedColumns: string[] = ['Job Number', 'Title', 'Target Field', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
   dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -86,7 +90,8 @@ export class JobOfferListComponent implements OnInit{
   constructor(
     private liveAnnouncer: LiveAnnouncer,
     private advertisementService: AdvertisementServices,
-    public dialog: MatDialog,
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
     private auth: AuthService) { 
@@ -94,6 +99,7 @@ export class JobOfferListComponent implements OnInit{
   }
 
   async refreshTable(status: string, title: string){
+    this.spinner.show();
     this.jobListLength = 1;
 
     if (title == ""){
@@ -122,6 +128,7 @@ export class JobOfferListComponent implements OnInit{
         title: this.jobList[i].title,
         status: this.jobList[i].current_status.toLowerCase(),
         posted_date: this.jobList[i].posted_date,
+        field_name: this.jobList[i].field_name,
         no_of_applications: this.jobList[i].no_of_applications,
         no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
         no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,
@@ -135,6 +142,8 @@ export class JobOfferListComponent implements OnInit{
     this.dataSource.paginator = this.paginator;
 
     this.jobListLength = this.jobList.length;
+
+    this.spinner.hide();
   }
 
   async ngOnInit() {

@@ -99,6 +99,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 	isUpdate: boolean = false;
 	jobID: string = '';
+	companyName: string = '';
 
 	fields: Field[] = [];
 	currencyUnits: string[] = [];
@@ -213,6 +214,8 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 	async loadData(){
 		this.spinner.show();
+
+		this.companyName = this.auth.getCompanyName();
 
 		// get all fields from the database
 		await this.jobFieldService.getAll()

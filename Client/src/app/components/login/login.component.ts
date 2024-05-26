@@ -54,6 +54,11 @@ export class LoginComponent {
         
         //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
 
+        if (tokenPayload.role == "seeker") {
+          this.snackBar.open("We need to access to your location informations for better job recommendation for you!", "", {panelClass: ['app-notification-warning']})._dismissAfter(5000);
+          this.auth.getLocation();
+        }
+
         this.router.navigate(['/' + tokenPayload.role]);
       },
       error:(err)=>{

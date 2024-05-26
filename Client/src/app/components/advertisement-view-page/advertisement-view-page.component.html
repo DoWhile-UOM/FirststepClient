@@ -40,8 +40,7 @@
                     </div>
                     <div class="detail-inner">
                         <div class="detail-head">Deadline</div>
-                        <div class="detail-data" *ngIf="adData.submission_deadline">{{adData.submission_deadline}}</div>
-                        <div class="detail-data" *ngIf="!adData.submission_deadline">-</div>
+                        <div class="detail-data" *ngIf="!isNullDeadline">{{adData.submission_deadline}}</div>
                     </div>
                 </div>
             </div>

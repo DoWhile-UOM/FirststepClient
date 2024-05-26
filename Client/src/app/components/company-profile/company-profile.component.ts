@@ -70,6 +70,7 @@ export class CompanyProfileComponent {
   constructor(
     private advertisementService: AdvertisementServices, 
     private a_router: ActivatedRoute, 
+    private router: Router,
     private spinner: NgxSpinnerService,
     private auth: AuthService) { }
 
@@ -103,6 +104,9 @@ export class CompanyProfileComponent {
           // something went wrong
           console.log("No advertisements found");
         }
+      })
+      .catch((error) => {
+        this.router.navigate(['notfound']);
       });
 
     this.spinner.hide();
