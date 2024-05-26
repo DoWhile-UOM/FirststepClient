@@ -5,23 +5,16 @@
 
 <div class="page">
   <div class="page-title">
-    <button mat-button>
-      <mat-icon
-        class="keyboard"
-        style="
-          font-size: 30px;
-          vertical-align: middle;
-          padding: 5px 10px 5px 5px;
-        "
-        >keyboard_backspace</mat-icon
-      >
-    </button>
+    <div class="back-button">
+      <button mat-icon-button (click)="onBackButtonClick()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </div>
     <div class="page-title-content">
       <div class="title-with-new-button">
         <p>{{ title }}</p>
-        <button mat-button class="new-button">
-          Edit Advertisement
-          <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
+        <button mat-button (click)="onEditClick()">
+          Edit <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
         </button>
       </div>
       <mat-label class="num"> Job Number: {{ job_number }}</mat-label><br />
@@ -30,111 +23,110 @@
     </div>
     <div class="buttons-right">
       <div>
-        <button mat-button class="custom-button">
-          Change Status
+        <button mat-button color="primary" class="custom-button">
+          <mat-icon><i class="fa-solid fa-chart-gantt" style="color: #005050;"></i></mat-icon>Change Status
         </button>
       </div>
       <div>
-        <button mat-button class="custom-button">
-          Task Delegation
+        <button mat-button color="primary" class="custom-button">
+          <mat-icon><i class="fa-solid fa-thumbtack" style="color: #005050;"></i></mat-icon>Assign Applications
         </button>
       </div>
       <div>
-        <button mat-button class="custom-button">
-          Interview Scheduling
+        <button mat-button color="primary" class="custom-button">
+          <mat-icon><i class="fa-regular fa-calendar-days" style="color: #005050;"></i></mat-icon>Interview Scheduling
         </button>
       </div>
     </div>
   </div>
-  <br /><br />
+
+  <br />
+  <hr>
 
   <div class="pagetitle-content">
     <span>
-      <mat-chip-listbox aria-label="Filter" #filterByStatus>
+      <mat-chip-listbox aria-label="Filter" #filterByStatus (change)="filter(filterByStatus.selected)">
         <mat-chip-option selected value="all">All</mat-chip-option>
-        <mat-chip-option value="notevaluated">Not Evaluated</mat-chip-option>
-        <mat-chip-option value="selected">Selected</mat-chip-option>
-        <mat-chip-option value="rejected">Rejected</mat-chip-option>
-        <mat-chip-option value="passed">Passed</mat-chip-option>
+        <mat-chip-option value="NotEvaluated">Not Evaluated</mat-chip-option>
+        <mat-chip-option value="Accepted">Selected</mat-chip-option>
+        <mat-chip-option value="Rejected">Rejected</mat-chip-option>
+        <mat-chip-option value="Pass">Passed</mat-chip-option>
       </mat-chip-listbox>
     </span>
   </div>
-  <br /><br />
+  <br />
   
-  <mat-card class="emptymsg" *ngIf="applicationListLength <= 0">
+  <mat-card class="emptymsg mat-elevation-z8" *ngIf="applicationListLength <= 0">
     <div>
       <p class="center-text">Can't Find Any Results!</p>
     </div>
   </mat-card>
-  <div *ngIf="applicationListLength > 0">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- ID Column -->
-    <ng-container matColumnDef="application_Id">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let application">
-        {{ application.application_Id }}
-      </td>
-    </ng-container>
+  <div *ngIf="applicationListLength > 0"  class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <!-- ID Column -->
+      <ng-container matColumnDef="application_Id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let application">
+          {{ application.application_Id }}
+        </td>
+      </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="seekerName">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let application">
-        {{ application.seekerName }}
-      </td>
-    </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="seekerName">
+        <th mat-header-cell *matHeaderCellDef>Applicant Name</th>
+        <td mat-cell *matCellDef="let application">
+          {{ application.seekerName }}
+        </td>
+      </ng-container>
 
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let application">{{ application.status }}</td>
-    </ng-container>
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let application">{{ application.status }}</td>
+      </ng-container>
 
-    <!-- Evaluated Column -->
-    <ng-container matColumnDef="is_evaluated">
-      <th mat-header-cell *matHeaderCellDef>Evaluated</th>
-      <td mat-cell *matCellDef="let application">
-        {{ application.is_evaluated }}
-      </td>
-    </ng-container>
+      <!-- Evaluated Column -->
+      <ng-container matColumnDef="is_evaluated">
+        <th mat-header-cell *matHeaderCellDef>Evaluated</th>
+        <td mat-cell *matCellDef="let application">
+          {{ application.is_evaluated }}
+        </td>
+      </ng-container>
 
-    <!-- Assigned Column -->
-    <ng-container matColumnDef="assigned_hrAssistant_id">
-      <th mat-header-cell *matHeaderCellDef>Assigned to</th>
-      <td mat-cell *matCellDef="let application">
-        {{ application.submitted_date }}
-      </td>
-    </ng-container>
+      <!-- Assigned Column -->
+      <ng-container matColumnDef="assigned_hrAssistant_id">
+        <th mat-header-cell *matHeaderCellDef>Assigned to</th>
+        <td mat-cell *matCellDef="let application">
+          {{ application.assigned_hrAssistant_id }}
+        </td>
+      </ng-container>
 
-    <!-- Submitted Date Column -->
-    <ng-container matColumnDef="submitted_date">
-      <th mat-header-cell *matHeaderCellDef>Submitted Date</th>
-      <td mat-cell *matCellDef="let application">
-        {{ application.submitted_date }}
-      </td>
-    </ng-container>
+      <!-- Submitted Date Column -->
+      <ng-container matColumnDef="submitted_date">
+        <th mat-header-cell *matHeaderCellDef>Submitted Date</th>
+        <td mat-cell *matCellDef="let application">
+          {{ application.submitted_date }}
+        </td>
+      </ng-container>
 
-    <!-- Icon column -->
-    <ng-container matColumnDef="icon">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let application">
-        <button mat-button>
-          <mat-icon class="icon-col" style="color: teal">visibility</mat-icon>
-          <mat-icon class="icon-col" style="color: teal">edit</mat-icon>
-          <mat-icon class="icon-col" style="color: teal">delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <!-- Icon column -->
+      <ng-container matColumnDef="icon">
+        <th mat-header-cell *matHeaderCellDef class="nu-column"></th>
+        <td mat-cell *matCellDef="let application">
+          <button mat-icon-button color="primary" (click)="explore(application.application_Id)" class="small-icon-button">
+            <mat-icon>explore</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-    <mat-paginator
-      [pageSizeOptions]="[10, 15, 20]"
-      showFirstLastButtons
-      aria-label="Select page of periodic elements">
+    </table>
+    <mat-paginator 
+      [pageSizeOptions]="[2, 10, 20]"
+      showFirstLastButtons>
     </mat-paginator>
-  </table>
 </div>
 
 </div>

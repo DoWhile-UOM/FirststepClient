@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
@@ -35,6 +35,7 @@ import { ApplicationService } from '../../../services/application.service';
 import { MatButton } from '@angular/material/button';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from '../../../services/auth.service';
 
 
 interface HRMListing {
@@ -51,7 +52,7 @@ interface HRMApplicationList {
   status: string;
   is_evaluated: boolean;
   assigned_hrAssistant_id: string ;
-  submitted_date: Date;
+  submitted_date: string;
 }
 
 @Component({
@@ -104,13 +105,17 @@ export class HrManagerApplicationListingComponent implements OnInit {
   field_name: string = '';
   current_status: string = '';
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(
     private applicationService: ApplicationService,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
-    private acRouter: ActivatedRoute
-  ) {}
+    private acRouter: ActivatedRoute,
+    private router: Router,
+    private auth: AuthService) {
+  }
 
   ngOnInit() {
     this.spinner.show();
@@ -121,12 +126,23 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.spinner.hide();
   }
 
-  async getApplicationList(jobID: number,status: string) {
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  filter(selected: any){
+    // filter by current status of the advertisement
+    this.snackBar.open("Refeshing table to show " + selected.value + " Applications ...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+    this.getApplicationList(this.jobID, selected.value);
+    this.selectedFilter = selected.value;
+  }
+
+  async getApplicationList(jobID: number, status: string) {
     try {
       const listing: HRMListing = await this.applicationService.getApplicationList(jobID, status);
       
       if (!listing) {
-        throw new Error('Not applications found for the job id');
+        this.snackBar.open('Not applications found for the job id', "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
       }
 
       this.title = listing.title;
@@ -135,19 +151,32 @@ export class HrManagerApplicationListingComponent implements OnInit {
       this.current_status = listing.current_status;
       this.applicationList = listing.applicationList || [];
 
+      for (let i = 0; i < this.applicationList.length; i++) {
+        var submitted_date = new Date(this.applicationList[i].submitted_date);
+        this.applicationList[i].submitted_date = submitted_date.toLocaleString('default', { month: 'short' }) + " " + submitted_date.getDate() + ", " + submitted_date.getFullYear();
+      }
+
       this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applicationList);
+      this.dataSource.paginator = this.paginator;
       this.applicationListLength = this.applicationList.length;
 
       if (this.applicationList.length === 0) {
-        this.snackBar.open('No applications found', 'Close', {
-          duration: 2000,
-        });
+        this.snackBar.open("Not application found", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
       }
     } catch (error) {
-      this.snackBar.open('Failed to fetch applications', 'Close', {
-        duration: 2000,
-      });
-      console.error('Error fetching applications:', error);
+      this.snackBar.open("Error : " + error, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
     }
+  }
+
+  onBackButtonClick(){
+		window.history.back();
+	}
+
+  onEditClick(){
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', {jobID: this.jobID}]);
+  }
+
+  explore(application_Id: number){
+    alert("Exploring " + application_Id);
   }
 }

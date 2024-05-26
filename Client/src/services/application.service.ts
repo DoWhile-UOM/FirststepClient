@@ -22,14 +22,14 @@ export class ApplicationService {
 
   async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};
-    try {
-      const response = await axios.get(
-        `https://localhost:7213/api/Application/GetApplicationList/JobID=${job_number}/status=${status}`
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching application list:', error);
-      throw error;
-    }
+    await axios.get(`https://localhost:7213/api/Application/GetApplicationList/JobID=${job_number}/status=${status}`)
+      .then((response) => {
+        applicationList = response.data;
+      })
+      .catch((error) => {
+        //console.error(error);
+      });
+
+    return applicationList;
   }
 }

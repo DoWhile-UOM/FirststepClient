@@ -175,7 +175,7 @@ export class JobOfferListComponent implements OnInit{
   }
 
   editAd(adID: number){
-    this.router.navigate(['ca/jobOfferList/updateJobDetails', {jobID: adID}]);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', {jobID: adID}]);
   }
 
   changeStatusOfJob(adID: number, action: string){
@@ -189,11 +189,11 @@ export class JobOfferListComponent implements OnInit{
   }
 
   exploreAd(adID: number){
-    alert("Explore job " + adID);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList', {jobID: adID}]);
   }
 
   addNew(){
-    this.router.navigate(['ca/jobOfferList/newJob']);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/newJob']);
   }
 
   search(){
