@@ -1,17 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AfterViewInit, Inject, ViewChild } from '@angular/core';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AdvertisementServices } from '../../../services/advertisement.service';
+import {
+  MatTableDataSource,
+  MatTableModule,
+} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  MatDialog,
+  MatDialogRef,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogTitle,
+  MatDialogContent,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -24,77 +32,122 @@ import { MatIcon } from '@angular/material/icon';
 import { MatLabel } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ApplicationService } from '../../../services/application.service';
+import { MatButton } from '@angular/material/button';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
-export interface HRManagerApplicationListDto {
+
+interface HRMListing {
+  title: string;
+  job_number: number;
+  field_name: string;
+  current_status: string;
+  applicationList: HRMApplicationList[];
+}
+
+interface HRMApplicationList {
   application_Id: number;
   seekerName: string;
   status: string;
   is_evaluated: boolean;
-  assigned:string;
+  assigned_hrAssistant_id: string ;
   submitted_date: Date;
 }
 
 @Component({
   selector: 'app-hr-manager-application-listing',
   standalone: true,
-  imports: [MatSlideToggleModule, MatToolbarModule, MatSortModule, MatPaginatorModule, MatTableModule, MatIconModule, MatButtonModule, MatChipsModule, FormsModule, CommonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatTooltipModule, MatToolbar, MatIcon, MatLabel, MatSelectModule],
+  imports: [
+    MatSlideToggleModule,
+    MatToolbarModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatChipsModule,
+    CommonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTooltipModule,
+    MatToolbar,
+    MatIcon,
+    MatLabel,
+    MatSelectModule,
+    MatButton,
+    SpinnerComponent,
+    FormsModule,
+  ],
   templateUrl: './hr-manager-application-listing.component.html',
-  styleUrl: './hr-manager-application-listing.component.css'
+  styleUrl: './hr-manager-application-listing.component.css',
 })
-export class HrManagerApplicationListingComponent {
-    //navbar
-    selected: number = 3;
-    colorList = ['black', 'back', 'black', 'black']
-  
-    //Table
-    
-    displayedColumns: string[] = ['application_Id', 'seekerName', 'status', 'is_evaluated','assigned', 'submitted_date'];
-    dataSource!: MatTableDataSource<HRManagerApplicationListDto>;
-  
-    @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort = new MatSort();
-  
-    job_id: number = 1;//temp
-  
-    applications: HRManagerApplicationListDto[] = [];
-    selectedFilter: string = 'assigned';
-    applicationsLength: number = 0;
-  
-  
-  
-    constructor(private applicationService:ApplicationService) {
-      this.applicationsLength=1;
-     }
-  
-    async ngOnInit() {
-      //nav bar
-      this.colorList.forEach(element => {
-        element = 'black';
-      });
-      
-      this.colorList[this.selected] = 'primary';
-  
-  //     //table
-  //     await this.applicationService.getAllApplicationsbyAdvertisementID(this.job_id).then((response) => {
-  //       this.applications = response;
-  //       console.log(this.applications);
-  //     });
-  //   }
-  
-  //   async refreshTable(status:string,) {}
-  
-  //    //table
-  
-  
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-  
-  
-  //new
-  
-  
-  
 
+export class HrManagerApplicationListingComponent implements OnInit {
+  displayedColumns: string[] = [
+    'application_Id',
+    'seekerName',
+    'status',
+    'is_evaluated',
+    'assigned_hrAssistant_id',
+    'submitted_date',
+    'icon',
+  ];
+
+  dataSource = new MatTableDataSource<HRMApplicationList>([]);
+  jobID: number = 0;
+  applicationList: HRMApplicationList[] = [];
+  selectedFilter: string = 'all';
+  applicationListLength: number = 0;
+  title: string = '';
+  job_number: number = 0;
+  field_name: string = '';
+  current_status: string = '';
+
+  constructor(
+    private applicationService: ApplicationService,
+    public dialog: MatDialog,
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar,
+    private acRouter: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    this.spinner.show();
+
+    this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
+    this.getApplicationList(this.jobID, this.selectedFilter);
+
+    this.spinner.hide();
+  }
+
+  async getApplicationList(jobID: number,status: string) {
+    try {
+      const listing: HRMListing = await this.applicationService.getApplicationList(jobID, status);
+      
+      if (!listing) {
+        throw new Error('Not applications found for the job id');
+      }
+
+      this.title = listing.title;
+      this.job_number = listing.job_number; 
+      this.field_name = listing.field_name;
+      this.current_status = listing.current_status;
+      this.applicationList = listing.applicationList || [];
+
+      this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applicationList);
+      this.applicationListLength = this.applicationList.length;
+
+      if (this.applicationList.length === 0) {
+        this.snackBar.open('No applications found', 'Close', {
+          duration: 2000,
+        });
+      }
+    } catch (error) {
+      this.snackBar.open('Failed to fetch applications', 'Close', {
+        duration: 2000,
+      });
+      console.error('Error fetching applications:', error);
+    }
+  }
 }

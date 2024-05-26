@@ -1,1 +1,140 @@
-<p>hr-manager-application-listing works!</p>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+/>
+
+<div class="page">
+  <div class="page-title">
+    <button mat-button>
+      <mat-icon
+        class="keyboard"
+        style="
+          font-size: 30px;
+          vertical-align: middle;
+          padding: 5px 10px 5px 5px;
+        "
+        >keyboard_backspace</mat-icon
+      >
+    </button>
+    <div class="page-title-content">
+      <div class="title-with-new-button">
+        <p>{{ title }}</p>
+        <button mat-button class="new-button">
+          Edit Advertisement
+          <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
+        </button>
+      </div>
+      <mat-label class="num"> Job Number: {{ job_number }}</mat-label><br />
+      <mat-label class="field">{{ field_name }}</mat-label>
+
+    </div>
+    <div class="buttons-right">
+      <div>
+        <button mat-button class="custom-button">
+          Change Status
+        </button>
+      </div>
+      <div>
+        <button mat-button class="custom-button">
+          Task Delegation
+        </button>
+      </div>
+      <div>
+        <button mat-button class="custom-button">
+          Interview Scheduling
+        </button>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+
+  <div class="pagetitle-content">
+    <span>
+      <mat-chip-listbox aria-label="Filter" #filterByStatus>
+        <mat-chip-option selected value="all">All</mat-chip-option>
+        <mat-chip-option value="notevaluated">Not Evaluated</mat-chip-option>
+        <mat-chip-option value="selected">Selected</mat-chip-option>
+        <mat-chip-option value="rejected">Rejected</mat-chip-option>
+        <mat-chip-option value="passed">Passed</mat-chip-option>
+      </mat-chip-listbox>
+    </span>
+  </div>
+  <br /><br />
+  
+  <mat-card class="emptymsg" *ngIf="applicationListLength <= 0">
+    <div>
+      <p class="center-text">Can't Find Any Results!</p>
+    </div>
+  </mat-card>
+  <div *ngIf="applicationListLength > 0">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID Column -->
+    <ng-container matColumnDef="application_Id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.application_Id }}
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="seekerName">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.seekerName }}
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let application">{{ application.status }}</td>
+    </ng-container>
+
+    <!-- Evaluated Column -->
+    <ng-container matColumnDef="is_evaluated">
+      <th mat-header-cell *matHeaderCellDef>Evaluated</th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.is_evaluated }}
+      </td>
+    </ng-container>
+
+    <!-- Assigned Column -->
+    <ng-container matColumnDef="assigned_hrAssistant_id">
+      <th mat-header-cell *matHeaderCellDef>Assigned to</th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.submitted_date }}
+      </td>
+    </ng-container>
+
+    <!-- Submitted Date Column -->
+    <ng-container matColumnDef="submitted_date">
+      <th mat-header-cell *matHeaderCellDef>Submitted Date</th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.submitted_date }}
+      </td>
+    </ng-container>
+
+    <!-- Icon column -->
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let application">
+        <button mat-button>
+          <mat-icon class="icon-col" style="color: teal">visibility</mat-icon>
+          <mat-icon class="icon-col" style="color: teal">edit</mat-icon>
+          <mat-icon class="icon-col" style="color: teal">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <mat-paginator
+      [pageSizeOptions]="[10, 15, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </table>
+</div>
+
+</div>

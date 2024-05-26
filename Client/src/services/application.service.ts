@@ -2,46 +2,34 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApplicationService {
-
-  constructor() { }
+  constructor() {}
 
   async submitSeekerApplication(applications: any) {
-    try{
-      await axios.post(Apipaths.submitApplication, applications)
+    try {
+      await axios
+        .post(Apipaths.submitApplication, applications)
         .then((response) => {
           console.log(response);
         });
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   }
 
-  // async getAllApplicationsbyAdvertisementID(job_id: number) {
-  //   let applicationList: any = [];
-  
-  //   await axios.get(Apipaths.getAllApplications + job_id)
-  //     .then(function (response) {
-  //       try {
-  //         applicationList = response.data;
-  //       }
-  //       catch (error) {
-  //         console.log("No applications found");
-  //       }
-  //     })
-  //     .catch(
-  //       function (error) {
-  //         alert('Network Error: ' + error);
-  //       }
-  //     );
-  
-  //   return applicationList;
+  async getApplicationList(job_number: number, status: string) {
+    let applicationList: any = {};
+    try {
+      const response = await axios.get(
+        `https://localhost:7213/api/Application/GetApplicationList/JobID=${job_number}/status=${status}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching application list:', error);
+      throw error;
+    }
+  }
 }
-
-
