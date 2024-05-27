@@ -15,4 +15,8 @@ export class SeekerApplicationFormConfirmComponent {
   viewapplication(){
     this.router.navigate(['seeker/home/applicationReview']);
   }
+
+  back(){
+    this.router.navigate(['seeker/']);
+  }
 }

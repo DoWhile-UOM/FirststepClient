@@ -11,8 +11,10 @@ import { CommonModule } from '@angular/common';
 import { FileDownloadComponent } from '../file-download/file-download.component';
 import { Router } from '@angular/router';
 import { ApplicationService } from '../../../services/application.service';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { SeekerApplicationFileUploadComponent } from '../seeker-application-file-upload/seeker-application-file-upload.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface Seeker {
   email: string;
@@ -55,6 +57,7 @@ interface Job {
     FileDownloadComponent,
     MatDialogModule,
     SeekerApplicationFileUploadComponent,
+    SpinnerComponent
   ],
 })
 export class SeekerApplicationFormComponent implements OnInit {
@@ -65,9 +68,11 @@ export class SeekerApplicationFormComponent implements OnInit {
   useDefaultCv: boolean = false;
 
   constructor(
+    public dialogRef: MatDialogRef<SeekerApplicationFormComponent>,
     private seekerService: SeekerService,
     private applicationService: ApplicationService,
     private router: Router,
+    private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     // assign data from application card
@@ -83,6 +88,8 @@ export class SeekerApplicationFormComponent implements OnInit {
   }
 
   async fetchEmployeeDetails() {
+    this.spinner.show();
+
     try {
       const seekerData =
         await this.seekerService.getSeekerDetailsForApplication(this.user_id);
@@ -90,6 +97,8 @@ export class SeekerApplicationFormComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching seeker details:', error);
     }
+
+    this.spinner.hide();
   }
 
   onCvSelected(file: File) {
@@ -98,6 +107,8 @@ export class SeekerApplicationFormComponent implements OnInit {
   }
 
   async onSubmitForm() {
+    this.spinner.show();
+    
     this.applicationData.UseDefaultCv = this.useDefaultCv;
     const applicationData = new FormData();
     applicationData.append(
@@ -115,12 +126,17 @@ export class SeekerApplicationFormComponent implements OnInit {
     }
 
     try {
+      // check sucess message from the application service
       await this.applicationService.submitSeekerApplication(applicationData);
+      
       this.router.navigate([
         'seeker/home/applicationForm/applicationFormconfirm',
       ]);
+      this.dialogRef.close();
     } catch (error) {
       console.error('Error submiting application with cv: ', error);
     }
+
+    this.spinner.hide();
   }
 }
