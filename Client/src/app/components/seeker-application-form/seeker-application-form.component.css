@@ -35,7 +35,7 @@ mat-card-title {
   display: flex;
   align-items: center;
   justify-content: center;
- /* color: #008080;*/
+  color: #008080;
   margin-bottom: 10px;
   margin-top: 10px;
   font-size: 2vw;
