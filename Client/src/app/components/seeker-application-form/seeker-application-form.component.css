@@ -1,4 +1,4 @@
-mat-card{
+mat-card {
   height: auto;
   padding: 3%;
 }
@@ -7,17 +7,15 @@ mat-card{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  
 }
 
 .textSection .fieldSection {
   display: flex;
   flex-direction: column;
-  
 }
 
-.textSection{
-  width:200px;
+.textSection {
+  width: 200px;
 }
 
 .fieldSection {
