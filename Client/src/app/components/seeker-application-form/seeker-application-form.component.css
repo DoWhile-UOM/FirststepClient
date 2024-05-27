@@ -1,4 +1,4 @@
-mat-card{
+mat-card {
   height: auto;
   padding: 3%;
 }
@@ -12,6 +12,10 @@ mat-card{
 .textSection .fieldSection {
   display: flex;
   flex-direction: column;
+}
+
+.textSection {
+  width: 200px;
 }
 
 .fieldSection {
@@ -32,9 +36,9 @@ mat-card-title {
   color: #008080;
   margin-bottom: 10px;
   margin-top: 10px;
-  font-size: 1.5vw;
+  font-size: 2vw;
   font-style: normal;
-  font-weight: 500;
+  font-weight: bold;
   line-height: normal;
 }
 
@@ -42,7 +46,6 @@ mat-card-content {
   color: #000;
   font-size: 1vw;
   font-style: normal;
-  font-weight: 700;
   line-height: normal;
 }
 

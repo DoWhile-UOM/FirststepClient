@@ -8,6 +8,24 @@ import { Apipaths } from './apipaths/apipaths';
 export class ApplicationService {
   constructor() {}
 
+  async submitSeekerApplication(applicationData: FormData): Promise<void> {
+    try {
+      const response = await axios.post(
+        Apipaths.submitApplication,
+        applicationData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error submiting application: ', error);
+    }
+  }
+
+  /*
   async submitSeekerApplication(applications: any) {
     try {
       await axios
@@ -18,7 +36,7 @@ export class ApplicationService {
     } catch (error) {
       console.error(error);
     }
-  }
+  }*/
 
   async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};
