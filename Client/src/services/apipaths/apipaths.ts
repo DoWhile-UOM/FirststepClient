@@ -1,5 +1,6 @@
 export class Apipaths {
     static readonly baseUrl: string = 'https://localhost:7213/api/';
+    //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
