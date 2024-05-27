@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -15,6 +15,13 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { AuthService } from '../../../services/auth.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface JobOffer{
   advertisement_id: number;
@@ -35,6 +42,7 @@ interface JobOfferTable{
   title: string;
   status: string;
   posted_date: string;
+  field_name: string;
   no_of_applications: number;
   no_of_evaluated_applications: number;
   no_of_accepted_applications: number;
@@ -56,19 +64,22 @@ var Table_data: JobOfferTable[] = [];
     CommonModule,
     MatCardModule,
     MatFormFieldModule,
-    MatInputModule],
+    MatInputModule,
+    MatMenuModule,
+    SpinnerComponent],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'
 })
 
-export class JobOfferListComponent implements AfterViewInit{
-  displayedColumns: string[] = ['Job Number', 'Title', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
+export class JobOfferListComponent implements OnInit{
+  displayedColumns: string[] = ['Job Number', 'Title', 'Target Field', 'Posted Date', 'Status', 'Applications', 'Reviewed', 'Accepted', 'Rejected', 'Action'];
   dataSource = new MatTableDataSource<JobOfferTable>(Table_data);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   company_id: string = '';
+  company_name: string = '';
 
   jobList: JobOffer[] = [];
   selectedFilter: string = 'active';
@@ -79,17 +90,16 @@ export class JobOfferListComponent implements AfterViewInit{
   constructor(
     private liveAnnouncer: LiveAnnouncer,
     private advertisementService: AdvertisementServices,
-    public dialog: MatDialog,
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar){
+    private snackBar: MatSnackBar,
+    private auth: AuthService) { 
       this.jobListLength = 1;
   }
 
-  async ngOnInit() {
-
-  }
-
   async refreshTable(status: string, title: string){
+    this.spinner.show();
     this.jobListLength = 1;
 
     if (title == ""){
@@ -118,6 +128,7 @@ export class JobOfferListComponent implements AfterViewInit{
         title: this.jobList[i].title,
         status: this.jobList[i].current_status.toLowerCase(),
         posted_date: this.jobList[i].posted_date,
+        field_name: this.jobList[i].field_name,
         no_of_applications: this.jobList[i].no_of_applications,
         no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
         no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,
@@ -131,17 +142,17 @@ export class JobOfferListComponent implements AfterViewInit{
     this.dataSource.paginator = this.paginator;
 
     this.jobListLength = this.jobList.length;
+
+    this.spinner.hide();
   }
 
-  ngAfterViewInit() {
-    // get the compnay id from the session storage
-    try {
-      this.company_id = sessionStorage.getItem('companyId') || '';
-    } catch (error) {
-      //console.log(error); //raises the error
-      this.snackBar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-      this.router.navigate(['/notfound']);
-      return;
+  async ngOnInit() {
+    try{
+      this.company_id = this.auth.getCompanyID() || '';
+      this.company_name = this.auth.getCompanyName() || '';
+    }
+    catch (error){
+      console.error(error);
     }
 
     this.refreshTable(this.selectedFilter, "");
@@ -164,7 +175,7 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   editAd(adID: number){
-    this.router.navigate(['ca/jobOfferList/updateJobDetails', {jobID: adID}]);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', {jobID: adID}]);
   }
 
   changeStatusOfJob(adID: number, action: string){
@@ -178,11 +189,11 @@ export class JobOfferListComponent implements AfterViewInit{
   }
 
   exploreAd(adID: number){
-    alert("Explore job " + adID);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList', {jobID: adID}]);
   }
 
   addNew(){
-    this.router.navigate(['ca/jobOfferList/newJob']);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/newJob']);
   }
 
   search(){
@@ -222,6 +233,7 @@ export class ConfirmDialog {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialog>,
     private advertisementService: AdvertisementServices,
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -246,11 +258,28 @@ export class ConfirmDialog {
     }
     else if (this.dialogtitle == "Hold") {
       await this.advertisementService.holdAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully evaluating!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      this.snackBar.open(this.title + " job offer successfully set as evaluating job!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
     }
     else if (this.dialogtitle == "Activate") {
-      await this.advertisementService.activateAdvertisement(this.id.toString());
-      this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      let res = await this.advertisementService.activateAdvertisement(this.id.toString());
+
+      if (res === "Invalid Deadline"){
+        let dialogRef = this.dialog.open(JobActivateDialog, {
+          width: '400px',
+          enterAnimationDuration: '50ms',
+          exitAnimationDuration: '50ms',
+          disableClose: true,
+          data: { title: this.title, id: this.id}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          this.dialogRef.close();
+          return;
+        });
+      }
+      else{
+        this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      }
     }
     else if (this.dialogtitle == "Delete" && this.canDelete) {
       var res = await this.advertisementService.deleteAdvertisement(this.id.toString());
@@ -264,5 +293,71 @@ export class ConfirmDialog {
     }
 
     this.dialogRef.close();
+  }
+}
+
+
+@Component({
+  selector: 'job-activate-dialog',
+  templateUrl: 'job-activate-dialog.html',
+  standalone: true,
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    MatInputModule, MatButtonModule, MatDialogActions, 
+    MatDialogClose, FormsModule, MatDialogTitle, 
+    MatDialogContent, MatFormFieldModule, MatDatepickerModule, MatCheckboxModule],
+})
+export class JobActivateDialog{
+  @ViewChild('defulatButton') confirmBtn: ElementRef | undefined;
+
+  title: string = "";
+  id: number = 0;
+  submission_deadline: string = '';
+  is_ignore_deadline: boolean = false;
+
+  constructor(
+    public dialogRef: MatDialogRef<JobActivateDialog>,
+    private snackBar: MatSnackBar,
+    private advertisementService: AdvertisementServices,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+
+    this.title = data.title;
+    this.id = data.id;
+    this.submission_deadline = String(new Date(Date.now()));
+    this.confirmBtn?.nativeElement.focus();
+  }
+
+  async onConfirmClick() {
+    let res;
+
+    if (this.is_ignore_deadline == true){
+      res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), "-1");
+    }
+    else if (this.submission_deadline == null){ 
+      this.snackBar.open("Please select a valid date!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      return;
+    }
+    else if (this.submission_deadline != ''){
+      let deadline = new Date(this.submission_deadline).toUTCString();
+
+      if (new Date(this.submission_deadline) < new Date(Date.now())){
+        this.snackBar.open("Application deadline must be a future date!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        return;
+      }
+      
+      res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), deadline);
+    }
+    else{
+      res = await this.advertisementService.activateAdvertisementAndChangeDeadline(this.id.toString(), "-1");
+    }
+
+    if (res){
+      this.snackBar.open(this.title + " job offer successfully activate again!", "", {panelClass: ['app-notification-normal']})._dismissAfter(5000);
+      this.dialogRef.close();
+    }
+    else{
+      this.snackBar.open("Failed to activate!", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      return;
+    }
   }
 }

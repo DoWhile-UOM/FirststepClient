@@ -15,12 +15,12 @@ constructor(private http: HttpClient) { }
 async getSeekerDetails(id : number) {
   let seekerData: any;
   
-  await axios.get(Apipaths.getSeekerDetails  + id)
+  await axios.get('https://localhost:7213/api/Seeker/GetSeeker/' + id)
     .then((response) => {
       seekerData = response.data;
     })
     .catch (function (error) {
-      alert("Network Error: " + error);
+      console.log("Network Error: " + error);
     });;
 
   return seekerData;
@@ -34,7 +34,7 @@ async getSeekerDetailsForApplication(id : number) {
       seekerData = response.data;
     })
     .catch (function (error) {
-      alert("Network Error: " + error);
+      console.log("Network Error: " + error);
     });;
 
   return seekerData;

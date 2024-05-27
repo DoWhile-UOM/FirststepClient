@@ -221,8 +221,24 @@ export class AdvertisementServices {
     return adData;
   }
 
+  async activateAdvertisementAndChangeDeadline(jobID: string, deadline: string) {
+    let response: any = null;
+
+    await axios.patch(Apipaths.changeStatusOfJob + jobID + "/reactivate/newSubmissionDeadline=" + deadline)
+      .then(function (res) {
+        response = res;
+      })
+      .catch(
+        (error) => {
+          this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
+
+    return response;
+  }
+
   async activateAdvertisement(jobID: string) {
-    this.changeStatus(jobID, "active");
+    return this.changeStatus(jobID, "active");
   }
 
   async holdAdvertisement(jobID: string) {
@@ -250,7 +266,8 @@ export class AdvertisementServices {
       .catch(
         (error) => {
           if (error.response.status == 400) {
-            this.snackBar.open("Expired Date must be future date!. Need to update it before active the advertisement!", "", {panelClass: ['app-notification-error']})._dismissAfter(15000);
+            this.snackBar.open("Expired Date must be future date!. Need to update it before active the advertisement!", "",{panelClass: ['app-notification-warning']})._dismissAfter(5000);
+            response = "Invalid Deadline";
           }
           else {
             this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
@@ -420,5 +437,26 @@ export class AdvertisementServices {
       );
 
     return response;
+  }
+
+  async getAssignedAdvertisementsByHRA(hraID: string){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getAdvertisementsByHRA + hraID)
+      .then(function (response) {
+        jobList = response.data;
+
+        for (let i = 0; i < jobList.length; i++) {
+          var postDate = new Date(jobList[i].posted_date);
+          jobList[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+        }
+      })
+      .catch(
+        (error) => {
+        this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
+
+    return jobList;
   }
 }

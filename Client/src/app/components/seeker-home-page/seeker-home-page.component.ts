@@ -40,6 +40,10 @@ export class SeekerHomePageComponent{
 
   constructor(private snackBar: MatSnackBar) {}
 
+  ngOnInit() {
+    this.snackBar.open("Welcome to the FirstStep Job Matching Platform!", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+  }
+
   async handlePageEvent(e: PageEvent) {
     this.pageSize = e.pageSize;
     this.pageIndex = e.pageIndex;
