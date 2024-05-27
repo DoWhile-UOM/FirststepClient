@@ -6,8 +6,9 @@ import { MatLabel } from '@angular/material/form-field';
 import { CompanyService } from '../../../services/company.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import { FormBuilder } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
@@ -17,6 +18,7 @@ import { PopUpComponent } from '../pop-up/pop-up.component';
 
 //interface to fetch company data
 export interface CmpyData {
+  company_id: string;
   company_name: string;
   company_email: string;
   company_website: string;
@@ -26,8 +28,8 @@ export interface CmpyData {
   company_city: string;
   company_province: string;
   company_business_scale: string;
-  comment:string;
-  verification_status:any;
+  comment: string;
+  verification_status: any;
   company_registered_date: string;
 }
 
@@ -35,7 +37,7 @@ export interface CmpyData {
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatDividerModule,MatGridListModule,MatCardModule,MatButtonModule,MatInputModule,ReactiveFormsModule,MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
@@ -46,57 +48,70 @@ export class RegCmpStateCheckComponent {
   isNoInput: boolean = true;
   //cmpData: CmpyData[] = [];
 
-  cmpData:CmpyData={} as CmpyData
+  cmpData: CmpyData = {} as CmpyData
 
-  constructor(private popup:MatDialog,private styleService:StylemanageService,private route:ActivatedRoute,private company: CompanyService) { }
-  
+  companyReg = this._formBuilder.group({
+    company_name: ['', Validators.required],
+    company_website: [''],
+    company_email: ['', [Validators.required, Validators.email]],
+    //otp: ['', Validators.required],
+    business_scale: ['', Validators.required],
+    business_reg_certificate: ['', Validators.required],
+    company_applied_date: ['', Validators.required],
+    certificate_of_incorporation: ['', Validators.required],
+    company_phone_number: ['', Validators.required],
+    business_reg_no: ['', Validators.required],
+  });
+
+  constructor(private _formBuilder: FormBuilder,private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) { }
+
 
 
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe(params =>{
+    this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
         this.company_id = id; // convert string to integer 10 is base
         console.log('Company ID:', this.company_id);
         this.fetchData(this.company_id);
       }
-    }); 
-    
+    });
+
   }
 
-  async fetchData(company_id:string) {
+  async fetchData(company_id: string) {
     console.log('Calling getCompnayRegState with company_id:', company_id);
     try {
       this.cmpData = await this.company.getCompnayRegState(company_id);
 
-      if(this.cmpData){
+      if (this.cmpData) {
         this.styleService.setStyle('circle-border-color', '#ffbf00');
         this.styleService.setStyle('number-color', '#ffbf00');
-        this.cmpData.company_registered_date=this.cmpData.company_registered_date.split('T')[0];
-        let evalstate=this.cmpData.verification_status;
-        let approvelstate=this.cmpData.comment;
-  
-        if(evalstate ){
+        this.cmpData.company_registered_date = this.cmpData.company_registered_date.split('T')[0];
+        let evalstate = this.cmpData.verification_status;
+        let approvelstate = this.cmpData.comment;
+
+        if (evalstate) {
           this.onApproved();
-        }else if (approvelstate){
+        } else if (approvelstate) {
           this.onRejected();
         }
       }
     } catch (error) {
       console.error('Error:', error);
     }
-  //end of fetch data
+    //end of fetch data
   }
 
-  onRejected(){
+  onRejected() {
     this.styleService.setStyle('circle-border-color', '#ff0000');
     this.styleService.setStyle('number-color', '#ff0000');
     this.regState = 'Rejected';
     this.isNoInput = false;
   }
 
-  onApproved(){
+  onApproved() {
     this.popup.open(PopUpComponent);
     this.styleService.setStyle('circle-border-color', '#00ff1a');
     this.styleService.setStyle('number-color', '#00ff1a');
@@ -104,10 +119,13 @@ export class RegCmpStateCheckComponent {
     this.regState = 'Already Approved';
   }
 
-  OnResubmit(){
+  OnResubmit() {
     this.styleService.setStyle('circle-border-color', '#ffbf00');
     this.styleService.setStyle('number-color', '#ffbf00');
     this.isNoInput = true;
+
+    //this.company.updateUnregCompanyDetails(this.companyReg.value,this.cmpData.company_id);
+
   }
 
 }
