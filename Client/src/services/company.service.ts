@@ -109,6 +109,24 @@ export class CompanyService {
   //       alert('Network Error: ' + error);
   //     });
   // }
+  async updateCompanyLogo(file: File, company_id: number) {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('companyId', company_id.toString());
+    await axios.patch(Apipaths.updateCompanyLogo + company_id, formData).then((response) => {
+      this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    }
+    ).catch((error) => {
+      console.log('Network Error: ' + error);
+    });
+    // await axios.put(Apipaths.updateCompanyLogo + company_id, { company_logo: company_logo })
+    //   .then((response) => {
+    //     this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    //   })
+    //   .catch((error) => {
+    //     console.log('Network Error: ' + error);
+    //   });
+  }
 
   async updateCompanyDetails(company: Company, company_id: number) {
     company.company_id = company_id; // should be chnaged

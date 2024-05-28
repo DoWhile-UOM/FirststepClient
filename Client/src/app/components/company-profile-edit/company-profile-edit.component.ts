@@ -157,17 +157,15 @@ export class CompanyProfileEditComponent {
     }
     this.eventOccured = true;
   }
-  onSaveLogo(): void {
+  async onSaveLogo() {
     if (this.selectedFile) {
-      // Implement the logic to save the logo, e.g., upload to the server
-      console.log('Saving logo:', this.selectedFile);
-
-      // Example: Uploading the file to a server
-      // const formData = new FormData();
-      // formData.append('logo', this.selectedFile);
-      // this.http.post('your-upload-url', formData).subscribe(response => {
-      //   console.log('Upload response:', response);
-      // });
+      await this.companyService.updateCompanyLogo(this.selectedFile, this.companyId)
+        .then(response => {
+          console.log('Upload successful', response);
+        })
+        .catch(error => {
+          console.error('Upload error', error);
+        });
     } else {
       console.error('No file selected!');
     }
