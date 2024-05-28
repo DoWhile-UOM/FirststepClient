@@ -58,19 +58,13 @@ export class CompanyService {
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
-
-    await axios
-      .get(Apipaths.getCompanyDetails + companyId)
-      .then(function (response) {
-        try {
-          companyDetails = response.data;
-          console.log();
-        } catch (error) {
-          console.log('No company details found for the given id');
-        }
-      })
-      .catch((error) => {
-      });
+    try {
+      const response = await axios.get(Apipaths.getCompanyDetails + companyId);
+      companyDetails = response.data;
+      console.log(companyDetails);
+    } catch (error) {
+      console.error('Error fetching company details:', error);
+    }
 
     console.log(companyDetails);
     return companyDetails;
@@ -188,7 +182,7 @@ export class CompanyService {
 
     return cmpData;
   }
-  
+
   //Get company Registration state details---End
 
   //Registration company state view Start here
@@ -205,7 +199,7 @@ export class CompanyService {
   //     console.log('Network Error: ' + error);
   //   }
   // }
-  
+
   async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
     try {
       const response = await axios.post(Apipaths.postCompanyAdminReg, {
