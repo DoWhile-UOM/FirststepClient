@@ -66,17 +66,17 @@ export class RegisterCompanyComponent {
 
   //form group for the stepper
   companyReg = this._formBuilder.group({
-    company_name: ['', Validators.required],
-    company_website: [''],
-    company_email: ['', [Validators.required, Validators.email]],
-    company_description:[''],
-    company_logo:[''],
-    business_scale: ['', Validators.required],
-    business_reg_certificate: [''],
-    company_applied_date: ['', Validators.required],
-    certificate_of_incorporation: [''],
-    company_phone_number: ['', Validators.required],
-    business_reg_no: ['', Validators.required],
+    company_name: ['', Validators.required],//
+    company_website: [''],//
+    company_email: ['', [Validators.required, Validators.email]],//
+    company_description: [''],//
+    company_logo: [''],//
+    company_business_scale: ['', Validators.required],//
+    business_reg_certificate: [''],//
+    company_registered_date: ['', Validators.required],///
+    certificate_of_incorporation: [''],//
+    company_phone_number: ['', Validators.required],//
+    business_reg_no: ['', Validators.required],//
     otp_in: ['', Validators.required]
   });
 
@@ -99,6 +99,11 @@ export class RegisterCompanyComponent {
       email: this.companyReg.get('company_email')?.value
     }
 
+    if (!this.isValidEmail(userData)) {
+      this.snackbar.open("Please Enter the Email Address", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      return;
+    }
+
     let verificationResult = await this.auth.requestOTP(userData)
 
     if (verificationResult == true) {
@@ -106,6 +111,7 @@ export class RegisterCompanyComponent {
       this.printTextAfterFiveMinutes();
     } else {
       this.snackbar.open("OTP Request failed Please try Again", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      return;
     }
   }
 
@@ -147,12 +153,22 @@ export class RegisterCompanyComponent {
   }
 
 
-  onRegister() {
+  async onRegister() {
+
     if (!this.isEmailVerified) {
       alert("Please verify your email first");
       return;
     } else {
+      if (this.companyReg.invalid) {
+        this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      }
       this.company.CompanyRegister(this.companyReg.value);
     }
+  }
+
+  isValidEmail(userData:requestOTP): boolean {
+    const email = userData.email||"";
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
   }
 }

@@ -86,14 +86,14 @@
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
                   <mat-label>Business Scale</mat-label>
-                  <mat-select formControlName="business_scale">
+                  <mat-select formControlName="company_business_scale">
                     <mat-option value="mic">Micro-Sized(Less Than 10 Employees)</mat-option>
                     <mat-option value="sm">Small-Sized(10-50 Employees)</mat-option>
                     <mat-option value="mid">Medium-Sized(50-250 Employees)</mat-option>
                     <mat-option value="lrg">Large-Sized(More Than 250 Employees)</mat-option>
                   </mat-select>
                   <mat-error
-                    *ngIf="companyReg.controls['business_scale'].touched && companyReg.controls['business_scale'].errors">
+                    *ngIf="companyReg.controls['company_business_scale'].touched && companyReg.controls['company_business_scale'].errors">
                     Please select a business scale.
                   </mat-error>
                 </mat-form-field>
@@ -117,7 +117,7 @@
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
                   <mat-label>Company Date of Registartion</mat-label>
-                  <input type="date" matInput placeholder="Enter Email" formControlName="company_applied_date" required />
+                  <input type="date" matInput placeholder="Enter Email" formControlName="company_registered_date" required />
                 </mat-form-field>
               </mat-grid-tile>
 
@@ -161,7 +161,7 @@
       <div>
         <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
           <mat-grid-tile style="width: 20%">
-            <button mat-raised-button [disabled]="!isFormVerified" class="apply-button" color="primary"
+            <button [disabled]="!isFormVerified" mat-raised-button class="apply-button" color="primary"
               style="width: 50%" (click)="onRegister()">
               Register
             </button>

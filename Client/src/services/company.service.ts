@@ -102,7 +102,9 @@ export class CompanyService {
       this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     }).catch((error) => {
       console.log('Network Error: ' + error);
-      this.snackBar.open('Registration Erro '+error.response.data, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      this.snackBar.open('Registration Error '+error.response.data, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      console.log('Registration Error: ' + error.response);
+      return error.response.data;
     });
   }
 
