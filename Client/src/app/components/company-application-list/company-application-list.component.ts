@@ -8,7 +8,7 @@ import {
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { CompanyService } from '../../../services/company.service';
@@ -22,6 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { retry } from 'rxjs';
+
 
 interface CompanyList {
   company_id: number;
@@ -60,6 +61,12 @@ export class CompanyApplicationListComponent {
   companyList: CompanyList[] = [];
   companyListLength: number = 0;
   selectedFilter: string = 'all';
+
+  totalItems = 100;
+  pageSize = 10;
+  currentPage = 0;
+
+  items: CompanyList[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -121,6 +128,7 @@ export class CompanyApplicationListComponent {
         if (this.companyList.length == 0) {
           this.companyListLength = 0;
         }
+        this.items = this.companyList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
         this.spinner.hide();
       })
       .catch((error) => {
@@ -158,5 +166,10 @@ export class CompanyApplicationListComponent {
     } else {
       return 'click to evaluate the application';
     }
+  }
+  //pagination
+  pageChanged(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.items = this.companyList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
   }
 }
