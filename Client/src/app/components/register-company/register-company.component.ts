@@ -38,6 +38,7 @@ import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailVerificationBoxComponent } from '../email-verification-box/email-verification-box.component';
+import { PopUpFinalComponent } from '../pop-up-final/pop-up-final.component';
 
 
 @Component({
@@ -69,9 +70,9 @@ export class RegisterCompanyComponent {
     business_reg_no: ['', Validators.required],//
   });
 
-  
 
-  constructor(public dialog: MatDialog,private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
+
+  constructor(public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
     this.companyReg.get('company_email')?.disable();
@@ -92,8 +93,9 @@ export class RegisterCompanyComponent {
     } else {
       if (this.companyReg.invalid) {
         this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-      }else{
+      } else {
         this.company.CompanyRegister(this.companyReg.value);
+        this.finalDialog();
         //Should redirect or popup show
       }
     }
@@ -108,6 +110,22 @@ export class RegisterCompanyComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.companyReg.get('company_email')?.setValue(result.emailAddress);//result.emailAddress refer to verified email
       this.isEmailVerified = result.verified;//Set email verifcation status is done
+    });
+  }
+
+  finalDialog(): void {
+    const dialogRef = this.dialog.open(PopUpFinalComponent, {
+      data: {
+        title: 'Your company registration application has been sent successfully',
+        message: 'Our staff is currently reviewing your application.',
+        message2: 'To check the status of your application, please refer to the link that has been sent to your mailbox.'
+      },
+      disableClose: true  // Disables closing the dialog
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log('User input:', result);
     });
   }
 
