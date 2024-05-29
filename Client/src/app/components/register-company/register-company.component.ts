@@ -99,16 +99,15 @@ export class RegisterCompanyComponent {
     }
   }
 
-  openDialog(): void {
+  openDialog(): void {//Open Dialog Box for email verifcation
     const dialogRef = this.dialog.open(EmailVerificationBoxComponent, {
       width: '1000px',
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.companyReg.get('company_email')?.setValue(result);
-      this.isEmailVerified = result.verified;
+      this.companyReg.get('company_email')?.setValue(result.emailAddress);//result.emailAddress refer to verified email
+      this.isEmailVerified = result.verified;//Set email verifcation status is done
     });
   }
 
