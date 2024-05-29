@@ -10,5 +10,29 @@
     <a routerLink="/seeker/home" routerLinkActive="active">Search</a>
     <a routerLink="/seeker/saved" routerLinkActive="active">Saved List</a>
     <a routerLink="/seeker/applied" routerLinkActive="active">Applications</a>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="medium-icon-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <span class="menu-header">
+        <div class="icon">
+          <mat-icon class="large-mat-icon"><i class="fa-solid fa-circle-user"></i></mat-icon>
+        </div>
+        <div class="user-name">
+          {{name}}
+        </div>
+      </span>
+      <hr>
+      <button mat-menu-item>
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-user-gear"></i></mat-icon>
+        <span>
+          <a routerLink="/seeker/edit-profile">My Profile</a>
+        </span>
+      </button>
+      <button mat-menu-item (click)="onSignoutClick()">
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>  
   </div>
 </mat-toolbar>

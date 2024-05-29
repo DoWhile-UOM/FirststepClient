@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { SeekerApplicationFormComponent } from '../seeker-application-form/seeker-application-form.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-advertisement-actions',
@@ -37,31 +38,11 @@ export class AdvertisementActionsComponent {
     private advertisementServices: AdvertisementServices,
     private snackbar: MatSnackBar,
     private router: Router,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private auth: AuthService) { }
 
   ngOnInit() {
-    try {
-      var seekerID = String(sessionStorage.getItem('user_id'));
-      var user_type = String(sessionStorage.getItem('user_type'));
-
-      if (this.seekerId == null && user_type != 'seeker'){
-        this.snackbar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-        // navigate to 404 page
-        this.router.navigate(['/notfound']);
-        // code to signout
-        return;
-      }
-
-      this.seekerId = Number(seekerID);
-    } catch (error) {
-      this.snackbar.open("Somthing went wrong!: Invalid Login", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-  
-      // navigate to 404 page
-      this.router.navigate(['/notfound']);
-      // code to signout
-      return;
-    }
+    this.seekerId = Number(this.auth.getUserId());
     
     if (this.currentStatus){
       this.icon = 'bookmark';

@@ -39,10 +39,10 @@ export class SeekerApplicationStatusComponent {
 
 
 async ngOnInit() {
-  this.fetchEmployeeDetails(); 
+  this.fetchSeekerDetails(); 
 }
 
-async fetchEmployeeDetails() {
+async fetchSeekerDetails() {
 
   try {
     const seekerData = await this.seekerService.getSeekerDetailsForApplication(this.user_id);

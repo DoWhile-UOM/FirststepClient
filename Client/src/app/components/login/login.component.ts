@@ -23,13 +23,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent {
   hide = true;
 
-  user = "ca"; 
-  userID = 0;
-
-  username = "sample";
-  companyid = 0;
-  companyname = "";
-
   constructor(
     private router: Router,
     private auth: AuthService,
@@ -60,35 +53,11 @@ export class LoginComponent {
         this.userStore.setRoleForStore(tokenPayload.role);
         
         //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
-        
-        sessionStorage.clear();
 
-
-        ////// temporary code to be removed
-        if (tokenPayload.role == 'seeker'){
-          this.userID = 3;
+        if (tokenPayload.role == "seeker") {
+          this.snackBar.open("We need to access to your location informations for better job recommendation for you!", "", {panelClass: ['app-notification-warning']})._dismissAfter(5000);
+          this.auth.getLocation();
         }
-        else{
-          this.userID = 10;
-          this.companyname = "BISTEC GLOBAL SERVICES";
-          this.companyid = 7;
-        }
-        ////// temporary code to be removed
-
-        sessionStorage.setItem('user', tokenPayload.role);
-        sessionStorage.setItem('user_id', this.userID.toString());  
-        sessionStorage.setItem('name', this.username);
-
-        switch(tokenPayload.role){
-          case 'seeker':
-            //sessionStorage.setItem('name', userData.name);
-            break;
-          case 'ca':
-            sessionStorage.setItem('companyId', this.companyid.toString());
-            sessionStorage.setItem('companyName', this.companyname);
-            break;
-        }
-
 
         this.router.navigate(['/' + tokenPayload.role]);
       },
