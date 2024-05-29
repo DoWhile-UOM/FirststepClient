@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicationService {
-  constructor() {}
+  constructor(private snackbar: MatSnackBar) {}
 
   async submitSeekerApplication(applicationData: FormData): Promise<void> {
     try {
@@ -25,18 +26,16 @@ export class ApplicationService {
     }
   }
 
-  /*
-  async submitSeekerApplication(applications: any) {
-    try {
-      await axios
-        .post(Apipaths.submitApplication, applications)
-        .then((response) => {
-          console.log(response);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  }*/
+  async changeAssignedHRA(application_id: number, hra_id: number) {
+    
+    await axios.patch(Apipaths.changeAssignedHRA + 'applicationId=' + application_id + '/hraId=' + hra_id)
+      .then((response) => {
+        this.snackbar.open("Sucessfully Change HR Assistant!", '', { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      })
+      .catch((error) => {
+        this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      });
+  }
 
   async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};

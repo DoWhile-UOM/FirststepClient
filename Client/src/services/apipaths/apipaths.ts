@@ -40,6 +40,11 @@ export class Apipaths {
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
     static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
 
+    // application
+    static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
+    static readonly changeAssignedHRA: string = this.baseUrl + 'Application/ChangeAssignedHRA/'; // + application_id
+    static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
+
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 
@@ -67,7 +72,4 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
-
-    //application
-    static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
 }
