@@ -170,6 +170,7 @@ export class CompanyApplicationListComponent {
   //pagination
   pageChanged(event: PageEvent) {
     this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
     this.items = this.companyList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
   }
 }
