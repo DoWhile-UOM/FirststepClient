@@ -7,6 +7,7 @@ import { RegisterCompanyComponent } from './components/register-company/register
 import { CompanyAdminRegistrtionFormComponent } from './components/company-admin-registrtion-form/company-admin-registrtion-form.component';
 import { SeekerSignupComponent } from './components/seeker-signup/seeker-signup.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { EmailVerificationBoxComponent } from './components/email-verification-box/email-verification-box.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },

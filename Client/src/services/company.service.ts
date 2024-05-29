@@ -102,6 +102,9 @@ export class CompanyService {
       this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     }).catch((error) => {
       console.log('Network Error: ' + error);
+      this.snackBar.open('Registration Error '+error.response.data, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      console.log('Registration Error: ' + error.response);
+      return error.response.data;
     });
   }
 
@@ -217,6 +220,19 @@ export class CompanyService {
     } catch (error) {
       console.log('Network Error: ' + error);
     }
+  }
+
+  async updateUnregCompanyDetails(company: Company, company_id: number) {
+    company.company_id = company_id; // should be chnaged
+    console.log('from service', company);
+    await axios
+      .put(Apipaths.updateUnregComapny + company_id, company) // tem slotion
+      .then((response) => {
+        this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      })
+      .catch((error) => {
+        console.log('Network Error: ' + error);
+      });
   }
 
 }
