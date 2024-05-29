@@ -27,6 +27,7 @@ export class Apipaths {
     static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'Advertisement/GetAdvertisementById/update/'; // + advertisement_id
     static readonly updateAdvertisement = this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
     static readonly getAdvertisementsByHRA = this.baseUrl + 'Advertisement/GetAssignedAdvertisementsByHRA/hra_id='; // + employee_id
+    static readonly getRecommendedAdvertisements = this.baseUrl + 'Advertisement/GetRecommendedAdvertisements/seekerID='; // + seeker_id
 
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id

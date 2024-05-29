@@ -459,4 +459,46 @@ export class AdvertisementServices {
 
     return jobList;
   }
+
+  async getRecommendedAdvertisements(seekerID: string, longitude: string, latitude: string, pageLength: number){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getRecommendedAdvertisements + seekerID + '/len=' + pageLength + '/long=' + longitude + '/lat=' + latitude)
+      .then(function (response) {
+        jobList = response.data;
+
+        for (let i = 0; i < jobList.firstPageAdvertisements.length; i++) {
+          var postDate = new Date(jobList.firstPageAdvertisements[i].posted_date);
+          jobList.firstPageAdvertisements[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+        }
+      })
+      .catch(
+        (error) => {
+        this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
+
+    return jobList;
+  }
+
+  async getRecommendedAdvertisementsWithoutLocation(seekerID: string, pageLength: number){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getRecommendedAdvertisements + seekerID + '/pageLength=' + pageLength)
+      .then(function (response) {
+        jobList = response.data;
+
+        for (let i = 0; i < jobList.firstPageAdvertisements.length; i++) {
+          var postDate = new Date(jobList.firstPageAdvertisements[i].posted_date);
+          jobList.firstPageAdvertisements[i].posted_date = postDate.toLocaleString('default', { month: 'short' }) + " " + postDate.getDate() + ", " + postDate.getFullYear();
+        }
+      })
+      .catch(
+        (error) => {
+        this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
+
+    return jobList;
+  }
 }
