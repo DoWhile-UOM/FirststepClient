@@ -55,20 +55,9 @@
                   </mat-error>
                 </mat-form-field>
   
-                <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
-                  [disabled]="isOTPRequestSent" id="otpreqbtn">{{ reqOTPbtntxt }} {{ remainingTime
-                  }}</button>
+                <button mat-raised-button class="apply-button" color="primary" (click)="openDialog()"
+                  [disabled]="isOTPRequestSent" id="otpreqbtn">Add your Email</button>
               </mat-grid-tile>
-  
-  
-              <mat-grid-tile class="button-with-inputbox">
-                <mat-form-field appearance="outline">
-                  <mat-label>OTP</mat-label>
-                  <input matInput placeholder="Enter Email" formControlName="otp_in" required />
-                </mat-form-field>
-                <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
-              </mat-grid-tile>
-  
   
               <mat-grid-tile class="button-with-inputbox">
                 <button mat-raised-button [disabled]="!isEmailVerified" matStepperNext class="apply-button"

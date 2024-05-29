@@ -105,6 +105,7 @@ export class EmailVerificationBoxComponent implements OnInit, OnDestroy{
       this.snackbar.open("OTP verification successful", "", { duration: 2000 });
       this.requestBtnstate= true;
       this.verifyBtnstate= true;
+      this.closeDialog();
     } else {
       this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
@@ -169,7 +170,15 @@ export class EmailVerificationBoxComponent implements OnInit, OnDestroy{
   }
 
   closeDialog(): void {
-    this.dialogRef.close(this.useremailAddress);
+    const additionalData = {
+      emailAddress: this.useremailAddress,
+      verified: true // Example boolean value
+    };
+    this.dialogRef.close(additionalData);
+  }
+
+  cancelDialog(): void {
+    this.dialogRef.close();
   }
 
 }

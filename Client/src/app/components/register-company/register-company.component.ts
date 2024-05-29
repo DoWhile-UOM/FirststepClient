@@ -36,17 +36,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialog } from '@angular/material/dialog';
+import { EmailVerificationBoxComponent } from '../email-verification-box/email-verification-box.component';
 
-
-
-interface requestOTP {
-  email: string | null | undefined;
-}
-
-interface verifyOTP {
-  email: string | null | undefined;
-  otp: string | null | undefined;
-}
 
 @Component({
   selector: 'app-register-company',
@@ -59,8 +51,6 @@ export class RegisterCompanyComponent {
 
   isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
-  remainingTime = 0;
-  reqOTPbtntxt = "Request OTP";
   isFormVerified: boolean = false;
 
 
@@ -77,12 +67,14 @@ export class RegisterCompanyComponent {
     certificate_of_incorporation: [''],//
     company_phone_number: ['', Validators.required],//
     business_reg_no: ['', Validators.required],//
-    otp_in: ['', Validators.required]
   });
 
-  constructor(private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
+  
+
+  constructor(public dialog: MatDialog,private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
+    this.companyReg.get('company_email')?.disable();
 
     // Watch for form validity changes
     this.companyReg.statusChanges.subscribe(status => {
@@ -92,85 +84,32 @@ export class RegisterCompanyComponent {
     });
   }
 
-
-  async requestOTP() {
-
-    const userData: requestOTP = {
-      email: this.companyReg.get('company_email')?.value
-    }
-
-    if (!this.isValidEmail(userData)) {
-      this.snackbar.open("Please Enter the Email Address", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-      return;
-    }
-
-    let verificationResult = await this.auth.requestOTP(userData)
-
-    if (verificationResult == true) {
-      this.snackbar.open("OTP Sent successful", "")._dismissAfter(3000);
-      this.printTextAfterFiveMinutes();
-    } else {
-      this.snackbar.open("OTP Request failed Please try Again", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-      return;
-    }
-  }
-
-
-  async VerifyOTP() {
-    console.log(this.companyReg.get('otp_in')?.value);
-
-    const userData: verifyOTP = {
-      email: this.companyReg.get('company_email')?.value,
-      otp: this.companyReg.get('otp_in')?.value
-    }
-
-    let verificationResult = await this.auth.verifyOTP(userData);
-
-    if (verificationResult == true) {
-      this.isEmailVerified = true;
-      this.snackbar.open("OTP verification successful", "", { duration: 2000 });
-    } else {
-      this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-    }
-
-  }
-
-  async printTextAfterFiveMinutes() {
-
-    this.isOTPRequestSent = true;
-    this.remainingTime = 5 * 60; // Initialize remaining time in seconds
-    this.reqOTPbtntxt = this.remainingTime.toString();
-
-    const intervalId = setInterval(() => {
-      this.remainingTime--;
-      if (this.remainingTime <= 0) {
-        clearInterval(intervalId); // Stop the timer when time is up
-        console.log("Timer off");
-        this.isOTPRequestSent = false;
-        this.reqOTPbtntxt = "Request OTP";
-      }
-    }, 1000); // Update every second
-  }
-
-
   async onRegister() {
 
     if (!this.isEmailVerified) {
-      alert("Please verify your email first");
+      this.snackbar.open("Please verify your email first", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       return;
     } else {
       if (this.companyReg.invalid) {
         this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      }else{
+        this.company.CompanyRegister(this.companyReg.value);
+        //Should redirect or popup show
       }
-      this.company.CompanyRegister(this.companyReg.value);
     }
   }
 
-  isValidEmail(userData:requestOTP): boolean {
-    const email = userData.email||"";
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EmailVerificationBoxComponent, {
+      width: '1000px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.companyReg.get('company_email')?.setValue(result);
+      this.isEmailVerified = result.verified;
+    });
   }
 
-  
 }
