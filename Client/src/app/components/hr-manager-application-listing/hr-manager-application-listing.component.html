@@ -13,7 +13,7 @@
     <div class="page-title-content">
       <div class="title-with-new-button">
         <p>{{ title }}</p>
-        <button mat-button (click)="onEditClick()">
+        <button mat-button (click)="onEditClick()" class="edit-button">
           Edit <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
         </button>
       </div>
@@ -124,9 +124,10 @@
 
     </table>
     <mat-paginator 
-      [pageSizeOptions]="[2, 10, 20]"
+      [pageSizeOptions]="[7, 15, 20]"
       showFirstLastButtons>
     </mat-paginator>
+  </div>
 </div>
 
-</div>
+<app-spinner></app-spinner>

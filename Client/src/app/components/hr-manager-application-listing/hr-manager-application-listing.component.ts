@@ -100,9 +100,9 @@ export class HrManagerApplicationListingComponent implements OnInit {
   applicationList: HRMApplicationList[] = [];
   selectedFilter: string = 'all';
   applicationListLength: number = 0;
-  title: string = '';
+  title: string = 'Job Title';
   job_number: number = 0;
-  field_name: string = '';
+  field_name: string = ' ';
   current_status: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
