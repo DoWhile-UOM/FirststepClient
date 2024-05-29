@@ -96,7 +96,7 @@ export class ManageRolesComponent {
         position: index + 1, // Increment position
         name: `${item.first_name} ${item.last_name}`, 
         email:item.email,
-        Role: (item.user_type) == 'HRA' ? 'HR Assistant': 'HR Manager',
+        Role: (item.user_type) == 'hra' ? 'HR Assistant': 'HR Manager',
       }));
     }
     else{
