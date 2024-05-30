@@ -36,7 +36,8 @@ import { MatButton } from '@angular/material/button';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/auth.service';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { EmployeeService } from '../../../services/employee.service';
 
 interface HRMListing {
   title: string;
@@ -79,6 +80,7 @@ interface HRMApplicationList {
     MatButton,
     SpinnerComponent,
     FormsModule,
+    MatMenuModule
   ],
   templateUrl: './hr-manager-application-listing.component.html',
   styleUrl: './hr-manager-application-listing.component.css',
@@ -104,11 +106,15 @@ export class HrManagerApplicationListingComponent implements OnInit {
   job_number: number = 0;
   field_name: string = ' ';
   current_status: string = '';
+  hraList: any[] = [];
+
+  userType: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private applicationService: ApplicationService,
+    private employeeService: EmployeeService,
     private dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
@@ -121,6 +127,12 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.spinner.show();
 
     this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
+    this.userType = this.auth.getRole();
+
+    if (this.userType == 'hra'){
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'assigned_hrAssistant_id');
+    }
+    
     this.getApplicationList(this.jobID, this.selectedFilter);
 
     this.spinner.hide();
@@ -137,9 +149,30 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.selectedFilter = selected.value;
   }
 
+  async getHraList(){
+    try{
+      this.hraList = await this.employeeService.getAllHRAs(this.auth.getCompanyID());
+    } catch (error) {
+      this.snackBar.open("Error : " + error, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+    }
+  }
+
   async getApplicationList(jobID: number, status: string) {
     try {
-      const listing: HRMListing = await this.applicationService.getApplicationList(jobID, status);
+      var listing: HRMListing = {title: '', job_number: 0, field_name: '', current_status: '', applicationList: []};
+      
+      if (this.userType == 'hra'){
+        listing = await this.applicationService.getAssignedApplicationList(this.auth.getUserId(), jobID, status);
+      }
+      else if (this.userType == 'hrm' || this.userType == 'ca'){ 
+        this.getHraList();
+        listing = await this.applicationService.getApplicationList(jobID, status);
+      }
+      else{
+        alert(this.userType);
+        this.snackBar.open("You are not authorized to view this page", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        this.router.navigate(['/notfound']);
+      }
       
       if (!listing) {
         this.snackBar.open('Not applications found for the job id', "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
@@ -166,6 +199,30 @@ export class HrManagerApplicationListingComponent implements OnInit {
     } catch (error) {
       this.snackBar.open("Error : " + error, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
     }
+  }
+
+  async assign(application_Id: number, hra_id: number){
+    await this.applicationService.changeAssignedHRA(application_Id, hra_id);
+
+    this.applicationList = this.applicationList.map((application) => {
+      if (application.application_Id === application_Id) {
+        application.assigned_hrAssistant_id = hra_id.toString();
+      }
+      return application;
+    });
+
+    this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applicationList);
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getHRAName(hra_id: number){
+    for (let i = 0; i < this.hraList.length; i++) {
+      if (Number(this.hraList[i].user_id) == hra_id) {
+        return this.hraList[i].first_name + ' ' + this.hraList[i].last_name;
+      }
+    }
+    
+    return 'Not Assigned';
   }
 
   onBackButtonClick(){

@@ -122,13 +122,43 @@ throw new Error('Method not implemented.');
     
     this.countries = Country.getAllCountries().map(country => country.name);
 
-    let res = this.auth.getLocation();
+    let res = await this.auth.getLocation();
 
     if (res != undefined && res != null){
       // get user's location
-      //alert(res.longitude + " " + res.latitude);
+      console.log(res.longitude + " " + res.latitude);
+      
+      this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
+        .then((response) => {
+          this.jobList = response.firstPageAdvertisements;
+          this.jobIdList = response.allAdvertisementIds;
+
+          if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
+            this.spinner.hide();
+            return;
+          }
+
+          this.newItemEvent.emit(this.jobList);
+          this.changePaginatorLengthEvent.emit(this.jobIdList.length);
+        });
+    }
+    else{
+      this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
+        .then((response) => {
+          this.jobList = response.firstPageAdvertisements;
+          this.jobIdList = response.allAdvertisementIds;
+
+          if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
+            this.spinner.hide();
+            return;
+          }
+
+          this.newItemEvent.emit(this.jobList);
+          this.changePaginatorLengthEvent.emit(this.jobIdList.length);
+        });
     }
 
+    /*
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
       .then((response) => {
         this.jobList = response.firstPageAdvertisements;
@@ -141,7 +171,7 @@ throw new Error('Method not implemented.');
 
         this.newItemEvent.emit(this.jobList);
         this.changePaginatorLengthEvent.emit(this.jobIdList.length);
-      });
+      });*/
 
     this.spinner.hide();
   }

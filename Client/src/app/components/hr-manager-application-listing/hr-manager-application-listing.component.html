@@ -13,7 +13,7 @@
     <div class="page-title-content">
       <div class="title-with-new-button">
         <p>{{ title }}</p>
-        <button mat-button (click)="onEditClick()" class="edit-button">
+        <button mat-button (click)="onEditClick()" class="edit-button" *ngIf="userType != 'hra'">
           Edit <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
         </button>
       </div>
@@ -23,17 +23,17 @@
     </div>
     <div class="buttons-right">
       <div>
-        <button mat-button color="primary" class="custom-button">
+        <button mat-button color="primary" class="custom-button" disabled="userType != 'hra'">
           <mat-icon><i class="fa-solid fa-chart-gantt" style="color: #005050;"></i></mat-icon>Change Status
         </button>
       </div>
       <div>
-        <button mat-button color="primary" class="custom-button">
+        <button mat-button color="primary" class="custom-button" disabled="userType != 'hra'">
           <mat-icon><i class="fa-solid fa-thumbtack" style="color: #005050;"></i></mat-icon>Assign Applications
         </button>
       </div>
       <div>
-        <button mat-button color="primary" class="custom-button">
+        <button mat-button color="primary" class="custom-button" disabled="userType != 'hra'">
           <mat-icon><i class="fa-regular fa-calendar-days" style="color: #005050;"></i></mat-icon>Interview Scheduling
         </button>
       </div>
@@ -94,10 +94,17 @@
       </ng-container>
 
       <!-- Assigned Column -->
-      <ng-container matColumnDef="assigned_hrAssistant_id">
+      <ng-container matColumnDef="assigned_hrAssistant_id" *ngIf="userType != 'hra'">
         <th mat-header-cell *matHeaderCellDef>Assigned to</th>
         <td mat-cell *matCellDef="let application">
-          {{ application.assigned_hrAssistant_id }}
+          <button mat-button color="primary" [matMenuTriggerFor]="menu" class="small-button">
+            {{ getHRAName(application.assigned_hrAssistant_id) }}
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item color="primary" *ngFor="let hra of hraList" (click)="assign(application.application_Id, hra.user_id)">
+              <span>{{ hra.first_name + ' ' + hra.last_name }}</span>
+            </button>
+          </mat-menu>          
         </td>
       </ng-container>
 

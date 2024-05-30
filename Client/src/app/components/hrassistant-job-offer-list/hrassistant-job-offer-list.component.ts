@@ -106,6 +106,6 @@ export class HrassistantJobOfferListComponent {
   }
 
   exploreAd(adID: number){
-    alert("Explore job " + adID);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList', {jobID: adID}]);
   }
 }
