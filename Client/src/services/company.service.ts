@@ -100,6 +100,7 @@ export class CompanyService {
   async CompanyRegister(companyObj: any) {
     await axios.post(Apipaths.registerCompany, companyObj).then((response) => {
       this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      return response.data;
     }).catch((error) => {
       console.log('Network Error: ' + error);
       this.snackBar.open('Registration Error '+error.response.data, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);

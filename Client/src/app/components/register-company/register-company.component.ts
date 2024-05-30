@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 //import { FileUploadComponent } from "../../CompanyPortal/shared/file-upload/file-upload.component";
 //import { JobOfferListComponent } from "../../CompanyPortal/shared/job-offer-list/job-offer-list.component";
 
@@ -49,6 +49,7 @@ import { PopUpFinalComponent } from '../pop-up-final/pop-up-final.component';
   styleUrl: './register-company.component.css'
 })
 export class RegisterCompanyComponent {
+  @ViewChild('stepper') stepper!: MatStepper;
 
   isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
@@ -75,7 +76,7 @@ export class RegisterCompanyComponent {
   constructor(public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
-    this.companyReg.get('company_email')?.disable();
+    //this.companyReg.get('company_email')?.disable();
 
     // Watch for form validity changes
     this.companyReg.statusChanges.subscribe(status => {
@@ -86,7 +87,7 @@ export class RegisterCompanyComponent {
   }
 
   async onRegister() {
-
+    this.isEmailVerified=true;
     if (!this.isEmailVerified) {
       this.snackbar.open("Please verify your email first", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       return;
@@ -94,8 +95,9 @@ export class RegisterCompanyComponent {
       if (this.companyReg.invalid) {
         this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       } else {
-        this.company.CompanyRegister(this.companyReg.value);
-        this.finalDialog();
+        let response=await this.company.CompanyRegister(this.companyReg.value);
+        console.log(response);
+        //this.finalDialog();
         //Should redirect or popup show
       }
     }
@@ -110,6 +112,7 @@ export class RegisterCompanyComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.companyReg.get('company_email')?.setValue(result.emailAddress);//result.emailAddress refer to verified email
       this.isEmailVerified = result.verified;//Set email verifcation status is done
+      this.stepper.next();
     });
   }
 
