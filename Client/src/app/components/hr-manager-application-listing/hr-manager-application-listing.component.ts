@@ -108,6 +108,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
   current_status: string = '';
   hraList: any[] = [];
 
+  userType: string = '';
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
@@ -125,8 +127,12 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.spinner.show();
 
     this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
+    this.userType = this.auth.getRole();
+
+    if (this.userType == 'hra'){
+      this.displayedColumns = this.displayedColumns.filter((column) => column !== 'assigned_hrAssistant_id');
+    }
     
-    this.getHraList();
     this.getApplicationList(this.jobID, this.selectedFilter);
 
     this.spinner.hide();
@@ -153,7 +159,20 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   async getApplicationList(jobID: number, status: string) {
     try {
-      const listing: HRMListing = await this.applicationService.getApplicationList(jobID, status);
+      var listing: HRMListing = {title: '', job_number: 0, field_name: '', current_status: '', applicationList: []};
+      
+      if (this.userType == 'hra'){
+        listing = await this.applicationService.getAssignedApplicationList(this.auth.getUserId(), jobID, status);
+      }
+      else if (this.userType == 'hrm' || this.userType == 'ca'){ 
+        this.getHraList();
+        listing = await this.applicationService.getApplicationList(jobID, status);
+      }
+      else{
+        alert(this.userType);
+        this.snackBar.open("You are not authorized to view this page", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        this.router.navigate(['/notfound']);
+      }
       
       if (!listing) {
         this.snackBar.open('Not applications found for the job id', "", {panelClass: ['app-notification-error']})._dismissAfter(3000);

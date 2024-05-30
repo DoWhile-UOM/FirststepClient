@@ -37,6 +37,19 @@ export class ApplicationService {
       });
   }
 
+  async getAssignedApplicationList(hra_id: number, jobId: number, status: string) {
+    let applicationList: any = {};
+    await axios.get(Apipaths.getassignedApplications + 'hraId=' + hra_id + '/JobID=' + jobId + '/status=' + status)
+      .then((response) => {
+        applicationList = response.data;
+      })
+      .catch((error) => {
+        this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      });
+
+    return applicationList;
+  }
+
   async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};
     await axios.get(`https://localhost:7213/api/Application/GetApplicationList/JobID=${job_number}/status=${status}`)
