@@ -126,37 +126,29 @@ throw new Error('Method not implemented.');
 
     if (res != undefined && res != null){
       // get user's location
-      console.log(res.longitude + " " + res.latitude);
+      alert(res.longitude + " " + res.latitude);
       
-      this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
+      await this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
         .then((response) => {
           this.jobList = response.firstPageAdvertisements;
           this.jobIdList = response.allAdvertisementIds;
-
-          if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
-            this.spinner.hide();
-            return;
-          }
-
-          this.newItemEvent.emit(this.jobList);
-          this.changePaginatorLengthEvent.emit(this.jobIdList.length);
         });
     }
     else{
-      this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
+      await this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
         .then((response) => {
           this.jobList = response.firstPageAdvertisements;
           this.jobIdList = response.allAdvertisementIds;
-
-          if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
-            this.spinner.hide();
-            return;
-          }
-
-          this.newItemEvent.emit(this.jobList);
-          this.changePaginatorLengthEvent.emit(this.jobIdList.length);
         });
     }
+
+    if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
+      this.spinner.hide();
+      return;
+    }
+
+    this.newItemEvent.emit(this.jobList);
+    this.changePaginatorLengthEvent.emit(this.jobIdList.length);
 
     /*
     await this.advertisementService.getSeekerHomePage(String(this.seekerID), String(this.pageSize))
