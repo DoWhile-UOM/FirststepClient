@@ -44,7 +44,9 @@ export interface RolesData {
       AddrolesPopupComponent,
       MatCardModule,
       MatChipsModule,
-      CommonModule
+      CommonModule,
+      MatDialogModule,
+      MatInputModule,
     ]
 })
 export class ManageRolesComponent {
@@ -106,15 +108,14 @@ export class ManageRolesComponent {
   }
 
   removeData(id: number){
-      const dialogRef = this.dialog.open(ConfirmDeleteComponent);
-      dialogRef.afterClosed().subscribe(result => {
-        if(result===true){
-          this.fetchData(this.selected);
-        }
-      });
-    
-       
-
+      const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {id: id}, 
+   } );
+    dialogRef.afterClosed().subscribe(result => {
+      if(result==true){
+        this.fetchData(this.selected);
+      }
+    }); 
   }
  
 /*  removeData(id: number): void {
@@ -164,6 +165,7 @@ export class ManageRolesComponent {
 @Component({
   selector: 'app-confirm-delete',
   templateUrl: './confirm-delete.html',
+  styleUrl: './manage-roles.component.css',
   standalone: true,
   imports: [
    MatDialogModule,
@@ -180,6 +182,7 @@ export class ConfirmDeleteComponent {
 
   async Clickdelete(){
       await this.employeeService.deleteEmployee(this.emp_id);
+      this.dialogRef.close(true);
   }
 }
 
