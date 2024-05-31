@@ -2,9 +2,8 @@
   <div id="Documentsubmissioncontainer" class="formchild">
 <input type="file" #file style="display: none" (change)="onFileSelected($event)" />
 <span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
-<button mat-stroked-button (click)="file.click()">Upload Document
-</button>
-  </div>
+<button mat-stroked-button  (click)="file.click()">Upload Document</button>
+</div>
   <div *ngIf="uploadInProgress" class="spinner">
     <mat-spinner diameter="30"></mat-spinner>
   </div>

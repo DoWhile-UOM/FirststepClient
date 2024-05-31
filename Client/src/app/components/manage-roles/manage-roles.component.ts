@@ -15,6 +15,7 @@ import {
   MatDialogClose,
   MatDialogContent,
   MatDialogTitle,
+  MatDialogModule,
 } from '@angular/material/dialog';
 import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
 import { EditRoleComponent } from '../edit-role/edit-role.component';
@@ -103,8 +104,20 @@ export class ManageRolesComponent {
       this.rolesData = [];
     }
   }
+
+  removeData(id: number){
+      const dialogRef = this.dialog.open(ConfirmDeleteComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if(result===true){
+          this.fetchData(this.selected);
+        }
+      });
+    
+       
+
+  }
  
-  removeData(id: number): void {
+/*  removeData(id: number): void {
   
 
   this.employeeService
@@ -119,7 +132,7 @@ export class ManageRolesComponent {
       .catch((error) => {
         console.error('Error deleting data:', error);
       });
-    }
+    }*/
     
   
     openDialog(){
@@ -146,6 +159,29 @@ export class ManageRolesComponent {
       await this.fetchData(selected.value);
     }
   }
+
+ //confirm component
+@Component({
+  selector: 'app-confirm-delete',
+  templateUrl: './confirm-delete.html',
+  standalone: true,
+  imports: [
+   MatDialogModule,
+    MatButtonModule
+  ], 
+})
+export class ConfirmDeleteComponent {
+  constructor(
+    private employeeService: EmployeeService,
+    public dialogRef: MatDialogRef<ConfirmDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  emp_id:number=this.data.id;
+
+  async Clickdelete(){
+      await this.employeeService.deleteEmployee(this.emp_id);
+  }
+}
 
 
 
