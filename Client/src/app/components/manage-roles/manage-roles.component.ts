@@ -22,6 +22,7 @@ import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 import { MatInputModule } from '@angular/material/input';
+import { AuthService } from '../../../services/auth.service';
 
 
 export interface RolesData {
@@ -54,7 +55,7 @@ export class ManageRolesComponent {
   rolesData: RolesData[] = [];
   
 
-  company_id: number = 7; // sample company_id
+  company_id: string = ''; // sample company_id
   selected: string = "all";
 
   @ViewChild(MatTable)
@@ -63,12 +64,20 @@ export class ManageRolesComponent {
   constructor(
     public dialog: MatDialog,
     private employeeService: EmployeeService,
+    private auth: AuthService
  
   ) {}
 
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
-    this.fetchData(this.selected);
+    try{
+      this.company_id = this.auth.getCompanyID();
+      this.fetchData(this.selected);
+    }
+    catch(error){
+      console.error('Error fetching data:', error);
+    }
+    
   }
 
   async fetchData(type: string) {
