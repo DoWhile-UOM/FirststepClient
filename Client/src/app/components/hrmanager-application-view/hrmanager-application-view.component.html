@@ -23,10 +23,9 @@
       <label class="bio">{{ applicationDetails.bio }}</label>
     </div>
 
-    <!-- New button -->
-    <button mat-button class="right-button" style="color: white">
-      Button Text
-    </button>
+    <span class="status-label" style="color: white; padding: 8px; background-color:teal; border-radius: 4px;">
+      {{ applicationDetails.is_evaluated ? applicationDetails.last_revision.status : 'Not Evaluated' }}
+    </span>
   </div>
 
   <hr />
@@ -60,18 +59,17 @@
     </div>
   </div>
 
-  <div class="comment-section" *ngIf="showComments">
+  <div class="comment-section" >
+    <!-- *ngIf="applicationDetails.is_evaluated" -->
     <hr />
 
     <div>
       <mat-label class="head">Evaluated By</mat-label>
-      <span>Sankha Abepitiya, HR Assistant, BISTECH GLOB</span>
+      <span>{{ applicationDetails.last_revision.employee_id }}, HR Assistant, BISTECH GLOBAL</span>
     </div>
     <div>
       <mat-label class="head">Comment</mat-label>
-      <span>
-        <textarea></textarea>
-      </span>
+      <span>{{ applicationDetails.last_revision.comment }}</span>
     </div>
     <div>
       <mat-label class="head">Change the decision</mat-label>
