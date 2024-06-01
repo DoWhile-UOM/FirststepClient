@@ -45,11 +45,11 @@ export class RoleProfileEditComponent {
   constructor(
     private employeeService: EmployeeService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) { }
   async ngOnInit() {
     try {
       this.spinner.show();
-      this.employee = await this.employeeService.getEmployeeDetails(7);
+      this.employee = await this.employeeService.getEmployeeDetails(10);
     } finally {
       this.spinner.hide();
     }
