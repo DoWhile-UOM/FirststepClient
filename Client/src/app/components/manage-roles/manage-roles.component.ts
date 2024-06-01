@@ -55,7 +55,7 @@ export class ManageRolesComponent {
   rolesData: RolesData[] = [];
   
 
-  company_id: string = ''; // sample company_id
+  company_id: string= ''; // sample company_id
   selected: string = "all";
 
   @ViewChild(MatTable)
@@ -71,7 +71,7 @@ export class ManageRolesComponent {
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
     try{
-      this.company_id = this.auth.getCompanyID();
+      this.company_id = this.auth.getCompanyID() || '';
       this.fetchData(this.selected);
     }
     catch(error){
@@ -82,6 +82,7 @@ export class ManageRolesComponent {
 
   async fetchData(type: string) {
     let dataSet: any[] = [];
+  
 
     if (type == "HRA") {
       await this.employeeService.getAllHRAs(this.company_id)
