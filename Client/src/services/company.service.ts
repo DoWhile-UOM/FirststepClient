@@ -113,7 +113,7 @@ export class CompanyService {
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('companyId', company_id.toString());
-    await axios.patch(Apipaths.updateCompanyLogo + company_id, formData).then((response) => {
+    await axios.patch(Apipaths.updateCompanyLogo + 'companyId=' + company_id, formData).then((response) => {
       this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     }
     ).catch((error) => {

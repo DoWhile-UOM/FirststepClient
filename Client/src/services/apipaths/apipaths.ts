@@ -39,7 +39,7 @@ export class Apipaths {
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
     static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
     // company logo
-    static readonly updateCompanyLogo: string = this.baseUrl + 'User/register';
+    static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://localhost:7213/api/Company/UpdateCompanyLogo?companyId=7
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
