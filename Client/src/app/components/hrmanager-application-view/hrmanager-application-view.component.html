@@ -15,7 +15,7 @@
           >{{ applicationDetails.first_name }} {{ applicationDetails.last_name }}</label
         >
         <!-- New button -->
-        <button mat-button class="View" style="background-color:  #e8e8e8; margin-left: 10px; font-size: 13px;">
+        <button mat-button *ngIf="applicationDetails.seeker_id" class="View" style="background-color:  #e8e8e8; margin-left: 10px; font-size: 13px;" (click)="viewProfile()">
           View Profile
           <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
         </button>
@@ -59,19 +59,29 @@
     </div>
   </div>
 
-  <div class="comment-section" >
-    <!-- *ngIf="applicationDetails.is_evaluated" -->
+  <div class="comment-section">
     <hr />
 
-    <div>
+    <div *ngIf="applicationDetails.is_evaluated">
       <mat-label class="head">Evaluated By</mat-label>
       <span>{{ applicationDetails.last_revision.employee_id }}, HR Assistant, BISTECH GLOBAL</span>
     </div>
     <div>
       <mat-label class="head">Comment</mat-label>
-      <span>{{ applicationDetails.last_revision.comment }}</span>
+      <!-- <span>{{ applicationDetails.last_revision.comment }}</span> -->
+
+      <!-- <h2>Revision History</h2>
+  <ul>
+    <li *ngFor="let revision of revisionHistory">
+      <p><strong>Revision ID:</strong> {{ revision.revision_id }}</p>
+      <p><strong>Comment:</strong> {{ revision.comment }}</p>
+      <p><strong>Status:</strong> {{ revision.status }}</p>
+      <p><strong>Date:</strong> {{ revision.created_date | date:'short' }}</p>
+      <p><strong>Revised by:</strong> {{ revision.employee_name }} ({{ revision.employee_role }})</p>
+    </li>
+  </ul> -->
     </div>
-    <div>
+    <div >
       <mat-label class="head">Change the decision</mat-label>
       <span>
         <button mat-button class="reject" style="color: red">Reject</button>

@@ -36,9 +36,20 @@ export class ApplicationService {
   async getApplicationDetails(applicationId: number): Promise<any> {
     try {
       const response = await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/${applicationId}`);
+      console.log('API response:', response.data); // Debugging statement
       return response.data;
     } catch (error) {
       console.error('Error fetching application details:', error);
+      throw error;
+    }
+  }
+
+  async getRevisionHistory(applicationId: number): Promise<any> {
+    try {
+      const response = await axios.get(`https://localhost:7213/api/ApplicationGetRevisionHistory/${applicationId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching revision history:', error);
       throw error;
     }
   }
