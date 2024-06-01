@@ -6,21 +6,31 @@ import { SeekerService } from '../../../services/seeker.service';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { ApplicationService } from '../../../services/application.service';
 
-interface Seeker {
+interface Revision {
+  revision_id: number;
+  comment: string;
+  status: string;
+  created_date: string;
+  employee_id: number;
+}
+
+interface ApplicationViewDto {
+  application_Id: number;
+  submitted_date: string;
+  email: string;
   first_name: string;
   last_name: string;
-  email: string;
   phone_number: number;
   bio: string;
-  description: string;
-  university: string;
+  cVurl: string;
+  profile_picture: string;
   linkedin: string;
-  field_name: string;
-  user_id: number;
+  current_status: string;
+  is_evaluated: boolean;
+  last_revision: Revision;
 }
-//Evaluation status should be added
-//HR Adss removed
 
 @Component({
   selector: 'app-hrmanager-application-view',
@@ -31,21 +41,24 @@ interface Seeker {
 })
 export class HrmanagerApplicationViewComponent implements OnInit {
   @Input() showComments: boolean = true; // Accepts showComments as input
-  seekerDetails: Seeker = {} as Seeker;
-  user_id: number = 1;
+  @Input() applicationId: number = 2; // Default value for testing
+  applicationDetails: ApplicationViewDto = {} as ApplicationViewDto;
+  loading: boolean = true;
+  error: string | null = null;
 
-  constructor(private seekerService: SeekerService) {}
+  constructor(private applicationService: ApplicationService) {}
 
   async ngOnInit() {
-    this.fetchSeekerDetails();
+    this.fetchApplicationDetails();
   }
 
-  async fetchSeekerDetails() {
+  async fetchApplicationDetails() {
     try {
-      const response = await this.seekerService.getSeekerDetails(this.user_id);
-      this.seekerDetails = response;
+      this.applicationDetails = await this.applicationService.getApplicationDetails(this.applicationId);
     } catch (error) {
-      console.error('Error fetching seeker details:', error);
+      this.error = 'Error fetching application details';
+    } finally {
+      this.loading = false;
     }
   }
 }
