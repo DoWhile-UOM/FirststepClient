@@ -1,13 +1,12 @@
 <div class="job-heading">
     <div class="job-heading-post-outer">
         <div class="job-post-heading-inner">
-            <img class="company-logo" src="../../../assets/BistechLogo.png" alt="Company Logo">
+            <img class="company-logo" [src]="company_logo_url" alt="Company Logo">
         </div>
         <div class="job-post-heading-inner">
             <h1 class="job-title">{{job_title}}</h1>
             <p class="company-name">{{company_name}}</p>
-            <p class="job-field">{{job_field}}</p>
-        </div>    
-        
+        </div> 
     </div>
+    <p class="job-field">{{job_field}}</p>
 </div>

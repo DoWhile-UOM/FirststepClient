@@ -18,6 +18,7 @@ interface Job {
   advertisement_id: number;
   title: string;
   company_name: string;
+  company_logo_url: string;
   company_id: number;
   field_name: string;
   country: string;
@@ -96,6 +97,11 @@ export class CompanyProfileComponent {
 
         this.jobList = this.company.companyAdvertisements.firstPageAdvertisements;
         this.jobIdList = this.company.companyAdvertisements.allAdvertisementIds;
+        
+        if (this.company.company_logo == ""){
+          // sample company logo
+          this.company.company_logo = "../../../assets/Img.png";
+        }
 
         //this.jobList = this.company.advertisementUnderCompany;
 
@@ -110,8 +116,6 @@ export class CompanyProfileComponent {
       });
 
     this.spinner.hide();
-
-    //this.documentService.downloadBlob(this.company.company_logo);
   }
 
   async handlePageEvent(e: PageEvent) {

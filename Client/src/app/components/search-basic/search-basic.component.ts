@@ -26,6 +26,7 @@ interface Job {
   advertisement_id: number;
   title: string;
   company_name: string;
+  company_logo_url: string;
   company_id: number;
   field_name: string;
   country: string;
@@ -126,7 +127,7 @@ throw new Error('Method not implemented.');
 
     if (res != undefined && res != null){
       // get user's location
-      alert(res.longitude + " " + res.latitude);
+      // alert(res.longitude + " " + res.latitude);
       
       await this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
         .then((response) => {
