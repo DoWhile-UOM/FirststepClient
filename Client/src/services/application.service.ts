@@ -32,4 +32,17 @@ export class ApplicationService {
 
     return applicationList;
   }
+
+  async getApplicationDetails(applicationId: number) {
+    let applicationDetails: any = {};
+    await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/ApplicationID=${applicationId}`)
+      .then((response) => {
+        applicationDetails = response.data;
+      })
+      .catch((error) => {
+        //console.error(error);
+      });
+
+    return applicationDetails;
+  }
 }
