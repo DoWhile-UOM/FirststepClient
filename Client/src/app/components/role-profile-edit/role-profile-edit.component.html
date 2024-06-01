@@ -1,72 +1,41 @@
-<div class="body">
-  <mat-card class="body-card">
-    <div class="arrow-section"><img src="/assets/arrow.png" alt="arrow" /></div>
-    <div class="content">
-      <mat-card-content>
-        <div class="top-section">
-          <div class="field-content">
-            <mat-form-field appearance="outline" floatLabel="always">
-              <mat-label>First Name</mat-label>
-              <input matInput #firstName placeholder="Enter your first name" [value]="employee.first_name"
-                (input)="employee.first_name = firstName.value" /><mat-icon matSuffix>mode_edit</mat-icon>
-            </mat-form-field>
+<div>
+  <h2 mat-dialog-title>Edit Profile Details</h2>
+  <div mat-dialog-content>
+    <form class="form">
+      <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+        <mat-label>First Name</mat-label>
+        <input matInput #firstName placeholder="Enter your first name" [value]="employee.first_name"
+          (input)="employee.first_name = firstName.value" />
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" floatLabel="always">
-              <mat-label>Last Name</mat-label>
-              <input matInput #lastname placeholder="Enter your last name" [value]="employee.last_name"
-                (input)="employee.last_name = lastname.value" /><mat-icon matSuffix>mode_edit</mat-icon>
-            </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput #lastname placeholder="Enter your last name" [value]="employee.last_name"
+          (input)="employee.last_name = lastname.value" />
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" floatLabel="always">
-              <mat-label>Email</mat-label>
-              <input matInput #email placeholder="Enter your email" [value]="employee.email"
-                (input)="employee.email = email.value" /><mat-icon matSuffix>mode_edit</mat-icon>
-            </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput #email placeholder="Enter your email" [value]="employee.email"
+          (input)="employee.email = email.value" />
+        <mat-icon matSuffix>mode_edit</mat-icon>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" floatLabel="always">
-              <mat-label>Password</mat-label>
-              <input matInput #password placeholder="Enter your password" [type]="hide ? 'password' : 'text'"
-                [value]="employee.password_hash" (input)="employee.password_hash = password.value" />
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{
-                  hide ? "visibility_off" : "visibility"
-                  }}</mat-icon>
-              </button>
-            </mat-form-field>
-
-            <!-- <mat-form-field appearance="outline" floatLabel="always">
-              <mat-label>Confrim Password</mat-label>
-              <input
-                matInput
-                placeholder="Re-enter your password"
-                [type]="hide ? 'password' : 'text'"
-              />
-              <button
-                mat-icon-button
-                matSuffix
-                (click)="hide = !hide"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide"
-              >
-                <mat-icon>{{
-                  hide ? "visibility_off" : "visibility"
-                }}</mat-icon>
-              </button>
-            </mat-form-field> -->
-          </div>
-        </div>
-        <mat-divider></mat-divider>
-
-        <div class="btn-section">
-          <button mat-button class="create-button update-btn" (click)="updateChanges()">
-            <span class="update-btn-name">Update Profile</span>
-          </button>
-          <button mat-button class="create-button discard-btn" (click)="discardChanges()">
-            <span class="discard-btn-name">Discard Changes</span>
-          </button>
-        </div>
-      </mat-card-content>
-    </div>
-  </mat-card>
+      <mat-form-field appearance="outline" floatLabel="always" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput #password placeholder="Enter your password" [type]="hide ? 'password' : 'text'"
+          [value]="employee.password_hash" (input)="employee.password_hash = password.value" />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button color="primary" (click)="updateChanges()" cdkFocusInitial>Update Profile</button>
+    <button mat-button (click)="close()">Close</button>
+  </div>
 </div>

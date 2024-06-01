@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +11,11 @@ import { EmployeeService } from '../../../services/employee.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {
+  MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions
+} from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 
 interface Employee {
@@ -35,7 +41,7 @@ interface Employee {
     MatButtonModule,
     MatListModule,
     SpinnerComponent,
-    NgxSpinnerModule,
+    NgxSpinnerModule, CommonModule, MatDialogTitle, MatDialogContent, MatDialogActions
   ],
 })
 export class RoleProfileEditComponent {
@@ -44,7 +50,8 @@ export class RoleProfileEditComponent {
 
   constructor(
     private employeeService: EmployeeService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<RoleProfileEditComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
   async ngOnInit() {
     try {
@@ -63,9 +70,7 @@ export class RoleProfileEditComponent {
     }
   }
 
-  async discardChanges() {
-    this.employee = {} as Employee;
-    this.employee = this.employee =
-      await this.employeeService.getEmployeeDetails(7);
+  async close() {
+    this.dialogRef.close();
   }
 }
