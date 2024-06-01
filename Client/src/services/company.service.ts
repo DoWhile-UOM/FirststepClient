@@ -56,6 +56,13 @@ interface CmpAdminReg {
 export class CompanyService {
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
+  public static BusinessScales: any[] = [
+    { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
+    { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
+    { name: 'Medium-Sized (50 - 250 Employees)', value: 'medium' },
+    { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
+  ];
+
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
 

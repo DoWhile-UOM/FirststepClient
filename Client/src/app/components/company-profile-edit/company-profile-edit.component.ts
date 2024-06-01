@@ -89,20 +89,15 @@ interface verifyOTP {
   ],
 })
 export class CompanyProfileEditComponent {
-hasDataLoaded: boolean = false;
-emailcaptuered='';
+  hasDataLoaded: boolean = false;
+  emailcaptuered='';
   selected = 'company.company_business_scale';
   email = new FormControl('', [Validators.required, Validators.email]);
   company: Company = {} as Company; // Initialize the company property
   cName = ''; // to store Comapny Name that is on the top
   noOfCols: number = 2;
   companyId: number = 7; // temp
-  BusinessScales: any[] = [
-    { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
-    { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
-    { name: 'Medium-Sized (50 - 250 Employees)', value: 'medium' },
-    { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
-  ];
+  BusinessScales: any[] = [];
 
   errorMessageForCompanyName = '';
   errorMessageForDescription = '';
@@ -121,8 +116,9 @@ emailcaptuered='';
   constructor(
     private companyService: CompanyService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog, private auth: AuthService,private snackbar: MatSnackBar,private cdr: ChangeDetectorRef
-  ) {}
+    public dialog: MatDialog, private auth: AuthService,private snackbar: MatSnackBar,private cdr: ChangeDetectorRef) {
+      this.BusinessScales = CompanyService.BusinessScales;
+  }
 
   async ngOnInit() {
     try {
