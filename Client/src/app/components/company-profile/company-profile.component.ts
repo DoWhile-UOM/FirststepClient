@@ -13,6 +13,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DocumentService } from '../../../services/document.service';
 import { AuthService } from '../../../services/auth.service';
+import { CompanyService } from '../../../services/company.service';
 
 interface Job {
   advertisement_id: number;
@@ -65,6 +66,7 @@ export class CompanyProfileComponent {
   company: Company = {} as Company;
   jobList: Job[] = [];
   jobIdList: number[] = [];
+  bussinessScale: any = [];
 
   seekerID: number = 0;
 
@@ -73,7 +75,9 @@ export class CompanyProfileComponent {
     private a_router: ActivatedRoute, 
     private router: Router,
     private spinner: NgxSpinnerService,
-    private auth: AuthService) { }
+    private auth: AuthService) { 
+      this.bussinessScale = CompanyService.BusinessScales;
+  }
 
   paginatorLength = 10;
   pageSize = 5;
@@ -97,6 +101,8 @@ export class CompanyProfileComponent {
 
         this.jobList = this.company.companyAdvertisements.firstPageAdvertisements;
         this.jobIdList = this.company.companyAdvertisements.allAdvertisementIds;
+
+        this.company.company_business_scale = this.bussinessScale.find((x: any) => x.value == this.company.company_business_scale)?.name ?? '';
         
         if (this.company.company_logo == ""){
           // sample company logo
