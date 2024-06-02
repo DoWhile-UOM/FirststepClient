@@ -33,13 +33,34 @@ export class ApplicationService {
     return applicationList;
   }
 
-  async getApplicationDetails(applicationId: number): Promise<any> {
-    try {
-      const response = await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/${applicationId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching application details:', error);
-      throw error;
-    }
+  // async getApplicationDetails(applicationId: number): Promise<any> {
+  //   try {
+  //     const response =
+  //     // const response = await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/${applicationId}`);
+  //     console.log(response);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('Error fetching application details:', error);
+  //   }
+  // }
+
+  async getApplicationDetails(applicationId: number) {
+    let applicationDetails: any = {};
+    await axios
+      .get('https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/' + applicationId)
+      .then(function (response) {
+        try {
+          applicationDetails = response.data;
+        } catch (error) {
+          console.log('No application details found for the given id');
+        }
+      })
+      .catch((error) => {
+        console.log('Network Error: ' + error);
+      });
+
+    return applicationDetails;
   }
+
+
 }
