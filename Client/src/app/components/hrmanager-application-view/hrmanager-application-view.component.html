@@ -15,18 +15,16 @@
           >{{ applicationDetails.first_name }} {{ applicationDetails.last_name }}</label
         >
         <!-- New button -->
-        <button mat-button class="View" style="background-color:  #e8e8e8; margin-left: 10px; font-size: 13px;">
-          View Profile
+        <button mat-button class="View" style="background-color:  #e8e8e8; margin-left: 10px; font-size: 13px;">          View Profile
           <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
         </button>
       </div>
       <label class="bio">{{ applicationDetails.bio }}</label>
     </div>
 
-    <!-- New button -->
-    <button mat-button class="right-button" style="color: white">
-      Button Text
-    </button>
+    <span class="status-label" style="color: white; padding: 8px; background-color:teal; border-radius: 4px;">
+      {{ applicationDetails.is_evaluated ? applicationDetails.last_revision.status : 'Not Evaluated' }}
+    </span>
   </div>
 
   <hr />
@@ -63,15 +61,28 @@
   <div class="comment-section" *ngIf="showComments">
     <hr />
 
-    <div>
+    <div  *ngIf="applicationDetails.is_evaluated">
       <mat-label class="head">Evaluated By</mat-label>
       <span>Sankha Abepitiya, HR Assistant, BISTECH GLOB</span>
     </div>
     <div>
       <mat-label class="head">Comment</mat-label>
-      <span>
-        <textarea></textarea>
+      
+      <!-- Display the comment if it exists -->
+      <span *ngIf="applicationDetails.last_revision && applicationDetails.last_revision.comment">
+        {{ applicationDetails.last_revision.comment }}
       </span>
+      
+      <!-- Display the input field if the comment does not exist -->
+      <div *ngIf="!applicationDetails.last_revision || !applicationDetails.last_revision.comment">
+        <div style="display: flex; flex-direction: column;"></div>
+        <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
+        <div style="display: flex; justify-content: space-between;">
+          <button mat-button (click)="addComment()">Add Comment</button>
+        <button mat-button>View Comment History</button>
+        </div>
+
+      </div>
     </div>
     <div>
       <mat-label class="head">Change the decision</mat-label>

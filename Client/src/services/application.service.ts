@@ -33,12 +33,52 @@ export class ApplicationService {
     return applicationList;
   }
 
-  async getApplicationDetails(applicationId: number): Promise<any> {
+  async getApplicationDetails(applicationId: number){
+    let applicationDetails: any = {};
+    await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/${applicationId}`)
+      .then((response) => {
+        applicationDetails = response.data;
+      })
+      .catch((error) => {
+        //console.error(error);
+      });
+
+    return applicationDetails;
+  }
+
+  // async getApplicationDetails(applicationId: number): Promise<any> {
+  //   try {
+  //     const response = await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/${applicationId}`);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error('Error fetching application details:', error);
+  //     throw error;
+  //   }
+  // }
+
+
+  //to check
+  async getRevisionHistory(applicationId: number): Promise<any> {
     try {
-      const response = await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/${applicationId}`);
+      const response = await axios.get(`https://localhost:7213/api/Application/GetRevisionHistory/${applicationId}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching application details:', error);
+      console.error('Error fetching revision history:', error);
+      throw error;
+    }
+  }
+
+  async addComment(applicationId: number, comment: string): Promise<any> {
+    try {
+      const response = await axios.post(`https://localhost:7213/api/Application/AddRevision`, {
+        application_id: applicationId,
+        comment: comment,
+        status: 'New', // have to change status
+        employee_id: 1 // replace with the actual employee_id
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error adding comment:', error);
       throw error;
     }
   }
