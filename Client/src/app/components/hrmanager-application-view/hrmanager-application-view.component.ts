@@ -50,15 +50,13 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
   async ngOnInit() {
     this.fetchApplicationDetails();
-    console.log(this.applicationDetails);
-    console.log("got details");
   }
 
   async fetchApplicationDetails() {
     try {
       this.applicationDetails = await this.applicationService.getApplicationDetails(this.applicationId);
     } catch (error) {
-      this.error = 'Error in ...';
+      this.error = 'Error fetching application details';
     } finally {
       this.loading = false;
     }
