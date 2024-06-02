@@ -28,7 +28,7 @@ export const routes: Routes = [
   // need to be verified
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
-  { path: 'home/applicationReview', component:SeekerApplicationStatusComponent },
+  { path: 'applicationReview', component:SeekerApplicationStatusComponent },
 
   //pdf viewer only for testing
   { path: 'pdf-view', component: PdfViewComponent},
