@@ -46,25 +46,10 @@ export class ApplicationService {
 
   async getRevisionHistory(applicationId: number): Promise<any> {
     try {
-      const response = await axios.get(`https://localhost:7213/api/Application/ApplicationGetRevisionHistory/${applicationId}`);
+      const response = await axios.get(`https://localhost:7213/api/ApplicationGetRevisionHistory/${applicationId}`);
       return response.data;
     } catch (error) {
       console.error('Error fetching revision history:', error);
-      throw error;
-    }
-  }
-
-  async addComment(applicationId: number, comment: string): Promise<any> {
-    try {
-      const response = await axios.post(`https://localhost:7213/api/Application/AddRevision`, {
-        application_id: applicationId,
-        comment: comment,
-        status: 'New', // have to change status
-        employee_id: 1 // replace with the actual employee_id
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error adding comment:', error);
       throw error;
     }
   }

@@ -8,7 +8,6 @@ import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ApplicationService } from '../../../services/application.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 interface Revision {
   revision_id: number;
@@ -38,7 +37,7 @@ interface ApplicationViewDto {
 @Component({
   selector: 'app-hrmanager-application-view',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, MatLabel, MatToolbar, MatButton, CommonModule, FormsModule],
+  imports: [MatIconModule, MatButtonModule, MatLabel, MatToolbar, MatButton, CommonModule],
   templateUrl: './hrmanager-application-view.component.html',
   styleUrls: ['./hrmanager-application-view.component.css'],
 })
@@ -49,8 +48,6 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   revisionHistory: any[] = [];
   loading: boolean = true;
   error: string | null = null;
-  newComment: string = '';
-
 
   constructor(private applicationService: ApplicationService ,  private router: Router) {}
 
@@ -76,19 +73,6 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       this.error = 'Error fetching revision history';
     } finally {
       this.loading = false;
-    }
-  }
-
-  async addComment() {
-    if (this.newComment.trim()) {
-      try {
-        // Assuming the application service has a method to add a comment
-        await this.applicationService.addComment(this.applicationId, this.newComment);
-        this.applicationDetails.last_revision.comment = this.newComment;
-        this.newComment = '';
-      } catch (error) {
-        console.error('Error adding comment:', error);
-      }
     }
   }
 
