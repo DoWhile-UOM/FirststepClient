@@ -7,7 +7,6 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ApplicationService } from '../../../services/application.service';
-import { Router } from '@angular/router';
 
 interface Revision {
   revision_id: number;
@@ -31,7 +30,6 @@ interface ApplicationViewDto {
   current_status: string;
   is_evaluated: boolean;
   last_revision: Revision;
-  seeker_id: number;
 }
 
 @Component({
@@ -45,11 +43,10 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   @Input() showComments: boolean = true; // Accepts showComments as input
   @Input() applicationId: number = 2; // Default value for testing
   applicationDetails: ApplicationViewDto = {} as ApplicationViewDto;
-  revisionHistory: any[] = [];
   loading: boolean = true;
   error: string | null = null;
 
-  constructor(private applicationService: ApplicationService ,  private router: Router) {}
+  constructor(private applicationService: ApplicationService) {}
 
   async ngOnInit() {
     this.fetchApplicationDetails();
@@ -58,32 +55,10 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   async fetchApplicationDetails() {
     try {
       this.applicationDetails = await this.applicationService.getApplicationDetails(this.applicationId);
-      console.log('Application details:', this.applicationDetails); // Debugging statement
     } catch (error) {
       this.error = 'Error fetching application details';
     } finally {
       this.loading = false;
     }
   }
-
-  async fetchRevisionHistory() {
-    try {
-      this.revisionHistory = await this.applicationService.getRevisionHistory(this.applicationId);
-    } catch (error) {
-      this.error = 'Error fetching revision history';
-    } finally {
-      this.loading = false;
-    }
-  }
-
-
-  viewProfile() {
-    console.log('Seeker ID:', this.applicationDetails.seeker_id); // Debugging statement
-    if (this.applicationDetails && this.applicationDetails.seeker_id) {
-      this.router.navigate(['jobOfferList/applicationList/applicationView/seekerProfileView', this.applicationDetails.seeker_id]);
-    } else {
-      console.error('Seeker ID is undefined or null');
-    }
-  }
-  
 }

@@ -40,17 +40,6 @@ async getSeekerDetailsForApplication(id : number) {
   return seekerData;
 }
 
-async getSeekerDetailsforSeekerView(seekerId: number): Promise<any> {
-  try {
-    const response = await axios.get(`http://localhost:5000/api/Seeker/GetSeekerDetailsForSeekerProfileView/${seekerId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching seeker details:', error);
-    throw error;
-  }
-}
-
-
 //update method
 async editseeker(seeker: any, seekerID: number) {
   try {
