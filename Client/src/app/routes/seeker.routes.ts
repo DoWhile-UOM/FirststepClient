@@ -32,4 +32,5 @@ export const routes: Routes = [
 
   //pdf viewer only for testing
   { path: 'pdf-view', component: PdfViewComponent},
+  { path: 'image-view', component: ImageViewerComponent},
 ];
