@@ -12,7 +12,7 @@ import { DocumentService } from '../../../services/document.service';
 })
 export class PdfViewComponent implements OnInit{ 
  
-  documentName: string = '1b2de735-4e1a-48f4-a8ff-9e0a46fb670e.pdf';
+  documentName: string = 'KARATE.pdf';
   public document: any;
   public resource: string = "https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib";
 
