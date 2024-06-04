@@ -46,28 +46,35 @@ export class ApplicationService {
     return applicationDetails;
   }
 
-  // async getApplicationDetails(applicationId: number): Promise<any> {
-  //   try {
-  //     const response = await axios.get(`https://localhost:7213/api/Application/GetSeekerApplicationViewByApplicationId/${applicationId}`);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error('Error fetching application details:', error);
-  //     throw error;
-  //   }
-  // }
+  async addRevision(applicationId: number, comment: string, status: string, employeeId: number) {
+    const newRevision = {
+      application_id: applicationId,
+      comment: comment,
+      status: status,
+      employee_id: employeeId
+    };
 
-
-  //to check
-  async getRevisionHistory(applicationId: number): Promise<any> {
     try {
-      const response = await axios.get(`https://localhost:7213/api/Application/GetRevisionHistory/${applicationId}`);
-      return response.data;
+      const response = await axios.post('https://localhost:7213/api/Revision/AddRevision', newRevision);
+      console.log('Revision added successfully:', response.data);
     } catch (error) {
-      console.error('Error fetching revision history:', error);
-      throw error;
+      console.error('Error adding revision:', error);
     }
   }
 
+  async getRevisionHistory(applicationId: number){
+    let revisionHistory: any = {};
+    await axios.get(`https://localhost:7213/api/Application/GetRevisionHistory/${applicationId}`)
+      .then((response) => {
+        revisionHistory = response.data;
+      })
+      .catch((error) => {
+        //console.error(error);
+      });
+
+    return revisionHistory;
+  }
+  
   async addComment(applicationId: number, comment: string): Promise<any> {
     try {
       const response = await axios.post(`https://localhost:7213/api/Application/AddRevision`, {

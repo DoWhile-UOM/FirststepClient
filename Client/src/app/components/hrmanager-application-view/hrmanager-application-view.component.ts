@@ -15,6 +15,9 @@ interface Revision {
   status: string;
   created_date: string;
   employee_id: number;
+  employee_name: string;
+  employee_role: string;
+
 }
 
 interface ApplicationViewDto {
@@ -31,6 +34,7 @@ interface ApplicationViewDto {
   current_status: string;
   is_evaluated: boolean;
   last_revision: Revision;
+  seeker_id: number;
 }
 
 @Component({
@@ -65,12 +69,15 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     }
   }
 
+
   async addComment() {
     if (this.newComment.trim()) {
       try {
-        // Assuming the application service has a method to add a comment
-        await this.applicationService.addComment(this.applicationId, this.newComment);
-        this.applicationDetails.last_revision.comment = this.newComment;
+        const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
+        const employeeId = 1; // Replace with the actual employee ID
+        await this.applicationService.addRevision(this.applicationId, this.newComment, status, employeeId);
+        // Fetch the updated application details to reflect the new comment
+        await this.fetchApplicationDetails();
         this.newComment = '';
       } catch (error) {
         console.error('Error adding comment:', error);

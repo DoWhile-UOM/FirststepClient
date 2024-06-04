@@ -61,9 +61,9 @@
   <div class="comment-section" *ngIf="showComments">
     <hr />
 
-    <div  *ngIf="applicationDetails.is_evaluated">
+    <div *ngIf="applicationDetails.is_evaluated">
       <mat-label class="head">Evaluated By</mat-label>
-      <span>Sankha Abepitiya, HR Assistant, BISTECH GLOB</span>
+      <span>{{ applicationDetails.last_revision.employee_name }}, {{ applicationDetails.last_revision.employee_role }}</span>
     </div>
     <div>
       <mat-label class="head">Comment</mat-label>
@@ -85,9 +85,11 @@
       </div>
     </div>
     <div>
-      <mat-label class="head">Change the decision</mat-label>
+      <mat-label class="head" *ngIf="applicationDetails.is_evaluated" >Change the decision</mat-label>
       <span>
+        <button mat-button class="accept" style="color: green">Accept</button>
         <button mat-button class="reject" style="color: red">Reject</button>
+        <button mat-button class="pass" style="color: orange">Pass</button>
       </span>
     </div>
   </div>
