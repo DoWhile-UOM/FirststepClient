@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,19 +9,23 @@ import { FormsModule } from '@angular/forms';
 import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
 
 import {
+  MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogModule,
+  MatDialogRef,
 } from '@angular/material/dialog';
 import { EmployeeService } from '../../../services/employee.service';
 import { SuccessPopupComponent } from '../success-popup/success-popup.component';
+import { I } from '@angular/cdk/keycodes';
 
 interface Employee {
   first_name: string;
   last_name: string;
   email: string;
   password: string;
+  company_id: number;
 }
 
 @Component({
@@ -49,7 +53,14 @@ export class AddrolesPopupComponent {
   hide=true;
   employee: Employee = {} as Employee;
   selectedRole: string = 'HRM';
-  constructor(private employeeService: EmployeeService, private _snackBar: MatSnackBar) {}
+  constructor(
+    public dialogRef: MatDialogRef<AddrolesPopupComponent>,
+    private employeeService: EmployeeService, private _snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: any
+) {
+  //assign data from manage roles component
+  this.employee.company_id = data.company_id;
+}
 
   async onSubmit() {
     if (this.selectedRole === 'HRA') {

@@ -6,7 +6,7 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-import {Inject} from '@angular/core';
+import { Inject } from '@angular/core';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
@@ -24,39 +24,37 @@ import { SuccessPopupComponent } from '../success-popup/success-popup.component'
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth.service';
 
-
 export interface RolesData {
   id: number;
   name: string;
-  email:string;
+  email: string;
   position: number;
   Role: string;
 }
 
 @Component({
-    selector: 'app-manage-roles',
-    standalone: true,
-    templateUrl: './manage-roles.component.html',
-    styleUrl: './manage-roles.component.css',
-    imports: [
-      MatIconModule,
-      MatButtonModule,
-      MatTableModule,
-      AddrolesPopupComponent,
-      MatCardModule,
-      MatChipsModule,
-      CommonModule,
-      MatDialogModule,
-      MatInputModule,
-    ]
+  selector: 'app-manage-roles',
+  standalone: true,
+  templateUrl: './manage-roles.component.html',
+  styleUrl: './manage-roles.component.css',
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    AddrolesPopupComponent,
+    MatCardModule,
+    MatChipsModule,
+    CommonModule,
+    MatDialogModule,
+    MatInputModule,
+  ],
 })
 export class ManageRolesComponent {
-  displayedColumns: string[] = ['position', 'name','email', 'Role', 'symbol'];
+  displayedColumns: string[] = ['position', 'name', 'email', 'Role', 'symbol'];
   rolesData: RolesData[] = [];
-  
 
-  company_id: string= ''; // sample company_id
-  selected: string = "all";
+  company_id: string = ''; // sample company_id
+  selected: string = 'all';
 
   @ViewChild(MatTable)
   table!: MatTable<RolesData>;
@@ -65,122 +63,103 @@ export class ManageRolesComponent {
     public dialog: MatDialog,
     private employeeService: EmployeeService,
     private auth: AuthService
- 
-  ) {}
+  ) {
+  
+  }
 
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
-    try{
+    try {
       this.company_id = this.auth.getCompanyID() || '';
       this.fetchData(this.selected);
-    }
-    catch(error){
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
-    
   }
 
   async fetchData(type: string) {
     let dataSet: any[] = [];
-  
 
-    if (type == "HRA") {
-      await this.employeeService.getAllHRAs(this.company_id)
+    if (type == 'HRA') {
+      await this.employeeService
+        .getAllHRAs(this.company_id)
         .then((data: any[]) => {
           dataSet = data;
-        }); 
-    }
-    else if (type == "HRM"){
-      await this.employeeService.getAllHRMs(this.company_id)
+        });
+    } else if (type == 'HRM') {
+      await this.employeeService
+        .getAllHRMs(this.company_id)
         .then((data: any[]) => {
           dataSet = data;
-        }); 
-    }
-    else {
-      await this.employeeService.getEmployeeList(this.company_id)
+        });
+    } else {
+      await this.employeeService
+        .getEmployeeList(this.company_id)
         .then((data: any[]) => {
           dataSet = data;
-        });  
+        });
     }
-    
-    if (dataSet.length > 0){
+
+    if (dataSet.length > 0) {
       this.rolesData = dataSet.map((item, index) => ({
-        id: item.user_id, 
+        id: item.user_id,
         position: index + 1, // Increment position
-        name: `${item.first_name} ${item.last_name}`, 
-        email:item.email,
-        Role: (item.user_type) == 'hra' ? 'HR Assistant': 'HR Manager',
+        name: `${item.first_name} ${item.last_name}`,
+        email: item.email,
+        Role: item.user_type == 'hra' ? 'HR Assistant' : 'HR Manager',
       }));
-    }
-    else{
+    } else {
       this.rolesData = [];
     }
   }
 
-  removeData(id: number){
-      const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
-      data: {id: id}, 
-   } );
-    dialogRef.afterClosed().subscribe(result => {
-      if(result==true){
+  removeData(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: { id: id },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == true) {
         this.fetchData(this.selected);
       }
-    }); 
+    });
   }
- 
-/*  removeData(id: number): void {
-  
 
-  this.employeeService
-      .deleteEmployee(id)
-      .then(() => {
-        this.rolesData = this.rolesData.filter(
-          (employee) => employee.id !== id
-        );
-        this.table.renderRows();
+  openAdd() {
+    const dialog = this.dialog.open(AddrolesPopupComponent, {
+      data: {
+        company_id: this.company_id,
+      },
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if ((result = true)) {
         this.fetchData(this.selected);
-      })
-      .catch((error) => {
-        console.error('Error deleting data:', error);
-      });
-    }*/
-    
-  
-    openDialog(){
-      const dialog=this.dialog.open(AddrolesPopupComponent); 
-      dialog.afterClosed().subscribe(result => {
-        if(result=true){
-          this.fetchData(this.selected);
-        }
-      });
-    }
-
-    openEdit( id:number){
-      const dialog = this.dialog.open(EditRoleComponent,{data:{id}});
-     
-      dialog.afterClosed().subscribe(result => {
-        if (result === true) {
-          this.fetchData(this.selected);
-        }
-      });
-    }
-     
-    async filter(selected: any){
-      this.selected = selected.value;
-      await this.fetchData(selected.value);
-    }
+      }
+    });
   }
 
- //confirm component
+  openEdit(id: number) {
+    const dialog = this.dialog.open(EditRoleComponent, { data: { id } });
+
+    dialog.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.fetchData(this.selected);
+      }
+    });
+  }
+
+  async filter(selected: any) {
+    this.selected = selected.value;
+    await this.fetchData(selected.value);
+  }
+}
+
+//confirm component
 @Component({
   selector: 'app-confirm-delete',
   templateUrl: './confirm-delete.html',
   styleUrl: './manage-roles.component.css',
   standalone: true,
-  imports: [
-   MatDialogModule,
-    MatButtonModule
-  ], 
+  imports: [MatDialogModule, MatButtonModule],
 })
 export class ConfirmDeleteComponent {
   constructor(
@@ -188,14 +167,10 @@ export class ConfirmDeleteComponent {
     public dialogRef: MatDialogRef<ConfirmDeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-  emp_id:number=this.data.id;
+  emp_id: number = this.data.id;
 
-  async Clickdelete(){
-      await this.employeeService.deleteEmployee(this.emp_id);
-      this.dialogRef.close(true);
+  async Clickdelete() {
+    await this.employeeService.deleteEmployee(this.emp_id);
+    this.dialogRef.close(true);
   }
 }
-
-
-
-  

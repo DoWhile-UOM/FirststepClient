@@ -57,7 +57,6 @@ export class EmployeeService {
 
   async addNewHRManager(employee: any) {
     try{
-      employee.company_id = 7; // sample company_id
       await axios.post(Apipaths.addNewHRManager, employee)
         .then((response) => {
           console.log(response);
@@ -70,8 +69,6 @@ export class EmployeeService {
 
   async addNewHRAssistant(employee: any) {
     try{
-      employee.company_id = 7; // sample company_id
-      
       await axios.post(Apipaths.addNewHRAssistant, employee)
         .then((response) => {
           console.log(response);
