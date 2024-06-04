@@ -9,6 +9,7 @@ import { SeekerApplicationFormComponent } from '../components/seeker-application
 import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 import { SeekerApplicationStatusComponent } from '../components/seeker-application-status/seeker-application-status.component';
 import { ImageViewerComponent } from '../components/image-viewer/image-viewer.component';
+import { PdfViewComponent } from '../components/pdf-view/pdf-view.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -21,5 +22,9 @@ export const routes: Routes = [
   // need to be verified
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
-  { path: 'home/applicationReview', component:SeekerApplicationStatusComponent },
+  { path: 'applicationReview', component:SeekerApplicationStatusComponent },
+
+  //pdf viewer only for testing
+  { path: 'pdf-view', component: PdfViewComponent},
+  { path: 'image-view', component: ImageViewerComponent},
 ];

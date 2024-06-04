@@ -52,3 +52,7 @@ mat-card div{
 mat-icon {
   font-family: "Material Icons";
 }
+mat-dialog-content{
+  width:404px;
+}
+

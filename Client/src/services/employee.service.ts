@@ -10,7 +10,6 @@ interface Employee {
   last_name: string;
   email: string;
   password_hash: string;
-  company_id: number;
 }
 
 @Injectable({
@@ -42,7 +41,7 @@ export class EmployeeService {
       });
   }
   
-  async getEmployeeList(company_id: number) {
+  async getEmployeeList(company_id: string) {
     let empData: any;
 
     await axios.get(Apipaths.getEmployeeList + company_id)
@@ -58,7 +57,6 @@ export class EmployeeService {
 
   async addNewHRManager(employee: any) {
     try{
-      employee.company_id = 7; // sample company_id
       await axios.post(Apipaths.addNewHRManager, employee)
         .then((response) => {
           console.log(response);
@@ -71,8 +69,6 @@ export class EmployeeService {
 
   async addNewHRAssistant(employee: any) {
     try{
-      employee.company_id = 7; // sample company_id
-      
       await axios.post(Apipaths.addNewHRAssistant, employee)
         .then((response) => {
           console.log(response);
@@ -105,7 +101,7 @@ export class EmployeeService {
     }
   }
 
-  async getAllHRMs(companyID: number){
+  async getAllHRMs(companyID: string){
     let empData: any;
     
     await axios.get(Apipaths.getAllHRMs + companyID)
@@ -119,7 +115,7 @@ export class EmployeeService {
     return empData;
   }
 
-  async getAllHRAs(companyID: number){
+  async getAllHRAs(companyID: string){
     let empData: any;
 
     await axios.get(Apipaths.getAllHRAs + companyID)

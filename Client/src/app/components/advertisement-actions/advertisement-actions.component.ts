@@ -19,6 +19,7 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './advertisement-actions.component.css'
 })
 export class AdvertisementActionsComponent {
+
   @Input() currentStatus: boolean = false;
   @Input() expired: boolean = false;
   @Input() jobID: number = 0;
@@ -87,5 +88,10 @@ export class AdvertisementActionsComponent {
         company_logo_url: this.company_logo_url}
     }); 
   }
+
+  trackApplication() {
+    //route to application status
+    this.router.navigate(['/seeker/applicationReview']);
+    }
 }
 
