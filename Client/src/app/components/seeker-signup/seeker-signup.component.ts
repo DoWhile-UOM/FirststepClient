@@ -50,13 +50,16 @@ interface newSeeker {
 
 }
 @Component({
-  selector: 'app-seeker-signup',
-  standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar],
-  templateUrl: './seeker-signup.component.html',
-  styleUrl: './seeker-signup.component.css'
+    selector: 'app-seeker-signup',
+    standalone: true,
+    templateUrl: './seeker-signup.component.html',
+    styleUrl: './seeker-signup.component.css',
+    imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar]
 })
 export class SeekerSignupComponent {
+resendOTP() {
+throw new Error('Method not implemented.');
+}
   //file upload
 url = './assets/images/SeekerEdit.jpg';
 

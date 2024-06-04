@@ -1,3 +1,76 @@
+@media (max-width: 480px) {
+  h2 {
+    font-size: 24px;
+  }
+  .heading {
+    font-size: 20px;
+  }
+  .mat-mdc-form-field {
+    width: 100%; /* Full width on mobile */
+  }
+}
+
+/* Updated Styles */
+.page {
+  display: flex;
+  flex-direction: column; /* Stack vertically on smaller screens */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensure content covers viewport height */
+}
+
+.up-container {
+  display: flex;
+  flex-direction: row; /* Row on larger screens */
+  flex-wrap: wrap; /* Allow wrapping to next line */
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Consistent spacing */
+}
+
+.left, .right {
+  flex: 1 1 400px; /* Grow to available space, minimum width of 400px */
+}
+
+.form-container {
+  width: 90%; /* Use percentage width for better scaling */
+  max-width: 500px; /* Limit maximum width on larger screens */
+  box-sizing: border-box; /* Include padding in the width calculation */
+  /* ...other styles */
+}
+
+.mat-mdc-form-field {
+  width: calc(100% - 30px); /* Adjust to account for padding */
+}
+
+.seeker {
+  width: auto;
+  max-width: 100%; /* Ensure the image doesn't overflow its container */
+  height: auto;
+}
+
+/* Media Queries for Different Screen Sizes */
+@media (max-width: 768px) {
+  .up-container {
+    flex-direction: column; /* Stack vertically on smaller screens */
+  }
+  .form-container {
+    width: 95%; 
+  }
+}
+
+form {
+  display: flex; /* Enable flexbox */
+  flex-wrap: wrap; /* Allow elements to wrap to the next line */
+  gap: 10px; /* Add spacing between elements */
+}
+
+.form-element {
+  flex: 1 1 200px; /* Each element takes at least 200px and can grow */
+}
+
+
+
 .page {
     display: flex;
     justify-content: center;
@@ -56,7 +129,7 @@
     text-align: center;
     font-size: 25px;
     font-weight: 550;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     line-height: 1.5;
   }
   
@@ -70,7 +143,8 @@
   p {
     text-align: center;
     font-size: 17px;
-    margin: 2vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
   }
   .form-container {
     border: 3px black;
@@ -84,41 +158,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* width: 500px;
-      height: 525px; */
+   
   }
-  .form-container-one {
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0.2, 0.2, 0.2, 0.2);
-    padding: 25px 25px 25px 25px;
-    height: 45vw;
-    width: 30vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* width: 500px;
-      height: 525px; */
-  }
-  .form-container-two {
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0.2, 0.2, 0.2, 0.2);
-    padding: 25px 25px 25px 25px;
-    height: 25vw;
-    width: 30vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* width: 500px;
-      height: 525px; */
-  }
-  
-  
   
   .mat-mdc-form-field {
     margin-top: 16px;
@@ -213,5 +254,17 @@
     width: min-content;
     display: grid;
     margin-bottom: 10px;
+  }
+  
+  .otp-field-container {
+    display: flex !important; /* Ensure Flexbox layout */
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  
+  /* Optional: Adjust the input width */
+  .otp-field-container input {
+    width: 70%; /* Or another value that works for your design */
   }
   

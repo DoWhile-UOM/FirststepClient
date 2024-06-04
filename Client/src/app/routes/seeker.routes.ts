@@ -9,6 +9,7 @@ import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup
 import { HrManagerApplicationListingComponent } from '../components/hr-manager-application-listing/hr-manager-application-listing.component';
 import { HrassistantApplicationViewComponent } from '../components/hrassistant-application-view/hrassistant-application-view.component';
 import { HrmanagerApplicationViewComponent } from '../components/hrmanager-application-view/hrmanager-application-view.component';
+import { RegisterCompanyComponent } from '../components/register-company/register-company.component';
 
 // need to be verified
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
@@ -29,4 +30,5 @@ export const routes: Routes = [
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
   { path: 'home/applicationReview', component:SeekerApplicationStatusComponent },
+  { path: 'register-company', component: RegisterCompanyComponent },
 ];
