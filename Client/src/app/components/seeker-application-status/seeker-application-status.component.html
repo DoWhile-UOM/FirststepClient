@@ -1,9 +1,9 @@
 <mat-card class="example-card">
   <mat-card-header>
     <app-advertisement-header
-    [company_name]="jobData.company_name"
-    [job_field]="jobData.field_name"
-    [job_title]="jobData.title"
+      [company_name]="jobData.company_name"
+      [job_field]="jobData.field_name"
+      [job_title]="jobData.title"
     ></app-advertisement-header>
   </mat-card-header>
   <mat-divider></mat-divider>
@@ -11,35 +11,32 @@
   <mat-stepper labelPosition="bottom" #stepper class="stepper">
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Application Submission
-          <br>date
+        <ng-template matStepLabel
+          >Application Submission <br />date
         </ng-template>
-        
       </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
       <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Application Screening
-          <br>date
+        <ng-template matStepLabel
+          >Application Screening <br />date
         </ng-template>
-        
       </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
-      <ng-template matStepLabel>Finalize
-        <br>date
-      </ng-template>
+        <ng-template matStepLabel>Application Finalize<br />date </ng-template>
       </form>
     </mat-step>
   </mat-stepper>
 
   <mat-divider></mat-divider>
-  
-    <mat-card-title>Submitted Documents</mat-card-title>
-    <mat-card-content>CV
-      <span
-        ><button mat-stroked-button color="primary">View Document</button>
-      </span>
+
+  <mat-card-title>Submitted Documents</mat-card-title>
+  <mat-card-content>
+    <div>CV</div>
+    <div>
+       <a mat-flat-button color="primary" href="https://www.lpl.arizona.edu/~umpire/professional/papers/Our%20Solar%20System%20-%20grades%202-5.pdf" target="_blank">View document</a>
+    </div>
   </mat-card-content>
 </mat-card>
