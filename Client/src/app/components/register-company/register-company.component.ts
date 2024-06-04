@@ -51,16 +51,17 @@ import { PopUpFinalComponent } from '../pop-up-final/pop-up-final.component';
 export class RegisterCompanyComponent {
   @ViewChild('stepper') stepper!: MatStepper;
 
-  isEmailVerified: boolean = false;
+  isEmailVerified: boolean = true;
   isOTPRequestSent: boolean = false;
   isFormVerified: boolean = false;
+  verifiedemail: string = "";
 
 
   //form group for the stepper
   companyReg = this._formBuilder.group({
     company_name: ['', Validators.required],//
     company_website: [''],//
-    company_email: ['', [Validators.required, Validators.email]],//
+    company_email: new FormControl({ value: '', disabled: true }),//
     company_description: [''],//
     company_logo: [''],//
     company_business_scale: ['', Validators.required],//
@@ -87,7 +88,7 @@ export class RegisterCompanyComponent {
   }
 
   async onRegister() {
-    this.isEmailVerified=true;
+    this.isEmailVerified = true;
     if (!this.isEmailVerified) {
       this.snackbar.open("Please verify your email first", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       return;
@@ -95,10 +96,23 @@ export class RegisterCompanyComponent {
       if (this.companyReg.invalid) {
         this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       } else {
-        let response=await this.company.CompanyRegister(this.companyReg.value);
-        console.log(response);
-        //this.finalDialog();
-        //Should redirect or popup show
+        try {
+          this.companyReg.get('company_email')?.enable();
+          let responseRegReq = await this.company.CompanyRegister(this.companyReg.value);
+
+          // Optionally disable the company_email control again
+          this.companyReg.get('company_email')?.disable();
+
+          if (responseRegReq.success) {
+            this.snackbar.open("Company registered successfully", "")._dismissAfter(3000);
+            this.finalDialog();
+          } else {
+            this.snackbar.open("Registration Error: " + responseRegReq.out, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+          }
+        } catch (error) {
+          console.error('Error during registration: ', error);
+          this.snackbar.open("Registration failed. Please try again.", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+        }
       }
     }
   }

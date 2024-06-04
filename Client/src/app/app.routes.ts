@@ -18,6 +18,7 @@ export const routes: Routes = [
   { path: 'CompanyReg', component: RegisterCompanyComponent },
   { path: 'RegCheck', component: RegCmpStateCheckComponent },
   { path: 'popupfinal', component: PopUpFinalComponent },
+  { path: 'RegCompanyAdmin', component: CompanyAdminRegistrtionFormComponent },
 
   {
     path: 'ca',

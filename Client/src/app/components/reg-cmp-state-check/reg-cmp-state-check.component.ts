@@ -15,29 +15,34 @@ import { MatDividerModule } from '@angular/material/divider';
 import { StylemanageService } from '../../../services/stylemanage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopUpComponent } from '../pop-up/pop-up.component';
+import { MatOptionModule } from '@angular/material/core';
 
 //interface to fetch company data
 export interface CmpyData {
-  company_id: string;
+  company_id: string;//
   company_name: string;
-  company_email: string;
   company_website: string;
-  company_phone_number: number;
-  company_logo: string;
+  company_email: string;
   company_description: string;
-  company_city: string;
-  company_province: string;
+  company_logo: string;
+  company_city: string;//not needed
+  company_province: string;//not needed
   company_business_scale: string;
+  business_reg_certificate: string;
+  company_registered_date: string;
+  certificate_of_incorporation:string;
+  company_phone_number:number
+  business_reg_no:number;
   comment: string;
   verification_status: any;
-  company_registered_date: string;
+  
 }
 
 
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [MatOptionModule,MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
@@ -51,16 +56,17 @@ export class RegCmpStateCheckComponent {
   cmpData: CmpyData = {} as CmpyData
 
   companyReg = this._formBuilder.group({
-    company_name: ['', Validators.required],
-    company_website: [''],
-    company_email: ['', [Validators.required, Validators.email]],
-    //otp: ['', Validators.required],
-    business_scale: ['', Validators.required],
-    business_reg_certificate: ['', Validators.required],
-    company_applied_date: ['', Validators.required],
-    certificate_of_incorporation: ['', Validators.required],
-    company_phone_number: ['', Validators.required],
-    business_reg_no: ['', Validators.required],
+    company_name: new FormControl({value: this.cmpData.company_name, disabled: true}),//
+    company_website: new FormControl({value: this.cmpData.company_website, disabled: false}),//
+    company_email: new FormControl({value: this.cmpData.company_email, disabled: true}),//
+    company_description: new FormControl({value: this.cmpData.company_description, disabled: false}),//
+    company_logo: new FormControl({value: this.cmpData.company_logo, disabled: false}),//
+    company_business_scale: new FormControl({value: this.cmpData.company_business_scale, disabled: false}),//
+    business_reg_certificate: new FormControl({value: this.cmpData.business_reg_certificate, disabled: false},Validators.required),//
+    company_registered_date: new FormControl({value: this.cmpData.company_registered_date, disabled: false},Validators.required),///
+    certificate_of_incorporation: new FormControl({value: this.cmpData.certificate_of_incorporation, disabled: false}),//
+    company_phone_number: new FormControl({value: this.cmpData.company_phone_number, disabled: false},Validators.required),//
+    business_reg_no: new FormControl({value: this.cmpData.business_reg_no, disabled: false},Validators.required),//
   });
 
   constructor(private _formBuilder: FormBuilder,private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) { }

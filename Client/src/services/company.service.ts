@@ -98,15 +98,15 @@ export class CompanyService {
   }
 
   async CompanyRegister(companyObj: any) {
-    await axios.post(Apipaths.registerCompany, companyObj).then((response) => {
-      this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-      return response.data;
-    }).catch((error) => {
-      console.log('Network Error: ' + error);
-      this.snackBar.open('Registration Error '+error.response.data, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-      console.log('Registration Error: ' + error.response);
-      return error.response.data;
-    });
+    try {
+      const response = await axios.post(Apipaths.registerCompany, companyObj);
+      //this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      return { success: true, out: response.data };
+    } catch (error: any) {
+      console.error('Network Error: ', error);
+      return { success: false, out: error.response.data };
+
+    }
   }
 
   // async updateCompanyDetails(company: Company) {
