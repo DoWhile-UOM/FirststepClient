@@ -17,6 +17,12 @@ interface Seeker{
   linkedin:string;
 }
 
+interface Job {
+  title: string;
+  field_name: string;
+  company_name: string;
+}
+
 @Component({
     selector: 'app-seeker-application-status',
     standalone: true,
@@ -27,6 +33,11 @@ interface Seeker{
 export class SeekerApplicationStatusComponent {
 
   SeekerDetails: Seeker = {} as Seeker;
+  jobData: Job = {
+    title: 'Software Developer',
+    field_name: 'Software Development',
+    company_name: 'Google',
+  }
   user_id: number = 2;
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -34,6 +45,10 @@ export class SeekerApplicationStatusComponent {
   secondFormGroup = this._formBuilder.group({
     secondCtrl: ['', Validators.required],
   });
+  thirdFormGroup = this._formBuilder.group({
+    thirdCtrl: ['', Validators.required],
+  });
+
 
   constructor(private _formBuilder: FormBuilder,private seekerService:SeekerService) {}
 
