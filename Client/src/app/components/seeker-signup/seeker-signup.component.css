@@ -32,6 +32,12 @@
   flex: 1 1 400px; /* Grow to available space, minimum width of 400px */
 }
 
+.form-field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adjust spacing between form fields and buttons */
+}
+
 .form-container {
   width: 90%; /* Use percentage width for better scaling */
   max-width: 500px; /* Limit maximum width on larger screens */
@@ -267,4 +273,5 @@ form {
   .otp-field-container input {
     width: 70%; /* Or another value that works for your design */
   }
+  
   

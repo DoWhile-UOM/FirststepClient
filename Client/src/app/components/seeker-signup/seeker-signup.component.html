@@ -83,7 +83,7 @@
                   Verify your email. Please check your email and enter the
                   confirmation code.
                 </p>
-                <div style="display: flex; align-items: center">
+                <div class="form-field-row">
                   <mat-form-field appearance="outline">
                     <mat-label>Email Address</mat-label>
                     <input
@@ -103,21 +103,27 @@
                   </mat-form-field>
                   <button
                     mat-button
+                    class="otp-btn"
                     matSuffix
                     (click)="requestOTP()"
                     [disabled]="isOTPRequestSent"
                     id="otpreqbtn"
-                    style="background-color: #595959; color: white"
+                    style="
+                      background-color: #595959;
+                      color: white;
+                      padding: 5px 10px 10px 10px;
+                    "
                   >
                     {{ reqOTPbtntxt }} {{ remainingTime }}
                   </button>
                 </div>
 
-                <div style="display: flex; align-items: center">
+                <div class="form-field-row">
                   <mat-form-field appearance="outline">
                     <mat-label>OTP</mat-label>
                     <input
                       matInput
+                      class="otp-btn"
                       placeholder="Enter Confirmation Code"
                       formControlName="otp_in"
                       required
@@ -128,13 +134,17 @@
                     mat-button
                     matSuffix
                     (click)="VerifyOTP()"
-                    style="background-color: #595959; color: white"
+                    style="
+                      background-color: #595959;
+                      color: white;
+                      padding: 5px 10px 10px 10px;
+                    "
                   >
                     Verify OTP
                   </button>
                 </div>
 
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" style="width: 27vw">
                   <mat-label>Enter Password</mat-label>
                   <input
                     matInput

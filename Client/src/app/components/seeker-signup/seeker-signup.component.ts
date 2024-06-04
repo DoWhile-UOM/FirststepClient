@@ -150,7 +150,7 @@ changeSkillsArray($event: Event){
 async requestOTP() {
 
   const userData: requestOTP = {
-    email: this.seekerReg.get('company_email')?.value
+    email: this.seekerReg.get('email')?.value
   }
 
   let verificationResult = await this.auth.requestOTP(userData)
