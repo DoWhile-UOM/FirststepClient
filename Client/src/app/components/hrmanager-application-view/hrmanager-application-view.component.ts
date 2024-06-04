@@ -9,12 +9,14 @@ import { CommonModule } from '@angular/common';
 import { ApplicationService } from '../../../services/application.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+
 
 interface Revision {
   revision_id: number;
   comment: string;
   status: string;
-  created_date: string;
+  date: string;
   employee_id: number;
   employee_name: string;
   employee_role: string;
@@ -55,7 +57,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   userRole: string | null = null;
   userName: string | null = null;
 
-  constructor(private applicationService: ApplicationService,private authService: AuthService) {}
+  constructor(private applicationService: ApplicationService,private authService: AuthService,    public dialog: MatDialog
+  ) {}
 
   async ngOnInit() {
     this.userRole = this.authService.getRole();
@@ -85,6 +88,25 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       } catch (error) {
         console.error('Error adding comment:', error);
       }
+    }
+  }
+
+  async viewCommentHistory() {
+    try {
+      const revisionHistory = await this.applicationService.getRevisionHistory(this.applicationId);
+      console.log('Revision History:', revisionHistory);
+    } catch (error) {
+      console.error('Error fetching revision history:', error);
+    }
+  }
+
+  async changeDecision(newStatus: string) {
+    try {
+      const employeeId = Number(this.authService.getUserId());
+      await this.applicationService.addRevision(this.applicationId, this.newComment, newStatus, employeeId);
+      await this.fetchApplicationDetails();
+    } catch (error) {
+      console.error('Error changing decision:', error);
     }
   }
 

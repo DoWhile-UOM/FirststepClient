@@ -66,9 +66,7 @@
       <span>{{ applicationDetails.last_revision.employee_name }}, {{ applicationDetails.last_revision.employee_role }}</span>
     </div>
     <div>
-      <mat-label class="head">Comment</mat-label>
-      
-      <!-- Display the comment if it exists -->
+      <mat-label class="head">Comment</mat-label>   
       <span *ngIf="applicationDetails.last_revision && applicationDetails.last_revision.comment">
         {{ applicationDetails.last_revision.comment }}
       </span>
@@ -79,7 +77,7 @@
         <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
         <div style="display: flex; justify-content: space-between;">
           <button mat-button (click)="addComment()">Add Comment</button>
-        <button mat-button>View Comment History</button>
+        <button mat-button (click)="viewCommentHistory()">View Comment History</button>
         </div>
 
       </div>
@@ -89,8 +87,11 @@
       <span>
         <button mat-button class="accept" style="color: green">Accept</button>
         <button mat-button class="reject" style="color: red">Reject</button>
-        <button mat-button class="pass" style="color: orange">Pass</button>
+        <button mat-button class="pass" style="color: black">Pass</button>
       </span>
     </div>
+
+    
+
   </div>
 </div>
