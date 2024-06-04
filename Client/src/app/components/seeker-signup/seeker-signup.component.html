@@ -84,31 +84,62 @@
                   confirmation code.
                 </p>
 
-                <mat-form-field appearance="outline" style="display: flex; align-items: center;"> 
-                  <mat-label>Email Address</mat-label>                  
+                <mat-form-field
+                  appearance="outline"
+                  style="display: flex; align-items: center"
+                >
+                  <mat-label>Email Address</mat-label>
                   <input
-                  matInput
-                  formControlName="email"
-                  placeholder="example@gmail.com"
-                  required
-                />                  
-                  <button mat-button matSuffix (click)="resendOTP()"
-                          style="background-color: #595959; color: white;">
-                    Resend OTP
+                    matInput
+                    formControlName="email"
+                    placeholder="example@gmail.com"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="
+                      seekerReg.controls['email'].touched &&
+                      seekerReg.controls['email'].errors
+                    "
+                  >
+                    Valid Email is required
+                  </mat-error>
+
+                  <button
+                    mat-button
+                    matSuffix
+                    (click)="requestOTP()"
+                    [disabled]="isOTPRequestSent"
+                    id="otpreqbtn"
+                    style="background-color: #595959; color: white"
+
+                  >
+                    {{ reqOTPbtntxt }} {{ remainingTime }}
                   </button>
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" style="display: flex; align-items: center;"> 
+                <mat-form-field
+                  appearance="outline"
+                  style="display: flex; align-items: center"
+                >
                   <mat-label>OTP</mat-label>
-                  <input matInput placeholder="Enter Confirmation Code" required>
-                  
-                  <button mat-button matSuffix (click)="resendOTP()"
-                          style="background-color: #595959; color: white;">
+                  <input
+                    matInput
+                    placeholder="Enter Confirmation Code"
+                    formControlName="otp_in"
+                    required
+                    required
+                  />
+
+                  <button
+                    mat-button
+                    matSuffix
+                    (click)="VerifyOTP()"
+                    style="background-color: #595959; color: white"
+                  >
                     Verify OTP
                   </button>
                 </mat-form-field>
-                
-                
+
                 <mat-form-field appearance="outline">
                   <mat-label>Enter Password</mat-label>
                   <input
@@ -179,12 +210,14 @@
                   />
                 </mat-form-field>
 
-                <mat-label class="label-import">Please upload your CV</mat-label>
+                <mat-label class="label-import"
+                  >Please upload your CV</mat-label
+                >
 
                 <div class="cvupload">
                   <app-file-upload></app-file-upload>
                 </div>
-                <br>
+                <br />
                 <div>
                   <button
                     mat-button
