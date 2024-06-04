@@ -83,27 +83,24 @@
                   Verify your email. Please check your email and enter the
                   confirmation code.
                 </p>
-
-                <mat-form-field
-                  appearance="outline"
-                  style="display: flex; align-items: center"
-                >
-                  <mat-label>Email Address</mat-label>
-                  <input
-                    matInput
-                    formControlName="email"
-                    placeholder="example@gmail.com"
-                    required
-                  />
-                  <mat-error
-                    *ngIf="
-                      seekerReg.controls['email'].touched &&
-                      seekerReg.controls['email'].errors
-                    "
-                  >
-                    Valid Email is required
-                  </mat-error>
-
+                <div style="display: flex; align-items: center">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Email Address</mat-label>
+                    <input
+                      matInput
+                      formControlName="email"
+                      placeholder="example@gmail.com"
+                      required
+                    />
+                    <mat-error
+                      *ngIf="
+                        seekerReg.controls['email'].touched &&
+                        seekerReg.controls['email'].errors
+                      "
+                    >
+                      Valid Email is required
+                    </mat-error>
+                  </mat-form-field>
                   <button
                     mat-button
                     matSuffix
@@ -111,25 +108,22 @@
                     [disabled]="isOTPRequestSent"
                     id="otpreqbtn"
                     style="background-color: #595959; color: white"
-
                   >
                     {{ reqOTPbtntxt }} {{ remainingTime }}
                   </button>
-                </mat-form-field>
+                </div>
 
-                <mat-form-field
-                  appearance="outline"
-                  style="display: flex; align-items: center"
-                >
-                  <mat-label>OTP</mat-label>
-                  <input
-                    matInput
-                    placeholder="Enter Confirmation Code"
-                    formControlName="otp_in"
-                    required
-                    required
-                  />
-
+                <div style="display: flex; align-items: center">
+                  <mat-form-field appearance="outline">
+                    <mat-label>OTP</mat-label>
+                    <input
+                      matInput
+                      placeholder="Enter Confirmation Code"
+                      formControlName="otp_in"
+                      required
+                      required
+                    />
+                  </mat-form-field>
                   <button
                     mat-button
                     matSuffix
@@ -138,7 +132,7 @@
                   >
                     Verify OTP
                   </button>
-                </mat-form-field>
+                </div>
 
                 <mat-form-field appearance="outline">
                   <mat-label>Enter Password</mat-label>
