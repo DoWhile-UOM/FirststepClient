@@ -8,6 +8,7 @@ import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ApplicationService } from '../../../services/application.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
 
 interface Revision {
   revision_id: number;
@@ -51,12 +52,15 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
   newComment: string = '';
+  userRole: string | null = null;
+  userName: string | null = null;
 
-
-  constructor(private applicationService: ApplicationService) {}
+  constructor(private applicationService: ApplicationService,private authService: AuthService) {}
 
   async ngOnInit() {
-    this.fetchApplicationDetails();
+    this.userRole = this.authService.getRole();
+    this.userName = this.authService.getName();
+    await this.fetchApplicationDetails();
   }
 
   async fetchApplicationDetails() {
@@ -74,9 +78,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     if (this.newComment.trim()) {
       try {
         const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
-        const employeeId = 1; // Replace with the actual employee ID
+        const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
         await this.applicationService.addRevision(this.applicationId, this.newComment, status, employeeId);
-        // Fetch the updated application details to reflect the new comment
         await this.fetchApplicationDetails();
         this.newComment = '';
       } catch (error) {
