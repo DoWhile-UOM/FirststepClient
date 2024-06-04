@@ -6,15 +6,15 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatInputModule} from '@angular/material/input';
 import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { SeekerService } from '../../../services/seeker.service';
 
+//interface application status
 
-interface Seeker{
-  email:string;
-  first_name:string;
-  last_name:string;
-  phone_number:string;
-  linkedin:string;
+interface Application{
+  status: string;
+  submitted_date: Date;
+  screening_date: Date;
+  finalize_date: Date;
+  CVurl: string;
 }
 
 interface Job {
@@ -32,7 +32,6 @@ interface Job {
 })
 export class SeekerApplicationStatusComponent {
 
-  SeekerDetails: Seeker = {} as Seeker;
   jobData: Job = {
     title: 'Software Developer',
     field_name: 'Software Development',
@@ -50,7 +49,7 @@ export class SeekerApplicationStatusComponent {
   });
 
 
-  constructor(private _formBuilder: FormBuilder,private seekerService:SeekerService) {}
+  constructor(private _formBuilder: FormBuilder) {}
 
 
 async ngOnInit() {
@@ -59,13 +58,6 @@ async ngOnInit() {
 
 async fetchSeekerDetails() {
 
-  try {
-    const seekerData = await this.seekerService.getSeekerDetailsForApplication(this.user_id);
-    this.SeekerDetails = seekerData;
-  } catch (error) {
-    console.error('Error fetching seeker details:', error);
-   
-  }
 }
 
 }
