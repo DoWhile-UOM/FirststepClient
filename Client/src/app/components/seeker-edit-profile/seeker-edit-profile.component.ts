@@ -93,7 +93,7 @@ export class SeekerEditProfileComponent {
    private seekerService: SeekerService,
    private jobFieldService: JobfieldService
  ) {}
- user_id: number = 2095;
+ user_id: number = 2134;
 
  fields: job_Field[] = [];
 
