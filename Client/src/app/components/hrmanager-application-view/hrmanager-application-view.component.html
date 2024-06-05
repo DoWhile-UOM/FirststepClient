@@ -85,9 +85,9 @@
     <div>
       <mat-label class="head" *ngIf="applicationDetails.is_evaluated" >Change the decision</mat-label>
       <span>
-        <button mat-button class="accept" style="color: green">Accept</button>
-        <button mat-button class="reject" style="color: red">Reject</button>
-        <button mat-button class="pass" style="color: black">Pass</button>
+        <button mat-button class="accept" style="color: green" (click)="changeDecision('Accepted')">Accept</button>
+        <button mat-button class="reject" style="color: red" (click)="changeDecision('Rejected')">Reject</button>
+        <button mat-button class="pass" style="color: black" (click)="changeDecision('Pass')">Pass</button>
       </span>
     </div>
 

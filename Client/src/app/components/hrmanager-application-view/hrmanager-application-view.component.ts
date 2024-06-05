@@ -10,6 +10,7 @@ import { ApplicationService } from '../../../services/application.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
+import { RevisionService } from '../../../services/revision.service';
 
 
 interface Revision {
@@ -57,7 +58,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   userRole: string | null = null;
   userName: string | null = null;
 
-  constructor(private applicationService: ApplicationService,private authService: AuthService,    public dialog: MatDialog
+  constructor(private applicationService: ApplicationService,private authService: AuthService,    public dialog: MatDialog ,private revisionService: RevisionService
   ) {}
 
   async ngOnInit() {
@@ -82,7 +83,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       try {
         const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
         const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
-        await this.applicationService.addRevision(this.applicationId, this.newComment, status, employeeId);
+        await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId);
         await this.fetchApplicationDetails();
         this.newComment = '';
       } catch (error) {
@@ -93,7 +94,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
   async viewCommentHistory() {
     try {
-      const revisionHistory = await this.applicationService.getRevisionHistory(this.applicationId);
+      const revisionHistory = await this.revisionService.getRevisionHistory(this.applicationId);
       console.log('Revision History:', revisionHistory);
     } catch (error) {
       console.error('Error fetching revision history:', error);
@@ -103,7 +104,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   async changeDecision(newStatus: string) {
     try {
       const employeeId = Number(this.authService.getUserId());
-      await this.applicationService.addRevision(this.applicationId, this.newComment, newStatus, employeeId);
+      await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId);
       await this.fetchApplicationDetails();
     } catch (error) {
       console.error('Error changing decision:', error);
