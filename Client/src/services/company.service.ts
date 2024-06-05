@@ -223,11 +223,12 @@ export class CompanyService {
     }
   }
 
-  async updateUnregCompanyDetails(company: Company, company_id: number) {
-    company.company_id = company_id; // should be chnaged
+  async updateUnregCompanyDetails(company: any) { // should be chnaged
+    
+    let companyId=company.company_id;
     console.log('from service', company);
     await axios
-      .put(Apipaths.updateUnregComapny + company_id, company) // tem slotion
+      .put(Apipaths.updateUnregComapny + companyId,company) // tem slotion
       .then((response) => {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })

@@ -16,6 +16,7 @@ import { StylemanageService } from '../../../services/stylemanage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatOptionModule } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -30,19 +31,19 @@ export interface CmpyData {
   company_business_scale: string;
   business_reg_certificate: string;
   company_registered_date: string;
-  certificate_of_incorporation:string;
-  company_phone_number:number
-  business_reg_no:number;
+  certificate_of_incorporation: string;
+  company_phone_number: number
+  business_reg_no: number;
   comment: string;
   verification_status: any;
-  
+
 }
 
 
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatOptionModule,MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
@@ -51,30 +52,27 @@ export class RegCmpStateCheckComponent {
   company_id: string = 'nmIkuA6ZIO'; // sample company_id
   regState: string = 'Pending'; // sample registration state
   isNoInput: boolean = true;
+
   //cmpData: CmpyData[] = [];
 
-  cmpData: CmpyData = {} as CmpyData
+  cmpData: CmpyData = { company_business_scale: 'mid' } as CmpyData
 
   companyReg = this._formBuilder.group({
-    company_name: new FormControl({value: this.cmpData.company_name, disabled: true}),//
-    company_website: new FormControl({value: this.cmpData.company_website, disabled: false}),//
-    company_email: new FormControl({value: this.cmpData.company_email, disabled: true}),//
-    company_description: new FormControl({value: this.cmpData.company_description, disabled: false}),//
-    company_logo: new FormControl({value: this.cmpData.company_logo, disabled: false}),//
-    company_business_scale: new FormControl({value: this.cmpData.company_business_scale, disabled: false}),//
-    business_reg_certificate: new FormControl({value: this.cmpData.business_reg_certificate, disabled: false},Validators.required),//
-    company_registered_date: new FormControl({value: this.cmpData.company_registered_date, disabled: false},Validators.required),///
-    certificate_of_incorporation: new FormControl({value: this.cmpData.certificate_of_incorporation, disabled: false}),//
-    company_phone_number: new FormControl({value: this.cmpData.company_phone_number, disabled: false},Validators.required),//
-    business_reg_no: new FormControl({value: this.cmpData.business_reg_no, disabled: false},Validators.required),//
+    company_name: new FormControl({ value: this.cmpData.company_name, disabled: true }),//
+    company_id: new FormControl({ value: this.cmpData.company_id, disabled: false }),//
+    company_website: new FormControl({ value: this.cmpData.company_website, disabled: false }),//
+    company_email: new FormControl({ value: this.cmpData.company_email, disabled: true }),//
+    company_description: new FormControl({ value: this.cmpData.company_description, disabled: false }),//
+    company_logo: new FormControl({ value: this.cmpData.company_logo, disabled: false }),//
+    company_business_scale: new FormControl(this.cmpData.company_business_scale),
+    business_reg_certificate: new FormControl({ value: this.cmpData.business_reg_certificate, disabled: false }, Validators.required),//
+    company_registered_date: new FormControl({ value: this.cmpData.company_registered_date, disabled: false }, Validators.required),///
+    certificate_of_incorporation: new FormControl({ value: this.cmpData.certificate_of_incorporation, disabled: false }),//
+    company_phone_number: new FormControl({ value: this.cmpData.company_phone_number, disabled: false }, Validators.required),//
+    business_reg_no: new FormControl({ value: this.cmpData.business_reg_no, disabled: false }, Validators.required),//
   });
 
-  constructor(private _formBuilder: FormBuilder,private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) { }
-
-
-
-  //Fetch data from the database when the component initializes
-  ngOnInit(): void {
+  constructor(private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
@@ -83,6 +81,13 @@ export class RegCmpStateCheckComponent {
         this.fetchData(this.company_id);
       }
     });
+  }
+
+
+
+  //Fetch data from the database when the component initializes
+  ngOnInit(): void {
+
 
   }
 
@@ -129,9 +134,9 @@ export class RegCmpStateCheckComponent {
     this.styleService.setStyle('circle-border-color', '#ffbf00');
     this.styleService.setStyle('number-color', '#ffbf00');
     this.isNoInput = true;
+    this.companyReg.get('company_email')?.enable();
 
-    //this.company.updateUnregCompanyDetails(this.companyReg.value,this.cmpData.company_id);
-
+    this.company.updateUnregCompanyDetails(this.companyReg.value);
   }
 
 }

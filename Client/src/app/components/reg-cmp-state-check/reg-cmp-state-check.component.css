@@ -131,6 +131,7 @@ mat-grid-tile mat-form-field {
 
 mat-grid-tile {
     height: auto;
+    
 }
 
 .title {
@@ -141,10 +142,6 @@ mat-grid-tile {
     word-wrap: break-word;
 }
 
-mat-form-field {
-    width: 75%;
-}
-
 button {
     width: 25%;
 }
@@ -153,3 +150,4 @@ button {
     width: 32px !important;
     height: 32px !important;
 }
+
