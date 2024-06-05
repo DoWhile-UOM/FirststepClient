@@ -105,8 +105,8 @@ span {
 
 .reject {
   background-color: white;
-  color: red;
-  border: 3px solid red;
+  color: #de3a3b;
+  border: 3px solid#de3a3b;
 }
 
 textarea {
@@ -140,14 +140,15 @@ textarea:focus {
   color: white;
   padding: 8px;
   border-radius: 4px;
+  font-weight:bold;
 }
 
 .status-rejected {
-  background-color: red;
+  background-color: #de3a3b;
 }
 
 .status-accepted {
-  background-color: green;
+  background-color: rgb(81,174,70);
 }
 
 .status-not-evaluated {
