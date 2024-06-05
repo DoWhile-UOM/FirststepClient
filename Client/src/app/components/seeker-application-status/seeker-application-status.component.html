@@ -12,7 +12,7 @@
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel
-          >Application Submission <br />date
+          >Application Submission <br/>date
         </ng-template>
       </form>
     </mat-step>
@@ -36,7 +36,7 @@
   <mat-card-content>
     <div>CV</div>
     <div>
-       <a mat-flat-button color="primary" href="https://www.lpl.arizona.edu/~umpire/professional/papers/Our%20Solar%20System%20-%20grades%202-5.pdf" target="_blank">View document</a>
+       <a mat-flat-button color="primary" [href]="document" target="_blank">View document</a>
     </div>
   </mat-card-content>
 </mat-card>

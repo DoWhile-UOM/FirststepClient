@@ -6,15 +6,16 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatInputModule} from '@angular/material/input';
 import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { ApplicationService } from '../../../services/application.service';
+import { url } from 'node:inspector';
+import { DocumentService } from '../../../services/document.service';
 
 //interface application status
 
 interface Application{
   status: string;
+  cv_name: string;
   submitted_date: Date;
-  screening_date: Date;
-  finalize_date: Date;
-  CVurl: string;
 }
 
 interface Job {
@@ -31,13 +32,16 @@ interface Job {
     imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule]
 })
 export class SeekerApplicationStatusComponent {
-
+  applicationData: Application = {} as Application;
+  //sample application id=8
+  application_id: number = 1015;
   jobData: Job = {
     title: 'Software Developer',
     field_name: 'Software Development',
     company_name: 'Google',
   }
-  user_id: number = 2;
+
+ 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -48,16 +52,29 @@ export class SeekerApplicationStatusComponent {
     thirdCtrl: ['', Validators.required],
   });
 
-
-  constructor(private _formBuilder: FormBuilder) {}
+document: any ;
+documentName: string = 'KARATE.pdf';
+  constructor(private _formBuilder: FormBuilder,
+    private applicationService: ApplicationService,
+    private documentService:DocumentService ) {}
 
 
 async ngOnInit() {
-  this.fetchSeekerDetails(); 
+ this.getDocumentUrl(); 
 }
 
-async fetchSeekerDetails() {
+//get document url
+async getDocumentUrl(){
+ this.documentService.generateSasToken(this.documentName).subscribe(
+    (token:string) => {
+      this.document= this.documentService.getBlobUrl(this.documentName, token);
+      console.log('Document URL:', this.document); 
+      
+    },
+    error => {
+      console.error('Error fetching SAS token:', error);
+    }
+  );
 
 }
-
 }

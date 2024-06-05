@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
+import { A } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root',
@@ -25,18 +26,6 @@ export class ApplicationService {
     }
   }
 
-  /*
-  async submitSeekerApplication(applications: any) {
-    try {
-      await axios
-        .post(Apipaths.submitApplication, applications)
-        .then((response) => {
-          console.log(response);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  }*/
 
   async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};
@@ -50,4 +39,22 @@ export class ApplicationService {
 
     return applicationList;
   }
+
+
+async getApplicationStatus(application_id: number) {
+  let applicationStatusDetails: any = {};
+  await axios.get(Apipaths.getApplicationStatus + application_id)
+    .then((response) => {
+      applicationStatusDetails = response.data;
+    })
+    .catch((error) => {
+      console.error('Error fetching application status:', error);
+    });
+
+  return applicationStatusDetails;
 }
+
+
+}
+
+
