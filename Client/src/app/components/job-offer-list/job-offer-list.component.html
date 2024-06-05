@@ -7,6 +7,7 @@
         <mat-chip-option value="all">All</mat-chip-option>
         <mat-chip-option selected value="active">Active</mat-chip-option>
         <mat-chip-option value="hold">Evaluating</mat-chip-option>
+        <mat-chip-option value="interview">Interview Ongoing</mat-chip-option>
         <mat-chip-option value="closed">Closed</mat-chip-option>
       </mat-chip-listbox>  
     </span>
@@ -94,20 +95,20 @@
           <button mat-icon-button color="primary" (click)="exploreAd(joboffer.advertisement_id)" class="small-icon-button">
             <mat-icon>explore</mat-icon>
           </button>
-          <button mat-icon-button color="primary" (click)="editAd(joboffer.advertisement_id)" class="small-icon-button">
+          <button mat-icon-button color="primary" (click)="editAd(joboffer.advertisement_id)" class="small-icon-button" [disabled]="!joboffer.has_permision_for_handling">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Hold')" class="small-icon-button">
+          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'active'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Hold')" class="small-icon-button" [disabled]="!joboffer.has_permision_for_handling">
             <mat-icon>pause</mat-icon>
           </button>
-          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'hold'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Close')" class="small-icon-button">
+          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'hold'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Close')" class="small-icon-button" [disabled]="!joboffer.has_permision_for_handling">
             <mat-icon>close</mat-icon>
           </button>
-          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Delete')" class="small-icon-button">
+          <button mat-icon-button color="primary" *ngIf="joboffer.status == 'closed'" (click)="changeStatusOfJob(joboffer.advertisement_id, 'Delete')" class="small-icon-button" [disabled]="!joboffer.has_permision_for_handling">
             <mat-icon>delete</mat-icon>
           </button>
           
-          <button mat-icon-button color="primary" [matMenuTriggerFor]="menu" class="small-icon-button">
+          <button mat-icon-button color="primary" [matMenuTriggerFor]="menu" class="small-icon-button" [disabled]="!joboffer.has_permision_for_handling">
             <mat-icon>more_horiz</mat-icon>
           </button>
           <mat-menu #menu="matMenu">

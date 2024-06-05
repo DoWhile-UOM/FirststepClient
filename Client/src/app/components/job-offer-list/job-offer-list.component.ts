@@ -30,6 +30,7 @@ interface JobOffer{
   posted_date: string;
   current_status: string;
   field_name: string;
+  has_permision_for_handling: boolean;
   no_of_applications: number;
   no_of_evaluated_applications: number;
   no_of_accepted_applications: number;
@@ -41,6 +42,7 @@ interface JobOfferTable{
   job_number: number;
   title: string;
   status: string;
+  has_permision_for_handling: boolean;
   posted_date: string;
   field_name: string;
   no_of_applications: number;
@@ -78,7 +80,7 @@ export class JobOfferListComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
-  company_id: string = '';
+  emp_id: string = '';
   company_name: string = '';
 
   jobList: JobOffer[] = [];
@@ -103,13 +105,13 @@ export class JobOfferListComponent implements OnInit{
     this.jobListLength = 1;
 
     if (title == ""){
-      await this.advertisementService.getAllAdvertisementsByCompanyID(this.company_id, status)
+      await this.advertisementService.getAllAdvertisementsByCompanyID(this.emp_id, status)
       .then((response) => {
         this.jobList = response;
       });
     }
     else{
-      await this.advertisementService.getAllAdvertisementsByCompanyIDAndSearch(this.company_id, status, title)
+      await this.advertisementService.getAllAdvertisementsByCompanyIDAndSearch(this.emp_id, status, title)
       .then((response) => {
         this.jobList = response;
       });
@@ -129,6 +131,7 @@ export class JobOfferListComponent implements OnInit{
         status: this.jobList[i].current_status.toLowerCase(),
         posted_date: this.jobList[i].posted_date,
         field_name: this.jobList[i].field_name,
+        has_permision_for_handling: this.jobList[i].has_permision_for_handling,
         no_of_applications: this.jobList[i].no_of_applications,
         no_of_evaluated_applications: this.jobList[i].no_of_evaluated_applications,
         no_of_accepted_applications: this.jobList[i].no_of_accepted_applications,
@@ -148,7 +151,7 @@ export class JobOfferListComponent implements OnInit{
 
   async ngOnInit() {
     try{
-      this.company_id = this.auth.getCompanyID() || '';
+      this.emp_id = this.auth.getUserId() || '';
       this.company_name = this.auth.getCompanyName() || '';
     }
     catch (error){
