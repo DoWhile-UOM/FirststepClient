@@ -12,18 +12,36 @@
     <div class="info">
       <div style="display: flex; align-items: center">
         <label class="name"
-          >{{ applicationDetails.first_name }} {{ applicationDetails.last_name }}</label
+          >{{ applicationDetails.first_name }}
+          {{ applicationDetails.last_name }}</label
         >
         <!-- New button -->
-        <button mat-button class="View" style="background-color:  #e8e8e8; margin-left: 10px; font-size: 13px;">          View Profile
+        <button
+          mat-button
+          class="View"
+          style="background-color: #e8e8e8; margin-left: 10px; font-size: 13px"
+        >
+          View Profile
           <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
         </button>
       </div>
       <label class="bio">{{ applicationDetails.bio }}</label>
     </div>
 
-    <span class="status-label" style="color: white; padding: 8px; background-color:teal; border-radius: 4px;">
-      {{ applicationDetails.is_evaluated ? applicationDetails.last_revision.status : 'Not Evaluated' }}
+    <span
+      class="status-label"
+      style="
+        color: white;
+        padding: 8px;
+        background-color: teal;
+        border-radius: 4px;
+      "
+    >
+      {{
+        applicationDetails.is_evaluated
+          ? applicationDetails.last_revision.status
+          : "Not Evaluated"
+      }}
     </span>
   </div>
 
@@ -60,40 +78,91 @@
 
   <div class="comment-section" *ngIf="showComments">
     <hr />
-
     <div *ngIf="applicationDetails.is_evaluated">
       <mat-label class="head">Evaluated By</mat-label>
       <span>
-        {{ applicationDetails.last_revision.name }}, {{ getRoleDisplayName(applicationDetails.last_revision.role) }}
+        {{ applicationDetails.last_revision.name }},
+        {{ getRoleDisplayName(applicationDetails.last_revision.role) }}
       </span>
-          </div>
+    </div>
     <div>
-      <mat-label class="head">Comment</mat-label>   
-      <span *ngIf="applicationDetails.last_revision && applicationDetails.last_revision.comment">
+      <mat-label class="head">Comment</mat-label>
+      <span
+        *ngIf="
+          applicationDetails.last_revision &&
+          applicationDetails.last_revision.comment
+        "
+      >
         {{ applicationDetails.last_revision.comment }}
       </span>
-      
-      <!-- Display the input field if the comment does not exist -->
-      <div *ngIf="!applicationDetails.last_revision || !applicationDetails.last_revision.comment">
-        <div style="display: flex; flex-direction: column;"></div>
-        <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
-        <div style="display: flex; justify-content: space-between;">
-          <button mat-button (click)="addComment()">Add Comment</button>
-        <button mat-button (click)="viewCommentHistory()">View Comment History</button>
-        </div>
 
+      <!-- Display the input field if the comment does not exist -->
+      <div
+        *ngIf="
+          !applicationDetails.last_revision ||
+          !applicationDetails.last_revision.comment
+        "
+      >
+        <textarea
+          [(ngModel)]="newComment"
+          placeholder="Add a comment"
+        ></textarea>
+        <div style="display: flex; justify-content: space-between">
+          <button mat-button (click)="addComment()">Add Comment</button>
+          <button mat-button (click)="viewCommentHistory()">
+            View Comment History
+          </button>
+        </div>
       </div>
     </div>
+
+
+
+
     <div>
-      <mat-label class="head" *ngIf="applicationDetails.is_evaluated" >Change the decision</mat-label>
+      <mat-label class="head" *ngIf="applicationDetails.is_evaluated"
+        >Change the decision</mat-label
+      >
+        <textarea
+          [(ngModel)]="newComment"
+          placeholder="Add a comment"
+        ></textarea>
+        <div style="display: flex; justify-content: space-between">
+          <button mat-button style="margin: 10px; background-color: #e8e8e8;" (click)="addComment()">Add Comment</button>
+          <button mat-button style="margin: 10px;"(click)="viewCommentHistory()">
+            View Comment History
+          </button>
+        </div>
+    </div>
+    <div>
+      <mat-label>                    </mat-label>
+
       <span>
-        <button mat-button class="accept" style="color: green" (click)="changeDecision('Accepted')">Accept</button>
-        <button mat-button class="reject" style="color: red" (click)="changeDecision('Rejected')">Reject</button>
-        <button mat-button class="pass" style="color: black" (click)="changeDecision('Pass')">Pass</button>
+        <button
+          mat-button
+          class="accept"
+          style="color: green"
+          (click)="changeDecision('Accepted')"
+        >
+          Accept
+        </button>
+        <button
+          mat-button
+          class="reject"
+          style="color: red"
+          (click)="changeDecision('Rejected')"
+        >
+          Reject
+        </button>
+        <button
+          mat-button
+          class="pass"
+          style="color: black"
+          (click)="changeDecision('Pass')"
+        >
+          Pass
+        </button>
       </span>
     </div>
-
-    
-
   </div>
 </div>

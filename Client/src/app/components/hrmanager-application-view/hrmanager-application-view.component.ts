@@ -81,7 +81,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   async addComment() {
     if (this.newComment.trim()) {
       try {
-        const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
+        // const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
         const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
         await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId);
         await this.fetchApplicationDetails();
