@@ -4,7 +4,7 @@
       <button mat-button>
         <mat-icon>keyboard_backspace</mat-icon>
       </button>
-  
+
       <img
         src="{{ applicationDetails.profile_picture }}"
         alt="Profile Picture"
@@ -20,7 +20,11 @@
           <button
             mat-button
             class="View"
-            style="background-color: #e8e8e8; margin-left: 10px; font-size: 13px"
+            style="
+              background-color: #e8e8e8;
+              margin-left: 10px;
+              font-size: 13px;
+            "
           >
             View Profile
             <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
@@ -28,7 +32,7 @@
         </div>
         <label class="bio">{{ applicationDetails.bio }}</label>
       </div>
-  
+
       <span
         class="status-label"
         style="
@@ -42,25 +46,29 @@
           applicationDetails.is_evaluated
             ? applicationDetails.last_revision.status
             : "Not Evaluated"
+        }} </span
+      ><span
+        class="status-label"
+        [ngClass]="{
+          'status-rejected':
+            applicationDetails.is_evaluated &&
+            applicationDetails.last_revision.status === 'Rejected',
+          'status-accepted':
+            applicationDetails.is_evaluated &&
+            applicationDetails.last_revision.status === 'Accepted',
+          'status-not-evaluated': !applicationDetails.is_evaluated
+        }"
+      >
+        {{
+          applicationDetails.is_evaluated
+            ? applicationDetails.last_revision.status
+            : "Not Evaluated"
         }}
-      </span><span
-      class="status-label"
-      [ngClass]="{
-        'status-rejected': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Rejected',
-        'status-accepted': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Accepted',
-        'status-not-evaluated': !applicationDetails.is_evaluated
-      }"
-    >
-      {{
-        applicationDetails.is_evaluated
-          ? applicationDetails.last_revision.status
-          : 'Not Evaluated'
-      }}
-    </span>
+      </span>
     </div>
-  
+
     <hr />
-  
+
     <div class="info-container">
       <div class="personalInfo">
         <div>
@@ -89,7 +97,7 @@
         </div>
       </div>
     </div>
-  
+
     <div class="comment-section" *ngIf="showComments">
       <hr />
       <div *ngIf="applicationDetails.is_evaluated">
@@ -109,52 +117,53 @@
         >
           {{ applicationDetails.last_revision.comment }}
         </span>
-  
-        <!-- Display the input field if the comment does not exist -->
-        <div
-          *ngIf="
-            !applicationDetails.last_revision ||
-            !applicationDetails.last_revision.comment
-          "
-        >
+
+        <div *ngIf="!applicationDetails.is_evaluated">
           <textarea
             [(ngModel)]="newComment"
             placeholder="Add a comment"
           ></textarea>
           <div style="display: flex; justify-content: space-between">
-            <button mat-button (click)="addComment()">Add Comment</button>
-            <button mat-button (click)="viewCommentHistory()">
-              View Comment History
+            <button
+              mat-button
+              style="margin: 10px 10px 10px 0px; background-color: #e8e8e8"
+              (click)="addComment()"
+            >
+              Add Comment
             </button>
           </div>
         </div>
       </div>
-  
-  
-  
-  
-      <div>
-        <mat-label class="head" *ngIf="applicationDetails.is_evaluated"
-          >Change the decision</mat-label
-        >
-          <textarea
-            [(ngModel)]="newComment"
-            placeholder="Add a comment"
-          ></textarea>
-          <div style="display: flex; justify-content: space-between">
-            <button mat-button style="margin: 10px; background-color: #e8e8e8;" (click)="addComment()">Add Comment</button>
-            <button mat-button style="margin: 10px;"(click)="viewCommentHistory()">
-              View Comment History
-            </button>
-          </div>
+
+      <div *ngIf="applicationDetails.is_evaluated">
+        <mat-label class="head">Change the decision</mat-label>
+        <textarea
+          [(ngModel)]="newComment"
+          placeholder="Add a comment"
+        ></textarea>
+        <div style="display: flex; justify-content: space-between">
+          <button
+            mat-button
+            style="margin: 10px; background-color: #e8e8e8"
+            (click)="addComment()"
+          >
+            Add Comment
+          </button>
+          <button
+            mat-button
+            style="margin: 10px"
+            (click)="viewCommentHistory()"
+          >
+            View Comment History
+          </button>
+        </div>
       </div>
-      <div style="margin-top: 20px;">
-  
-        <span >
+      <div style="margin-top: 20px">
+        <span>
           <button
             mat-button
             class="eval"
-            style="background-color: rgba(58, 219, 58, 0.5);"
+            style="background-color: rgba(81,174,70,0.8)"
             (click)="changeDecision('Accepted')"
           >
             Accept
@@ -162,7 +171,11 @@
           <button
             mat-button
             class="eval"
-            style="color:black ;background-color: rgba(255, 0, 0, 0.5); border: none;"
+            style="
+              color: black;
+              background-color: rgba(220,59,60, 0.8);
+              border: none;
+            "
             (click)="changeDecision('Rejected')"
           >
             Reject
@@ -170,7 +183,11 @@
           <button
             mat-button
             class="eval"
-            style="color:black ;background-color: rgba(0, 0, 0, 0.25); border: none;"
+            style="
+              color: black;
+              background-color: rgba(0, 0, 0, 0.25);
+              border: none;
+            "
             (click)="changeDecision('Pass')"
           >
             Pass
@@ -179,5 +196,4 @@
       </div>
     </div>
   </div>
-  
 </div>

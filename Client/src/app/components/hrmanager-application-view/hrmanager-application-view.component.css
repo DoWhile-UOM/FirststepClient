@@ -97,8 +97,8 @@
   }
   .reject {
     background-color: white;
-    color: red;
-    border: 3px solid red;
+    color: #dc3b3c;
+    border: 3px solid #dc3b3c;
   }
   
   textarea {
@@ -142,11 +142,11 @@
   }
   
   .status-rejected {
-    background-color: #FF0000;
+    background-color: #dc3b3c;
   }
   
   .status-accepted {
-    background-color: green;
+    background-color: #51ae46;
   }
   
   .status-not-evaluated {

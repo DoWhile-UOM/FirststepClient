@@ -50,7 +50,7 @@ interface ApplicationViewDto {
 })
 export class HrmanagerApplicationViewComponent implements OnInit {
   @Input() showComments: boolean = true; // Accepts showComments as input
-  @Input() applicationId: number = 2; // Default value for testing
+  @Input() applicationId: number = 1020; // Default value for testing
   applicationDetails: ApplicationViewDto = {} as ApplicationViewDto;
   loading: boolean = true;
   error: string | null = null;
