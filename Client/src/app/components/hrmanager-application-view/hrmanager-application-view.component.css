@@ -1,8 +1,9 @@
 .wrapper {
   display: flex;
-  justify-content: center;  /* Center horizontally */
-  align-items: center;      /* Center vertically */
-  height: 100vh;            /* Full viewport height */
+  justify-content: center;
+  align-items: center;
+  height: 105vh;
+  background-color: #f0f0f0; /* Optional: set a background color */
 }
 
 .body {
@@ -14,148 +15,159 @@
   font-family: "roboto";
 }
 
-  hr {
-    margin-left: 60px;
-    margin-top: 15px;
-  }
-  .info-container {
-      display: flex;
-      justify-content: space-between;
-    }
-  .name {
-    font-size: 22px;
-    font-weight: 450;
-    margin-bottom: 10px;
-  }
-  .bio {
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-  .upper-section {
-    display: flex;
-    align-items: center;
-  }
-  
-  button.mat-button {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .profileimage {
-    margin-left: 10px; /* adjust this value to increase or decrease the space */
-    height: auto;
-    width: 75px;
-    margin-right: 40px;
-  }
-  
-  .info {
-    margin-left: 10px; /* adjust this value to increase or decrease the space */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .personalInfo > div,
-  .comment-section > div {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 15px;
-    margin: 30px 0px 30px 0px;
-    padding-left: 80px;
-  }
-  
-  .head {
-    text-align: left;
-    width: 180px;
-    font-weight: 550;
-  }
-  
-  span {
-    text-align: left;
-  }
-  
-  .buttons {
-      display: flex;
-      gap: 10px; /* Add some space between the buttons */
-      margin-top: 30px;  
-  }
-  .button-container{
-      padding-right: 30px;
-  }
-  .Open {
-    background-color: teal;
-    color: white;
-    margin-right: 10px;
-  }
-  
-  .Download {
-    background-color: white;
-    color: teal;
-    border: 3px solid teal;
-  }
-  .reject {
-    background-color: white;
-    color: #dc3b3c;
-    border: 3px solid #dc3b3c;
-  }
-  
-  textarea {
-    width: 250px; /* Set the width of the textarea */
-    height: 60px; /* Set the height of the textarea */
-    padding: 10px; /* Add some padding inside the textarea */
-    box-sizing: border-box; /* Make sure the padding and border are included in the total width and height */
-    border: 1px solid #ccc; /* Add a border */
-    border-radius: 4px; /* Round the corners */
-    background-color: #f8f8f8; /* Set a background color */
-    font-size: 16px; /* Increase the font size */
-    transition: all 0.3s ease; /* Add a transition for smooth effects */
-    resize: none;
-  }
-  
-  textarea:focus {
-    border-color: teal; /* Change the border color when the textarea is focused */
-    background-color: #fff; /* Change the background color when the textarea is focused */
-    outline: none; /* Remove the default browser outline */
-  }
+hr {
+  margin-left: 60px;
+  margin-top: 15px;
+}
 
-  .upper-section {
-    position: relative;
-  }
+.info-container {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .status-label {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    background-color: teal;
-    color: white;
-    margin-right:100px ;
-    font-weight: bold;
-  }
+.name {
+  font-size: 22px;
+  font-weight: 450;
+  margin-bottom: 10px;
+}
 
-  .status-label {
-    color: white;
-    padding: 8px;
-    border-radius: 4px;
-  }
-  
-  .status-rejected {
-    background-color: #dc3b3c;
-  }
-  
-  .status-accepted {
-    background-color: #51ae46;
-  }
-  
-  .status-not-evaluated {
-    background-color: teal;
-  }
-  
-  .eval{
-    margin-right: 10px;
-    margin-top: 10px;
-  }
+.bio {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
 
-  
+.upper-section {
+  display: flex;
+  align-items: center;
+}
+
+button.mat-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.profileimage {
+  margin-left: 10px; /* adjust this value to increase or decrease the space */
+  height: auto;
+  width: 75px;
+  margin-right: 40px;
+}
+
+.info {
+  margin-left: 10px; /* adjust this value to increase or decrease the space */
+  display: flex;
+  flex-direction: column;
+}
+
+.personalInfo > div,
+.comment-section > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 15px;
+  margin: 30px 0px 30px 0px;
+  padding-left: 80px;
+}
+
+.head {
+  text-align: left;
+  width: 180px;
+  font-weight: 550;
+}
+
+span {
+  text-align: left;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px; /* Add some space between the buttons */
+  margin-top: 30px;
+}
+
+.button-container {
+  padding-right: 30px;
+}
+
+.Open {
+  background-color: teal;
+  color: white;
+  margin-right: 10px;
+}
+
+.Download {
+  background-color: white;
+  color: teal;
+  border: 3px solid teal;
+}
+
+.reject {
+  background-color: white;
+  color: red;
+  border: 3px solid red;
+}
+
+textarea {
+  width: 250px; /* Set the width of the textarea */
+  height: 60px; /* Set the height of the textarea */
+  padding: 10px; /* Add some padding inside the textarea */
+  box-sizing: border-box; /* Make sure the padding and border are included in the total width and height */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Round the corners */
+  background-color: #f8f8f8; /* Set a background color */
+  font-size: 16px; /* Increase the font size */
+  transition: all 0.3s ease; /* Add a transition for smooth effects */
+  resize: none;
+}
+
+textarea:focus {
+  border-color: teal; /* Change the border color when the textarea is focused */
+  background-color: #fff; /* Change the background color when the textarea is focused */
+  outline: none; /* Remove the default browser outline */
+}
+
+.upper-section {
+  position: relative;
+}
+
+.status-label {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.status-rejected {
+  background-color: red;
+}
+
+.status-accepted {
+  background-color: green;
+}
+
+.status-not-evaluated {
+  background-color: teal;
+}
+
+.comment-decision-section {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Add some space between the textarea and the buttons */
+}
+
+.comment-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Add some space between the buttons */
+}
+
+.decision-buttons {
+  display: flex;
+  gap: 10px; /* Add some space between the buttons */
+  margin-top: 25px; /* Add some space above the buttons */
+}
