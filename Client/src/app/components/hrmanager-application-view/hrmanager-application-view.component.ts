@@ -17,10 +17,10 @@ interface Revision {
   revision_id: number;
   comment: string;
   status: string;
-  date: string;
+  created_date: string;
   employee_id: number;
-  employee_name: string;
-  employee_role: string;
+  name: string;
+  role: string;
 
 }
 
@@ -110,5 +110,19 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       console.error('Error changing decision:', error);
     }
   }
+
+  getRoleDisplayName(role: string): string {
+    switch (role) {
+      case 'hra':
+        return 'HR Assistant';
+      case 'ca':
+        return 'Company Admin';
+      case 'hrm':
+        return 'HR Manager';
+      default:
+        return role; // Fallback to the original role if not matched
+    }
+  }
+  
 
 }
