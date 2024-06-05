@@ -1,16 +1,19 @@
+.wrapper {
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  align-items: center;      /* Center vertically */
+  height: 100vh;            /* Full viewport height */
+}
+
 .body {
-    width: 1000px;
-    height: fit-content;
-    border: 3px black;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
-    padding: 25px 25px 25px 25px;
-    margin-left: 200px;
-    margin-right: 200px;
-    margin-bottom: auto;
-    margin-top: 50px;
-    font-family: "roboto";
-  }
+  width: 1000px;
+  height: fit-content;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  padding: 25px;
+  font-family: "roboto";
+}
+
   hr {
     margin-left: 60px;
     margin-top: 15px;
@@ -129,6 +132,30 @@
     background-color: teal;
     color: white;
     margin-right:100px ;
+    font-weight: bold;
+  }
+
+  .status-label {
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .status-rejected {
+    background-color: #FF0000;
+  }
+  
+  .status-accepted {
+    background-color: green;
+  }
+  
+  .status-not-evaluated {
+    background-color: teal;
+  }
+  
+  .eval{
+    margin-right: 10px;
+    margin-top: 10px;
   }
 
   
