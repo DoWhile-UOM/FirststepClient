@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ApplicationService } from '../../../services/application.service';
 import { url } from 'node:inspector';
 import { DocumentService } from '../../../services/document.service';
+import { NgIf } from '@angular/common';
+
 
 //interface application status
 
@@ -29,12 +31,12 @@ interface Job {
     standalone: true,
     templateUrl: './seeker-application-status.component.html',
     styleUrl: './seeker-application-status.component.css',
-    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule]
+    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule,NgIf]
 })
 export class SeekerApplicationStatusComponent {
+
   applicationData: Application = {} as Application;
-  //sample application id=8
-  application_id: number = 1015;
+  
   jobData: Job = {
     title: 'Software Developer',
     field_name: 'Software Development',
@@ -54,13 +56,29 @@ export class SeekerApplicationStatusComponent {
 
 document: any ;
 documentName: string = 'KARATE.pdf';
+//sample application id
+application_id: number = 1015;
   constructor(private _formBuilder: FormBuilder,
     private applicationService: ApplicationService,
     private documentService:DocumentService ) {}
 
 
 async ngOnInit() {
- this.getDocumentUrl(); 
+ this.getApplicationStatus();
+}
+
+
+getApplicationStatus(): void{
+  this.applicationService.getApplicationStatus(this.application_id).then(
+    (data: Application) => {
+      this.applicationData = data;
+      console.log('Application Status:', this.applicationData);
+      this.getDocumentUrl();
+    },
+    error => {
+      console.error('Error fetching application status:', error);
+    }
+  );
 }
 
 //get document url
@@ -76,5 +94,14 @@ async getDocumentUrl(){
     }
   );
 
+}
+
+//Only the steps up to and including the current status are marked as completed, except if the current status is 'Rejected'
+isCompleted(stepName: string): boolean {
+  const statusOrder = ['Submitted', 'Screening', 'Finalized', 'Rejected'];
+  const currentStatusIndex = statusOrder.indexOf(this.applicationData.status);
+  const stepIndex = statusOrder.indexOf(stepName);
+  return stepIndex < currentStatusIndex || (stepIndex === currentStatusIndex  && this.applicationData.status !== 'Rejected');
+ 
 }
 }
