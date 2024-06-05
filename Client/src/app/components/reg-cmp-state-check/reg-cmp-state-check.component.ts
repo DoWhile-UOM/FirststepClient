@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -26,8 +27,6 @@ export interface CmpyData {
   company_email: string;
   company_description: string;
   company_logo: string;
-  company_city: string;//not needed
-  company_province: string;//not needed
   company_business_scale: string;
   business_reg_certificate: string;
   company_registered_date: string;
@@ -58,21 +57,21 @@ export class RegCmpStateCheckComponent {
   cmpData: CmpyData = { company_business_scale: 'mid' } as CmpyData
 
   companyReg = this._formBuilder.group({
-    company_name: new FormControl({ value: this.cmpData.company_name, disabled: true }),//
+    company_name: new FormControl({ value: this.cmpData.company_name, disabled: false }),//
     company_id: new FormControl({ value: this.cmpData.company_id, disabled: false }),//
     company_website: new FormControl({ value: this.cmpData.company_website, disabled: false }),//
-    company_email: new FormControl({ value: this.cmpData.company_email, disabled: true }),//
+    company_email: new FormControl({ value: this.cmpData.company_email, disabled: false }),//
     company_description: new FormControl({ value: this.cmpData.company_description, disabled: false }),//
     company_logo: new FormControl({ value: this.cmpData.company_logo, disabled: false }),//
     company_business_scale: new FormControl(this.cmpData.company_business_scale),
-    business_reg_certificate: new FormControl({ value: this.cmpData.business_reg_certificate, disabled: false }, Validators.required),//
-    company_registered_date: new FormControl({ value: this.cmpData.company_registered_date, disabled: false }, Validators.required),///
+    business_reg_certificate: new FormControl({ value: this.cmpData.business_reg_certificate, disabled: false }, ),//
+    company_registered_date: new FormControl({ value: this.cmpData.company_registered_date, disabled: false }),///
     certificate_of_incorporation: new FormControl({ value: this.cmpData.certificate_of_incorporation, disabled: false }),//
-    company_phone_number: new FormControl({ value: this.cmpData.company_phone_number, disabled: false }, Validators.required),//
-    business_reg_no: new FormControl({ value: this.cmpData.business_reg_no, disabled: false }, Validators.required),//
+    company_phone_number: new FormControl({ value: this.cmpData.company_phone_number, disabled: false }),//
+    business_reg_no: new FormControl({ value: this.cmpData.business_reg_no, disabled: false }),//
   });
 
-  constructor(private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
+  constructor(private snackbar: MatSnackBar,private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
@@ -81,6 +80,7 @@ export class RegCmpStateCheckComponent {
         this.fetchData(this.company_id);
       }
     });
+  
   }
 
 
@@ -134,9 +134,18 @@ export class RegCmpStateCheckComponent {
     this.styleService.setStyle('circle-border-color', '#ffbf00');
     this.styleService.setStyle('number-color', '#ffbf00');
     this.isNoInput = true;
-    this.companyReg.get('company_email')?.enable();
 
-    this.company.updateUnregCompanyDetails(this.companyReg.value);
+    Object.keys(this.companyReg.controls).forEach(key => {
+      this.companyReg.get(key)?.enable();
+    });
+    if(this.companyReg.invalid){
+      this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }else{
+      console.log('from service', this.companyReg.value);
+      this.company.updateUnregCompanyDetails(this.companyReg.value,this.cmpData.company_id);
+    }
+
+
   }
 
 }
