@@ -107,6 +107,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   field_name: string = ' ';
   current_status: string = '';
   hraList: any[] = [];
+  restrictPermissionForButton: boolean = false;
 
   userType: string = '';
 
@@ -115,7 +116,6 @@ export class HrManagerApplicationListingComponent implements OnInit {
   constructor(
     private applicationService: ApplicationService,
     private employeeService: EmployeeService,
-    private dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
     private acRouter: ActivatedRoute,
@@ -131,6 +131,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
     if (this.userType == 'hra'){
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'assigned_hrAssistant_id');
+      this.restrictPermissionForButton = true;
     }
     
     this.getApplicationList(this.jobID, this.selectedFilter);
