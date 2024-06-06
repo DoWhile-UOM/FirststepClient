@@ -2,7 +2,6 @@ import { Component, Input, OnInit, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
-//import { SeekerService } from '../../../services/seeker.service';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -88,7 +87,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   newComment: string = '';
   userRole: string | null = null;
   userName: string | null = null;
-  userID: number | null = null;
+  userID: number = 0; 
   isEditingComment: boolean = false;
   currentRevisionId: number | null = null;
 
@@ -100,9 +99,9 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.userID = 4123; // For testing
     this.userRole = 'hra'; // For testing
-    this.userName = 'Nethma Karunathilaka'; // For testing
-    this.userID = 40; // For testing
+    this.userName = 'Nethma Karunathilaka'; //This does not get passed
     // this.userRole = this.authService.getUserId();
     // this.userRole = this.authService.getRole();
     // this.userName = this.authService.getName();
@@ -155,13 +154,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
   async handlePassDecision(newStatus: string) {
     try {
-      const employeeId = 42; 
-      // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
       await this.revisionService.addRevision(
         this.applicationId,
         this.newComment,
         newStatus,
-        employeeId,
+        this.userID,
         this.userName!,
         this.userRole!
       );
@@ -181,13 +178,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         try {
-          const employeeId = 40;
-          // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
           await this.revisionService.addRevision(
             this.applicationId,
             this.newComment,
             newStatus,
-            employeeId,
+            this.userID,
             this.userName!,
             this.userRole!
           );
@@ -209,13 +204,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         try {
-          const employeeId = 40;
-          // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
           await this.revisionService.addRevision(
             this.applicationId,
             this.newComment,
             newStatus,
-            employeeId,
+            this.userID,
             this.userName!,
             this.userRole!
           );
