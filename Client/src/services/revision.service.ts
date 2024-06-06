@@ -8,26 +8,43 @@ export class RevisionService {
 
   constructor() { }
 
-  async addRevision(applicationId: number, comment: string, status: string, employeeId: number) {
+  async addRevision(applicationId: number, comment: string, status: string, employeeId: number, employeeName: string, employeeRole: string) {
     const newRevision = {
       application_id: applicationId,
       comment: comment,
       status: status,
       employee_id: employeeId,
-      date: new Date()  // Ensure the date is sent
+      name: employeeName,
+      role: employeeRole,
+      date: new Date()
     };
 
     try {
-      const response = await axios.post('https://localhost:7213/api/Revision/CreateRevision', newRevision);
-      console.log('Revision added successfully:', response.data);
+      await axios.post('https://localhost:7213/api/Revision/CreateRevision', newRevision);
     } catch (error) {
       console.error('Error adding revision:', error);
     }
   }
 
+  async updateRevision(revisionId: number, comment: string, status: string) {
+    const updatedRevision = {
+      revision_id: revisionId,
+      comment: comment,
+      status: status,
+      date: new Date()
+    };
+
+    try {
+      await axios.put('https://localhost:7213/api/Revision/UpdateRevision', updatedRevision);
+    } catch (error) {
+      console.error('Error updating revision:', error);
+    }
+  }
+
   async getRevisionHistory(applicationId: number) {
     let revisionHistory: any = {};
-    await axios.get(`https://localhost:7213/api/Revision/GetRevisionHistory/${applicationId}`)
+    await axios
+      .get(`https://localhost:7213/api/Revision/GetRevisionHistory/${applicationId}`)
       .then((response) => {
         revisionHistory = response.data;
       })
@@ -36,5 +53,13 @@ export class RevisionService {
       });
 
     return revisionHistory;
+  }
+
+  async deleteRevision(revisionId: number) {
+    try {
+      await axios.delete(`https://localhost:7213/api/Revision/DeleteRevisionById/${revisionId}`);
+    } catch (error) {
+      console.error('Error deleting revision:', error);
+    }
   }
 }

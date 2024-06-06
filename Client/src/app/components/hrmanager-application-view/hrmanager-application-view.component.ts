@@ -50,7 +50,7 @@ interface ApplicationViewDto {
 })
 export class HrmanagerApplicationViewComponent implements OnInit {
   @Input() showComments: boolean = true; // Accepts showComments as input
-  @Input() applicationId: number = 2; // Default value for testing
+  @Input() applicationId: number = 5; // Default value for testing
   applicationDetails: ApplicationViewDto = {} as ApplicationViewDto;
   loading: boolean = true;
   error: string | null = null;
@@ -62,8 +62,10 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.userRole = this.authService.getRole();
-    this.userName = this.authService.getName();
+    this.userRole = 'hra'; // For testing
+    this.userName = 'Nethma Karunathilaka'; // For testing
+    // this.userRole = this.authService.getRole();
+    // this.userName = this.authService.getName();
     await this.fetchApplicationDetails();
   }
 
@@ -79,15 +81,39 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
 
   async addComment() {
-    if (this.newComment.trim()) {
+    if (this.newComment.trim() || this.applicationDetails.is_evaluated) {
       try {
-        // const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
-        const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
-        await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId);
+        const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
+        const employeeId =42 ;
+        // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
+        await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId, this.userName!, this.userRole!);
         await this.fetchApplicationDetails();
         this.newComment = '';
       } catch (error) {
         console.error('Error adding comment:', error);
+      }
+    }
+  }
+
+  async changeDecision(newStatus: string) {
+    if (newStatus === 'Rejected' && !this.newComment.trim()) {
+      alert('Comment is mandatory when rejecting an application');
+      return;
+    }
+
+    if (newStatus === 'Pass' && this.userRole !== 'hra') {
+      return;
+    }
+
+    if (newStatus === 'Accepted' || confirm('Are you sure you want to reject this application?')) {
+      try {
+        const employeeId = 42;
+        // const employeeId = Number(this.authService.getUserId());
+        await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
+        await this.fetchApplicationDetails();
+        alert(`Application was ${newStatus}`);
+      } catch (error) {
+        console.error(`Error changing decision to ${newStatus}:`, error);
       }
     }
   }
@@ -101,16 +127,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     }
   }
 
-  async changeDecision(newStatus: string) {
-    try {
-      const employeeId = Number(this.authService.getUserId());
-      await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId);
-      await this.fetchApplicationDetails();
-    } catch (error) {
-      console.error('Error changing decision:', error);
-    }
-  }
-
+  
   getRoleDisplayName(role: string): string {
     switch (role) {
       case 'hra':
@@ -120,9 +137,9 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       case 'hrm':
         return 'HR Manager';
       default:
-        return role; // Fallback to the original role if not matched
+        return role; 
     }
   }
-  
+
 
 }
