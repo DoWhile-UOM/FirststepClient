@@ -320,8 +320,11 @@ export class RejectDialog {
     MatDialogClose,
     MatDialogTitle,
     MatDialogContent,
+    CommonModule
   ],
   templateUrl: './comment-history-dialog.html',
+  styleUrls: ['./comment-history-dialog.css'],
+
 })
 export class CommentHistoryDialog {
   constructor(

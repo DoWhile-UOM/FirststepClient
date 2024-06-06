@@ -3,7 +3,7 @@
   <table mat-table [dataSource]="data" class="mat-elevation-z8">
     <ng-container matColumnDef="created_date">
       <th mat-header-cell *matHeaderCellDef>Date</th>
-      <td mat-cell *matCellDef="let element">{{element.created_date }}</td>
+      <td mat-cell *matCellDef="let element">{{element.created_date}}</td>
     </ng-container>
     <ng-container matColumnDef="employee_name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -19,21 +19,20 @@
     </ng-container>
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let element">{{element.status}}</td>
+      <td mat-cell *matCellDef="let element" style="align-items: center;">
+        <span class="stat" [ngClass]="{
+          'status-accepted': element.status === 'Accepted',
+          'status-rejected': element.status === 'Rejected',
+          'status-passed': element.status === 'Pass'
+        }">{{element.status}}</span>
+      </td>
     </ng-container>
-    <tr
-      mat-header-row
-      *matHeaderRowDef="['created_date', 'employee_name', 'employee_role', 'comment', 'status']"
-    ></tr>
-    <tr
-      mat-row
-      *matRowDef="let row; columns: ['created_date', 'employee_name', 'employee_role', 'comment', 'status'];"
-    ></tr>
+    <tr mat-header-row *matHeaderRowDef="['created_date', 'employee_name', 'employee_role', 'comment', 'status']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['created_date', 'employee_name', 'employee_role', 'comment', 'status'];"></tr>
   </table>
 </mat-dialog-content>
-<mat-dialog-actions >
-    <div style="display: flex; justify-content: flex-end; width: 100%;">
-        <button mat-button mat-dialog-close >Close</button>
-
-    </div>
+<mat-dialog-actions>
+  <div class="button-container">
+    <button mat-button mat-dialog-close>Close</button>
+  </div>
 </mat-dialog-actions>

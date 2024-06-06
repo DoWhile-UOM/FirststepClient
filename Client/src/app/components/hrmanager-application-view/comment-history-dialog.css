@@ -1,0 +1,22 @@
+.status-accepted {
+    background-color: rgb(81, 174, 70);
+    color: white;
+  }
+  
+  .status-rejected {
+    background-color: rgb(220, 59, 60);
+    color: white;
+
+  }
+  
+  .status-passed {
+    background-color: rgb(0, 0, 0);
+    color: white;
+
+  }
+
+  .stat{
+    padding: 10px;
+    border-radius: 5px;    
+  }
+  
