@@ -83,8 +83,119 @@
         </div>
       </div>
     </div>
-
     <div class="comment-section" *ngIf="showComments">
+      <hr />
+      <div *ngIf="applicationDetails.is_evaluated">
+        <mat-label class="head">Evaluated By</mat-label>
+        <span>
+          {{ applicationDetails.last_revision.name }},
+          {{ getRoleDisplayName(applicationDetails.last_revision.role) }}
+        </span>
+      </div>
+      <div>
+        <mat-label class="head">Comment</mat-label>
+        <span
+          *ngIf="
+            applicationDetails.last_revision &&
+            applicationDetails.last_revision.comment
+          "
+        >
+          {{ applicationDetails.last_revision.comment }}
+        </span>
+    
+        <div *ngIf="!applicationDetails.is_evaluated || isEditingComment">
+          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
+          <div style="display: flex; justify-content: space-between">
+            <button
+              mat-button
+              *ngIf="!isEditingComment"
+              style="margin: 10px 10px 10px 0px; background-color: #e8e8e8"
+              (click)="addComment()"
+            >
+              Add Comment
+            </button>
+            <button
+              mat-button
+              *ngIf="isEditingComment"
+              style="margin: 10px 10px 10px 0px; background-color: #e8e8e8"
+              (click)="updateComment()"
+            >
+              Update Comment
+            </button>
+          </div>
+        </div>
+      </div>
+    
+      <div *ngIf="applicationDetails.is_evaluated">
+        <mat-label class="head">Change the decision</mat-label>
+        <div class="comment-decision-section">
+          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
+          <button
+            mat-button
+            *ngIf="!isEditingComment"
+            style="margin: 10px; background-color: #e8e8e8"
+            (click)="addComment()"
+          >
+            Add Comment
+          </button>
+          <button
+            mat-button
+            *ngIf="isEditingComment"
+            style="margin: 10px; background-color: #e8e8e8"
+            (click)="updateComment()"
+          >
+            Update Comment
+          </button>
+        </div>
+        <div class="comment-buttons">
+          <button
+            mat-button
+            style="margin: 10px; margin-left: 20px;"
+            (click)="viewCommentHistory()"
+          >
+            View Comment History
+            <mat-icon class="view" style="margin-left: 5px">history</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="decision-buttons">
+        <button
+          mat-button
+          class="eval"
+          style="background-color: rgba(81,174,70,0.8)"
+          (click)="changeDecision('Accepted')"
+        >
+          Accept
+        </button>
+        <button
+          mat-button
+          class="eval"
+          style="
+            color: black;
+            background-color: rgba(220,59,60, 0.8);
+            border: none;
+          "
+          (click)="changeDecision('Rejected')"
+        >
+          Reject
+        </button>
+        <button
+          mat-button
+          class="eval"
+          style="
+            color: black;
+            background-color: rgba(0, 0, 0, 0.25);
+            border: none;
+          "
+          (click)="changeDecision('Pass')"
+        >
+          Pass
+        </button>
+      </div>
+    </div>
+    
+
+    <!-- <div class="comment-section" *ngIf="showComments">
       <hr />
       <div *ngIf="applicationDetails.is_evaluated">
         <mat-label class="head">Evaluated By</mat-label>
@@ -195,7 +306,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
     

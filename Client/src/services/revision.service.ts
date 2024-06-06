@@ -26,20 +26,14 @@ export class RevisionService {
     }
   }
 
-  async updateRevision(revisionId: number, comment: string, status: string) {
-    const updatedRevision = {
-      revision_id: revisionId,
-      comment: comment,
-      status: status,
-      date: new Date()
-    };
-
+  async updateRevision(revision: any) {
     try {
-      await axios.put('https://localhost:7213/api/Revision/UpdateRevision', updatedRevision);
+      await axios.put('https://localhost:7213/api/Revision/UpdateRevision', revision);
     } catch (error) {
       console.error('Error updating revision:', error);
     }
   }
+
 
   async getRevisionHistory(applicationId: number) {
     let revisionHistory: any = {};

@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Edit Comment</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Edit your comment</mat-label>
+    <textarea matInput [(ngModel)]="data.comment"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onYesClick()">Update Comment</button>
+</mat-dialog-actions>

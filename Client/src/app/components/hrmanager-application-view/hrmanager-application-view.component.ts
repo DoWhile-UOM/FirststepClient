@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 interface Revision {
   revision_id: number;
@@ -110,7 +111,22 @@ currentRevisionId: number | null = null;
   async updateComment() {
     if (this.currentRevisionId !== null) {
       try {
-        await this.revisionService.updateRevision(this.currentRevisionId, this.newComment, this.applicationDetails.last_revision.status);
+        const updatedRevision = {
+          revision_id: this.currentRevisionId,
+          comment: this.newComment,
+          status: this.applicationDetails.last_revision.status,
+          application_id: this.applicationDetails.application_Id, // Ensure this is included
+          employee_id: this.applicationDetails.last_revision.employee_id, 
+          //application_id: this.applicationDetails.application_Id, 
+          // employee_id: 42, 
+          // employee_id: Number(this.authService.getUserId()), // Ensure this is correctly fetched from AuthService
+          date: new Date()
+        };
+
+        console.log('Payload being sent:', updatedRevision); // Add this line to debug
+
+  
+        await this.revisionService.updateRevision(updatedRevision);
         await this.fetchApplicationDetails();
         this.newComment = '';
         this.isEditingComment = false;
@@ -120,7 +136,8 @@ currentRevisionId: number | null = null;
       }
     }
   }
-
+  
+  
   // Call this method when entering edit mode
 editComment(revisionId: number, comment: string) {
   this.currentRevisionId = revisionId;
@@ -257,12 +274,72 @@ onYesClick(): void {
 @Component({
   selector: 'comment-history-dialog',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent,MatIconModule, MatButtonModule, MatLabel, MatToolbar, MatButton, CommonModule, FormsModule, MatDialogModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule],
+  imports: [
+    MatTableModule, 
+    MatPaginatorModule, 
+    MatSortModule, 
+    MatIconModule, 
+    MatButtonModule, 
+    MatDialogActions, 
+    MatDialogClose, 
+    MatDialogTitle, 
+    MatDialogContent
+  ],
   templateUrl: './comment-history-dialog.html',
 })
 export class CommentHistoryDialog {
   constructor(
     public dialogRef: MatDialogRef<CommentHistoryDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialog: MatDialog
   ) {}
+
+  openEditDialog(element: any): void {
+    const dialogRef = this.dialog.open(EditCommentDialog, {
+      width: '300px',
+      data: { ...element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Handle successful update if needed
+      }
+    });
+  }
+}
+
+@Component({
+  selector: 'edit-comment-dialog',
+  standalone: true,
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatFormFieldModule, MatInputModule, FormsModule],
+  templateUrl: './edit-comment-dialog.html',
+})
+export class EditCommentDialog {
+  constructor(
+    public dialogRef: MatDialogRef<EditCommentDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private revisionService: RevisionService
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  async onYesClick(): Promise<void> {
+    try {
+      const updatedRevision = {
+        revision_id: this.data.revision_id,
+        comment: this.data.comment,
+        status: this.data.status,
+        application_id: this.data.application_id,
+        employee_id: this.data.employee_id,
+        date: new Date()
+      };
+
+      await this.revisionService.updateRevision(updatedRevision);
+      this.dialogRef.close(true);
+    } catch (error) {
+      console.error('Error updating comment:', error);
+    }
+  }
 }
