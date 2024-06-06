@@ -189,7 +189,7 @@ async showRejectDialog(newStatus: string) {
 
 async viewCommentHistory() {
   const dialogRef = this.dialog.open(CommentHistoryDialog, {
-    width: '600px',
+    width: '800px',
     data: await this.revisionService.getRevisionHistory(this.applicationId)
   });
 
@@ -257,7 +257,7 @@ onYesClick(): void {
 @Component({
   selector: 'comment-history-dialog',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent,MatIconModule, MatButtonModule, MatLabel, MatToolbar, MatButton, CommonModule, FormsModule, MatDialogModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule],
   templateUrl: './comment-history-dialog.html',
 })
 export class CommentHistoryDialog {
