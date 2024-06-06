@@ -88,62 +88,62 @@ currentRevisionId: number | null = null;
   }
 
 
-  async addComment() {
-    if (this.isEditingComment) {
-      // If editing a comment, call the update method
-      await this.updateComment();
-    } else {
-    if (this.newComment.trim() || this.applicationDetails.is_evaluated) {
-      try {
-        const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
-        const employeeId =42 ;
-        // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
-        await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId, this.userName!, this.userRole!);
-        await this.fetchApplicationDetails();
-        this.newComment = '';
-      } catch (error) {
-        console.error('Error adding comment:', error);
-      }
-    }
-  }
-  }
+  // async addComment() {
+  //   if (this.isEditingComment) {
+  //     // If editing a comment, call the update method
+  //     await this.updateComment();
+  //   } else {
+  //   if (this.newComment.trim() || this.applicationDetails.is_evaluated) {
+  //     try {
+  //       const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
+  //       const employeeId =42 ;
+  //       // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
+  //       await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId, this.userName!, this.userRole!);
+  //       await this.fetchApplicationDetails();
+  //       this.newComment = '';
+  //     } catch (error) {
+  //       console.error('Error adding comment:', error);
+  //     }
+  //   }
+  // }
+  // }
 
-  async updateComment() {
-    if (this.currentRevisionId !== null) {
-      try {
-        const updatedRevision = {
-          revision_id: this.currentRevisionId,
-          comment: this.newComment,
-          status: this.applicationDetails.last_revision.status,
-          application_id: this.applicationDetails.application_Id, // Ensure this is included
-          employee_id: this.applicationDetails.last_revision.employee_id, 
-          //application_id: this.applicationDetails.application_Id, 
-          // employee_id: 42, 
-          // employee_id: Number(this.authService.getUserId()), // Ensure this is correctly fetched from AuthService
-          date: new Date()
-        };
+  // async updateComment() {
+  //   if (this.currentRevisionId !== null) {
+  //     try {
+  //       const updatedRevision = {
+  //         revision_id: this.currentRevisionId,
+  //         comment: this.newComment,
+  //         status: this.applicationDetails.last_revision.status,
+  //         application_id: this.applicationDetails.application_Id, // Ensure this is included
+  //         employee_id: this.applicationDetails.last_revision.employee_id, 
+  //         //application_id: this.applicationDetails.application_Id, 
+  //         // employee_id: 42, 
+  //         // employee_id: Number(this.authService.getUserId()), // Ensure this is correctly fetched from AuthService
+  //         date: new Date()
+  //       };
 
-        console.log('Payload being sent:', updatedRevision); // Add this line to debug
+  //       console.log('Payload being sent:', updatedRevision); // Add this line to debug
 
   
-        await this.revisionService.updateRevision(updatedRevision);
-        await this.fetchApplicationDetails();
-        this.newComment = '';
-        this.isEditingComment = false;
-        this.currentRevisionId = null;
-      } catch (error) {
-        console.error('Error updating comment:', error);
-      }
-    }
-  }
+  //       await this.revisionService.updateRevision(updatedRevision);
+  //       await this.fetchApplicationDetails();
+  //       this.newComment = '';
+  //       this.isEditingComment = false;
+  //       this.currentRevisionId = null;
+  //     } catch (error) {
+  //       console.error('Error updating comment:', error);
+  //     }
+  //   }
+  // }
   
   
-  // Call this method when entering edit mode
-editComment(revisionId: number, comment: string) {
-  this.currentRevisionId = revisionId;
-  this.newComment = comment;
-  this.isEditingComment = true;
-}
+//   // Call this method when entering edit mode
+// editComment(revisionId: number, comment: string) {
+//   this.currentRevisionId = revisionId;
+//   this.newComment = comment;
+//   this.isEditingComment = true;
+// }
 
 
 
@@ -174,6 +174,7 @@ async showAcceptDialog(newStatus: string) {
     if (result) {
       try {
         const employeeId = 42;
+        // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
         await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
         await this.fetchApplicationDetails();
         alert('Application was Accepted');
@@ -194,6 +195,7 @@ async showRejectDialog(newStatus: string) {
     if (result) {
       try {
         const employeeId = 42;
+        // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
         await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
         await this.fetchApplicationDetails();
         alert('Application was Rejected');
@@ -228,6 +230,7 @@ getRoleDisplayName(role: string): string {
   }
 }
 }
+
 
 Component({
   selector: 'accept-dialog',
@@ -274,72 +277,26 @@ onYesClick(): void {
 @Component({
   selector: 'comment-history-dialog',
   standalone: true,
-  imports: [
-    MatTableModule, 
-    MatPaginatorModule, 
-    MatSortModule, 
-    MatIconModule, 
-    MatButtonModule, 
-    MatDialogActions, 
-    MatDialogClose, 
-    MatDialogTitle, 
-    MatDialogContent
-  ],
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
   templateUrl: './comment-history-dialog.html',
 })
 export class CommentHistoryDialog {
   constructor(
     public dialogRef: MatDialogRef<CommentHistoryDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialog: MatDialog
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  openEditDialog(element: any): void {
-    const dialogRef = this.dialog.open(EditCommentDialog, {
-      width: '300px',
-      data: { ...element }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Handle successful update if needed
-      }
-    });
-  }
-}
-
-@Component({
-  selector: 'edit-comment-dialog',
-  standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatFormFieldModule, MatInputModule, FormsModule],
-  templateUrl: './edit-comment-dialog.html',
-})
-export class EditCommentDialog {
-  constructor(
-    public dialogRef: MatDialogRef<EditCommentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private revisionService: RevisionService
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  async onYesClick(): Promise<void> {
-    try {
-      const updatedRevision = {
-        revision_id: this.data.revision_id,
-        comment: this.data.comment,
-        status: this.data.status,
-        application_id: this.data.application_id,
-        employee_id: this.data.employee_id,
-        date: new Date()
-      };
-
-      await this.revisionService.updateRevision(updatedRevision);
-      this.dialogRef.close(true);
-    } catch (error) {
-      console.error('Error updating comment:', error);
+  getRoleDisplayName(role: string): string {
+    switch (role) {
+      case 'hra':
+        return 'HR Assistant';
+      case 'ca':
+        return 'Company Admin';
+      case 'hrm':
+        return 'HR Manager';
+      default:
+        return role;
     }
   }
+  
 }

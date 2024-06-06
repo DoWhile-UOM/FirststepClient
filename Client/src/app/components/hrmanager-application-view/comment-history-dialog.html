@@ -3,7 +3,7 @@
   <table mat-table [dataSource]="data" class="mat-elevation-z8">
     <ng-container matColumnDef="created_date">
       <th mat-header-cell *matHeaderCellDef>Date</th>
-      <td mat-cell *matCellDef="let element">{{element.created_date}}</td>
+      <td mat-cell *matCellDef="let element">{{element.created_date }}</td>
     </ng-container>
     <ng-container matColumnDef="employee_name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
@@ -11,25 +11,29 @@
     </ng-container>
     <ng-container matColumnDef="employee_role">
       <th mat-header-cell *matHeaderCellDef>Role</th>
-      <td mat-cell *matCellDef="let element">{{element.employee_role}}</td>
+      <td mat-cell *matCellDef="let element">{{ getRoleDisplayName(element.employee_role) }}</td>
     </ng-container>
     <ng-container matColumnDef="comment">
       <th mat-header-cell *matHeaderCellDef>Comment</th>
-      <td mat-cell *matCellDef="let element">
-        {{element.comment}}
-        <button mat-icon-button (click)="openEditDialog(element)">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </td>
+      <td mat-cell *matCellDef="let element">{{element.comment}}</td>
     </ng-container>
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let element">{{element.status}}</td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="['created_date', 'employee_name', 'employee_role', 'comment', 'status']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['created_date', 'employee_name', 'employee_role', 'comment', 'status'];"></tr>
+    <tr
+      mat-header-row
+      *matHeaderRowDef="['created_date', 'employee_name', 'employee_role', 'comment', 'status']"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['created_date', 'employee_name', 'employee_role', 'comment', 'status'];"
+    ></tr>
   </table>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
+<mat-dialog-actions >
+    <div style="display: flex; justify-content: flex-end; width: 100%;">
+        <button mat-button mat-dialog-close >Close</button>
+
+    </div>
 </mat-dialog-actions>
