@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
@@ -9,9 +9,13 @@ import { CommonModule } from '@angular/common';
 import { ApplicationService } from '../../../services/application.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RevisionService } from '../../../services/revision.service';
-
+import { MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 interface Revision {
   revision_id: number;
@@ -44,7 +48,7 @@ interface ApplicationViewDto {
 @Component({
   selector: 'app-hrmanager-application-view',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, MatLabel, MatToolbar, MatButton, CommonModule, FormsModule],
+  imports: [MatIconModule, MatButtonModule, MatLabel, MatToolbar, MatButton, CommonModule, FormsModule, MatDialogModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule],
   templateUrl: './hrmanager-application-view.component.html',
   styleUrls: ['./hrmanager-application-view.component.css'],
 })
@@ -126,51 +130,139 @@ editComment(revisionId: number, comment: string) {
 
 
 
-  async changeDecision(newStatus: string) {
-    if (newStatus === 'Rejected' && !this.newComment.trim()) {
-      alert('Comment is mandatory when rejecting an application');
-      return;
-    }
+async changeDecision(newStatus: string) {
+  if (newStatus === 'Rejected' && !this.newComment.trim()) {
+    alert('Comment is mandatory when rejecting an application');
+    return;
+  }
 
-    if (newStatus === 'Pass' && this.userRole !== 'hra') {
-      return;
-    }
+  if (newStatus === 'Pass' && this.userRole !== 'hra') {
+    return;
+  }
 
-    if (newStatus === 'Accepted' || confirm('Are you sure you want to reject this application?')) {
+  if (newStatus === 'Accepted') {
+    await this.showAcceptDialog(newStatus);
+  } else {
+    await this.showRejectDialog(newStatus);
+  }
+}
+
+async showAcceptDialog(newStatus: string) {
+  const dialogRef = this.dialog.open(AcceptDialog, {
+    width: '300px',
+    data: { message: 'Application was Accepted' }
+  });
+
+  dialogRef.afterClosed().subscribe(async result => {
+    if (result) {
       try {
         const employeeId = 42;
-        // const employeeId = Number(this.authService.getUserId());
         await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
         await this.fetchApplicationDetails();
-        alert(`Application was ${newStatus}`);
+        alert('Application was Accepted');
       } catch (error) {
         console.error(`Error changing decision to ${newStatus}:`, error);
       }
     }
-  }
+  });
+}
 
-  async viewCommentHistory() {
-    try {
-      const revisionHistory = await this.revisionService.getRevisionHistory(this.applicationId);
-      console.log('Revision History:', revisionHistory);
-    } catch (error) {
-      console.error('Error fetching revision history:', error);
+async showRejectDialog(newStatus: string) {
+  const dialogRef = this.dialog.open(RejectDialog, {
+    width: '300px',
+    data: { message: 'Are you sure you want to reject this application?' }
+  });
+
+  dialogRef.afterClosed().subscribe(async result => {
+    if (result) {
+      try {
+        const employeeId = 42;
+        await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
+        await this.fetchApplicationDetails();
+        alert('Application was Rejected');
+      } catch (error) {
+        console.error(`Error changing decision to ${newStatus}:`, error);
+      }
     }
+  });
+}
+
+async viewCommentHistory() {
+  const dialogRef = this.dialog.open(CommentHistoryDialog, {
+    width: '600px',
+    data: await this.revisionService.getRevisionHistory(this.applicationId)
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('Comment History dialog was closed');
+  });
+}
+
+getRoleDisplayName(role: string): string {
+  switch (role) {
+    case 'hra':
+      return 'HR Assistant';
+    case 'ca':
+      return 'Company Admin';
+    case 'hrm':
+      return 'HR Manager';
+    default:
+      return role; 
   }
+}
+}
 
-  
-  getRoleDisplayName(role: string): string {
-    switch (role) {
-      case 'hra':
-        return 'HR Assistant';
-      case 'ca':
-        return 'Company Admin';
-      case 'hrm':
-        return 'HR Manager';
-      default:
-        return role; 
-    }
-  }
+Component({
+  selector: 'accept-dialog',
+  standalone: true,
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  templateUrl: './accept-dialog.html',
+})
+export class AcceptDialog {
+constructor(
+  public dialogRef: MatDialogRef<AcceptDialog>,
+  @Inject(MAT_DIALOG_DATA) public data: any
+) {}
 
+onNoClick(): void {
+  this.dialogRef.close();
+}
 
+onYesClick(): void {
+  this.dialogRef.close(true);
+}
+}
+
+@Component({
+  selector: 'reject-dialog',
+  standalone: true,
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  templateUrl: './reject-dialog.html',
+})
+export class RejectDialog {
+constructor(
+  public dialogRef: MatDialogRef<RejectDialog>,
+  @Inject(MAT_DIALOG_DATA) public data: any
+) {}
+
+onNoClick(): void {
+  this.dialogRef.close();
+}
+
+onYesClick(): void {
+  this.dialogRef.close(true);
+}
+}
+
+@Component({
+  selector: 'comment-history-dialog',
+  standalone: true,
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  templateUrl: './comment-history-dialog.html',
+})
+export class CommentHistoryDialog {
+  constructor(
+    public dialogRef: MatDialogRef<CommentHistoryDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }
