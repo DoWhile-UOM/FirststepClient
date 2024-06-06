@@ -103,50 +103,60 @@
         >
           {{ applicationDetails.last_revision.comment }}
         </span>
-
+    
         <div *ngIf="!applicationDetails.is_evaluated">
-          <textarea
-            [(ngModel)]="newComment"
-            placeholder="Add a comment"
-          ></textarea>
+          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
           <div style="display: flex; justify-content: space-between">
             <button
               mat-button
+              *ngIf="!isEditingComment"
               style="margin: 10px 10px 10px 0px; background-color: #e8e8e8"
               (click)="addComment()"
             >
               Add Comment
             </button>
+            <button
+              mat-button
+              *ngIf="isEditingComment"
+              style="margin: 10px 10px 10px 0px; background-color: #e8e8e8"
+              (click)="updateComment()"
+            >
+              Update Comment
+            </button>
           </div>
         </div>
       </div>
-
+    
       <div *ngIf="applicationDetails.is_evaluated">
         <mat-label class="head">Change the decision</mat-label>
         <div class="comment-decision-section">
-          <textarea
-            [(ngModel)]="newComment"
-            placeholder="Add a comment"
-          ></textarea>
+          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
           <button
             mat-button
+            *ngIf="!isEditingComment"
             style="margin: 10px; background-color: #e8e8e8"
             (click)="addComment()"
           >
             Add Comment
           </button>
+          <button
+            mat-button
+            *ngIf="isEditingComment"
+            style="margin: 10px; background-color: #e8e8e8"
+            (click)="updateComment()"
+          >
+            Update Comment
+          </button>
         </div>
         <div class="comment-buttons">
           <button
             mat-button
-            style="margin: 10px; margin: left 20px;"
+            style="margin: 10px; margin-left: 20px;"
             (click)="viewCommentHistory()"
           >
             View Comment History
             <mat-icon class="view" style="margin-left: 5px">history</mat-icon>
-
           </button>
-          
         </div>
       </div>
       <div class="decision-buttons">
@@ -186,3 +196,5 @@
     </div>
   </div>
 </div>
+
+    

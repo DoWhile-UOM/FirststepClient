@@ -57,6 +57,9 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   newComment: string = '';
   userRole: string | null = null;
   userName: string | null = null;
+  isEditingComment: boolean = false;
+currentRevisionId: number | null = null;
+
 
   constructor(private applicationService: ApplicationService,private authService: AuthService,    public dialog: MatDialog ,private revisionService: RevisionService
   ) {}
@@ -81,6 +84,10 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
 
   async addComment() {
+    if (this.isEditingComment) {
+      // If editing a comment, call the update method
+      await this.updateComment();
+    } else {
     if (this.newComment.trim() || this.applicationDetails.is_evaluated) {
       try {
         const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
@@ -94,6 +101,30 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       }
     }
   }
+  }
+
+  async updateComment() {
+    if (this.currentRevisionId !== null) {
+      try {
+        await this.revisionService.updateRevision(this.currentRevisionId, this.newComment, this.applicationDetails.last_revision.status);
+        await this.fetchApplicationDetails();
+        this.newComment = '';
+        this.isEditingComment = false;
+        this.currentRevisionId = null;
+      } catch (error) {
+        console.error('Error updating comment:', error);
+      }
+    }
+  }
+
+  // Call this method when entering edit mode
+editComment(revisionId: number, comment: string) {
+  this.currentRevisionId = revisionId;
+  this.newComment = comment;
+  this.isEditingComment = true;
+}
+
+
 
   async changeDecision(newStatus: string) {
     if (newStatus === 'Rejected' && !this.newComment.trim()) {
