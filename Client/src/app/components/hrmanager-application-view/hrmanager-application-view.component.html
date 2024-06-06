@@ -36,6 +36,9 @@
           'status-rejected':
             applicationDetails.is_evaluated &&
             applicationDetails.last_revision.status === 'Rejected',
+          'status-passed':
+            applicationDetails.is_evaluated &&
+            applicationDetails.last_revision.status === 'Pass',
           'status-accepted':
             applicationDetails.is_evaluated &&
             applicationDetails.last_revision.status === 'Accepted',

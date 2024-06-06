@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,Inject } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
@@ -9,9 +9,19 @@ import { CommonModule } from '@angular/common';
 import { ApplicationService } from '../../../services/application.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
-import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { RevisionService } from '../../../services/revision.service';
-import { MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -26,7 +36,6 @@ interface Revision {
   employee_id: number;
   name: string;
   role: string;
-
 }
 
 interface ApplicationViewDto {
@@ -49,7 +58,24 @@ interface ApplicationViewDto {
 @Component({
   selector: 'app-hrmanager-application-view',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, MatLabel, MatToolbar, MatButton, CommonModule, FormsModule, MatDialogModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule],
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatLabel,
+    MatToolbar,
+    MatButton,
+    CommonModule,
+    FormsModule,
+    MatDialogModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+  ],
   templateUrl: './hrmanager-application-view.component.html',
   styleUrls: ['./hrmanager-application-view.component.css'],
 })
@@ -63,10 +89,13 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   userRole: string | null = null;
   userName: string | null = null;
   isEditingComment: boolean = false;
-currentRevisionId: number | null = null;
+  currentRevisionId: number | null = null;
 
-
-  constructor(private applicationService: ApplicationService,private authService: AuthService,    public dialog: MatDialog ,private revisionService: RevisionService
+  constructor(
+    private applicationService: ApplicationService,
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private revisionService: RevisionService
   ) {}
 
   async ngOnInit() {
@@ -79,7 +108,8 @@ currentRevisionId: number | null = null;
 
   async fetchApplicationDetails() {
     try {
-      this.applicationDetails = await this.applicationService.getApplicationDetails(this.applicationId);
+      this.applicationDetails =
+        await this.applicationService.getApplicationDetails(this.applicationId);
     } catch (error) {
       this.error = 'Error fetching application details';
     } finally {
@@ -87,197 +117,202 @@ currentRevisionId: number | null = null;
     }
   }
 
-
-  // async addComment() {
-  //   if (this.isEditingComment) {
-  //     // If editing a comment, call the update method
-  //     await this.updateComment();
-  //   } else {
-  //   if (this.newComment.trim() || this.applicationDetails.is_evaluated) {
-  //     try {
-  //       const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
-  //       const employeeId =40 ;
-  //       // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
-  //       await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId, this.userName!, this.userRole!);
-  //       await this.fetchApplicationDetails();
-  //       this.newComment = '';
-  //     } catch (error) {
-  //       console.error('Error adding comment:', error);
-  //     }
-  //   }
-  // }
-  // }
-
-  // async updateComment() {
-  //   if (this.currentRevisionId !== null) {
-  //     try {
-  //       const updatedRevision = {
-  //         revision_id: this.currentRevisionId,
-  //         comment: this.newComment,
-  //         status: this.applicationDetails.last_revision.status,
-  //         application_id: this.applicationDetails.application_Id, // Ensure this is included
-  //         employee_id: this.applicationDetails.last_revision.employee_id, 
-  //         //application_id: this.applicationDetails.application_Id, 
-  //         // employee_id: 40, 
-  //         // employee_id: Number(this.authService.getUserId()), // Ensure this is correctly fetched from AuthService
-  //         date: new Date()
-  //       };
-
-  //       console.log('Payload being sent:', updatedRevision); // Add this line to debug
-
-  
-  //       await this.revisionService.updateRevision(updatedRevision);
-  //       await this.fetchApplicationDetails();
-  //       this.newComment = '';
-  //       this.isEditingComment = false;
-  //       this.currentRevisionId = null;
-  //     } catch (error) {
-  //       console.error('Error updating comment:', error);
-  //     }
-  //   }
-  // }
-  
-  
-//   // Call this method when entering edit mode
-// editComment(revisionId: number, comment: string) {
-//   this.currentRevisionId = revisionId;
-//   this.newComment = comment;
-//   this.isEditingComment = true;
-// }
-
-
-
-async changeDecision(newStatus: string) {
-  if (newStatus === 'Rejected' && !this.newComment.trim()) {
-    alert('Comment is mandatory when rejecting an application');
-    return;
-  }
-
-  if (newStatus === 'Pass' && this.userRole !== 'hra') {
-    return;
-  }
-
-  if (newStatus === 'Accepted') {
-    await this.showAcceptDialog(newStatus);
-  } else {
-    await this.showRejectDialog(newStatus);
-  }
-}
-
-async showAcceptDialog(newStatus: string) {
-  const dialogRef = this.dialog.open(AcceptDialog, {
-    width: '300px',
-    data: { message: 'Application was Accepted' }
-  });
-
-  dialogRef.afterClosed().subscribe(async result => {
-    if (result) {
-      try {
-        const employeeId = 40;
-        // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
-        await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
-        await this.fetchApplicationDetails();
-        alert('Application was Accepted');
-      } catch (error) {
-        console.error(`Error changing decision to ${newStatus}:`, error);
+  async changeDecision(newStatus: string) {
+    if (
+      (newStatus === 'Rejected' || newStatus === 'Pass') &&
+      !this.newComment.trim()
+    ) {
+      if (newStatus === 'Rejected') {
+        alert('Comment is mandatory when rejecting an application');
+      } else if (newStatus === 'Pass') {
+        alert(
+          'Please state the reason for passing the application. This will be directed to an HR Manager'
+        );
       }
+      return;
     }
-  });
-}
 
-async showRejectDialog(newStatus: string) {
-  const dialogRef = this.dialog.open(RejectDialog, {
-    width: '300px',
-    data: { message: 'Are you sure you want to reject this application?' }
-  });
+    if (newStatus === 'Pass' && this.userRole !== 'hra') {
+      return;
+    }
 
-  dialogRef.afterClosed().subscribe(async result => {
-    if (result) {
-      try {
-        const employeeId = 40;
-        // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
-        await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
-        await this.fetchApplicationDetails();
-        alert('Application was Rejected');
-      } catch (error) {
-        console.error(`Error changing decision to ${newStatus}:`, error);
+    if (newStatus === 'Accepted') {
+      await this.showAcceptDialog(newStatus);
+    } else if (newStatus === 'Rejected') {
+      await this.showRejectDialog(newStatus);
+    } else if (newStatus === 'Pass') {
+      await this.handlePassDecision(newStatus);
+    }
+  }
+
+  async handlePassDecision(newStatus: string) {
+    try {
+      const employeeId = 42; 
+      // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
+      await this.revisionService.addRevision(
+        this.applicationId,
+        this.newComment,
+        newStatus,
+        employeeId,
+        this.userName!,
+        this.userRole!
+      );
+      await this.fetchApplicationDetails();
+      alert('Application was Passed');
+    } catch (error) {
+      console.error(`Error changing decision to ${newStatus}:`, error);
+    }
+  }
+
+  async showAcceptDialog(newStatus: string) {
+    const dialogRef = this.dialog.open(AcceptDialog, {
+      width: '300px',
+      data: { message: 'Application was Accepted' },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        try {
+          const employeeId = 40;
+          // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
+          await this.revisionService.addRevision(
+            this.applicationId,
+            this.newComment,
+            newStatus,
+            employeeId,
+            this.userName!,
+            this.userRole!
+          );
+          await this.fetchApplicationDetails();
+          alert('Application was Accepted');
+        } catch (error) {
+          console.error(`Error changing decision to ${newStatus}:`, error);
+        }
       }
+    });
+  }
+
+  async showRejectDialog(newStatus: string) {
+    const dialogRef = this.dialog.open(RejectDialog, {
+      width: '300px',
+      data: { message: 'Are you sure you want to reject this application?' },
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        try {
+          const employeeId = 40;
+          // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
+          await this.revisionService.addRevision(
+            this.applicationId,
+            this.newComment,
+            newStatus,
+            employeeId,
+            this.userName!,
+            this.userRole!
+          );
+          await this.fetchApplicationDetails();
+          alert('Application was Rejected');
+        } catch (error) {
+          console.error(`Error changing decision to ${newStatus}:`, error);
+        }
+      }
+    });
+  }
+
+  async viewCommentHistory() {
+    const dialogRef = this.dialog.open(CommentHistoryDialog, {
+      width: '800px',
+      data: await this.revisionService.getRevisionHistory(this.applicationId),
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('Comment History dialog was closed');
+    });
+  }
+
+  getRoleDisplayName(role: string): string {
+    switch (role) {
+      case 'hra':
+        return 'HR Assistant';
+      case 'ca':
+        return 'Company Admin';
+      case 'hrm':
+        return 'HR Manager';
+      default:
+        return role;
     }
-  });
-}
-
-async viewCommentHistory() {
-  const dialogRef = this.dialog.open(CommentHistoryDialog, {
-    width: '800px',
-    data: await this.revisionService.getRevisionHistory(this.applicationId)
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-    console.log('Comment History dialog was closed');
-  });
-}
-
-getRoleDisplayName(role: string): string {
-  switch (role) {
-    case 'hra':
-      return 'HR Assistant';
-    case 'ca':
-      return 'Company Admin';
-    case 'hrm':
-      return 'HR Manager';
-    default:
-      return role; 
   }
 }
-}
-
 
 @Component({
   selector: 'accept-dialog',
   standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  imports: [
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+  ],
   templateUrl: './accept-dialog.html',
 })
 export class AcceptDialog {
-constructor(
-  public dialogRef: MatDialogRef<AcceptDialog>,
-  @Inject(MAT_DIALOG_DATA) public data: any
-) {}
+  constructor(
+    public dialogRef: MatDialogRef<AcceptDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
-onNoClick(): void {
-  this.dialogRef.close();
-}
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
-onYesClick(): void {
-  this.dialogRef.close(true);
-}
+  onYesClick(): void {
+    this.dialogRef.close(true);
+  }
 }
 
 @Component({
   selector: 'reject-dialog',
   standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  imports: [
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+  ],
   templateUrl: './reject-dialog.html',
 })
 export class RejectDialog {
-constructor(
-  public dialogRef: MatDialogRef<RejectDialog>,
-  @Inject(MAT_DIALOG_DATA) public data: any
-) {}
+  constructor(
+    public dialogRef: MatDialogRef<RejectDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
-onNoClick(): void {
-  this.dialogRef.close();
-}
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
-onYesClick(): void {
-  this.dialogRef.close(true);
-}
+  onYesClick(): void {
+    this.dialogRef.close(true);
+  }
 }
 
 @Component({
   selector: 'comment-history-dialog',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatIconModule, MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  imports: [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+  ],
   templateUrl: './comment-history-dialog.html',
 })
 export class CommentHistoryDialog {
@@ -298,5 +333,4 @@ export class CommentHistoryDialog {
         return role;
     }
   }
-  
 }

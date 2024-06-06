@@ -147,6 +147,10 @@ textarea:focus {
   background-color: #de3a3b;
 }
 
+.status-passed {
+  background-color: black;
+}
+
 .status-accepted {
   background-color: rgb(81,174,70);
 }
