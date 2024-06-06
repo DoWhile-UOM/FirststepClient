@@ -85,8 +85,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   loading: boolean = true;
   error: string | null = null;
   newComment: string = '';
-  userRole: string | null = null;
-  userName: string | null = null;
+  userRole: string = '';
+  userName: string = '';
   userID: number = 0; 
   isEditingComment: boolean = false;
   currentRevisionId: number | null = null;
@@ -99,12 +99,17 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.userID = 4123; // For testing
-    this.userRole = 'hra'; // For testing
+    this.userID = 40; // For testing
+    this.userRole = 'hra'; //This does not get passed
     this.userName = 'Nethma Karunathilaka'; //This does not get passed
     // this.userRole = this.authService.getUserId();
     // this.userRole = this.authService.getRole();
     // this.userName = this.authService.getName();
+
+    console.log('UserID:', this.userID);
+    console.log('UserRole:', this.userRole);
+    console.log('UserName:', this.userName);
+
     await this.fetchApplicationDetails();
   }
 
@@ -112,6 +117,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     try {
       this.applicationDetails =
         await this.applicationService.getApplicationDetails(this.applicationId);
+        console.log('Application Details:', this.applicationDetails);
+
     } catch (error) {
       this.error = 'Error fetching application details';
     } finally {
@@ -120,6 +127,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   }
 
   async changeDecision(newStatus: string) {
+    console.log('Changing decision to:', newStatus); // Debugging log
+
     if (
       (newStatus === 'Rejected' || newStatus === 'Pass') &&
       !this.newComment.trim()
@@ -133,6 +142,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     }
 
     if (newStatus === 'Pass' && this.userRole !== 'hra') {
+      console.log('User role is not hra, decision change not allowed.'); // Debugging log
       return;
     }
 
@@ -145,6 +155,18 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     }
   }
 
+  shouldShowChangeDecision(): boolean {
+    if (
+      this.userRole === 'hra' &&
+      this.applicationDetails.last_revision &&
+      (this.applicationDetails.last_revision.role === 'hrm' || this.applicationDetails.last_revision.role === 'ca')
+    ) {
+      return false;
+    }
+    return true;
+  }
+  
+
   showAlertDialog(title: string, message: string): void {
     this.dialog.open(AlertDialog, {
       width: '300px',
@@ -153,6 +175,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   }
 
   async handlePassDecision(newStatus: string) {
+    console.log('Handling pass decision with status:', newStatus); // Debugging log
+
     try {
       await this.revisionService.addRevision(
         this.applicationId,
@@ -162,10 +186,12 @@ export class HrmanagerApplicationViewComponent implements OnInit {
         this.userName!,
         this.userRole!
       );
+      console.log('Revision added successfully'); // Debugging log
+
       await this.fetchApplicationDetails();
       this.showAlertDialog('Success', 'Application was Passed');
     } catch (error) {
-      console.error(`Error changing decision to ${newStatus}:`, error);
+      console.error(`Error changing decision to ${newStatus}:`, error); // Log error
     }
   }
 
@@ -183,8 +209,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
             this.newComment,
             newStatus,
             this.userID,
-            this.userName!,
-            this.userRole!
+            this.userName,
+            this.userRole
           );
           await this.fetchApplicationDetails();
           this.showAlertDialog('Success', 'Application was Accepted');

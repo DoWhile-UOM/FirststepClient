@@ -16,7 +16,6 @@
             >{{ applicationDetails.first_name }}
             {{ applicationDetails.last_name }}</label
           >
-          <!-- New button -->
           <button
             mat-button
             class="View"
@@ -110,7 +109,7 @@
         </div>
       </div>
     
-      <div *ngIf="applicationDetails.is_evaluated">
+      <div *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()">
         <mat-label class="head">Change the decision</mat-label>
         <div class="comment-decision-section">
           <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
@@ -126,7 +125,7 @@
           </button>
         </div>
       </div>
-      <div class="decision-buttons">
+      <div *ngIf="shouldShowChangeDecision()" class="decision-buttons">
         <button
           mat-button
           class="eval"
@@ -149,12 +148,14 @@
         </button>
         <button
           mat-button
+          *ngIf="this.userRole == 'hra'"
           class="eval"
           style="
             color: black;
             background-color: rgba(0, 0, 0, 0.25);
             border: none;
           "
+
           (click)="changeDecision('Pass')"
         >
           Pass
