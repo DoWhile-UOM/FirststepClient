@@ -133,6 +133,8 @@ textarea:focus {
 }
 
 .status-label {
+  margin-right: 100px;
+  padding-right: 30px;
   position: absolute;
   top: 50%;
   right: 0;

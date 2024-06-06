@@ -88,6 +88,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   newComment: string = '';
   userRole: string | null = null;
   userName: string | null = null;
+  userID: number | null = null;
   isEditingComment: boolean = false;
   currentRevisionId: number | null = null;
 
@@ -101,6 +102,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   async ngOnInit() {
     this.userRole = 'hra'; // For testing
     this.userName = 'Nethma Karunathilaka'; // For testing
+    this.userID = 40; // For testing
+    // this.userRole = this.authService.getUserId();
     // this.userRole = this.authService.getRole();
     // this.userName = this.authService.getName();
     await this.fetchApplicationDetails();
@@ -123,11 +126,9 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       !this.newComment.trim()
     ) {
       if (newStatus === 'Rejected') {
-        alert('Comment is mandatory when rejecting an application');
+        this.showAlertDialog('Alert', 'Comment is mandatory when rejecting an application');
       } else if (newStatus === 'Pass') {
-        alert(
-          'Please state the reason for passing the application. This will be directed to an HR Manager'
-        );
+        this.showAlertDialog('Alert', 'Please state the reason for passing the application. This will be directed to an HR Manager');
       }
       return;
     }
@@ -145,6 +146,13 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     }
   }
 
+  showAlertDialog(title: string, message: string): void {
+    this.dialog.open(AlertDialog, {
+      width: '300px',
+      data: { title: title, message: message }
+    });
+  }
+
   async handlePassDecision(newStatus: string) {
     try {
       const employeeId = 42; 
@@ -158,7 +166,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
         this.userRole!
       );
       await this.fetchApplicationDetails();
-      alert('Application was Passed');
+      this.showAlertDialog('Success', 'Application was Passed');
     } catch (error) {
       console.error(`Error changing decision to ${newStatus}:`, error);
     }
@@ -184,7 +192,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
             this.userRole!
           );
           await this.fetchApplicationDetails();
-          alert('Application was Accepted');
+          this.showAlertDialog('Success', 'Application was Accepted');
         } catch (error) {
           console.error(`Error changing decision to ${newStatus}:`, error);
         }
@@ -212,7 +220,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
             this.userRole!
           );
           await this.fetchApplicationDetails();
-          alert('Application was Rejected');
+          this.showAlertDialog('Success', 'Application was Rejected');
         } catch (error) {
           console.error(`Error changing decision to ${newStatus}:`, error);
         }
@@ -332,5 +340,36 @@ export class CommentHistoryDialog {
       default:
         return role;
     }
+  }
+}
+
+@Component({
+  selector: 'alert-dialog',
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogTitle,
+    MatDialogContent,
+  ],
+  template: `
+    <h2 mat-dialog-title>{{ data.title }}</h2>
+    <mat-dialog-content>
+      <p>{{ data.message }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="onOkClick()">OK</button>
+    </mat-dialog-actions>
+  `,
+})
+export class AlertDialog {
+  constructor(
+    public dialogRef: MatDialogRef<AlertDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onOkClick(): void {
+    this.dialogRef.close();
   }
 }
