@@ -137,4 +137,15 @@ mat-form-field {
 .content{
   padding: 50px;
 }
-
+.loading-page{
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  height: 100%;
+  width: 70%;
+}
+.loading-spinner{
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}

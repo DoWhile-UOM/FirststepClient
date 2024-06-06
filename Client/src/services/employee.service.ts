@@ -12,15 +12,35 @@ interface Employee {
   password_hash: string;
   company_id: number;
 }
+interface User {
+  user_id: number;
+  password_hash: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
+  constructor(private snackBar: MatSnackBar) { }
 
   async getEmployeeDetails(id: number) {
     let empData: any;
     await axios.get(Apipaths.getEmployeeDetails + id)
+      .then((response) => {
+        empData = response.data;
+      })
+      .catch(function (error) {
+        alert("Network Error: " + error);
+      });;
+
+    return empData;
+  }
+  async getUserDetails(id: number) {
+    let empData: any;
+    await axios.get(Apipaths.getUserDetails + id)
       .then((response) => {
         empData = response.data;
       })
@@ -40,6 +60,19 @@ export class EmployeeService {
         console.error(error);
       });
   }
+  async updateUserDetails(user: User) {
+    await axios
+      .put(Apipaths.updateUserDetails, user)
+      .then((response) => {
+        if (response.status == 200) {
+          this.snackBar.open('User details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.snackBar.open('Error updating user details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      });
+  }
 
   async getEmployeeList(company_id: number) {
     let empData: any;
@@ -50,6 +83,7 @@ export class EmployeeService {
       })
       .catch(function (error) {
         alert("Network Error: " + error);
+
       });
 
     return empData;

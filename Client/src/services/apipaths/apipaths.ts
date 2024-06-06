@@ -5,11 +5,13 @@ export class Apipaths {
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
     static readonly addNewHRAssistant: string = this.baseUrl + 'Employee/AddNewHRAssistant';
     static readonly editemployee: string = this.baseUrl + 'Employee/UpdateEmployee/';
-    static readonly getEmployeeDetails: string = this.baseUrl + 'Employee/GetEmployeeById/';//https://localhost:7213/api/Employee/GetEmployeeById/
+    static readonly getEmployeeDetails: string = this.baseUrl + 'Employee/GetEmployeeById/';
     static readonly getEmployeeList: string = this.baseUrl + 'Employee/GetAllEmployees/';
     static readonly deleteEmployee: string = this.baseUrl + 'Employee/DeleteEmployee/'; // + employee_id
     static readonly getAllHRMs: string = this.baseUrl + 'Employee/GetAllHRManagers/'; // + company_id
     static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
+    static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId:int?user_id='; // + user_id 
+    static readonly updateUserDetails: string = this.baseUrl + 'User/UpdateUser';
 
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
