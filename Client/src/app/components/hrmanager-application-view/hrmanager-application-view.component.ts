@@ -96,7 +96,7 @@ currentRevisionId: number | null = null;
   //   if (this.newComment.trim() || this.applicationDetails.is_evaluated) {
   //     try {
   //       const status = this.applicationDetails.is_evaluated ? this.applicationDetails.last_revision.status : 'Not Evaluated';
-  //       const employeeId =42 ;
+  //       const employeeId =40 ;
   //       // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
   //       await this.revisionService.addRevision(this.applicationId, this.newComment, status, employeeId, this.userName!, this.userRole!);
   //       await this.fetchApplicationDetails();
@@ -118,7 +118,7 @@ currentRevisionId: number | null = null;
   //         application_id: this.applicationDetails.application_Id, // Ensure this is included
   //         employee_id: this.applicationDetails.last_revision.employee_id, 
   //         //application_id: this.applicationDetails.application_Id, 
-  //         // employee_id: 42, 
+  //         // employee_id: 40, 
   //         // employee_id: Number(this.authService.getUserId()), // Ensure this is correctly fetched from AuthService
   //         date: new Date()
   //       };
@@ -173,7 +173,7 @@ async showAcceptDialog(newStatus: string) {
   dialogRef.afterClosed().subscribe(async result => {
     if (result) {
       try {
-        const employeeId = 42;
+        const employeeId = 40;
         // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
         await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
         await this.fetchApplicationDetails();
@@ -194,7 +194,7 @@ async showRejectDialog(newStatus: string) {
   dialogRef.afterClosed().subscribe(async result => {
     if (result) {
       try {
-        const employeeId = 42;
+        const employeeId = 40;
         // const employeeId = Number(this.authService.getUserId()); // Ensure this is correctly fetched from AuthService
         await this.revisionService.addRevision(this.applicationId, this.newComment, newStatus, employeeId, this.userName!, this.userRole!);
         await this.fetchApplicationDetails();
@@ -232,7 +232,7 @@ getRoleDisplayName(role: string): string {
 }
 
 
-Component({
+@Component({
   selector: 'accept-dialog',
   standalone: true,
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
