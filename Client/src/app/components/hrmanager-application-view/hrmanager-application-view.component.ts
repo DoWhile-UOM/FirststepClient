@@ -28,6 +28,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Revision {
   revision_id: number;
@@ -101,7 +102,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     private dialog: MatDialog,
     private acRouter: ActivatedRoute,
     private router: Router,
-    private revisionService: RevisionService
+    private revisionService: RevisionService,
+    private snackBar: MatSnackBar
   ) {}
 
   async ngOnInit() {
@@ -121,9 +123,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
   async fetchApplicationDetails() {
     try {
-      this.applicationDetails =
-        await this.applicationService.getApplicationDetails(this.applicationId);
-        console.log('Application Details:', this.applicationDetails);
+      this.applicationDetails = await this.applicationService.getApplicationDetails(this.applicationId);
 
     } catch (error) {
       this.error = 'Error fetching application details';
@@ -133,8 +133,6 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   }
 
   async changeDecision(newStatus: string) {
-    console.log('Changing decision to:', newStatus); // Debugging log
-
     if (
       (newStatus === 'Rejected' || newStatus === 'Pass') &&
       !this.newComment.trim()
@@ -148,7 +146,6 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     }
 
     if (newStatus === 'Pass' && this.userRole !== 'hra') {
-      console.log('User role is not hra, decision change not allowed.'); // Debugging log
       return;
     }
 
@@ -181,8 +178,6 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   }
 
   async handlePassDecision(newStatus: string) {
-    console.log('Handling pass decision with status:', newStatus); // Debugging log
-
     try {
       await this.revisionService.addRevision(
         this.applicationId,
@@ -192,12 +187,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
         this.userName!,
         this.userRole!
       );
-      console.log('Revision added successfully'); // Debugging log
 
       await this.fetchApplicationDetails();
       this.showAlertDialog('Success', 'Application was Passed');
     } catch (error) {
-      console.error(`Error changing decision to ${newStatus}:`, error); // Log error
+      this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
     }
   }
 
@@ -221,7 +215,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
           await this.fetchApplicationDetails();
           this.showAlertDialog('Success', 'Application was Accepted');
         } catch (error) {
-          console.error(`Error changing decision to ${newStatus}:`, error);
+          this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
         }
       }
     });
@@ -247,7 +241,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
           await this.fetchApplicationDetails();
           this.showAlertDialog('Success', 'Application was Rejected');
         } catch (error) {
-          console.error(`Error changing decision to ${newStatus}:`, error);
+          this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
         }
       }
     });
@@ -258,10 +252,6 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       width: '1000px',
       height: '500px',
       data: await this.revisionService.getRevisionHistory(this.applicationId),
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('Comment History dialog was closed');
     });
   }
 

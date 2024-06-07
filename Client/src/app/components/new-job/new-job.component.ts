@@ -295,8 +295,6 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 
 		if (countryCode == undefined){
 			this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
-			//this.createJobFormGroup.controls.locationCountryControl.setValue('');
-			
 			this.spinner.hide();
 			return;
 		}
