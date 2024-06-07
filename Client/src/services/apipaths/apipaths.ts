@@ -15,7 +15,7 @@ export class Apipaths {
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
     static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
-    static readonly getAdvertisementsByCompanyID: string = this.baseUrl + 'Advertisement/GetAdvertisementsByCompanyID/'; // + company_id
+    static readonly GetCompanyAdvertisementList: string = this.baseUrl + 'Advertisement/GetCompanyAdvertisementList/'; // + emp_id
     static readonly addNewJob: string = this.baseUrl + 'Advertisement/AddAdvertisement';
     static readonly changeStatusOfJob: string = this.baseUrl + 'Advertisement/ChangeStatus/'; // + advertisement_id
     static readonly deleteJob: string = this.baseUrl + 'Advertisement/DeleteAdvertisement/'; // + advertisement_id
