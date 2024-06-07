@@ -58,19 +58,19 @@ mat-icon {
   width: 100%;
 }
 .labelName{
-  width: 30%; flex: none;
-
+  width: 100%; 
+  flex: none;
   display: flex !important;
-  margin-right: 10px;
+  
    
 }
 .labelContent{
   width: 60%; flex: none;
   display: flex !important;
-  margin-left: 10px;
+ 
 }
 .lName{
-  width:60%;
+  width:90%;
   align-items: flex-end; 
   display: flex; 
   justify-content: flex-end;
@@ -89,10 +89,10 @@ mat-icon {
   width: 100%;
 }
 .left{
-  width: 75%;
+  width: 50%;
 }
 .right{
-  width: 25%;
+  width: 50%;
 }
 .labelName, .labelContent {
   font-size: calc(1em + 1.333px); 
