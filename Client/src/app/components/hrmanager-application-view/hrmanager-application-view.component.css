@@ -181,15 +181,7 @@ textarea:focus {
 
 .comment-wrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px; /* Adjust the gap as needed */
   padding-left: 80px; /* Match the padding of the surrounding elements */
-}
-
-.comment-content {
-  flex: 1; /* This makes the comment content take up the remaining space */
-}
-
-.comment-buttons {
-  margin-top: 10px; /* Adjust this value to align the button correctly */
 }

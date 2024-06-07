@@ -91,20 +91,30 @@
           {{ getRoleDisplayName(applicationDetails.last_revision.role) }}
         </span>
       </div>
-      
-      <div class="comment-wrapper">
-        <div>
-          <mat-label class="head">Comment</mat-label>
-          <span
-            *ngIf="
-              applicationDetails.last_revision &&
-              applicationDetails.last_revision.comment
-            "
-          >
-            {{ applicationDetails.last_revision.comment }}
-          </span>
+      <div>
+        <mat-label class="head">Comment</mat-label>
+        <span
+          *ngIf="
+            applicationDetails.last_revision &&
+            applicationDetails.last_revision.comment
+          "
+        >
+          {{ applicationDetails.last_revision.comment }}
+        </span>
+    
+        <div *ngIf="!applicationDetails.is_evaluated">
+          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
+          <div style="display: flex; justify-content: space-between">            
+          </div>
         </div>
-        <div class="comment-buttons" *ngIf="applicationDetails.is_evaluated">
+      </div>
+    
+      <div *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()">
+        <mat-label class="head">Change the decision</mat-label>
+        <div class="comment-decision-section">
+          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
+        </div>
+        <div class="comment-buttons"  >
           <button
             mat-button
             style="margin: 10px;  border: solid 1px grey; color:grey;"
@@ -115,20 +125,6 @@
           </button>
         </div>
       </div>
-    
-      <div *ngIf="!applicationDetails.is_evaluated">
-        <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
-        <div style="display: flex; justify-content: space-between">            
-        </div>
-      </div>
-    
-      <div *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()">
-        <mat-label class="head">Change the decision</mat-label>
-        <div class="comment-decision-section">
-          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
-        </div>
-      </div>
-      
       <div *ngIf="shouldShowChangeDecision()" class="decision-buttons">
         <button
           mat-button
@@ -151,6 +147,7 @@
         >
           Reject
           <mat-icon>clear</mat-icon>
+
         </button>
         <button
           mat-button
@@ -161,14 +158,16 @@
             background-color: rgba(0, 0, 0, 0.25);
             border: none;
           "
+
           (click)="changeDecision('Pass')"
         >
+        <mat-icon>send</mat-icon>
+
           Pass
-          <mat-icon>send</mat-icon>
+
         </button>
       </div>
     </div>
-    
     
 
     
