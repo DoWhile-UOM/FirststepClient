@@ -62,110 +62,133 @@ interface updateSeeker {
   field_id: number;
   password: string;
   seekerSkills: string[];
-} 
+}
 
 @Component({
-    selector: 'app-seeker-edit-profile',
-    standalone: true,
-    templateUrl: './seeker-edit-profile.component.html',
-    styleUrl: './seeker-edit-profile.component.css',
-    imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, MatRadioModule, ReactiveFormsModule, CommonModule, MatFormField, AddSkillsComponent]
+  selector: 'app-seeker-edit-profile',
+  standalone: true,
+  templateUrl: './seeker-edit-profile.component.html',
+  styleUrl: './seeker-edit-profile.component.css',
+  imports: [
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FlexLayoutModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatChipsModule,
+    MatDividerModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
+    FormsModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatFormField,
+    AddSkillsComponent,
+  ],
 })
-export class SeekerEditProfileComponent {
-   // The image url of the default image
- url = './assets/images/SeekerEdit.jpg';
+export class SeekerEditProfileComponent implements OnInit {
+  // The image url of the default image
+  url = './assets/images/SeekerEdit.jpg';
 
- //image upload
- onselectFile(event: any) {
-   if (event.target.files) {
-     var reader = new FileReader();
-     reader.readAsDataURL(event.target.files[0]);
-     reader.onload = (event: any) => {
-       this.url = event.target.result;
-     };
-   }
- }
+  seekerDetails: Seeker = {} as Seeker;
+  seekerUpdate: updateSeeker = {} as updateSeeker;
+  fields: job_Field[] = [];
+  selectedFieldId!: number;
+  skills: string[] = [];
+  selected = false; //radio button
 
- seekerDetails: Seeker = {} as Seeker;
- seekerUpdate: updateSeeker = {} as updateSeeker;
+  @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
 
- constructor(
-   private seekerService: SeekerService,
-   private jobFieldService: JobfieldService
- ) {}
- user_id: number = 2095;
+  constructor(
+    private seekerService: SeekerService,
+    private jobFieldService: JobfieldService
+  ) {}
+  user_id: number = 2095;
 
- fields: job_Field[] = [];
+  async ngOnInit() {
+    await this.fetchSeekerDetails();
+    await this.jobFieldService.getAll().then((response) => {
+      this.fields = response;
+      this.selectedFieldId = this.seekerDetails.field_id;
+    });
+  }
 
- selectedFieldId!: number;
+  async ngAfterViewInit() {
+    this.skills = this.addSkillsComponent.skills;
+  }
 
- async ngOnInit() {
-   await this.fetchSeekerDetails();
-   await this.jobFieldService.getAll().then((response) => {
-     this.fields = response;
-     this.selectedFieldId = this.seekerDetails.field_id; // Assuming this is how you fetch the current field ID
-   });
- }
+  async fetchSeekerDetails() {
+    try {
+      const response = await this.seekerService.getSeekerDetails(this.user_id);
+      this.seekerDetails = response;
+    } catch (error) {
+      console.error('Error fetching seeker details:', error);
+    }
+  }
 
- async ngAfterViewInit() {
-   this.skills = this.addSkillsComponent.skills;
- }
- data(data: any) {
-   throw new Error('Method not implemented.');
- }
+  changeSkillsArray($event: Event) {
+    var skills = $event;
+    if (skills != null) {
+      this.skills = skills as unknown as string[];
+    }
+    alert('Skills: ' + this.skills);
+  }
 
- //radiobutton
- selected = false;
+  async onApply() {
+    this.seekerUpdate = {
+      first_name: this.seekerDetails.first_name,
+      last_name: this.seekerDetails.last_name,
+      email: this.seekerDetails.email,
+      phone_number: this.seekerDetails.phone_number,
+      bio: this.seekerDetails.bio,
+      description: this.seekerDetails.description,
+      university: this.seekerDetails.university,
+      cVurl: this.seekerDetails.cVurl,
+      profile_picture: this.seekerDetails.profile_picture,
+      linkedin: this.seekerDetails.linkedin,
+      field_id: this.selectedFieldId,
+      password: this.seekerDetails.password_hash,
+      seekerSkills: this.skills,
+    };
+    try {
+      await this.seekerService.editseeker(this.seekerUpdate, this.user_id);
+      alert('Profile updated successfully');
+    } catch (error) {
+      console.error('error updating profile', error);
+    }
+  }
 
- onRadioChange() {
-   this.selected = true;
- }
+  async onDelete(user_id: number) {
+    try {
+      await this.seekerService.deleteseeker(this.user_id).then(() => {
+        this.seekerDetails = {} as Seeker;
+      });
+    } catch (error) {
+      console.error('Error deleting seeker:', error);
+    }
+  }
 
- //get
- async fetchSeekerDetails() {
-   try {
-     const response = await this.seekerService.getSeekerDetails(this.user_id);
-     this.seekerDetails = response;
-   } catch (error) {
-     console.error('Error fetching seeker details:', error);
-   }
- }
+  //image upload
+  onselectFile(event: any) {
+    if (event.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
+    }
+  }
 
- //skills
+  data(data: any) {
+    throw new Error('Method not implemented.');
+  }
 
- skills: string[] = [];
- @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
-
- changeSkillsArray($event: Event) {
-   var skills = $event;
-   if (skills != null) {
-     this.skills = skills as unknown as string[];
-   }
-   alert('Skills: ' + this.skills);
- }
-
- //update
- async onApply() {
-   //this.seekerUpdate.field_id = this.selectedFieldId; //fetch the selected field id
-   // this.seekerUpdate.seekerSkills = this.skills;
-   // this.seekerUpdate.seekerSkills = this.skills;
-   try {
-     await this.seekerService.editseeker(this.seekerUpdate, this.user_id);
-   } catch (error) {
-     console.error('error updating profile', error);
-   }
- }
-
- //Delete
-
- async onDelete(user_id: number) {
-   try {
-     await this.seekerService.deleteseeker(this.user_id).then(() => {
-       this.seekerDetails = {} as Seeker;
-     });
-   } catch (error) {
-     console.error('Error deleting seeker:', error);
-   }
- }
-
+  onRadioChange() {
+    this.selected = true;
+  }
 }
