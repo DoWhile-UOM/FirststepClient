@@ -143,3 +143,36 @@
     flex-direction: column;
   }
   
+  .example-button-row {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin-left: 10px;
+  }
+  
+  .example-button-row .mat-mdc-button-base {
+    margin: 0px 8px 8px 0;
+  }
+  
+  .example-flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .example-button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+  }
+  
+  #discard {
+    --mdc-protected-button-label-text-color: #008080;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+
+  .button-container {
+    margin-left: 10px;
+    margin-bottom: 20px;
+  }
