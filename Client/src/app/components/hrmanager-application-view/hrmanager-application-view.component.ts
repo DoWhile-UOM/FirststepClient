@@ -26,6 +26,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface Revision {
   revision_id: number;
@@ -80,7 +81,7 @@ interface ApplicationViewDto {
 })
 export class HrmanagerApplicationViewComponent implements OnInit {
   @Input() showComments: boolean = true; // Accepts showComments as input
-  @Input() applicationId: number = 7; // Default value for testing
+  @Input() applicationId: number = 0;
   applicationDetails: ApplicationViewDto = {} as ApplicationViewDto;
   loading: boolean = true;
   error: string | null = null;
@@ -94,21 +95,23 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   constructor(
     private applicationService: ApplicationService,
     private authService: AuthService,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
+    private acRouter: ActivatedRoute,
+    private router: Router,
     private revisionService: RevisionService
   ) {}
 
   async ngOnInit() {
-    this.userID = 40; // For testing
-    this.userRole = 'hra'; //This does not get passed
-    this.userName = 'Nethma Karunathilaka'; //This does not get passed
-    // this.userRole = this.authService.getUserId();
-    // this.userRole = this.authService.getRole();
-    // this.userName = this.authService.getName();
+    this.userID = this.authService.getUserId();
+    this.userRole = this.authService.getRole();
+    this.userName = this.authService.getName();
 
-    console.log('UserID:', this.userID);
-    console.log('UserRole:', this.userRole);
-    console.log('UserName:', this.userName);
+    try {
+      this.applicationId = Number(this.acRouter.snapshot.paramMap.get('applicationId'));
+    }
+    catch {
+      this.router.navigate(['/notfound']);
+    }
 
     await this.fetchApplicationDetails();
   }
