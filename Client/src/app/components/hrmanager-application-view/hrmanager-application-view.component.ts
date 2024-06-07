@@ -26,8 +26,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ActivatedRoute } from '@angular/router';
-
 
 interface Revision {
   revision_id: number;
@@ -97,26 +95,20 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     private applicationService: ApplicationService,
     private authService: AuthService,
     public dialog: MatDialog,
-    private revisionService: RevisionService,
-    private route: ActivatedRoute
+    private revisionService: RevisionService
   ) {}
 
   async ngOnInit() {
-    // this.userID = 40; // For testing
-    // this.userRole = 'hra'; //This does not get passed
-    // this.userName = 'Nethma Karunathilaka'; //This does not get passed
-    this.userID = this.authService.getUserId();
-    this.userRole = this.authService.getRole();
-    this.userName = this.authService.getName();
+    this.userID = 40; // For testing
+    this.userRole = 'hra'; //This does not get passed
+    this.userName = 'Nethma Karunathilaka'; //This does not get passed
+    // this.userRole = this.authService.getUserId();
+    // this.userRole = this.authService.getRole();
+    // this.userName = this.authService.getName();
 
     console.log('UserID:', this.userID);
     console.log('UserRole:', this.userRole);
     console.log('UserName:', this.userName);
-
-    this.route.params.subscribe(params => {
-      this.applicationId = +params['applicationId'];
-      this.fetchApplicationDetails();
-    });
 
     await this.fetchApplicationDetails();
   }
@@ -125,7 +117,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     try {
       this.applicationDetails =
         await this.applicationService.getApplicationDetails(this.applicationId);
-        //console.log('Application Details:', this.applicationDetails);
+        console.log('Application Details:', this.applicationDetails);
 
     } catch (error) {
       this.error = 'Error fetching application details';

@@ -20,7 +20,7 @@ export const hrmRoutes: Routes = [
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
   { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent},
   { path: 'jobOfferList/applicationList', component: HrManagerApplicationListingComponent },
-  { path: 'jobOfferList/applicationList/applicationView/:applicationId', component: HrmanagerApplicationViewComponent },
+  { path: 'jobOfferList/applicationList/applicationView', component: HrmanagerApplicationViewComponent },
 
   //temp
   { path: 'editProfile', component: SeekerEditProfileComponent }
