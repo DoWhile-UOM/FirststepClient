@@ -20,7 +20,7 @@ async getSeekerDetails(id : number) {
       seekerData = response.data;
     })
     .catch (function (error) {
-      console.log("Network Error: " + error);
+      console.log("Network Error in getSeekerDetails : " + error);
     });;
 
   return seekerData;
