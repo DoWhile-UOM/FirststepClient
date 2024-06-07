@@ -25,8 +25,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
 
 interface Revision {
   revision_id: number;
@@ -75,6 +76,8 @@ interface ApplicationViewDto {
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatCardModule,
+    MatDividerModule,
   ],
   templateUrl: './hrmanager-application-view.component.html',
   styleUrls: ['./hrmanager-application-view.component.css'],
@@ -273,6 +276,10 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       default:
         return role;
     }
+  }
+
+  onBackButtonClick() {
+    window.history.back();
   }
 }
 
