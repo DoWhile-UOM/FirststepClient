@@ -10,6 +10,9 @@ import { ApplicationService } from '../../../services/application.service';
 import { url } from 'node:inspector';
 import { DocumentService } from '../../../services/document.service';
 import { NgIf } from '@angular/common';
+import { MatDialogModule} from '@angular/material/dialog';
+import { PdfViewComponent } from '../pdf-view/pdf-view.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 //interface application status
@@ -31,9 +34,10 @@ interface Job {
     standalone: true,
     templateUrl: './seeker-application-status.component.html',
     styleUrl: './seeker-application-status.component.css',
-    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule,NgIf]
+    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule,NgIf,MatDialogModule]
 })
 export class SeekerApplicationStatusComponent implements OnInit{
+
 
   applicationData: Application = {} as Application;
   
@@ -59,7 +63,8 @@ document: any ;
 application_id: number = 1014;
   constructor(private _formBuilder: FormBuilder,
     private applicationService: ApplicationService,
-    private documentService:DocumentService ) {}
+    private documentService:DocumentService,
+    public dialog:MatDialog) {}
 
 
 async ngOnInit() {
@@ -103,4 +108,7 @@ isCompleted(stepName: string): boolean {
   return stepIndex < currentStatusIndex || (stepIndex === currentStatusIndex  && this.applicationData.status !== 'Rejected');
  
 }
+viewDocument() {
+  const dialogRef = this.dialog.open(PdfViewComponent);
+  }
 }
