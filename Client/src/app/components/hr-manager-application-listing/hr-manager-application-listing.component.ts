@@ -177,7 +177,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', {jobID: this.jobID}]);
   }
 
-  explore(application_Id: number){
-    alert("Exploring " + application_Id);
+  explore(application_Id: number) {
+    this.router.navigate([this.auth.getRole() +'/jobOfferList/applicationList/applicationView', application_Id ]);
   }
+  
 }
