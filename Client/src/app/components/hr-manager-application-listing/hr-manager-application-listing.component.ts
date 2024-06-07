@@ -159,6 +159,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   async getApplicationList(jobID: number, status: string) {
+    jobID=1057;
     try {
       var listing: HRMListing = {title: '', job_number: 0, field_name: '', current_status: '', applicationList: []};
       

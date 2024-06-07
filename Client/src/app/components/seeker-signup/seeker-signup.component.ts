@@ -25,8 +25,10 @@ import { JobfieldService } from '../../../services/jobfield.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FormArray } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+
 
 interface field {
   field_id: number;
@@ -49,14 +51,28 @@ interface newSeeker {
   seekerSkills: string[];
 
 }
+
+interface requestOTP {
+  email: string | null | undefined;
+}
+
+interface verifyOTP {
+  email: string | null | undefined;
+  otp: string | null | undefined;
+}
 @Component({
-  selector: 'app-seeker-signup',
-  standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar],
-  templateUrl: './seeker-signup.component.html',
-  styleUrl: './seeker-signup.component.css'
+    selector: 'app-seeker-signup',
+    standalone: true,
+    templateUrl: './seeker-signup.component.html',
+    styleUrl: './seeker-signup.component.css',
+    imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar]
 })
 export class SeekerSignupComponent {
+  isEmailVerified: boolean = false;
+  isOTPRequestSent: boolean = false;
+  remainingTime = 0;
+  reqOTPbtntxt = "Request OTP";
+  isFormVerified: boolean = false;
   //file upload
 url = './assets/images/SeekerEdit.jpg';
 
@@ -81,17 +97,20 @@ seekerReg = this._formBuilder.group({
   field_id: ['', Validators.required],
   cVurl: ['', Validators.required],
   bio: ['', Validators.required],
-  otp: [''],
+  // otp: [''],
   description: ['', Validators.required],
   profile_picture: [''],
   seekerSkills: this._formBuilder.array([]),
+  otp_in: ['', Validators.required]
+
 });
 
 constructor(
   private _formBuilder: FormBuilder,
   private jobFieldService: JobfieldService,
   private seekerService: SeekerService,
-  private _snackBar: MatSnackBar
+  private _snackBar: MatSnackBar,
+  private snackbar: MatSnackBar, private auth: AuthService, private http: HttpClient
 ) {}
 
 fields: field[] = [];
@@ -103,6 +122,13 @@ async ngOnInit() {
   await this.jobFieldService.getAll().then((response) => {
     this.fields = response;
     console.log(this.fields);
+  });
+
+  //otp
+  this.seekerReg.statusChanges.subscribe(status => {
+    if (this.isEmailVerified) {
+      this.isFormVerified = status === 'VALID';
+    }
   });
 }
 ngAfterViewInit() {
@@ -119,6 +145,59 @@ changeSkillsArray($event: Event){
 		this.skills = skills as unknown as string[];
 	}
 	alert("Skills: " + this.skills);
+}
+
+async requestOTP() {
+
+  const userData: requestOTP = {
+    email: this.seekerReg.get('email')?.value
+  }
+
+  let verificationResult = await this.auth.requestOTP(userData)
+
+  if (verificationResult == true) {
+    this.snackbar.open("OTP Sent successful", "")._dismissAfter(3000);
+    this.printTextAfterFiveMinutes();
+  } else {
+    this.snackbar.open("OTP Request failed Please try Again", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+  }
+}
+
+
+async VerifyOTP() {
+  console.log(this.seekerReg.get('otp_in')?.value);
+
+  const userData: verifyOTP = {
+    email: this.seekerReg.get('email')?.value,
+    otp: this.seekerReg.get('otp_in')?.value
+  }
+
+  let verificationResult = await this.auth.verifyOTP(userData);
+
+  if (verificationResult == true) {
+    this.isEmailVerified = true;
+    this.snackbar.open("OTP verification successful", "", { duration: 2000 });
+  } else {
+    this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+  }
+
+}
+
+async printTextAfterFiveMinutes() {
+
+  this.isOTPRequestSent = true;
+  this.remainingTime = 5 * 60; // Initialize remaining time in seconds
+  this.reqOTPbtntxt = this.remainingTime.toString();
+
+  const intervalId = setInterval(() => {
+    this.remainingTime--;
+    if (this.remainingTime <= 0) {
+      clearInterval(intervalId); // Stop the timer when time is up
+      console.log("Timer off");
+      this.isOTPRequestSent = false;
+      this.reqOTPbtntxt = "Request OTP";
+    }
+  }, 1000); // Update every second
 }
 
 //Submit button
@@ -144,5 +223,7 @@ displayError(error: HttpErrorResponse) {
   }
   this._snackBar.open(message, "Close", { duration: 5000 });
 }
+
+
 
 }
