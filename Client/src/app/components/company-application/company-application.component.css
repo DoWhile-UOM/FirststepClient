@@ -60,11 +60,35 @@ mat-icon {
   width: 30%; flex: none;
 
   display: flex !important;
+  margin-right: 10px;
    
 }
+.labelContent{
+  width: 60%; flex: none;
+  display: flex !important;
+  margin-left: 10px;
+}
 .lName{
-  width:100%;
-  text-align: right;
+  width:60%;
+  align-items: flex-end; 
   display: flex; 
   justify-content: flex-end;
+}
+.lContent{
+  width:100%;
+  align-items: flex-start; 
+  display: flex; 
+  justify-content: flex-start;
+}
+.content {
+  display: flex;
+  justify-content: space-between; 
+  align-items: start; 
+  width: 100%;
+}
+.left{
+  width: 75%;
+}
+.right{
+  width: 25%;
 }
