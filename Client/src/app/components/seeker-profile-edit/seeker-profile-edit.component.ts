@@ -95,7 +95,6 @@ export class SeekerProfileEditComponent {
   hasDataLoaded: boolean = false;
   emailcaptured = '';
   selected = 'seeker.field_id';
-  seekerName= '';
   noOfCols: number = 2;
   user_id: number = 2095;//temp
   seeker:Seeker = {} as Seeker; // Initialize seeker object
@@ -133,7 +132,7 @@ export class SeekerProfileEditComponent {
   async ngOnInit() {
     try{
       this.spinner.show();
-      this.seeker = await this.seekerService.getSeekerDetails(this.authService.getUserId());
+      this.seeker = await this.seekerService.getSeekerDetails(this.user_id);
       // this.job_fields = await this.seekerService.getJobFields();
       console.log("Seeker: ", this.seeker);
       this.hasDataLoaded = true;

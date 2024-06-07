@@ -2,13 +2,13 @@
   <app-spinner></app-spinner>
   <mat-card class="card" *ngIf="hasDataLoaded == true">
     <div class="heading title">
-      <span class="sectionHeading">{{ seekerName }}</span>
+      <span class="sectionHeading">{{ seeker.first_name }} {{seeker.last_name}}</span>
     </div>
     <form class="form" #updateCompanyDetailsForm="ngForm">
       <!-- Top Section -->
       <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
         <mat-grid-tile>
-          <img src="assets/images/BistechLogo.png" class="md-card-image" />
+          <img src="{{seeker.profile_picture}}" class="md-card-image" />
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field
