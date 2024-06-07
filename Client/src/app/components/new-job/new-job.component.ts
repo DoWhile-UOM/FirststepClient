@@ -255,11 +255,14 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 	@HostListener('window:resize', ['$event'])
 	onResize() {
 		// resize the grid list based on the window size
-		if (window.innerWidth < window.innerHeight){
+		if (window.innerWidth < window.innerHeight || window.innerWidth < 700){
 			this.noOfCols = 1;
 		}
-		else {
-			this.noOfCols = window.innerWidth < 768 ? 2 : 3;
+		else if (window.innerWidth < 1400){
+			this.noOfCols = 2;
+		}
+		else{
+			this.noOfCols = 3;
 		}
 	}
 

@@ -36,7 +36,7 @@
 }
 
 .nu-column{
-  width: 5em;
+  max-width: 5em;
   text-align: center;
 }
 

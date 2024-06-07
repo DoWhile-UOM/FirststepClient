@@ -19,6 +19,7 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './advertisement-actions.component.css'
 })
 export class AdvertisementActionsComponent {
+
   @Input() currentStatus: boolean = false;
   @Input() expired: boolean = false;
   @Input() jobID: number = 0;
@@ -28,6 +29,7 @@ export class AdvertisementActionsComponent {
   @Input() company_name: string = "";
   @Input() job_title: string = "";
   @Input() job_field: string = "";
+  @Input() company_logo_url: string = "";
 
   icon: string = 'bookmark_border'; // bookmark
   isApplicationPage: boolean = false;
@@ -82,8 +84,14 @@ export class AdvertisementActionsComponent {
         seekerID: this.seekerId, 
         company_name: this.company_name, 
         job_title: this.job_title, 
-        job_field: this.job_field}
+        job_field: this.job_field,
+        company_logo_url: this.company_logo_url}
     }); 
   }
+
+  trackApplication() {
+    //route to application status
+    this.router.navigate(['/seeker/applicationReview']);
+    }
 }
 

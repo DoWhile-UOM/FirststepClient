@@ -55,20 +55,9 @@
                   </mat-error>
                 </mat-form-field>
   
-                <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
-                  [disabled]="isOTPRequestSent" id="otpreqbtn">{{ reqOTPbtntxt }} {{ remainingTime
-                  }}</button>
+                <button mat-raised-button class="apply-button" color="primary" (click)="openDialog()"
+                  [disabled]="isOTPRequestSent" id="otpreqbtn">Add your Email</button>
               </mat-grid-tile>
-  
-  
-              <mat-grid-tile class="button-with-inputbox">
-                <mat-form-field appearance="outline">
-                  <mat-label>OTP</mat-label>
-                  <input matInput placeholder="Enter Email" formControlName="otp_in" required />
-                </mat-form-field>
-                <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
-              </mat-grid-tile>
-  
   
               <mat-grid-tile class="button-with-inputbox">
                 <button mat-raised-button [disabled]="!isEmailVerified" matStepperNext class="apply-button"
@@ -86,15 +75,14 @@
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
                   <mat-label>Business Scale</mat-label>
-                  <mat-select formControlName="business_scale">
-                    <mat-option value="Sp">Sole Proprietorship</mat-option>
-                    <mat-option value="Ps">Partnership</mat-option>
-                    <mat-option value="Pvt">Private Limited Company</mat-option>
-                    <mat-option value="Plc">Public Limited Company</mat-option>
-                    <mat-option value="Clc">Company Limited Guarantee</mat-option>
+                  <mat-select formControlName="company_business_scale">
+                    <mat-option value="mic">Micro-Sized(Less Than 10 Employees)</mat-option>
+                    <mat-option value="sm">Small-Sized(10-50 Employees)</mat-option>
+                    <mat-option value="mid">Medium-Sized(50-250 Employees)</mat-option>
+                    <mat-option value="lrg">Large-Sized(More Than 250 Employees)</mat-option>
                   </mat-select>
                   <mat-error
-                    *ngIf="companyReg.controls['business_scale'].touched && companyReg.controls['business_scale'].errors">
+                    *ngIf="companyReg.controls['company_business_scale'].touched && companyReg.controls['company_business_scale'].errors">
                     Please select a business scale.
                   </mat-error>
                 </mat-form-field>
@@ -117,28 +105,38 @@
   
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
-                  <mat-label>Date of Registartion</mat-label>
-                  <input type="date" matInput placeholder="Enter Email" formControlName="company_applied_date" required />
+                  <mat-label>Company Date of Registartion</mat-label>
+                  <input type="date" matInput placeholder="Enter Email" formControlName="company_registered_date" required />
+                </mat-form-field>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                  <mat-label>Company Description</mat-label>
+                  <textarea matInput placeholder="Company Description" formControlName="company_description"></textarea>
+                </mat-form-field>
+              </mat-grid-tile>
+
+              <mat-grid-tile>
+                <mat-form-field appearance="outline">
+                  <mat-label>Company Logo</mat-label>
+                  <input matInput placeholder="Enter Email" formControlName="company_logo"/>
                 </mat-form-field>
               </mat-grid-tile>
   
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
-                  <mat-label>Documnet 1</mat-label>
-                  <input matInput placeholder="Enter Email" formControlName="business_reg_certificate" required />
+                  <mat-label>Business Registration Certificate</mat-label>
+                  <input matInput placeholder="Enter Email" formControlName="business_reg_certificate"/>
                 </mat-form-field>
               </mat-grid-tile>
   
   
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
-                  <mat-label>Documnet 2</mat-label>
-                  <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation"
-                    required />
-  
-  
+                  <mat-label>Certificate of Incorporation</mat-label>
+                  <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation"/>
                   <button>Upload File</button>
-  
                 </mat-form-field>
               </mat-grid-tile>
   
@@ -152,7 +150,7 @@
       <div>
         <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
           <mat-grid-tile style="width: 20%">
-            <button mat-raised-button [disabled]="!isFormVerified" class="apply-button" color="primary"
+            <button [disabled]="!isFormVerified" mat-raised-button class="apply-button" color="primary"
               style="width: 50%" (click)="onRegister()">
               Register
             </button>

@@ -56,6 +56,13 @@ interface CmpAdminReg {
 export class CompanyService {
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
+  public static BusinessScales: any[] = [
+    { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
+    { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
+    { name: 'Medium-Sized (50 - 250 Employees)', value: 'medium' },
+    { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
+  ];
+
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
 
@@ -102,6 +109,9 @@ export class CompanyService {
       this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     }).catch((error) => {
       console.log('Network Error: ' + error);
+      this.snackBar.open('Registration Error '+error.response.data, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      console.log('Registration Error: ' + error.response);
+      return error.response.data;
     });
   }
 
@@ -217,6 +227,19 @@ export class CompanyService {
     } catch (error) {
       console.log('Network Error: ' + error);
     }
+  }
+
+  async updateUnregCompanyDetails(company: Company, company_id: number) {
+    company.company_id = company_id; // should be chnaged
+    console.log('from service', company);
+    await axios
+      .put(Apipaths.updateUnregComapny + company_id, company) // tem slotion
+      .then((response) => {
+        this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      })
+      .catch((error) => {
+        console.log('Network Error: ' + error);
+      });
   }
 
 }
