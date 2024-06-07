@@ -56,7 +56,7 @@ export class SeekerApplicationStatusComponent implements OnInit{
 
 document: any ;
 //sample application id
-application_id: number = 1022;
+application_id: number = 1014;
   constructor(private _formBuilder: FormBuilder,
     private applicationService: ApplicationService,
     private documentService:DocumentService ) {}
