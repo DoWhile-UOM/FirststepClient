@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { AdvertisementHeaderComponent } from "../advertisement-header/advertisement-header.component";
@@ -33,7 +33,7 @@ interface Job {
     styleUrl: './seeker-application-status.component.css',
     imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule,NgIf]
 })
-export class SeekerApplicationStatusComponent {
+export class SeekerApplicationStatusComponent implements OnInit{
 
   applicationData: Application = {} as Application;
   
@@ -55,9 +55,8 @@ export class SeekerApplicationStatusComponent {
   });
 
 document: any ;
-documentName: string = 'KARATE.pdf';
 //sample application id
-application_id: number = 1015;
+application_id: number = 1022;
   constructor(private _formBuilder: FormBuilder,
     private applicationService: ApplicationService,
     private documentService:DocumentService ) {}
@@ -83,9 +82,9 @@ getApplicationStatus(): void{
 
 //get document url
 async getDocumentUrl(){
- this.documentService.generateSasToken(this.documentName).subscribe(
+ this.documentService.generateSasToken(this.applicationData.cv_name).subscribe(
     (token:string) => {
-      this.document= this.documentService.getBlobUrl(this.documentName, token);
+      this.document= this.documentService.getBlobUrl(this.applicationData.cv_name, token);
       console.log('Document URL:', this.document); 
       
     },
