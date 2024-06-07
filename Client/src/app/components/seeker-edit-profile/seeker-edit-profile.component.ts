@@ -14,11 +14,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SeekerService } from '../../../services/seeker.service';
+import { SkillService } from '../../../services/skill.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatFormField } from '@angular/material/form-field';
 
 interface job_Field {
@@ -68,7 +71,7 @@ interface updateSeeker {
     styleUrl: './seeker-edit-profile.component.css',
     imports: [MatIconModule, MatInputModule, MatFormFieldModule, FlexLayoutModule, MatCheckboxModule, MatButtonModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSlideToggleModule, MatToolbarModule, FormsModule, MatSelectModule, MatRadioModule, ReactiveFormsModule, CommonModule, MatFormField, AddSkillsComponent]
 })
-export class SeekerEditProfileComponent implements OnInit{
+export class SeekerEditProfileComponent {
    // The image url of the default image
  url = './assets/images/SeekerEdit.jpg';
 
@@ -90,9 +93,10 @@ export class SeekerEditProfileComponent implements OnInit{
    private seekerService: SeekerService,
    private jobFieldService: JobfieldService
  ) {}
- 
- user_id: number = 2134;
+ user_id: number = 2095;
+
  fields: job_Field[] = [];
+
  selectedFieldId!: number;
 
  async ngOnInit() {
@@ -105,6 +109,9 @@ export class SeekerEditProfileComponent implements OnInit{
 
  async ngAfterViewInit() {
    this.skills = this.addSkillsComponent.skills;
+ }
+ data(data: any) {
+   throw new Error('Method not implemented.');
  }
 
  //radiobutton
@@ -139,33 +146,26 @@ export class SeekerEditProfileComponent implements OnInit{
 
  //update
  async onApply() {
-  this.seekerUpdate = {
-    ...this.seekerDetails,
-    field_id: this.selectedFieldId,
-    seekerSkills: this.skills,
-    password: '' // Assume password handling is elsewhere or prompted separately
-  };
- try {
+   //this.seekerUpdate.field_id = this.selectedFieldId; //fetch the selected field id
+   // this.seekerUpdate.seekerSkills = this.skills;
+   // this.seekerUpdate.seekerSkills = this.skills;
+   try {
      await this.seekerService.editseeker(this.seekerUpdate, this.user_id);
-     alert('Profile updated successfully');
    } catch (error) {
      console.error('error updating profile', error);
-     alert('Failed to update profile');
    }
  }
 
  //Delete
 
- async onDelete() {
-  try {
-    await this.seekerService.deleteseeker(this.user_id).then(() => {
-      this.seekerDetails = {} as Seeker;
-      alert('Profile deleted successfully');
-    });
-  } catch (error) {
-    console.error('Error deleting seeker:', error);
-    alert('Failed to delete profile');
-  }
-}
+ async onDelete(user_id: number) {
+   try {
+     await this.seekerService.deleteseeker(this.user_id).then(() => {
+       this.seekerDetails = {} as Seeker;
+     });
+   } catch (error) {
+     console.error('Error deleting seeker:', error);
+   }
+ }
 
 }

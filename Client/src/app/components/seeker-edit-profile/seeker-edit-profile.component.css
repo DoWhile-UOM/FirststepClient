@@ -1,217 +1,216 @@
 h1 {
-    padding-top: 30px;
-    padding-left: 220px;
-    font-weight: 550;
-    font-size: 30px;
-    font-family: "roboto";
+  padding-top: 30px;
+  padding-left: 220px;
+  font-weight: 550;
+  font-size: 30px;
+  font-family: "roboto";
+}
+
+.form-popup {
+  width: 1000px;
+  margin: auto;
+  height: fit-content;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  padding: 25px;
+}
+
+.form-container mat-form-field {
+  width: 400px;
+  height: 60px;
+  padding-bottom: 5px;
+}
+.sidebyside mat-form-field {
+  width: 400px;
+  height: 60px;
+  margin: 0px 40px 0px 10px;
+}
+
+.custom-mat-form-field .mat-form-field-wrapper {
+  height: 10px;
+}
+
+.custom-mat-form-field .mat-form-field-flex {
+  height: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 100px !important;
+}
+
+::ng-deep
+  .mat-mdc-text-field-wrapper
+  .mat-mdc-form-field-flex
+  .mat-form-floating-label {
+  top: 0px !important;
+  font-size: 12px;
+}
+
+.form-container sidebyside {
+  display: flex;
+  flex-direction: column;
+  align-items: Center;
+  justify-content: space-between;
+}
+
+.flex-item {
+  flex: 2;
+}
+
+.up-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.up-container .left {
+  flex: 1;
+  padding: 10px;
+  align-items: center;
+}
+.right {
+  flex: 1;
+  padding: 10px;
+  align-items: right;
+}
+
+.form-container {
+  margin: 50px 50px 50px 50px;
+}
+
+#des {
+  width: 800px;
+  height: 200px;
+}
+
+.form-container skill {
+  width: auto;
+  height: auto;
+  border: 3px black;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+/* buttons */
+section {
+  display: flex;
+  width: fit-content;
+}
+
+.button-container {
+  margin-left: 10px;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 28px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: flex;
+  max-width: 600px;
+  text-align: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 0px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 120px;
+}
+
+#discard {
+  --mdc-protected-button-label-text-color: #008080;
+  margin-left: 5px;
+  margin-right: 10px;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: #008080;
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+::ng-deep .mat-stepper-horizontal-line {
+  border-top-color: white;
+  border-top-width: 5px solid !important;
+}
+
+::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header {
+  &[ng-reflect-selected="false"].mat-step-header {
+    background-color: white;
   }
-  
-  .form-popup {
-    width: 1000px;
-    margin: auto;
-    height: fit-content;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
-    padding: 25px;
+}
+
+::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header {
+  &[ng-reflect-selected="true"].mat-step-header {
+    background-color: white;
+    border: 1px solid rgb(167, 52, 52) !important;
+    backdrop-filter: blur(10px);
   }
-  
-  .form-container mat-form-field {
-    width: 400px;
-    height: 60px;
-    padding-bottom: 5px;
-  }
-  .sidebyside mat-form-field {
-    width: 400px;
-    height: 60px;
-    margin: 0px 40px 0px 10px;
-  }
-  
-  .custom-mat-form-field .mat-form-field-wrapper {
-    height: 10px;
-  }
-  
-  .custom-mat-form-field .mat-form-field-flex {
-    height: 100%;
-  }
-  
-  ::ng-deep .mat-mdc-text-field-wrapper {
-    height: 100px !important;
-  }
-  
-  ::ng-deep
-    .mat-mdc-text-field-wrapper
-    .mat-mdc-form-field-flex
-    .mat-form-floating-label {
-    top: 0px !important;
-    font-size: 12px;
-  }
-  
-  .form-container sidebyside {
-    display: flex;
-    flex-direction: column;
-    align-items: Center;
-    justify-content: space-between;
-  }
-  
-  .flex-item {
-    flex: 2;
-  }
-  
-  .up-container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .up-container .left {
-    flex: 1;
-    padding: 10px;
-    align-items: center;
-  }
-  .right {
-    flex: 1;
-    padding: 10px;
-    align-items: right;
-  }
-  
-  .form-container {
-    margin: 50px 50px 50px 50px;
-  }
-  
-  #des {
-    width: 800px;
-    height: 200px;
-  }
-  
-  .form-container skill {
-    width: auto;
-    height: auto;
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
-  }
-  
-  .example-chip-list {
-    width: 100%;
-  }
-  
-  /* buttons */
-  section {
-    display: flex;
-    width: fit-content;
-  }
-  
-  .button-container {
-    margin-left: 10px;
-  }
-  
-  .example-label {
-    display: table-cell;
-    font-size: 14px;
-    margin-left: 28px;
-    min-width: 120px;
-  }
-  
-  .example-button-row {
-    display: flex;
-    max-width: 600px;
-    text-align: center;
-    align-items: center;
-    margin-left: 10px;
-  }
-  
-  .example-button-row .mat-mdc-button-base {
-    margin: 0px 8px 8px 0;
-  }
-  
-  .example-flex-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .example-button-container {
-    display: flex;
-    justify-content: space-between;
-    width: 120px;
-  }
-  
-  #discard {
-    --mdc-protected-button-label-text-color: #008080;
-    margin-left: 5px;
-    margin-right: 10px;
-  }
-  
-  .mat-mdc-raised-button.mat-primary {
-    --mdc-protected-button-container-color: #008080;
-  }
-  
-  .example-chip-list {
-    width: 100%;
-  }
-  
-  ::ng-deep .mat-stepper-horizontal-line {
-    border-top-color: white;
-    border-top-width: 5px solid !important;
-  }
-  
-  ::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header {
-    &[ng-reflect-selected="false"].mat-step-header {
-      background-color: white;
-    }
-  }
-  
-  ::ng-deep .mat-primary.mat-step-header.mat-horizontal-stepper-header {
-    &[ng-reflect-selected="true"].mat-step-header {
-      background-color: white;
-      border: 1px solid rgb(167, 52, 52) !important;
-      backdrop-filter: blur(10px);
-    }
-  }
-  
-  .form-field-like {
-    position: relative; /* Needed for absolute positioning of the label */
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    padding-top: 20px; /* Increase padding-top to make space for the label */
-    margin-left: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #9f9f9f;
-    border-radius: 5px;
-    width: 830px;
-  }
-  
-  .form-field-like .label {
-    position: absolute;
-    top: -0.5em; /* Adjust this to move the label up to the border */
-    left: 10px; /* Adjust this to move the label inside from the left */
-    background: white; /* Same as the container background */
-    padding: 0 5px; /* Add padding on the sides of the label */
-    font-size: 12px; /* Adjust font size as needed */
-    color: #9f9f9f; /* Adjust text color as needed */
-  }
-  
-  .radio-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-field-like:hover {
-    border-color: black;
-  }
-  
-  .form-field-like.selected {
-    border-color: #009688;
-    border-width: 2px;
-  }
-  
-  .form-field-like.selected .label {
-    color: #21a497;
-  }
-  
-  .skillchip {
-    width: 850px;
-    margin-left: 10px;
-  }
-  
+}
+
+.form-field-like {
+  position: relative; /* Needed for absolute positioning of the label */
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  padding-top: 20px; /* Increase padding-top to make space for the label */
+  margin-left: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #9f9f9f;
+  border-radius: 5px;
+  width: 830px;
+}
+
+.form-field-like .label {
+  position: absolute;
+  top: -0.5em; /* Adjust this to move the label up to the border */
+  left: 10px; /* Adjust this to move the label inside from the left */
+  background: white; /* Same as the container background */
+  padding: 0 5px; /* Add padding on the sides of the label */
+  font-size: 12px; /* Adjust font size as needed */
+  color: #9f9f9f; /* Adjust text color as needed */
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field-like:hover {
+  border-color: black;
+}
+
+.form-field-like.selected {
+  border-color: #009688;
+  border-width: 2px;
+}
+
+.form-field-like.selected .label {
+  color: #21a497;
+}
+
+.skillchip {
+  width: 850px;
+  margin-left: 10px;
+}
