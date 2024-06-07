@@ -101,6 +101,16 @@
         >
           {{ applicationDetails.last_revision.comment }}
         </span>
+        <div class="comment-buttons"  *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()"  >
+          <button
+            mat-button
+            style="margin: 10px;  color:grey;"
+            (click)="viewCommentHistory()"
+          >
+            View Comment History
+            <mat-icon class="view" style="margin-left: 5px">history</mat-icon>
+          </button>
+        </div>
     
         <div *ngIf="!applicationDetails.is_evaluated">
           <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
@@ -114,16 +124,7 @@
         <div class="comment-decision-section">
           <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
         </div>
-        <div class="comment-buttons"  >
-          <button
-            mat-button
-            style="margin: 10px;  border: solid 1px grey; color:grey;"
-            (click)="viewCommentHistory()"
-          >
-            View Comment History
-            <mat-icon class="view" style="margin-left: 5px">history</mat-icon>
-          </button>
-        </div>
+        
       </div>
       <div *ngIf="shouldShowChangeDecision()" class="decision-buttons">
         <button
