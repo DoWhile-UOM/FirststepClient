@@ -102,7 +102,11 @@
           <div style="display: flex; justify-content: space-between"></div>
         </div>
       </div>
+    </div>
 
+    <mat-divider *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()"></mat-divider>
+
+    <div class="comment-section" *ngIf="showComments">
       <div *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()">
         <mat-label class="head">Change the decision</mat-label>
         <div class="comment-decision-section">
