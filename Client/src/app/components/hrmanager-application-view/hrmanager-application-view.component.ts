@@ -80,7 +80,7 @@ interface ApplicationViewDto {
 })
 export class HrmanagerApplicationViewComponent implements OnInit {
   @Input() showComments: boolean = true; // Accepts showComments as input
-  @Input() applicationId: number = 7; // Default value for testing
+  @Input() applicationId: number = 5; // Default value for testing
   applicationDetails: ApplicationViewDto = {} as ApplicationViewDto;
   loading: boolean = true;
   error: string | null = null;
@@ -249,7 +249,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
   async viewCommentHistory() {
     const dialogRef = this.dialog.open(CommentHistoryDialog, {
-      width: '800px',
+      width: '1000px',
+      height: '500px',
       data: await this.revisionService.getRevisionHistory(this.applicationId),
     });
 

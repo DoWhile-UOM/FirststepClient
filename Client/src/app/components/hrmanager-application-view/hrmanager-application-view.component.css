@@ -150,15 +150,15 @@ textarea:focus {
 }
 
 .status-passed {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .status-accepted {
-  background-color: rgb(81,174,70);
+  background-color:teal;
 }
 
 .status-not-evaluated {
-  background-color: teal;
+  background-color:rgba(0, 0, 0, 0.5);
 }
 
 .comment-decision-section {
@@ -177,4 +177,11 @@ textarea:focus {
   display: flex;
   gap: 10px; /* Add some space between the buttons */
   margin-top: 25px; /* Add some space above the buttons */
+}
+
+.comment-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px; /* Adjust the gap as needed */
+  padding-left: 80px; /* Match the padding of the surrounding elements */
 }
