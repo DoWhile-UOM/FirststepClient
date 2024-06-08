@@ -36,6 +36,7 @@ interface CompanyApplication {
   certificate_of_incorporation: string;
   comment: string;
   verified_system_admin_id: number;
+  company_business_scale: string;
 }
 interface EvaluatedCompanyDetails {
   company_id: number;
@@ -88,7 +89,7 @@ export class CompanyApplicationComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router
-  ) {}
+  ) { }
   //getCompanyApplicationById
   // ngOnInit() {
   //   console.log('inside ngOnInit');
@@ -206,7 +207,7 @@ export class CompanyApplicationComponent implements OnInit {
 export class CommentInCompanyEvaluation {
   comment: string = '';
 
-  constructor(public dialogRef: MatDialogRef<CommentInCompanyEvaluation>) {}
+  constructor(public dialogRef: MatDialogRef<CommentInCompanyEvaluation>) { }
 
   closeDialog() {
     this.dialogRef.close(this.comment);
@@ -231,7 +232,7 @@ export class CommentInCompanyEvaluation {
     MatDialogClose,
   ],
 })
-export class CannotRejectWithoutCommentPopup {}
+export class CannotRejectWithoutCommentPopup { }
 
 //comapany-approval-confirmation-popup
 @Component({
@@ -252,7 +253,7 @@ export class CannotRejectWithoutCommentPopup {}
 export class CompanyApprovalConfirmationPopup {
   constructor(
     public dialogRef: MatDialogRef<CompanyApprovalConfirmationPopup>
-  ) {}
+  ) { }
 
   closeDialog() {
     this.dialogRef.close('Approval Confirmed');

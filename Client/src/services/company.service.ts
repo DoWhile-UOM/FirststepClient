@@ -65,19 +65,13 @@ export class CompanyService {
 
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
-
-    await axios
-      .get(Apipaths.getCompanyDetails + companyId)
-      .then(function (response) {
-        try {
-          companyDetails = response.data;
-          console.log();
-        } catch (error) {
-          console.log('No company details found for the given id');
-        }
-      })
-      .catch((error) => {
-      });
+    try {
+      const response = await axios.get(Apipaths.getCompanyDetails + companyId);
+      companyDetails = response.data;
+      console.log(companyDetails);
+    } catch (error) {
+      console.error('Error fetching company details:', error);
+    }
 
     console.log(companyDetails);
     return companyDetails;
@@ -125,6 +119,24 @@ export class CompanyService {
   //       alert('Network Error: ' + error);
   //     });
   // }
+  async updateCompanyLogo(file: File, company_id: number) {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('companyId', company_id.toString());
+    await axios.patch(Apipaths.updateCompanyLogo + 'companyId=' + company_id, formData).then((response) => {
+      this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    }
+    ).catch((error) => {
+      this.snackBar.open('Error updating company logo', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    });
+    // await axios.put(Apipaths.updateCompanyLogo + company_id, { company_logo: company_logo })
+    //   .then((response) => {
+    //     this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    //   })
+    //   .catch((error) => {
+    //     console.log('Network Error: ' + error);
+    //   });
+  }
 
   async updateCompanyDetails(company: Company, company_id: number) {
     company.company_id = company_id; // should be chnaged
@@ -150,8 +162,11 @@ export class CompanyService {
         evaluatedCompanyDetails
       )
       .then((response) => {
+        this.snackBar.open('Company was registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
+        const errorMessage = error.message || 'Unknown error occurred';
+        this.snackBar.open(`Error occurred: ${errorMessage}`, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       });
   }
 
@@ -177,6 +192,7 @@ export class CompanyService {
       companyList = response.data;
       console.log('company list was received');
     } catch (error) {
+      this.snackBar.open('Error fetching company list', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
 
     return companyList;
@@ -198,7 +214,7 @@ export class CompanyService {
 
     return cmpData;
   }
-  
+
   //Get company Registration state details---End
 
   //Registration company state view Start here
@@ -215,7 +231,7 @@ export class CompanyService {
   //     console.log('Network Error: ' + error);
   //   }
   // }
-  
+
   async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
     try {
       const response = await axios.post(Apipaths.postCompanyAdminReg, {
@@ -223,9 +239,9 @@ export class CompanyService {
         type: type,
         company_id: companyId
       });
-      console.log('Company Admin Registration Successful');
+      this.snackBar.open('Company Admin registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     } catch (error) {
-      console.log('Network Error: ' + error);
+      this.snackBar.open('Error registering company admin', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
 

@@ -11,6 +11,8 @@ export class Apipaths {
     static readonly deleteEmployee: string = this.baseUrl + 'Employee/DeleteEmployee/'; // + employee_id
     static readonly getAllHRMs: string = this.baseUrl + 'Employee/GetAllHRManagers/'; // + company_id
     static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
+    static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId:int?user_id='; // + user_id 
+    static readonly updateUserDetails: string = this.baseUrl + 'User/UpdateUser';
 
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
@@ -40,6 +42,7 @@ export class Apipaths {
     static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
     static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
+    static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://localhost:7213/api/Company/UpdateCompanyLogo?companyId=7
     static readonly updateUnregComapny:string =this.baseUrl + 'Company/UpdateUnregisteredCompany/';
 
     // application
