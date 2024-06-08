@@ -10,7 +10,6 @@ interface Employee {
   last_name: string;
   email: string;
   password_hash: string;
-  company_id: number;
 }
 interface User {
   user_id: number;
@@ -38,6 +37,7 @@ export class EmployeeService {
 
     return empData;
   }
+  
   async getUserDetails(id: number) {
     let empData: any;
     await axios.get(Apipaths.getUserDetails + id)
@@ -50,6 +50,7 @@ export class EmployeeService {
 
     return empData;
   }
+  
   async updateEmployeeDetails(employee: Employee) {
     await axios
       .put(Apipaths.editemployee + 7, employee) // tem solution
@@ -60,6 +61,7 @@ export class EmployeeService {
         this.snackBar.open('Error updating employee details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
+  
   async updateUserDetails(user: User) {
     await axios
       .put(Apipaths.updateUserDetails, user)
@@ -89,8 +91,7 @@ export class EmployeeService {
   }
 
   async addNewHRManager(employee: any) {
-    try {
-      employee.company_id = 7; // sample company_id
+    try{
       await axios.post(Apipaths.addNewHRManager, employee)
         .then((response) => {
           console.log(response);
@@ -102,9 +103,7 @@ export class EmployeeService {
   }
 
   async addNewHRAssistant(employee: any) {
-    try {
-      employee.company_id = 7; // sample company_id
-
+    try{
       await axios.post(Apipaths.addNewHRAssistant, employee)
         .then((response) => {
           console.log(response);
@@ -137,7 +136,7 @@ export class EmployeeService {
     }
   }
 
-  async getAllHRMs(companyID: number) {
+  async getAllHRMs(companyID: string){
     let empData: any;
 
     await axios.get(Apipaths.getAllHRMs + companyID)
@@ -151,7 +150,7 @@ export class EmployeeService {
     return empData;
   }
 
-  async getAllHRAs(companyID: number) {
+  async getAllHRAs(companyID: string){
     let empData: any;
 
     await axios.get(Apipaths.getAllHRAs + companyID)

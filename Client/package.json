@@ -26,6 +26,7 @@
     "@angular/ssr": "^17.1.1",
     "@auth0/angular-jwt": "^5.2.0",
     "@azure/storage-blob": "^12.17.0",
+    "@syncfusion/ej2-angular-pdfviewer": "^24.2.7",
     "@syncfusion/ej2-angular-richtexteditor": "^24.2.7",
     "axios": "^1.6.7",
     "country-data": "^0.0.31",

@@ -1,5 +1,6 @@
 export class Apipaths {
     static readonly baseUrl: string = 'https://localhost:7213/api/';
+    //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
@@ -16,7 +17,7 @@ export class Apipaths {
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
     static readonly getAdvertisements: string = this.baseUrl + 'Advertisement/GetAllAdvertisements';
-    static readonly getAdvertisementsByCompanyID: string = this.baseUrl + 'Advertisement/GetAdvertisementsByCompanyID/'; // + company_id
+    static readonly GetCompanyAdvertisementList: string = this.baseUrl + 'Advertisement/GetCompanyAdvertisementList/'; // + emp_id
     static readonly addNewJob: string = this.baseUrl + 'Advertisement/AddAdvertisement';
     static readonly changeStatusOfJob: string = this.baseUrl + 'Advertisement/ChangeStatus/'; // + advertisement_id
     static readonly deleteJob: string = this.baseUrl + 'Advertisement/DeleteAdvertisement/'; // + advertisement_id
@@ -28,6 +29,7 @@ export class Apipaths {
     static readonly getAdvertisementByIDwithKeywords = this.baseUrl + 'Advertisement/GetAdvertisementById/update/'; // + advertisement_id
     static readonly updateAdvertisement = this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
     static readonly getAdvertisementsByHRA = this.baseUrl + 'Advertisement/GetAssignedAdvertisementsByHRA/hra_id='; // + employee_id
+    static readonly getRecommendedAdvertisements = this.baseUrl + 'Advertisement/GetRecommendedAdvertisements/seekerID='; // + seeker_id
 
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
@@ -40,8 +42,14 @@ export class Apipaths {
     static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
     static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
-    // company logo
     static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://localhost:7213/api/Company/UpdateCompanyLogo?companyId=7
+    static readonly updateUnregComapny:string =this.baseUrl + 'Company/UpdateUnregisteredCompany/';
+
+    // application
+    static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
+    static readonly changeAssignedHRA: string = this.baseUrl + 'Application/ChangeAssignedHRA/'; // + application_id
+    static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
+    static readonly getassignedApplications: string = this.baseUrl + 'Application/GetAssignedApplicationList/'; // + hra_id
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
@@ -70,7 +78,4 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
-
-    //application
-    static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
 }

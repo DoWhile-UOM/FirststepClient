@@ -74,7 +74,7 @@
 
 .container-content{
     margin-top: 1em;
-    width: 60%;
+    width: 65%;
 }
 
 .container-content mat-grid-tile{
@@ -91,8 +91,8 @@
 
 /* for temp */
 .company-logo img{
-    width: 135px;
-    height: 90px;
+    width: 110px;
+    height: 110px;
 }
 
 .paginator{
