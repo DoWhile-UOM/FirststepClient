@@ -24,6 +24,10 @@
     margin: 0;
 
   }
+  .sectionHeading{
+    margin: 6em 1em 1em 0.75em;
+
+  }
   .title {
     color: #008080;
     font-size: 25px;
@@ -89,15 +93,7 @@
     padding: 10px;
     margin-right: 10px;
   }
-  /* .apply-changes-class:hover {
-    background-color: #ffffff;
-    color: #008080;
-    border-width: 1px;
-    border-style: solid;
-    outline: none;
-    border-radius: 5px;
-    border-color: #008080;
-  } */
+  
   .discard-changes-class {
     background-color: #ffffff;
     color: #008080;
@@ -110,16 +106,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  /* .discard-changes-class:hover {
-    background-color: #008080;
-    color: #ffffff;
-    border-width: 1px;
-    border-style: none;
-    outline: none;
-    border-radius: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  } */
+
   button:hover {
     cursor: pointer;
   }
@@ -133,15 +120,7 @@
     padding: 2px 0;
     padding: 10px;
   }
-  /* .delete-account-class:hover {
-    background-color: #ffffff;
-    color: #d73434;
-    border-width: 1px;
-    border-style: solid;
-    outline: none;
-    border-radius: 5px;
-    padding: 2px 0;
-  } */
+  
   
   .container-otp{
     display: flex;
