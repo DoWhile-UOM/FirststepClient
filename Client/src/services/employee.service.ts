@@ -30,17 +30,19 @@ export class EmployeeService {
 
     return empData;
   }
+  //update employee in edit role
   async updateEmployeeDetails(employee: Employee) {
-    await axios
-      .put(Apipaths.editemployee + 7, employee) // tem solution
-      .then((response) => {
-        console.log('Emlpoyee details updated successfully');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    try{
+      await axios.put(Apipaths.editemployee + employee.user_id, employee)
+        .then((response) => {
+          console.log('Emlpoyee details updated successfully');
+        });
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
-  
+ 
   async getEmployeeList(company_id: string) {
     let empData: any;
 
