@@ -34,6 +34,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeekerService } from '../../../services/seeker.service';
+import { JobfieldService } from '../../../services/jobfield.service';
 
 interface job_Field {
   field_name: string;
@@ -43,7 +44,7 @@ interface job_Field {
 interface Seeker {
   user_id: number;
   email: string;
-  password: string; // Changed from password_hash
+  password_hash: string; 
   first_name: string;
   last_name: string;
   user_type: string;
@@ -110,10 +111,12 @@ export class SeekerProfileEditComponent {
   noOfCols: number = 2;
   seeker:Seeker = {} as Seeker;
   seekerUpdate: UpdateSeeker = {} as UpdateSeeker;
-  Fields:any[] = [];
+  fields: job_Field[] = [];
+  selectedFieldId!: number;
 
 
-  // job_fields: job_Field[] = [];
+
+
   // seekerSkills: string[] = [];
   // selectedSkills: string[] = [];
 
@@ -124,6 +127,7 @@ export class SeekerProfileEditComponent {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private authService: AuthService,
+    private jobFieldService: JobfieldService
   ) {
     this.seekerForm = this.fb.group({
       first_name: ['', Validators.required],
@@ -135,13 +139,17 @@ export class SeekerProfileEditComponent {
       university: [''],
       linkedin: [''],
       field_id: ['', Validators.required],
-      password: ['', Validators.required] // Changed from password_hash
+      password_hash: ['', Validators.required] // Changed from password_hash
     });
   }
 
   async ngOnInit() {
     this.spinner.show();
     try {
+      await this.jobFieldService.getAll().then((response) => {
+        this.fields = response;
+        this.selectedFieldId = this.seeker.field_id;
+      });
       const seeker = await this.seekerService.getSeekerDetails(this.user_id);
       this.seekerForm.patchValue(seeker);
       this.emailcaptured = seeker.email;

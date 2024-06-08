@@ -33,7 +33,7 @@ async getSeekerDetails(id: number) {
     const response = await axios.get('https://localhost:7213/api/Seeker/GetSeeker/' + id);
     return response.data;
   } catch (error) {
-    console.error("Network Error in getSeekerDetails: ");
+    //console.error("Network Error in getSeekerDetails: ");
   }
 }
 

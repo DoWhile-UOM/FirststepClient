@@ -148,6 +148,7 @@
     text-align: center;
     align-items: center;
     margin-left: 10px;
+    margin-top: 10px;
   }
   
   .example-button-row .mat-mdc-button-base {
@@ -169,4 +170,5 @@
   .button-container {
     margin-left: 10px;
     margin-bottom: 20px;
+    gap: 10px;
   }

@@ -11,6 +11,13 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
+            <mat-label>Bio</mat-label>
+            <input matInput formControlName="bio" required />
+            <mat-error *ngIf="seekerForm.get('bio')?.hasError('required')">Bio is required</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
             <input matInput formControlName="first_name" required />
             <mat-error *ngIf="seekerForm.get('first_name')?.hasError('required')">First name is required</mat-error>
@@ -23,13 +30,7 @@
             <mat-error *ngIf="seekerForm.get('last_name')?.hasError('required')">Last name is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field appearance="outline">
-            <mat-label>Bio</mat-label>
-            <input matInput formControlName="bio" required />
-            <mat-error *ngIf="seekerForm.get('bio')?.hasError('required')">Bio is required</mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+        
       </mat-grid-list>
       <div class="description-text-editor">
         <mat-form-field appearance="outline">
@@ -58,7 +59,7 @@
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password" required />
+            <input matInput formControlName="password_hash" type="password" required />
             <mat-error *ngIf="seekerForm.get('password')?.hasError('required')">Password is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
@@ -76,15 +77,9 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
-            <mat-label>CV URL</mat-label>
-            <input matInput formControlName="cVurl" />
-          </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field appearance="outline">
             <mat-label>Field</mat-label>
             <mat-select formControlName="field_id">
-              <mat-option *ngFor="let field of Fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
+              <mat-option *ngFor="let field of fields" >{{ field.field_name }}</mat-option>
             </mat-select>
             <mat-error *ngIf="seekerForm.get('field_id')?.hasError('required')">Field is required</mat-error>
           </mat-form-field>
@@ -112,9 +107,9 @@
       </div>
 
       <!-- CV upload button and view button -->
-      <div class="button-container">
+      <div class="button-container" style="gap: 10px;">
         <button mat-raised-button color="primary">Upload New</button>
-        <button mat-raised-button id="discard">View</button>
+        <button mat-raised-button id="view">View</button>
       </div>
 
       <mat-divider></mat-divider>
