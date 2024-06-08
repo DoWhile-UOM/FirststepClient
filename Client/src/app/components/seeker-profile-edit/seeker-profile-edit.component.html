@@ -58,11 +58,11 @@
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
             <input matInput formControlName="phone_number" required />
-            <mat-error *ngIf="seekerForm.get('phone_number')?.invalid">{{
-              phoneNumberErrorMessage()
-            }}</mat-error>
+            <mat-error *ngIf="seekerForm.get('phone_number')?.hasError('required')">Phone number is required</mat-error>
+            <mat-error *ngIf="seekerForm.get('phone_number')?.hasError('pattern')">Phone number is invalid</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+        
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
@@ -101,16 +101,13 @@
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Field</mat-label>
-            <mat-select formControlName="field_id">
-              <mat-option *ngFor="let field of fields">{{
-                field.field_name
-              }}</mat-option>
+            <mat-select formControlName="field_id" required>
+              <mat-option *ngFor="let field of fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
             </mat-select>
-            <mat-error *ngIf="seekerForm.get('field_id')?.hasError('required')"
-              >Field is required</mat-error
-            >
+            <mat-error *ngIf="seekerForm.get('field_id')?.hasError('required')">Field is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+        
         <mat-grid-tile>
           <!-- <app-add-skills formControlName="seekerSkills" (skillsChange)="onSkillsChange($event)"></app-add-skills> -->
         </mat-grid-tile>

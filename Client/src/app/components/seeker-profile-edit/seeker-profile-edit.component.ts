@@ -103,7 +103,7 @@ export class SeekerProfileEditComponent implements OnInit{
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone_number: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]], // Adjusted pattern for phone numbers with 7-15 digits
       bio: ['', Validators.required],
       description: ['', Validators.required],
       university: [''],
