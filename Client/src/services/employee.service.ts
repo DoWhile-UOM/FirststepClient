@@ -44,8 +44,8 @@ export class EmployeeService {
       .then((response) => {
         empData = response.data;
       })
-      .catch(function (error) {
-        alert("Network Error: " + error);
+      .catch((error) => {
+        this.snackBar.open('Error fetching user details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });;
 
     return empData;
@@ -54,10 +54,10 @@ export class EmployeeService {
     await axios
       .put(Apipaths.editemployee + 7, employee) // tem solution
       .then((response) => {
-        console.log('Emlpoyee details updated successfully');
+        this.snackBar.open('Employee details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
-        console.error(error);
+        this.snackBar.open('Error updating employee details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
   async updateUserDetails(user: User) {
@@ -69,7 +69,6 @@ export class EmployeeService {
         }
       })
       .catch((error) => {
-        console.log(error);
         this.snackBar.open('Error updating user details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }

@@ -93,10 +93,6 @@ export class RoleProfileEditComponent {
       this.user.first_name = this.employee.first_name;
       this.user.last_name = this.employee.last_name;
       this.user.password_hash = this.employee.password_hash;
-      console.log(this.user.user_id);
-      console.log(this.employee.password_hash);
-      console.log(this.user);
-
       await this.employeeService.updateUserDetails(this.user);
 
 
@@ -109,10 +105,6 @@ export class RoleProfileEditComponent {
     }
   }
   formValidation() {
-    console.log("inside the form validation function");
-    console.log(this.isFNameVaild);
-    console.log(this.isLNameVaild);
-    console.log(this.isEmailVaild);
 
     if (this.isFNameVaild && this.isLNameVaild && this.isEmailVaild) {
       this.updateChanges();
