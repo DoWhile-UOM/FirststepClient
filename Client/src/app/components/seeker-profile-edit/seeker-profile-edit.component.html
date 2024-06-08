@@ -5,7 +5,7 @@
       <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
     </div>
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
-      <mat-grid-list cols="2" rowHeight="140">
+      <mat-grid-list cols="2" rowHeight="140" style="margin: 0;">
         <mat-grid-tile>
           <img [src]="seekerForm.get('profile_picture')?.value" class="md-card-image" />
         </mat-grid-tile>
