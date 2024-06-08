@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
@@ -39,7 +39,7 @@ import { AddSkillsComponent } from '../add-skills/add-skills.component';
 interface SeekerProfile {
   user_id: number;
   email: string;
-  password?: string;
+  password: string; 
   first_name: string;
   last_name: string;
   phone_number: number;
@@ -70,7 +70,7 @@ interface VerifyOTP {
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css'
 })
-export class SeekerProfileEditComponent {
+export class SeekerProfileEditComponent implements OnInit{  
   seekerForm: FormGroup;
   hasDataLoaded: boolean = false;
   user_id: number = 2095;//temp
@@ -85,8 +85,10 @@ export class SeekerProfileEditComponent {
   passwordFieldType: string = 'password';
   passwordPlaceholder: string = '********';
 
+  @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
+
   // seekerSkills: string[] = [];
-  // selectedSkills: string[] = [];
+  //  selectedSkills: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -171,17 +173,12 @@ export class SeekerProfileEditComponent {
   
     this.spinner.show();
     try {
-      // Create a copy of the form value
-      const formValue: SeekerProfile = { ...this.seekerForm.value };
-  
-      // Ensure password is either a string or undefined
+      const formValue: Partial<SeekerProfile> = { ...this.seekerForm.value };
       if (formValue.password === this.passwordPlaceholder) {
-        formValue.password = undefined;
-      } else {
-        formValue.password = formValue.password || ''; // Ensure it is a string
+        delete formValue.password; // Remove password if it's still the placeholder
       }
   
-      // await this.seekerService.editSeeker(formValue, this.user_id);
+      await this.seekerService.editSeeker(formValue as SeekerProfile, this.user_id);
       this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
     } catch (error) {
       console.error("Error updating profile: ", error);
@@ -192,26 +189,16 @@ export class SeekerProfileEditComponent {
   }
   
   
-
   async discardChanges() {
     this.spinner.show();
     try {
-      await this.jobFieldService.getAll().then((response) => {
-        this.fields = response;
-      });
       const seeker = await this.seekerService.getSeekerProfile(this.user_id);
-      this.seekerForm.patchValue({  
-        first_name: seeker.first_name,
-        last_name: seeker.last_name,
-        email: seeker.email,
-        phone_number: seeker.phone_number,
-        bio: seeker.bio,
-        description: seeker.description,
-        university: seeker.university,
-        linkedin: seeker.linkedin,
-        field_id: seeker.field_id,
-        password: this.passwordPlaceholder
-      }); 
+      this.seekerForm.patchValue({
+        ...seeker,
+        password: this.passwordPlaceholder,
+        seekerSkills: seeker.seekerSkills || []
+      });
+      this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
     } catch (error) {
       console.error(error);
       this.snackBar.open('Failed to discard changes', 'Close', { duration: 3000 });
@@ -219,7 +206,7 @@ export class SeekerProfileEditComponent {
       this.spinner.hide();
     }
   }
-
+  
   async deleteAccount() {
     this.spinner.show();
     try {
@@ -236,6 +223,7 @@ export class SeekerProfileEditComponent {
   onSkillsChange(skills: string[]) {
     this.seekerForm.get('seekerSkills')?.setValue(skills);
   }
+  
   
 
   phoneNumberErrorMessage() {

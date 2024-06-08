@@ -75,33 +75,14 @@
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input
-              matInput
-              [type]="passwordFieldType"
-              formControlName="password"
-              (focus)="onPasswordFocus()"
-              (blur)="onPasswordBlur()"
-              required
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="togglePasswordVisibility()"
-              type="button"
-            >
-              <mat-icon>{{
-                passwordFieldType === "password"
-                  ? "visibility_off"
-                  : "visibility"
-              }}</mat-icon>
+            <input matInput [type]="passwordFieldType" formControlName="password" (focus)="onPasswordFocus()" (blur)="onPasswordBlur()" required />
+            <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+              <mat-icon>{{ passwordFieldType === 'password' ? 'visibility' : 'visibility_off' }}</mat-icon>
             </button>
-            <mat-error *ngIf="seekerForm.get('password')?.invalid">{{
-              passwordErrorMessage()
-            }}</mat-error>
-            <!-- <input matInput formControlName="password_hash" type="password" required /> -->
-            <!-- <mat-error *ngIf="seekerForm.get('password')?.hasError('required')">Password is required</mat-error> -->
+            <mat-error *ngIf="seekerForm.get('password')?.hasError('required')">Password is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+        
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>University</mat-label>
