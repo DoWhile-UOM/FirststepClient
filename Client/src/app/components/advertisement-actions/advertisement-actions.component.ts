@@ -88,8 +88,16 @@ export class AdvertisementActionsComponent {
   }
 
   trackApplication() {
-    //route to application status
-    this.router.navigate(['/seeker/applicationReview']);
+    //open dialog to track application
+    this.dialog.open(SeekerApplicationFormComponent,{
+      maxWidth: '100em',
+      data: {
+        company_name: this.company_name, 
+        job_title: this.job_title, 
+        job_field: this.job_field,
+        }
+    });
+
     }
 }
 

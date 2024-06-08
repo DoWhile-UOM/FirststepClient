@@ -7,7 +7,7 @@
     ></app-advertisement-header>
   </mat-card-header>
   <mat-divider></mat-divider>
-
+  <mat-dialog-content>
   <mat-stepper labelPosition="bottom" #stepper class="stepper" [linear]="true">
     <mat-step [stepControl]="firstFormGroup" [completed]="isCompleted('Submitted')" [editable]="false">
       <form [formGroup]="firstFormGroup">
@@ -33,13 +33,13 @@
 <div class="rejected-message" *ngIf="applicationData.status === 'Rejected'">
   Your application has been rejected
 </div>
-  <mat-divider></mat-divider>
-
-  <mat-card-title>Submitted Documents</mat-card-title>
-  <mat-card-content>
+</mat-dialog-content>
+    <mat-dialog-actions> 
+ 
     <div>CV</div>
     <div>
        <a mat-flat-button color="primary" [href]="document" target="_blank">View document</a>
     </div>
-  </mat-card-content>
+  </mat-dialog-actions> 
+
 </mat-card>

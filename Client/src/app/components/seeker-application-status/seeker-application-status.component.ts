@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { AdvertisementHeaderComponent } from "../advertisement-header/advertisement-header.component";
@@ -10,6 +10,11 @@ import { ApplicationService } from '../../../services/application.service';
 import { url } from 'node:inspector';
 import { DocumentService } from '../../../services/document.service';
 import { NgIf } from '@angular/common';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule
+} from '@angular/material/dialog';
+import { DialogData } from '../company-application/company-application.component';
 
 
 //interface application status
@@ -31,7 +36,7 @@ interface Job {
     standalone: true,
     templateUrl: './seeker-application-status.component.html',
     styleUrl: './seeker-application-status.component.css',
-    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule,NgIf]
+    imports: [MatCardModule, MatDividerModule, AdvertisementHeaderComponent,MatStepperModule,MatInputModule,FormsModule, ReactiveFormsModule,MatButtonModule,NgIf, MatDialogModule]
 })
 export class SeekerApplicationStatusComponent implements OnInit{
 
@@ -59,7 +64,8 @@ document: any ;
 application_id: number = 1014;
   constructor(private _formBuilder: FormBuilder,
     private applicationService: ApplicationService,
-    private documentService:DocumentService ) {}
+    private documentService:DocumentService, 
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
 
 async ngOnInit() {
