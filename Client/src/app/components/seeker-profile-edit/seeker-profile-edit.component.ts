@@ -110,7 +110,7 @@ export class SeekerProfileEditComponent implements OnInit{
       linkedin: [''],
       field_id: ['', Validators.required],
       password: ['', Validators.required],
-      seekerSkills: [[], Validators.required]
+      seekerSkills: [[]]
 
     });
   }
@@ -209,16 +209,21 @@ export class SeekerProfileEditComponent implements OnInit{
   }
   
   async deleteAccount() {
-    this.spinner.show();
-    try {
-      await this.seekerService.deleteSeeker(this.user_id);
-      this.snackBar.open('Profile deleted successfully', 'Close', { duration: 2000 });
-    } catch (error) {
-      console.error("Error deleting profile: ", error);
-      this.snackBar.open('Failed to delete profile', 'Close', { duration: 3000 });
-    } finally {
-      this.spinner.hide();
-    }
+    const dialogRef = this.dialog.open(ConfirmDeleteProfilePopUp);
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result === true) {
+        this.spinner.show();
+        try {
+          await this.seekerService.deleteSeeker(this.user_id);
+          this.snackBar.open('Profile deleted successfully', 'Close', { duration: 2000 });
+        } catch (error) {
+          console.error("Error deleting profile: ", error);
+          this.snackBar.open('Failed to delete profile', 'Close', { duration: 3000 });
+        } finally {
+          this.spinner.hide();
+        }
+      }
+    });
   }
 
   onSkillsChange(skills: string[]) {
@@ -436,3 +441,26 @@ export class ApprovingChangingEmailPopUp {
   ],
 })
 export class InformEmailShouldBeVerifiedPopUp {}
+
+@Component({
+  selector: 'confirm-delete-profile-pop-up',
+  templateUrl: 'confirm-delete-profile-pop-up.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
+})
+export class ConfirmDeleteProfilePopUp {
+  constructor(public dialogRef: MatDialogRef<ConfirmDeleteProfilePopUp>) {}
+
+  closeDialog() {
+    this.dialogRef.close(false);
+  }
+  yesAction(){
+    this.dialogRef.close(true);
+  }
+}
