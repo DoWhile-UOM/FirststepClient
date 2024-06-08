@@ -165,7 +165,7 @@ export class SeekerEditProfileComponent implements OnInit {
 
   async onDelete(user_id: number) {
     try {
-      await this.seekerService.deleteseeker(this.user_id).then(() => {
+      await this.seekerService.deleteSeeker(this.user_id).then(() => {
         this.seekerDetails = {} as Seeker;
       });
     } catch (error) {

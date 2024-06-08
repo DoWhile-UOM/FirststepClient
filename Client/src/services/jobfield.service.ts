@@ -25,4 +25,11 @@ export class JobfieldService {
 
     return fieldList;
   }
+
+  //For seeker profile edit
+  async getFieldNameById(fieldId: number): Promise<string> {
+    const fields = await this.getAll();
+    const field = fields.find((f: any) => f.field_id === fieldId);
+    return field ? field.field_name : 'Unknown';
+  }
 }

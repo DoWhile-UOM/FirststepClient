@@ -21,7 +21,6 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { CompanyService } from '../../../services/company.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatCardModule } from '@angular/material/card';
@@ -35,22 +34,14 @@ import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
+import { AddSkillsComponent } from '../add-skills/add-skills.component';
 
-interface job_Field {
-  field_name: string;
-  field_id: number;
-}
-
-interface Seeker {
+interface SeekerProfile {
   user_id: number;
   email: string;
-  password_hash: string; 
+  password?: string;
   first_name: string;
   last_name: string;
-  user_type: string;
-  token: string;
-  refresh_token: string;
-  refresh_token_expiry: string;
   phone_number: number;
   bio: string;
   description: string;
@@ -59,25 +50,8 @@ interface Seeker {
   profile_picture: string;
   linkedin: string;
   field_id: number;
-  job_Field?: job_Field;
-  job_field_name?: string;
+  field_name?: string;
   seekerSkills?: string[];
-}
-
-interface UpdateSeeker {
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
-  phone_number: number;
-  bio: string;
-  description: string;
-  university: string;
-  cVurl: string;
-  profile_picture: string;
-  linkedin: string;
-  field_id: number;
-  seekerSkills: string[];
 }
 
 interface RequestOTP {
@@ -100,22 +74,16 @@ export class SeekerProfileEditComponent {
   seekerForm: FormGroup;
   hasDataLoaded: boolean = false;
   user_id: number = 2095;//temp
-  isConfrimedToChangeEmail: boolean = false;
+  isConfirmedToChangeEmail: boolean = false;
   emailcaptured = '';
   otp: string = '';
   isOTPRequestSent: boolean = false;
   remainingTime: number = 0;
   reqOTPbtntxt: string = 'Request OTP';
-  // isFormVerified: boolean = false;
-  // selected = 'seeker.field_id';
   noOfCols: number = 2;
-  seeker:Seeker = {} as Seeker;
-  seekerUpdate: UpdateSeeker = {} as UpdateSeeker;
-  fields: job_Field[] = [];
-  selectedFieldId!: number;
-
-
-
+  fields: any = [];
+  passwordFieldType: string = 'password';
+  passwordPlaceholder: string = '********';
 
   // seekerSkills: string[] = [];
   // selectedSkills: string[] = [];
@@ -139,7 +107,9 @@ export class SeekerProfileEditComponent {
       university: [''],
       linkedin: [''],
       field_id: ['', Validators.required],
-      password_hash: ['', Validators.required] // Changed from password_hash
+      password: ['', Validators.required],
+      seekerSkills: [[], Validators.required]
+
     });
   }
 
@@ -148,10 +118,21 @@ export class SeekerProfileEditComponent {
     try {
       await this.jobFieldService.getAll().then((response) => {
         this.fields = response;
-        this.selectedFieldId = this.seeker.field_id;
       });
-      const seeker = await this.seekerService.getSeekerDetails(this.user_id);
-      this.seekerForm.patchValue(seeker);
+      const seeker = await this.seekerService.getSeekerProfile(this.user_id);
+      this.seekerForm.patchValue({  
+        first_name: seeker.first_name,
+        last_name: seeker.last_name,
+        email: seeker.email,
+        phone_number: seeker.phone_number,
+        bio: seeker.bio,
+        description: seeker.description,
+        university: seeker.university,
+        linkedin: seeker.linkedin,
+        field_id: seeker.field_id,
+        password: this.passwordPlaceholder,
+        
+      }); 
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
@@ -162,20 +143,45 @@ export class SeekerProfileEditComponent {
     }
   }
 
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
+  onPasswordFocus() {
+    if (this.seekerForm.get('password')?.value === this.passwordPlaceholder) {
+      this.seekerForm.get('password')?.setValue('');
+    }
+  }
+
+  onPasswordBlur() {
+    if (!this.seekerForm.get('password')?.value) {
+      this.seekerForm.get('password')?.setValue(this.passwordPlaceholder);
+    }
+  }
   async onSubmit() {
     if (this.seekerForm.invalid) {
       this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
-
-    if (this.emailcaptured !== this.seekerForm.get('email')?.value && !this.isConfrimedToChangeEmail) {
+  
+    if (this.emailcaptured !== this.seekerForm.get('email')?.value && !this.isConfirmedToChangeEmail) {
       this.dialog.open(InformEmailShouldBeVerifiedPopUp);
       return;
     }
-
+  
     this.spinner.show();
     try {
-      await this.seekerService.editSeeker(this.seekerForm.value as UpdateSeeker, this.user_id);
+      // Create a copy of the form value
+      const formValue: SeekerProfile = { ...this.seekerForm.value };
+  
+      // Ensure password is either a string or undefined
+      if (formValue.password === this.passwordPlaceholder) {
+        formValue.password = undefined;
+      } else {
+        formValue.password = formValue.password || ''; // Ensure it is a string
+      }
+  
+      // await this.seekerService.editSeeker(formValue, this.user_id);
       this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
     } catch (error) {
       console.error("Error updating profile: ", error);
@@ -184,13 +190,28 @@ export class SeekerProfileEditComponent {
       this.spinner.hide();
     }
   }
+  
+  
 
   async discardChanges() {
     this.spinner.show();
     try {
-      const seeker = await this.seekerService.getSeekerDetails(this.user_id);
-      this.seekerForm.patchValue(seeker);
-      this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
+      await this.jobFieldService.getAll().then((response) => {
+        this.fields = response;
+      });
+      const seeker = await this.seekerService.getSeekerProfile(this.user_id);
+      this.seekerForm.patchValue({  
+        first_name: seeker.first_name,
+        last_name: seeker.last_name,
+        email: seeker.email,
+        phone_number: seeker.phone_number,
+        bio: seeker.bio,
+        description: seeker.description,
+        university: seeker.university,
+        linkedin: seeker.linkedin,
+        field_id: seeker.field_id,
+        password: this.passwordPlaceholder
+      }); 
     } catch (error) {
       console.error(error);
       this.snackBar.open('Failed to discard changes', 'Close', { duration: 3000 });
@@ -202,7 +223,7 @@ export class SeekerProfileEditComponent {
   async deleteAccount() {
     this.spinner.show();
     try {
-      await this.seekerService.deleteseeker(this.user_id);
+      await this.seekerService.deleteSeeker(this.user_id);
       this.snackBar.open('Profile deleted successfully', 'Close', { duration: 2000 });
     } catch (error) {
       console.error("Error deleting profile: ", error);
@@ -211,6 +232,11 @@ export class SeekerProfileEditComponent {
       this.spinner.hide();
     }
   }
+
+  onSkillsChange(skills: string[]) {
+    this.seekerForm.get('seekerSkills')?.setValue(skills);
+  }
+  
 
   phoneNumberErrorMessage() {
     if (this.seekerForm.get('phone_number')?.hasError('required')) {
@@ -281,7 +307,7 @@ export class SeekerProfileEditComponent {
     const dialogRef = this.dialog.open(ApprovingChangingEmailPopUp);
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.isConfrimedToChangeEmail = true;
+        this.isConfirmedToChangeEmail = true;
         this.emailcaptured = this.seekerForm.get('email')?.value;
         this.requestOTP();
       }
