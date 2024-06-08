@@ -162,6 +162,7 @@ export class SeekerProfileEditComponent implements OnInit{
   }
   async onSubmit() {
     if (this.seekerForm.invalid) {
+      this.seekerForm.markAllAsTouched(); // Mark all fields as touched to trigger validation messages
       this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
@@ -290,6 +291,28 @@ export class SeekerProfileEditComponent implements OnInit{
     }
     return '';
   }
+
+  getErrorMessage(formControlName: string): string {
+    const control = this.seekerForm.get(formControlName);
+    if (control?.hasError('required')) {
+      return `${formControlName.replace('_', ' ')} is required`;
+    }
+    if (control?.hasError('email')) {
+      return 'Email is invalid';
+    }
+    if (control?.hasError('pattern')) {
+      if (formControlName === 'phone_number') {
+        return 'Phone number is invalid';
+      }
+    }
+    return '';
+  }
+  
+  hasError(formControlName: string): boolean {
+    const control = this.seekerForm.get(formControlName);
+    return control ? control.invalid && (control.dirty || control.touched) : false;
+  }
+  
 
   confirmToChangeEmail() {
     const dialogRef = this.dialog.open(ApprovingChangingEmailPopUp);
