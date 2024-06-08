@@ -83,26 +83,6 @@
         </mat-grid-tile>
       </mat-grid-list>
 
-      <!-- OTP Section -->
-      <div *ngIf="isConfirmedToChangeEmail">
-        <mat-grid-list cols="1" rowHeight="300">
-          <mat-grid-tile>
-            <div class="container-otp">
-              <span class="mat-typography">Click send otp button</span>
-              <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()" [disabled]="isOTPRequestSent">
-                {{ reqOTPbtntxt }} {{ remainingTime }}
-              </button>
-              <span class="mat-typography">Once that button is clicked, enter the otp received in the provided email address.</span>
-              <mat-form-field appearance="outline">
-                <mat-label>OTP</mat-label>
-                <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}" required />
-              </mat-form-field>
-              <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
-            </div>
-          </mat-grid-tile>
-        </mat-grid-list>
-      </div>
-
       <!-- CV upload button and view button -->
       <div class="button-container" style="gap: 10px;">
         <button mat-raised-button color="primary">Upload New</button>
