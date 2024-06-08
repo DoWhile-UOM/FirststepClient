@@ -1,0 +1,55 @@
+<mat-card class="card">
+
+  <form [formGroup]="companyReg">
+
+    <mat-grid-list cols="1" rowHeight="100">
+
+      <mat-grid-tile>
+        <h3>Verify Your Email Address</h3>
+      </mat-grid-tile>
+
+      <mat-grid-tile class="button-with-inputbox">
+        <mat-form-field appearance="outline">
+          <mat-label>Email Address</mat-label>
+          <input matInput placeholder="Enter Email" [(ngModel)]="useremailAddress" formControlName="company_email"
+            required />
+          <mat-error
+            *ngIf="companyReg.controls['company_email'].touched && companyReg.controls['company_email'].errors">
+            Valid Email is required
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
+          [disabled]="requestBtnstate" id="otpreqbtn">{{ requestBtnstate ? 'Resend in ' + rmnTime + ' sec' : 'Request'
+          }}</button>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile class="button-with-inputbox">
+        <mat-form-field appearance="outline">
+          <mat-label>OTP</mat-label>
+          <input matInput placeholder="Enter Email" formControlName="otp_in" required />
+        </mat-form-field>
+        <button [disabled]="verifyBtnstate" mat-raised-button class="apply-button" color="primary"
+          (click)="VerifyOTP()">Verify OTP</button>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+
+  <mat-divider></mat-divider>
+  <div>
+
+    <mat-grid-list cols="3" rowHeight="140" style="display: flex; justify-content: space-between">
+
+      <mat-grid-tile style="width: 20%">
+        <button mat-raised-button class="apply-button" (click)="cancelDialog()" color="secondary" style="width: 50%">
+          Cancel
+        </button>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+  </div>
+
+</mat-card>

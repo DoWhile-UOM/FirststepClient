@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -12,19 +13,13 @@ import { MatButtonModule } from '@angular/material/button';
     MatSlideToggleModule,
     MatToolbarModule,
     MatButtonModule,
+    RouterModule
   ],
 })
 export class LandingPageComponent {
-  selected: number = 0;
-  colorList = ['primary', 'back', 'black', 'black'];
+  constructor(private router: Router) {}
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.colorList.forEach((element) => {
-      element = 'black';
-    });
-
-    this.colorList[this.selected] = 'primary';
+  login(){
+    this.router.navigate(['/login']);
   }
 }

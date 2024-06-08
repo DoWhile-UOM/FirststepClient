@@ -3,6 +3,7 @@
   width: 60%;
   min-width: 400px;
   margin: 0 auto;
+  font-size: 15.333px;
 }
 .card {
   padding: 2em;
@@ -57,14 +58,42 @@ mat-icon {
   width: 100%;
 }
 .labelName{
-  width: 30%; flex: none;
-
+  width: 100%; 
+  flex: none;
   display: flex !important;
+  
    
 }
+.labelContent{
+  width: 60%; flex: none;
+  display: flex !important;
+ 
+}
 .lName{
-  width:100%;
-  text-align: right;
+  width:90%;
+  align-items: flex-end; 
   display: flex; 
   justify-content: flex-end;
+  font-weight: bold;
+}
+.lContent{
+  width:100%;
+  align-items: flex-start; 
+  display: flex; 
+  justify-content: flex-start;
+}
+.content {
+  display: flex;
+  justify-content: space-between; 
+  align-items: start; 
+  width: 100%;
+}
+.left{
+  width: 50%;
+}
+.right{
+  width: 50%;
+}
+.labelName, .labelContent {
+  font-size: calc(1em + 1.333px); 
 }

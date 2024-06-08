@@ -1,4 +1,4 @@
-.dummy-navbar {
+/* .dummy-navbar {
   display: flex;
   justify-content: flex-end;
 }
@@ -96,6 +96,7 @@ mat-button {
 }
 
 /* media query section starts here*/
+/*
 @media only screen and (max-width: 768px) {
   .body-card {
     width: 80%;
@@ -109,4 +110,42 @@ mat-button {
   .field-content {
     width: 100%;
   }
+} */
+/* components/role-profile-edit/role-profile-edit.component.css */
+.full-width {
+  width: 100%;
+}
+
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  margin:20px;
+  box-sizing: border-box;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+}
+
+mat-form-field {
+  margin-bottom: 16px;
+}
+.content{
+  padding: 50px;
+}
+.loading-page{
+  display: flex; 
+  justify-content: center;
+  align-items: center; 
+  height: 100%;
+  width: 70%;
+}
+.loading-spinner{
+  justify-content: center;
+  align-items: center;
+  width: 70%;
 }

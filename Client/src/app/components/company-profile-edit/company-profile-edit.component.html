@@ -7,8 +7,13 @@
     <form class="form" #updateCompanyDetailsForm="ngForm" (ngSubmit)="onSubmit()">
       <!-- Top Section -->
       <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
-        <mat-grid-tile>
-          <img src="assets/images/BistechLogo.png" class="md-card-image" />
+        <mat-grid-tile class="tile">
+
+          <img [src]="logoUrl" class="logo" /><br />
+          <input type="file" (change)="onselectFile($event)" *ngIf="!eventOccured" />
+          <button mat-raised-button (click)="onSaveLogo()" *ngIf="eventOccured">Save Logo</button>
+
+          <!--<img src="assets/images/BistechLogo.png" class="md-card-image" />-->
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field class="form-field company-name-field" appearance="outline">

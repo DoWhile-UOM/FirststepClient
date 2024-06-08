@@ -30,6 +30,7 @@ export class AdvertisementActionsComponent {
   @Input() company_name: string = "";
   @Input() job_title: string = "";
   @Input() job_field: string = "";
+  @Input() company_logo_url: string = "";
 
   icon: string = 'bookmark_border'; // bookmark
   isApplicationPage: boolean = false;
@@ -84,7 +85,8 @@ export class AdvertisementActionsComponent {
         seekerID: this.seekerId, 
         company_name: this.company_name, 
         job_title: this.job_title, 
-        job_field: this.job_field}
+        job_field: this.job_field,
+        company_logo_url: this.company_logo_url}
     }); 
   }
 

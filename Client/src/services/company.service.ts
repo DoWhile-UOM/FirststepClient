@@ -56,21 +56,22 @@ interface CmpAdminReg {
 export class CompanyService {
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
+  public static BusinessScales: any[] = [
+    { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
+    { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
+    { name: 'Medium-Sized (50 - 250 Employees)', value: 'medium' },
+    { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
+  ];
+
   async getCompanyDetails(companyId: number) {
     let companyDetails: any = {};
-
-    await axios
-      .get(Apipaths.getCompanyDetails + companyId)
-      .then(function (response) {
-        try {
-          companyDetails = response.data;
-          console.log();
-        } catch (error) {
-          console.log('No company details found for the given id');
-        }
-      })
-      .catch((error) => {
-      });
+    try {
+      const response = await axios.get(Apipaths.getCompanyDetails + companyId);
+      companyDetails = response.data;
+      console.log(companyDetails);
+    } catch (error) {
+      console.error('Error fetching company details:', error);
+    }
 
     console.log(companyDetails);
     return companyDetails;
@@ -98,11 +99,15 @@ export class CompanyService {
   }
 
   async CompanyRegister(companyObj: any) {
-    await axios.post(Apipaths.registerCompany, companyObj).then((response) => {
-      this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-    }).catch((error) => {
-      console.log('Network Error: ' + error);
-    });
+    try {
+      const response = await axios.post(Apipaths.registerCompany, companyObj);
+      //this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      return { success: true, out: response.data };
+    } catch (error: any) {
+      console.error('Network Error: ', error);
+      return { success: false, out: error.response.data };
+
+    }
   }
 
   // async updateCompanyDetails(company: Company) {
@@ -115,6 +120,24 @@ export class CompanyService {
   //       alert('Network Error: ' + error);
   //     });
   // }
+  async updateCompanyLogo(file: File, company_id: number) {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('companyId', company_id.toString());
+    await axios.patch(Apipaths.updateCompanyLogo + 'companyId=' + company_id, formData).then((response) => {
+      this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    }
+    ).catch((error) => {
+      this.snackBar.open('Error updating company logo', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    });
+    // await axios.put(Apipaths.updateCompanyLogo + company_id, { company_logo: company_logo })
+    //   .then((response) => {
+    //     this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    //   })
+    //   .catch((error) => {
+    //     console.log('Network Error: ' + error);
+    //   });
+  }
 
   async updateCompanyDetails(company: Company, company_id: number) {
     company.company_id = company_id; // should be chnaged
@@ -140,8 +163,11 @@ export class CompanyService {
         evaluatedCompanyDetails
       )
       .then((response) => {
+        this.snackBar.open('Company was registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
+        const errorMessage = error.message || 'Unknown error occurred';
+        this.snackBar.open(`Error occurred: ${errorMessage}`, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       });
   }
 
@@ -167,6 +193,7 @@ export class CompanyService {
       companyList = response.data;
       console.log('company list was received');
     } catch (error) {
+      this.snackBar.open('Error fetching company list', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
 
     return companyList;
@@ -188,7 +215,7 @@ export class CompanyService {
 
     return cmpData;
   }
-  
+
   //Get company Registration state details---End
 
   //Registration company state view Start here
@@ -205,7 +232,7 @@ export class CompanyService {
   //     console.log('Network Error: ' + error);
   //   }
   // }
-  
+
   async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
     try {
       const response = await axios.post(Apipaths.postCompanyAdminReg, {
@@ -213,10 +240,24 @@ export class CompanyService {
         type: type,
         company_id: companyId
       });
-      console.log('Company Admin Registration Successful');
+      this.snackBar.open('Company Admin registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     } catch (error) {
-      console.log('Network Error: ' + error);
+      this.snackBar.open('Error registering company admin', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
+  }
+
+  async updateUnregCompanyDetails(company: any,id:string) { // should be chnaged
+    
+    let companyId=company.company_id;
+    //console.log('from service', company);
+    await axios
+      .put(Apipaths.updateUnregComapny + id,company) // tem slotion
+      .then((response) => {
+        this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      })
+      .catch((error) => {
+        console.log('Network Error: ' + error);
+      });
   }
 
 }

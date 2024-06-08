@@ -12,6 +12,7 @@ interface Job {
   advertisement_id: number;
   title: string;
   company_name: string;
+  company_logo_url: string;
   company_id: number;
   field_name: string;
   country: string;
@@ -27,6 +28,7 @@ interface AppliedJob {
   advertisement_id: number;
   title: string;
   company_name: string;
+  company_logo_url: string;
   company_id: number;
   field_name: string;
   country: string;
@@ -49,15 +51,20 @@ export class AdvertisementCardComponent{
   @Input() job!: Job;
   @Input() appliedJob!: AppliedJob;
   icon: string = 'bookmark_border'; 
+  company_logo_url: string = '../../../assets/Img.png';
   isApplicationPage: boolean = false;
 
   displayStatus: string = 'Screening';
 
   constructor(private router: Router, private jobDetailsDialog: MatDialog) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.router.url == '/seeker/applied'){
       this.isApplicationPage = true;
+      this.company_logo_url = this.appliedJob.company_logo_url;
+    }
+    else{
+      this.company_logo_url = this.job.company_logo_url;
     }
   }
 
