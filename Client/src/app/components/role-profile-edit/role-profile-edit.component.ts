@@ -93,13 +93,13 @@ export class RoleProfileEditComponent {
       this.user.first_name = this.employee.first_name;
       this.user.last_name = this.employee.last_name;
       this.user.password_hash = this.employee.password_hash;
-
       console.log(this.user.user_id);
       console.log(this.employee.password_hash);
+      console.log(this.user);
 
-      let response = await this.employeeService.updateUserDetails(this.user);
+      await this.employeeService.updateUserDetails(this.user);
 
-      console.log('response is' + response);
+
     }
     catch (error) {
       console.error('Error updating employee details:', error);
