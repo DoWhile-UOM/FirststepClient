@@ -99,14 +99,15 @@ export class CompanyService {
   }
 
   async CompanyRegister(companyObj: any) {
-    await axios.post(Apipaths.registerCompany, companyObj).then((response) => {
-      this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-    }).catch((error) => {
-      console.log('Network Error: ' + error);
-      this.snackBar.open('Registration Error '+error.response.data, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-      console.log('Registration Error: ' + error.response);
-      return error.response.data;
-    });
+    try {
+      const response = await axios.post(Apipaths.registerCompany, companyObj);
+      //this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      return { success: true, out: response.data };
+    } catch (error: any) {
+      console.error('Network Error: ', error);
+      return { success: false, out: error.response.data };
+
+    }
   }
 
   // async updateCompanyDetails(company: Company) {
@@ -245,11 +246,12 @@ export class CompanyService {
     }
   }
 
-  async updateUnregCompanyDetails(company: Company, company_id: number) {
-    company.company_id = company_id; // should be chnaged
-    console.log('from service', company);
+  async updateUnregCompanyDetails(company: any,id:string) { // should be chnaged
+    
+    let companyId=company.company_id;
+    //console.log('from service', company);
     await axios
-      .put(Apipaths.updateUnregComapny + company_id, company) // tem slotion
+      .put(Apipaths.updateUnregComapny + id,company) // tem slotion
       .then((response) => {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })

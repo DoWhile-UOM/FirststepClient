@@ -15,29 +15,34 @@ import { MatDividerModule } from '@angular/material/divider';
 import { StylemanageService } from '../../../services/stylemanage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopUpComponent } from '../pop-up/pop-up.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 //interface to fetch company data
 export interface CmpyData {
-  company_id: string;
+  company_id: string;//
   company_name: string;
-  company_email: string;
   company_website: string;
-  company_phone_number: number;
-  company_logo: string;
+  company_email: string;
   company_description: string;
-  company_city: string;
-  company_province: string;
+  company_logo: string;
   company_business_scale: string;
+  business_reg_certificate: string;
+  company_registered_date: string;
+  certificate_of_incorporation: string;
+  company_phone_number: number
+  business_reg_no: number;
   comment: string;
   verification_status: any;
-  company_registered_date: string;
+
 }
 
 
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
@@ -46,29 +51,27 @@ export class RegCmpStateCheckComponent {
   company_id: string = 'nmIkuA6ZIO'; // sample company_id
   regState: string = 'Pending'; // sample registration state
   isNoInput: boolean = true;
+
   //cmpData: CmpyData[] = [];
 
-  cmpData: CmpyData = {} as CmpyData
+  cmpData: CmpyData = { company_business_scale: 'mid' } as CmpyData
 
   companyReg = this._formBuilder.group({
-    company_name: ['', Validators.required],
-    company_website: [''],
-    company_email: ['', [Validators.required, Validators.email]],
-    //otp: ['', Validators.required],
-    business_scale: ['', Validators.required],
-    business_reg_certificate: ['', Validators.required],
-    company_applied_date: ['', Validators.required],
-    certificate_of_incorporation: ['', Validators.required],
-    company_phone_number: ['', Validators.required],
-    business_reg_no: ['', Validators.required],
+    company_name: new FormControl({ value: this.cmpData.company_name, disabled: false }),//
+    company_id: new FormControl({ value: this.cmpData.company_id, disabled: false }),//
+    company_website: new FormControl({ value: this.cmpData.company_website, disabled: false }),//
+    company_email: new FormControl({ value: this.cmpData.company_email, disabled: false }),//
+    company_description: new FormControl({ value: this.cmpData.company_description, disabled: false }),//
+    company_logo: new FormControl({ value: this.cmpData.company_logo, disabled: false }),//
+    company_business_scale: new FormControl(this.cmpData.company_business_scale),
+    business_reg_certificate: new FormControl({ value: this.cmpData.business_reg_certificate, disabled: false }, ),//
+    company_registered_date: new FormControl({ value: this.cmpData.company_registered_date, disabled: false }),///
+    certificate_of_incorporation: new FormControl({ value: this.cmpData.certificate_of_incorporation, disabled: false }),//
+    company_phone_number: new FormControl({ value: this.cmpData.company_phone_number, disabled: false }),//
+    business_reg_no: new FormControl({ value: this.cmpData.business_reg_no, disabled: false }),//
   });
 
-  constructor(private _formBuilder: FormBuilder,private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) { }
-
-
-
-  //Fetch data from the database when the component initializes
-  ngOnInit(): void {
+  constructor(private snackbar: MatSnackBar,private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
@@ -77,6 +80,14 @@ export class RegCmpStateCheckComponent {
         this.fetchData(this.company_id);
       }
     });
+  
+  }
+
+
+
+  //Fetch data from the database when the component initializes
+  ngOnInit(): void {
+
 
   }
 
@@ -124,7 +135,16 @@ export class RegCmpStateCheckComponent {
     this.styleService.setStyle('number-color', '#ffbf00');
     this.isNoInput = true;
 
-    //this.company.updateUnregCompanyDetails(this.companyReg.value,this.cmpData.company_id);
+    Object.keys(this.companyReg.controls).forEach(key => {
+      this.companyReg.get(key)?.enable();
+    });
+    if(this.companyReg.invalid){
+      this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }else{
+      console.log('from service', this.companyReg.value);
+      this.company.updateUnregCompanyDetails(this.companyReg.value,this.cmpData.company_id);
+    }
+
 
   }
 
