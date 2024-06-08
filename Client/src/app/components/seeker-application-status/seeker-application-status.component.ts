@@ -12,9 +12,11 @@ import { DocumentService } from '../../../services/document.service';
 import { NgIf } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
-  MatDialogModule
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
 } from '@angular/material/dialog';
-import { DialogData } from '../company-application/company-application.component';
+import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 
 
 //interface application status
@@ -23,6 +25,8 @@ interface Application{
   status: string;
   cv_name: string;
   submitted_date: Date;
+  advertisement_id: number;
+  seeker_id: number;
 }
 
 interface Job {
@@ -40,12 +44,10 @@ interface Job {
 })
 export class SeekerApplicationStatusComponent implements OnInit{
 
-  applicationData: Application = {} as Application;
-  
-  jobData: Job = {} as Job;
-  
 
- 
+  applicationData: Application = {} as Application;
+  jobData: Job = {} as Job;
+
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -56,10 +58,9 @@ export class SeekerApplicationStatusComponent implements OnInit{
     thirdCtrl: ['', Validators.required],
   });
 
-document: any ;
-//sample application id
-application_id: number = 1014;
-  constructor(private _formBuilder: FormBuilder,
+  constructor(
+    public dialog: MatDialog,
+    private _formBuilder: FormBuilder,
     private applicationService: ApplicationService,
     private documentService:DocumentService, 
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -68,21 +69,22 @@ application_id: number = 1014;
       this.jobData.title = data.job_title;
       this.jobData.field_name = data.field_name;
       this.jobData.company_name = data.company_name;
+      //assign job id and seeker id
+      this.applicationData.advertisement_id = data.jobID;
+      this.applicationData.seeker_id = data.seekerID;
+
     }
   
-
-
 async ngOnInit() {
  this.getApplicationStatus();
 }
 
-
+//get application by advertisment id and seeker id 
 getApplicationStatus(): void{
-  this.applicationService.getApplicationStatus(this.application_id).then(
+  this.applicationService.getApplicationStatus(this.applicationData.advertisement_id, this.applicationData.seeker_id).then(
     (data: Application) => {
       this.applicationData = data;
       console.log('Application Status:', this.applicationData);
-      this.getDocumentUrl();
     },
     error => {
       console.error('Error fetching application status:', error);
@@ -90,20 +92,16 @@ getApplicationStatus(): void{
   );
 }
 
-//get document url
-async getDocumentUrl(){
- this.documentService.generateSasToken(this.applicationData.cv_name).subscribe(
-    (token:string) => {
-      this.document= this.documentService.getBlobUrl(this.applicationData.cv_name, token);
-      console.log('Document URL:', this.document); 
-      
-    },
-    error => {
-      console.error('Error fetching SAS token:', error);
-    }
-  );
 
+openpdf() {
+  this.dialog.open(PdfViewComponent,{
+    data: {
+    //pass cv name to pdf view component
+    documentName: this.applicationData.cv_name
+    },
+  });
 }
+  
 
 //Only the steps up to and including the current status are marked as completed, except if the current status is 'Rejected'
 isCompleted(stepName: string): boolean {

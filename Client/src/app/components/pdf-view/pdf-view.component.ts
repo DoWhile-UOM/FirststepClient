@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { PdfViewerModule } from '@syncfusion/ej2-angular-pdfviewer';
-import { MatDialogModule, MatDialogContent} from '@angular/material/dialog';
+import { MatDialogModule, MatDialogContent, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DocumentService } from '../../../services/document.service';
+import { DialogData } from '../company-application/company-application.component';
 
 @Component({
   selector: 'app-pdf-view',
@@ -12,11 +13,13 @@ import { DocumentService } from '../../../services/document.service';
 })
 export class PdfViewComponent implements OnInit{ 
  
-  documentName: string = 'KARATE.pdf';
+  public documentName: string = this.data.documentName;
   public document: any;
   public resource: string = "https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib";
 
-  constructor(private documentService:DocumentService) { }
+  constructor(private documentService:DocumentService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData)
+  { }
   
   ngOnInit(): void {
   this.documentService.generateSasToken(this.documentName).subscribe(

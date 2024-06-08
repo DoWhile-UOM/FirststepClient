@@ -70,6 +70,10 @@ export class Apipaths {
 
     //application
     static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
-    static readonly getApplicationStatus: string = this.baseUrl + 'Application/GetApplicationStatus/'; // + application_id
+    //path to get application status  
+    //https://localhost:7213/api/Application/status?advertisementId=1057&seekerId=2
+    static readonly getApplicationStatus: string = this.baseUrl + 'Application/status?advertisementId='; //  '&seekerId=' + seeker_id
+
+
   
 }

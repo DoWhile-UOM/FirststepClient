@@ -40,19 +40,19 @@ export class ApplicationService {
     return applicationList;
   }
 
+  //get application status bu advertisment id and seeker id
+  async getApplicationStatus(advertisement_id: number, seeker_id: number) {
+    let applicationStatusDetails: any = {};
+    await axios.get(Apipaths.getApplicationStatus + advertisement_id + '&seekerId=' + seeker_id)
+      .then((response) => {
+        applicationStatusDetails = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching application status:', error);
+      });
 
-async getApplicationStatus(application_id: number) {
-  let applicationStatusDetails: any = {};
-  await axios.get(Apipaths.getApplicationStatus + application_id)
-    .then((response) => {
-      applicationStatusDetails = response.data;
-    })
-    .catch((error) => {
-      console.error('Error fetching application status:', error);
-    });
-
-  return applicationStatusDetails;
-}
+    return applicationStatusDetails;
+  }
 
 
 }

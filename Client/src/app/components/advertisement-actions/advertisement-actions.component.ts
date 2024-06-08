@@ -92,6 +92,8 @@ export class AdvertisementActionsComponent {
     //open dialog to track application
     this.dialog.open(SeekerApplicationStatusComponent,{
       data: {
+        jobID: this.jobID,
+        seekerID: this.seekerId,
         company_name: this.company_name, 
         job_title: this.job_title, 
         job_field: this.job_field,
