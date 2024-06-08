@@ -42,11 +42,8 @@ export class SeekerApplicationStatusComponent implements OnInit{
 
   applicationData: Application = {} as Application;
   
-  jobData: Job = {
-    title: 'Software Developer',
-    field_name: 'Software Development',
-    company_name: 'Google',
-  }
+  jobData: Job = {} as Job;
+  
 
  
   firstFormGroup = this._formBuilder.group({
@@ -65,7 +62,14 @@ application_id: number = 1014;
   constructor(private _formBuilder: FormBuilder,
     private applicationService: ApplicationService,
     private documentService:DocumentService, 
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    ) {
+      // assign data from application card 
+      this.jobData.title = data.job_title;
+      this.jobData.field_name = data.field_name;
+      this.jobData.company_name = data.company_name;
+    }
+  
 
 
 async ngOnInit() {

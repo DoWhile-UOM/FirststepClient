@@ -10,6 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { SeekerApplicationFormComponent } from '../seeker-application-form/seeker-application-form.component';
 import { AuthService } from '../../../services/auth.service';
+import { SeekerApplicationStatusComponent } from '../seeker-application-status/seeker-application-status.component';
 
 @Component({
   selector: 'app-advertisement-actions',
@@ -89,8 +90,7 @@ export class AdvertisementActionsComponent {
 
   trackApplication() {
     //open dialog to track application
-    this.dialog.open(SeekerApplicationFormComponent,{
-      maxWidth: '100em',
+    this.dialog.open(SeekerApplicationStatusComponent,{
       data: {
         company_name: this.company_name, 
         job_title: this.job_title, 
