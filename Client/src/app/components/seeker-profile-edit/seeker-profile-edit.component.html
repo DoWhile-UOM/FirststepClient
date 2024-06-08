@@ -2,45 +2,32 @@
   <app-spinner></app-spinner>
   <mat-card class="card" *ngIf="hasDataLoaded">
     <div class="heading title">
-      <span class="sectionHeading"
-        >{{ seekerForm.get("first_name")?.value }}
-        {{ seekerForm.get("last_name")?.value }}</span
-      >
+      <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
     </div>
-
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
-      <mat-grid-list cols="2" rowHeight="140" style="margin: 0">
+      <mat-grid-list cols="2" rowHeight="140" style="margin: 0;">
         <mat-grid-tile>
-          <img
-            [src]="seekerForm.get('profile_picture')?.value"
-            class="md-card-image"
-          />
+          <img [src]="seekerForm.get('profile_picture')?.value" class="md-card-image" />
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Bio</mat-label>
             <input matInput formControlName="bio" required />
-            <mat-error *ngIf="seekerForm.get('bio')?.invalid">{{
-              bioErrorMessage()
-            }}</mat-error>
+            <mat-error *ngIf="hasError('bio')">{{ getErrorMessage('bio') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
             <input matInput formControlName="first_name" required />
-            <mat-error *ngIf="seekerForm.get('first_name')?.invalid">{{
-              seekerNameErrorMessage()
-            }}</mat-error>
+            <mat-error *ngIf="hasError('first_name')">{{ getErrorMessage('first_name') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Last Name</mat-label>
             <input matInput formControlName="last_name" required />
-            <mat-error *ngIf="seekerForm.get('last_name')?.invalid">{{
-              seekerNameErrorMessage()
-            }}</mat-error>
+            <mat-error *ngIf="hasError('last_name')">{{ getErrorMessage('last_name') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
@@ -48,9 +35,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Description</mat-label>
           <textarea matInput formControlName="description" required></textarea>
-          <mat-error *ngIf="seekerForm.get('description')?.invalid">{{
-            descriptionErrorMessage()
-          }}</mat-error>
+          <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
         </mat-form-field>
       </div>
       <mat-grid-list cols="2" rowHeight="100">
@@ -58,38 +43,27 @@
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
             <input matInput formControlName="phone_number" required />
-            <mat-error *ngIf="seekerForm.get('phone_number')?.hasError('required')">Phone number is required</mat-error>
-            <mat-error *ngIf="seekerForm.get('phone_number')?.hasError('pattern')">Phone number is invalid</mat-error>
+            <mat-error *ngIf="hasError('phone_number')">{{ getErrorMessage('phone_number') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-        
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" required />
-            <mat-error *ngIf="seekerForm.get('email')?.invalid">{{
-              emailErrorMessage()
-            }}</mat-error>
+            <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput [type]="passwordFieldType" formControlName="password" (focus)="onPasswordFocus()" (blur)="onPasswordBlur()" required />
-            <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-              <mat-icon>{{ passwordFieldType === 'password' ? 'visibility' : 'visibility_off' }}</mat-icon>
-            </button>
-            <mat-error *ngIf="seekerForm.get('password')?.hasError('required')">Password is required</mat-error>
+            <input matInput formControlName="password" type="password" required />
+            <mat-error *ngIf="hasError('password')">{{ getErrorMessage('password') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-        
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>University</mat-label>
             <input matInput formControlName="university" />
-            <mat-error *ngIf="seekerForm.get('university')?.invalid">{{
-              universityErrorMessage()
-            }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -104,12 +78,8 @@
             <mat-select formControlName="field_id" required>
               <mat-option *ngFor="let field of fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
             </mat-select>
-            <mat-error *ngIf="seekerForm.get('field_id')?.hasError('required')">Field is required</mat-error>
+            <mat-error *ngIf="hasError('field_id')">{{ getErrorMessage('field_id') }}</mat-error>
           </mat-form-field>
-        </mat-grid-tile>
-        
-        <mat-grid-tile>
-          <!-- <app-add-skills formControlName="seekerSkills" (skillsChange)="onSkillsChange($event)"></app-add-skills> -->
         </mat-grid-tile>
       </mat-grid-list>
 
@@ -119,44 +89,22 @@
           <mat-grid-tile>
             <div class="container-otp">
               <span class="mat-typography">Click send otp button</span>
-              <button
-                mat-raised-button
-                class="apply-button"
-                color="primary"
-                (click)="requestOTP()"
-                [disabled]="isOTPRequestSent"
-              >
+              <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()" [disabled]="isOTPRequestSent">
                 {{ reqOTPbtntxt }} {{ remainingTime }}
               </button>
-              <span class="mat-typography"
-                >Once that button is clicked, enter the otp received in the
-                provided email address.</span
-              >
+              <span class="mat-typography">Once that button is clicked, enter the otp received in the provided email address.</span>
               <mat-form-field appearance="outline">
                 <mat-label>OTP</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter OTP"
-                  [(ngModel)]="otp"
-                  [ngModelOptions]="{ standalone: true }"
-                  required
-                />
+                <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}" required />
               </mat-form-field>
-              <button
-                mat-raised-button
-                class="apply-button"
-                color="primary"
-                (click)="VerifyOTP()"
-              >
-                Verify OTP
-              </button>
+              <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
             </div>
           </mat-grid-tile>
         </mat-grid-list>
       </div>
 
       <!-- CV upload button and view button -->
-      <div class="button-container" style="gap: 10px">
+      <div class="button-container" style="gap: 10px;">
         <button mat-raised-button color="primary">Upload New</button>
         <button mat-raised-button id="view">View</button>
       </div>
@@ -164,29 +112,11 @@
       <mat-divider></mat-divider>
       <section>
         <div class="example-button-row">
-          <button type="submit" mat-raised-button color="primary">
-            Update Profile
-          </button>
-          <button
-            type="button"
-            mat-raised-button
-            id="discard"
-            (click)="discardChanges()"
-          >
-            Discard Changes
-          </button>
-          <button
-            type="button"
-            mat-raised-button
-            color="warn"
-            id="delete"
-            (click)="deleteAccount()"
-          >
-            Delete Profile
-          </button>
+          <button type="submit" mat-raised-button color="primary">Update Profile</button>
+          <button type="button" mat-raised-button id="discard" (click)="discardChanges()">Discard Changes</button>
+          <button type="button" mat-raised-button color="warn" id="delete" (click)="deleteAccount()">Delete Profile</button>
         </div>
       </section>
     </form>
   </mat-card>
 </div>
-<app-spinner *ngIf="!hasDataLoaded"></app-spinner>
