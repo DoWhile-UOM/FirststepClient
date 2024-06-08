@@ -156,7 +156,7 @@ export class SeekerEditProfileComponent implements OnInit {
       seekerSkills: this.skills,
     };
     try {
-      await this.seekerService.editseeker(this.seekerUpdate, this.user_id);
+      // await this.seekerService.editSeeker(this.seekerUpdate, this.user_id);
       alert('Profile updated successfully');
     } catch (error) {
       console.error('error updating profile', error);

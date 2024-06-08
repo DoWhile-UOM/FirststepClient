@@ -41,28 +41,15 @@ interface job_Field {
 }
 
 interface Seeker {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: number;
-  bio: string;
-  description: string;
-  university: string;
-  cVurl: string;
-  profile_picture: string;
-  linkedin: string;
-  field_id: any;
   user_id: number;
-  password_hash: string;
-  job_Field: any;
-  job_field_name: string;
-  seekerSkills: string[];
-}
-
-interface updateSeeker {
+  email: string;
+  password: string; // Changed from password_hash
   first_name: string;
   last_name: string;
-  email: string;
+  user_type: string;
+  token: string;
+  refresh_token: string;
+  refresh_token_expiry: string;
   phone_number: number;
   bio: string;
   description: string;
@@ -71,15 +58,33 @@ interface updateSeeker {
   profile_picture: string;
   linkedin: string;
   field_id: number;
+  job_Field?: job_Field;
+  job_field_name?: string;
+  seekerSkills?: string[];
+}
+
+interface UpdateSeeker {
+  email: string;
   password: string;
+  first_name: string;
+  last_name: string;
+  phone_number: number;
+  bio: string;
+  description: string;
+  university: string;
+  cVurl: string;
+  profile_picture: string;
+  linkedin: string;
+  field_id: number;
   seekerSkills: string[];
 }
 
-interface requestOTP {
-  email: string ;
+interface RequestOTP {
+  email: string;
 }
-interface verifyOTP {
-  email: string ;
+
+interface VerifyOTP {
+  email: string;
   otp: string | null | undefined;
 }
 
@@ -91,338 +96,298 @@ interface verifyOTP {
   styleUrl: './seeker-profile-edit.component.css'
 })
 export class SeekerProfileEditComponent {
-
+  seekerForm: FormGroup;
   hasDataLoaded: boolean = false;
-  emailcaptured = '';
-  selected = 'seeker.field_id';
-  noOfCols: number = 2;
   user_id: number = 2095;//temp
-  seeker:Seeker = {} as Seeker; // Initialize seeker object
-  Fields:any[] = [];
-
-
-  job_fields: job_Field[] = [];
-  seekerSkills: string[] = [];
-  selectedSkills: string[] = [];
-
-
-
-  errorMessageForSeekerName = '';
-  errorMessageForEmail = '';
-  errorMessageForPhoneNumber = '';
-  errorMessageForBio = '';
-  errorMessageForDescription = '';
-  errorMessageForUniversity = '';
-  errorMessageForCVurl = '';
-  errorMessageForProfilePicture = '';
-  errorMessageForLinkedin = '';
-  errorMessageForField = '';
-  errorMessageForPassword = '';
-  errorMessageForSeekerSkills = '';
-
+  isConfrimedToChangeEmail: boolean = false;
+  emailcaptured = '';
+  otp: string = '';
   isOTPRequestSent: boolean = false;
   remainingTime: number = 0;
   reqOTPbtntxt: string = 'Request OTP';
-  isFormVerified: boolean = false;
-  isConfrimedToChangeEmail: boolean = false;
-  otp: string = '';
+  // isFormVerified: boolean = false;
+  // selected = 'seeker.field_id';
+  noOfCols: number = 2;
+  seeker:Seeker = {} as Seeker;
+  seekerUpdate: UpdateSeeker = {} as UpdateSeeker;
+  Fields:any[] = [];
 
-  constructor(private seekerService: SeekerService, private spinner: NgxSpinnerService, private authService: AuthService, private snackBar: MatSnackBar, private cd: ChangeDetectorRef, private dialog: MatDialog,private auth:AuthService,private snackbar: MatSnackBar) { }
+
+  // job_fields: job_Field[] = [];
+  // seekerSkills: string[] = [];
+  // selectedSkills: string[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private seekerService: SeekerService,
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private authService: AuthService,
+  ) {
+    this.seekerForm = this.fb.group({
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      bio: ['', Validators.required],
+      description: ['', Validators.required],
+      university: [''],
+      linkedin: [''],
+      field_id: ['', Validators.required],
+      password: ['', Validators.required] // Changed from password_hash
+    });
+  }
 
   async ngOnInit() {
-    try{
-      this.spinner.show();
-      this.seeker = await this.seekerService.getSeekerDetails(this.user_id);
-      // this.job_fields = await this.seekerService.getJobFields();
-      console.log("Seeker: ", this.seeker);
+    this.spinner.show();
+    try {
+      const seeker = await this.seekerService.getSeekerDetails(this.user_id);
+      this.seekerForm.patchValue(seeker);
+      this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
-      this.spinner.hide();
     } catch (error) {
       console.error(error);
+      this.snackBar.open('Failed to load profile details', 'Close', { duration: 3000 });
+    } finally {
       this.spinner.hide();
     }
   }
 
   async onSubmit() {
-    console.log("onSubmit function is called");
+    if (this.seekerForm.invalid) {
+      this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
+      return;
+    }
+
+    if (this.emailcaptured !== this.seekerForm.get('email')?.value && !this.isConfrimedToChangeEmail) {
+      this.dialog.open(InformEmailShouldBeVerifiedPopUp);
+      return;
+    }
+
+    this.spinner.show();
     try {
-      if (
-        this.errorMessageForSeekerName == '' &&
-        this.errorMessageForEmail == '' &&
-        this.errorMessageForPhoneNumber == '' &&
-        this.errorMessageForBio == '' &&
-        this.errorMessageForDescription == '' &&
-        this.errorMessageForUniversity == '' &&
-        this.errorMessageForField == '' &&
-        this.errorMessageForPassword == '' 
-        // && this.errorMessageForSeekerSkills == ''
-      ) {
-        console.log('Seeker: ', this.seeker);
-        this.spinner.show();
-        console.log(this.seeker);
-        // this.seeker.field_id = this.selected;
-        // this.seeker.seekerSkills = this.selectedSkills;
-        console.log("Seeker: ", this.seeker);
-        await this.seekerService.editseeker(this.seeker, this.user_id);
-        this.spinner.hide();
-        this.snackBar.open('Profile updated successfully', 'Close', {
-          duration: 2000,
-        });
-      }else if(!(this.emailcaptured==this.seeker.email)){
-        this.dialog.open(InformEmailShouldBeVerifiedPopUp);
-      }
-      else {
-        this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
-      }
+      await this.seekerService.editSeeker(this.seekerForm.value as UpdateSeeker, this.user_id);
+      this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
+    } catch (error) {
+      console.error("Error updating profile: ", error);
+      this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
     } finally {
       this.spinner.hide();
     }
   }
 
-  
   async discardChanges() {
-    this.seeker = {} as Seeker;
-    this.seeker = await this.seekerService.getSeekerDetails(this.user_id);
-    console.log('discarded changes');
+    this.spinner.show();
+    try {
+      const seeker = await this.seekerService.getSeekerDetails(this.user_id);
+      this.seekerForm.patchValue(seeker);
+      this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
+    } catch (error) {
+      console.error(error);
+      this.snackBar.open('Failed to discard changes', 'Close', { duration: 3000 });
+    } finally {
+      this.spinner.hide();
+    }
   }
 
   async deleteAccount() {
+    this.spinner.show();
     try {
-      this.spinner.show();
       await this.seekerService.deleteseeker(this.user_id);
-      console.log('deleted');
+      this.snackBar.open('Profile deleted successfully', 'Close', { duration: 2000 });
+    } catch (error) {
+      console.error("Error deleting profile: ", error);
+      this.snackBar.open('Failed to delete profile', 'Close', { duration: 3000 });
     } finally {
       this.spinner.hide();
-    }
-  }
-
-
-
-  //errorMessages
-  seekerNameErrorMessage() { //last name should be checked too
-    if (this.seeker.first_name.length == 0) {
-      this.errorMessageForSeekerName = 'First name is required';
-    } else {
-      this.errorMessageForSeekerName = '';
-    }
-  }
-
-  descriptionErrorMessage() {
-    if (this.seeker.description.length == 0) {
-      this.errorMessageForDescription = 'Description is required';
-    } else {
-      this.errorMessageForDescription = '';
-    }
-  }
-
-  bioErrorMessage() {
-    if (this.seeker.bio.length == 0) {
-      this.errorMessageForBio = 'Bio is required';
-    } else {
-      this.errorMessageForBio = '';
     }
   }
 
   phoneNumberErrorMessage() {
-    let phoneNumberRegex = /^[0-9]{10}$/;
-    let testResult = phoneNumberRegex.test(this.seeker.phone_number.toString());
-    if (this.seeker.phone_number.toString().length == 0) { 
-      console.log('should print required');
-      this.errorMessageForPhoneNumber = 'Phone number is required';
-    } else if (testResult == false) {
-      console.log('should print invalid');
-      this.errorMessageForPhoneNumber = 'Phone number is invalid';
-    } else {
-      console.log('should print empty');
-      this.errorMessageForPhoneNumber = '';
+    if (this.seekerForm.get('phone_number')?.hasError('required')) {
+      return 'Phone number is required';
     }
-  }
-
-  universityErrorMessage() {
-    if (this.seeker.university.length == 0) {
-      this.errorMessageForUniversity = 'University is required';
-    } else {
-      this.errorMessageForUniversity = '';
+    if (this.seekerForm.get('phone_number')?.hasError('pattern')) {
+      return 'Phone number is invalid';
     }
-  }
-
-  // CVurlErrorMessage() {
-  //   if (this.seeker.cVurl.length == 0) {
-  //     this.errorMessageForCVurl = 'CV url is required';
-  //   } else {
-  //     this.errorMessageForCVurl = '';
-  //   }
-  // }
-
-  // profilePictureErrorMessage() {
-  //   if (this.seeker.profile_picture.length == 0) {
-  //     this.errorMessageForProfilePicture = 'Profile picture is required';
-  //   } else {
-  //     this.errorMessageForProfilePicture = '';
-  //   }
-  // }
-
-  fieldErrorMessage() {
-    if (this.seeker.field_id == 0) {
-      this.errorMessageForField = 'Field is required';
-    } else {
-      this.errorMessageForField = '';
-    }
-  }
-
-  passwordErrorMessage() {
-    if (this.seeker.password_hash.length == 0) {
-      this.errorMessageForPassword = 'Password is required';
-    } else {
-      this.errorMessageForPassword = '';
-    }
+    return '';
   }
 
   emailErrorMessage() {
-    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    let testResult = emailRegex.test(this.seeker.email.toString());
-    if (this.seeker.email.length == 0) {
-      this.errorMessageForEmail = 'Email is required.';
-    } else if (testResult == false) {
-      console.log('should print ivalid');
-      this.errorMessageForEmail = 'Email is invalid.';
-      console.log(this.errorMessageForEmail);
-    } else {
-      console.log('should print empty');
-      this.errorMessageForEmail = '';
-      this.confirmToChangeEmail();
+    if (this.seekerForm.get('email')?.hasError('required')) {
+      return 'Email is required';
     }
-    console.log(this.errorMessageForEmail);
+    if (this.seekerForm.get('email')?.hasError('email')) {
+      return 'Email is invalid';
+    }
+    return '';
   }
 
-  //OTP handling
-  confirmToChangeEmail(){
+  seekerNameErrorMessage() {
+    if (this.seekerForm.get('first_name')?.hasError('required')) {
+      return 'First name is required';
+    }
+    if (this.seekerForm.get('last_name')?.hasError('required')) {
+      return 'Last name is required';
+    }
+    return '';
+  }
+
+  descriptionErrorMessage() {
+    if (this.seekerForm.get('description')?.hasError('required')) {
+      return 'Description is required';
+    }
+    return '';
+  }
+
+  bioErrorMessage() {
+    if (this.seekerForm.get('bio')?.hasError('required')) {
+      return 'Bio is required';
+    }
+    return '';
+  }
+
+  universityErrorMessage() {
+    if (this.seekerForm.get('university')?.hasError('required')) {
+      return 'University is required';
+    }
+    return '';
+  }
+
+  fieldErrorMessage() {
+    if (this.seekerForm.get('field_id')?.hasError('required')) {
+      return 'Field is required';
+    }
+    return '';
+  }
+
+  passwordErrorMessage() {
+    if (this.seekerForm.get('password')?.hasError('required')) {
+      return 'Password is required';
+    }
+    return '';
+  }
+
+  confirmToChangeEmail() {
     const dialogRef = this.dialog.open(ApprovingChangingEmailPopUp);
     dialogRef.afterClosed().subscribe((result) => {
-      if (result == true) {
-        this.isConfrimedToChangeEmail=true;
-        console.log(this.isConfrimedToChangeEmail);
-        }
+      if (result === true) {
+        this.isConfrimedToChangeEmail = true;
+        this.emailcaptured = this.seekerForm.get('email')?.value;
+        this.requestOTP();
+      }
     });
   }
 
-
   async requestOTP() {
-  
-    const userData: requestOTP = {
-      email: this.seeker.email,
+    const userData: RequestOTP = {
+      email: this.seekerForm.get('email')?.value,
     };
-    let verificationResult = await this.auth.requestOTP(userData);
-    console.log('otp request sent');
-    console.log(verificationResult);
-    if (verificationResult == true) {
-      this.snackbar.open('OTP Sent successful', '')._dismissAfter(3000);
-      this.printTextAfterFiveMinutes();
-      console.log('otp sent');
-    } else {
-      this.snackbar
-        .open('OTP Request failed Please try Again', '', {
+    try {
+      const verificationResult = await this.authService.requestOTP(userData);
+      if (verificationResult) {
+        this.snackBar.open('OTP Sent successfully', '', { duration: 3000 });
+        this.printTextAfterFiveMinutes();
+      } else {
+        this.snackBar.open('OTP Request failed, Please try Again', '', {
           panelClass: ['app-notification-error'],
-        })
-        ._dismissAfter(3000);
+          duration: 3000
+        });
+      }
+    } catch (error) {
+      console.error('Error requesting OTP: ', error);
     }
-}
-async VerifyOTP() {
-console.log(this.seeker.email);
-const userData: verifyOTP = {
-  email: this.seeker.email,
-  otp: this.otp,
-};
-let verificationResult = await this.auth.verifyOTP(userData);
-console.log(userData);
-console.log('otp verification request was sent');
-if (verificationResult == true) {
-  // this.isEmailVerified = true;
-  this.emailcaptured=this.seeker.email;
-  this.snackbar.open('OTP verification successful', '', { duration: 2000 });
-  console.log('otp verified');
-} else {
-  this.snackbar
-    .open('OTP verification failed', '', {
-      panelClass: ['app-notification-error'],
-    })
-    ._dismissAfter(3000);
-}
-}
-
-printTextAfterFiveMinutes(){
-this.isOTPRequestSent = true;
-this.remainingTime = 300;//60*5
-this.reqOTPbtntxt = this.remainingTime.toString();
-const intervalId = setInterval(() => {
-  this.remainingTime--;
-  // this.cdr.detectChanges();
-  if (this.remainingTime <= 0) {
-    clearInterval(intervalId); // Stop the timer when time is up
-    console.log("Timer off");
-    this.isOTPRequestSent = false;
-    this.reqOTPbtntxt = "Request OTP";
   }
-  console.log(this.remainingTime);
-}, 1000);
+
+  async VerifyOTP() {
+    const userData: VerifyOTP = {
+      email: this.seekerForm.get('email')?.value,
+      otp: this.otp,
+    };
+    try {
+      const verificationResult = await this.authService.verifyOTP(userData);
+      if (verificationResult) {
+        this.emailcaptured = this.seekerForm.get('email')?.value;
+        this.snackBar.open('OTP verification successful', '', { duration: 2000 });
+      } else {
+        this.snackBar.open('OTP verification failed', '', {
+          panelClass: ['app-notification-error'],
+          duration: 3000
+        });
+      }
+    } catch (error) {
+      console.error('Error verifying OTP: ', error);
+    }
+  }
+
+  printTextAfterFiveMinutes() {
+    this.isOTPRequestSent = true;
+    this.remainingTime = 300; // 60*5
+    this.reqOTPbtntxt = this.remainingTime.toString();
+    const intervalId = setInterval(() => {
+      this.remainingTime--;
+      if (this.remainingTime <= 0) {
+        clearInterval(intervalId); // Stop the timer when time is up
+        this.isOTPRequestSent = false;
+        this.reqOTPbtntxt = "Request OTP";
+      }
+    }, 1000);
+  }
 }
 
-}
-
-//cannot-submit-without-all-inputs-are-valid-pop-up
+// cannot-submit-without-all-inputs-are-valid-pop-up
 @Component({
-selector: 'cannot-submit-without-all-inputs-are-valid-pop-up',
-standalone: true,
-templateUrl: 'cannot-submit-without-all-inputs-are-valid-pop-up.html',
-imports: [
-MatDialogTitle,
-MatDialogContent,
-MatDialogActions,
-MatDialogClose,
-MatButtonModule,
-],
+  selector: 'cannot-submit-without-all-inputs-are-valid-pop-up',
+  templateUrl: 'cannot-submit-without-all-inputs-are-valid-pop-up.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
 })
 export class CannotSubmitWithoutAllInputsAreValidPopUp {}
 
-//approving-changing0email-pop-up
+// approving-changing-email-pop-up
 @Component({
-selector: 'approvaing-changing-email-pop-up',
-standalone: true,
-templateUrl: 'approvaing-changing-email-pop-up.html',
-imports: [
-MatDialogTitle,
-MatDialogContent,
-MatDialogActions,
-MatDialogClose,
-MatButtonModule,
-],
+  selector: 'approving-changing-email-pop-up',
+  templateUrl: 'approving-changing-email-pop-up.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
 })
 export class ApprovingChangingEmailPopUp {
-givenPermissionToChangeEmail: boolean = false;
-constructor(public dialogRef: MatDialogRef<ApprovingChangingEmailPopUp>) {}
+  givenPermissionToChangeEmail: boolean = false;
+  constructor(public dialogRef: MatDialogRef<ApprovingChangingEmailPopUp>) {}
 
-closeDialog() {
-this.dialogRef.close(this.givenPermissionToChangeEmail);
-}
-yesAction(){
-this.givenPermissionToChangeEmail = true;
-this.dialogRef.close(this.givenPermissionToChangeEmail);
-}
+  closeDialog() {
+    this.dialogRef.close(this.givenPermissionToChangeEmail);
+  }
+  yesAction(){
+    this.givenPermissionToChangeEmail = true;
+    this.dialogRef.close(this.givenPermissionToChangeEmail);
+  }
 }
 
-//inform-email-should-be-verified-pop-up
+// inform-email-should-be-verified-pop-up
 @Component({
-selector: 'inform-email-should-be-verified-pop-up',
-standalone: true,
-templateUrl: 'inform-email-should-be-verified-pop-up.html',
-imports: [
-MatDialogTitle,
-MatDialogContent,
-MatDialogActions,
-MatDialogClose,
-MatButtonModule,
-],
+  selector: 'inform-email-should-be-verified-pop-up',
+  templateUrl: 'inform-email-should-be-verified-pop-up.html',
+  standalone: true,
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+  ],
 })
-export class InformEmailShouldBeVerifiedPopUp{}
-
-
+export class InformEmailShouldBeVerifiedPopUp {}

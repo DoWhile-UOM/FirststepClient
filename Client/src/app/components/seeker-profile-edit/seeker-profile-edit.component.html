@@ -1,199 +1,109 @@
 <div class="body">
   <app-spinner></app-spinner>
-  <mat-card class="card" *ngIf="hasDataLoaded == true">
+  <mat-card class="card" *ngIf="hasDataLoaded">
     <div class="heading title">
-      <span class="sectionHeading">{{ seeker.first_name }} {{seeker.last_name}}</span>
+      <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
     </div>
-    <form class="form" #updateCompanyDetailsForm="ngForm">
-      <!-- Top Section -->
-      <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
+    <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
+      <mat-grid-list cols="2" rowHeight="140">
         <mat-grid-tile>
-          <img src="{{seeker.profile_picture}}" class="md-card-image" />
+          <img [src]="seekerForm.get('profile_picture')?.value" class="md-card-image" />
         </mat-grid-tile>
         <mat-grid-tile>
-          <mat-form-field
-            class="form-field company-name-field"
-            appearance="outline"
-          >
+          <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
-            <input
-              matInput
-              placeholder="Enter your First Name"
-              name="first_name"
-              [(ngModel)]="seeker.first_name"
-              (blur)="seekerNameErrorMessage()"
-              required
-            />
-            <mat-error>{{ errorMessageForSeekerName }}</mat-error>
+            <input matInput formControlName="first_name" required />
+            <mat-error *ngIf="seekerForm.get('first_name')?.hasError('required')">First name is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-
         <mat-grid-tile>
-          <mat-form-field
-            class="form-field company-name-field"
-            appearance="outline"
-          >
+          <mat-form-field appearance="outline">
             <mat-label>Last Name</mat-label>
-            <input
-              matInput
-              placeholder="Enter your Last Name"
-              name="last_name"
-              [(ngModel)]="seeker.last_name"
-              (blur)="seekerNameErrorMessage()"
-              required
-            />
-            <mat-error>{{ errorMessageForSeekerName }}</mat-error>
+            <input matInput formControlName="last_name" required />
+            <mat-error *ngIf="seekerForm.get('last_name')?.hasError('required')">Last name is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-
         <mat-grid-tile>
-          <mat-form-field
-            class="form-field company-name-field"
-            appearance="outline"
-          >
+          <mat-form-field appearance="outline">
             <mat-label>Bio</mat-label>
-            <input
-              matInput
-              placeholder="Enter your Bio"
-              name="bio"
-              [(ngModel)]="seeker.bio"
-              (blur)="seekerNameErrorMessage()"
-              required
-            />
-            <mat-error>{{ errorMessageForSeekerName }}</mat-error>
+            <input matInput formControlName="bio" required />
+            <mat-error *ngIf="seekerForm.get('bio')?.hasError('required')">Bio is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
       <div class="description-text-editor">
-        <mat-form-field class="form-field" appearance="outline">
+        <mat-form-field appearance="outline">
           <mat-label>Description</mat-label>
-          <textarea
-            matInput
-            #companyDescription
-            cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="1"
-            [(ngModel)]="seeker.description"
-            name="description"
-            placeholder="Enter your Description"
-            (blur)="descriptionErrorMessage()"
-            required
-          ></textarea>
-          <mat-error>{{ errorMessageForDescription }}</mat-error>
+          <textarea matInput formControlName="description" required></textarea>
+          <mat-error *ngIf="seekerForm.get('description')?.hasError('required')">Description is required</mat-error>
         </mat-form-field>
       </div>
-      <mat-grid-list cols="{{ noOfCols }}" rowHeight="100">
+      <mat-grid-list cols="2" rowHeight="100">
         <mat-grid-tile>
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>University</mat-label>
-            <input
-              matInput
-              placeholder="Enter your University"
-              name="university"
-              [(ngModel)]="seeker.university"
-              (blur)="universityErrorMessage()"
-              required
-            />
-            <mat-error>{{ errorMessageForUniversity }}</mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>LinkedIn URL </mat-label>
-            <input
-              matInput
-              placeholder="Enter your LinkedIn URL"
-              name="linkedin"
-              [(ngModel)]="seeker.linkedin"
-            />
-          </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <mat-form-field class="form-field" appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
-            <input
-              matInput
-              placeholder="Enter your Phone Number"
-              name="phone_number"
-              [(ngModel)]="seeker.phone_number"
-              (blur)="phoneNumberErrorMessage()"
-              required
-            />
-            <mat-error>{{ errorMessageForPhoneNumber }}</mat-error>
+            <input matInput formControlName="phone_number" required />
+            <mat-error *ngIf="seekerForm.get('phone_number')?.hasError('required')">Phone number is required</mat-error>
+            <mat-error *ngIf="seekerForm.get('phone_number')?.hasError('pattern')">Phone number is invalid</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
-          <mat-form-field class="form-field" appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input
-              matInput
-              type="email"
-              placeholder="Enter your Email"
-              name="email"
-              [(ngModel)]="seeker.email"
-              (blur)="emailErrorMessage()"
-              required
-            />
-            <mat-error>{{ errorMessageForEmail }}</mat-error>
+            <input matInput formControlName="email" required />
+            <mat-error *ngIf="seekerForm.get('email')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="seekerForm.get('email')?.hasError('email')">Email is invalid</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
-          <mat-form-field class="form-field" appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input
-              matInput
-              type="password"
-              placeholder="Enter your Password"
-              name="password"
-              [(ngModel)]="seeker.password_hash"
-              (blur)="passwordErrorMessage()"
-              required
-            />
-            <mat-error>{{ errorMessageForPassword }}</mat-error>
+            <input matInput formControlName="password" type="password" required />
+            <mat-error *ngIf="seekerForm.get('password')?.hasError('required')">Password is required</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-
         <mat-grid-tile>
-          <mat-form-field appearance="outline" class="form-field">
-            <mat-label>Bussiness Scale</mat-label>
-            <mat-select
-              name="field_id"
-              [(ngModel)]="seeker.field_id"
-              #field_id
-              required
-            >
-              @for(field of Fields ; track field){
-              <mat-option [value]="field.value">{{ field.name }}</mat-option>
-              }
+          <mat-form-field appearance="outline">
+            <mat-label>University</mat-label>
+            <input matInput formControlName="university" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>LinkedIn URL</mat-label>
+            <input matInput formControlName="linkedin" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>CV URL</mat-label>
+            <input matInput formControlName="cVurl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>Field</mat-label>
+            <mat-select formControlName="field_id">
+              <mat-option *ngFor="let field of Fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
             </mat-select>
+            <mat-error *ngIf="seekerForm.get('field_id')?.hasError('required')">Field is required</mat-error>
           </mat-form-field>
-        </mat-grid-tile>
-
-        <mat-grid-tile>
-          <!-- seeker skills -->
         </mat-grid-tile>
       </mat-grid-list>
-
-      <!-- otp part -->
-      <div *ngIf="isConfrimedToChangeEmail==true">
-        <mat-grid-list cols="{{ 1 }}" rowHeight="300">
+      
+      <!-- OTP Section -->
+      <div *ngIf="isConfrimedToChangeEmail">
+        <mat-grid-list cols="1" rowHeight="300">
           <mat-grid-tile>
             <div class="container-otp">
-              <span class="mat-typography"> Click send otp button
-              </span>
-              <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
-                [disabled]="isOTPRequestSent" id="otpreqbtn">{{reqOTPbtntxt }} {{remainingTime
-                }}</button>
-
-              <span class="mat-typography"> Once that button is clicked, enter the otp(one time password)
-                recived in
-                the provided email
-                address.
-              </span>
+              <span class="mat-typography">Click send otp button</span>
+              <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()" [disabled]="isOTPRequestSent">
+                {{ reqOTPbtntxt }} {{ remainingTime }}
+              </button>
+              <span class="mat-typography">Once that button is clicked, enter the otp received in the provided email address.</span>
               <mat-form-field appearance="outline">
                 <mat-label>OTP</mat-label>
-                <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
-                  required />
+                <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}" required />
               </mat-form-field>
               <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify OTP</button>
             </div>
@@ -202,57 +112,19 @@
       </div>
 
       <!-- CV upload button and view button -->
-    <div class="button-container">
-      <button mat-raised-button color="primary">Upload New</button>
-      <button mat-raised-button id="discard">View</button>
-    </div>
+      <div class="button-container">
+        <button mat-raised-button color="primary">Upload New</button>
+        <button mat-raised-button id="discard">View</button>
+      </div>
 
       <mat-divider></mat-divider>
-      <!-- <div class="button-section">
-        <div class="right-btn">
-          <button class="apply-changes-class" (click)="onSubmit()">
-            <span class="apply-changes">Apply Changes</span>
-          </button>
-          <button class="discard-changes-class" (click)="discardChanges()">
-            <span class="discard-changes">Discard Changes</span>
-          </button>
+      <section>
+        <div class="example-button-row">
+          <button type="submit" mat-raised-button color="primary">Update Profile</button>
+          <button type="button" mat-raised-button id="discard" (click)="discardChanges()">Discard Changes</button>
+          <button type="button" mat-raised-button color="warn" id="delete" (click)="deleteAccount()">Delete Profile</button>
         </div>
-        <div class="left-btn">
-          <button class="delete-account-class" (click)="deleteAccount()">
-            <span class="delete-account">Delete Accoount</span>
-          </button>
-        </div>
-      </div> -->
-    <!-- Buttons -->
-    <mat-divider></mat-divider>
-
-    <br /><br />
-    <section>
-      <div class="example-button-row">
-        <button type="submit" mat-raised-button color="primary" (click)="onSubmit()">
-          Update Profile
-        </button>
-        <button mat-raised-button id="discard" (click)="discardChanges()">
-          Discard Changes
-        </button>
-        <button
-          mat-raised-button
-          color="warn"
-          id="delete"
-          (click)="deleteAccount()"
-        >
-          Delete Profile
-        </button>
-      </div>
-    </section>
-
-
-
-
-
-
-
-       
+      </section>
     </form>
   </mat-card>
 </div>
