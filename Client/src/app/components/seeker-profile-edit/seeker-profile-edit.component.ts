@@ -152,6 +152,8 @@ export class SeekerProfileEditComponent implements OnInit {
         description: seeker.description,
         university: seeker.university,
         CVurl: seeker.cVurl || 'defaultCVurlValue',
+        // cVurl: ['', Validators.required], // Add cVurl field here
+
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
         password: this.passwordPlaceholder,
@@ -186,7 +188,7 @@ export class SeekerProfileEditComponent implements OnInit {
   }
   async onSubmit() {
     if (this.seekerForm.invalid) {
-      this.seekerForm.markAllAsTouched();
+      this.seekerForm.markAllAsTouched(); // Mark all fields as touched to trigger validation messages
       this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
@@ -196,30 +198,30 @@ export class SeekerProfileEditComponent implements OnInit {
       return;
     }
   
-    // Ensure CVurl has a default value if it's empty
-    if (!this.seekerForm.get('CVurl')?.value) {
-      this.seekerForm.patchValue({ CVurl: 'defaultCVurlValue' });
-    }
-  
-    // Ensure the password field is correctly handled
-    if (this.seekerForm.get('password')?.value === this.passwordPlaceholder) {
-      this.seekerForm.patchValue({ password: '' }); // Clear the placeholder if it hasn't been changed
-    }
-  
     this.spinner.show();
     try {
       const formValue: Partial<SeekerProfile> = { ...this.seekerForm.value };
-      if (formValue.password === '') {
-        delete formValue.password; // Remove password if it's still empty
-      } else if (formValue.password === this.passwordPlaceholder) {
-        formValue.password = ''; // Ensure password is not left as the placeholder
+  
+      // Check if the password field is the placeholder and if so, delete it from the payload
+      if (formValue.password === this.passwordPlaceholder) {
+        delete formValue.password;
+      }
+  
+      // Ensure cVurl field is always included
+      if (!formValue.cVurl) {
+        formValue.cVurl = this.seekerForm.get('cVurl')?.value || '';
       }
   
       await this.seekerService.editSeeker(formValue as SeekerProfile, this.user_id);
       this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
-    } catch (error) {
-      console.error("Error updating profile: ", error);
-      this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error updating profile: ", error.message);
+        this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
+      } else {
+        console.error("An unknown error occurred.");
+        this.snackBar.open('An unknown error occurred', 'Close', { duration: 3000 });
+      }
     } finally {
       this.spinner.hide();
     }
