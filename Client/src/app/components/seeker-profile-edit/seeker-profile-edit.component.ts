@@ -192,41 +192,96 @@ export class SeekerProfileEditComponent implements OnInit {
       this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
-  
-    if (this.emailcaptured !== this.seekerForm.get('email')?.value && !this.isConfirmedToChangeEmail) {
-      this.dialog.open(InformEmailShouldBeVerifiedPopUp);
+
+    if (
+      this.emailcaptured !== this.seekerForm.get('email')?.value &&
+      !this.isConfirmedToChangeEmail
+    ) {
+      const dialogRef = this.dialog.open(ApprovingChangingEmailPopUp);
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result === true) {
+          this.showInformEmailShouldBeVerifiedPopUp();
+        } else {
+          this.revertEmailChange();
+        }
+      });
       return;
     }
-  
+
+    await this.updateProfile();
+  }
+
+  showInformEmailShouldBeVerifiedPopUp() {
+    const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        this.openOTPVerificationDialog();
+      } else {
+        this.revertEmailChange();
+      }
+    });
+  }
+
+  openOTPVerificationDialog() {
+    const dialogRef = this.dialog.open(EmailVerificationBoxComponent, {
+      width: '400px',
+      data: { email: this.seekerForm.get('email')?.value },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.verified) {
+        this.updateProfile();
+      } else {
+        this.snackBar.open('Email verification failed', '', {
+          panelClass: ['app-notification-error'],
+          duration: 3000,
+        });
+      }
+    });
+  }
+
+  async updateProfile() {
     this.spinner.show();
     try {
       const formValue: Partial<SeekerProfile> = { ...this.seekerForm.value };
-  
+
       // Check if the password field is the placeholder and if so, delete it from the payload
       if (formValue.password === this.passwordPlaceholder) {
         delete formValue.password;
       }
-  
+
       // Ensure cVurl field is always included
       if (!formValue.cVurl) {
         formValue.cVurl = this.seekerForm.get('cVurl')?.value || '';
       }
-  
-      await this.seekerService.editSeeker(formValue as SeekerProfile, this.user_id);
-      this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
+
+      await this.seekerService.editSeeker(
+        formValue as SeekerProfile,
+        this.user_id
+      );
+      this.snackBar.open('Profile updated successfully', 'Close', {
+        duration: 2000,
+      });
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error("Error updating profile: ", error.message);
-        this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
+        console.error('Error updating profile: ', error.message);
+        this.snackBar.open('Failed to update profile', 'Close', {
+          duration: 3000,
+        });
       } else {
-        console.error("An unknown error occurred.");
-        this.snackBar.open('An unknown error occurred', 'Close', { duration: 3000 });
+        console.error('An unknown error occurred.');
+        this.snackBar.open('An unknown error occurred', 'Close', {
+          duration: 3000,
+        });
       }
     } finally {
       this.spinner.hide();
     }
   }
-  
+
+  revertEmailChange() {
+    this.seekerForm.get('email')?.setValue(this.emailcaptured);
+  }
 
   openEmailVerificationDialog(): void {
     const dialogRef = this.dialog.open(EmailVerificationBoxComponent, {
