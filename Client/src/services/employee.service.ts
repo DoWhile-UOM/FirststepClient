@@ -75,7 +75,7 @@ export class EmployeeService {
       });
   }
 
-  async getEmployeeList(company_id: number) {
+  async getEmployeeList(company_id: string) {
     let empData: any;
 
     await axios.get(Apipaths.getEmployeeList + company_id)
