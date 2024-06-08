@@ -5,12 +5,6 @@ import { SavedAdvertisementListComponent } from '../components/saved-advertiseme
 import { ApplicationAdvertisementListComponent } from '../components/application-advertisement-list/application-advertisement-list.component';
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { SeekerEditProfileComponent } from '../components/seeker-edit-profile/seeker-edit-profile.component';
-import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup.component';
-import { HrManagerApplicationListingComponent } from '../components/hr-manager-application-listing/hr-manager-application-listing.component';
-import { HrassistantApplicationViewComponent } from '../components/hrassistant-application-view/hrassistant-application-view.component';
-import { HrmanagerApplicationViewComponent } from '../components/hrmanager-application-view/hrmanager-application-view.component';
-
-// need to be verified
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
 import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 import { SeekerApplicationStatusComponent } from '../components/seeker-application-status/seeker-application-status.component';

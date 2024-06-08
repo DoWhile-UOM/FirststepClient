@@ -5,15 +5,9 @@
 
   <div class="pageTitleContent">
     <span>
-      <mat-chip-listbox
-        aria-label="Filter"
-        #filterByStatus
-        (change)="filter(filterByStatus.selected)"
-      >
+      <mat-chip-listbox aria-label="Filter" #filterByStatus (change)="filter(filterByStatus.selected)">
         <mat-chip-option selected value="all">All</mat-chip-option>
-        <mat-chip-option value="registered"
-          >Registered</mat-chip-option
-        >
+        <mat-chip-option value="registered">Registered</mat-chip-option>
         <mat-chip-option value="rejected">Rejected</mat-chip-option>
         <mat-chip-option value="pending">Pending</mat-chip-option>
       </mat-chip-listbox>
@@ -27,47 +21,37 @@
   </div>
 </mat-card>
 <div class="adTable mat-elevation-z8" *ngIf="companyListLength > 0">
-  <table mat-table [dataSource]="companyList" class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="items" class="mat-elevation-z8">
     <ng-container matColumnDef="company_name">
       <th mat-header-cell *matHeaderCellDef>Company Name</th>
       <td mat-cell *matCellDef="let element">
         {{ element.company_name }}
-      </td></ng-container
-    >
+      </td>
+    </ng-container>
     <ng-container matColumnDef="verification_status">
       <th mat-header-cell *matHeaderCellDef>Verification Status</th>
       <td mat-cell *matCellDef="let element">
-        <button
-          mat-flat-button
-          [color]="getColor(element.verification_status)"
-          class="registered-status-btn"
-          [ngClass]="getColor(element.verification_status)"
-        >
+        <button mat-flat-button [color]="getColor(element.verification_status)" class="registered-status-btn"
+          [ngClass]="getColor(element.verification_status)">
           {{ element.verification_status }}
         </button>
-      </td></ng-container
-    >
+      </td>
+    </ng-container>
     <ng-container matColumnDef="view">
       <th mat-header-cell *matHeaderCellDef>View</th>
       <td mat-cell *matCellDef="let element" class="view-content">
-        <a
-          class="view-section"
-          [matTooltip]="displayToolTip(element.evaluated_status)"
-          (click)="viewCompanyApplication(element.company_id)"
-        >
-          <mat-icon
-            *ngIf="element.evaluated_status == 'Not Evaluated'"
-            class="icon"
-            >editicon</mat-icon
-          >
-          <mat-icon *ngIf="element.evaluated_status == 'Evaluated'" class="icon"
-            >visibility</mat-icon
-          >
+        <a class="view-section" [matTooltip]="displayToolTip(element.evaluated_status)"
+          (click)="viewCompanyApplication(element.company_id)">
+          <mat-icon *ngIf="element.evaluated_status == 'Not Evaluated'" class="icon">editicon</mat-icon>
+          <mat-icon *ngIf="element.evaluated_status == 'Evaluated'" class="icon">visibility</mat-icon>
           {{ element.view }}
         </a>
-      </td></ng-container
-    >
+      </td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  <mat-paginator [length]="totalItems" [pageSize]="pageSize" (page)="pageChanged($event)" [pageIndex]="currentPage"
+    [pageSizeOptions]="[ 10, 15, 20]"></mat-paginator>
 </div>

@@ -12,11 +12,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, HttpClientModule, MatCardModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, FlexLayoutServerModule],
+  imports: [ReactiveFormsModule, FormsModule, HttpClientModule, MatCardModule, MatIconModule, MatInputModule, MatFormFieldModule, MatButtonModule, FlexLayoutServerModule, SpinnerComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -27,6 +29,7 @@ export class LoginComponent {
     private router: Router,
     private auth: AuthService,
     private userStore: UserStoreService,
+    private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar){
 
   }
@@ -39,6 +42,8 @@ export class LoginComponent {
   onLogin(){
     //console.log(this.loginForm.value);
     //this.auth.signup(this.myForm.value)
+    this.spinner.show();
+
     this.auth.login(this.loginForm.value)
     .subscribe({
       next:(res)=>{
@@ -59,11 +64,14 @@ export class LoginComponent {
           this.auth.getLocation();
         }
 
+        this.spinner.hide();
         this.router.navigate(['/' + tokenPayload.role]);
       },
       error:(err)=>{
         this.snackBar.open("Login Error! Error Code " + err.status, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
       }
-  });
+    });
+
+    this.spinner.hide();
   
 }}

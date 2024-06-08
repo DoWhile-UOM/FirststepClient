@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 import { A } from '@angular/cdk/keycodes';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicationService {
-  constructor() {}
+  constructor(private snackbar: MatSnackBar) {}
 
   async submitSeekerApplication(applicationData: FormData): Promise<void> {
     try {
@@ -26,6 +27,28 @@ export class ApplicationService {
     }
   }
 
+  async changeAssignedHRA(application_id: number, hra_id: number) {
+    await axios.patch(Apipaths.changeAssignedHRA + 'applicationId=' + application_id + '/hraId=' + hra_id)
+      .then((response) => {
+        this.snackbar.open("Sucessfully Change HR Assistant!", '', { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      })
+      .catch((error) => {
+        this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      });
+  }
+
+  async getAssignedApplicationList(hra_id: number, jobId: number, status: string) {
+    let applicationList: any = {};
+    await axios.get(Apipaths.getassignedApplications + 'hraId=' + hra_id + '/JobID=' + jobId + '/status=' + status)
+      .then((response) => {
+        applicationList = response.data;
+      })
+      .catch((error) => {
+        this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      });
+
+    return applicationList;
+  }
 
   async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};
@@ -54,7 +77,16 @@ export class ApplicationService {
     return applicationStatusDetails;
   }
 
+  async getApplicationDetails(applicationId: number){
+    let applicationDetails: any = {};
+    await axios.get(`https://localhost:7213/api/Application/GetSeekerApplications/${applicationId}`)
+      .then((response) => {
+        applicationDetails = response.data;
+      })
+      .catch((error) => {
+        //console.error(error);
+      });
 
+    return applicationDetails;
+  }
 }
-
-

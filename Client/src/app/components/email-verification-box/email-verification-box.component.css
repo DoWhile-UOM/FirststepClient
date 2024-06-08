@@ -1,0 +1,108 @@
+.form-popup {
+    width: 1200px;
+    height: 600px;
+    border: 3px black;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+    padding: 25px 25px 25px 25px;
+    margin-left: 130px;
+  }
+  
+  .seeker {
+    width: 400px;
+    height: auto;
+    padding: 60px 100px 30px 100px;
+  }
+  
+  h2 {
+    font-size: 30px;
+    font-weight: 550;
+    font-family: "roboto";
+    align-items: center;
+    font-style: italic;
+  }
+  
+  h3 {
+    font-size: 30px;
+    font-weight: 550;
+    font-family: "roboto";
+    align-items: center;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-bottom: 25px;
+  }
+  
+  p {
+    text-align: center;
+    align-items: center;
+  }
+  
+  .form-container {
+    border: 3px black;
+    border-radius: 25px;
+    background: #fff;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+    padding: 25px 25px 25px 25px;
+    width: 500px;
+    height: 525px;
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+    display: grid;
+    width: 450px;
+    align-items: center;
+    padding-left: 15px;
+    padding-bottom: 0;
+  }
+  
+  
+  .mat-button{
+    padding-left: 10px;
+  
+  }
+  
+  .body {
+    padding: 3em;
+    width: 60%;
+    min-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .card {
+    padding: 2em;
+  }
+  
+  mat-grid-tile mat-form-field {
+    width: 75%;
+    margin: 0.75em;
+  }
+  
+  .company-logo {
+    width: 20px;
+    height: auto;
+  }
+  
+  
+  .title {
+    color: #008080;
+    font-size: 25px;
+    font-family: Lato;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  
+  .mat-mdc-button-touch-target {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  
+  .button-with-inputbox mat-form-field{
+    width: 55%;
+  }
+  
+  .button-with-inputbox button{
+    width: 20%;
+  }

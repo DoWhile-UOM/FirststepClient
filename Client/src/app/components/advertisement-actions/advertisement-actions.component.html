@@ -4,9 +4,9 @@
         {{(currentStatus) ? 'Saved' : 'Save'}}
     </button>
 
-    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'NotEvaluated'" class="status-chip-pending"> Screening </mat-chip>
-    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'Accepted'" class="status-chip-accepted"> Accepted </mat-chip>
-    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'Rejected'" class="status-chip-rejected"> Rejected </mat-chip>
+    <mat-chip *ngIf="isApplicationPage && (applicationStatus == 'Screening' || applicationStatus == 'Submitted')" class="status-chip-pending"> {{applicationStatus}} </mat-chip>
+    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'Finalized'" class="status-chip-accepted"> {{applicationStatus}} </mat-chip>
+    <mat-chip *ngIf="isApplicationPage && applicationStatus == 'Rejected'" class="status-chip-rejected"> {{applicationStatus}} </mat-chip>
 
     <button
         *ngIf="!isApplicationPage"

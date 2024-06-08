@@ -16,6 +16,17 @@ mat-grid-tile mat-form-field {
   width: 100%;
   margin: 0.75em;
 }
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.logo {
+  width: 100px; /* Adjust the size as needed */
+  height: auto;
+  margin-right: 10px; 
+}
 
 mat-grid-tile {
   height: auto;
@@ -141,4 +152,8 @@ button:hover {
 .container-otp{
   display: flex;
   flex-direction: column;
+}
+input[type="file"] {
+  display: block;
+  margin: 10px auto;
 }

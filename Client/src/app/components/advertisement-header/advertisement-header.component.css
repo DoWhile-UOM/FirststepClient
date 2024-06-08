@@ -8,6 +8,11 @@
     width: 100%;
 }
 
+.job-post-heading-inner{
+    display: flex;
+    flex-direction: column;
+}
+
 .job-title {
     color: black; 
     font-size: 33px; 
@@ -28,11 +33,11 @@
     color: black; 
     font-family: Lato;
     margin-top: 0.5em;
+    margin-left: 1.5em;
 }
 
 .company-logo{
     width: 80px; 
     height: 80px;
-    padding: 1.5em;
-    padding-bottom: 0;
+    padding: 0em 1.5em;
 }

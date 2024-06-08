@@ -11,20 +11,27 @@ interface Employee {
   email: string;
   password_hash: string;
 }
+interface User {
+  user_id: number;
+  password_hash: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  
-  async getEmployeeDetails(id : number) {
+  constructor(private snackBar: MatSnackBar) { }
+
+  async getEmployeeDetails(id: number) {
     let empData: any;
-    
     await axios.get(Apipaths.getEmployeeDetails + id)
       .then((response) => {
         empData = response.data;
       })
-      .catch (function (error) {
+      .catch(function (error) {
         alert("Network Error: " + error);
       });;
 
@@ -50,8 +57,9 @@ export class EmployeeService {
       .then((response) => {
         empData = response.data;
       })
-      .catch (function (error) {
+      .catch(function (error) {
         alert("Network Error: " + error);
+
       });
 
     return empData;
@@ -82,21 +90,21 @@ export class EmployeeService {
   }
 
   async editemployee(employee: any, employeeID: number) {
-    try{      
-      await axios.put( Apipaths.editemployee+ employeeID, employee)
+    try {
+      await axios.put(Apipaths.editemployee + employeeID, employee)
         .then((response) => {
           console.log(response);
         });
-      
+
     }
     catch (error) {
       console.error(error);
     }
   }
 
-  async deleteEmployee(employeeID:number){
-    try{
-      await axios.delete(Apipaths.deleteEmployee+employeeID)
+  async deleteEmployee(employeeID: number) {
+    try {
+      await axios.delete(Apipaths.deleteEmployee + employeeID)
     }
     catch (error) {
       console.error(error);
@@ -105,7 +113,7 @@ export class EmployeeService {
 
   async getAllHRMs(companyID: string){
     let empData: any;
-    
+
     await axios.get(Apipaths.getAllHRMs + companyID)
       .then((response) => {
         empData = response.data;
@@ -113,7 +121,7 @@ export class EmployeeService {
       .catch(function (error) {
         alert("Network Error: " + error);
       });
-    
+
     return empData;
   }
 
@@ -127,7 +135,7 @@ export class EmployeeService {
       .catch(function (error) {
         alert("Network Error: " + error);
       });
-    
+
     return empData;
   }
 }
