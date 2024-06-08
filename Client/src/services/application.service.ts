@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
+import { A } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -27,7 +28,6 @@ export class ApplicationService {
   }
 
   async changeAssignedHRA(application_id: number, hra_id: number) {
-    
     await axios.patch(Apipaths.changeAssignedHRA + 'applicationId=' + application_id + '/hraId=' + hra_id)
       .then((response) => {
         this.snackbar.open("Sucessfully Change HR Assistant!", '', { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
@@ -63,6 +63,20 @@ export class ApplicationService {
     return applicationList;
   }
 
+  //get application status bu advertisment id and seeker id
+  async getApplicationStatus(advertisement_id: number, seeker_id: number) {
+    let applicationStatusDetails: any = {};
+    await axios.get(Apipaths.getApplicationStatus + advertisement_id + '&seekerId=' + seeker_id)
+      .then((response) => {
+        applicationStatusDetails = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching application status:', error);
+      });
+
+    return applicationStatusDetails;
+  }
+
   async getApplicationDetails(applicationId: number){
     let applicationDetails: any = {};
     await axios.get(`https://localhost:7213/api/Application/GetSeekerApplications/${applicationId}`)
@@ -75,6 +89,4 @@ export class ApplicationService {
 
     return applicationDetails;
   }
-
-    
 }

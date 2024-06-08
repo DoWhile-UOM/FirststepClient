@@ -10,6 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { SeekerApplicationFormComponent } from '../seeker-application-form/seeker-application-form.component';
 import { AuthService } from '../../../services/auth.service';
+import { SeekerApplicationStatusComponent } from '../seeker-application-status/seeker-application-status.component';
 
 @Component({
   selector: 'app-advertisement-actions',
@@ -90,8 +91,17 @@ export class AdvertisementActionsComponent {
   }
 
   trackApplication() {
-    //route to application status
-    this.router.navigate(['/seeker/applicationReview']);
+    //open dialog to track application
+    this.dialog.open(SeekerApplicationStatusComponent,{
+      data: {
+        jobID: this.jobID,
+        seekerID: this.seekerId,
+        company_name: this.company_name, 
+        job_title: this.job_title, 
+        job_field: this.job_field,
+        }
+    });
+
     }
 }
 

@@ -8,15 +8,17 @@
     margin-top: 2vw;
   }
   
-  mat-card-content {
+  mat-dialog-actions {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     color: #000;
     font-size: 1vw;
     justify-content: space-between;
-    background-color: yellow;
+    margin-top: 1vw;
     width:30%;
+    align-self: center;
 
   }
 
@@ -26,7 +28,7 @@
     justify-content: center;
     color: #008080;
     margin-top: 50px;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
   }
   
 

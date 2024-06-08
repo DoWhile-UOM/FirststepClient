@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { PdfViewComponent } from '../pdf-view/pdf-view.component';
-
+import { DocumentService } from '../../../services/document.service';
 
 @Component({
     selector: 'app-file-download',
@@ -13,12 +12,11 @@ import { PdfViewComponent } from '../pdf-view/pdf-view.component';
     imports: [MatIconModule,MatButtonModule]
 })
 export class FileDownloadComponent {
+document: any;
 
 constructor(
-    public dialog: MatDialog
+    private documentService: DocumentService,
 ) {} 
 
-openpdf() {
-    const dialogRef = this.dialog.open(PdfViewComponent);
-}
+
 }

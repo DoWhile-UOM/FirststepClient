@@ -1,45 +1,45 @@
 <mat-card class="example-card">
   <mat-card-header>
     <app-advertisement-header
-    [company_name]="jobData.company_name"
-    [job_field]="jobData.field_name"
-    [job_title]="jobData.title"
+      [company_name]="jobData.company_name"
+      [job_field]="jobData.field_name"
+      [job_title]="jobData.title"
     ></app-advertisement-header>
   </mat-card-header>
   <mat-divider></mat-divider>
-
-  <mat-stepper labelPosition="bottom" #stepper class="stepper">
-    <mat-step [stepControl]="firstFormGroup">
+  <mat-dialog-content>
+  <mat-stepper labelPosition="bottom" #stepper class="stepper" [linear]="true">
+    <mat-step [stepControl]="firstFormGroup" [completed]="isCompleted('Submitted')" [editable]="false">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Application Submission
-          <br>date
+        <ng-template matStepLabel
+          >Application Submission <br/>{{applicationData.submitted_date}}
         </ng-template>
-        
       </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
+    <mat-step [stepControl]="secondFormGroup" [completed]="isCompleted('Screening')" [editable]="false">
       <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Application Screening
-          <br>date
+        <ng-template matStepLabel
+          >Application Screening 
         </ng-template>
-        
       </form>
     </mat-step>
-    <mat-step [stepControl]="thirdFormGroup">
+    <mat-step [stepControl]="thirdFormGroup" [completed]="isCompleted('Finalized')" [editable]="false">
       <form [formGroup]="thirdFormGroup">
-      <ng-template matStepLabel>Finalize
-        <br>date
-      </ng-template>
+        <ng-template matStepLabel>Application Finalize</ng-template>
       </form>
     </mat-step>
   </mat-stepper>
+<!--rejected message-->
+<div class="rejected-message" *ngIf="applicationData.status === 'Rejected'">
+  Your application has been rejected
+</div>
+</mat-dialog-content>
+    <mat-dialog-actions> 
+ 
+    <div>CV</div>
+    <div>
+       <button mat-flat-button color="primary" (click)="openpdf()">View document</button>
+    </div>
+  </mat-dialog-actions> 
 
-  <mat-divider></mat-divider>
-  
-    <mat-card-title>Submitted Documents</mat-card-title>
-    <mat-card-content>CV
-      <span
-        ><button mat-stroked-button color="primary">View Document</button>
-      </span>
-  </mat-card-content>
 </mat-card>
