@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { FormsModule } from '@angular/forms';
@@ -36,7 +35,6 @@ interface Employee {
     FileUploadComponent,
     MatInputModule,
     MatFormFieldModule,
-    MatRadioModule,
     MatButtonModule,
     FileUploadComponent,
     FormsModule,
