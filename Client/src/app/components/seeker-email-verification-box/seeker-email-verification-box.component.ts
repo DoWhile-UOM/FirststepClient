@@ -50,6 +50,7 @@ interface verifyOTP {
     MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './seeker-email-verification-box.component.html',
   styleUrl: './seeker-email-verification-box.component.css',

@@ -46,13 +46,18 @@
             <mat-error *ngIf="hasError('phone_number')">{{ getErrorMessage('phone_number') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+
         <mat-grid-tile>
           <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
+            <mat-label>Email Address</mat-label>
             <input matInput formControlName="email" required />
-            <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error>
+            <mat-error *ngIf="seekerForm.controls['email'].touched && seekerForm.controls['email'].errors">
+              Valid Email is required
+            </mat-error>
+            <!-- <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error> -->
           </mat-form-field>
-        </mat-grid-tile>
+        </mat-grid-tile>   
+
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>

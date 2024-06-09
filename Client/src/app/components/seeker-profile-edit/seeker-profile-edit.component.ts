@@ -3,7 +3,7 @@ import {
   OnInit,
   ViewChild,
   Output,
-  EventEmitter,
+  EventEmitter,  
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,7 +42,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
-import { EmailVerificationBoxComponent } from '../email-verification-box/email-verification-box.component';
+import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
 
 interface SeekerProfile {
   user_id: number;
@@ -84,6 +84,7 @@ interface SeekerProfile {
     MatDialogClose,
     NgxSpinnerModule,
     SpinnerComponent,
+    SeekerEmailVerificationBoxComponent
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -94,13 +95,16 @@ export class SeekerProfileEditComponent implements OnInit {
   user_id: number = 2095; //temp
   isConfirmedToChangeEmail: boolean = false;
   emailcaptured = '';
-  isOTPRequestSent: boolean = false;
   remainingTime: number = 0;
   reqOTPbtntxt: string = 'Request OTP';
   noOfCols: number = 2;
   fields: any = [];
   passwordFieldType: string = 'password';
   passwordPlaceholder: string = '********';
+
+  isEmailVerified: boolean = false;
+  isOTPRequestSent: boolean = false;
+  isFormVerified: boolean = false;
 
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
 
@@ -120,16 +124,12 @@ export class SeekerProfileEditComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone_number: [
-        '',
-        [Validators.required, Validators.pattern(/^\d{7,15}$/)],
-      ], // Adjusted pattern for phone numbers with 7-15 digits
+      phone_number: ['',[Validators.required, Validators.pattern(/^\d{7,15}$/)],], // Adjusted pattern for phone numbers with 7-15 digits
       bio: ['', Validators.required],
       description: ['', Validators.required],
       university: [''],
       linkedin: [''],
       CVurl: [''], // Add CVurl field here
-
       field_id: ['', Validators.required],
       password: ['', Validators.required],
       seekerSkills: [[]],
@@ -139,10 +139,13 @@ export class SeekerProfileEditComponent implements OnInit {
   async ngOnInit() {
     this.spinner.show();
     try {
+      // Fetch all job fields
       await this.jobFieldService.getAll().then((response) => {
         this.fields = response;
       });
+      // Fetch seeker profile data
       const seeker = await this.seekerService.getSeekerProfile(this.user_id);
+      // Populate the form with the fetched data
       this.seekerForm.patchValue({
         first_name: seeker.first_name,
         last_name: seeker.last_name,
@@ -153,7 +156,6 @@ export class SeekerProfileEditComponent implements OnInit {
         university: seeker.university,
         CVurl: seeker.cVurl || 'defaultCVurlValue',
         // cVurl: ['', Validators.required], // Add cVurl field here
-
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
         password: this.passwordPlaceholder,
@@ -176,12 +178,14 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   onPasswordFocus() {
+    // Clear the password field if it contains the placeholder
     if (this.seekerForm.get('password')?.value === this.passwordPlaceholder) {
       this.seekerForm.get('password')?.setValue('');
     }
   }
 
   onPasswordBlur() {
+    // Restore the password placeholder if the field is empty
     if (!this.seekerForm.get('password')?.value) {
       this.seekerForm.get('password')?.setValue(this.passwordPlaceholder);
     }
@@ -193,6 +197,7 @@ export class SeekerProfileEditComponent implements OnInit {
       return;
     }
 
+    // Check if email has changed and needs verification
     if (
       this.emailcaptured !== this.seekerForm.get('email')?.value &&
       !this.isConfirmedToChangeEmail
@@ -211,6 +216,7 @@ export class SeekerProfileEditComponent implements OnInit {
     await this.updateProfile();
   }
 
+
   showInformEmailShouldBeVerifiedPopUp() {
     const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
     dialogRef.afterClosed().subscribe((result) => {
@@ -222,14 +228,29 @@ export class SeekerProfileEditComponent implements OnInit {
     });
   }
 
+
+  // openDialog(): void {
+  //   const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
+  //     width: '1000px',
+  //     data: {}
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //     this.seekerForm.get('email')?.setValue(result);
+  //     this.isEmailVerified = result.verified;
+  //   });
+  // }
+
   openOTPVerificationDialog() {
-    const dialogRef = this.dialog.open(EmailVerificationBoxComponent, {
+    const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
       width: '400px',
       data: { email: this.seekerForm.get('email')?.value },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.verified) {
+        this.isConfirmedToChangeEmail = true;
         this.updateProfile();
       } else {
         this.snackBar.open('Email verification failed', '', {
@@ -254,7 +275,7 @@ export class SeekerProfileEditComponent implements OnInit {
       if (!formValue.cVurl) {
         formValue.cVurl = this.seekerForm.get('cVurl')?.value || '';
       }
-
+      // Update seeker profile
       await this.seekerService.editSeeker(
         formValue as SeekerProfile,
         this.user_id
@@ -280,25 +301,27 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   revertEmailChange() {
+    // Revert the email field to the original value
     this.seekerForm.get('email')?.setValue(this.emailcaptured);
   }
 
-  openEmailVerificationDialog(): void {
-    const dialogRef = this.dialog.open(EmailVerificationBoxComponent, {
-      width: '400px',
-      data: {},
-    });
+  // openEmailVerificationDialog(): void {
+  //   const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
+  //     width: '400px',
+  //     data: {},
+  //   });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result.verified) {
-        this.emailcaptured = this.seekerForm.get('email')?.value;
-        this.isConfirmedToChangeEmail = true;
-        this.onSubmit();
-      }
-    });
-  }
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result.verified) {
+  //       this.emailcaptured = this.seekerForm.get('email')?.value;
+  //       this.isConfirmedToChangeEmail = true;
+  //       this.onSubmit();
+  //     }
+  //   });
+  // }
 
   async discardChanges() {
+    // Discard changes and reload the original profile data
     this.spinner.show();
     try {
       const seeker = await this.seekerService.getSeekerProfile(this.user_id);
@@ -341,6 +364,7 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   onSkillsChange(skills: string[]) {
+    // Update the skills field with the selected skills
     this.seekerForm.get('seekerSkills')?.setValue(skills);
   }
 
@@ -410,6 +434,7 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   getErrorMessage(formControlName: string): string {
+    //To get error message for a given form control
     const control = this.seekerForm.get(formControlName);
     if (control?.hasError('required')) {
       return `${formControlName.replace('_', ' ')} is required`;
