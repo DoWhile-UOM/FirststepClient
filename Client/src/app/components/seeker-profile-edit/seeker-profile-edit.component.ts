@@ -132,7 +132,8 @@ export class SeekerProfileEditComponent implements OnInit {
       description: ['', Validators.required],
       university: [''],
       linkedin: [''],
-      CVurl: [''], // Add CVurl field here
+      CVurl: ['defaultCVurlValue'], // Set default value for CVurl
+      // CVurl: [''], // Add CVurl field here
       field_id: ['', Validators.required],
       password: ['', Validators.required],
       seekerSkills: [[]],
