@@ -33,6 +33,8 @@ interface Job {
   title: string;
   field_name: string;
   company_name: string;
+  company_logo_url: string;
+
 }
 
 @Component({
@@ -69,11 +71,13 @@ export class SeekerApplicationStatusComponent implements OnInit{
       this.jobData.title = data.job_title;
       this.jobData.field_name = data.field_name;
       this.jobData.company_name = data.company_name;
+      this.jobData.company_logo_url = data.company_logo_url;
+      
       //assign job id and seeker id
       this.applicationData.advertisement_id = data.jobID;
       this.applicationData.seeker_id = data.seekerID;
-
     }
+
   
 async ngOnInit() {
  this.getApplicationStatus();
