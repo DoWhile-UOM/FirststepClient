@@ -5,7 +5,7 @@ import { MatFormField } from '@angular/material/form-field';
 import { MatLabel } from '@angular/material/form-field';
 import { CompanyService } from '../../../services/company.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,6 +18,7 @@ import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -42,7 +43,7 @@ export interface CmpyData {
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [FormsModule,CommonModule,MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
@@ -54,22 +55,7 @@ export class RegCmpStateCheckComponent {
 
   //cmpData: CmpyData[] = [];
 
-  cmpData: CmpyData = { company_business_scale: 'mid' } as CmpyData
-
-  companyReg = this._formBuilder.group({
-    company_name: new FormControl({ value: this.cmpData.company_name, disabled: false }),//
-    company_id: new FormControl({ value: this.cmpData.company_id, disabled: false }),//
-    company_website: new FormControl({ value: this.cmpData.company_website, disabled: false }),//
-    company_email: new FormControl({ value: this.cmpData.company_email, disabled: false }),//
-    company_description: new FormControl({ value: this.cmpData.company_description, disabled: false }),//
-    company_logo: new FormControl({ value: this.cmpData.company_logo, disabled: false }),//
-    company_business_scale: new FormControl(this.cmpData.company_business_scale),
-    business_reg_certificate: new FormControl({ value: this.cmpData.business_reg_certificate, disabled: false }, ),//
-    company_registered_date: new FormControl({ value: this.cmpData.company_registered_date, disabled: false }),///
-    certificate_of_incorporation: new FormControl({ value: this.cmpData.certificate_of_incorporation, disabled: false }),//
-    company_phone_number: new FormControl({ value: this.cmpData.company_phone_number, disabled: false }),//
-    business_reg_no: new FormControl({ value: this.cmpData.business_reg_no, disabled: false }),//
-  });
+  cmpData: CmpyData = {} as CmpyData
 
   constructor(private snackbar: MatSnackBar,private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
@@ -134,16 +120,7 @@ export class RegCmpStateCheckComponent {
     this.styleService.setStyle('circle-border-color', '#ffbf00');
     this.styleService.setStyle('number-color', '#ffbf00');
     this.isNoInput = true;
-
-    Object.keys(this.companyReg.controls).forEach(key => {
-      this.companyReg.get(key)?.enable();
-    });
-    if(this.companyReg.invalid){
-      this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-    }else{
-      console.log('from service', this.companyReg.value);
-      this.company.updateUnregCompanyDetails(this.companyReg.value,this.cmpData.company_id);
-    }
+    this.company.updateUnregCompanyDetails(this.cmpData);
 
 
   }
