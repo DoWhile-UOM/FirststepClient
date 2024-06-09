@@ -8,7 +8,6 @@ import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { ApplicationService } from '../../../services/application.service';
 import { url } from 'node:inspector';
-import { DocumentService } from '../../../services/document.service';
 import { NgIf } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
@@ -61,10 +60,10 @@ export class SeekerApplicationStatusComponent implements OnInit{
   });
 
   constructor(
+    public dialogRef: MatDialogRef<SeekerApplicationStatusComponent>,
     public dialog: MatDialog,
     private _formBuilder: FormBuilder,
-    private applicationService: ApplicationService,
-    private documentService:DocumentService, 
+    private applicationService: ApplicationService, 
     @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
       // assign data from application card 
