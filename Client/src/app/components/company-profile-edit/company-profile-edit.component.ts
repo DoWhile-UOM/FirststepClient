@@ -36,6 +36,7 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 interface Company {
@@ -87,7 +88,7 @@ interface verifyOTP {
     CommonModule,
     MatDialogTitle,
     MatDialogContent,
-    MatDialogActions,
+    MatDialogActions, MatProgressSpinnerModule,
   ],
 })
 export class CompanyProfileEditComponent {
@@ -115,7 +116,7 @@ export class CompanyProfileEditComponent {
   isConfrimedToChangeEmail: boolean = false;
   otp: string = '';
 
-  logoUrl: string | ArrayBuffer | null = null;
+  logoUrl: string = '../../../assets/Img.png';
   logoBlobName = '';
   selectedFile: File | null = null;
   eventOccured: boolean = false;
@@ -140,7 +141,6 @@ export class CompanyProfileEditComponent {
       );
       this.cName = this.company.company_name;
       this.emailcaptuered = this.company.company_email;
-      console.log('got details');
       this.hasDataLoaded = true;
       this.logoBlobName = this.company.company_logo;
       this.imageDownload();
@@ -156,9 +156,18 @@ export class CompanyProfileEditComponent {
     if (this.company.company_logo != '') {
       this.documentService.generateSasToken(this.logoBlobName).subscribe({
         next: (token: string) => {
-          this.logoUrl = this.documentService.getBlobUrl(this.logoBlobName, token);
+          const blobUrl = this.documentService.getBlobUrl(this.logoBlobName, token);
           console.log('SAS token fetched:', token);
           console.log('Blob URL:', this.logoUrl);
+
+          fetch(blobUrl)
+            .then(response => response.blob())
+            .then(blob => {
+              this.logoUrl = URL.createObjectURL(blob);
+            })
+            .catch(error => {
+              console.error('Error fetching blob:', error);
+            });
         },
         error: (error) => {
           console.error('Error fetching SAS token:', error);
@@ -174,7 +183,7 @@ export class CompanyProfileEditComponent {
       this.selectedFile = input.files[0];
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.logoUrl = e.target?.result || '';
+        this.logoUrl = (e.target?.result as string) || '';
       };
       reader.readAsDataURL(this.selectedFile);
     }

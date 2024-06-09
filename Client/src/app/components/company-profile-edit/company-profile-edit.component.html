@@ -8,10 +8,12 @@
       <!-- Top Section -->
       <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
         <mat-grid-tile class="tile">
-
-          <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="md-card-image" width="100" height="100"
-            onError="this.onerror=null;this.src='fallback-image-url';"><br />
-          <input type="file" (change)="onselectFile($event)" *ngIf="!eventOccured" />
+          <p *ngIf="!logoUrl"><mat-spinner class="imageLoading"></mat-spinner>Loading image...</p>
+          <div *ngIf="logoUrl">
+            <img [src]="logoUrl" alt="Company Logo" class="md-card-image" width="100" height="100"
+              onError="this.onerror=null;this.src='fallback-image-url';"><br />
+            <input type="file" (change)="onselectFile($event)" *ngIf="!eventOccured" />
+          </div>
           <button mat-raised-button (click)="onSaveLogo()" *ngIf="eventOccured">Save Logo</button>
 
           <!--<img src="assets/images/BistechLogo.png" class="md-card-image" />-->

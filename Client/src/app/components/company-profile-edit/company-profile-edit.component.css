@@ -157,3 +157,9 @@ input[type="file"] {
   display: block;
   margin: 10px auto;
 }
+
+.imageLoading {
+  width: 50px !important;
+  margin: 0 auto;
+  display: block;
+}
