@@ -9,7 +9,8 @@
       <mat-grid-list cols="{{ noOfCols }}" rowHeight="140">
         <mat-grid-tile class="tile">
 
-          <img [src]="logoUrl" class="logo" /><br />
+          <img *ngIf="logoUrl" [src]="logoUrl" alt="Company Logo" class="md-card-image" width="100" height="100"
+            onError="this.onerror=null;this.src='fallback-image-url';"><br />
           <input type="file" (change)="onselectFile($event)" *ngIf="!eventOccured" />
           <button mat-raised-button (click)="onSaveLogo()" *ngIf="eventOccured">Save Logo</button>
 

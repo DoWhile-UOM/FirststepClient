@@ -30,11 +30,13 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DocumentService } from '../../../services/document.service';
 
 import { ChangeDetectorRef } from '@angular/core';
 
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 
 interface Company {
   company_id: number;
@@ -114,18 +116,20 @@ export class CompanyProfileEditComponent {
   otp: string = '';
 
   logoUrl: string | ArrayBuffer | null = null;
+  logoBlobName = '';
   selectedFile: File | null = null;
   eventOccured: boolean = false;
   //commayForm
   companyForm!: FormGroup;
   constructor(
     private companyService: CompanyService,
+    private documentService: DocumentService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog, 
+    public dialog: MatDialog,
     private auth: AuthService,
     private snackbar: MatSnackBar,
     private cdr: ChangeDetectorRef) {
-      this.BusinessScales = CompanyService.BusinessScales;
+    this.BusinessScales = CompanyService.BusinessScales;
   }
 
   async ngOnInit() {
@@ -138,12 +142,31 @@ export class CompanyProfileEditComponent {
       this.emailcaptuered = this.company.company_email;
       console.log('got details');
       this.hasDataLoaded = true;
+      this.logoBlobName = this.company.company_logo;
+      this.imageDownload();
       this.spinner.hide();
     } catch (error) {
       console.log(error);
       this.spinner.hide();
     }
   }
+  //image download
+  imageDownload() {
+    console.log('inside the imageDownload function')
+    if (this.company.company_logo != '') {
+      this.documentService.generateSasToken(this.logoBlobName).subscribe({
+        next: (token: string) => {
+          this.logoUrl = this.documentService.getBlobUrl(this.logoBlobName, token);
+          console.log('SAS token fetched:', token);
+          console.log('Blob URL:', this.logoUrl);
+        },
+        error: (error) => {
+          console.error('Error fetching SAS token:', error);
+        }
+      });
+    }
+  }
+
   //image upload
   onselectFile(event: Event): void {
     const input = event.target as HTMLInputElement;
