@@ -106,6 +106,9 @@ export class SeekerProfileEditComponent implements OnInit {
   isOTPRequestSent: boolean = false;
   isFormVerified: boolean = false;
 
+  emailReadOnly: boolean = true;
+
+
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
 
   // seekerSkills: string[] = [];
@@ -196,62 +199,38 @@ export class SeekerProfileEditComponent implements OnInit {
       this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
-
-    // Check if email has changed and needs verification
-    if (
-      this.emailcaptured !== this.seekerForm.get('email')?.value &&
-      !this.isConfirmedToChangeEmail
-    ) {
-      const dialogRef = this.dialog.open(ApprovingChangingEmailPopUp);
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result === true) {
-          this.showInformEmailShouldBeVerifiedPopUp();
-        } else {
-          this.revertEmailChange();
-        }
-      });
-      return;
-    }
-
+  
     await this.updateProfile();
   }
+  
 
 
   showInformEmailShouldBeVerifiedPopUp() {
     const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
-        this.openOTPVerificationDialog();
+        this.openDialog();
       } else {
         this.revertEmailChange();
       }
     });
   }
 
-
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
-  //     width: '1000px',
-  //     data: {}
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //     this.seekerForm.get('email')?.setValue(result);
-  //     this.isEmailVerified = result.verified;
-  //   });
-  // }
-
-  openOTPVerificationDialog() {
+  openDialog(): void {
     const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
       width: '400px',
       data: { email: this.seekerForm.get('email')?.value },
     });
-
+  
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.verified) {
         this.isConfirmedToChangeEmail = true;
-        this.updateProfile();
+        this.seekerForm.get('email')?.setValue(result.emailAddress);
+        this.emailcaptured = result.emailAddress;
+        this.emailReadOnly = true;  // Freeze email editing after updating
+        this.snackBar.open('Email verified successfully', 'Close', {
+          duration: 2000,
+        });
       } else {
         this.snackBar.open('Email verification failed', '', {
           panelClass: ['app-notification-error'],
@@ -260,6 +239,26 @@ export class SeekerProfileEditComponent implements OnInit {
       }
     });
   }
+  
+
+  // openOTPVerificationDialog() {
+  //   const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
+  //     width: '400px',
+  //     data: { email: this.seekerForm.get('email')?.value },
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result && result.verified) {
+  //       this.isConfirmedToChangeEmail = true;
+  //       this.updateProfile();
+  //     } else {
+  //       this.snackBar.open('Email verification failed', '', {
+  //         panelClass: ['app-notification-error'],
+  //         duration: 3000,
+  //       });
+  //     }
+  //   });
+  // }
 
   async updateProfile() {
     this.spinner.show();

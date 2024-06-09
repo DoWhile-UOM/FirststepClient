@@ -50,12 +50,12 @@ interface verifyOTP {
     MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './seeker-email-verification-box.component.html',
   styleUrl: './seeker-email-verification-box.component.css',
 })
-export class SeekerEmailVerificationBoxComponent implements OnDestroy{
+export class SeekerEmailVerificationBoxComponent implements OnDestroy, OnInit {
   requestBtnstate: boolean = false;
   verifyBtnstate: boolean = true;
   rmnTime: number = 60;
@@ -75,60 +75,79 @@ export class SeekerEmailVerificationBoxComponent implements OnDestroy{
     private auth: AuthService,
     private _formBuilder: FormBuilder
   ) {}
-  
+
+  ngOnInit(): void {
+    this.useremailAddress = this.data.email;
+    this.seekerForm.get('email')?.setValue(this.useremailAddress);
+  }
 
   async requestOTP() {
-
     const userData: requestOTP = {
-      email: this.seekerForm.get('company_email')?.value
-    }
+      email: this.seekerForm.get('email')?.value,
+    };
 
     if (!this.isValidEmail(userData)) {
-      this.snackbar.open("Please Enter the Email Address", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.snackbar
+        .open('Please Enter the Email Address', '', {
+          panelClass: ['app-notification-error'],
+        })
+        ._dismissAfter(3000);
       return;
     }
-    this.requestBtnstate=true;
+    this.requestBtnstate = true;
 
-    let verificationResult = await this.auth.requestOTP(userData)
+    let verificationResult = await this.auth.requestOTP(userData);
 
     if (verificationResult == true) {
-      this.snackbar.open("OTP Sent successful", "")._dismissAfter(3000);
+      this.snackbar.open('OTP Sent successful', '')._dismissAfter(3000);
       this.handleClick();
-      this.verifyBtnstate=false;
-      //this.printTextAfterFiveMinutes();
+      this.verifyBtnstate = false;
     } else {
-      this.snackbar.open("OTP Request failed Please try Again", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-      this.requestBtnstate=false;
+      this.snackbar
+        .open('OTP Request failed. Please try Again', '', {
+          panelClass: ['app-notification-error'],
+        })
+        ._dismissAfter(3000);
+      this.requestBtnstate = false;
       return;
     }
   }
-
 
   async VerifyOTP() {
-    console.log(this.seekerForm.get('otp_in')?.value);
-
     const userData: verifyOTP = {
-      email: this.seekerForm.get('company_email')?.value,
-      otp: this.seekerForm.get('otp_in')?.value
+      email: this.seekerForm.get('email')?.value,
+      otp: this.seekerForm.get('otp_in')?.value,
+    };
+  
+    if (!userData.email) {
+      this.snackbar.open('Please enter your email address', '', {
+        panelClass: ['app-notification-error'],
+        duration: 3000,
+      });
+      return;
     }
 
-    let verificationResult = await this.auth.verifyOTP(userData);
+    console.log('Verifying OTP with data:', userData);
+
+    const verificationResult = await this.auth.verifyOTP(userData);
 
     if (verificationResult == true) {
-      //this.isEmailVerified = true;
-      this.snackbar.open("OTP verification successful", "", { duration: 2000 });
-      this.requestBtnstate= true;
-      this.verifyBtnstate= true;
+      this.snackbar.open('OTP verification successful', '', { duration: 2000 });
+      this.requestBtnstate = true;
+      this.verifyBtnstate = true;
       this.closeDialog();
     } else {
-      this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.snackbar.open('OTP verification failed', '', {
+        panelClass: ['app-notification-error'],
+        duration: 3000,
+      });
     }
-
   }
+  
+  
 
-
-  isValidEmail(userData:requestOTP): boolean {
-    const email = userData.email||"";
+  isValidEmail(userData: requestOTP): boolean {
+    const email = userData.email || '';
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   }
@@ -139,7 +158,6 @@ export class SeekerEmailVerificationBoxComponent implements OnDestroy{
   }
 
   handleClick(): void {
-    
     const currentTime = Date.now();
     const unlockTime = currentTime + 60000; // 60 seconds later
 
@@ -149,13 +167,13 @@ export class SeekerEmailVerificationBoxComponent implements OnDestroy{
   }
 
   checkButtonStatus(): void {
-    if(this.isBrowser()) {
+    if (this.isBrowser()) {
       const unlockTime = localStorage.getItem('unlockTime');
 
       if (unlockTime) {
         const currentTime = Date.now();
         const timeDifference = parseInt(unlockTime) - currentTime;
-  
+
         if (timeDifference > 0) {
           this.requestBtnstate = true;
           this.rmnTime = Math.ceil(timeDifference / 1000);
@@ -185,8 +203,8 @@ export class SeekerEmailVerificationBoxComponent implements OnDestroy{
 
   closeDialog(): void {
     const additionalData = {
-      emailAddress: this.useremailAddress,
-      verified: true // Example boolean value
+      emailAddress: this.seekerForm.get('email')?.value,
+      verified: true,
     };
     this.dialogRef.close(additionalData);
   }
@@ -194,10 +212,6 @@ export class SeekerEmailVerificationBoxComponent implements OnDestroy{
   cancelDialog(): void {
     this.dialogRef.close();
   }
-
-
-
-
 
   // ngOnInit(): void {
   //   this.useremailAddress = this.data.email;
