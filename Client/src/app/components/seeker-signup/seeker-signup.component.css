@@ -1,277 +1,108 @@
-@media (max-width: 480px) {
-  h2 {
-    font-size: 24px;
-  }
-  .heading {
-    font-size: 20px;
-  }
-  .mat-mdc-form-field {
-    width: 100%; /* Full width on mobile */
-  }
-}
-
-/* Updated Styles */
 .page {
   display: flex;
-  flex-direction: column; /* Stack vertically on smaller screens */
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensure content covers viewport height */
+  min-height: 100vh;
 }
 
-.up-container {
+.content-container {
   display: flex;
-  flex-direction: row; /* Row on larger screens */
-  flex-wrap: wrap; /* Allow wrapping to next line */
   justify-content: center;
   align-items: center;
-  gap: 20px; /* Consistent spacing */
+  width: 100%;
 }
 
-.left, .right {
-  flex: 1 1 400px; /* Grow to available space, minimum width of 400px */
-}
-
-.form-field-row {
+.left {
+  flex: 1;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px; /* Adjust spacing between form fields and buttons */
-}
-
-.form-container {
-  width: 90%; /* Use percentage width for better scaling */
-  max-width: 500px; /* Limit maximum width on larger screens */
-  box-sizing: border-box; /* Include padding in the width calculation */
-  /* ...other styles */
-}
-
-.mat-mdc-form-field {
-  width: calc(100% - 30px); /* Adjust to account for padding */
 }
 
 .seeker {
-  width: auto;
-  max-width: 100%; /* Ensure the image doesn't overflow its container */
+  width: 100%;
   height: auto;
+  max-width: 400px;
 }
 
-/* Media Queries for Different Screen Sizes */
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.step-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.custom-stepper-button,
+.custom-stepper1-button {
+  padding: 10px 20px;
+}
+
+.skill-part {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.skillchip {
+  width: 100%;
+  display: grid;
+  align-items: center;
+}
+
+.cvupload {
+  width: 100%;
+  display: grid;
+  margin-bottom: 10px;
+}
+
+.otp-field-container {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.otp-field-container input {
+  width: 70%;
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
-  .up-container {
-    flex-direction: column; /* Stack vertically on smaller screens */
-  }
-  .form-container {
-    width: 95%; 
-  }
-}
-
-form {
-  display: flex; /* Enable flexbox */
-  flex-wrap: wrap; /* Allow elements to wrap to the next line */
-  gap: 10px; /* Add spacing between elements */
-}
-
-.form-element {
-  flex: 1 1 200px; /* Each element takes at least 200px and can grow */
-}
-
-
-
-.page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .form-popup {
-    justify-content: center;
-    align-items: center;
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-  }
-  
-  .up-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .left {
-    flex: 1;
-    padding: 10px;
-    align-items: center;
-    text-align: center;
-  }
-  
-  img {
-    display: inline-block;
-  }
-  
-  .right {
-    flex: 1;
-    padding: 10px;
-    align-items: right;
-  }
-  
-  .seeker {
-    text-align: center;
-    width: 30vw;
-    height: auto;
-    padding-bottom: 50px;
-  
-    /* padding: 60px 100px 30px 100px; */
-  }
-  
-  h2 {
-    font-size: 30px;
-    font-weight: 550;
-    text-align: center;
-    font-style: italic;
-  }
-  
-  .heading {
-    text-align: center;
-    font-size: 25px;
-    font-weight: 550;
-    margin-bottom: 25px;
-    line-height: 1.5;
-  }
-  
-  .label-import {
-    text-align: left;
-    font-size: 17px;
-    font-weight: 500;
-    color: #7a7a7a;
-  }
-  
-  p {
-    text-align: center;
-    font-size: 17px;
-    margin-left: 2vw;
-    margin-right: 2vw;
-  }
-  .form-container {
-    border: 3px black;
-    border-radius: 25px;
-    background: #fff;
-    box-shadow: 5px 5px 5px 5px rgba(0.2, 0.2, 0.2, 0.2);
-    padding: 25px 25px 25px 25px;
-    height: 35vw;
-    width: 30vw;
-    display: flex;
+  .content-container {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-   
   }
-  
-  .mat-mdc-form-field {
-    margin-top: 16px;
-    display: grid;
-    width: 20vw;
-    align-items: center;
-    padding-left: 15px;
-    padding-bottom: 0;
+  .seeker {
+    width: 100%;
+    max-width: none;
   }
-  
-  /* Adjusting the distance between steps */
-  .mat-horizontal-stepper .mat-step-header {
-    margin-right: 20px; /* Increase or decrease this value to adjust the distance */
-  }
-  
-  .custom-stepper-button {
-    background-color: white;
-    color: #008080;
-    border: 3px solid #008080;
-  }
-  .custom-stepper1-button {
-    background-color: #008080;
-    color: white;
-  }
-  
-  .mat-button {
-    padding-left: 10px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between; /* Positions elements at opposite ends */
-    width: 100%; /* Ensures full-width for the container */
-    gap: 10px;
-  }
-  
-  .custom-stepper-button,
-  .custom-stepper1-button {
-    padding: 10px 20px; /* Padding to add space within the button */
-    margin-right: 10px; /* Adds margin on the right of each button */
-  }
-  
-  mat-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .nav-bar {
-    height: 4em;
-    background-color: white;
-    position: absolute;
-    z-index: 2;
-    margin-top: 0;
-  }
-  
-  .mat-toolbar {
-    position: relative;
-    z-index: 2;
-  }
-  
-  .logo {
-    height: 2.5em;
-    width: 2.5em;
-    margin-right: 0.5em;
-  }
-  
-  .flex-spacer {
-    flex: 1 1 auto;
-  }
-  
-  .profile-image {
-    height: 2em;
-    width: 2em;
-    border-radius: 50%;
-    margin-right: 16px;
-    margin-left: 5px;
-  }
-  
-  .skill-part{
-    margin: 2vw;
-    
-  }
-  
-  .skillchip {
-    width: 20vw;
-    display: grid;
-    align-items: center;
-  }
-  
-  .cvupload {
-    width: min-content;
-    display: grid;
-    margin-bottom: 10px;
-  }
-  
-  .otp-field-container {
-    display: flex !important; /* Ensure Flexbox layout */
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-  }
-  
-  /* Optional: Adjust the input width */
-  .otp-field-container input {
-    width: 70%; /* Or another value that works for your design */
-  }
-  
-  
+}
