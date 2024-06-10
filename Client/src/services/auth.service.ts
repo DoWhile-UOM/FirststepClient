@@ -30,9 +30,18 @@ export class AuthService {
     return this.http.post<any>(Apipaths.authenticate, loginObj)
   }
 
-  async ResetPasswordReq(restPassword:any) {
+  async ResetPasswordReq(email:string) {
     try {
-      const response = await axios.post(Apipaths.postCompanyAdminReg, restPassword);
+      const response = await axios.post(Apipaths.resetpasswordReq+email);
+      this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    } catch (error) {
+      this.snackBar.open('Error Occured on Password Reset', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
+  }
+
+  async ResetPassword(restPassword:any) {
+    try {
+      const response = await axios.post(Apipaths.resetpassword, restPassword);
       this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     } catch (error) {
       this.snackBar.open('Error Occured on Password Reset', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);

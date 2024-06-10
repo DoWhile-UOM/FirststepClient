@@ -59,7 +59,7 @@ export class ResetPasswordComponent {
 
       passwordConfirmControl.disable();
       this.loginForm.get('token')?.setValue(this.token_id);
-      this.auth.ResetPasswordReq(this.loginForm.value);
+      this.auth.ResetPassword(this.loginForm.value);
     }
 
     this.spinner.hide();
