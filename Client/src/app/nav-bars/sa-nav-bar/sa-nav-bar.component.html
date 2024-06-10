@@ -9,5 +9,14 @@
   <div class="right-buttons">
     <a routerLink="/sa/home" routerLinkActive="active">Dashboard</a>
     <a routerLink="/sa/company-application" routerLinkActive="active">Company Application List</a>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="medium-icon-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onSignoutClick()">
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>
