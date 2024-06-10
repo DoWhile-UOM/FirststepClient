@@ -3,7 +3,7 @@ import {
   OnInit,
   ViewChild,
   Output,
-  EventEmitter,  
+  EventEmitter,
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -84,7 +84,7 @@ interface SeekerProfile {
     MatDialogClose,
     NgxSpinnerModule,
     SpinnerComponent,
-    SeekerEmailVerificationBoxComponent
+    SeekerEmailVerificationBoxComponent,
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -108,7 +108,6 @@ export class SeekerProfileEditComponent implements OnInit {
 
   emailReadOnly: boolean = true;
 
-
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
 
   // seekerSkills: string[] = [];
@@ -127,13 +126,16 @@ export class SeekerProfileEditComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone_number: ['',[Validators.required, Validators.pattern(/^\d{7,15}$/)],], // Adjusted pattern for phone numbers with 7-15 digits
+      phone_number: [
+        '',
+        [Validators.required, Validators.pattern(/^\d{7,15}$/)],
+      ], // Adjusted pattern for phone numbers with 7-15 digits
       bio: ['', Validators.required],
       description: ['', Validators.required],
       university: [''],
       linkedin: [''],
-      CVurl: ['defaultCVurlValue'], // Set default value for CVurl
-      // CVurl: [''], // Add CVurl field here
+      cVurl: ['defaultCVurlValue'], // Set default value for cVurl
+      // cVurl: [''], // Add cVurl field here
       field_id: ['', Validators.required],
       password: [''],
       seekerSkills: [[]],
@@ -158,7 +160,7 @@ export class SeekerProfileEditComponent implements OnInit {
         bio: seeker.bio,
         description: seeker.description,
         university: seeker.university,
-        CVurl: seeker.cVurl || 'defaultCVurlValue',
+        cVurl: seeker.cVurl || 'defaultCVurlValue',
         // cVurl: ['', Validators.required], // Add cVurl field here
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
@@ -200,11 +202,9 @@ export class SeekerProfileEditComponent implements OnInit {
       this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
-  
+
     await this.updateProfile();
   }
-  
-
 
   showInformEmailShouldBeVerifiedPopUp() {
     const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
@@ -222,13 +222,13 @@ export class SeekerProfileEditComponent implements OnInit {
       width: '400px',
       data: { email: this.seekerForm.get('email')?.value },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.verified) {
         this.isConfirmedToChangeEmail = true;
         this.seekerForm.get('email')?.setValue(result.emailAddress);
         this.emailcaptured = result.emailAddress;
-        this.emailReadOnly = true;  // Freeze email editing after updating
+        this.emailReadOnly = true; // Freeze email editing after updating
         this.snackBar.open('Email verified successfully', 'Close', {
           duration: 2000,
         });
@@ -240,7 +240,6 @@ export class SeekerProfileEditComponent implements OnInit {
       }
     });
   }
-  
 
   // openOTPVerificationDialog() {
   //   const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
@@ -265,16 +264,12 @@ export class SeekerProfileEditComponent implements OnInit {
     this.spinner.show();
     try {
       const formValue: Partial<SeekerProfile> = { ...this.seekerForm.value };
-
-      // // Check if the password field is the placeholder and if so, delete it from the payload
-      // if (formValue.password === this.passwordPlaceholder) {
-      //   delete formValue.password;
-      // }
-
-      // // Ensure cVurl field is always included
-      // if (!formValue.cVurl) {
-      //   formValue.cVurl = this.seekerForm.get('cVurl')?.value || '';
-      // }
+  
+      // Check if the password field is the placeholder or null and if so, delete it from the payload
+      if (formValue.password === this.passwordPlaceholder || formValue.password === null) {
+        delete formValue.password;
+      }
+  
       // Update seeker profile
       await this.seekerService.editSeeker(
         formValue as SeekerProfile,
@@ -299,6 +294,7 @@ export class SeekerProfileEditComponent implements OnInit {
       this.spinner.hide();
     }
   }
+  
 
   revertEmailChange() {
     // Revert the email field to the original value
