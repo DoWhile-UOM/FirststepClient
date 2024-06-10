@@ -43,7 +43,7 @@ export interface CmpyData {
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [FormsModule,CommonModule,MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [FormsModule, CommonModule, MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
@@ -57,7 +57,7 @@ export class RegCmpStateCheckComponent {
 
   cmpData: CmpyData = {} as CmpyData
 
-  constructor(private snackbar: MatSnackBar,private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
+  constructor(private snackbar: MatSnackBar, private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
@@ -66,9 +66,15 @@ export class RegCmpStateCheckComponent {
         this.fetchData(this.company_id);
       }
     });
-  
+
   }
 
+  BusinessScales: any[] = [
+    { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
+    { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
+    { name: 'Medium-Sized (50 - 250 Employees)', value: 'medium' },
+    { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
+  ];
 
 
   //Fetch data from the database when the component initializes
@@ -120,7 +126,18 @@ export class RegCmpStateCheckComponent {
     this.styleService.setStyle('circle-border-color', '#ffbf00');
     this.styleService.setStyle('number-color', '#ffbf00');
     this.isNoInput = true;
-    this.company.updateUnregCompanyDetails(this.cmpData);
+    try {
+        //this.errorMessageForCompanyName == '' &&
+        //this.errorMessageForDescription == '' &&
+        //this.errorMessageForWebsite == '' &&
+        //this.errorMessageForPhoneNumber == '' &&
+        //this.errorMessageForEmail == '' && (this.emailcaptuered == this.company.company_email)
+      console.log(this.company);
+      this.company.updateUnregCompanyDetails(this.cmpData);
+
+    } finally {
+      //this.spinner.hide();
+    }
 
 
   }

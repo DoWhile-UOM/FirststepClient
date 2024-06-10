@@ -58,8 +58,8 @@
 
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Company Name</mat-label>
-                        <input matInput placeholder="Your input here" type="text"
-                            class="form-control" name="company_name" [(ngModel)]="cmpData.company_name" id="companyName" name="companyName"
+                        <input matInput placeholder="Your input here" type="text" class="form-control"
+                            name="company_name" [(ngModel)]="cmpData.company_name" id="companyName" name="companyName"
                             required>
                     </mat-form-field>
 
@@ -70,18 +70,17 @@
                 <mat-grid-tile><!--Company web-->
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>URL of the Website</mat-label>
-                        <input matInput placeholder="Your input here" type="url"
-                            class="form-control" name="company_website" [(ngModel)]="cmpData.company_website" id="websiteUrl" name="websiteUrl"
-                            required>
+                        <input matInput placeholder="Your input here" type="url" class="form-control"
+                            name="company_website" [(ngModel)]="cmpData.company_website" id="websiteUrl"
+                            name="websiteUrl" required>
                     </mat-form-field>
                 </mat-grid-tile>
 
                 <mat-grid-tile><!--Company Email-->
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Email Address</mat-label>
-                        <input matInput placeholder="Your input here" type="email"
-                            class="form-control" name="company_email" [(ngModel)]="cmpData.company_name" id="emailAddress"
-                            required>
+                        <input matInput placeholder="Your input here" type="email" class="form-control"
+                            name="company_email" [(ngModel)]="cmpData.company_email" id="emailAddress" required>
                     </mat-form-field>
                 </mat-grid-tile>
 
@@ -90,11 +89,11 @@
 
 
                         <mat-label>Business Scale</mat-label>
-                        <mat-select >
-                            <mat-option value="mic">Micro-Sized(Less Than 10 Employees)</mat-option>
-                            <mat-option value="sm">Small-Sized(10-50 Employees)</mat-option>
-                            <mat-option value="mid">Medium-Sized(50-250 Employees)</mat-option>
-                            <mat-option value="lrg">Large-Sized(More Than 250 Employees)</mat-option>
+                        <mat-select name="company_business_scale" [(ngModel)]="cmpData.company_business_scale" #company_business_scale
+                            required>
+                            @for(BScale of BusinessScales ; track BScale){
+                            <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
+                            }
                         </mat-select>
 
                     </mat-form-field>
@@ -105,23 +104,24 @@
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Contact No</mat-label>
                         <input matInput placeholder="Your input here" type="email" class="form-control"
-                        name="company_phone_number" [(ngModel)]="cmpData.company_phone_number" id="emailAddress" required>
+                            name="company_phone_number" [(ngModel)]="cmpData.company_phone_number" id="emailAddress"
+                            required>
                     </mat-form-field>
                 </mat-grid-tile>
 
                 <mat-grid-tile>
                     <mat-form-field appearance="outline">
                         <mat-label>Business Registration Number</mat-label>
-                        <input type="text" matInput placeholder="Business Registration Number"
-                        name="business_reg_no" [(ngModel)]="cmpData.business_reg_no" required />
+                        <input type="text" matInput placeholder="Business Registration Number" name="business_reg_no"
+                            [(ngModel)]="cmpData.business_reg_no" required />
                     </mat-form-field>
                 </mat-grid-tile>
 
                 <mat-grid-tile>
                     <mat-form-field appearance="outline">
                         <mat-label>Company Date of Registartion</mat-label>
-                        <input type="date" matInput placeholder="Enter Email" [(ngModel)]="cmpData.company_registered_date"
-                        name="company_registered_date" required />
+                        <input type="date" matInput placeholder="Enter Email"
+                            [(ngModel)]="cmpData.company_registered_date" name="company_registered_date" required />
                     </mat-form-field>
                 </mat-grid-tile>
 
@@ -129,7 +129,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Company Description</mat-label>
                         <textarea matInput placeholder="Company Description" [(ngModel)]="cmpData.company_description"
-                        name="company_description"></textarea>
+                            name="company_description"></textarea>
                     </mat-form-field>
                 </mat-grid-tile>
 
@@ -137,7 +137,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Company Logo</mat-label>
                         <input matInput placeholder="Enter Email" [(ngModel)]="cmpData.company_logo"
-                        name="company_logo" />
+                            name="company_logo" />
                     </mat-form-field>
                 </mat-grid-tile>
 
@@ -145,7 +145,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Business Registration Certificate</mat-label>
                         <input matInput placeholder="Enter Email" [(ngModel)]="cmpData.business_reg_certificate"
-                        name="business_reg_certificate"/>
+                            name="business_reg_certificate" />
                     </mat-form-field>
                 </mat-grid-tile>
 
@@ -154,8 +154,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Certificate of Incorporation</mat-label>
                         <input matInput placeholder="Enter contact Number"
-                        [(ngModel)]="cmpData.certificate_of_incorporation"
-                        name="certificate_of_incorporation" />
+                            [(ngModel)]="cmpData.certificate_of_incorporation" name="certificate_of_incorporation" />
                         <button>Upload File</button>
                     </mat-form-field>
                 </mat-grid-tile>
