@@ -18,6 +18,13 @@ interface CmpAdminReg {
   first_name: string;
   last_name: string;
 }
+interface unRegCA {
+  email: string;
+  first_name: string;
+  last_name: string;
+  password_hash: string;
+  confirmed_password: string;
+}
 
 @Component({
   selector: 'app-company-admin-registrtion-form',
@@ -43,6 +50,7 @@ export class CompanyAdminRegistrtionFormComponent {
   errorMessageForPassword = '';
   errorMessageForConfirmedPassword = '';
   errorMessageForEmail = '';
+  unRegCA: unRegCA = {} as unRegCA;
 
 
 

@@ -129,6 +129,9 @@ export class CompanyApplicationListComponent {
         if (this.companyList.length == 0) {
           this.companyListLength = 0;
         }
+        if (this.companyList.length != 0) {
+          this.companyListLength = this.companyList.length;
+        }
         this.items = this.companyList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
         this.spinner.hide();
       })
