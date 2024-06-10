@@ -24,16 +24,11 @@ export class PdfViewComponent implements OnInit{
   { }
   
   ngOnInit(): void {
-  this.documentService.generateSasToken(this.documentName).subscribe(
-    (token:string) => {
-      this.document= this.documentService.getBlobUrl(this.documentName, token);
-      console.log('Document URL:', this.document); 
-      
-    },
-    error => {
-      console.error('Error fetching SAS token:', error);
-    }
-  );
+  //call get blob url
+    this.documentService.getBlobUrl(this.documentName).subscribe((data) => {
+      this.document = data;
+    });
+    
 }
 
 }
