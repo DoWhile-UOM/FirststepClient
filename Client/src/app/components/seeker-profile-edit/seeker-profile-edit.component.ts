@@ -166,6 +166,8 @@ export class SeekerProfileEditComponent implements OnInit {
         password: this.passwordPlaceholder,
       });
 
+      this.skills = this.removeDuplicates(seeker.seekerSkills || []);
+
       
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
@@ -180,7 +182,7 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-		this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
+		this.skills = this.removeDuplicates(this.addSkillsComponent.skills || []);
 	}
 
   togglePasswordVisibility() {
