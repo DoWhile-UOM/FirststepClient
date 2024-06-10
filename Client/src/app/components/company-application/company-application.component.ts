@@ -28,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
 
 interface CompanyApplication {
   company_id: number;
+  business_reg_no: number;
   company_name: string;
   verification_status: boolean;
   company_email: string;
