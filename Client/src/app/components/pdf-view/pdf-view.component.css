@@ -1,16 +1,20 @@
 
 
   ejs-pdfviewer{
-    width:100%;
+    width:1000px;
     height:100%;
     overflow:hidden;
-  }
-  mat-dialog-content{
-    width:100vw;
-    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-   
-    
+
+  }
+  mat-dialog-content{
+    width:auto;
+    height:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+  
   }
