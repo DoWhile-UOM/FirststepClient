@@ -45,6 +45,7 @@ export class CompanyAdminRegistrtionFormComponent {
   errorMessageForEmail = '';
 
 
+
   constructor(private route: ActivatedRoute, private companyService: CompanyService) { }
 
   ngOnInit(): void {
@@ -65,6 +66,7 @@ export class CompanyAdminRegistrtionFormComponent {
       last_name: formValue.lastName,
 
     };
+
     try {
       console.log('Company Admin Registration Started');
       await this.companyService.postCompanyAdminReg(adminRegData, this.type, this.cmpID);
@@ -74,11 +76,51 @@ export class CompanyAdminRegistrtionFormComponent {
     }
   }
 
+  formValidation(adminRegData: CmpAdminReg) {
+    this.validateFirstName(adminRegData.first_name);
+    this.validateLastName(adminRegData.last_name);
+    this.validatePassword(adminRegData.password_hash);
+    this.validateConfirmedPassword(adminRegData.password_hash);
+    this.validateEmail(adminRegData.email);
+  }
+
   validateFirstName(value: string) {
     if (value === '') {
       this.errorMessageForFName = 'First Name is required';
     } else {
       this.errorMessageForFName = '';
+    }
+  }
+  validateLastName(value: string) {
+    if (value === '') {
+      this.errorMessageForLName = 'Last Name is required';
+    } else {
+      this.errorMessageForLName = '';
+    }
+  }
+  validatePassword(value: string) {
+    if (value === '') {
+      this.errorMessageForPassword = 'Password is required';
+    } else {
+      this.errorMessageForPassword = '';
+    }
+  }
+  validateConfirmedPassword(pass: string) {
+    // Assuming the confirmed password input has an id 'confirmPassword'
+    const confirmPasswordElement = document.getElementById('confirmPassword') as HTMLInputElement;
+    const comfirmPass = confirmPasswordElement ? confirmPasswordElement.value : '';
+
+    if (comfirmPass === '' || comfirmPass !== pass) {
+      this.errorMessageForConfirmedPassword = 'Confirmed Password does not match';
+    } else {
+      this.errorMessageForConfirmedPassword = '';
+    }
+  }
+  validateEmail(value: string) {
+    if (value === '') {
+      this.errorMessageForEmail = 'Email is required';
+    } else {
+      this.errorMessageForEmail = '';
     }
   }
 

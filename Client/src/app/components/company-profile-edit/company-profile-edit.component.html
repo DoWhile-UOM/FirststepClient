@@ -15,7 +15,7 @@
             <div style="display: flex; justify-content: center; align-items: center;">
               <mat-icon *ngIf="!eventOccured" class="edit">editicon</mat-icon>
               <label *ngIf="!eventOccured" for="profile-upload" class="custom-file-upload">
-                Edit Profile
+                Edit Logo
               </label>
             </div>
             <input type="file" id="profile-upload" (change)="onselectFile($event)" *ngIf="!eventOccured"
@@ -109,7 +109,7 @@
       <mat-divider></mat-divider>
       <div class="button-section">
         <div class="right-btn">
-          <button mat-raised-button class="apply-button" (click)="onSubmit()">
+          <button mat-raised-button class="apply-button-class" (click)="onSubmit()">
             <span class="apply-changes">Apply Changes</span>
           </button>
           <button mat-raised-button class="discard-changes-class" (click)="discardChanges()">

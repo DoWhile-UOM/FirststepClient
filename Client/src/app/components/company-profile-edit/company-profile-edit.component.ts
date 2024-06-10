@@ -100,7 +100,7 @@ export class CompanyProfileEditComponent {
   company: Company = {} as Company; // Initialize the company property
   cName = ''; // to store Comapny Name that is on the top
   noOfCols: number = 2;
-  companyId: number = 7; // temp
+  companyId: number = 0; // temp
   BusinessScales: any[] = [];
 
   errorMessageForCompanyName = '';
@@ -135,6 +135,7 @@ export class CompanyProfileEditComponent {
 
   async ngOnInit() {
     try {
+      this.companyId = Number(this.auth.getCompanyID());
       this.spinner.show();
       this.company = await this.companyService.getCompanyDetails(
         this.companyId

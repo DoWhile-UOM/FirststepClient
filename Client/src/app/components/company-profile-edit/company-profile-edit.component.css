@@ -104,18 +104,7 @@ button {
   border-radius: 5px;
   border-color: #008080;
 } */
-.discard-changes-class {
-  background-color: #ffffff;
-  color: #008080;
-  border-width: 1px;
-  border-style: solid;
-  outline: none;
-  border-radius: 5px;
-  border-color: #008080;
-  padding: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
+
 /* .discard-changes-class:hover {
   background-color: #008080;
   color: #ffffff;
@@ -129,16 +118,7 @@ button {
 button:hover {
   cursor: pointer;
 }
-.delete-account-class {
-  background-color: #d73434;
-  color: #ffffff;
-  border-width: 1px;
-  border-style: none;
-  outline: none;
-  border-radius: 5px;
-  padding: 2px 0;
-  padding: 10px;
-}
+
 /* .delete-account-class:hover {
   background-color: #ffffff;
   color: #d73434;
@@ -184,15 +164,18 @@ input[type="file"] {
 .edit{
   color:#008080;
 }
-.apply-button{
+.apply-button-class{
   background-color: #008080 !important;
   color: #ffffff !important;
   margin-right: 20px;
+  width: 170px !important;
 }
 .delete-account-class{
   background-color: #d73434 !important;
   color: #ffffff !important;
+  width: 170px !important;
+  
 }
-.discard-changes-class,.apply-changes,.delete-account-class{
-  padding: 10px;
+.discard-changes-class{
+  width: 170px !important;
 }

@@ -14,20 +14,23 @@
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>First Name</mat-label>
             <input matInput placeholder="Enter your first name" name="firstName" ngModel required />
+            <mat-error>{{errorMessageForFName}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Last Name</mat-label>
-            <input matInput placeholder="Enter your last name" name="lastName" ngModel />
+            <input matInput placeholder="Enter your last name" name="lastName" ngModel required />
+            <mat-error>{{errorMessageForLName}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Email Address</mat-label>
-            <input matInput placeholder="Enter your email address" name="email" ngModel />
+            <input matInput placeholder="Enter your email address" name="email" ngModel required />
+            <mat-error>{{errorMessageForEmail}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
@@ -35,22 +38,25 @@
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Password</mat-label>
             <input matInput placeholder="Enter your password" name="password" [type]="hide ? 'password' : 'text'"
-              ngModel />
+              ngModel required />
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
+            <mat-error>{{errorMessageForPassword}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Confrim Password</mat-label>
-            <input matInput placeholder="Re-enter your password" [type]="hide ? 'password' : 'text'" />
+            <input matInput placeholder="Re-enter your password" [type]="hide ? 'password' : 'text'"
+              name="confirmPassword" />
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
+            <mat-error>{{errorMessageForConfirmedPassword}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
