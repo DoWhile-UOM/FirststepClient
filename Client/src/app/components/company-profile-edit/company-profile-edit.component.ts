@@ -116,7 +116,7 @@ export class CompanyProfileEditComponent {
   isConfrimedToChangeEmail: boolean = false;
   otp: string = '';
 
-  logoUrl: string = '../../../assets/Img.png';
+  logoUrl: string = '';
   logoBlobName = '';
   selectedFile: File | null = null;
   eventOccured: boolean = false;
@@ -152,22 +152,24 @@ export class CompanyProfileEditComponent {
   }
   //image download
   imageDownload() {
-    console.log('inside the imageDownload function')
+    console.log('inside the imageDownload function');
+    console.log('company logo:', this.company.company_logo);
     if (this.company.company_logo != '') {
       this.documentService.generateSasToken(this.logoBlobName).subscribe({
         next: (token: string) => {
           const blobUrl = this.documentService.getBlobUrl(this.logoBlobName, token);
+          this.logoUrl = blobUrl;
           console.log('SAS token fetched:', token);
-          console.log('Blob URL:', this.logoUrl);
 
-          fetch(blobUrl)
-            .then(response => response.blob())
-            .then(blob => {
-              this.logoUrl = URL.createObjectURL(blob);
-            })
-            .catch(error => {
-              console.error('Error fetching blob:', error);
-            });
+          // fetch(blobUrl)
+          //   .then(response => response.blob())
+          //   .then(blob => {
+          //     this.logoUrl = URL.createObjectURL(blob);
+          //     console.log('Blob URL:', this.logoUrl);
+          //   })
+          //   .catch(error => {
+          //     console.error('Error fetching blob:', error);
+          //   });
         },
         error: (error) => {
           console.error('Error fetching SAS token:', error);
@@ -177,7 +179,7 @@ export class CompanyProfileEditComponent {
   }
 
   //image upload
-  onselectFile(event: Event): void {
+  onselectFile(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.selectedFile = input.files[0];
