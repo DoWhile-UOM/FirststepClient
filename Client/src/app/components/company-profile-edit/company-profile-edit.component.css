@@ -184,3 +184,15 @@ input[type="file"] {
 .edit{
   color:#008080;
 }
+.apply-button{
+  background-color: #008080 !important;
+  color: #ffffff !important;
+  margin-right: 20px;
+}
+.delete-account-class{
+  background-color: #d73434 !important;
+  color: #ffffff !important;
+}
+.discard-changes-class,.apply-changes,.delete-account-class{
+  padding: 10px;
+}
