@@ -3,11 +3,13 @@ import { PdfViewerModule } from '@syncfusion/ej2-angular-pdfviewer';
 import { MatDialogModule, MatDialogContent, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DocumentService } from '../../../services/document.service';
 import { DialogData } from '../company-application/company-application.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-pdf-view',
   standalone: true,
-  imports: [PdfViewerModule, MatDialogModule, MatDialogContent,], 
+  imports: [PdfViewerModule, MatDialogModule, MatDialogContent,MatIconModule,MatButtonModule], 
   templateUrl: './pdf-view.component.html',
   styleUrl: './pdf-view.component.css'
 })
