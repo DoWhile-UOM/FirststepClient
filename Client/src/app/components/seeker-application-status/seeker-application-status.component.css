@@ -1,7 +1,9 @@
+app-advertisement-header{
+  margin-top: 2vw;
+}
 .stepper {
   margin-top: 2vw;
 }
-
 mat-dialog-actions {
   display: flex;
   flex-direction: row;
@@ -11,6 +13,7 @@ mat-dialog-actions {
   font-size: 1vw;
   justify-content: space-between;
   margin-top: 1vw;
+  margin-bottom: 1vw;
   width: 35%;
   align-self: center;
   font-weight: bold;
