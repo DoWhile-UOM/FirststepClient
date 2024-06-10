@@ -149,3 +149,7 @@ mat-form-field {
   align-items: center;
   width: 70%;
 }
+.apply-button{
+  background-color: #008080;
+  color: #fff;
+}

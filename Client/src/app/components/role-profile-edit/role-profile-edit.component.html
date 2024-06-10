@@ -5,9 +5,8 @@
     <form class="form" #updateUserDetails="ngForm" (ngSubmit)="formValidation()">
       <mat-grid-list cols="1" rowHeight="105">
 
-        <mat-grid-tile style="background-color: aqua;">
-          <mat-form-field appearance="outline" floatLabel="always" class="full-width"
-            style="background-color:blueviolet;">
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" floatLabel="always" class="full-width">
             <mat-label>First Name</mat-label>
             <input matInput placeholder="Enter your first Name" name="first_name" [(ngModel)]="employee.first_name"
               (blur)="firstNameValidation()" required />
@@ -53,9 +52,9 @@
     </form>
   </div>
   <div mat-dialog-actions>
-    <button mat-button color="primary" (click)="formValidation()" cdkFocusInitial>Update Profile</button>
+    <button mat-raised-button class="apply-button" (click)="formValidation()" cdkFocusInitial>Update Profile</button>
 
-    <button mat-button (click)="close()">Close</button>
+    <button mat-raised-button (click)="close()">Close</button>
   </div>
 </div>
 
