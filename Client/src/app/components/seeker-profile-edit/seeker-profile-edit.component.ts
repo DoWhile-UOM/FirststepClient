@@ -164,11 +164,10 @@ export class SeekerProfileEditComponent implements OnInit {
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
         password: this.passwordPlaceholder,
+        seekerSkills: seeker.seekerSkills || [],
       });
 
-      this.skills = this.removeDuplicates(seeker.seekerSkills || []);
-
-      
+      this.skills = this.removeDuplicates(seeker.seekerSkills || []);      
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
@@ -182,8 +181,12 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-		this.skills = this.removeDuplicates(this.addSkillsComponent.skills || []);
-	}
+    if (this.addSkillsComponent && this.addSkillsComponent.skills) {
+      this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
+      this.seekerForm.get('seekerSkills')?.setValue(this.skills);
+    }
+  }
+  
 
   togglePasswordVisibility() {
     this.passwordFieldType =
@@ -257,6 +260,8 @@ export class SeekerProfileEditComponent implements OnInit {
       if (formValue.password === this.passwordPlaceholder || formValue.password === null) {
         delete formValue.password;
       }
+
+      formValue.seekerSkills = this.skills;
   
       // Update seeker profile
       await this.seekerService.editSeeker(
@@ -341,9 +346,10 @@ export class SeekerProfileEditComponent implements OnInit {
 	}
 
   onSkillsChange(skills: string[]) {
-    // Update the skills field with the selected skills
-    this.seekerForm.get('seekerSkills')?.setValue(skills);
+    this.skills = this.removeDuplicates(skills);
+    this.seekerForm.get('seekerSkills')?.setValue(this.skills);
   }
+  
 
   removeDuplicates(arr: string[]) {
 		let uniqueArr = Array.from(new Set(arr));
