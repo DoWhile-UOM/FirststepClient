@@ -15,20 +15,16 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class PdfViewComponent implements OnInit{ 
  
-  public documentName: string = this.data.documentName;
+
   public document: any;
   public resource: string = "https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib";
 
-  constructor(private documentService:DocumentService,
+  constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData)
   { }
   
-  ngOnInit(): void {
-  //call get blob url
-    this.documentService.getBlobUrl(this.documentName).subscribe((data) => {
-      this.document = data;
-    });
-    
-}
+  ngOnInit() {
+    this.document = this.data.documentUrl;
+  }
 
 }

@@ -56,11 +56,7 @@ generateBlobUrl(blobName: string, sasToken:string): string {
   return `${this.containerUrl}/${blobName}?${sasToken}`;
 
 } 
-//method to get blob url using api path
-getBlobUrl(blobName: string): Observable<string> {
-  const url = `${Apipaths.DocumentBaseUrl}${blobName}`;
-  return this.http.get(url, { responseType: 'text' });
-}
+
 
 
 

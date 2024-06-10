@@ -80,9 +80,7 @@ export class Apipaths {
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
 
-    //document Service
-   
-    static readonly DocumentBaseUrl: string = this.baseUrl + 'Document/GetBlobUrl?blobName=';
+  
 
 
 }
