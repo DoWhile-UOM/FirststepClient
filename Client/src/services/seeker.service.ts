@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
 import axios from 'axios';
 import { HttpClient } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface SeekerProfile {
   user_id: number;
@@ -28,7 +29,7 @@ interface SeekerProfile {
 
 export class SeekerService {
   
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient,private snackbar: MatSnackBar) { }
 
 async getSeekerDetails(id: number) {
   try {
@@ -87,19 +88,17 @@ async editSeeker(seeker: SeekerProfile, seekerID: number) {
   }
 }
 
-
-//update method
-// async editseeker(seeker: any, seekerID: number) {
-//   try {
-//     await axios
-//       .put('https://localhost:7213/api/Seeker/UpdateSeeker/' + seekerID, seeker)
-//       .then((response) => {
-//         console.log(response);
-//       });console.log("seeker updated successfully");
-//   } catch (error) {
-//     console.error(error);
+// async updateProfilePicture(file: File, user_id: number) {
+//   const formData: FormData = new FormData();
+//   formData.append('file', file);
+//   formData.append('user_id', user_id.toString());
+//   await axios.patch(Apipaths.updateProfilePicture + 'companyId=' + user_id, formData).then((response) => {
+//     this.snackbar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
 //   }
-// }
+//   ).catch((error) => {
+//     this.snackbar.open('Error updating company logo', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+//   });
+
 
 //delete method
 async deleteSeeker(seekerID: number) {

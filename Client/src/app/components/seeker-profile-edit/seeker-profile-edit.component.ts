@@ -43,6 +43,7 @@ import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface SeekerProfile {
   user_id: number;
@@ -85,7 +86,8 @@ interface SeekerProfile {
     NgxSpinnerModule,
     SpinnerComponent,
     SeekerEmailVerificationBoxComponent,
-    AddSkillsComponent
+    AddSkillsComponent,
+    MatProgressSpinnerModule
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -108,6 +110,11 @@ export class SeekerProfileEditComponent implements OnInit {
   isFormVerified: boolean = false;
 
   emailReadOnly: boolean = true;
+
+  logoUrl = '';
+  logoBlobName = '';
+  selectedFile: File | null = null;
+  eventOccured: boolean = false;
 
   skills: string[] = [];
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
@@ -140,6 +147,34 @@ export class SeekerProfileEditComponent implements OnInit {
       seekerSkills: [[]],
     });
   }
+//image upload
+// onselectFile(event: any) {
+//   const input = event.target as HTMLInputElement;
+//   if (input.files && input.files[0]) {
+//     this.selectedFile = input.files[0];
+//     const reader = new FileReader();
+//     reader.onload = (e: ProgressEvent<FileReader>) => {
+//       this.logoUrl = (e.target?.result as string) || '';
+//     };
+//     reader.readAsDataURL(this.selectedFile);
+//   }
+//   this.eventOccured = true;
+// }
+// async onSaveLogo() {
+//   if (this.selectedFile) {
+//     await this.seekerService.updateProfilePicture(this.selectedFile, this.user_id)
+//       .then(response => {
+//         console.log('Upload successful', response);
+//       })
+//       .catch(error => {
+//         console.error('Upload error', error);
+//       });
+//   } else {
+//     console.error('No file selected!');
+//   }
+//   this.eventOccured = false;
+// }
+
 
   async ngOnInit() {
     this.spinner.show();

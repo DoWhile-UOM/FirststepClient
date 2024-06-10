@@ -14,6 +14,12 @@
   margin-top: 2em;
 }
 
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 mat-grid-tile mat-form-field {
   width: 100%;
   margin: 0.75em;
