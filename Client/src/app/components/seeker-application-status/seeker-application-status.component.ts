@@ -100,7 +100,7 @@ openpdf() {
   this.dialog.open(PdfViewComponent,{
     data: {
     //pass cv name to pdf view component
-    documentName: this.applicationData.cv_name
+    documentUrl: this.applicationData.cv_name
     },
   });
 }
