@@ -85,6 +85,7 @@ interface SeekerProfile {
     NgxSpinnerModule,
     SpinnerComponent,
     SeekerEmailVerificationBoxComponent,
+    AddSkillsComponent
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -108,10 +109,8 @@ export class SeekerProfileEditComponent implements OnInit {
 
   emailReadOnly: boolean = true;
 
+  skills: string[] = [];
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
-
-  // seekerSkills: string[] = [];
-  //  selectedSkills: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -166,6 +165,8 @@ export class SeekerProfileEditComponent implements OnInit {
         field_id: seeker.field_id,
         password: this.passwordPlaceholder,
       });
+
+      
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
@@ -177,6 +178,10 @@ export class SeekerProfileEditComponent implements OnInit {
       this.spinner.hide();
     }
   }
+
+  ngAfterViewInit() {
+		this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
+	}
 
   togglePasswordVisibility() {
     this.passwordFieldType =
@@ -241,25 +246,6 @@ export class SeekerProfileEditComponent implements OnInit {
     });
   }
 
-  // openOTPVerificationDialog() {
-  //   const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
-  //     width: '400px',
-  //     data: { email: this.seekerForm.get('email')?.value },
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result && result.verified) {
-  //       this.isConfirmedToChangeEmail = true;
-  //       this.updateProfile();
-  //     } else {
-  //       this.snackBar.open('Email verification failed', '', {
-  //         panelClass: ['app-notification-error'],
-  //         duration: 3000,
-  //       });
-  //     }
-  //   });
-  // }
-
   async updateProfile() {
     this.spinner.show();
     try {
@@ -300,21 +286,6 @@ export class SeekerProfileEditComponent implements OnInit {
     // Revert the email field to the original value
     this.seekerForm.get('email')?.setValue(this.emailcaptured);
   }
-
-  // openEmailVerificationDialog(): void {
-  //   const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
-  //     width: '400px',
-  //     data: {},
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result.verified) {
-  //       this.emailcaptured = this.seekerForm.get('email')?.value;
-  //       this.isConfirmedToChangeEmail = true;
-  //       this.onSubmit();
-  //     }
-  //   });
-  // }
 
   async discardChanges() {
     // Discard changes and reload the original profile data
@@ -359,10 +330,28 @@ export class SeekerProfileEditComponent implements OnInit {
     });
   }
 
+  changeSkillsArray($event: Event){
+		var skills = $event;
+		if (skills != null){
+			let skillArray = skills as unknown as string[];
+			this.skills = this.removeDuplicates(skillArray);
+		}
+	}
+
   onSkillsChange(skills: string[]) {
     // Update the skills field with the selected skills
     this.seekerForm.get('seekerSkills')?.setValue(skills);
   }
+
+  removeDuplicates(arr: string[]) {
+		let uniqueArr = Array.from(new Set(arr));
+
+		if (uniqueArr.length != arr.length){
+			this.snackBar.open("Removed Duplicate Keywords and Skills", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+		}
+
+		return uniqueArr;
+	}
 
   phoneNumberErrorMessage() {
     if (this.seekerForm.get('phone_number')?.hasError('required')) {

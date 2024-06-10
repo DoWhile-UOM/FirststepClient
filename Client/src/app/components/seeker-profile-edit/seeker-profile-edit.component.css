@@ -164,3 +164,9 @@ button:hover {
   padding: 5px;
   margin-right: 5px;
 }
+
+.textbox-form-field{
+  position: relative;
+  width: calc(100% - 2.2em);
+  margin: 0 auto;
+}
