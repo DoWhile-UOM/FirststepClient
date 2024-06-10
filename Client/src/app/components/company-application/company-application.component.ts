@@ -25,6 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 
+
 interface CompanyApplication {
   company_id: number;
   company_name: string;
@@ -184,6 +185,12 @@ export class CompanyApplicationComponent implements OnInit {
   //go back to the company application list
   goBack() {
     this.router.navigate(['/sa/company-application']);
+  }
+  openBRCerti() {
+
+  }
+  openIncCerti() {
+
   }
 }
 
