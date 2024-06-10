@@ -147,7 +147,7 @@
                   <mat-label>Enter Password</mat-label>
                   <input
                     matInput
-                    formControlName="password_hash"
+                    formControlName="password"
                     placeholder="example@gmail.com"
                     required
                   />
@@ -265,19 +265,11 @@
                   Can we know your professional background ?
                 </mat-label>
                 <mat-form-field appearance="outline">
-                  <mat-label>Field of Work</mat-label>
-                  <mat-select formControlName="field_id">
-                    <mat-option
-                      *ngFor="let field of fields"
-                      [value]="field.field_id"
-                      >{{ field.field_name }}</mat-option
-                    >
-                    <!-- @for (field of fields; track field) {
-                    <mat-option [value]="field.field_id">{{
-                      field.field_name
-                    }}</mat-option>
-                    } -->
+                  <mat-label>Field</mat-label>
+                  <mat-select formControlName="field_id" required>
+                    <mat-option *ngFor="let field of fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
                   </mat-select>
+                  <!-- <mat-error *ngIf="hasError('field_id')">{{ getErrorMessage('field_id') }}</mat-error> -->
                 </mat-form-field>
 
                 <div class="skill-part">

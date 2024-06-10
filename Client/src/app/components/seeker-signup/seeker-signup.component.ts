@@ -25,16 +25,11 @@ import { JobfieldService } from '../../../services/jobfield.service';
 import { AuthService } from '../../../services/auth.service';
 import axios, { AxiosError } from 'axios';
 
-interface Field {
-  field_id: number;
-  field_name: string;
-}
-
 interface NewSeeker {
   first_name: string;
   last_name: string;
   email: string;
-  password_hash: string;
+  password: string;
   phone_number: string;
   university: string;
   linkedin: string;
@@ -75,7 +70,7 @@ export class SeekerSignupComponent implements OnInit {
 
   seekerReg: FormGroup;
 
-  fields: Field[] = [];
+  fields: any = [];
   seekerDetails: NewSeeker[] = [];
   skills: string[] = [];
 
@@ -94,7 +89,7 @@ export class SeekerSignupComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', Validators.required],
-      password_hash: ['', Validators.required],
+      password: ['', Validators.required],
       phone_number: ['', Validators.required],
       university: [''],
       linkedin: [''],
@@ -138,10 +133,11 @@ export class SeekerSignupComponent implements OnInit {
   }
 
   // Skills change handler
-  changeSkillsArray(event: Event) {
+  changeSkillsArray(event: any) {
     const skills = event;
     if (skills != null) {
-      this.skills = skills as unknown as string[];
+      this.skills = skills as string[];
+      this.seekerReg.patchValue({ seekerSkills: this.skills });
     }
     alert("Skills: " + this.skills);
   }
@@ -196,8 +192,14 @@ export class SeekerSignupComponent implements OnInit {
     }, 1000); // Update every second
   }
 
-  // Submit button handler
   onRegister() {
+    // Ensure the seekerSkills array is up-to-date
+  this.seekerReg.patchValue({
+    seekerSkills: this.skills.length ? this.skills : ['default_skill'],
+    profile_picture: this.url || 'default_profile_picture_url', // Assign temporary value if not set
+    cVurl: this.seekerReg.get('cVurl')?.value || 'default_cv_url' // Assign temporary value if not set
+  });
+
     this.seekerService.SeekerRegister(this.seekerReg.value).subscribe({
       next: () => {
         this._snackBar.open("Registration successful", "Close", { duration: 3000 });
