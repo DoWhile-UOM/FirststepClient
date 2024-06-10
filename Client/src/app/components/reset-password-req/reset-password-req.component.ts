@@ -39,29 +39,19 @@ export class ResetPasswordReqComponent {
   }
 
   loginForm = new FormGroup({
-    password: new FormControl('', [Validators.required]),
-    passwordconfirm: new FormControl('', [Validators.required]),
-    token: new FormControl(this.token_id, [Validators.required])
+    email: new FormControl('', [Validators.required,Validators.email])
   });
 
   onLogin() {
     //console.log(this.loginForm.value);
     //this.auth.signup(this.myForm.value)
     this.spinner.show();
-    const passwordConfirmControl = this.loginForm.get('passwordconfirm');
-    if (passwordConfirmControl) {
-      if(this.loginForm.value.password != this.loginForm.value.passwordconfirm){
-        this.snackBar.open("Passwords do not match", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-        this.spinner.hide();
-        return;
-      }
-
-      passwordConfirmControl.disable();
-      this.loginForm.get('token')?.setValue(this.token_id);
-      this.auth.ResetPassword(this.loginForm.value);
+    if(!this.loginForm.value.email){
+      this.snackBar.open("Please Enter the Email", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.spinner.hide();
+      return;
     }
-
+    this.auth.ResetPasswordReq(this.loginForm.value.email);
     this.spinner.hide();
-
   }
 }
