@@ -135,7 +135,7 @@ export class SeekerProfileEditComponent implements OnInit {
       CVurl: ['defaultCVurlValue'], // Set default value for CVurl
       // CVurl: [''], // Add CVurl field here
       field_id: ['', Validators.required],
-      password: ['', Validators.required],
+      password: [''],
       seekerSkills: [[]],
     });
   }
@@ -266,15 +266,15 @@ export class SeekerProfileEditComponent implements OnInit {
     try {
       const formValue: Partial<SeekerProfile> = { ...this.seekerForm.value };
 
-      // Check if the password field is the placeholder and if so, delete it from the payload
-      if (formValue.password === this.passwordPlaceholder) {
-        delete formValue.password;
-      }
+      // // Check if the password field is the placeholder and if so, delete it from the payload
+      // if (formValue.password === this.passwordPlaceholder) {
+      //   delete formValue.password;
+      // }
 
-      // Ensure cVurl field is always included
-      if (!formValue.cVurl) {
-        formValue.cVurl = this.seekerForm.get('cVurl')?.value || '';
-      }
+      // // Ensure cVurl field is always included
+      // if (!formValue.cVurl) {
+      //   formValue.cVurl = this.seekerForm.get('cVurl')?.value || '';
+      // }
       // Update seeker profile
       await this.seekerService.editSeeker(
         formValue as SeekerProfile,
@@ -426,12 +426,12 @@ export class SeekerProfileEditComponent implements OnInit {
     return '';
   }
 
-  passwordErrorMessage() {
-    if (this.seekerForm.get('password')?.hasError('required')) {
-      return 'Password is required';
-    }
-    return '';
-  }
+  // passwordErrorMessage() {
+  //   if (this.seekerForm.get('password')?.hasError('required')) {
+  //     return 'Password is required';
+  //   }
+  //   return '';
+  // }
 
   getErrorMessage(formControlName: string): string {
     //To get error message for a given form control
