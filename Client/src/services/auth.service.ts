@@ -18,7 +18,7 @@ export class AuthService {
 
   private baseUrl: string = "https://localhost:7213/api/User"
 
-  constructor(private local: LocalService, private http: HttpClient, private route: Router) {
+  constructor(private snackBar:MatSnackBar,private local: LocalService, private http: HttpClient, private route: Router) {
     this.userPayload = this.decodedToken() //call decodedToken() to get payload data
   }
 
@@ -28,6 +28,15 @@ export class AuthService {
 
   login(loginObj: any) {
     return this.http.post<any>(Apipaths.authenticate, loginObj)
+  }
+
+  async ResetPasswordReq(restPassword:any) {
+    try {
+      const response = await axios.post(Apipaths.postCompanyAdminReg, restPassword);
+      this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    } catch (error) {
+      this.snackBar.open('Error Occured on Password Reset', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
   }
 
   //-----OTP Service----------------------------------
