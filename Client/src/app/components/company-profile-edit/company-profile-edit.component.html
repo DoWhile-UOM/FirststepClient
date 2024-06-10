@@ -109,15 +109,15 @@
       <mat-divider></mat-divider>
       <div class="button-section">
         <div class="right-btn">
-          <button class="apply-changes-class" (click)="onSubmit()">
+          <button mat-raised-button class="apply-button" (click)="onSubmit()">
             <span class="apply-changes">Apply Changes</span>
           </button>
-          <button class="discard-changes-class" (click)="discardChanges()">
+          <button mat-raised-button class="discard-changes" (click)="discardChanges()">
             <span class="discard-changes">Discard Changes</span>
           </button>
         </div>
         <div class="left-btn">
-          <button class="delete-account-class" (click)="deleteAccount()">
+          <button mat-raised-button class="delete-account-class" (click)="deleteAccount()">
             <span class="delete-account">Delete Accoount</span>
           </button>
         </div>

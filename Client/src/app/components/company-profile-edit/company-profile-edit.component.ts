@@ -116,7 +116,7 @@ export class CompanyProfileEditComponent {
   isConfrimedToChangeEmail: boolean = false;
   otp: string = '';
 
-  logoUrl: string = '';
+  logoUrl = '';
   logoBlobName = '';
   selectedFile: File | null = null;
   eventOccured: boolean = false;
@@ -142,39 +142,13 @@ export class CompanyProfileEditComponent {
       this.cName = this.company.company_name;
       this.emailcaptuered = this.company.company_email;
       this.hasDataLoaded = true;
-      this.logoBlobName = this.company.company_logo;
-      this.imageDownload();
+
+      this.logoUrl = this.company.company_logo;
+      console.log(this.logoUrl);
       this.spinner.hide();
     } catch (error) {
       console.log(error);
       this.spinner.hide();
-    }
-  }
-  //image download
-  imageDownload() {
-    console.log('inside the imageDownload function');
-    console.log('company logo:', this.company.company_logo);
-    if (this.company.company_logo != '') {
-      this.documentService.generateSasToken(this.logoBlobName).subscribe({
-        next: (token: string) => {
-          const blobUrl = this.documentService.getBlobUrl(this.logoBlobName, token);
-          this.logoUrl = blobUrl;
-          console.log('SAS token fetched:', token);
-
-          // fetch(blobUrl)
-          //   .then(response => response.blob())
-          //   .then(blob => {
-          //     this.logoUrl = URL.createObjectURL(blob);
-          //     console.log('Blob URL:', this.logoUrl);
-          //   })
-          //   .catch(error => {
-          //     console.error('Error fetching blob:', error);
-          //   });
-        },
-        error: (error) => {
-          console.error('Error fetching SAS token:', error);
-        }
-      });
     }
   }
 
