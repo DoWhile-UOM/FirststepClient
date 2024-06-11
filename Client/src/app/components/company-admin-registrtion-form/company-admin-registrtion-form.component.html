@@ -76,24 +76,27 @@
     <!--email verification-->
     <div *ngIf="isConfrimedToChangeEmail==true">
       <mat-grid-list cols="{{ 1 }}" rowHeight="300">
-        <mat-grid-tile class="container-otp">
-          <span class="mat-typography"> Click send otp button
-          </span>
-          <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
-            [disabled]="isOTPRequestSent" id="otpreqbtn">{{reqOTPbtntxt }} {{remainingTime
-            }}</button>
+        <mat-grid-tile>
+          <div class="container-otp">
+            <span class="mat-typography"> Click send otp button
+            </span>
+            <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
+              [disabled]="isOTPRequestSent" id="otpreqbtn">{{reqOTPbtntxt }} {{remainingTime
+              }}</button>
 
-          <span class="mat-typography"> Once that button is clicked, enter the otp(one time password)
-            recived in
-            the provided email
-            address.
-          </span>
-          <mat-form-field appearance="outline">
-            <mat-label>OTP</mat-label>
-            <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}" required />
-          </mat-form-field>
-          <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify
-            OTP</button>
+            <span class="mat-typography"> Once that button is clicked, enter the otp(one time password)
+              recived in
+              the provided email
+              address.
+            </span>
+            <mat-form-field appearance="outline">
+              <mat-label>OTP</mat-label>
+              <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
+                required />
+            </mat-form-field>
+            <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify
+              OTP</button>
+          </div>
         </mat-grid-tile>
       </mat-grid-list>
     </div>
