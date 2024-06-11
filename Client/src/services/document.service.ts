@@ -13,7 +13,7 @@ export class DocumentService {
   private apiUrl = 'https://localhost:7213/api/Document';
   private fetchUrl = 'https://localhost:7213/api/Document/GetSasToken';
   private containerUrl = 'https://firststep.blob.core.windows.net/firststep';
-  
+
 
 
   constructor(private http: HttpClient) { }
@@ -46,27 +46,13 @@ export class DocumentService {
   }
 
 
-generateSasToken(blobName: string): Observable<string> {
+  generateSasToken(blobName: string): Observable<string> {
     const url = `${this.fetchUrl}?blobName=${blobName}`;
     return this.http.get(url, { responseType: 'text' });
-}
+  }
 
-generateBlobUrl(blobName: string, sasToken:string): string {
-
-  return `${this.containerUrl}/${blobName}?${sasToken}`;
-
-} 
-
-
-
-
-
-
-
-
-
-
-
-   
+  generateBlobUrl(blobName: string, sasToken:string): string {
+    return `${this.containerUrl}/${blobName}?${sasToken}`;
+  }
 }
 

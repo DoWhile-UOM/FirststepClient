@@ -30,7 +30,7 @@ export class CaNavBarComponent {
   roleProfileEdit() {
     const dialogRef = this.dialog.open(RoleProfileEditComponent, {
       width: '500px',
-      data: { id: 10 }
+      data: { id: Number(this.auth.getUserId()) }
     });
   }
 }

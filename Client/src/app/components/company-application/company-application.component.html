@@ -136,14 +136,20 @@
             <mat-label class="lName">Business Registratin Number:</mat-label>
           </mat-grid-tile>
           <mat-grid-tile class="labelContent">
-            <mat-label class="lContent">{{ companyApplication.business_reg_certificate }}</mat-label>
-            <mat-label class="lContent" *ngIf="companyApplication.business_reg_certificate == ''">Business Registration
+            <mat-label class="lContent">{{ companyApplication.business_reg_no }}</mat-label>
+            <mat-label class="lContent" *ngIf="companyApplication.business_reg_no == 0">Business Registration
               Number has not
               been provided</mat-label>
           </mat-grid-tile>
         </mat-grid-list>
       </div>
-      <div class="right">documents</div>
+      <div class="right">
+        <button mat-raised-button class="left-certificate" (click)="openBRCerti()">open business registration
+          certificate</button>
+        <button mat-raised-button class="right-certificate" (click)="openIncCerti()">open
+          certificate_of_incorporation</button>
+
+      </div>
     </div>
 
     <mat-divider></mat-divider>

@@ -11,6 +11,7 @@ import { EmployeeService } from '../../../services/employee.service';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from '../../../services/auth.service';
 import {
   MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle,
   MatDialogContent,
@@ -74,10 +75,12 @@ export class RoleProfileEditComponent {
   constructor(
     private employeeService: EmployeeService,
     private snackBar: MatSnackBar,
+    private auth: AuthService,
     private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<RoleProfileEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
   async ngOnInit() {
+    this.empId = Number(this.auth.getUserId());
     this.employee = await this.employeeService.getUserDetails(this.empId);
     if (this.employee) {
       this.hasDataLoaded = true;

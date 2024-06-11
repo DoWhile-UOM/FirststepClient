@@ -3,7 +3,7 @@
   <div mat-dialog-content>
 
     <form class="form" #updateUserDetails="ngForm" (ngSubmit)="formValidation()">
-      <mat-grid-list cols="1" rowHeight="140">
+      <mat-grid-list cols="1" rowHeight="105">
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always" class="full-width">
@@ -52,8 +52,9 @@
     </form>
   </div>
   <div mat-dialog-actions>
-    <button mat-button color="primary" (click)="formValidation()" cdkFocusInitial>Update Profile</button>
-    <button mat-button (click)="close()">Close</button>
+    <button mat-raised-button class="apply-button" (click)="formValidation()" cdkFocusInitial>Update Profile</button>
+
+    <button mat-raised-button (click)="close()">Close</button>
   </div>
 </div>
 

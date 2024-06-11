@@ -30,11 +30,14 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DocumentService } from '../../../services/document.service';
 
 import { ChangeDetectorRef } from '@angular/core';
 
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 interface Company {
   company_id: number;
@@ -85,7 +88,7 @@ interface verifyOTP {
     CommonModule,
     MatDialogTitle,
     MatDialogContent,
-    MatDialogActions,
+    MatDialogActions, MatProgressSpinnerModule,
   ],
 })
 export class CompanyProfileEditComponent {
@@ -97,7 +100,7 @@ export class CompanyProfileEditComponent {
   company: Company = {} as Company; // Initialize the company property
   cName = ''; // to store Comapny Name that is on the top
   noOfCols: number = 2;
-  companyId: number = 7; // temp
+  companyId: number = 0; // temp
   BusinessScales: any[] = [];
 
   errorMessageForCompanyName = '';
@@ -113,45 +116,51 @@ export class CompanyProfileEditComponent {
   isConfrimedToChangeEmail: boolean = false;
   otp: string = '';
 
-  logoUrl: string | ArrayBuffer | null = null;
+  logoUrl = '';
+  logoBlobName = '';
   selectedFile: File | null = null;
   eventOccured: boolean = false;
   //commayForm
   companyForm!: FormGroup;
   constructor(
     private companyService: CompanyService,
+    private documentService: DocumentService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog, 
+    public dialog: MatDialog,
     private auth: AuthService,
     private snackbar: MatSnackBar,
     private cdr: ChangeDetectorRef) {
-      this.BusinessScales = CompanyService.BusinessScales;
+    this.BusinessScales = CompanyService.BusinessScales;
   }
 
   async ngOnInit() {
     try {
+      this.companyId = Number(this.auth.getCompanyID());
       this.spinner.show();
       this.company = await this.companyService.getCompanyDetails(
         this.companyId
       );
       this.cName = this.company.company_name;
       this.emailcaptuered = this.company.company_email;
-      console.log('got details');
       this.hasDataLoaded = true;
+
+      this.logoUrl = this.company.company_logo;
+      console.log(this.logoUrl);
       this.spinner.hide();
     } catch (error) {
       console.log(error);
       this.spinner.hide();
     }
   }
+
   //image upload
-  onselectFile(event: Event): void {
+  onselectFile(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.selectedFile = input.files[0];
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.logoUrl = e.target?.result || '';
+        this.logoUrl = (e.target?.result as string) || '';
       };
       reader.readAsDataURL(this.selectedFile);
     }

@@ -93,7 +93,26 @@ mat-icon {
 }
 .right{
   width: 50%;
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
 }
 .labelName, .labelContent {
   font-size: calc(1em + 1.333px); 
+}
+.left-certificate{
+  margin-top: 200px;
+  background-color: #008080 !important ;
+  color: #fff !important;
+  margin-right: 25px;
+  width: 250px;
+  height: auto;
+}
+.right-certificate{
+  margin-top: 200px;
+  background-color: #008080 !important;
+  color: #fff !important;
+  width: 250px;
+  height: auto;
 }
