@@ -16,6 +16,7 @@
       </div>
       <div class="hero-text">
         <h1>Skills speak louder than words</h1>
+        <ng-lottie [options]="options" (animationCreated)="animationCreated($event)" />
         <p>We help students to find their dream job while guiding companies to find their perfect team</p>
         <p>To begin your journey register as a seeker</p>
         <button mat-raised-button color="primary" type="submit">Sign Up</button>

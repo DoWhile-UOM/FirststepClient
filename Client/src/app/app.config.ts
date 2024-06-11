@@ -9,14 +9,19 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { tokenInterceptor } from './interceptors/token.interceptor';
+import { provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideHttpClient(withFetch())
-    ,provideRouter(routes), 
-    provideClientHydration(),
-     provideAnimations(),
-     importProvidersFrom(HttpClientModule),
-     {provide:HTTP_INTERCEPTORS,useClass:tokenInterceptor,multi:true
-    }]
- 
+    , provideRouter(routes),
+  provideClientHydration(),
+  provideAnimations(),
+  importProvidersFrom(HttpClientModule), provideLottieOptions({
+    player: () => player,
+  }),
+     {
+    provide: HTTP_INTERCEPTORS, useClass: tokenInterceptor, multi: true
+  }]
+
 };

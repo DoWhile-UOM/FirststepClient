@@ -20,7 +20,7 @@
                 <div class="circle-box">
                     <a>Application Submission</a>
                     <div class="circle">
-                        <div class="checkmark"></div>
+                        <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
                     </div>
                     <a>{{cmpData.company_registered_date}}</a>
                 </div>

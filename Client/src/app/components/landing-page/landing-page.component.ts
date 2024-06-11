@@ -3,6 +3,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
+import { AnimationItem } from 'lottie-web';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,13 +15,22 @@ import { Router, RouterModule } from '@angular/router';
     MatSlideToggleModule,
     MatToolbarModule,
     MatButtonModule,
-    RouterModule
+    RouterModule, LottieComponent
   ],
 })
 export class LandingPageComponent {
-  constructor(private router: Router) {}
+  options: AnimationOptions = {
+    path: 'assets/lottie/checkmark.json',
+  };
 
-  login(){
+  constructor(private router: Router) { }
+
+  
+
+  login() {
     this.router.navigate(['/login']);
+  }
+
+  animationCreated(animationItem: AnimationItem): void {
   }
 }

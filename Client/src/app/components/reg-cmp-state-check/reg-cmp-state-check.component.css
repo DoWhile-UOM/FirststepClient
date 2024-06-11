@@ -14,7 +14,6 @@
 
 .circle {
     position: relative;
-    background-color: #008080;
     /* Green color for the circle */
     border-radius: 50%;
     height: 120px;

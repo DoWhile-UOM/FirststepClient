@@ -19,6 +19,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+import { AnimationItem } from 'lottie-web';
+import { LottieComponent, AnimationOptions } from 'ngx-lottie';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -43,11 +45,14 @@ export interface CmpyData {
 @Component({
   selector: 'app-reg-cmp-state-check',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
+  imports: [LottieComponent,FormsModule, CommonModule, MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
   templateUrl: './reg-cmp-state-check.component.html',
   styleUrl: './reg-cmp-state-check.component.css'
 })
 export class RegCmpStateCheckComponent {
+  options: AnimationOptions = {
+    path: 'assets/lottie/checkmark.json',
+  };
 
   company_id: string = 'nmIkuA6ZIO'; // sample company_id
   regState: string = 'Pending'; // sample registration state
@@ -81,6 +86,10 @@ export class RegCmpStateCheckComponent {
   ngOnInit(): void {
 
 
+  }
+
+  
+  animationCreated(animationItem: AnimationItem): void {
   }
 
   async fetchData(company_id: string) {
