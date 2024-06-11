@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div *ngIf="seekerDetails" class="wrapper">
   <mat-card class="body">
     <div class="upper-section">
       <button mat-icon-button>
@@ -29,6 +29,14 @@
           <span>{{ seekerDetails.phone_number }}</span>
         </div>
         <div>
+          <mat-label class="head">Email Address</mat-label>
+          <span>{{ seekerDetails.email }}</span>
+        </div>
+        <div>
+          <mat-label class="head">Field of Work</mat-label>
+          <span>{{ seekerDetails.field_name }}</span>
+        </div>
+        <div>
           <mat-label class="head">LinkedIn</mat-label>
           <span>{{ seekerDetails.linkedin }}</span>
         </div>
@@ -37,12 +45,13 @@
           <span>{{ seekerDetails.university }}</span>
         </div>
         <div>
-          <mat-label class="head">Email Address</mat-label>
-          <span>{{ seekerDetails.email }}</span>
-        </div>
-        <div>
           <mat-label class="head">Description</mat-label>
           <span>{{ seekerDetails.description }}</span>
+        </div>
+        <div>
+          <mat-label class="head">Skills</mat-label>
+          <span>{{ seekerDetails.seekerSkills }}</span>
+
         </div>
       </div>
       <div class="button-container">
