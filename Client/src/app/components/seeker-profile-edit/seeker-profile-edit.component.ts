@@ -43,7 +43,10 @@ import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
+import { SeekerApplicationFileUploadComponent } from '../seeker-application-file-upload/seeker-application-file-upload.component';
+import { profile } from 'console';
+
 
 interface SeekerProfile {
   user_id: number;
@@ -87,7 +90,8 @@ interface SeekerProfile {
     SpinnerComponent,
     SeekerEmailVerificationBoxComponent,
     AddSkillsComponent,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    SeekerApplicationFileUploadComponent,
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -143,6 +147,7 @@ export class SeekerProfileEditComponent implements OnInit {
       cVurl: ['defaultCVurlValue'], // Set default value for cVurl
       // cVurl: [''], // Add cVurl field here
       field_id: ['', Validators.required],
+      profile_picture: [''],
       password: [''],
       seekerSkills: [[]],
     });
@@ -243,13 +248,22 @@ export class SeekerProfileEditComponent implements OnInit {
   }
   async onSubmit() {
     if (this.seekerForm.invalid) {
-      this.seekerForm.markAllAsTouched(); // Mark all fields as touched to trigger validation messages
+      this.seekerForm.markAllAsTouched();
       this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
-
+  
+    // Check if the cVurl field has a value before updating the profile
+    if (!this.seekerForm.get('cVurl')?.value) {
+      this.snackBar.open('Please upload a CV before updating the profile', 'Close', {
+        duration: 3000,
+      });
+      return;
+    }
+  
     await this.updateProfile();
   }
+  
 
   showInformEmailShouldBeVerifiedPopUp() {
     const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
@@ -484,7 +498,30 @@ export class SeekerProfileEditComponent implements OnInit {
       ? control.invalid && (control.dirty || control.touched)
       : false;
   }
+
+  // Add this method to open the UploadCV dialog
+  openUploadDialog(): void {
+    const dialogRef = this.dialog.open(UploadCV, {
+      width: '1000px',
+    });
+
+    dialogRef.componentInstance.fileSelected.subscribe(({ file, url }) => {
+      this.seekerForm.patchValue({
+        cVurl: url,
+      });
+      this.selectedFile = file;
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (this.selectedFile) {
+        this.snackBar.open('File uploaded successfully', 'Close', {
+          duration: 2000,
+        });
+      }
+    });
+  }
 }
+
 
 // cannot-submit-without-all-inputs-are-valid-pop-up
 @Component({
@@ -562,5 +599,57 @@ export class ConfirmDeleteProfilePopUp {
   }
   yesAction() {
     this.dialogRef.close(true);
+  }
+}
+
+
+@Component({
+  selector:'app-upload-cv',
+  templateUrl:'upload-cv.html',
+  styles:'upload-cv.css',
+  standalone:true,
+  imports:[
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    CommonModule
+  ]
+})
+export class UploadCV {
+  @Output() fileSelected = new EventEmitter<{ file: File, url: string }>();
+  uploadInProgress = false;
+  uploadSuccess = false;
+
+  constructor(public dialogRef: MatDialogRef<UploadCV>) {}
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  async onFileSelected($event: Event) {
+    const input = $event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.uploadInProgress = true;
+      this.uploadSuccess = false;
+      const file = input.files[0];
+
+      try {
+        const fileUrl = await this.fileUploadSimulate(file);
+        this.uploadSuccess = true;
+        this.fileSelected.emit({ file, url: fileUrl });
+      } catch (error) {
+        console.error('Error uploading file: ', error);
+      } finally {
+        this.uploadInProgress = false;
+      }
+    }
+  }
+
+  fileUploadSimulate(file: File): Promise<string> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('http://example.com/your-uploaded-file.pdf'); // Simulated URL of the uploaded file
+      }, 3000);
+    });
   }
 }

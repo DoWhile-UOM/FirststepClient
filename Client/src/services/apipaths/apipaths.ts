@@ -67,7 +67,7 @@ export class Apipaths {
     static readonly getSeekerProfile: string = this.baseUrl + 'Seeker/GetSeekerProfile/';// + seeker_id
     static readonly getSeekerEditProfile:string = this.baseUrl + 'Seeker/GetSeekerProfile/Update/';// + seeker_id
     static readonly addSeeker: string = this.baseUrl + 'Seeker/AddSeeker';
-    static readonly editSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker';// + seeker_id
+    static readonly editSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker/';// + seeker_id
     static readonly updateProfilePicture: string = this.baseUrl + 'Seeker/UpdateProfilePicture/'; // + user_id
     static readonly deleteSeeker: string = this.baseUrl + 'Seeker/DeleteSeeker/'; // + seeker_id
 
