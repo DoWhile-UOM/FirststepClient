@@ -107,6 +107,7 @@ export class ManageRolesComponent {
     } else {
       this.rolesData = [];
       this.table.renderRows();
+      
     }
   }
 
@@ -118,6 +119,7 @@ export class ManageRolesComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         this.fetchData(this.selected);
+        window.location.reload();
       }
     });
   }
@@ -132,17 +134,21 @@ export class ManageRolesComponent {
     dialog.afterClosed().subscribe((result) => {
       if (result == true) {
         this.fetchData(this.selected);
+        window.location.reload();
       }
     });
   }
 
   openEdit(id: number) {
     const dialog = this.dialog.open(EditRoleComponent, { data: { id } });
+   //fetch the results only if returns true
     dialog.afterClosed().subscribe((result) => {
-      if (result ==true) {
+      if (result == true) {
         this.fetchData(this.selected);
+        window.location.reload();
       }
     });
+
   }
 
   async filter(selected: any) {

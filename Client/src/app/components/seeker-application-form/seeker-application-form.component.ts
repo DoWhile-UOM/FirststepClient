@@ -120,10 +120,7 @@ export class SeekerApplicationFormComponent implements OnInit {
 
   async onSubmitForm() {
     if (!this.useDefaultCv && !this.applicationData.cv) {
-      this.snackBar.open('Please upload a CV or select the default CV', '',{
-        duration: 3000,
-        //change snack bar color into red and fonts into white later  
-      });
+      this.snackBar.open("Please upload a CV or select the default CV", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       return;
     }
     this.spinner.show();
