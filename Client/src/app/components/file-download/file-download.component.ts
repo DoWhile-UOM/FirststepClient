@@ -13,10 +13,15 @@ import { DocumentService } from '../../../services/document.service';
 })
 export class FileDownloadComponent {
 document: any;
+documentName = 'sample.pdf';
+cvName: any;
 
 constructor(
     private documentService: DocumentService,
-) {} 
 
+) {} 
+  ngOnInit(): void {
+
+}
 
 }

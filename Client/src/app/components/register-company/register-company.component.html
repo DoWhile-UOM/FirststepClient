@@ -73,10 +73,10 @@
               <mat-form-field appearance="outline">
                 <mat-label>Business Scale</mat-label>
                 <mat-select formControlName="company_business_scale">
-                  <mat-option value="mic">Micro-Sized(Less Than 10 Employees)</mat-option>
-                  <mat-option value="sm">Small-Sized(10-50 Employees)</mat-option>
-                  <mat-option value="mid">Medium-Sized(50-250 Employees)</mat-option>
-                  <mat-option value="lrg">Large-Sized(More Than 250 Employees)</mat-option>
+                  <mat-option value="micro">Micro-Sized(Less Than 10 Employees)</mat-option>
+                  <mat-option value="small">Small-Sized(10-50 Employees)</mat-option>
+                  <mat-option value="medium">Medium-Sized(50-250 Employees)</mat-option>
+                  <mat-option value="large">Large-Sized(More Than 250 Employees)</mat-option>
                 </mat-select>
                 <mat-error
                   *ngIf="companyReg.controls['company_business_scale'].touched && companyReg.controls['company_business_scale'].errors">

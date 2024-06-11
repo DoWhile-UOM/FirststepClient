@@ -6,18 +6,14 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { FormsModule } from '@angular/forms';
-import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 
 import {
   MAT_DIALOG_DATA,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
 import { EmployeeService } from '../../../services/employee.service';
-import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 import { I } from '@angular/cdk/keycodes';
 
 interface Employee {
@@ -42,25 +38,22 @@ interface Employee {
     FileUploadComponent,
     FormsModule,
     MatDialogModule,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
     MatSnackBarModule,
-    
   ],
 })
 export class AddrolesPopupComponent {
-  hide=true;
+  hide = true;
   employee: Employee = {} as Employee;
   selectedRole: string = 'HRM';
   constructor(
     public dialogRef: MatDialogRef<AddrolesPopupComponent>,
-    private employeeService: EmployeeService, private _snackBar: MatSnackBar,
+    private employeeService: EmployeeService,
+    private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any
-) {
-  //assign data from manage roles component
-  this.employee.company_id = data.company_id;
-}
+  ) {
+    //assign data from manage roles component
+    this.employee.company_id = data.company_id;
+  }
 
   async onSubmit() {
     if (this.selectedRole === 'HRA') {
@@ -68,8 +61,10 @@ export class AddrolesPopupComponent {
     } else {
       await this.employeeService.addNewHRManager(this.employee);
     }
+
+    this._snackBar.open('Role added successfully', 'Close', {
+      duration: 3000,
+    });
+    this.dialogRef.close(true);
   }
-
-  
 }
-

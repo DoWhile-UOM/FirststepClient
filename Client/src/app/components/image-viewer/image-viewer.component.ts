@@ -22,7 +22,7 @@ constructor(private documentService:DocumentService) { }
 ngOnInit(): void {
   this.documentService.generateSasToken(this.blobName).subscribe(
     (token:string) => {
-      this.imageUrl= this.documentService.getBlobUrl(this.blobName, token);
+      this.imageUrl= this.documentService.generateBlobUrl(this.blobName, token);
       
     },
     error => {

@@ -16,6 +16,7 @@ mat-card {
 
 .textSection {
   width: 200px;
+  font-weight: bold;
 }
 
 .fieldSection {

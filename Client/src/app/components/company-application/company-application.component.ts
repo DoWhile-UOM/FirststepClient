@@ -49,6 +49,7 @@ interface EvaluatedCompanyDetails {
   verified_system_admin_id: number;
 }
 export interface DialogData {
+  documentUrl: any;
   documentName: string;
   comment: string;
 }

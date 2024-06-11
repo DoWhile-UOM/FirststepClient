@@ -92,13 +92,15 @@ export class AdvertisementActionsComponent {
 
   trackApplication() {
     //open dialog to track application
-    this.dialog.open(SeekerApplicationStatusComponent,{
+    const dialog=this.dialog.open(SeekerApplicationStatusComponent,{
+      maxWidth: '100em',
       data: {
         jobID: this.jobID,
         seekerID: this.seekerId,
         company_name: this.company_name, 
         job_title: this.job_title, 
         job_field: this.job_field,
+        company_logo_url: this.company_logo_url
         }
     });
 
