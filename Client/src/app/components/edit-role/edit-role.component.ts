@@ -66,8 +66,9 @@ export class EditRoleComponent implements OnInit {
    await this.employeeService.editemployee(this.employeeDetails, this.user_id);
    //open a snackbar
    this._snackBar.open('Role Updated Successfully', 'Close', {
-      duration: 3000,
+      duration: 2000,
     });
+    this.dialogRef.close(true);
   }
  
 }

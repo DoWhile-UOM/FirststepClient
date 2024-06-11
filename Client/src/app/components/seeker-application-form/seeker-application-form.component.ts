@@ -28,6 +28,7 @@ interface Seeker {
   phone_number: string;
   linkedin: string;
   cVurl: string;
+  defualt_cv_url : string;
 }
 
 interface Application {

@@ -95,7 +95,7 @@ getApplicationStatus(): void{
   );
 }
 
-//change this
+
 openpdf() {
   this.dialog.open(PdfViewComponent,{
     data: {

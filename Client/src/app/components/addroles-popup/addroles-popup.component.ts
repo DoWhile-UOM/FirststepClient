@@ -63,7 +63,7 @@ export class AddrolesPopupComponent {
     }
 
     this._snackBar.open('Role added successfully', 'Close', {
-      duration: 3000,
+      duration: 2000,
     });
     this.dialogRef.close(true);
   }
