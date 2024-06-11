@@ -27,6 +27,7 @@ interface Seeker {
   last_name: string;
   phone_number: string;
   linkedin: string;
+  cVurl: string;
 }
 
 interface Application {
