@@ -1,0 +1,178 @@
+.body {
+  padding: 3em;
+  width: 60%;
+  min-width: 400px;
+  margin: 0 auto;
+}
+.card {
+  padding: 2em;
+  padding: 2em;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.form-container {
+  margin-top: 2em;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+mat-grid-tile mat-form-field {
+  width: 100%;
+  margin: 0.75em;
+}
+
+mat-grid-tile {
+  height: min-content;
+  margin: 0;
+}
+.sectionHeading {
+  margin: 6em 1em 1em 0.75em;
+}
+.title {
+  color: #008080;
+  font-size: 25px;
+  font-family: Lato;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+.description-text-editor {
+  padding-left: 1em;
+  width: calc(100% - 2.2em);
+  margin-bottom: 1.2em;
+  padding-top: 1em;
+}
+mat-form-field {
+  width: 100%;
+  height: 60px;
+}
+.right-btn,
+.left-btn {
+  width: 100%;
+}
+.left-btn {
+  justify-content: flex-start;
+}
+
+.button-section,
+.right-btn {
+  display: block;
+}
+.button-section {
+  display: flex;
+  margin-top: 40px;
+}
+.right-btn {
+  justify-content: flex-start;
+  width: 50%;
+  display: flex;
+  padding: 5px;
+}
+.left-btn {
+  justify-content: flex-end;
+  width: 50%;
+  display: flex;
+}
+button {
+  width: 25%;
+}
+.apply-changes,
+.discard-changes,
+.delete-account {
+  font-weight: 400;
+}
+.apply-changes-class {
+  background-color: #008080;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.discard-changes-class {
+  background-color: #ffffff;
+  color: #008080;
+  border-width: 1px;
+  border-style: solid;
+  outline: none;
+  border-radius: 5px;
+  border-color: #008080;
+  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+.delete-account-class {
+  background-color: #d73434;
+  color: #ffffff;
+  border-width: 1px;
+  border-style: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 2px 0;
+  padding: 10px;
+}
+
+.container-otp {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-button-row {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 25px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 0px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.button-container {
+  margin-left: 10px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  gap: 10px;
+}
+
+.button-with-inputbox mat-form-field {
+  width: 55%;
+}
+
+.button-with-inputbox button {
+  width: 45%;
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.textbox-form-field{
+  position: relative;
+  width: calc(100% - 2.2em);
+  margin: 0 auto;
+}

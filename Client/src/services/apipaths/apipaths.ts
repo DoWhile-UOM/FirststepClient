@@ -62,8 +62,14 @@ export class Apipaths {
     static readonly getAllFields: string = this.baseUrl + 'JobField/GetAllJobFields';
 
     // seeker
-    static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';
-    static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';
+    static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';// + seeker_id
+    static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';// + seeker_id
+    static readonly getSeekerProfile: string = this.baseUrl + 'Seeker/GetSeekerProfile/';// + seeker_id
+    static readonly addSeeker: string = this.baseUrl + 'Seeker/AddSeeker';
+    static readonly editSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker';// + seeker_id
+    static readonly updateProfilePicture: string = this.baseUrl + 'Seeker/UpdateProfilePicture/'; // + user_id
+    static readonly deleteSeeker: string = this.baseUrl + 'Seeker/DeleteSeeker/'; // + seeker_id
+
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
