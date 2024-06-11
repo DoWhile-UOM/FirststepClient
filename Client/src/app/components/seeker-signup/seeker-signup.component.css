@@ -34,7 +34,7 @@
 
 .step-card {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -44,6 +44,7 @@
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
+  line-height: 1.5; 
 }
 
 .form-container {
@@ -52,8 +53,10 @@
   align-items: center;
 }
 
-.full-width {
+.fixed-width {
   width: 100%;
+  max-width: 400px;
+  margin-bottom: 15px;
 }
 
 .button-container {
@@ -61,11 +64,20 @@
   justify-content: space-between;
   width: 100%;
   gap: 10px;
+  margin-top: 20px; /* Add space between buttons and top form fields */
 }
 
-.custom-stepper-button,
+.custom-stepper-button {
+  padding: 10px 20px;
+  border: 2px solid #008080; /* Add border for Back button */
+  color: #008080 !important; /* Set text color */
+  background-color: transparent; /* Transparent background */
+}
+
 .custom-stepper1-button {
   padding: 10px 20px;
+  background-color: #008080;
+  color: white !important;
 }
 
 .skill-part {
@@ -86,15 +98,25 @@
 }
 
 .otp-field-container {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  width: 100% !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-.otp-field-container input {
-  width: 70%;
+.otp-field-container .fixed-width {
+  width: calc(70% - 10px);
 }
+
+.otp-field-container button {
+  width: calc(30% - 10px);
+}
+
+/* New class for combined width */
+.combined-width {
+  width: calc(100% - 10px);
+}
+
 
 /* Media Queries */
 @media (max-width: 768px) {
@@ -105,4 +127,11 @@
     width: 100%;
     max-width: none;
   }
+}
+
+.label-import {
+  color: #008080;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
 }

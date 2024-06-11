@@ -5,26 +5,52 @@
       <mat-step>
         <div class="content-container">
           <div class="left">
-            <img src="./assets/images/signup1.png" alt="Seeker" class="seeker" />
+            <img
+              src="./assets/images/signup1.png"
+              alt="Seeker"
+              class="seeker"
+            />
           </div>
           <mat-card class="step-card right">
-            <h2>Find Your Future With FirstStep</h2>
             <div class="form-container">
-              <mat-label class="heading">Create Your FirstStep Account</mat-label>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-label class="heading"
+                >Create Your FirstStep Account</mat-label
+              >
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>First Name</mat-label>
-                <input matInput placeholder="Enter First name" formControlName="first_name" required />
+                <input
+                  matInput
+                  placeholder="Enter First name"
+                  formControlName="first_name"
+                  required
+                />
               </mat-form-field>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Last Name</mat-label>
-                <input matInput placeholder="Enter Last name" formControlName="last_name" required />
+                <input
+                  matInput
+                  placeholder="Enter Last name"
+                  formControlName="last_name"
+                  required
+                />
               </mat-form-field>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Contact Number</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="phone_number" required />
+                <input
+                  matInput
+                  placeholder="Enter contact Number"
+                  formControlName="phone_number"
+                  required
+                />
               </mat-form-field>
               <div class="button-container">
-                <button mat-button matStepperNext class="custom-stepper1-button">Next</button>
+                <button
+                  mat-button
+                  matStepperNext
+                  class="custom-stepper1-button"
+                >
+                  Next
+                </button>
               </div>
             </div>
           </mat-card>
@@ -35,37 +61,87 @@
       <mat-step>
         <div class="content-container">
           <div class="left">
-            <img src="./assets/images/signup2.png" alt="Seeker" class="seeker" />
+            <img
+              src="./assets/images/signup2.png"
+              alt="Seeker"
+              class="seeker"
+            />
           </div>
           <mat-card class="step-card right">
-            <h2>Easily Find the Career Path Meant For You</h2>
             <div class="form-container">
-              <mat-label class="heading">Let's verify your Email and Password</mat-label>
-              <p>Verify your email. Please check your email and enter the confirmation code.</p>
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Email Address</mat-label>
-                <input matInput formControlName="email" placeholder="example@gmail.com" required />
-                <mat-error *ngIf="seekerReg.controls['email'].touched && seekerReg.controls['email'].errors">
-                  Valid Email is required
-                </mat-error>
-              </mat-form-field>
-              <button mat-button class="otp-btn" matSuffix (click)="requestOTP()" [disabled]="isOTPRequestSent" id="otpreqbtn" style="background-color: #595959; color: white;">
-                {{ reqOTPBtnText }} {{ remainingTime }}
-              </button>
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>OTP</mat-label>
-                <input matInput class="otp-btn" placeholder="Enter Confirmation Code" formControlName="otp_in" required />
-              </mat-form-field>
-              <button mat-button matSuffix (click)="VerifyOTP()" style="background-color: #595959; color: white;">
-                Verify OTP
-              </button>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-label class="heading"
+                >Let's verify your Email and Password</mat-label
+              >
+              <p style="text-align: center; margin-bottom: 20px; ">
+                Verify your email. Please check your email and enter the confirmation code.
+              </p>
+              
+              <div class="otp-field-container">
+                <mat-form-field appearance="outline" class="fixed-width">
+                  <mat-label>Email Address</mat-label>
+                  <input
+                    matInput
+                    formControlName="email"
+                    placeholder="example@gmail.com"
+                    required
+                  />
+                  <mat-error
+                    *ngIf="
+                      seekerReg.controls['email'].touched &&
+                      seekerReg.controls['email'].errors
+                    "
+                  >
+                    Valid Email is required
+                  </mat-error>
+                </mat-form-field>
+                <button
+                  mat-button
+                  class="otp-btn"
+                  (click)="requestOTP()"
+                  [disabled]="isOTPRequestSent"
+                  id="otpreqbtn"
+                >
+                  {{ reqOTPBtnText }} {{ remainingTime }}
+                </button>
+              </div>
+              <div class="otp-field-container">
+                <mat-form-field appearance="outline" class="fixed-width">
+                  <mat-label>OTP</mat-label>
+                  <input
+                    matInput
+                    placeholder="Enter Confirmation Code"
+                    formControlName="otp_in"
+                    required
+                  />
+                </mat-form-field>
+                <button mat-button class="otp-btn" (click)="VerifyOTP()">
+                  Verify OTP
+                </button>
+              </div>
+              <mat-form-field appearance="outline" class="combined-width">
                 <mat-label>Enter Password</mat-label>
-                <input matInput formControlName="password" placeholder="Enter Password" required />
+                <input
+                  matInput
+                  formControlName="password"
+                  placeholder="Enter Password"
+                  required
+                />
               </mat-form-field>
               <div class="button-container">
-                <button mat-button matStepperPrevious class="custom-stepper-button">Back</button>
-                <button mat-button matStepperNext class="custom-stepper1-button">Next</button>
+                <button
+                  mat-button
+                  matStepperPrevious
+                  class="custom-stepper-button"
+                >
+                  Back
+                </button>
+                <button
+                  mat-button
+                  matStepperNext
+                  class="custom-stepper1-button"
+                >
+                  Next
+                </button>
               </div>
             </div>
           </mat-card>
@@ -76,27 +152,52 @@
       <mat-step>
         <div class="content-container">
           <div class="left">
-            <img src="./assets/images/signup3.png" alt="Seeker" class="seeker" />
+            <img
+              src="./assets/images/signup3.png"
+              alt="Seeker"
+              class="seeker"
+            />
           </div>
           <mat-card class="step-card right">
-            <h2>Meet Top Companies in Sri Lanka</h2>
             <div class="form-container">
-              <mat-label class="heading">Can we know more about your Educational background?</mat-label>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-label class="heading"
+                >Can we know more about your Educational background?</mat-label
+              >
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>University</mat-label>
-                <input matInput placeholder="Enter University" formControlName="university" />
+                <input
+                  matInput
+                  placeholder="Enter University"
+                  formControlName="university"
+                />
               </mat-form-field>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>LinkedIn Profile</mat-label>
-                <input matInput placeholder="Enter LinkedIn Profile URL" formControlName="linkedin" />
+                <input
+                  matInput
+                  placeholder="Enter LinkedIn Profile URL"
+                  formControlName="linkedin"
+                />
               </mat-form-field>
               <mat-label class="label-import">Please upload your CV</mat-label>
-              <div class="cvupload">
+              <div class="cvupload fixed-width">
                 <app-file-upload></app-file-upload>
               </div>
               <div class="button-container">
-                <button mat-button matStepperPrevious class="custom-stepper-button">Back</button>
-                <button mat-button matStepperNext class="custom-stepper1-button">Next</button>
+                <button
+                  mat-button
+                  matStepperPrevious
+                  class="custom-stepper-button"
+                >
+                  Back
+                </button>
+                <button
+                  mat-button
+                  matStepperNext
+                  class="custom-stepper1-button"
+                >
+                  Next
+                </button>
               </div>
             </div>
           </mat-card>
@@ -107,27 +208,50 @@
       <mat-step>
         <div class="content-container">
           <div class="left">
-            <img src="./assets/images/signup4.png" alt="Seeker" class="seeker" />
+            <img
+              src="./assets/images/signup4.png"
+              alt="Seeker"
+              class="seeker"
+            />
           </div>
           <mat-card class="step-card right">
-            <h2>Start Climbing the Corporate Ladder with Us</h2>
             <div class="form-container">
-              <mat-label class="heading">Can we know your professional background?</mat-label>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-label class="heading"
+                >Can we know your professional background?</mat-label
+              >
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Field</mat-label>
                 <mat-select formControlName="field_id" required>
-                  <mat-option *ngFor="let field of fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
+                  <mat-option
+                    *ngFor="let field of fields"
+                    [value]="field.field_id"
+                    >{{ field.field_name }}</mat-option
+                  >
                 </mat-select>
               </mat-form-field>
-              <div class="skill-part">
-                <mat-label class="label-import">Add Your Skills</mat-label>
+              <div class="skill-part fixed-width">
+                <mat-label class="label-import" style="text-align: center;">Add Your Skills</mat-label>
                 <div class="skillchip">
-                  <app-add-skills (skillChange)="changeSkillsArray($event)"></app-add-skills>
+                  <app-add-skills
+                    (skillChange)="changeSkillsArray($event)"
+                  ></app-add-skills>
                 </div>
               </div>
               <div class="button-container">
-                <button mat-button matStepperPrevious class="custom-stepper-button">Back</button>
-                <button mat-button matStepperNext class="custom-stepper1-button">Next</button>
+                <button
+                  mat-button
+                  matStepperPrevious
+                  class="custom-stepper-button"
+                >
+                  Back
+                </button>
+                <button
+                  mat-button
+                  matStepperNext
+                  class="custom-stepper1-button"
+                >
+                  Next
+                </button>
               </div>
             </div>
           </mat-card>
@@ -138,28 +262,49 @@
       <mat-step>
         <div class="content-container">
           <div class="left">
-            <img src="./assets/images/signup5.png" alt="Seeker" class="seeker" />
+            <img
+              src="./assets/images/signup5.png"
+              alt="Seeker"
+              class="seeker"
+            />
           </div>
           <mat-card class="step-card right">
-            <h2>Let's Get Started!</h2>
             <div class="form-container">
-              <mat-label class="heading">Let's enter details for your profile</mat-label>
+              <mat-label class="heading"
+                >Let's enter details for your profile</mat-label
+              >
               <mat-label class="label-import">Profile Picture</mat-label>
               <div class="left">
                 <img [src]="url" style="height: 100px; width: auto" /><br />
                 <input type="file" (change)="onselectFile($event)" />
               </div>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Bio</mat-label>
                 <input matInput placeholder="Enter Bio" formControlName="bio" />
               </mat-form-field>
-              <mat-form-field appearance="outline" class="full-width">
+              <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Description</mat-label>
-                <input matInput placeholder="Enter Description" formControlName="description" />
+                <input
+                  matInput
+                  placeholder="Enter Description"
+                  formControlName="description"
+                />
               </mat-form-field>
               <div class="button-container">
-                <button mat-button matStepperPrevious class="custom-stepper-button">Back</button>
-                <button mat-button class="custom-stepper1-button" (click)="onRegister()">Submit</button>
+                <button
+                  mat-button
+                  matStepperPrevious
+                  class="custom-stepper-button"
+                >
+                  Back
+                </button>
+                <button
+                  mat-button
+                  class="custom-stepper1-button"
+                  (click)="onRegister()"
+                >
+                  Submit
+                </button>
               </div>
             </div>
           </mat-card>
