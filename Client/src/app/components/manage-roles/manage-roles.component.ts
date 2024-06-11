@@ -11,16 +11,11 @@ import {
   MatDialog,
   MAT_DIALOG_DATA,
   MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogTitle,
   MatDialogModule,
 } from '@angular/material/dialog';
 import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
 import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
-import { SuccessPopupComponent } from '../success-popup/success-popup.component';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth.service';
 
@@ -108,8 +103,10 @@ export class ManageRolesComponent {
         email: item.email,
         Role: item.user_type == 'hra' ? 'HR Assistant' : 'HR Manager',
       }));
+      this.table.renderRows();
     } else {
       this.rolesData = [];
+      this.table.renderRows();
     }
   }
 
@@ -117,6 +114,7 @@ export class ManageRolesComponent {
     const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
       data: { id: id },
     });
+    //after dialog closed fetch the results
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         this.fetchData(this.selected);
@@ -130,8 +128,9 @@ export class ManageRolesComponent {
         company_id: this.company_id,
       },
     });
+ //after dialog closed fetch the results
     dialog.afterClosed().subscribe((result) => {
-      if ((result = true)) {
+      if (result == true) {
         this.fetchData(this.selected);
       }
     });
@@ -139,9 +138,8 @@ export class ManageRolesComponent {
 
   openEdit(id: number) {
     const dialog = this.dialog.open(EditRoleComponent, { data: { id } });
-
     dialog.afterClosed().subscribe((result) => {
-      if (result === true) {
+      if (result ==true) {
         this.fetchData(this.selected);
       }
     });

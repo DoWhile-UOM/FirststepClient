@@ -8,7 +8,6 @@ import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { ApplicationService } from '../../../services/application.service';
 import { url } from 'node:inspector';
-import { DocumentService } from '../../../services/document.service';
 import { NgIf } from '@angular/common';
 import {
   MAT_DIALOG_DATA,
@@ -33,6 +32,8 @@ interface Job {
   title: string;
   field_name: string;
   company_name: string;
+  company_logo_url: string;
+
 }
 
 @Component({
@@ -59,21 +60,23 @@ export class SeekerApplicationStatusComponent implements OnInit{
   });
 
   constructor(
+    public dialogRef: MatDialogRef<SeekerApplicationStatusComponent>,
     public dialog: MatDialog,
     private _formBuilder: FormBuilder,
-    private applicationService: ApplicationService,
-    private documentService:DocumentService, 
+    private applicationService: ApplicationService, 
     @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
       // assign data from application card 
       this.jobData.title = data.job_title;
       this.jobData.field_name = data.field_name;
       this.jobData.company_name = data.company_name;
+      this.jobData.company_logo_url = data.company_logo_url;
+      
       //assign job id and seeker id
       this.applicationData.advertisement_id = data.jobID;
       this.applicationData.seeker_id = data.seekerID;
-
     }
+
   
 async ngOnInit() {
  this.getApplicationStatus();
@@ -92,12 +95,12 @@ getApplicationStatus(): void{
   );
 }
 
-
+//change this
 openpdf() {
   this.dialog.open(PdfViewComponent,{
     data: {
     //pass cv name to pdf view component
-    documentName: this.applicationData.cv_name
+    documentUrl: this.applicationData.cv_name
     },
   });
 }

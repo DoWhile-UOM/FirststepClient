@@ -3,6 +3,7 @@ import { BlobServiceClient } from '@azure/storage-blob';
 import { Apipaths } from './apipaths/apipaths';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root'
@@ -50,11 +51,22 @@ generateSasToken(blobName: string): Observable<string> {
     return this.http.get(url, { responseType: 'text' });
 }
 
-getBlobUrl(blobName: string, sasToken:string): string {
+generateBlobUrl(blobName: string, sasToken:string): string {
 
   return `${this.containerUrl}/${blobName}?${sasToken}`;
 
 } 
+
+
+
+
+
+
+
+
+
+
+
    
 }
 
