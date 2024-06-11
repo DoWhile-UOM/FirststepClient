@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -26,6 +27,7 @@ import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AuthService } from '../../../services/auth.service';
 import axios, { AxiosError } from 'axios';
+
 
 interface NewSeeker {
   first_name: string;
@@ -57,10 +59,11 @@ interface VerifyOTP {
     standalone: true,
     templateUrl: './seeker-signup.component.html',
     styleUrl: './seeker-signup.component.css',
-    imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar,MatGridTile,MatGridList]
+    imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar,MatGridTile,MatGridList,MatStepper]
 })
 
 export class SeekerSignupComponent implements OnInit {
+ 
   isEmailVerified = false;
   isOTPRequestSent = false;
   remainingTime = 0;
@@ -77,6 +80,7 @@ export class SeekerSignupComponent implements OnInit {
   skills: string[] = [];
 
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
+  @ViewChild('stepper') stepper!: MatStepper;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -88,17 +92,17 @@ export class SeekerSignupComponent implements OnInit {
     private http: HttpClient
   ) {
     this.seekerReg = this._formBuilder.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      phone_number: ['', Validators.required],
-      university: [''],
-      linkedin: [''],
+      first_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      last_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(128), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
+      university: ['', [Validators.maxLength(100)]],
+      linkedin: ['', [Validators.pattern(/^(http(s)?:\/\/)?(www\.)?linkedin\.com\/.*$/)]],
       field_id: ['', Validators.required],
       cVurl: [''],
-      bio: ['', Validators.required],
-      description: ['', Validators.required],
+      bio: ['', [Validators.required, Validators.maxLength(500)]],
+      description: ['', [Validators.required, Validators.maxLength(2000)]],
       profile_picture: [''],
       seekerSkills: [[]],
       otp_in: ['']
@@ -221,6 +225,23 @@ export class SeekerSignupComponent implements OnInit {
       message = `Server returned code ${error.status}, error message is: ${error.statusText}; Details: ${error.error}`;
     }
     this._snackBar.open(message, "Close", { duration: 5000 });
+  }
+
+  isFormInvalid(step: number): boolean {
+    switch (step) {
+      case 0:
+        return this.seekerReg.get('first_name')?.invalid || this.seekerReg.get('last_name')?.invalid || this.seekerReg.get('phone_number')?.invalid || false;
+      case 1:
+        return this.seekerReg.get('email')?.invalid || this.seekerReg.get('password')?.invalid || this.seekerReg.get('otp_in')?.invalid || !this.isEmailVerified || false;
+      case 2:
+        return this.seekerReg.get('university')?.invalid || this.seekerReg.get('linkedin')?.invalid || false;
+      case 3:
+        return this.seekerReg.get('field_id')?.invalid || this.seekerReg.get('seekerSkills')?.invalid || false;
+      case 4:
+        return this.seekerReg.get('bio')?.invalid || this.seekerReg.get('description')?.invalid || false;
+      default:
+        return true;
+    }
   }
 }
 

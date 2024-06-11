@@ -1,54 +1,33 @@
 <div class="page">
-  <mat-stepper labelPosition="bottom" #stepper color="primary">
+  <mat-stepper [linear]="true" labelPosition="bottom" #stepper color="primary">
     <form [formGroup]="seekerReg">
       <!-- Step 1: User Registration -->
-      <mat-step>
+      <mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(0)">
         <div class="content-container">
           <div class="left">
-            <img
-              src="./assets/images/signup1.png"
-              alt="Seeker"
-              class="seeker"
-            />
+            <img src="./assets/images/signup1.png" alt="Seeker" class="seeker" />
           </div>
           <mat-card class="step-card right">
             <div class="form-container">
-              <mat-label class="heading"
-                >Create Your FirstStep Account</mat-label
-              >
+              <mat-label class="heading">Create Your FirstStep Account</mat-label>
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>First Name</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter First name"
-                  formControlName="first_name"
-                  required
-                />
+                <input matInput placeholder="Enter First name" formControlName="first_name" required />
+                <mat-error *ngIf="seekerReg.get('first_name')?.hasError('required')">First name is required</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Last Name</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter Last name"
-                  formControlName="last_name"
-                  required
-                />
+                <input matInput placeholder="Enter Last name" formControlName="last_name" required />
+                <mat-error *ngIf="seekerReg.get('last_name')?.hasError('required')">Last name is required</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Contact Number</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter contact Number"
-                  formControlName="phone_number"
-                  required
-                />
+                <input matInput placeholder="Enter contact Number" formControlName="phone_number" required />
+                <mat-error *ngIf="seekerReg.get('phone_number')?.hasError('required')">Contact number is required</mat-error>
+                <mat-error *ngIf="seekerReg.get('phone_number')?.hasError('pattern')">Invalid contact number</mat-error>
               </mat-form-field>
               <div class="button-container">
-                <button
-                  mat-button
-                  matStepperNext
-                  class="custom-stepper1-button"
-                >
+                <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="isFormInvalid(0)">
                   Next
                 </button>
               </div>
@@ -58,88 +37,44 @@
       </mat-step>
 
       <!-- Step 2: Password Verification -->
-      <mat-step>
+      <mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(1)">
         <div class="content-container">
           <div class="left">
-            <img
-              src="./assets/images/signup2.png"
-              alt="Seeker"
-              class="seeker"
-            />
+            <img src="./assets/images/signup2.png" alt="Seeker" class="seeker" />
           </div>
           <mat-card class="step-card right">
             <div class="form-container">
-              <mat-label class="heading"
-                >Let's verify your Email and Password</mat-label
-              >
-              <p style="text-align: center; margin-bottom: 20px; ">
-                Verify your email. Please check your email and enter the confirmation code.
-              </p>
-              
+              <mat-label class="heading">Let's verify your Email and Password</mat-label>
+              <p style="text-align: center; margin-bottom: 20px;">Verify your email. Please check your email and enter the confirmation code.</p>
               <div class="otp-field-container">
                 <mat-form-field appearance="outline" class="fixed-width">
                   <mat-label>Email Address</mat-label>
-                  <input
-                    matInput
-                    formControlName="email"
-                    placeholder="example@gmail.com"
-                    required
-                  />
-                  <mat-error
-                    *ngIf="
-                      seekerReg.controls['email'].touched &&
-                      seekerReg.controls['email'].errors
-                    "
-                  >
-                    Valid Email is required
-                  </mat-error>
+                  <input matInput formControlName="email" placeholder="example@gmail.com" required />
+                  <mat-error *ngIf="seekerReg.get('email')?.hasError('required')">Email is required</mat-error>
+                  <mat-error *ngIf="seekerReg.get('email')?.hasError('email')">Valid Email is required</mat-error>
                 </mat-form-field>
-                <button
-                  mat-button
-                  class="otp-btn"
-                  (click)="requestOTP()"
-                  [disabled]="isOTPRequestSent"
-                  id="otpreqbtn"
-                >
+                <button mat-button class="otp-btn" (click)="requestOTP()" [disabled]="isOTPRequestSent" id="otpreqbtn">
                   {{ reqOTPBtnText }} {{ remainingTime }}
                 </button>
               </div>
               <div class="otp-field-container">
                 <mat-form-field appearance="outline" class="fixed-width">
                   <mat-label>OTP</mat-label>
-                  <input
-                    matInput
-                    placeholder="Enter Confirmation Code"
-                    formControlName="otp_in"
-                    required
-                  />
+                  <input matInput placeholder="Enter Confirmation Code" formControlName="otp_in" required />
                 </mat-form-field>
-                <button mat-button class="otp-btn" (click)="VerifyOTP()">
-                  Verify OTP
-                </button>
+                <button mat-button class="otp-btn" (click)="VerifyOTP()">Verify OTP</button>
               </div>
               <mat-form-field appearance="outline" class="combined-width">
                 <mat-label>Enter Password</mat-label>
-                <input
-                  matInput
-                  formControlName="password"
-                  placeholder="Enter Password"
-                  required
-                />
+                <input matInput formControlName="password" placeholder="Enter Password" required />
+                <mat-error *ngIf="seekerReg.get('password')?.hasError('required')">Password is required</mat-error>
+                <mat-error *ngIf="seekerReg.get('password')?.hasError('pattern')">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character</mat-error>
               </mat-form-field>
               <div class="button-container">
-                <button
-                  mat-button
-                  matStepperPrevious
-                  class="custom-stepper-button"
-                >
+                <button mat-button matStepperPrevious class="custom-stepper-button">
                   Back
                 </button>
-                <button
-                  mat-button
-                  matStepperNext
-                  class="custom-stepper1-button"
-                >
+                <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="isFormInvalid(1)">
                   Next
                 </button>
               </div>
@@ -149,53 +84,33 @@
       </mat-step>
 
       <!-- Step 3: Educational Background Information -->
-      <mat-step>
+      <mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(2)">
         <div class="content-container">
           <div class="left">
-            <img
-              src="./assets/images/signup3.png"
-              alt="Seeker"
-              class="seeker"
-            />
+            <img src="./assets/images/signup3.png" alt="Seeker" class="seeker" />
           </div>
           <mat-card class="step-card right">
             <div class="form-container">
-              <mat-label class="heading"
-                >Can we know more about your Educational background?</mat-label
-              >
+              <mat-label class="heading">Can we know more about your Educational background?</mat-label>
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>University</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter University"
-                  formControlName="university"
-                />
+                <input matInput placeholder="Enter University" formControlName="university" />
+                <mat-error *ngIf="seekerReg.get('university')?.hasError('maxlength')">University name is too long</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>LinkedIn Profile</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter LinkedIn Profile URL"
-                  formControlName="linkedin"
-                />
+                <input matInput placeholder="Enter LinkedIn Profile URL" formControlName="linkedin" />
+                <mat-error *ngIf="seekerReg.get('linkedin')?.hasError('pattern')">Invalid LinkedIn URL</mat-error>
               </mat-form-field>
               <mat-label class="label-import">Please upload your CV</mat-label>
               <div class="cvupload fixed-width">
                 <app-file-upload></app-file-upload>
               </div>
               <div class="button-container">
-                <button
-                  mat-button
-                  matStepperPrevious
-                  class="custom-stepper-button"
-                >
+                <button mat-button matStepperPrevious class="custom-stepper-button">
                   Back
                 </button>
-                <button
-                  mat-button
-                  matStepperNext
-                  class="custom-stepper1-button"
-                >
+                <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="isFormInvalid(2)">
                   Next
                 </button>
               </div>
@@ -205,51 +120,32 @@
       </mat-step>
 
       <!-- Step 4: Professional Background Information -->
-      <mat-step>
+      <mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(3)">
         <div class="content-container">
           <div class="left">
-            <img
-              src="./assets/images/signup4.png"
-              alt="Seeker"
-              class="seeker"
-            />
+            <img src="./assets/images/signup4.png" alt="Seeker" class="seeker" />
           </div>
           <mat-card class="step-card right">
             <div class="form-container">
-              <mat-label class="heading"
-                >Can we know your professional background?</mat-label
-              >
+              <mat-label class="heading">Can we know your professional background?</mat-label>
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Field</mat-label>
                 <mat-select formControlName="field_id" required>
-                  <mat-option
-                    *ngFor="let field of fields"
-                    [value]="field.field_id"
-                    >{{ field.field_name }}</mat-option
-                  >
+                  <mat-option *ngFor="let field of fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
                 </mat-select>
+                <mat-error *ngIf="seekerReg.get('field_id')?.hasError('required')">Field is required</mat-error>
               </mat-form-field>
               <div class="skill-part fixed-width">
                 <mat-label class="label-import" style="text-align: center;">Add Your Skills</mat-label>
                 <div class="skillchip">
-                  <app-add-skills
-                    (skillChange)="changeSkillsArray($event)"
-                  ></app-add-skills>
+                  <app-add-skills (skillChange)="changeSkillsArray($event)"></app-add-skills>
                 </div>
               </div>
               <div class="button-container">
-                <button
-                  mat-button
-                  matStepperPrevious
-                  class="custom-stepper-button"
-                >
+                <button mat-button matStepperPrevious class="custom-stepper-button">
                   Back
                 </button>
-                <button
-                  mat-button
-                  matStepperNext
-                  class="custom-stepper1-button"
-                >
+                <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="isFormInvalid(3)">
                   Next
                 </button>
               </div>
@@ -259,20 +155,14 @@
       </mat-step>
 
       <!-- Step 5: Profile Information -->
-      <mat-step>
+      <mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(4)">
         <div class="content-container">
           <div class="left">
-            <img
-              src="./assets/images/signup5.png"
-              alt="Seeker"
-              class="seeker"
-            />
+            <img src="./assets/images/signup5.png" alt="Seeker" class="seeker" />
           </div>
           <mat-card class="step-card right">
             <div class="form-container">
-              <mat-label class="heading"
-                >Let's enter details for your profile</mat-label
-              >
+              <mat-label class="heading">Let's enter details for your profile</mat-label>
               <mat-label class="label-import">Profile Picture</mat-label>
               <div class="left">
                 <img [src]="url" style="height: 100px; width: auto" /><br />
@@ -281,28 +171,20 @@
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Bio</mat-label>
                 <input matInput placeholder="Enter Bio" formControlName="bio" />
+                <mat-error *ngIf="seekerReg.get('bio')?.hasError('required')">Bio is required</mat-error>
+                <mat-error *ngIf="seekerReg.get('bio')?.hasError('maxlength')">Bio is too long</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" class="fixed-width">
                 <mat-label>Description</mat-label>
-                <input
-                  matInput
-                  placeholder="Enter Description"
-                  formControlName="description"
-                />
+                <input matInput placeholder="Enter Description" formControlName="description" />
+                <mat-error *ngIf="seekerReg.get('description')?.hasError('required')">Description is required</mat-error>
+                <mat-error *ngIf="seekerReg.get('description')?.hasError('maxlength')">Description is too long</mat-error>
               </mat-form-field>
               <div class="button-container">
-                <button
-                  mat-button
-                  matStepperPrevious
-                  class="custom-stepper-button"
-                >
+                <button mat-button matStepperPrevious class="custom-stepper-button">
                   Back
                 </button>
-                <button
-                  mat-button
-                  class="custom-stepper1-button"
-                  (click)="onRegister()"
-                >
+                <button mat-button class="custom-stepper1-button" (click)="onRegister()" [disabled]="isFormInvalid(4)">
                   Submit
                 </button>
               </div>
