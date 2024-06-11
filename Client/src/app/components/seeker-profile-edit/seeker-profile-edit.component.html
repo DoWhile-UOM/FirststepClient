@@ -1,29 +1,12 @@
 <div class="body">
-  <app-spinner></app-spinner>
+  <app-spinner *ngIf="!hasDataLoaded"></app-spinner>
   <mat-card class="card" *ngIf="hasDataLoaded">
     <div class="heading title">
       <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
     </div>
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="2" rowHeight="140" style="margin: 0;">
-        <mat-grid-tile class="tile">
-          <!-- <p *ngIf="!logoUrl"><mat-spinner class="imageLoading"></mat-spinner>Loading image...</p>
-          <div *ngIf="logoUrl">
-            <img [src]="logoUrl" alt="Company Logo" class="md-card-image" width="100" height="100"
-              onError="this.onerror=null;this.src='fallback-image-url';"><br />
-            <div style="display: flex; justify-content: center; align-items: center;">
-              <mat-icon *ngIf="!eventOccured" class="edit">editicon</mat-icon>
-              <label *ngIf="!eventOccured" for="profile-upload" class="custom-file-upload">
-                Edit Logo
-              </label>
-            </div>
-            <input type="file" id="profile-upload" (change)="onselectFile($event)" *ngIf="!eventOccured"
-              name="Edit Profile" />
-          </div>
-          <button mat-raised-button (click)="onSaveLogo()" *ngIf="eventOccured">Save Logo</button> -->
-
-          <!--<img src="assets/images/BistechLogo.png" class="md-card-image" />-->
-        </mat-grid-tile>
+        <mat-grid-tile class="tile"></mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Bio</mat-label>
@@ -61,7 +44,6 @@
             <mat-error *ngIf="hasError('phone_number')">{{ getErrorMessage('phone_number') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-
         <mat-grid-tile class="button-with-inputbox">
           <mat-form-field appearance="outline">
             <mat-label>Email Address</mat-label>
@@ -70,8 +52,6 @@
           </mat-form-field>
           <button mat-raised-button class="apply-button" color="primary" (click)="openDialog()" id="otpreqbtn">Change your Email</button>
         </mat-grid-tile>
-        
-
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
@@ -101,17 +81,14 @@
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
-
       <div class="textbox-form-field">
-				<app-add-skills [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
-			</div>
-
-      <!-- CV upload button and view button -->
-      <div class="button-container" style="gap: 10px;">
-        <button mat-raised-button color="primary" (click)="openUploadDialog()">Upload New</button>
-        <button mat-raised-button id="view">View</button>
+        <app-add-skills [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
       </div>
-
+      <div class="button-container" style="gap: 10px;">
+        <div class="button-container" style="gap: 10px;">
+          <button mat-raised-button color="primary" (click)="openUploadDialog()">Upload CV</button>
+          <button mat-raised-button color="primary" (click)="openPdfViewer()">View</button>
+        </div>      </div>
       <mat-divider></mat-divider>
       <section>
         <div class="example-button-row">

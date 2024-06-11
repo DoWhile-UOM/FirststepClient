@@ -1,6 +1,7 @@
 import {
   Component,
   OnInit,
+  Inject,
   ViewChild,
   Output,
   EventEmitter,
@@ -44,7 +45,6 @@ import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
 import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
-import { SeekerApplicationFileUploadComponent } from '../seeker-application-file-upload/seeker-application-file-upload.component';
 import { profile } from 'console';
 
 
@@ -64,6 +64,8 @@ interface SeekerProfile {
   field_id: number;
   field_name?: string;
   seekerSkills?: string[];
+  cvFile?: File; // New CV file
+
 }
 
 @Component({
@@ -91,7 +93,6 @@ interface SeekerProfile {
     SeekerEmailVerificationBoxComponent,
     AddSkillsComponent,
     MatProgressSpinnerModule,
-    SeekerApplicationFileUploadComponent,
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -118,6 +119,7 @@ export class SeekerProfileEditComponent implements OnInit {
   logoUrl = '';
   logoBlobName = '';
   selectedFile: File | null = null;
+  cvUrl: string = '';
   eventOccured: boolean = false;
 
   skills: string[] = [];
@@ -144,8 +146,7 @@ export class SeekerProfileEditComponent implements OnInit {
       description: ['', Validators.required],
       university: [''],
       linkedin: [''],
-      cVurl: ['defaultCVurlValue'], // Set default value for cVurl
-      // cVurl: [''], // Add cVurl field here
+      cVurl: [''], 
       field_id: ['', Validators.required],
       profile_picture: [''],
       password: [''],
@@ -181,44 +182,45 @@ export class SeekerProfileEditComponent implements OnInit {
 // }
 
 
-  async ngOnInit() {
-    this.spinner.show();
-    try {
-      // Fetch all job fields
-      await this.jobFieldService.getAll().then((response) => {
-        this.fields = response;
-      });
-      // Fetch seeker profile data
-      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
-      // Populate the form with the fetched data
-      this.seekerForm.patchValue({
-        first_name: seeker.first_name,
-        last_name: seeker.last_name,
-        email: seeker.email,
-        phone_number: seeker.phone_number,
-        bio: seeker.bio,
-        description: seeker.description,
-        university: seeker.university,
-        cVurl: seeker.cVurl || 'defaultCVurlValue',
-        // cVurl: ['', Validators.required], // Add cVurl field here
-        linkedin: seeker.linkedin,
-        field_id: seeker.field_id,
-        password: this.passwordPlaceholder,
-        seekerSkills: seeker.seekerSkills || [],
-      });
+async ngOnInit() {
+  this.spinner.show();
+  try {
+    // Fetch all job fields
+    await this.jobFieldService.getAll().then((response) => {
+      this.fields = response;
+    });
+    // Fetch seeker profile data
+    const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
+    // Populate the form with the fetched data
+    this.seekerForm.patchValue({
+      first_name: seeker.first_name,
+      last_name: seeker.last_name,
+      email: seeker.email,
+      phone_number: seeker.phone_number,
+      bio: seeker.bio,
+      description: seeker.description,
+      university: seeker.university,
+      cVurl: seeker.cVurl || '',
+      linkedin: seeker.linkedin,
+      field_id: seeker.field_id,
+      password: this.passwordPlaceholder,
+      seekerSkills: seeker.seekerSkills || [],
+    });
 
-      this.skills = this.removeDuplicates(seeker.seekerSkills || []);      
-      this.emailcaptured = seeker.email;
-      this.hasDataLoaded = true;
-    } catch (error) {
-      console.error(error);
-      this.snackBar.open('Failed to load profile details', 'Close', {
-        duration: 3000,
-      });
-    } finally {
-      this.spinner.hide();
-    }
+    this.cvUrl = seeker.cVurl || ''; // Save the CV URL
+    this.skills = this.removeDuplicates(seeker.seekerSkills || []);
+    this.emailcaptured = seeker.email;
+    this.hasDataLoaded = true;
+  } catch (error) {
+    console.error(error);
+    this.snackBar.open('Failed to load profile details', 'Close', {
+      duration: 3000,
+    });
+  } finally {
+    this.spinner.hide();
   }
+}
+
 
   ngAfterViewInit() {
     if (this.addSkillsComponent && this.addSkillsComponent.skills) {
@@ -246,24 +248,42 @@ export class SeekerProfileEditComponent implements OnInit {
       this.seekerForm.get('password')?.setValue(this.passwordPlaceholder);
     }
   }
+
   async onSubmit() {
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
-      this.dialog.open(CannotSubmitWithoutAllInputsAreValidPopUp);
       return;
     }
-  
-    // Check if the cVurl field has a value before updating the profile
-    if (!this.seekerForm.get('cVurl')?.value) {
-      this.snackBar.open('Please upload a CV before updating the profile', 'Close', {
-        duration: 3000,
-      });
-      return;
-    }
-  
+
     await this.updateProfile();
   }
-  
+
+  async updateProfile() {
+    if (this.seekerForm.invalid) {
+      this.seekerForm.markAllAsTouched();
+      this.snackBar.open('Please fill in all required fields', 'Close', { duration: 3000 });
+      return;
+    }
+
+    this.spinner.show();
+    try {
+      const formValue: SeekerProfile = { ...this.seekerForm.value };
+      formValue.seekerSkills = this.seekerForm.get('seekerSkills')?.value;
+
+      if (this.selectedFile) {
+        formValue.cvFile = this.selectedFile;
+        formValue.cVurl = ''; // Indicate a new CV is uploaded
+      }
+
+      await this.seekerService.editSeeker(formValue, this.user_id);
+      this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
+    } catch (error) {
+      console.error('Error updating profile: ', error);
+      this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
+    } finally {
+      this.spinner.hide();
+    }
+  }
 
   showInformEmailShouldBeVerifiedPopUp() {
     const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
@@ -299,44 +319,6 @@ export class SeekerProfileEditComponent implements OnInit {
       }
     });
   }
-
-  async updateProfile() {
-    this.spinner.show();
-    try {
-      const formValue: Partial<SeekerProfile> = { ...this.seekerForm.value };
-  
-      // Check if the password field is the placeholder or null and if so, delete it from the payload
-      if (formValue.password === this.passwordPlaceholder || formValue.password === null) {
-        delete formValue.password;
-      }
-
-      formValue.seekerSkills = this.skills;
-  
-      // Update seeker profile
-      await this.seekerService.editSeeker(
-        formValue as SeekerProfile,
-        this.user_id
-      );
-      this.snackBar.open('Profile updated successfully', 'Close', {
-        duration: 2000,
-      });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Error updating profile: ', error.message);
-        this.snackBar.open('Failed to update profile', 'Close', {
-          duration: 3000,
-        });
-      } else {
-        console.error('An unknown error occurred.');
-        this.snackBar.open('An unknown error occurred', 'Close', {
-          duration: 3000,
-        });
-      }
-    } finally {
-      this.spinner.hide();
-    }
-  }
-  
 
   revertEmailChange() {
     // Revert the email field to the original value
@@ -499,20 +481,39 @@ export class SeekerProfileEditComponent implements OnInit {
       : false;
   }
 
-  // Add this method to open the UploadCV dialog
+  onCvSelected(event: { file: File; url: string }) {
+    this.selectedFile = event.file; // Correctly access the file property
+    this.seekerForm.patchValue({ cVurl: event.url }); // Correctly access the url property
+  }
+  
+  
+
+  openPdfViewer() {
+    if (this.cvUrl) {
+      this.dialog.open(PdfViewComponent, {
+        data: { documentUrl: this.cvUrl },
+      });
+    } else {
+      this.snackBar.open('No CV available to view', 'Close', {
+        duration: 3000,
+      });
+    }
+  }
+  
+
   openUploadDialog(): void {
     const dialogRef = this.dialog.open(UploadCV, {
       width: '1000px',
     });
 
-    dialogRef.componentInstance.fileSelected.subscribe(({ file, url }) => {
-      this.seekerForm.patchValue({
-        cVurl: url,
-      });
+    dialogRef.componentInstance.fileSelected.subscribe((file: File) => {
       this.selectedFile = file;
+      this.seekerForm.patchValue({
+        cVurl: '',
+      });
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(() => {
       if (this.selectedFile) {
         this.snackBar.open('File uploaded successfully', 'Close', {
           duration: 2000,
@@ -521,7 +522,6 @@ export class SeekerProfileEditComponent implements OnInit {
     });
   }
 }
-
 
 // cannot-submit-without-all-inputs-are-valid-pop-up
 @Component({
@@ -604,11 +604,11 @@ export class ConfirmDeleteProfilePopUp {
 
 
 @Component({
-  selector:'app-upload-cv',
-  templateUrl:'upload-cv.html',
-  styles:'upload-cv.css',
-  standalone:true,
-  imports:[
+  selector: 'app-upload-cv',
+  templateUrl: 'upload-cv.html',
+  styleUrls: ['upload-cv.css'], 
+  standalone: true,
+  imports: [
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
@@ -616,15 +616,10 @@ export class ConfirmDeleteProfilePopUp {
   ]
 })
 export class UploadCV {
-  @Output() fileSelected = new EventEmitter<{ file: File, url: string }>();
+  @Output() fileSelected = new EventEmitter<{ file: File; url: string }>();
   uploadInProgress = false;
   uploadSuccess = false;
-
   constructor(public dialogRef: MatDialogRef<UploadCV>) {}
-
-  closeDialog() {
-    this.dialogRef.close();
-  }
 
   async onFileSelected($event: Event) {
     const input = $event.target as HTMLInputElement;
@@ -636,7 +631,7 @@ export class UploadCV {
       try {
         const fileUrl = await this.fileUploadSimulate(file);
         this.uploadSuccess = true;
-        this.fileSelected.emit({ file, url: fileUrl });
+        this.fileSelected.emit({ file, url: '' }); // Emit empty URL as a placeholder
       } catch (error) {
         console.error('Error uploading file: ', error);
       } finally {
@@ -648,8 +643,37 @@ export class UploadCV {
   fileUploadSimulate(file: File): Promise<string> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve('http://example.com/your-uploaded-file.pdf'); // Simulated URL of the uploaded file
+        resolve(''); // No URL used here, just resolve the promise
       }, 3000);
     });
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-pdf-view',
+  standalone: true,
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
+  template: `
+    <h1 mat-dialog-title>CV Viewer</h1>
+    <mat-dialog-content>
+      <embed [src]="data.documentUrl" type="application/pdf" width="100%" height="600px" />
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button (click)="onClose()">Close</button>
+    </mat-dialog-actions>
+  `,
+})
+export class PdfViewComponent {
+  constructor(
+    public dialogRef: MatDialogRef<PdfViewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { documentUrl: string }
+  ) {}
+
+  onClose(): void {
+    this.dialogRef.close();
   }
 }
