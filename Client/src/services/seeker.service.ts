@@ -39,6 +39,16 @@ async getSeekerDetails(id: number) {
   }
 }
 
+async getSeekerProfile(id: number) {
+  try {
+    const response = await axios.get(Apipaths.getSeekerProfile + id);
+    return response.data as SeekerProfile;
+  } catch (error) {
+    console.error("Error fetching seeker profile: ", error);
+    throw error;
+  }
+}
+
 // async getSeekerDetails(id : number) {
 //   let seekerData: any;
   
@@ -67,9 +77,9 @@ async getSeekerDetailsForApplication(id : number) {
   return seekerData;
 }
 
-async getSeekerProfile(id: number) {
+async getSeekerEditProfile(id: number) {
   try {
-    const response = await axios.get(Apipaths.getSeekerProfile + id);
+    const response = await axios.get(Apipaths.getSeekerEditProfile + id);
     return response.data as SeekerProfile;
   } catch (error) {
     console.error("Error fetching seeker profile: ", error);

@@ -184,7 +184,7 @@ export class SeekerProfileEditComponent implements OnInit {
         this.fields = response;
       });
       // Fetch seeker profile data
-      const seeker = await this.seekerService.getSeekerProfile(this.user_id);
+      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
       // Populate the form with the fetched data
       this.seekerForm.patchValue({
         first_name: seeker.first_name,
@@ -333,7 +333,7 @@ export class SeekerProfileEditComponent implements OnInit {
     // Discard changes and reload the original profile data
     this.spinner.show();
     try {
-      const seeker = await this.seekerService.getSeekerProfile(this.user_id);
+      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
       this.seekerForm.patchValue({
         ...seeker,
         password: this.passwordPlaceholder,
