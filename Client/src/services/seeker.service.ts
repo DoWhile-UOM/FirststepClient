@@ -33,10 +33,9 @@ constructor(private http: HttpClient,private snackbar: MatSnackBar) { }
 
 async getSeekerDetails(id: number) {
   try {
-    const response = await axios.get('https://localhost:7213/api/Seeker/GetSeeker/' + id);
+    const response = await axios.get(Apipaths.getSeekerDetails + id);
     return response.data;
   } catch (error) {
-    //console.error("Network Error in getSeekerDetails: ");
   }
 }
 
@@ -70,7 +69,7 @@ async getSeekerDetailsForApplication(id : number) {
 
 async getSeekerProfile(id: number) {
   try {
-    const response = await axios.get(`https://localhost:7213/api/Seeker/GetSeekerProfile/${id}`);
+    const response = await axios.get(Apipaths.getSeekerProfile + id);
     return response.data as SeekerProfile;
   } catch (error) {
     console.error("Error fetching seeker profile: ", error);
@@ -80,7 +79,7 @@ async getSeekerProfile(id: number) {
 
 async editSeeker(seeker: SeekerProfile, seekerID: number) {
   try {
-    const response = await axios.put(`https://localhost:7213/api/Seeker/UpdateSeeker/${seekerID}`, seeker);
+    const response = await axios.put( Apipaths.editSeeker + seekerID, seeker);
     console.log("Seeker updated successfully", response);
   } catch (error) {
     console.error("Error updating seeker: ", error);
@@ -103,7 +102,7 @@ async editSeeker(seeker: SeekerProfile, seekerID: number) {
 //delete method
 async deleteSeeker(seekerID: number) {
   try {
-    await axios.delete('https://localhost:7213/api/Seeker/DeleteSeeker/' + seekerID);
+    await axios.delete(Apipaths.deleteSeeker + seekerID);
     console.log("seeker deleted successfully");
   } catch (error) {
     ///console.error(error);
@@ -112,13 +111,13 @@ async deleteSeeker(seekerID: number) {
 
 //register method
 SeekerRegister(seeker:any){
-  return this.http.post<any>('https://localhost:7213/api/Seeker/AddSeeker',seeker)
+  return this.http.post<any>(Apipaths.addSeeker,seeker);
 }
 
 //add method
 async addseeker(seeker: any) {
   try {
-    await axios.post('https://localhost:7213/api/Seeker/AddSeeker', seeker)
+    await axios.post(Apipaths.addSeeker, seeker)
      .then((response) => {
        console.log(response);
      });
