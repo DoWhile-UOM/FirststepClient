@@ -1,5 +1,8 @@
 <mat-dialog-content>
-    <ejs-pdfviewer
+<button mat-icon-button class="back-button" (click)="closeDialog()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>  
+<ejs-pdfviewer
       id="container"
       [documentPath]="document"
       [resourceUrl]="resource"

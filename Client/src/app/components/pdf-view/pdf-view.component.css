@@ -1,20 +1,26 @@
 
+mat-dialog-content{
+  width:auto;
+  height:auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
 
+}
+   
   ejs-pdfviewer{
     width:1000px;
-    height:100%;
+    height:90%;
     overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
-
   }
-  mat-dialog-content{
-    width:auto;
-    height:auto;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-  
+
+
+  .back-button {
+    position: absolute;
+
   }
