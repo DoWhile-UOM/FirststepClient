@@ -62,12 +62,29 @@ export class EditRoleComponent implements OnInit {
     this.employeeDetails = await this.employeeService.getEmployeeDetails(this.user_id);
   }
 
+  async onSubmit() {
+    if (
+      !this.employeeDetails.first_name ||
+      !this.employeeDetails.last_name ||
+      !this.employeeDetails.email 
+    ) {
+      this._snackBar
+        .open('Please fill all the fields', '', {
+          panelClass: ['app-notification-error'],
+        })
+        ._dismissAfter(3000);
+     
+    } else {
+      this.onApply();
+    }
+  }
+
   async onApply() {
    await this.employeeService.editemployee(this.employeeDetails, this.user_id);
    //open a snackbar
-   this._snackBar.open('Role Updated Successfully', 'Close', {
-      duration: 3000,
+   this._snackBar.open('Role Updated Successfully', '', {
+      duration: 2000,
     });
+    this.dialogRef.close(true);
   }
- 
 }
