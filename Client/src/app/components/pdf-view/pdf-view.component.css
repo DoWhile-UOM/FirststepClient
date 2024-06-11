@@ -3,7 +3,6 @@ mat-dialog-content{
   width:auto;
   height:auto;
   display:flex;
-  flex-direction:row;
   justify-content:center;
   align-items:center;
   overflow:hidden;
@@ -17,10 +16,4 @@ mat-dialog-content{
     display:flex;
     justify-content:center;
     align-items:center;
-  }
-
-
-  .back-button {
-    position: absolute;
-
   }
