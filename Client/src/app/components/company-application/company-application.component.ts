@@ -25,7 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 import { AuthService } from '../../../services/auth.service';
-
+import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 
 interface CompanyApplication {
   company_id: number;
@@ -119,6 +119,9 @@ export class CompanyApplicationComponent implements OnInit {
       this.spinner.show();
       this.companyApplication =
         await this.companyService.getCompanyApplicationById(this.companyID);
+      console.log(this.companyApplication);
+      console.log(this.companyApplication.business_reg_certificate);
+      console.log(this.companyApplication.certificate_of_incorporation);
 
       if (this.companyApplication.verified_system_admin_id !== 0) {
         this.evaluated_status = 'Evaluated';
@@ -192,10 +195,29 @@ export class CompanyApplicationComponent implements OnInit {
     this.router.navigate(['/sa/company-application']);
   }
   openBRCerti() {
+    if(this.companyApplication.business_reg_certificate == null || this.companyApplication.business_reg_certificate == ''){
+      this.dialog.open(EmptyPdfPopUp);
+      return;
+    }
+    this.dialog.open(PdfViewComponent, {
+      data: {
+        documentUrl: this.companyApplication.business_reg_certificate,
+        documentName: 'Business Registration Certificate',
+      },
+    });
 
   }
   openIncCerti() {
-
+    if(this.companyApplication.certificate_of_incorporation == null || this.companyApplication.certificate_of_incorporation == ''){
+      this.dialog.open(EmptyPdfPopUp);
+      return;
+    }
+    this.dialog.open(PdfViewComponent, {
+      data: {
+        documentUrl: this.companyApplication.certificate_of_incorporation,
+        documentName: 'Certificate of Incorporation',
+      },
+    });
   }
 }
 
@@ -275,3 +297,20 @@ export class CompanyApprovalConfirmationPopup {
     this.dialogRef.close('Approval Cancelled');
   }
 }
+//empty-pdf-pop-up
+@Component({
+  selector: 'empty-pdf-pop-up',
+  standalone: true,
+  templateUrl: 'empty-pdf-pop-up.html',
+  imports: [
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
+})
+export class EmptyPdfPopUp { }
