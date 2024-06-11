@@ -24,6 +24,7 @@ import {
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
+import { AuthService } from '../../../services/auth.service';
 
 
 interface CompanyApplication {
@@ -80,7 +81,7 @@ export interface DialogData {
 export class CompanyApplicationComponent implements OnInit {
   noOfCols: number = 2;
   evaluated_status: string = '';
-  systemAdminID: number = 5; //temporary value
+  systemAdminID: number = 0; //temporary value
   companyID: number = 0;
   companyApplication: CompanyApplication = {} as CompanyApplication; // this is the object that will be used to store the company application details
   evaluatedCompanyDetails: EvaluatedCompanyDetails =
@@ -91,7 +92,8 @@ export class CompanyApplicationComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private auth: AuthService,
   ) { }
   //getCompanyApplicationById
   // ngOnInit() {
@@ -105,6 +107,7 @@ export class CompanyApplicationComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.loadCompanyApplication(params['id']);
     });
+    this.systemAdminID = Number(this.auth.getUserId());
   }
 
   async loadCompanyApplication(id: string) {
