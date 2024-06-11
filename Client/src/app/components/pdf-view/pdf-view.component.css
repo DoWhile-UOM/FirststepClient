@@ -3,7 +3,7 @@ mat-dialog-content{
   width:auto;
   height:auto;
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
   justify-content:center;
   align-items:center;
   overflow:hidden;
@@ -12,7 +12,7 @@ mat-dialog-content{
    
   ejs-pdfviewer{
     width:1000px;
-    height:90%;
+    height:100%;
     overflow:hidden;
     display:flex;
     justify-content:center;
