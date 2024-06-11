@@ -98,10 +98,10 @@
 
       <!-- CV upload button and view button -->
       <div class="button-container" style="gap: 10px;">
-        <button mat-raised-button color="primary">Upload New</button>
-        <button mat-raised-button id="view">View</button>
+        <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput />
+        <button mat-raised-button color="primary" (click)="fileInput.click()">Upload New</button>
+        <button mat-raised-button id="view" (click)="openPdfViewer()">View</button>
       </div>
-
       <mat-divider></mat-divider>
       <section>
         <div class="example-button-row">
