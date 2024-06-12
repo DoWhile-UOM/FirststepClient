@@ -29,6 +29,8 @@ jobs:
       - name: Build the Angular app
         working-directory: ./Client
         run: npm run build -- --configuration production
+      - name: List build directory contents
+        run: ls -R ./Client/dist/Client
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
