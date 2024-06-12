@@ -30,7 +30,7 @@ jobs:
         working-directory: ./Client
         run: npm run build -- --configuration production
       - name: List build directory contents
-        run: ls -R ./Client/dist/client
+        run: ls -R ./Client/dist/client/src
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
