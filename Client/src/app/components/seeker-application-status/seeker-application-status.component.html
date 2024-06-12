@@ -1,51 +1,53 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <app-advertisement-header></app-advertisement-header>
-  </mat-card-header>
-  <mat-divider></mat-divider>
+<app-advertisement-header
+  [company_name]="jobData.company_name"
+  [job_field]="jobData.field_name"
+  [job_title]="jobData.title"
+  [company_logo_url]="jobData.company_logo_url"
+></app-advertisement-header>
 
-  <mat-stepper labelPosition="bottom" #stepper class="stepper">
-    <mat-step [stepControl]="firstFormGroup">
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <mat-stepper labelPosition="bottom" #stepper class="stepper" [linear]="true">
+    <mat-step
+      [stepControl]="firstFormGroup"
+      [completed]="isCompleted('Submitted')"
+      [editable]="false"
+    >
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Application Submission</ng-template>
+        <ng-template matStepLabel
+          >Application Submission <br />{{ applicationData.submitted_date }}
+        </ng-template>
       </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
+    <mat-step
+      [stepControl]="secondFormGroup"
+      [completed]="isCompleted('Screening')"
+      [editable]="false"
+    >
       <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Application Screening</ng-template>
+        <ng-template matStepLabel>Application Screening </ng-template>
       </form>
     </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Finalize</ng-template>
+    <mat-step
+      [stepControl]="thirdFormGroup"
+      [completed]="isCompleted('Finalized')"
+      [editable]="false"
+    >
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Application Finalize</ng-template>
+      </form>
     </mat-step>
   </mat-stepper>
-
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <mat-card-title>Application Form</mat-card-title>
-    <div class="detailsField">
-      <div class="textSection">
-        <div>First Name</div>
-        <div>Last Name</div>
-        <div>Email</div>
-        <div>phone number</div>
-        <div>Linkedin</div>
-        <div>CV</div>
-        <div class="doc">Other Documents</div>
-      </div>
-      <div class="fieldSection">
-        <div>{{ SeekerDetails.first_name }}</div>
-        <div>{{ SeekerDetails.last_name }}</div>
-        <div>{{ SeekerDetails.email }}</div>
-        <div>{{ SeekerDetails.phone_number }}</div>
-        <div>{{ SeekerDetails.linkedin }}</div>
-        <div>
-          <button mat-stroked-button color="primary">View Document</button>
-        </div>
-        <div>
-          <button mat-stroked-button color="primary">View Document</button>
-        </div>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+  <!--rejected message-->
+  <div class="rejected-message" *ngIf="applicationData.status === 'Rejected'">
+    Your application has been rejected
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div>CV</div>
+  <div>
+    <button mat-flat-button color="primary" (click)="openpdf()">
+      View document
+    </button>
+  </div>
+</mat-dialog-actions>

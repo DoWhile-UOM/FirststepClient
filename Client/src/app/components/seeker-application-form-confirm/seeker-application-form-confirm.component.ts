@@ -13,7 +13,7 @@ export class SeekerApplicationFormConfirmComponent {
   constructor(private router: Router) {}
 
   viewapplication(){
-    this.router.navigate(['seeker/home/applicationReview']);
+    this.router.navigate(['seeker/applied']);
   }
 
   back(){

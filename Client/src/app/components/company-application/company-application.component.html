@@ -90,43 +90,67 @@
       </mat-grid-tile>
     </mat-grid-list> -->
 
-    <mat-grid-list cols="2" rowHeight="100">
-      <mat-grid-tile class="labelName">
-        <mat-label class="lName">Company Name:</mat-label>
-        <!-- <label >Company Name:</label> -->
-      </mat-grid-tile>
-      <mat-grid-tile style="display: flex; justify-content: flex-start;">
-        <mat-label>{{ companyApplication.company_name }}</mat-label>
-      </mat-grid-tile>
+    <div class="content">
+      <div class="left">
+        <mat-grid-list cols="2" rowHeight="80">
+          <mat-grid-tile class="labelName">
+            <mat-label class="lName">Company Name:</mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile class="labelContent">
+            <mat-label class="lContent">{{ companyApplication.company_name }}</mat-label>
+          </mat-grid-tile>
 
-      <mat-grid-tile class="labelName">
-        <mat-label class="lName">URL of the website:</mat-label>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <mat-label>{{ companyApplication.company_website }}</mat-label>
-      </mat-grid-tile>
+          <mat-grid-tile class="labelName">
+            <mat-label class="lName">URL of the website:</mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile class="labelContent">
+            <mat-label class="lContent">{{ companyApplication.company_website }}</mat-label>
+            <mat-label class="lContent" *ngIf="companyApplication.company_website =='' ">website has not been
+              provided</mat-label>
+          </mat-grid-tile>
 
-      <mat-grid-tile class="labelName">
-        <mat-label class="lName">Email:</mat-label>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <mat-label>{{ companyApplication.company_email }}</mat-label>
-      </mat-grid-tile>
+          <mat-grid-tile class="labelName">
+            <mat-label class="lName">Email:</mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile class="labelContent">
+            <mat-label class="lContent">{{ companyApplication.company_email }}</mat-label>
+          </mat-grid-tile>
 
-      <mat-grid-tile class="labelName">
-        <mat-label class="lName">Phone Number:</mat-label>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <mat-label>{{ companyApplication.company_phone_number }}</mat-label>
-      </mat-grid-tile>
+          <mat-grid-tile class="labelName">
+            <mat-label class="lName">Phone Number:</mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile class="labelContent">
+            <mat-label class="lContent">{{ companyApplication.company_phone_number }}</mat-label>
+          </mat-grid-tile>
 
-      <mat-grid-tile class="labelName">
-        <mat-label class="lName">Business Registratin Number:</mat-label>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <mat-label>{{ companyApplication.business_reg_certificate }}</mat-label>
-      </mat-grid-tile>
-    </mat-grid-list>
+          <mat-grid-tile class="labelName">
+            <mat-label class="lName">Business Scale</mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile class="labelContent">
+            <mat-label class="lContent">{{ companyApplication.company_business_scale}}</mat-label>
+            <mat-label class="lContent" *ngIf="companyApplication.company_business_scale == ''">Businnes has not been
+              provided</mat-label>
+          </mat-grid-tile>
+
+          <mat-grid-tile class="labelName">
+            <mat-label class="lName">Business Registratin Number:</mat-label>
+          </mat-grid-tile>
+          <mat-grid-tile class="labelContent">
+            <mat-label class="lContent">{{ companyApplication.business_reg_no }}</mat-label>
+            <mat-label class="lContent" *ngIf="companyApplication.business_reg_no == 0">Business Registration
+              Number has not
+              been provided</mat-label>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      <div class="right">
+        <button mat-raised-button class="left-certificate" (click)="openBRCerti()">open business registration
+          certificate</button>
+        <button mat-raised-button class="right-certificate" (click)="openIncCerti()">open
+          certificate_of_incorporation</button>
+
+      </div>
+    </div>
 
     <mat-divider></mat-divider>
     <div *ngIf="evaluated_status == 'Not Evaluated'">

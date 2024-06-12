@@ -8,7 +8,7 @@ import {
   MatTableDataSource,
   MatTableModule,
 } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { CompanyService } from '../../../services/company.service';
@@ -21,7 +21,9 @@ import { SaNavBarComponent } from '../../nav-bars/sa-nav-bar/sa-nav-bar.componen
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+
 import { retry } from 'rxjs';
+
 
 interface CompanyList {
   company_id: number;
@@ -59,7 +61,13 @@ export class CompanyApplicationListComponent {
 
   companyList: CompanyList[] = [];
   companyListLength: number = 0;
-  selectedFilter: string = 'all';
+  selectedFilter: string = 'pending';
+
+  totalItems = 100;
+  pageSize = 10;
+  currentPage = 0;
+
+  items: CompanyList[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -81,7 +89,6 @@ export class CompanyApplicationListComponent {
 
   async fetchData(status: string) {
     this.spinner.show();
-    console.log('Fetching data');
     await this.companyService
       .getAllCompanyList()
       .then((data: any[]) => {
@@ -116,15 +123,17 @@ export class CompanyApplicationListComponent {
             (company) => company.evaluated_status == 'Not Evaluated'
           );
         }
-        console.log('Company List', data);
 
         if (this.companyList.length == 0) {
           this.companyListLength = 0;
         }
+        if (this.companyList.length != 0) {
+          this.companyListLength = this.companyList.length;
+        }
+        this.items = this.companyList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
         this.spinner.hide();
       })
       .catch((error) => {
-        console.log('error', error);
         this.spinner.hide();
       });
   }
@@ -158,5 +167,11 @@ export class CompanyApplicationListComponent {
     } else {
       return 'click to evaluate the application';
     }
+  }
+  //pagination
+  pageChanged(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.items = this.companyList.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
   }
 }

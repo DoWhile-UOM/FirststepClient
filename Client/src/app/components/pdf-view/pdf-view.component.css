@@ -1,0 +1,19 @@
+
+mat-dialog-content{
+  width:auto;
+  height:auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+
+}
+   
+  ejs-pdfviewer{
+    width:1000px;
+    height:100%;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }

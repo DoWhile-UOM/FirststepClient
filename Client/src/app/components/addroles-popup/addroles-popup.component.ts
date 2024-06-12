@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,22 +6,24 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { FormsModule } from '@angular/forms';
-import {MatSnackBarModule, MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import {
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
+  MAT_DIALOG_DATA,
   MatDialogModule,
+  MatDialogRef,
 } from '@angular/material/dialog';
 import { EmployeeService } from '../../../services/employee.service';
-import { SuccessPopupComponent } from '../success-popup/success-popup.component';
+import { I } from '@angular/cdk/keycodes';
 
 interface Employee {
   first_name: string;
   last_name: string;
   email: string;
   password: string;
+  company_id: number;
 }
 
 @Component({
@@ -38,27 +40,53 @@ interface Employee {
     FileUploadComponent,
     FormsModule,
     MatDialogModule,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
     MatSnackBarModule,
-    
+    SpinnerComponent
   ],
 })
 export class AddrolesPopupComponent {
-  hide=true;
+  hide = true;
   employee: Employee = {} as Employee;
   selectedRole: string = 'HRM';
-  constructor(private employeeService: EmployeeService, private _snackBar: MatSnackBar) {}
-
-  async onSubmit() {
-    if (this.selectedRole === 'HRA') {
-      await this.employeeService.addNewHRAssistant(this.employee);
-    } else {
-      await this.employeeService.addNewHRManager(this.employee);
-    }
+  constructor(
+    public dialogRef: MatDialogRef<AddrolesPopupComponent>,
+    private employeeService: EmployeeService,
+    private _snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    //assign data from manage roles component
+    this.employee.company_id = data.company_id;
   }
 
   
+  async onSubmit() {
+    this.spinner.show();
+   if (
+      !this.employee.first_name ||
+      !this.employee.last_name ||
+      !this.employee.email ||
+      !this.employee.password
+    ) {
+        this._snackBar.open("Please fill all the Fields", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+        this.spinner.hide();
+        return false;  
+      }
+    
+    else{
+     if (this.selectedRole === 'HRA') {
+        await this.employeeService.addNewHRAssistant(this.employee);
+      } else {
+        await this.employeeService.addNewHRManager(this.employee);
+      }
+
+      this._snackBar.open('Role added successfully', '', {
+        duration: 3000,
+      });
+      this.spinner.hide();
+      return true;
+     
+      }
+    }
 }
 

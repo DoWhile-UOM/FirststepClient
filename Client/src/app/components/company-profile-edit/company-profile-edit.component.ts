@@ -16,7 +16,7 @@ import {
   MatDialogTitle,
   MatDialogContent,
   MatDialogActions,
-  MatDialogClose,MAT_DIALOG_DATA,
+  MatDialogClose, MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -30,11 +30,14 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DocumentService } from '../../../services/document.service';
 
 import { ChangeDetectorRef } from '@angular/core';
 
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 interface Company {
   company_id: number;
@@ -55,10 +58,10 @@ interface BusinessScale {
 }
 
 interface requestOTP {
-  email: string ;
+  email: string;
 }
 interface verifyOTP {
-  email: string ;
+  email: string;
   otp: string | null | undefined;
 }
 
@@ -85,24 +88,20 @@ interface verifyOTP {
     CommonModule,
     MatDialogTitle,
     MatDialogContent,
-    MatDialogActions,
+    MatDialogActions, MatProgressSpinnerModule,
   ],
 })
 export class CompanyProfileEditComponent {
-hasDataLoaded: boolean = false;
-emailcaptuered='';
+  hasDataLoaded: boolean = false;
+
+  emailcaptuered = '';
   selected = 'company.company_business_scale';
   email = new FormControl('', [Validators.required, Validators.email]);
   company: Company = {} as Company; // Initialize the company property
   cName = ''; // to store Comapny Name that is on the top
   noOfCols: number = 2;
-  companyId: number = 7; // temp
-  BusinessScales: any[] = [
-    { name: 'Micro-Sized (Lower Than 10 Employees)', value: 'micro' },
-    { name: 'Small-Sized (10 - 50 Employees)', value: 'small' },
-    { name: 'Medium-Sized (50 - 250 Employees)', value: 'medium' },
-    { name: 'Large-Sized (More Than  250 Employees)', value: 'large' },
-  ];
+  companyId: number = 0; // temp
+  BusinessScales: any[] = [];
 
   errorMessageForCompanyName = '';
   errorMessageForDescription = '';
@@ -116,30 +115,70 @@ emailcaptuered='';
   isFormVerified: boolean = false;
   isConfrimedToChangeEmail: boolean = false;
   otp: string = '';
+
+  logoUrl = '';
+  logoBlobName = '';
+  selectedFile: File | null = null;
+  eventOccured: boolean = false;
   //commayForm
   companyForm!: FormGroup;
   constructor(
     private companyService: CompanyService,
+    private documentService: DocumentService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog, private auth: AuthService,private snackbar: MatSnackBar,private cdr: ChangeDetectorRef
-  ) {}
+    public dialog: MatDialog,
+    private auth: AuthService,
+    private snackbar: MatSnackBar,
+    private cdr: ChangeDetectorRef) {
+    this.BusinessScales = CompanyService.BusinessScales;
+  }
 
   async ngOnInit() {
     try {
+      this.companyId = Number(this.auth.getCompanyID());
       this.spinner.show();
-
       this.company = await this.companyService.getCompanyDetails(
         this.companyId
       );
       this.cName = this.company.company_name;
-      this.emailcaptuered=this.company.company_email;
-      console.log('got details');
+      this.emailcaptuered = this.company.company_email;
       this.hasDataLoaded = true;
+
+      this.logoUrl = this.company.company_logo;
+      console.log(this.logoUrl);
       this.spinner.hide();
-    } catch(error) {
+    } catch (error) {
       console.log(error);
       this.spinner.hide();
     }
+  }
+
+  //image upload
+  onselectFile(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.logoUrl = (e.target?.result as string) || '';
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+    this.eventOccured = true;
+  }
+  async onSaveLogo() {
+    if (this.selectedFile) {
+      await this.companyService.updateCompanyLogo(this.selectedFile, this.companyId)
+        .then(response => {
+          console.log('Upload successful', response);
+        })
+        .catch(error => {
+          console.error('Upload error', error);
+        });
+    } else {
+      console.error('No file selected!');
+    }
+    this.eventOccured = false;
   }
 
   async onSubmit() {
@@ -150,8 +189,8 @@ emailcaptuered='';
         this.errorMessageForDescription == '' &&
         this.errorMessageForWebsite == '' &&
         this.errorMessageForPhoneNumber == '' &&
-        this.errorMessageForEmail == ''&& (this.emailcaptuered==this.company.company_email)
-        
+        this.errorMessageForEmail == '' && (this.emailcaptuered == this.company.company_email)
+
       ) {
         console.log('Company : ', this.company);
         this.spinner.show();
@@ -163,7 +202,7 @@ emailcaptuered='';
         this.cName = this.company.company_name;
         console.log('updated');
       }
-      else if(!(this.emailcaptuered==this.company.company_email)){
+      else if (!(this.emailcaptuered == this.company.company_email)) {
         this.dialog.open(InformEmailShouldBeVerifiedPopUp);
       }
       else {
@@ -216,7 +255,7 @@ emailcaptuered='';
   phoneNumberErrorMessage() {
     let phoneNumberRegex = /^[0-9]{10}$/;
     let testResult = phoneNumberRegex.test(this.company.company_phone_number.toString());
-    if (this.company.company_phone_number.toString().length == 0) { 
+    if (this.company.company_phone_number.toString().length == 0) {
       console.log('should print required');
       this.errorMessageForPhoneNumber = 'Phone number is required';
     } else if (testResult == false) {
@@ -243,38 +282,38 @@ emailcaptuered='';
     }
     console.log(this.errorMessageForEmail);
   }
-   //OTP handling
-  confirmTOChangeEmail(){
+  //OTP handling
+  confirmTOChangeEmail() {
     const dialogRef = this.dialog.open(ApprovingChangingEmailPopUp);
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
-        this.isConfrimedToChangeEmail=true;
+        this.isConfrimedToChangeEmail = true;
         console.log(this.isConfrimedToChangeEmail);
-        }
+      }
     });
   }
 
 
- 
+
   async requestOTP() {
-  
-        const userData: requestOTP = {
-          email: this.company.company_email,
-        };
-        let verificationResult = await this.auth.requestOTP(userData);
-        console.log('otp request sent');
-        console.log(verificationResult);
-        if (verificationResult == true) {
-          this.snackbar.open('OTP Sent successful', '')._dismissAfter(3000);
-          this.printTextAfterFiveMinutes();
-          console.log('otp sent');
-        } else {
-          this.snackbar
-            .open('OTP Request failed Please try Again', '', {
-              panelClass: ['app-notification-error'],
-            })
-            ._dismissAfter(3000);
-        }
+
+    const userData: requestOTP = {
+      email: this.company.company_email,
+    };
+    let verificationResult = await this.auth.requestOTP(userData);
+    console.log('otp request sent');
+    console.log(verificationResult);
+    if (verificationResult == true) {
+      this.snackbar.open('OTP Sent successful', '')._dismissAfter(3000);
+      this.printTextAfterFiveMinutes();
+      console.log('otp sent');
+    } else {
+      this.snackbar
+        .open('OTP Request failed Please try Again', '', {
+          panelClass: ['app-notification-error'],
+        })
+        ._dismissAfter(3000);
+    }
   }
   async VerifyOTP() {
     console.log(this.company.company_email);
@@ -287,7 +326,7 @@ emailcaptuered='';
     console.log('otp verification request was sent');
     if (verificationResult == true) {
       // this.isEmailVerified = true;
-      this.emailcaptuered=this.company.company_email;
+      this.emailcaptuered = this.company.company_email;
       this.snackbar.open('OTP verification successful', '', { duration: 2000 });
       console.log('otp verified');
     } else {
@@ -299,7 +338,7 @@ emailcaptuered='';
     }
   }
 
-  printTextAfterFiveMinutes(){
+  printTextAfterFiveMinutes() {
     this.isOTPRequestSent = true;
     this.remainingTime = 300;//60*5
     this.reqOTPbtntxt = this.remainingTime.toString();
@@ -331,7 +370,7 @@ emailcaptuered='';
     MatButtonModule,
   ],
 })
-export class CannotSubmitWithoutAllInputsAreValidPopUp {}
+export class CannotSubmitWithoutAllInputsAreValidPopUp { }
 
 //approving-changing0email-pop-up
 @Component({
@@ -348,12 +387,12 @@ export class CannotSubmitWithoutAllInputsAreValidPopUp {}
 })
 export class ApprovingChangingEmailPopUp {
   givenPermissionToChangeEmail: boolean = false;
-  constructor(public dialogRef: MatDialogRef<ApprovingChangingEmailPopUp>) {}
+  constructor(public dialogRef: MatDialogRef<ApprovingChangingEmailPopUp>) { }
 
   closeDialog() {
     this.dialogRef.close(this.givenPermissionToChangeEmail);
   }
-  yesAction(){
+  yesAction() {
     this.givenPermissionToChangeEmail = true;
     this.dialogRef.close(this.givenPermissionToChangeEmail);
   }
@@ -372,4 +411,4 @@ export class ApprovingChangingEmailPopUp {
     MatButtonModule,
   ],
 })
-export class InformEmailShouldBeVerifiedPopUp{}
+export class InformEmailShouldBeVerifiedPopUp { }

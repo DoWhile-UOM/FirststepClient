@@ -30,6 +30,7 @@ interface Job{
 	job_description: string;
 	field_name: string;
 	company_name: string;
+  company_logo_url: string;
   is_expired: boolean;
   skills: Skill[];
 }

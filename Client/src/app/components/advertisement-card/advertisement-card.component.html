@@ -1,7 +1,7 @@
 <mat-card class="job-card">
     <div class="job-heading">
         <div class="title-container">
-            <img class="company-logo" src="../../../assets/BistechLogo.png" alt="Company Logo">
+            <img class="company-logo" [src]="company_logo_url" alt="Company Logo">
             <div class="title">
                 <mat-card-title class="job-title">{{(isApplicationPage) ? appliedJob.title : job.title}}</mat-card-title>
                 <mat-card-subtitle class="company-name" (click)="onClickCompanyName()">{{(isApplicationPage) ? appliedJob.company_name : job.company_name}}</mat-card-subtitle>
@@ -24,8 +24,8 @@
         </p>
     </div> 
     <div class="job-details-outer">
-        <app-advertisement-actions *ngIf="!isApplicationPage" [jobID]="job.advertisement_id" [currentStatus]="job.is_saved" [expired]="job.is_expired" [company_name]="job.company_name" [job_title]="job.title" [job_field]="job.field_name"></app-advertisement-actions>
-        <app-advertisement-actions *ngIf="isApplicationPage" [jobID]="appliedJob.advertisement_id" [applicationStatus]="appliedJob.application_status"></app-advertisement-actions>
+        <app-advertisement-actions *ngIf="!isApplicationPage" [jobID]="job.advertisement_id" [currentStatus]="job.is_saved" [expired]="job.is_expired" [company_name]="job.company_name" [job_title]="job.title" [job_field]="job.field_name" [company_logo_url]="job.company_logo_url"></app-advertisement-actions>
+        <app-advertisement-actions *ngIf="isApplicationPage" [jobID]="appliedJob.advertisement_id" [applicationStatus]="appliedJob.application_status" [company_name]="appliedJob.company_name" [job_title]="appliedJob.title" [job_field]="appliedJob.field_name" [company_logo_url]="appliedJob.company_logo_url"></app-advertisement-actions>
         <div class="job-details-inner">
             <p class="post-date" *ngIf="!isApplicationPage">{{(job.is_expired ? 'Job Expired' : 'Posted On ' + job.posted_date)}}</p>
             <p class="post-date" *ngIf="isApplicationPage">{{'Posted On ' + appliedJob.posted_date}}</p>

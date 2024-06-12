@@ -24,9 +24,12 @@ import {
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
+import { AuthService } from '../../../services/auth.service';
+import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 
 interface CompanyApplication {
   company_id: number;
+  business_reg_no: number;
   company_name: string;
   verification_status: boolean;
   company_email: string;
@@ -36,6 +39,7 @@ interface CompanyApplication {
   certificate_of_incorporation: string;
   comment: string;
   verified_system_admin_id: number;
+  company_business_scale: string;
 }
 interface EvaluatedCompanyDetails {
   company_id: number;
@@ -45,6 +49,8 @@ interface EvaluatedCompanyDetails {
   verified_system_admin_id: number;
 }
 export interface DialogData {
+  documentUrl: any;
+  documentName: string;
   comment: string;
 }
 
@@ -76,7 +82,7 @@ export interface DialogData {
 export class CompanyApplicationComponent implements OnInit {
   noOfCols: number = 2;
   evaluated_status: string = '';
-  systemAdminID: number = 5; //temporary value
+  systemAdminID: number = 0; //temporary value
   companyID: number = 0;
   companyApplication: CompanyApplication = {} as CompanyApplication; // this is the object that will be used to store the company application details
   evaluatedCompanyDetails: EvaluatedCompanyDetails =
@@ -87,8 +93,9 @@ export class CompanyApplicationComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private router: Router
-  ) {}
+    private router: Router,
+    private auth: AuthService,
+  ) { }
   //getCompanyApplicationById
   // ngOnInit() {
   //   console.log('inside ngOnInit');
@@ -101,6 +108,7 @@ export class CompanyApplicationComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.loadCompanyApplication(params['id']);
     });
+    this.systemAdminID = Number(this.auth.getUserId());
   }
 
   async loadCompanyApplication(id: string) {
@@ -111,6 +119,9 @@ export class CompanyApplicationComponent implements OnInit {
       this.spinner.show();
       this.companyApplication =
         await this.companyService.getCompanyApplicationById(this.companyID);
+      console.log(this.companyApplication);
+      console.log(this.companyApplication.business_reg_certificate);
+      console.log(this.companyApplication.certificate_of_incorporation);
 
       if (this.companyApplication.verified_system_admin_id !== 0) {
         this.evaluated_status = 'Evaluated';
@@ -183,6 +194,31 @@ export class CompanyApplicationComponent implements OnInit {
   goBack() {
     this.router.navigate(['/sa/company-application']);
   }
+  openBRCerti() {
+    if(this.companyApplication.business_reg_certificate == null || this.companyApplication.business_reg_certificate == ''){
+      this.dialog.open(EmptyPdfPopUp);
+      return;
+    }
+    this.dialog.open(PdfViewComponent, {
+      data: {
+        documentUrl: this.companyApplication.business_reg_certificate,
+        documentName: 'Business Registration Certificate',
+      },
+    });
+
+  }
+  openIncCerti() {
+    if(this.companyApplication.certificate_of_incorporation == null || this.companyApplication.certificate_of_incorporation == ''){
+      this.dialog.open(EmptyPdfPopUp);
+      return;
+    }
+    this.dialog.open(PdfViewComponent, {
+      data: {
+        documentUrl: this.companyApplication.certificate_of_incorporation,
+        documentName: 'Certificate of Incorporation',
+      },
+    });
+  }
 }
 
 //comment-in-company-evaluation
@@ -206,7 +242,7 @@ export class CompanyApplicationComponent implements OnInit {
 export class CommentInCompanyEvaluation {
   comment: string = '';
 
-  constructor(public dialogRef: MatDialogRef<CommentInCompanyEvaluation>) {}
+  constructor(public dialogRef: MatDialogRef<CommentInCompanyEvaluation>) { }
 
   closeDialog() {
     this.dialogRef.close(this.comment);
@@ -231,7 +267,7 @@ export class CommentInCompanyEvaluation {
     MatDialogClose,
   ],
 })
-export class CannotRejectWithoutCommentPopup {}
+export class CannotRejectWithoutCommentPopup { }
 
 //comapany-approval-confirmation-popup
 @Component({
@@ -252,7 +288,7 @@ export class CannotRejectWithoutCommentPopup {}
 export class CompanyApprovalConfirmationPopup {
   constructor(
     public dialogRef: MatDialogRef<CompanyApprovalConfirmationPopup>
-  ) {}
+  ) { }
 
   closeDialog() {
     this.dialogRef.close('Approval Confirmed');
@@ -261,3 +297,20 @@ export class CompanyApprovalConfirmationPopup {
     this.dialogRef.close('Approval Cancelled');
   }
 }
+//empty-pdf-pop-up
+@Component({
+  selector: 'empty-pdf-pop-up',
+  standalone: true,
+  templateUrl: 'empty-pdf-pop-up.html',
+  imports: [
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
+})
+export class EmptyPdfPopUp { }

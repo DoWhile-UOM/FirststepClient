@@ -35,4 +35,8 @@ button {
 .create-btn-name {
   color: #fff;
 }
-
+.container-otp{
+  display: flex !important;
+  flex-direction: column !important;
+ 
+}

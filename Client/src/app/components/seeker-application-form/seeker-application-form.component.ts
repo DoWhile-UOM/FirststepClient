@@ -11,10 +11,15 @@ import { CommonModule } from '@angular/common';
 import { FileDownloadComponent } from '../file-download/file-download.component';
 import { Router } from '@angular/router';
 import { ApplicationService } from '../../../services/application.service';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { SeekerApplicationFileUploadComponent } from '../seeker-application-file-upload/seeker-application-file-upload.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 interface Seeker {
   email: string;
@@ -22,6 +27,8 @@ interface Seeker {
   last_name: string;
   phone_number: string;
   linkedin: string;
+  cVurl: string;
+  defualt_cv_url : string;
 }
 
 interface Application {
@@ -38,6 +45,7 @@ interface Job {
   title: string;
   field_name: string;
   company_name: string;
+  company_logo_url: string;
 }
 
 @Component({
@@ -57,7 +65,8 @@ interface Job {
     FileDownloadComponent,
     MatDialogModule,
     SeekerApplicationFileUploadComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    MatSnackBarModule,
   ],
 })
 export class SeekerApplicationFormComponent implements OnInit {
@@ -66,6 +75,7 @@ export class SeekerApplicationFormComponent implements OnInit {
   jobData: Job = {} as Job;
   user_id: number = 0;
   useDefaultCv: boolean = false;
+  
 
   constructor(
     public dialogRef: MatDialogRef<SeekerApplicationFormComponent>,
@@ -73,7 +83,8 @@ export class SeekerApplicationFormComponent implements OnInit {
     private applicationService: ApplicationService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: any  
   ) {
     // assign data from application card
     this.applicationData.advertisement_id = data.jobID;
@@ -81,6 +92,7 @@ export class SeekerApplicationFormComponent implements OnInit {
     this.jobData.company_name = data.company_name;
     this.jobData.title = data.job_title;
     this.jobData.field_name = data.job_field;
+    this.jobData.company_logo_url = data.company_logo_url;
   }
 
   async ngOnInit() {
@@ -107,8 +119,12 @@ export class SeekerApplicationFormComponent implements OnInit {
   }
 
   async onSubmitForm() {
+    if (!this.useDefaultCv && !this.applicationData.cv) {
+      this.snackBar.open("Please upload a CV or select the default CV", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      return;
+    }
     this.spinner.show();
-    
+
     this.applicationData.UseDefaultCv = this.useDefaultCv;
     const applicationData = new FormData();
     applicationData.append(
@@ -116,19 +132,17 @@ export class SeekerApplicationFormComponent implements OnInit {
       this.applicationData.advertisement_id.toString()
     );
     applicationData.append('seeker_id', this.user_id.toString());
-    applicationData.append(
-      'useDefaultCv',
-      this.applicationData.UseDefaultCv.toString()
-    );
-
+    applicationData.append('useDefaultCv',this.applicationData.UseDefaultCv.toString());
+    
     if (!this.applicationData.UseDefaultCv && this.applicationData.cv) {
       applicationData.append('cv', this.applicationData.cv);
     }
-
+    
+    
     try {
       // check sucess message from the application service
       await this.applicationService.submitSeekerApplication(applicationData);
-      
+
       this.router.navigate([
         'seeker/home/applicationForm/applicationFormconfirm',
       ]);

@@ -16,6 +16,7 @@ mat-card {
 
 .textSection {
   width: 200px;
+  font-weight: bold;
 }
 
 .fieldSection {
@@ -36,9 +37,8 @@ mat-card-title {
   color: #008080;
   margin-bottom: 10px;
   margin-top: 10px;
-  font-size: 2vw;
+  font-size: 1.5vw;
   font-style: normal;
-  font-weight: bold;
   line-height: normal;
 }
 

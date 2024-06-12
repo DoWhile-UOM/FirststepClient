@@ -3,7 +3,7 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 //import { FileUploadComponent } from "../../CompanyPortal/shared/file-upload/file-upload.component";
 //import { JobOfferListComponent } from "../../CompanyPortal/shared/job-offer-list/job-offer-list.component";
 
@@ -36,17 +36,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialog } from '@angular/material/dialog';
+import { EmailVerificationBoxComponent } from '../email-verification-box/email-verification-box.component';
+import { PopUpFinalComponent } from '../pop-up-final/pop-up-final.component';
 
-
-
-interface requestOTP {
-  email: string | null | undefined;
-}
-
-interface verifyOTP {
-  email: string | null | undefined;
-  otp: string | null | undefined;
-}
 
 @Component({
   selector: 'app-register-company',
@@ -56,32 +49,35 @@ interface verifyOTP {
   styleUrl: './register-company.component.css'
 })
 export class RegisterCompanyComponent {
+  @ViewChild('stepper') stepper!: MatStepper;
 
-  isEmailVerified: boolean = false;
+  isEmailVerified: boolean = true;
   isOTPRequestSent: boolean = false;
-  remainingTime = 0;
-  reqOTPbtntxt = "Request OTP";
   isFormVerified: boolean = false;
+  verifiedemail: string = "";
 
 
   //form group for the stepper
   companyReg = this._formBuilder.group({
-    company_name: ['', Validators.required],
-    company_website: [''],
-    company_email: ['', [Validators.required, Validators.email]],
-    //otp: ['', Validators.required],
-    business_scale: ['', Validators.required],
-    business_reg_certificate: ['', Validators.required],
-    company_applied_date: ['', Validators.required],
-    certificate_of_incorporation: ['', Validators.required],
-    company_phone_number: ['', Validators.required],
-    business_reg_no: ['', Validators.required],
-    otp_in: ['', Validators.required]
+    company_name: ['', Validators.required],//
+    company_website: [''],//
+    company_email: new FormControl({ value: '', disabled: true }),//
+    company_description: [''],//
+    company_logo: [''],//
+    company_business_scale: ['', Validators.required],//
+    business_reg_certificate: [''],//
+    company_registered_date: ['', Validators.required],///
+    certificate_of_incorporation: [''],//
+    company_phone_number: ['', Validators.required],//
+    business_reg_no: ['', Validators.required],//
   });
 
-  constructor(private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
+
+
+  constructor(public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private company: CompanyService, private _formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
+    //this.companyReg.get('company_email')?.disable();
 
     // Watch for form validity changes
     this.companyReg.statusChanges.subscribe(status => {
@@ -91,67 +87,63 @@ export class RegisterCompanyComponent {
     });
   }
 
-
-  async requestOTP() {
-
-    const userData: requestOTP = {
-      email: this.companyReg.get('company_email')?.value
-    }
-
-    let verificationResult = await this.auth.requestOTP(userData)
-
-    if (verificationResult == true) {
-      this.snackbar.open("OTP Sent successful", "")._dismissAfter(3000);
-      this.printTextAfterFiveMinutes();
-    } else {
-      this.snackbar.open("OTP Request failed Please try Again", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-    }
-  }
-
-
-  async VerifyOTP() {
-    console.log(this.companyReg.get('otp_in')?.value);
-
-    const userData: verifyOTP = {
-      email: this.companyReg.get('company_email')?.value,
-      otp: this.companyReg.get('otp_in')?.value
-    }
-
-    let verificationResult = await this.auth.verifyOTP(userData);
-
-    if (verificationResult == true) {
-      this.isEmailVerified = true;
-      this.snackbar.open("OTP verification successful", "", { duration: 2000 });
-    } else {
-      this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-    }
-
-  }
-
-  async printTextAfterFiveMinutes() {
-
-    this.isOTPRequestSent = true;
-    this.remainingTime = 5 * 60; // Initialize remaining time in seconds
-    this.reqOTPbtntxt = this.remainingTime.toString();
-
-    const intervalId = setInterval(() => {
-      this.remainingTime--;
-      if (this.remainingTime <= 0) {
-        clearInterval(intervalId); // Stop the timer when time is up
-        console.log("Timer off");
-        this.isOTPRequestSent = false;
-        this.reqOTPbtntxt = "Request OTP";
-      }
-    }, 1000); // Update every second
-  }
-
-
-  onRegister() {
+  async onRegister() {
+    this.isEmailVerified = true;
     if (!this.isEmailVerified) {
-      alert("Please verify your email first");
+      this.snackbar.open("Please verify your email first", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       return;
     } else {
-      this.company.CompanyRegister(this.companyReg.value);
+      if (this.companyReg.invalid) {
+        this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      } else {
+        try {
+          this.companyReg.get('company_email')?.enable();
+          let responseRegReq = await this.company.CompanyRegister(this.companyReg.value);
+
+          // Optionally disable the company_email control again
+          this.companyReg.get('company_email')?.disable();
+
+          if (responseRegReq.success) {
+            this.snackbar.open("Company registered successfully", "")._dismissAfter(3000);
+            this.finalDialog();
+          } else {
+            this.snackbar.open("Registration Error: " + responseRegReq.out, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+          }
+        } catch (error) {
+          console.error('Error during registration: ', error);
+          this.snackbar.open("Registration failed. Please try again.", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+        }
+      }
     }
   }
+
+  openDialog(): void {//Open Dialog Box for email verifcation
+    const dialogRef = this.dialog.open(EmailVerificationBoxComponent, {
+      width: '1000px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.companyReg.get('company_email')?.setValue(result.emailAddress);//result.emailAddress refer to verified email
+      this.isEmailVerified = result.verified;//Set email verifcation status is done
+      this.stepper.next();
+    });
+  }
+
+  finalDialog(): void {
+    const dialogRef = this.dialog.open(PopUpFinalComponent, {
+      data: {
+        title: 'Your company registration application has been sent successfully',
+        message: 'Our staff is currently reviewing your application.',
+        message2: 'To check the status of your application, please refer to the link that has been sent to your mailbox.'
+      },
+      disableClose: true  // Disables closing the dialog
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log('User input:', result);
+    });
+  }
+
 }

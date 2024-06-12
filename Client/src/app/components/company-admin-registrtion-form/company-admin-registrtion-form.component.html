@@ -10,47 +10,57 @@
 
     <mat-grid-list cols="1" rowHeight="100">
       <form class="form" #form="ngForm" (ngSubmit)="onSubmit(form.value)">
+
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>First Name</mat-label>
-            <input matInput placeholder="Enter your first name" name="firstName" ngModel required />
+            <input matInput placeholder="Enter your first name" name="first_name" [(ngModel)]="unRegCA.first_name"
+              (blur)="validateFirstName()" required />
+            <mat-error>{{errorMessageForFName}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Last Name</mat-label>
-            <input matInput placeholder="Enter your last name" name="lastName" ngModel />
+            <input matInput placeholder="Enter your last name" name="last_name" [(ngModel)]="unRegCA.last_name"
+              (blur)="validateLastName()" required />
+            <mat-error>{{errorMessageForLName}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Email Address</mat-label>
-            <input matInput placeholder="Enter your email address" name="email" ngModel />
+            <input matInput placeholder="Enter your email address" name="email" [(ngModel)]="unRegCA.email"
+              (blur)="validateEmail()" required />
+            <mat-error>{{errorMessageForEmail}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Password</mat-label>
-            <input matInput placeholder="Enter your password" name="password" [type]="hide ? 'password' : 'text'"
-              ngModel />
+            <input matInput placeholder="Enter your password" name="password_hash" [type]="hide ? 'password' : 'text'"
+              [(ngModel)]="unRegCA.password_hash" (blur)="validatePassword()" required />
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
+            <mat-error>{{errorMessageForPassword}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
         <mat-grid-tile>
           <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Confrim Password</mat-label>
-            <input matInput placeholder="Re-enter your password" [type]="hide ? 'password' : 'text'" />
+            <input matInput placeholder="Re-enter your password" [type]="hide ? 'password' : 'text'"
+              name="confirmed_password" [(ngModel)]="unRegCA.confirmed_password" (blur)="validateConfirmedPassword()" />
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
+            <mat-error>{{errorMessageForConfirmedPassword}}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
 
@@ -63,5 +73,32 @@
       </form>
     </mat-grid-list>
 
+    <!--email verification-->
+    <div *ngIf="isConfrimedToChangeEmail==true">
+      <mat-grid-list cols="{{ 1 }}" rowHeight="300">
+        <mat-grid-tile>
+          <div class="container-otp">
+            <span class="mat-typography"> Click send otp button
+            </span>
+            <button mat-raised-button class="apply-button" color="primary" (click)="requestOTP()"
+              [disabled]="isOTPRequestSent" id="otpreqbtn">{{reqOTPbtntxt }} {{remainingTime
+              }}</button>
+
+            <span class="mat-typography"> Once that button is clicked, enter the otp(one time password)
+              recived in
+              the provided email
+              address.
+            </span>
+            <mat-form-field appearance="outline">
+              <mat-label>OTP</mat-label>
+              <input matInput placeholder="Enter OTP" [(ngModel)]="otp" [ngModelOptions]="{standalone: true}"
+                required />
+            </mat-form-field>
+            <button mat-raised-button class="apply-button" color="primary" (click)="VerifyOTP()">Verify
+              OTP</button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
   </mat-card>
 </div>
