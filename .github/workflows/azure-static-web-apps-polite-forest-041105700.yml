@@ -38,7 +38,7 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_FOREST_041105700 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
-          app_location: "./Client" # App source code path
+          app_location: "./Client/src/app" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "dist/client" # Ensure this matches the output path in angular.json
 
