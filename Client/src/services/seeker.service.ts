@@ -14,13 +14,13 @@ interface SeekerProfile {
   bio: string;
   description: string;
   university: string;
-  CVurl: string;
+  cVurl: string;
   profile_picture: string;
   linkedin: string;
   field_id: number;
   field_name?: string;
   seekerSkills?: string[];
-  cvFile?: File; // New CV file
+  cvFile?: File;
 
 }
 

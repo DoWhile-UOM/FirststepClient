@@ -4,7 +4,7 @@
     <div class="heading title">
       <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
     </div>
-    <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="2" rowHeight="140" style="margin: 0;">
         <mat-grid-tile class="tile"></mat-grid-tile>
         <mat-grid-tile>
@@ -86,7 +86,6 @@
       </div>
       <div class="button-container" style="gap: 10px;">
         <div class="button-container" style="gap: 10px;">
-
           <button mat-raised-button color="primary" (click)="openUploadDialog()">Upload CV</button>
           <button mat-raised-button color="primary" (click)="openPdfViewer()">View</button>
         </div>      </div>
