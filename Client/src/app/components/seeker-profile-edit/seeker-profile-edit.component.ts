@@ -44,7 +44,10 @@ import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
-import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
+import {
+  MatProgressSpinnerModule,
+  MatSpinner,
+} from '@angular/material/progress-spinner';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 
 interface SeekerProfile {
@@ -64,7 +67,6 @@ interface SeekerProfile {
   field_name?: string;
   seekerSkills?: string[];
   cvFile?: File; // New CV file
-
 }
 
 @Component({
@@ -92,7 +94,7 @@ interface SeekerProfile {
     SeekerEmailVerificationBoxComponent,
     AddSkillsComponent,
     MatProgressSpinnerModule,
-    PdfViewComponent
+    PdfViewComponent,
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -111,7 +113,6 @@ export class SeekerProfileEditComponent implements OnInit {
   passwordFieldType: string = 'password';
   passwordPlaceholder: string = '********';
   disableViewButton: boolean = false; // Disable view button when no CV is uploaded
-
 
   isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
@@ -149,81 +150,81 @@ export class SeekerProfileEditComponent implements OnInit {
       description: ['', Validators.required],
       university: [''],
       linkedin: [''],
-      cVurl: [''], 
+      cVurl: [''],
       field_id: ['', Validators.required],
       profile_picture: [''],
       password: [''],
       seekerSkills: [[]],
     });
   }
-//image upload
-// onselectFile(event: any) {
-//   const input = event.target as HTMLInputElement;
-//   if (input.files && input.files[0]) {
-//     this.selectedFile = input.files[0];
-//     const reader = new FileReader();
-//     reader.onload = (e: ProgressEvent<FileReader>) => {
-//       this.logoUrl = (e.target?.result as string) || '';
-//     };
-//     reader.readAsDataURL(this.selectedFile);
-//   }
-//   this.eventOccured = true;
-// }
-// async onSaveLogo() {
-//   if (this.selectedFile) {
-//     await this.seekerService.updateProfilePicture(this.selectedFile, this.user_id)
-//       .then(response => {
-//         console.log('Upload successful', response);
-//       })
-//       .catch(error => {
-//         console.error('Upload error', error);
-//       });
-//   } else {
-//     console.error('No file selected!');
-//   }
-//   this.eventOccured = false;
-// }
+  //image upload
+  // onselectFile(event: any) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files[0]) {
+  //     this.selectedFile = input.files[0];
+  //     const reader = new FileReader();
+  //     reader.onload = (e: ProgressEvent<FileReader>) => {
+  //       this.logoUrl = (e.target?.result as string) || '';
+  //     };
+  //     reader.readAsDataURL(this.selectedFile);
+  //   }
+  //   this.eventOccured = true;
+  // }
+  // async onSaveLogo() {
+  //   if (this.selectedFile) {
+  //     await this.seekerService.updateProfilePicture(this.selectedFile, this.user_id)
+  //       .then(response => {
+  //         console.log('Upload successful', response);
+  //       })
+  //       .catch(error => {
+  //         console.error('Upload error', error);
+  //       });
+  //   } else {
+  //     console.error('No file selected!');
+  //   }
+  //   this.eventOccured = false;
+  // }
 
+  async ngOnInit() {
+    this.spinner.show();
+    try {
+      // Fetch all job fields
+      await this.jobFieldService.getAll().then((response) => {
+        this.fields = response;
+      });
+      // Fetch seeker profile data
+      const seeker = await this.seekerService.getSeekerEditProfile(
+        this.user_id
+      );
+      // Populate the form with the fetched data
+      this.seekerForm.patchValue({
+        first_name: seeker.first_name,
+        last_name: seeker.last_name,
+        email: seeker.email,
+        phone_number: seeker.phone_number,
+        bio: seeker.bio,
+        description: seeker.description,
+        university: seeker.university,
+        cVurl: seeker.cVurl,
+        linkedin: seeker.linkedin,
+        field_id: seeker.field_id,
+        password: this.passwordPlaceholder,
+        seekerSkills: seeker.seekerSkills || [],
+      });
 
-async ngOnInit() {
-  this.spinner.show();
-  try {
-    // Fetch all job fields
-    await this.jobFieldService.getAll().then((response) => {
-      this.fields = response;
-    });
-    // Fetch seeker profile data
-    const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
-    // Populate the form with the fetched data
-    this.seekerForm.patchValue({
-      first_name: seeker.first_name,
-      last_name: seeker.last_name,
-      email: seeker.email,
-      phone_number: seeker.phone_number,
-      bio: seeker.bio,
-      description: seeker.description,
-      university: seeker.university,
-      cVurl: seeker.cVurl,
-      linkedin: seeker.linkedin,
-      field_id: seeker.field_id,
-      password: this.passwordPlaceholder,
-      seekerSkills: seeker.seekerSkills || [],
-    });
-
-    this.cVurl = seeker.cVurl; // Save the CV URL
-    this.skills = this.removeDuplicates(seeker.seekerSkills || []);
-    this.emailcaptured = seeker.email;
-    this.hasDataLoaded = true;
-  } catch (error) {
-    console.error(error);
-    this.snackBar.open('Failed to load profile details', 'Close', {
-      duration: 3000,
-    });
-  } finally {
-    this.spinner.hide();
+      this.cVurl = seeker.cVurl; // Save the CV URL
+      this.skills = this.removeDuplicates(seeker.seekerSkills || []);
+      this.emailcaptured = seeker.email;
+      this.hasDataLoaded = true;
+    } catch (error) {
+      console.error(error);
+      this.snackBar.open('Failed to load profile details', 'Close', {
+        duration: 3000,
+      });
+    } finally {
+      this.spinner.hide();
+    }
   }
-}
-
 
   ngAfterViewInit() {
     if (this.addSkillsComponent && this.addSkillsComponent.skills) {
@@ -231,7 +232,6 @@ async ngOnInit() {
       this.seekerForm.get('seekerSkills')?.setValue(this.skills);
     }
   }
-  
 
   togglePasswordVisibility() {
     this.passwordFieldType =
@@ -264,7 +264,9 @@ async ngOnInit() {
   async updateProfile() {
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
-      this.snackBar.open('Please fill in all required fields', 'Close', { duration: 3000 });
+      this.snackBar.open('Please fill in all required fields', 'Close', {
+        duration: 3000,
+      });
       return;
     }
 
@@ -273,16 +275,37 @@ async ngOnInit() {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
       formValue.seekerSkills = this.seekerForm.get('seekerSkills')?.value;
 
+      const formData = new FormData();
+      formData.append('email', formValue.email);
+      formData.append('first_name', formValue.first_name);
+      formData.append('last_name', formValue.last_name);
+      formData.append('phone_number', formValue.phone_number.toString());
+      formData.append('bio', formValue.bio);
+      formData.append('description', formValue.description);
+      formData.append('university', formValue.university || '');
+      formData.append('CVurl', formValue.cVurl || '');
+      formData.append('profile_picture', formValue.profile_picture || '');
+      formData.append('linkedin', formValue.linkedin || '');
+      formData.append('field_id', formValue.field_id.toString());
+      // Append each skill individually
+      if (formValue.seekerSkills) {
+        formValue.seekerSkills.forEach((skill) =>
+          formData.append('seekerSkills', skill)
+        );
+      }
       if (this.selectedFile) {
-        formValue.cvFile = this.selectedFile;
+        formData.append('cvFile', this.selectedFile);
       }
 
-      await this.seekerService.editSeeker(formValue, this.user_id);
-      this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
-
+      await this.seekerService.editSeeker(formData, this.user_id);
+      this.snackBar.open('Profile updated successfully', 'Close', {
+        duration: 2000,
+      });
     } catch (error) {
       console.error('Error updating profile: ', error);
-      this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
+      this.snackBar.open('Failed to update profile', 'Close', {
+        duration: 3000,
+      });
     } finally {
       this.spinner.hide();
     }
@@ -332,7 +355,9 @@ async ngOnInit() {
     // Discard changes and reload the original profile data
     this.spinner.show();
     try {
-      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
+      const seeker = await this.seekerService.getSeekerEditProfile(
+        this.user_id
+      );
       this.seekerForm.patchValue({
         ...seeker,
         password: this.passwordPlaceholder,
@@ -371,29 +396,32 @@ async ngOnInit() {
     });
   }
 
-  changeSkillsArray($event: Event){
-		var skills = $event;
-		if (skills != null){
-			let skillArray = skills as unknown as string[];
-			this.skills = this.removeDuplicates(skillArray);
-		}
-	}
+  changeSkillsArray($event: Event) {
+    var skills = $event;
+    if (skills != null) {
+      let skillArray = skills as unknown as string[];
+      this.skills = this.removeDuplicates(skillArray);
+    }
+  }
 
   onSkillsChange(skills: string[]) {
     this.skills = this.removeDuplicates(skills);
     this.seekerForm.get('seekerSkills')?.setValue(this.skills);
   }
-  
 
   removeDuplicates(arr: string[]) {
-		let uniqueArr = Array.from(new Set(arr));
+    let uniqueArr = Array.from(new Set(arr));
 
-		if (uniqueArr.length != arr.length){
-			this.snackBar.open("Removed Duplicate Keywords and Skills", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
-		}
+    if (uniqueArr.length != arr.length) {
+      this.snackBar
+        .open('Removed Duplicate Keywords and Skills', '', {
+          panelClass: ['app-notification-warning'],
+        })
+        ._dismissAfter(3000);
+    }
 
-		return uniqueArr;
-	}
+    return uniqueArr;
+  }
 
   phoneNumberErrorMessage() {
     if (this.seekerForm.get('phone_number')?.hasError('required')) {
@@ -484,11 +512,9 @@ async ngOnInit() {
       : false;
   }
 
-  
   onCvSelected(file: File) {
     this.seekerDetails.cvFile = file;
   }
-  
 
   openPdfViewer() {
     if (this.cVurl) {
@@ -503,7 +529,6 @@ async ngOnInit() {
       });
     }
   }
-  
 
   openUploadDialog(): void {
     const dialogRef = this.dialog.open(UploadCV, {
@@ -517,7 +542,6 @@ async ngOnInit() {
         //cvFile: file,
       });
       this.disableViewButton = true; // Disable view button when a new file is selected
-
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -609,18 +633,17 @@ export class ConfirmDeleteProfilePopUp {
   }
 }
 
-
 @Component({
   selector: 'app-upload-cv',
   templateUrl: 'upload-cv.html',
-  styleUrls: ['upload-cv.css'], 
+  styleUrls: ['upload-cv.css'],
   standalone: true,
   imports: [
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    CommonModule
-  ]
+    CommonModule,
+  ],
 })
 export class UploadCV {
   @Output() fileSelected = new EventEmitter<File>();
@@ -635,17 +658,15 @@ export class UploadCV {
       this.uploadSuccess = false;
       const file = input.files[0];
 
-      try{
+      try {
         await this.fileUploadSimulate(file);
-        this.uploadSuccess=true;
+        this.uploadSuccess = true;
         this.fileSelected.emit(file);
-      }
-      catch(error){
+      } catch (error) {
         console.error('Error uploading file: ', error);
+      } finally {
+        this.uploadInProgress = false;
       }
-      finally{
-        this.uploadInProgress=false;
-    }
     }
   }
 
@@ -661,4 +682,3 @@ export class UploadCV {
     this.dialogRef.close();
   }
 }
-
