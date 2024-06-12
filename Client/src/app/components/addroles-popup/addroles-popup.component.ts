@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import {
   MAT_DIALOG_DATA,
@@ -39,6 +41,7 @@ interface Employee {
     FormsModule,
     MatDialogModule,
     MatSnackBarModule,
+    SpinnerComponent
   ],
 })
 export class AddrolesPopupComponent {
@@ -49,22 +52,41 @@ export class AddrolesPopupComponent {
     public dialogRef: MatDialogRef<AddrolesPopupComponent>,
     private employeeService: EmployeeService,
     private _snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     //assign data from manage roles component
     this.employee.company_id = data.company_id;
   }
 
+  
   async onSubmit() {
-    if (this.selectedRole === 'HRA') {
-      await this.employeeService.addNewHRAssistant(this.employee);
-    } else {
-      await this.employeeService.addNewHRManager(this.employee);
-    }
+    this.spinner.show();
+   if (
+      !this.employee.first_name ||
+      !this.employee.last_name ||
+      !this.employee.email ||
+      !this.employee.password
+    ) {
+        this._snackBar.open("Please fill all the Fields", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+        this.spinner.hide();
+        return false;  
+      }
+    
+    else{
+     if (this.selectedRole === 'HRA') {
+        await this.employeeService.addNewHRAssistant(this.employee);
+      } else {
+        await this.employeeService.addNewHRManager(this.employee);
+      }
 
-    this._snackBar.open('Role added successfully', 'Close', {
-      duration: 3000,
-    });
-    this.dialogRef.close(true);
-  }
+      this._snackBar.open('Role added successfully', '', {
+        duration: 3000,
+      });
+      this.spinner.hide();
+      return true;
+     
+      }
+    }
 }
+

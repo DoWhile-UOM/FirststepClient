@@ -6,6 +6,8 @@ import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
+import { RoleProfileEditComponent } from '../../components/role-profile-edit/role-profile-edit.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-sa-nav-bar',
   standalone: true,
@@ -14,19 +16,19 @@ import { AuthService } from '../../../services/auth.service';
   styleUrl: './sa-nav-bar.component.css'
 })
 export class SaNavBarComponent {
-  selected: number = 2;
-  colorList = ['black', 'back', 'black', 'black']
+  name: string = "System Admin";
 
-  constructor(private router: Router, private auth: AuthService) { }
-
-  ngOnInit(): void {
-    this.colorList.forEach(element => {
-      element = 'black';
-    });
-
-    this.colorList[this.selected] = 'primary';
+  constructor(private dialog: MatDialog, private auth: AuthService) { 
+    this.name = this.auth.getName();
   }
+
   onSignoutClick() {
     this.auth.signOut();
+  }
+  roleProfileEdit() {
+    const dialogRef = this.dialog.open(RoleProfileEditComponent, {
+      width: '500px',
+      data: { id: Number(this.auth.getUserId()) }
+    });
   }
 }
