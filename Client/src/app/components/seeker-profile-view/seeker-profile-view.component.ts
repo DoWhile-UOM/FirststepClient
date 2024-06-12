@@ -26,7 +26,7 @@ interface Seeker {
   bio: string;
   description: string;
   university: string;
-  cVurl: string;
+  CVurl: string;
   profile_picture: string;
   linkedin: string;
   field_id: number;
