@@ -61,7 +61,7 @@ export class CompanyApplicationListComponent {
 
   companyList: CompanyList[] = [];
   companyListLength: number = 0;
-  selectedFilter: string = 'all';
+  selectedFilter: string = 'pending';
 
   totalItems = 100;
   pageSize = 10;
@@ -89,7 +89,6 @@ export class CompanyApplicationListComponent {
 
   async fetchData(status: string) {
     this.spinner.show();
-    console.log('Fetching data');
     await this.companyService
       .getAllCompanyList()
       .then((data: any[]) => {
@@ -124,7 +123,6 @@ export class CompanyApplicationListComponent {
             (company) => company.evaluated_status == 'Not Evaluated'
           );
         }
-        console.log('Company List', data);
 
         if (this.companyList.length == 0) {
           this.companyListLength = 0;
@@ -136,7 +134,6 @@ export class CompanyApplicationListComponent {
         this.spinner.hide();
       })
       .catch((error) => {
-        console.log('error', error);
         this.spinner.hide();
       });
   }

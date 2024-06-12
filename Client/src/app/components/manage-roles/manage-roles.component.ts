@@ -18,6 +18,8 @@ import { EditRoleComponent } from '../edit-role/edit-role.component';
 import { EmployeeService } from '../../../services/employee.service';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export interface RolesData {
   id: number;
@@ -42,6 +44,7 @@ export interface RolesData {
     CommonModule,
     MatDialogModule,
     MatInputModule,
+    SpinnerComponent
   ],
 })
 export class ManageRolesComponent {
@@ -57,19 +60,22 @@ export class ManageRolesComponent {
   constructor(
     public dialog: MatDialog,
     private employeeService: EmployeeService,
-    private auth: AuthService
+    private auth: AuthService,
+    private spinner: NgxSpinnerService
   ) {
   
   }
 
   //Fetch data from the database when the component initializes
   ngOnInit(): void {
+    this.spinner.show();
     try {
       this.company_id = this.auth.getCompanyID() || '';
       this.fetchData(this.selected);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+    this.spinner.hide();
   }
 
   async fetchData(type: string) {
@@ -163,18 +169,21 @@ export class ManageRolesComponent {
   templateUrl: './confirm-delete.html',
   styleUrl: './manage-roles.component.css',
   standalone: true,
-  imports: [MatDialogModule, MatButtonModule],
+  imports: [MatDialogModule, MatButtonModule, SpinnerComponent],
 })
 export class ConfirmDeleteComponent {
   constructor(
     private employeeService: EmployeeService,
     public dialogRef: MatDialogRef<ConfirmDeleteComponent>,
+    private spinner: NgxSpinnerService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   emp_id: number = this.data.id;
 
   async Clickdelete() {
+    this.spinner.show();
     await this.employeeService.deleteEmployee(this.emp_id);
     this.dialogRef.close(true);
+    this.spinner.hide();
   }
 }

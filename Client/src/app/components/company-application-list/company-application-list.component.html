@@ -1,15 +1,15 @@
 <app-spinner></app-spinner>
 
 <div class="page-title">
-  <p>Company Registration Application List</p>
+  <p>Company Registration Applications</p>
 
   <div class="pageTitleContent">
     <span>
       <mat-chip-listbox aria-label="Filter" #filterByStatus (change)="filter(filterByStatus.selected)">
-        <mat-chip-option selected value="all">All</mat-chip-option>
+        <mat-chip-option value="all">All</mat-chip-option>
         <mat-chip-option value="registered">Registered</mat-chip-option>
         <mat-chip-option value="rejected">Rejected</mat-chip-option>
-        <mat-chip-option value="pending">Pending</mat-chip-option>
+        <mat-chip-option selected value="pending">Pending</mat-chip-option>
       </mat-chip-listbox>
     </span>
   </div>
