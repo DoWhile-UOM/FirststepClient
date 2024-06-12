@@ -46,7 +46,6 @@ import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
 import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 import { profile } from 'console';
-import { Spinner } from '@syncfusion/ej2-angular-pdfviewer';
 
 
 interface SeekerProfile {
@@ -59,7 +58,7 @@ interface SeekerProfile {
   bio: string;
   description: string;
   university: string;
-  CVurl: string;
+  cVurl: string;
   profile_picture: string;
   linkedin: string;
   field_id: number;
@@ -147,7 +146,7 @@ export class SeekerProfileEditComponent implements OnInit {
       description: ['', Validators.required],
       university: [''],
       linkedin: [''],
-      CVurl: [''], //CVurl
+      cVurl: [''], 
       field_id: ['', Validators.required],
       profile_picture: [''],
       password: [''],
@@ -265,30 +264,18 @@ async ngOnInit() {
       this.snackBar.open('Please fill in all required fields', 'Close', { duration: 3000 });
       return;
     }
-  
+
     this.spinner.show();
     try {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
       formValue.seekerSkills = this.seekerForm.get('seekerSkills')?.value;
-  
-      const formData = new FormData();
-      formData.append('email', formValue.email);
-      formData.append('first_name', formValue.first_name);
-      formData.append('last_name', formValue.last_name);
-      formData.append('phone_number', formValue.phone_number.toString());
-      formData.append('bio', formValue.bio);
-      formData.append('description', formValue.description);
-      formData.append('university', formValue.university || '');
-      formData.append('cVurl', formValue.CVurl || '');
-      formData.append('profile_picture', formValue.profile_picture || '');
-      formData.append('linkedin', formValue.linkedin || '');
-      formData.append('field_id', formValue.field_id.toString());
-      formData.append('seekerSkills', JSON.stringify(formValue.seekerSkills || []));
+
       if (this.selectedFile) {
-        formData.append('cvFile', this.selectedFile);
+        formValue.cvFile = this.selectedFile;
+        formValue.cVurl = ''; // Indicate a new CV is uploaded
       }
-  
-      await this.seekerService.editSeeker(formData, this.user_id);
+
+      await this.seekerService.editSeeker(formValue, this.user_id);
       this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
     } catch (error) {
       console.error('Error updating profile: ', error);
@@ -381,7 +368,6 @@ async ngOnInit() {
     });
   }
 
-  //Skills 
   changeSkillsArray($event: Event){
 		var skills = $event;
 		if (skills != null){
@@ -406,7 +392,6 @@ async ngOnInit() {
 		return uniqueArr;
 	}
 
-  //Error Handling
   phoneNumberErrorMessage() {
     if (this.seekerForm.get('phone_number')?.hasError('required')) {
       return 'Phone number is required';
@@ -496,30 +481,12 @@ async ngOnInit() {
       : false;
   }
 
-  //File Handling
   onCvSelected(event: { file: File; url: string }) {
-    this.selectedFile = event.file; // Store the file for later submission
-    this.seekerForm.patchValue({ CVurl: event.url }); // Update form with URL
+    this.selectedFile = event.file; // Correctly access the file property
+    this.seekerForm.patchValue({ cVurl: event.url }); // Correctly access the url property
   }
-
-  openUploadDialog(): void {
-    const dialogRef = this.dialog.open(UploadCV, {
-      width: '1000px',
-    });
-
-    dialogRef.componentInstance.fileSelected.subscribe(({ file, url }) => {
-      this.selectedFile = file; // Store the file for later submission
-      this.seekerForm.patchValue({ CVurl: url }); // Update form with URL
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      if (this.selectedFile) {
-        this.snackBar.open('File uploaded successfully', 'Close', {
-          duration: 2000,
-        });
-      }
-    });
-  }
+  
+  
 
   openPdfViewer() {
     if (this.cvUrl) {
@@ -531,6 +498,28 @@ async ngOnInit() {
         duration: 3000,
       });
     }
+  }
+  
+
+  openUploadDialog(): void {
+    const dialogRef = this.dialog.open(UploadCV, {
+      width: '1000px',
+    });
+
+    dialogRef.componentInstance.fileSelected.subscribe((file: File) => {
+      this.selectedFile = file;
+      this.seekerForm.patchValue({
+        cVurl: '',
+      });
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      if (this.selectedFile) {
+        this.snackBar.open('File uploaded successfully', 'Close', {
+          duration: 2000,
+        });
+      }
+    });
   }
 }
 
@@ -585,7 +574,7 @@ export class ApprovingChangingEmailPopUp {
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
-    MatButtonModule
+    MatButtonModule,
   ],
 })
 export class InformEmailShouldBeVerifiedPopUp {}
@@ -600,7 +589,6 @@ export class InformEmailShouldBeVerifiedPopUp {}
     MatDialogActions,
     MatDialogClose,
     MatButtonModule,
-    CommonModule
   ],
 })
 export class ConfirmDeleteProfilePopUp {
@@ -614,29 +602,23 @@ export class ConfirmDeleteProfilePopUp {
   }
 }
 
-// dialog for uploading CV
+
 @Component({
   selector: 'app-upload-cv',
   templateUrl: 'upload-cv.html',
+  styleUrls: ['upload-cv.css'], 
   standalone: true,
   imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
+    MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    SpinnerComponent,
-    CommonModule,
-    MatIconModule
-  ],
-  styleUrls: ['upload-cv.css']
+    CommonModule
+  ]
 })
 export class UploadCV {
   @Output() fileSelected = new EventEmitter<{ file: File; url: string }>();
   uploadInProgress = false;
   uploadSuccess = false;
-
   constructor(public dialogRef: MatDialogRef<UploadCV>) {}
 
   async onFileSelected($event: Event) {
@@ -649,7 +631,7 @@ export class UploadCV {
       try {
         const fileUrl = await this.fileUploadSimulate(file);
         this.uploadSuccess = true;
-        this.fileSelected.emit({ file, url: fileUrl }); // Emit URL here if applicable
+        this.fileSelected.emit({ file, url: '' }); // Emit empty URL as a placeholder
       } catch (error) {
         console.error('Error uploading file: ', error);
       } finally {
@@ -661,7 +643,7 @@ export class UploadCV {
   fileUploadSimulate(file: File): Promise<string> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(''); // Return URL if applicable
+        resolve(''); // No URL used here, just resolve the promise
       }, 3000);
     });
   }
@@ -671,7 +653,6 @@ export class UploadCV {
   }
 }
 
-// dialog for viewing PDF
 @Component({
   selector: 'app-pdf-view',
   standalone: true,

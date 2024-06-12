@@ -89,8 +89,30 @@ async getSeekerEditProfile(id: number) {
   }
 }
 
-async editSeeker(formData: FormData, seekerID: number) {
+async editSeeker(seeker: SeekerProfile, seekerID: number) {
   try {
+    const formData = new FormData();
+    formData.append('email', seeker.email);
+    formData.append('first_name', seeker.first_name);
+    formData.append('last_name', seeker.last_name);
+    formData.append('phone_number', seeker.phone_number.toString());
+    formData.append('bio', seeker.bio);
+    formData.append('description', seeker.description);
+    formData.append('university', seeker.university);
+    formData.append('cVurl', seeker.cVurl);
+    formData.append('profile_picture', seeker.profile_picture);
+    formData.append('linkedin', seeker.linkedin);
+    formData.append('field_id', seeker.field_id.toString());
+    if (seeker.cvFile) {
+      formData.append('cvFile', seeker.cvFile);
+      formData.append('cVurl', ''); // Indicate a new CV is uploaded
+    } else {
+      formData.append('cVurl', seeker.cVurl);
+    }
+    if (seeker.seekerSkills) {
+      formData.append('seekerSkills', JSON.stringify(seeker.seekerSkills));
+    }
+
     const response = await axios.put(Apipaths.editSeeker + seekerID, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
