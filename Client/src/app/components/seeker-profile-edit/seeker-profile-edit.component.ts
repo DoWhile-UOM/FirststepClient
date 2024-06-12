@@ -273,7 +273,7 @@ export class SeekerProfileEditComponent implements OnInit {
     this.spinner.show();
     try {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
-      formValue.seekerSkills = this.seekerForm.get('seekerSkills')?.value;
+      formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
 
       const formData = new FormData();
       formData.append('email', formValue.email);
@@ -287,12 +287,12 @@ export class SeekerProfileEditComponent implements OnInit {
       formData.append('profile_picture', formValue.profile_picture || '');
       formData.append('linkedin', formValue.linkedin || '');
       formData.append('field_id', formValue.field_id.toString());
-      // Append each skill individually
-      if (formValue.seekerSkills) {
-        formValue.seekerSkills.forEach((skill) =>
-          formData.append('seekerSkills', skill)
-        );
-      }
+      
+       // Append each skill individually
+    if (formValue.seekerSkills) {
+      formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
+    }
+
       if (this.selectedFile) {
         formData.append('cvFile', this.selectedFile);
       }
@@ -396,6 +396,8 @@ export class SeekerProfileEditComponent implements OnInit {
     });
   }
 
+  //Skill Handling
+
   changeSkillsArray($event: Event) {
     var skills = $event;
     if (skills != null) {
@@ -423,6 +425,17 @@ export class SeekerProfileEditComponent implements OnInit {
     return uniqueArr;
   }
 
+  private manageSkills(newSkills: string[] | null): string[] {
+    let currentSkills = this.seekerForm.get('seekerSkills')?.value || [];
+  
+    if (newSkills) {
+      currentSkills = [...currentSkills, ...newSkills];
+    }
+  
+    return this.removeDuplicates(currentSkills);
+  }
+
+  
   phoneNumberErrorMessage() {
     if (this.seekerForm.get('phone_number')?.hasError('required')) {
       return 'Phone number is required';
