@@ -45,8 +45,7 @@ import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
 import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
-import { profile } from 'console';
-
+import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 
 interface SeekerProfile {
   user_id: number;
@@ -93,11 +92,13 @@ interface SeekerProfile {
     SeekerEmailVerificationBoxComponent,
     AddSkillsComponent,
     MatProgressSpinnerModule,
+    PdfViewComponent
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
 })
 export class SeekerProfileEditComponent implements OnInit {
+  seekerDetails: SeekerProfile = {} as SeekerProfile;
   seekerForm: FormGroup;
   hasDataLoaded: boolean = false;
   user_id: number = 2095; //temp
@@ -109,6 +110,8 @@ export class SeekerProfileEditComponent implements OnInit {
   fields: any = [];
   passwordFieldType: string = 'password';
   passwordPlaceholder: string = '********';
+  disableViewButton: boolean = false; // Disable view button when no CV is uploaded
+
 
   isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
@@ -119,7 +122,7 @@ export class SeekerProfileEditComponent implements OnInit {
   logoUrl = '';
   logoBlobName = '';
   selectedFile: File | null = null;
-  cvUrl: string = '';
+  cVurl: string = '';
   eventOccured: boolean = false;
 
   skills: string[] = [];
@@ -200,14 +203,14 @@ async ngOnInit() {
       bio: seeker.bio,
       description: seeker.description,
       university: seeker.university,
-      cVurl: seeker.cVurl || '',
+      cVurl: seeker.cVurl,
       linkedin: seeker.linkedin,
       field_id: seeker.field_id,
       password: this.passwordPlaceholder,
       seekerSkills: seeker.seekerSkills || [],
     });
 
-    this.cvUrl = seeker.cVurl || ''; // Save the CV URL
+    this.cVurl = seeker.cVurl; // Save the CV URL
     this.skills = this.removeDuplicates(seeker.seekerSkills || []);
     this.emailcaptured = seeker.email;
     this.hasDataLoaded = true;
@@ -272,11 +275,11 @@ async ngOnInit() {
 
       if (this.selectedFile) {
         formValue.cvFile = this.selectedFile;
-        formValue.cVurl = ''; // Indicate a new CV is uploaded
       }
 
       await this.seekerService.editSeeker(formValue, this.user_id);
       this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
+
     } catch (error) {
       console.error('Error updating profile: ', error);
       this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
@@ -481,17 +484,18 @@ async ngOnInit() {
       : false;
   }
 
-  onCvSelected(event: { file: File; url: string }) {
-    this.selectedFile = event.file; // Correctly access the file property
-    this.seekerForm.patchValue({ cVurl: event.url }); // Correctly access the url property
-  }
   
+  onCvSelected(file: File) {
+    this.seekerDetails.cvFile = file;
+  }
   
 
   openPdfViewer() {
-    if (this.cvUrl) {
+    if (this.cVurl) {
       this.dialog.open(PdfViewComponent, {
-        data: { documentUrl: this.cvUrl },
+        data: { documentUrl: this.cVurl },
+        width: '80%',
+        height: '80%',
       });
     } else {
       this.snackBar.open('No CV available to view', 'Close', {
@@ -503,14 +507,17 @@ async ngOnInit() {
 
   openUploadDialog(): void {
     const dialogRef = this.dialog.open(UploadCV, {
-      width: '1000px',
+      width: '400px',
+      height: '200px',
     });
 
     dialogRef.componentInstance.fileSelected.subscribe((file: File) => {
       this.selectedFile = file;
       this.seekerForm.patchValue({
-        cVurl: '',
+        //cvFile: file,
       });
+      this.disableViewButton = true; // Disable view button when a new file is selected
+
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -616,7 +623,7 @@ export class ConfirmDeleteProfilePopUp {
   ]
 })
 export class UploadCV {
-  @Output() fileSelected = new EventEmitter<{ file: File; url: string }>();
+  @Output() fileSelected = new EventEmitter<File>();
   uploadInProgress = false;
   uploadSuccess = false;
   constructor(public dialogRef: MatDialogRef<UploadCV>) {}
@@ -628,15 +635,17 @@ export class UploadCV {
       this.uploadSuccess = false;
       const file = input.files[0];
 
-      try {
-        const fileUrl = await this.fileUploadSimulate(file);
-        this.uploadSuccess = true;
-        this.fileSelected.emit({ file, url: '' }); // Emit empty URL as a placeholder
-      } catch (error) {
-        console.error('Error uploading file: ', error);
-      } finally {
-        this.uploadInProgress = false;
+      try{
+        await this.fileUploadSimulate(file);
+        this.uploadSuccess=true;
+        this.fileSelected.emit(file);
       }
+      catch(error){
+        console.error('Error uploading file: ', error);
+      }
+      finally{
+        this.uploadInProgress=false;
+    }
     }
   }
 
@@ -653,27 +662,3 @@ export class UploadCV {
   }
 }
 
-@Component({
-  selector: 'app-pdf-view',
-  standalone: true,
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
-  template: `
-    <h1 mat-dialog-title>CV Viewer</h1>
-    <mat-dialog-content>
-      <embed [src]="data.documentUrl" type="application/pdf" width="100%" height="600px" />
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button (click)="onClose()">Close</button>
-    </mat-dialog-actions>
-  `,
-})
-export class PdfViewComponent {
-  constructor(
-    public dialogRef: MatDialogRef<PdfViewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { documentUrl: string }
-  ) {}
-
-  onClose(): void {
-    this.dialogRef.close();
-  }
-}

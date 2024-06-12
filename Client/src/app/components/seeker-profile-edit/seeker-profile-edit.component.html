@@ -84,11 +84,10 @@
       <div class="textbox-form-field">
         <app-add-skills [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
       </div>
-      <div class="button-container" style="gap: 10px;">
         <div class="button-container" style="gap: 10px;">
           <button mat-raised-button color="primary" (click)="openUploadDialog()">Upload CV</button>
-          <button mat-raised-button color="primary" (click)="openPdfViewer()">View</button>
-        </div>      </div>
+          <button mat-raised-button color="primary" [disabled]="disableViewButton" (click)="openPdfViewer()">View CV</button>
+        </div>      
       <mat-divider></mat-divider>
       <section>
         <div class="example-button-row">
