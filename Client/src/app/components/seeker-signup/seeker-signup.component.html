@@ -104,7 +104,7 @@
               </mat-form-field>
               <mat-label class="label-import">Please upload your CV</mat-label>
               <div class="cvupload fixed-width">
-                <app-file-upload></app-file-upload>
+                <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload>
               </div>
               <div class="button-container">
                 <button mat-button matStepperPrevious class="custom-stepper-button">
