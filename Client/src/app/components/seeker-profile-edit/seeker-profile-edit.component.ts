@@ -120,9 +120,10 @@ export class SeekerProfileEditComponent implements OnInit {
 
   emailReadOnly: boolean = true;
 
-  logoUrl = '';
-  logoBlobName = '';
+  propicUrl = '';
+  propicBlobName = '';
   selectedFile: File | null = null;
+  selectedimage: File | null = null;
   cVurl: string = '';
   eventOccured: boolean = false;
 
@@ -158,32 +159,32 @@ export class SeekerProfileEditComponent implements OnInit {
     });
   }
   //image upload
-  // onselectFile(event: any) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files[0]) {
-  //     this.selectedFile = input.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = (e: ProgressEvent<FileReader>) => {
-  //       this.logoUrl = (e.target?.result as string) || '';
-  //     };
-  //     reader.readAsDataURL(this.selectedFile);
-  //   }
-  //   this.eventOccured = true;
-  // }
-  // async onSaveLogo() {
-  //   if (this.selectedFile) {
-  //     await this.seekerService.updateProfilePicture(this.selectedFile, this.user_id)
-  //       .then(response => {
-  //         console.log('Upload successful', response);
-  //       })
-  //       .catch(error => {
-  //         console.error('Upload error', error);
-  //       });
-  //   } else {
-  //     console.error('No file selected!');
-  //   }
-  //   this.eventOccured = false;
-  // }
+  onselectFile(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedimage = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.propicUrl = (e.target?.result as string) || '';
+      };
+      reader.readAsDataURL(this.selectedimage);
+    }
+    this.eventOccured = true;
+  }
+  async onSaveLogo() {
+    if (this.selectedimage) {
+      await this.seekerService.updateProfilePicture(this.selectedimage, this.user_id)
+        .then(response => {
+          console.log('Upload successful', response);
+        })
+        .catch(error => {
+          console.error('Upload error', error);
+        });
+    } else {
+      console.error('No file selected!');
+    }
+    this.eventOccured = false;
+  }
 
   async ngOnInit() {
     this.spinner.show();
@@ -211,7 +212,7 @@ export class SeekerProfileEditComponent implements OnInit {
         password: this.passwordPlaceholder,
         seekerSkills: seeker.seekerSkills || [],
       });
-
+      this.propicUrl = seeker.profile_picture;
       this.cVurl = seeker.cVurl; // Save the CV URL
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;

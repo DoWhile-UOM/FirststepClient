@@ -6,8 +6,24 @@
     </div>
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="2" rowHeight="140" style="margin: 0;">
-        <mat-grid-tile class="tile"></mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile class="tile">
+          <p *ngIf="!propicUrl"><mat-spinner class="imageLoading"></mat-spinner>Loading image...</p>
+          <div *ngIf="propicUrl">
+            <img [src]="propicUrl" alt="Seeker profile picture" class="md-card-image" width="100" height="auto"
+              onError="this.onerror=null;this.src='fallback-image-url';"><br />
+            <div style="display: flex; justify-content: center; align-items: center;">
+              <mat-icon *ngIf="!eventOccured" class="edit">editicon</mat-icon>
+              <label *ngIf="!eventOccured" for="profile-upload" class="custom-file-upload">
+                Edit Logo
+              </label>
+            </div>
+            <input type="file" id="profile-upload" (change)="onselectFile($event)" *ngIf="!eventOccured"
+              name="Edit Profile" />
+          </div>
+          <button mat-raised-button (click)="onSaveLogo()" *ngIf="eventOccured">Save Logo</button>
+
+          <!--<img src="assets/images/BistechLogo.png" class="md-card-image" />-->
+        </mat-grid-tile>        <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Bio</mat-label>
             <input matInput formControlName="bio" required />

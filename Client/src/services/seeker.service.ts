@@ -51,19 +51,6 @@ async getSeekerProfile(id: number) {
   }
 }
 
-// async getSeekerDetails(id : number) {
-//   let seekerData: any;
-  
-//   await axios.get('https://localhost:7213/api/Seeker/GetSeeker/' + id)
-//     .then((response) => {
-//       seekerData = response.data;
-//     })
-//     .catch (function (error) {
-//       console.log("Network Error in getSeekerDetails : " + error);
-//     });;
-
-//   return seekerData;
-// }
 
 async getSeekerDetailsForApplication(id : number) {
   let seekerData: any;
@@ -104,17 +91,17 @@ async editSeeker(formData: FormData, seekerID: number) {
 }
 
 
-// async updateProfilePicture(file: File, user_id: number) {
-//   const formData: FormData = new FormData();
-//   formData.append('file', file);
-//   formData.append('user_id', user_id.toString());
-//   await axios.patch(Apipaths.updateProfilePicture + 'companyId=' + user_id, formData).then((response) => {
-//     this.snackbar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-//   }
-//   ).catch((error) => {
-//     this.snackbar.open('Error updating company logo', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-//   });
-
+async updateProfilePicture(file: File, user_id: number) {
+  const formData: FormData = new FormData();
+  formData.append('file', file);
+  formData.append('user_id', user_id.toString());
+  await axios.patch(Apipaths.updateProfilePicture + 'companyId=' + user_id, formData).then((response) => {
+    this.snackbar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+  }
+  ).catch((error) => {
+    this.snackbar.open('Error updating company logo', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+  });
+}
 
 //delete method
 async deleteSeeker(seekerID: number) {
