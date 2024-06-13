@@ -172,6 +172,12 @@ export class SeekerProfileEditComponent implements OnInit {
     }
     this.eventOccured = true;
   }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('profile-upload') as HTMLInputElement;
+    fileInput.click();
+  }
+  
   // async onSaveLogo() {
   //   if (this.selectedimage) {
   //     await this.seekerService.updateProfilePicture(this.selectedimage, this.user_id)
