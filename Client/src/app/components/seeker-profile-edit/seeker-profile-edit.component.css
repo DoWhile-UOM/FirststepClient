@@ -176,3 +176,26 @@ button:hover {
   width: calc(100% - 2.2em);
   margin: 0 auto;
 }
+
+
+.imageLoading {
+  width: 50px !important;
+  margin: 0 auto;
+  display: block;
+}
+
+.edit{
+  color:#008080;
+}
+
+.custom-file-upload {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  color:#008080; 
+  margin-left: 10px;
+}
+
+.custom-file-upload mat-icon {
+  font-size: 24px !important; 
+}

@@ -67,6 +67,7 @@ interface SeekerProfile {
   field_name?: string;
   seekerSkills?: string[];
   cvFile?: File; // New CV file
+  profilePictureFile?: File; // New profile picture file
 }
 
 @Component({
@@ -171,20 +172,20 @@ export class SeekerProfileEditComponent implements OnInit {
     }
     this.eventOccured = true;
   }
-  async onSaveLogo() {
-    if (this.selectedimage) {
-      await this.seekerService.updateProfilePicture(this.selectedimage, this.user_id)
-        .then(response => {
-          console.log('Upload successful', response);
-        })
-        .catch(error => {
-          console.error('Upload error', error);
-        });
-    } else {
-      console.error('No file selected!');
-    }
-    this.eventOccured = false;
-  }
+  // async onSaveLogo() {
+  //   if (this.selectedimage) {
+  //     await this.seekerService.updateProfilePicture(this.selectedimage, this.user_id)
+  //       .then(response => {
+  //         console.log('Upload successful', response);
+  //       })
+  //       .catch(error => {
+  //         console.error('Upload error', error);
+  //       });
+  //   } else {
+  //     console.error('No file selected!');
+  //   }
+  //   this.eventOccured = false;
+  // }
 
   async ngOnInit() {
     this.spinner.show();
@@ -298,6 +299,13 @@ export class SeekerProfileEditComponent implements OnInit {
         formData.append('cvFile', this.selectedFile);
       }
 
+      if (this.selectedimage) {
+        formData.append('profilePictureFile', this.selectedimage);
+      } else {
+        formData.append('profile_picture', this.propicUrl); // Ensure the current profile picture URL is sent
+      }
+  
+  
       await this.seekerService.editSeeker(formData, this.user_id);
       this.snackBar.open('Profile updated successfully', 'Close', {
         duration: 2000,

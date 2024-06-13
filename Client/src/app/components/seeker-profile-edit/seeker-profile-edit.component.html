@@ -14,16 +14,14 @@
             <div style="display: flex; justify-content: center; align-items: center;">
               <mat-icon *ngIf="!eventOccured" class="edit">editicon</mat-icon>
               <label *ngIf="!eventOccured" for="profile-upload" class="custom-file-upload">
-                Edit Logo
+                Edit image
               </label>
             </div>
             <input type="file" id="profile-upload" (change)="onselectFile($event)" *ngIf="!eventOccured"
               name="Edit Profile" />
           </div>
-          <button mat-raised-button (click)="onSaveLogo()" *ngIf="eventOccured">Save Logo</button>
-
-          <!--<img src="assets/images/BistechLogo.png" class="md-card-image" />-->
-        </mat-grid-tile>        <mat-grid-tile>
+        </mat-grid-tile>      
+        <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Bio</mat-label>
             <input matInput formControlName="bio" required />
