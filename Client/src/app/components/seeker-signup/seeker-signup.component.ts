@@ -189,6 +189,10 @@ onCvSelected(file: File) {
     } else {
       this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
+
+    this.snackbar.open("OTP was requested", "", {
+    duration: 3000,
+  });
   }
 
   // OTP timer
