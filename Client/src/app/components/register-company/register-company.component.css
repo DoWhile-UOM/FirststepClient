@@ -100,12 +100,19 @@ mat-grid-tile mat-form-field {
 }
 
 
+
 .title {
   color: #008080;
   font-size: 25px;
   font-family: Lato;
   font-weight: 700;
   word-wrap: break-word;
+}
+
+.spaced-tile {
+  margin-top: 20px;
+  margin-bottom: 20px; 
+  height: 500px;
 }
 
 

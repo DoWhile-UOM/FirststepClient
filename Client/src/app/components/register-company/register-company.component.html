@@ -115,27 +115,32 @@
               </mat-form-field>
             </mat-grid-tile>
 
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
+            <mat-grid-tile class="spaced-tile" >
+
                 <mat-label>Company Logo</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="company_logo" />
-              </mat-form-field>
+                
+                <app-seeker-application-file-upload
+                (fileSelected)="onFileSelected($event,'company_logo')"></app-seeker-application-file-upload>
+
             </mat-grid-tile>
 
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
+            <mat-grid-tile class="spaced-tile">
+
                 <mat-label>Business Registration Certificate</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="business_reg_certificate" />
-              </mat-form-field>
+
+                <app-seeker-application-file-upload
+                (fileSelected)="onFileSelected($event,'business_reg_certificate')"></app-seeker-application-file-upload>
+
             </mat-grid-tile>
 
 
-            <mat-grid-tile>
-              <mat-form-field appearance="outline">
+            <mat-grid-tile class="spaced-tile">
+
                 <mat-label>Certificate of Incorporation</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation" />
-                <button>Upload File</button>
-              </mat-form-field>
+
+                <app-seeker-application-file-upload
+                (fileSelected)="onFileSelected($event,'certificate_of_incorporation')"></app-seeker-application-file-upload>
+
             </mat-grid-tile>
 
           </mat-grid-list>

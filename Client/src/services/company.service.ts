@@ -100,7 +100,11 @@ export class CompanyService {
 
   async CompanyRegister(companyObj: any) {
     try {
-      const response = await axios.post(Apipaths.registerCompany, companyObj);
+      const response = await axios.post(Apipaths.registerCompany, companyObj, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       //this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       return { success: true, out: response.data };
     } catch (error: any) {
