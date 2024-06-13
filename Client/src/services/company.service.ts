@@ -247,11 +247,16 @@ export class CompanyService {
   }
 
   async updateUnregCompanyDetails(company: any) { // should be chnaged
-    
-    let Id=company.company_id;
+
+    let Id = company.company_id;
     //console.log('from service', company);
     await axios
-      .put(Apipaths.updateUnregComapny + Id,company) // tem slotion
+      .put(Apipaths.updateUnregComapny + Id, company,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }) // tem slotion
       .then((response) => {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })

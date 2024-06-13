@@ -52,7 +52,7 @@
         <mat-divider></mat-divider>
 
         <!--Company Details-->
-        <form #updateCompanyDetailsForm="ngForm" (ngSubmit)="OnResubmit()">
+        <form #updateCompanyDetailsForm="ngForm">
             <mat-grid-list cols="1" rowHeight="150">
                 <mat-grid-tile><!--Company Name-->
 
@@ -72,7 +72,7 @@
                         <mat-label>URL of the Website</mat-label>
                         <input matInput placeholder="Your input here" type="url" class="form-control"
                             name="company_website" [(ngModel)]="cmpData.company_website" id="websiteUrl"
-                            name="websiteUrl" required>
+                            name="websiteUrl">
                     </mat-form-field>
                 </mat-grid-tile>
 
@@ -89,8 +89,8 @@
 
 
                         <mat-label>Business Scale</mat-label>
-                        <mat-select name="company_business_scale" [(ngModel)]="cmpData.company_business_scale" #company_business_scale
-                            required>
+                        <mat-select name="company_business_scale" [(ngModel)]="cmpData.company_business_scale"
+                            #company_business_scale required>
                             @for(BScale of BusinessScales ; track BScale){
                             <mat-option [value]="BScale.value">{{ BScale.name }}</mat-option>
                             }
@@ -134,29 +134,36 @@
                 </mat-grid-tile>
 
                 <mat-grid-tile>
-                    <mat-form-field appearance="outline">
+                    <div>
+
                         <mat-label>Company Logo</mat-label>
+                        <!-----
                         <input matInput placeholder="Enter Email" [(ngModel)]="cmpData.company_logo"
-                            name="company_logo" />
-                    </mat-form-field>
+                            name="company_logo" />----->
+                        <app-seeker-application-file-upload
+                            (fileSelected)="onFileSelected($event,'company_logo')"></app-seeker-application-file-upload>
+                    </div>
                 </mat-grid-tile>
 
                 <mat-grid-tile>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Business Registration Certificate</mat-label>
+
+                    <!----<mat-label>Business Registration Certificate</mat-label>
                         <input matInput placeholder="Enter Email" [(ngModel)]="cmpData.business_reg_certificate"
-                            name="business_reg_certificate" />
-                    </mat-form-field>
+                            name="business_reg_certificate" />--->
+                    <app-seeker-application-file-upload
+                        (fileSelected)="onFileSelected($event,'business_reg_certificate')"></app-seeker-application-file-upload>
+
                 </mat-grid-tile>
 
 
                 <mat-grid-tile>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Certificate of Incorporation</mat-label>
+
+                    <!----<mat-label>Certificate of Incorporation</mat-label>
                         <input matInput placeholder="Enter contact Number"
-                            [(ngModel)]="cmpData.certificate_of_incorporation" name="certificate_of_incorporation" />
-                        <button>Upload File</button>
-                    </mat-form-field>
+                            [(ngModel)]="cmpData.certificate_of_incorporation" name="certificate_of_incorporation" />-->
+                    <app-seeker-application-file-upload
+                        (fileSelected)="onFileSelected($event,'certificate_of_incorporation')"></app-seeker-application-file-upload>
+
                 </mat-grid-tile>
 
 
@@ -167,8 +174,8 @@
         <div>
             <mat-grid-list cols="2" rowHeight="140" style="display: flex; justify-content: space-between">
                 <mat-grid-tile style="width: 20%">
-                    <button [disabled]="isNoInput" mat-raised-button class="apply-button" color="primary"
-                        style="width: 50%" (click)="OnResubmit()">
+                    <button [disabled]="isNoInputMain" mat-raised-button class="apply-button" color="primary"
+                        style="width: 50%" (click)="ResubmitData()">
                         Resubmit
                     </button>
                 </mat-grid-tile>

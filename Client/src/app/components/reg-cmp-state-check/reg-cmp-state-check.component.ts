@@ -19,6 +19,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+import { SeekerApplicationFileUploadComponent } from "../seeker-application-file-upload/seeker-application-file-upload.component";
 
 //interface to fetch company data
 export interface CmpyData {
@@ -27,11 +28,11 @@ export interface CmpyData {
   company_website: string;
   company_email: string;
   company_description: string;
-  company_logo: string;
+  company_logo: File|null;
   company_business_scale: string;
-  business_reg_certificate: string;
+  business_reg_certificate: File|null;
   company_registered_date: string;
-  certificate_of_incorporation: string;
+  certificate_of_incorporation: File|null;
   company_phone_number: number
   business_reg_no: number;
   comment: string;
@@ -39,23 +40,30 @@ export interface CmpyData {
 
 }
 
+interface CompanyDocuments {
+  company_logo: File|null;
+  business_reg_certificate: File|null;
+  certificate_of_incorporation: File|null;
+}
+
 
 @Component({
-  selector: 'app-reg-cmp-state-check',
-  standalone: true,
-  imports: [FormsModule, CommonModule, MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
-  templateUrl: './reg-cmp-state-check.component.html',
-  styleUrl: './reg-cmp-state-check.component.css'
+    selector: 'app-reg-cmp-state-check',
+    standalone: true,
+    templateUrl: './reg-cmp-state-check.component.html',
+    styleUrl: './reg-cmp-state-check.component.css',
+    imports: [FormsModule, CommonModule, MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel, SeekerApplicationFileUploadComponent]
 })
 export class RegCmpStateCheckComponent {
 
   company_id: string = 'nmIkuA6ZIO'; // sample company_id
   regState: string = 'Pending'; // sample registration state
-  isNoInput: boolean = true;
+  isNoInputMain: boolean = true;
 
   //cmpData: CmpyData[] = [];
 
   cmpData: CmpyData = {} as CmpyData
+  uploadDoc: CompanyDocuments={} as CompanyDocuments
 
   constructor(private snackbar: MatSnackBar, private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
@@ -111,7 +119,7 @@ export class RegCmpStateCheckComponent {
     this.styleService.setStyle('circle-border-color', '#ff0000');
     this.styleService.setStyle('number-color', '#ff0000');
     this.regState = 'Rejected';
-    this.isNoInput = false;
+    this.isNoInputMain = false;
   }
 
   onApproved() {
@@ -122,10 +130,13 @@ export class RegCmpStateCheckComponent {
     this.regState = 'Already Approved';
   }
 
-  OnResubmit() {
+  ResubmitData() {
+    this.cmpData.company_logo=this.uploadDoc.company_logo;
+    this.cmpData.business_reg_certificate=this.uploadDoc.business_reg_certificate;
+    this.cmpData.certificate_of_incorporation=this.uploadDoc.certificate_of_incorporation;
     this.styleService.setStyle('circle-border-color', '#ffbf00');
     this.styleService.setStyle('number-color', '#ffbf00');
-    this.isNoInput = true;
+    this.isNoInputMain = true;
     try {
         //this.errorMessageForCompanyName == '' &&
         //this.errorMessageForDescription == '' &&
@@ -140,6 +151,26 @@ export class RegCmpStateCheckComponent {
     }
 
 
+  }
+
+  onFileSelected(file: File,name:string) {
+    console.log('File selected:', name);
+    //applicationData.append('cv', this.applicationData.cv);
+
+    switch (name) {
+      case "company_logo":
+        this.uploadDoc.company_logo = file;
+        break;
+      case "business_reg_certificate":
+        this.uploadDoc.business_reg_certificate = file;
+        break;
+      case "certificate_of_incorporation":
+        this.uploadDoc.certificate_of_incorporation = file;
+        break;
+
+      default:
+        this.uploadDoc.business_reg_certificate = file;
+    }
   }
 
 }
