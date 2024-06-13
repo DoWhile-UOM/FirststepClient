@@ -292,7 +292,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   async viewCommentHistory() {
     const dialogRef = this.dialog.open(CommentHistoryDialog, {
       width: '1000px',
-      height: '500px',
+      minHeight: '450px',
       data: await this.revisionService.getRevisionHistory(this.applicationId),
     });
   }

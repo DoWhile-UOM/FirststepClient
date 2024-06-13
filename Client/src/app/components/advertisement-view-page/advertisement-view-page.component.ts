@@ -1,14 +1,15 @@
 import { Component, Inject } from '@angular/core';
 import { AdvertisementHeaderComponent } from '../advertisement-header/advertisement-header.component';
-import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialog } from '@angular/material/dialog';
 import { countries } from 'country-data';
 import { Country } from 'country-state-city';
 import { MatBadgeModule } from '@angular/material/badge';
+import { SeekerApplicationFormComponent } from '../seeker-application-form/seeker-application-form.component';
+import { AuthService } from '../../../services/auth.service';
 
 interface Skill{
   skill_name: string;
@@ -47,9 +48,11 @@ export class AdvertisementViewPageComponent {
   isNullDeadline: boolean = false;
 
   constructor(
-    private router: ActivatedRoute, 
     private adService: AdvertisementServices,
-    public dialogRef: MatDialogRef<AdvertisementViewPageComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    private auth: AuthService,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<AdvertisementViewPageComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
       if (data.jobID == null) {
         console.log("No job ID found");
         return;
@@ -75,4 +78,19 @@ export class AdvertisementViewPageComponent {
         }
       })();
   } 
+
+  onClickApplyJob(){
+    this.dialogRef.close();
+    
+    this.dialog.open(SeekerApplicationFormComponent,{
+      maxWidth: '100em',
+      data: {
+        jobID: this.data.jobID, 
+        seekerID:  this.auth.getUserId(), 
+        company_name:  this.adData.company_name, 
+        job_title:  this.adData.title, 
+        job_field:  this.adData.field_name,
+        company_logo_url:  this.adData.company_logo_url}
+    }); 
+  }
 }

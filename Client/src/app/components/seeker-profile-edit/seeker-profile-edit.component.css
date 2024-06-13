@@ -187,13 +187,15 @@ button:hover {
 }
 
 .button-with-inputbox mat-form-field {
-  width: 55%;
+  width: 65%;
 }
 
 .button-with-inputbox button {
-  width: 45%;
+  width: 35%;
   padding: 5px;
   margin-right: 5px;
+  margin-top: 1.5em;
+  height: 3.5em;
 }
 
 .textbox-form-field {
@@ -244,7 +246,7 @@ mat-grid-list.mat-grid-list-below-description mat-form-field {
 .button-container {
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 30%;
   gap: 10px; /* Adjust the gap between the buttons */
   margin-top: 20px; /* Increase the margin-top value if necessary */
 }

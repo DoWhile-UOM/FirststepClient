@@ -125,6 +125,7 @@ textarea:focus {
 
 .upper-section {
   position: relative;
+  margin-bottom: 1.5em;
 }
 
 .status-label {

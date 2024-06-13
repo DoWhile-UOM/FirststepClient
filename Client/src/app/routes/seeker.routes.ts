@@ -7,10 +7,7 @@ import { CompanyProfileComponent } from '../components/company-profile/company-p
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
 import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
 import { SeekerApplicationStatusComponent } from '../components/seeker-application-status/seeker-application-status.component';
-import { ImageViewerComponent } from '../components/image-viewer/image-viewer.component';
-import { PdfViewComponent } from '../components/pdf-view/pdf-view.component';
 import { SeekerProfileEditComponent } from '../components/seeker-profile-edit/seeker-profile-edit.component';
-import { SeekerSignupComponent } from '../components/seeker-signup/seeker-signup.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,7 +16,6 @@ export const routes: Routes = [
   { path: 'applied', component: ApplicationAdvertisementListComponent },
   { path: 'home/company-profile', component: CompanyProfileComponent },
   { path: 'profile-edit', component: SeekerProfileEditComponent },
-  { path: 'signup', component: SeekerSignupComponent },
 
   // need to be verified
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
