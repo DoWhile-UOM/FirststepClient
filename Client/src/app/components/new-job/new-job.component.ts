@@ -60,7 +60,7 @@ interface UpdateJob{
 	title: string;
 	country: string;
 	city: string;
-	comapny_id: number;
+	company_id: number;
 	employeement_type: string;
 	arrangement: string;
 	experience: string;
@@ -192,9 +192,9 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		if (adData.title != undefined){
 			this.isUpdate = true;
 
-			if (adData.comapny_id != Number(this.auth.getCompanyID())){
+			if (adData.company_id != Number(this.auth.getCompanyID())){
 				this.snackBar.open("Unauthorized Access", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
-				this.router.navigate(['notfound']);
+				this.router.navigate(['/notfound']);
 			}
 
 			this.adData = adData;
@@ -211,7 +211,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			this.createJobFormGroup.controls.locationCityControl.setValue(adData.city);
 		}
 		else{
-			this.router.navigate(['notfound']);
+			this.router.navigate(['/notfound']);
 		}
 	}
 

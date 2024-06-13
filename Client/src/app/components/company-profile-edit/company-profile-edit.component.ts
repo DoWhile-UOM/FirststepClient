@@ -192,15 +192,12 @@ export class CompanyProfileEditComponent {
         this.errorMessageForEmail == '' && (this.emailcaptuered == this.company.company_email)
 
       ) {
-        console.log('Company : ', this.company);
         this.spinner.show();
-        console.log(this.company);
         await this.companyService.updateCompanyDetails(
           this.company,
           this.companyId
         ); // 7 for bistec
         this.cName = this.company.company_name;
-        console.log('updated');
       }
       else if (!(this.emailcaptuered == this.company.company_email)) {
         this.dialog.open(InformEmailShouldBeVerifiedPopUp);
