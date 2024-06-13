@@ -23,6 +23,22 @@ interface SeekerProfile {
   cvFile?: File;
 
 }
+export interface SeekerProfileViewDto {
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: number;
+  bio: string;
+  description: string;
+  university: string;
+  profile_picture: string;
+  linkedin: string;
+  field_id: number;
+  user_id: number;
+  cVurl: string;
+  field_name?: string;
+  seekerSkills?: string[];
+}
 
 
 @Injectable({
@@ -41,14 +57,16 @@ async getSeekerDetails(id: number) {
   }
 }
 
-async getSeekerProfile(id: number) {
-  try {
-    const response = await axios.get(Apipaths.getSeekerProfile + id);
-    return response.data as SeekerProfile;
-  } catch (error) {
-    console.error("Error fetching seeker profile: ", error);
-    throw error;
-  }
+async getSeekerProfile(id: number): Promise<SeekerProfileViewDto> {
+  let seekerData: SeekerProfileViewDto;
+  await axios.get(Apipaths.getSeekerProfile + id)
+    .then((response) => {
+      seekerData = response.data;
+    })
+    .catch((error) => {
+      console.log("Network Error: " + error);
+    });
+  return seekerData!;
 }
 
 
