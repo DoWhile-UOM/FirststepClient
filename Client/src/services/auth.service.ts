@@ -26,8 +26,8 @@ export class AuthService {
     return this.http.post<any>(Apipaths.register, userObj)
   }
 
-  login(loginObj: any) {
-    return this.http.post<any>(Apipaths.authenticate, loginObj)
+  async login(loginObj: any) {
+    return await this.http.post<any>(Apipaths.authenticate, loginObj)
   }
 
   //-----OTP Service----------------------------------
@@ -146,7 +146,7 @@ export class AuthService {
       return this.userPayload.CompanyID
   }
 
-  getLocation(): Promise<any> {
+  async getLocation(): Promise<any> {
     return new Promise((resolve, reject) => {
       try{
         if (navigator.geolocation) {

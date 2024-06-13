@@ -7,7 +7,6 @@
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
-@import "../node_modules/@syncfusion/ej2-angular-layouts/styles/material.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
