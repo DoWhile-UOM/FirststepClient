@@ -1,38 +1,68 @@
 <div class="body">
-  <app-spinner></app-spinner>
+  <app-spinner *ngIf="!hasDataLoaded"></app-spinner>
   <mat-card class="card" *ngIf="hasDataLoaded">
-    <div class="heading title">
-      <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
+    <div class="heading title" style="margin-bottom: 2em">
+      <span class="sectionHeading"
+        >{{ seekerForm.get("first_name")?.value }}
+        {{ seekerForm.get("last_name")?.value }}</span
+      >
     </div>
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
-      <mat-grid-list cols="2" rowHeight="140" style="margin: 0;">
+      <mat-grid-list cols="2" rowHeight="140" style="margin: 0">
         <mat-grid-tile class="tile">
-
-          <!-- <img [src]="logoUrl" class="logo" /><br /> -->
-          <!-- <input type="file" (change)="onselectFile($event)" *ngIf="!eventOccured" /> -->
-          <!-- <button mat-raised-button (click)="onSaveLogo()" *ngIf="eventOccured">Save Logo</button> -->
-
-          <!--<img src="assets/images/BistechLogo.png" class="md-card-image" />-->
+          <p *ngIf="!propicUrl">
+            <mat-spinner class="imageLoading"></mat-spinner>Loading image...
+          </p>
+          <div *ngIf="propicUrl">
+            <img
+              [src]="propicUrl"
+              alt="Seeker profile picture"
+              class="profile-image"
+              width="100"
+              height="auto"
+              onError="this.onerror=null;this.src='fallback-image-url';"
+            /><br />
+            <div class="edit-container">
+              <mat-icon class="edit" (click)="triggerFileInput()"
+                >edit</mat-icon
+              >
+              <label class="custom-file-upload" (click)="triggerFileInput()"
+                >Edit image</label
+              >
+              <input
+                type="file"
+                id="profile-upload"
+                (change)="onselectFile($event)"
+                style="display: none"
+              />
+            </div>
+          </div>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Bio</mat-label>
             <input matInput formControlName="bio" required />
-            <mat-error *ngIf="hasError('bio')">{{ getErrorMessage('bio') }}</mat-error>
+            <mat-error *ngIf="hasError('bio')">{{
+              getErrorMessage("bio")
+            }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>First Name</mat-label>
             <input matInput formControlName="first_name" required />
-            <mat-error *ngIf="hasError('first_name')">{{ getErrorMessage('first_name') }}</mat-error>
+            <mat-error *ngIf="hasError('first_name')">{{
+              getErrorMessage("first_name")
+            }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Last Name</mat-label>
             <input matInput formControlName="last_name" required />
-            <mat-error *ngIf="hasError('last_name')">{{ getErrorMessage('last_name') }}</mat-error>
+            <mat-error *ngIf="hasError('last_name')">{{
+              getErrorMessage("last_name")
+            }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
@@ -43,7 +73,7 @@
           <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
         </mat-form-field>
       </div>
-      <mat-grid-list cols="2" rowHeight="100">
+      <mat-grid-list cols="2" rowHeight="100" class="mat-grid-list-below-description">
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
@@ -51,22 +81,42 @@
             <mat-error *ngIf="hasError('phone_number')">{{ getErrorMessage('phone_number') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-
         <mat-grid-tile class="button-with-inputbox">
           <mat-form-field appearance="outline">
             <mat-label>Email Address</mat-label>
-            <input matInput placeholder="Enter Email" formControlName="email" [readonly]="emailReadOnly" required />
-            <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error>
+            <input
+              matInput
+              placeholder="Enter Email"
+              formControlName="email"
+              [readonly]="emailReadOnly"
+              required
+            />
+            <mat-error *ngIf="hasError('email')">{{
+              getErrorMessage("email")
+            }}</mat-error>
           </mat-form-field>
-          <button mat-raised-button class="apply-button" color="primary" (click)="openDialog()" id="otpreqbtn">Change your Email</button>
+          <button
+            mat-raised-button
+            class="apply-button"
+            color="primary"
+            (click)="openDialog()"
+            id="otpreqbtn"
+          >
+            Change your Email
+          </button>
         </mat-grid-tile>
-        
-
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password" required />
-            <mat-error *ngIf="hasError('password')">{{ getErrorMessage('password') }}</mat-error>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              required
+            />
+            <mat-error *ngIf="hasError('password')">{{
+              getErrorMessage("password")
+            }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -85,29 +135,60 @@
           <mat-form-field appearance="outline">
             <mat-label>Field</mat-label>
             <mat-select formControlName="field_id" required>
-              <mat-option *ngFor="let field of fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
+              <mat-option
+                *ngFor="let field of fields"
+                [value]="field.field_id"
+                >{{ field.field_name }}</mat-option
+              >
             </mat-select>
-            <mat-error *ngIf="hasError('field_id')">{{ getErrorMessage('field_id') }}</mat-error>
+            <mat-error *ngIf="hasError('field_id')">{{
+              getErrorMessage("field_id")
+            }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
-
       <div class="textbox-form-field">
-				<app-add-skills [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
-			</div>
-
-      <!-- CV upload button and view button -->
-      <div class="button-container" style="gap: 10px;">
-        <button mat-raised-button color="primary">Upload New</button>
-        <button mat-raised-button id="view">View</button>
+        <app-add-skills
+          [skills]="skills"
+          (skillChange)="changeSkillsArray($event)"
+        ></app-add-skills>
       </div>
-
+      <div class="button-container" style="gap: 10px">
+        <button mat-raised-button color="primary" (click)="openUploadDialog()">
+          Upload CV
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="disableViewButton"
+          (click)="openPdfViewer()"
+        >
+          View CV
+        </button>
+      </div>
       <mat-divider></mat-divider>
       <section>
         <div class="example-button-row">
-          <button type="submit" mat-raised-button color="primary">Update Profile</button>
-          <button type="button" mat-raised-button id="discard" (click)="discardChanges()">Discard Changes</button>
-          <button type="button" mat-raised-button color="warn" id="delete" (click)="deleteAccount()">Delete Profile</button>
+          <button type="submit" mat-raised-button color="primary">
+            Update Profile
+          </button>
+          <button
+            type="button"
+            mat-raised-button
+            id="discard"
+            (click)="discardChanges()"
+          >
+            Discard Changes
+          </button>
+          <button
+            type="button"
+            mat-raised-button
+            color="warn"
+            id="delete"
+            (click)="deleteAccount()"
+          >
+            Delete Profile
+          </button>
         </div>
       </section>
     </form>

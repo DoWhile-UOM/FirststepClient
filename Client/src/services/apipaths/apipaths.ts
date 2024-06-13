@@ -51,7 +51,8 @@ export class Apipaths {
     static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
     static readonly getassignedApplications: string = this.baseUrl + 'Application/GetAssignedApplicationList/'; // + hra_id
     static readonly getApplicationStatus: string = this.baseUrl + 'Application/status?advertisementId='; //  '&seekerId=' + seeker_id
-
+    static readonly getApplicationList: string = this.baseUrl + 'Application/GetApplicationList/'; // + job_number + '/status=' + status
+    static readonly getSeekerApplicationDetails: string = this.baseUrl + 'Application/GetSeekerApplications/'; // + application_id
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 
@@ -65,8 +66,9 @@ export class Apipaths {
     static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';// + seeker_id
     static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';// + seeker_id
     static readonly getSeekerProfile: string = this.baseUrl + 'Seeker/GetSeekerProfile/';// + seeker_id
+    static readonly getSeekerEditProfile:string = this.baseUrl + 'Seeker/GetSeekerProfile/Update/';// + seeker_id
     static readonly addSeeker: string = this.baseUrl + 'Seeker/AddSeeker';
-    static readonly editSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker';// + seeker_id
+    static readonly editSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker/';// + seeker_id
     static readonly updateProfilePicture: string = this.baseUrl + 'Seeker/UpdateProfilePicture/'; // + user_id
     static readonly deleteSeeker: string = this.baseUrl + 'Seeker/DeleteSeeker/'; // + seeker_id
 

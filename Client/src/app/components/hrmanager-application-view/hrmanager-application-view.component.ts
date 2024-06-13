@@ -29,6 +29,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 
 interface Revision {
   revision_id: number;
@@ -92,7 +93,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   newComment: string = '';
   userRole: string = '';
   userName: string = '';
-  userID: number = 0; 
+  userID: number = 0;
   isEditingComment: boolean = false;
   currentRevisionId: number | null = null;
 
@@ -112,9 +113,10 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     this.userName = this.authService.getName();
 
     try {
-      this.applicationId = Number(this.acRouter.snapshot.paramMap.get('applicationId'));
-    }
-    catch {
+      this.applicationId = Number(
+        this.acRouter.snapshot.paramMap.get('applicationId')
+      );
+    } catch {
       this.router.navigate(['/notfound']);
     }
 
@@ -123,13 +125,23 @@ export class HrmanagerApplicationViewComponent implements OnInit {
 
   async fetchApplicationDetails() {
     try {
-      this.applicationDetails = await this.applicationService.getApplicationDetails(this.applicationId);
-
+      this.applicationDetails =
+        await this.applicationService.getApplicationDetails(this.applicationId);
     } catch (error) {
       this.error = 'Error fetching application details';
     } finally {
       this.loading = false;
     }
+  }
+
+  // Function to open the pdf
+  openpdf() {
+    this.dialog.open(PdfViewComponent, {
+      data: {
+        //pass cv name to pdf view component
+        documentUrl: this.applicationDetails.cVurl,
+      },
+    });
   }
 
   async changeDecision(newStatus: string) {
@@ -138,9 +150,15 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       !this.newComment.trim()
     ) {
       if (newStatus === 'Rejected') {
-        this.showAlertDialog('Alert', 'Comment is mandatory when rejecting an application');
+        this.showAlertDialog(
+          'Alert',
+          'Comment is mandatory when rejecting an application'
+        );
       } else if (newStatus === 'Pass') {
-        this.showAlertDialog('Alert', 'Please state the reason for passing the application. This will be directed to an HR Manager');
+        this.showAlertDialog(
+          'Alert',
+          'Please state the reason for passing the application. This will be directed to an HR Manager'
+        );
       }
       return;
     }
@@ -162,18 +180,18 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     if (
       this.userRole === 'hra' &&
       this.applicationDetails.last_revision &&
-      (this.applicationDetails.last_revision.role === 'hrm' || this.applicationDetails.last_revision.role === 'ca')
+      (this.applicationDetails.last_revision.role === 'hrm' ||
+        this.applicationDetails.last_revision.role === 'ca')
     ) {
       return false;
     }
     return true;
   }
-  
 
   showAlertDialog(title: string, message: string): void {
     this.dialog.open(AlertDialog, {
       width: '300px',
-      data: { title: title, message: message }
+      data: { title: title, message: message },
     });
   }
 
@@ -191,7 +209,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       await this.fetchApplicationDetails();
       this.showAlertDialog('Success', 'Application was Passed');
     } catch (error) {
-      this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      this.snackBar
+        .open(`Error changing decision to ${newStatus}:` + error, '', {
+          panelClass: ['app-notification-eror'],
+        })
+        ._dismissAfter(3000);
     }
   }
 
@@ -215,7 +237,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
           await this.fetchApplicationDetails();
           this.showAlertDialog('Success', 'Application was Accepted');
         } catch (error) {
-          this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+          this.snackBar
+            .open(`Error changing decision to ${newStatus}:` + error, '', {
+              panelClass: ['app-notification-eror'],
+            })
+            ._dismissAfter(3000);
         }
       }
     });
@@ -241,7 +267,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
           await this.fetchApplicationDetails();
           this.showAlertDialog('Success', 'Application was Rejected');
         } catch (error) {
-          this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+          this.snackBar
+            .open(`Error changing decision to ${newStatus}:` + error, '', {
+              panelClass: ['app-notification-eror'],
+            })
+            ._dismissAfter(3000);
         }
       }
     });
@@ -340,11 +370,10 @@ export class RejectDialog {
     MatDialogClose,
     MatDialogTitle,
     MatDialogContent,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './comment-history-dialog.html',
   styleUrls: ['./comment-history-dialog.css'],
-
 })
 export class CommentHistoryDialog {
   constructor(
