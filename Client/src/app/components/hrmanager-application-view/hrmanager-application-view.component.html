@@ -16,7 +16,8 @@
           <button
             mat-button
             class="View"
-            style="background-color: #e8e8e8; margin-left: 10px; font-size: 13px;">Profile
+            style="background-color: #e8e8e8; margin-left: 10px; font-size: 13px;"
+            (click)="showProfile()">Profile
             <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
           </button>
         </div>
@@ -147,3 +148,5 @@
     </div>
   </mat-card>
 </div>
+
+<app-spinner></app-spinner>

@@ -24,5 +24,9 @@ export class NavBarComponent {
   onSignoutClick() {
     this.auth.signOut();
   }
+
+  onProfileClick(){
+    this.router.navigate(['seeker/profile-edit']);
+  }
 }
 

@@ -22,6 +22,7 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 
 interface SeekerProfileViewDto {
   email: string;
@@ -74,14 +75,18 @@ export class SeekerProfileViewComponent implements OnInit {
     private jobFieldService: JobfieldService,
     private snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
+    private acRouter: ActivatedRoute,
     public dialog: MatDialog,
   ) {}
 
-  user_id: number = 2095;
+  user_id: number = 0;
 
   async ngOnInit() {
     this.spinner.show();
+
     try {
+      this.user_id = Number(this.acRouter.snapshot.paramMap.get('seeker'))
+
       // Fetch all job fields
       this.fields = await this.jobFieldService.getAll();
 
@@ -102,13 +107,16 @@ export class SeekerProfileViewComponent implements OnInit {
     }
   }
 
-  //change this
-openpdf() {
-  this.dialog.open(PdfViewComponent,{
-    data: {
-    //pass cv name to pdf view component
-    documentUrl: this.seekerDetails.cVurl
-    },
-  });
-}
+  openpdf() {
+    this.dialog.open(PdfViewComponent,{
+      data: {
+      //pass cv name to pdf view component
+      documentUrl: this.seekerDetails.cVurl
+      },
+    });
+  }
+
+  onBackButtonClick(){
+    window.history.back();
+  }
 }

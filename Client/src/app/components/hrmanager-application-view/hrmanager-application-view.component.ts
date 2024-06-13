@@ -30,6 +30,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface Revision {
   revision_id: number;
@@ -80,6 +82,7 @@ interface ApplicationViewDto {
     MatSortModule,
     MatCardModule,
     MatDividerModule,
+    SpinnerComponent
   ],
   templateUrl: './hrmanager-application-view.component.html',
   styleUrls: ['./hrmanager-application-view.component.css'],
@@ -104,13 +107,16 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     private acRouter: ActivatedRoute,
     private router: Router,
     private revisionService: RevisionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) {}
 
   async ngOnInit() {
     this.userID = this.authService.getUserId();
     this.userRole = this.authService.getRole();
     this.userName = this.authService.getName();
+
+    this.spinner.show();
 
     try {
       this.applicationId = Number(
@@ -121,6 +127,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     }
 
     await this.fetchApplicationDetails();
+
+    this.spinner.hide();
   }
 
   async fetchApplicationDetails() {
@@ -186,6 +194,10 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  showProfile(){
+    this.router.navigate([this.authService.getRole() + '/profile-view', {seeker: this.applicationDetails.seeker_id}]);
   }
 
   showAlertDialog(title: string, message: string): void {

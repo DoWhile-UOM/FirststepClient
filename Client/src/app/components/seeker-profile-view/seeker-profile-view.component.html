@@ -1,7 +1,7 @@
 <div *ngIf="seekerDetails" class="wrapper">
   <mat-card class="body">
     <div class="upper-section">
-      <button mat-icon-button>
+      <button mat-icon-button (click)="onBackButtonClick()">
         <mat-icon>keyboard_backspace</mat-icon>
       </button>
     
@@ -62,3 +62,5 @@
     </div>
   </mat-card>
 </div>
+
+<app-spinner></app-spinner>

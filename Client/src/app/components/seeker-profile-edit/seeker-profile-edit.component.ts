@@ -104,7 +104,7 @@ export class SeekerProfileEditComponent implements OnInit {
   seekerDetails: SeekerProfile = {} as SeekerProfile;
   seekerForm: FormGroup;
   hasDataLoaded: boolean = false;
-  user_id: number = 4135; //temp
+  user_id: number = 0; //temp
   isConfirmedToChangeEmail: boolean = false;
   emailcaptured = '';
   remainingTime: number = 0;
@@ -177,21 +177,6 @@ export class SeekerProfileEditComponent implements OnInit {
     const fileInput = document.getElementById('profile-upload') as HTMLInputElement;
     fileInput.click();
   }
-  
-  // async onSaveLogo() {
-  //   if (this.selectedimage) {
-  //     await this.seekerService.updateProfilePicture(this.selectedimage, this.user_id)
-  //       .then(response => {
-  //         console.log('Upload successful', response);
-  //       })
-  //       .catch(error => {
-  //         console.error('Upload error', error);
-  //       });
-  //   } else {
-  //     console.error('No file selected!');
-  //   }
-  //   this.eventOccured = false;
-  // }
 
   async ngOnInit() {
     this.spinner.show();
@@ -200,10 +185,10 @@ export class SeekerProfileEditComponent implements OnInit {
       await this.jobFieldService.getAll().then((response) => {
         this.fields = response;
       });
+
+      this.user_id = this.authService.getUserId();
       // Fetch seeker profile data
-      const seeker = await this.seekerService.getSeekerEditProfile(
-        this.user_id
-      );
+      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
       // Populate the form with the fetched data
       this.seekerForm.patchValue({
         first_name: seeker.first_name,
@@ -339,7 +324,8 @@ export class SeekerProfileEditComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
-      width: '400px',
+      width: '450px',
+      height: '100px',
       data: { email: this.seekerForm.get('email')?.value },
     });
 
@@ -548,8 +534,6 @@ export class SeekerProfileEditComponent implements OnInit {
     if (this.cVurl) {
       this.dialog.open(PdfViewComponent, {
         data: { documentUrl: this.cVurl },
-        width: '80%',
-        height: '80%',
       });
     } else {
       this.snackBar.open('No CV available to view', 'Close', {
