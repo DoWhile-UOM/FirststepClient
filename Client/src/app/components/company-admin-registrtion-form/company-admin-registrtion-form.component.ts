@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { CompanyService } from '../../../services/company.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -23,13 +22,15 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { EmployeeService } from '../../../services/employee.service';
 
 
 interface CmpAdminReg {
   email: string;
-  password_hash: string;
+  password: string;
   first_name: string;
   last_name: string;
+  company_id: number;
 }
 interface unRegCA {
   email: string;
@@ -84,9 +85,10 @@ export class CompanyAdminRegistrtionFormComponent {
   unRegCA: unRegCA = {} as unRegCA;
   RegCA: CmpAdminReg = {} as CmpAdminReg;
 
-  constructor(private route: ActivatedRoute, private companyService: CompanyService, private spinner: NgxSpinnerService, public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private cdr: ChangeDetectorRef) { }
+  constructor(private route: ActivatedRoute, private employeeService: EmployeeService, private spinner: NgxSpinnerService, public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
@@ -115,13 +117,17 @@ export class CompanyAdminRegistrtionFormComponent {
     this.RegCA.first_name = this.unRegCA.first_name;
     this.RegCA.last_name = this.unRegCA.last_name;
     this.RegCA.email = this.unRegCA.email;
-    this.RegCA.password_hash = this.unRegCA.password_hash;
+    this.RegCA.password = this.unRegCA.password_hash;
+    this.RegCA.company_id = parseInt(this.cmpID);
+    console.log(this.RegCA);
+    console.log(this.cmpID);
+    console.log(parseInt(this.cmpID));
     const IsVaild = this.formValidation();
     if (IsVaild) {
       try {
         this.spinner.show();
         console.log('Company Admin Registration Started');
-        await this.companyService.postCompanyAdminReg(this.RegCA, this.type, this.cmpID);
+        await this.employeeService.postCompanyAdminReg(this.RegCA);
         this.spinner.hide();
       } catch (error) {
         this.spinner.hide();

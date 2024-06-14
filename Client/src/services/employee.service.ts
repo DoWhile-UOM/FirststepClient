@@ -18,6 +18,13 @@ interface User {
   last_name: string;
   email: string;
 }
+interface CmpAdminReg {
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  company_id: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +44,7 @@ export class EmployeeService {
 
     return empData;
   }
-  
+
   async getUserDetails(id: number) {
     let empData: any;
     await axios.get(Apipaths.getUserDetails + id)
@@ -50,7 +57,7 @@ export class EmployeeService {
 
     return empData;
   }
-  
+
   async updateEmployeeDetails(employee: Employee) {
     await axios
       .put(Apipaths.editemployee + 7, employee) // tem solution
@@ -61,7 +68,7 @@ export class EmployeeService {
         this.snackBar.open('Error updating employee details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
-  
+
   async updateUserDetails(user: User) {
     await axios
       .put(Apipaths.updateUserDetails, user)
@@ -91,7 +98,7 @@ export class EmployeeService {
   }
 
   async addNewHRManager(employee: any) {
-    try{
+    try {
       await axios.post(Apipaths.addNewHRManager, employee)
         .then((response) => {
           console.log(response);
@@ -103,7 +110,7 @@ export class EmployeeService {
   }
 
   async addNewHRAssistant(employee: any) {
-    try{
+    try {
       await axios.post(Apipaths.addNewHRAssistant, employee)
         .then((response) => {
           console.log(response);
@@ -136,7 +143,7 @@ export class EmployeeService {
     }
   }
 
-  async getAllHRMs(companyID: string){
+  async getAllHRMs(companyID: string) {
     let empData: any;
 
     await axios.get(Apipaths.getAllHRMs + companyID)
@@ -150,7 +157,7 @@ export class EmployeeService {
     return empData;
   }
 
-  async getAllHRAs(companyID: string){
+  async getAllHRAs(companyID: string) {
     let empData: any;
 
     await axios.get(Apipaths.getAllHRAs + companyID)
@@ -162,5 +169,18 @@ export class EmployeeService {
       });
 
     return empData;
+  }
+  async postCompanyAdminReg(adminRegData: CmpAdminReg) {
+    try {
+      const response = await axios.post(Apipaths.postCompanyAdminReg, adminRegData);
+      if (response.status === 200) {
+        this.snackBar.open('Company Admin registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      } else {
+        this.snackBar.open('Error registering company admin', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      }
+    } catch (error) {
+      console.error(error);
+      this.snackBar.open('Error registering company admin', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
   }
 }
