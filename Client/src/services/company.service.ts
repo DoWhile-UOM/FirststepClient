@@ -100,7 +100,11 @@ export class CompanyService {
 
   async CompanyRegister(companyObj: any) {
     try {
-      const response = await axios.post(Apipaths.registerCompany, companyObj);
+      const response = await axios.post(Apipaths.registerCompany, companyObj, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       //this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       return { success: true, out: response.data };
     } catch (error: any) {
@@ -211,6 +215,7 @@ export class CompanyService {
     }
     catch (error) {
       //console.error(error);
+      cmpData=false;
     }
 
     return cmpData;
@@ -247,11 +252,16 @@ export class CompanyService {
   }
 
   async updateUnregCompanyDetails(company: any) { // should be chnaged
-    
-    let Id=company.company_id;
+
+    let Id = company.company_id;
     //console.log('from service', company);
     await axios
-      .put(Apipaths.updateUnregComapny + Id,company) // tem slotion
+      .put(Apipaths.updateUnregComapny + Id, company,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }) // tem slotion
       .then((response) => {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
