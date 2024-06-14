@@ -26,6 +26,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatChipsModule } from '@angular/material/chips';
 import { AuthService } from '../../../services/auth.service';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
+import { Inject } from '@angular/core';
 
 interface CompanyApplication {
   company_id: number;
@@ -131,7 +132,12 @@ export class CompanyApplicationComponent implements OnInit {
     }
   }
   approve() {
-    const dialogRef = this.dialog.open(CompanyApprovalConfirmationPopup);
+    const dialogRef = this.dialog.open(CompanyApprovalConfirmationPopup,
+      {
+        data: {
+          companyName: this.companyApplication.company_name,
+        }
+      });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result == 'Approval Confirmed') {
@@ -153,7 +159,12 @@ export class CompanyApplicationComponent implements OnInit {
     });
   }
   reject() {
-    const dialogRef = this.dialog.open(CommentInCompanyEvaluation);
+    const dialogRef = this.dialog.open(CommentInCompanyEvaluation, {
+      data: {
+        companyName: this.companyApplication.company_name,
+      },
+
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       this.companyApplication.comment = result;
@@ -240,8 +251,10 @@ export class CompanyApplicationComponent implements OnInit {
 })
 export class CommentInCompanyEvaluation {
   comment: string = '';
-
-  constructor(public dialogRef: MatDialogRef<CommentInCompanyEvaluation>) { }
+  companyName = '';
+  constructor(public dialogRef: MatDialogRef<CommentInCompanyEvaluation>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.companyName = data.companyName;
+  }
 
   closeDialog() {
     this.dialogRef.close(this.comment);
@@ -285,9 +298,12 @@ export class CannotRejectWithoutCommentPopup { }
   ],
 })
 export class CompanyApprovalConfirmationPopup {
+  companyName = '';
   constructor(
-    public dialogRef: MatDialogRef<CompanyApprovalConfirmationPopup>
-  ) { }
+    public dialogRef: MatDialogRef<CompanyApprovalConfirmationPopup>, @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.companyName = data.companyName;
+  }
 
   closeDialog() {
     this.dialogRef.close('Approval Confirmed');
