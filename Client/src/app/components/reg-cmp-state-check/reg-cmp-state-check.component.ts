@@ -187,17 +187,14 @@ export class RegCmpStateCheckComponent {
   NotFound(): void {
     const dialogRef = this.dialog.open(PopUpFinalComponent, {
       data: {
-        title: 'Invalid Link',
+        title: 'Invalid Request',
         message: 'The link to view the status of your company registration application is invalid',
         message2: 'Please check the link again or contact our customer care team for assistance.'
       },
       disableClose: true  // Disables closing the dialog
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log('User input:', result);
-    });
+
   }
 
 }
