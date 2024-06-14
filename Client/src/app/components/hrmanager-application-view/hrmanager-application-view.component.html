@@ -36,7 +36,6 @@
       </div>
 
       <mat-chip
-        style="  color: white !important;;"
         class="status-label"
         [ngClass]="{
           'status-rejected':
@@ -73,16 +72,23 @@
         </div>
         <div>
           <mat-label class="head">Phone Number</mat-label>
-          <span>{{ applicationDetails.phone_number }}</span>
+          <span><a href="tel:{{ applicationDetails.phone_number }}">{{ applicationDetails.phone_number }}</a></span>
         </div>
         <div>
           <mat-label class="head">Email Address</mat-label>
-          <span>{{ applicationDetails.email }}</span>
+          <span><a style="text-decoration: none; color: black;" href="mailto:{{ applicationDetails.email }}">{{ applicationDetails.email }}</a></span>
         </div>
       </div>
       <div class="button-container">
         <div class="buttons">
-          <button mat-button class="Open" style="color: white" (click)="openpdf()">Open CV</button>
+          <button
+            mat-button
+            class="Open"
+            style="color: white"
+            (click)="openpdf()"
+          >
+            Open CV
+          </button>
           <!-- <button mat-button class="Download" style="color: teal">Download CV</button> -->
         </div>
       </div>
@@ -153,8 +159,12 @@
           class="eval"
           style="color: white; background-color: #008080"
           (click)="changeDecision('Accepted')"
-          *ngIf="!applicationDetails.is_evaluated || applicationDetails.last_revision.status === 'Rejected' || applicationDetails.last_revision.status === 'Pass'"
-          >
+          *ngIf="
+            !applicationDetails.is_evaluated ||
+            applicationDetails.last_revision.status === 'Rejected' ||
+            applicationDetails.last_revision.status === 'Pass'
+          "
+        >
           Accept
           <mat-icon>check</mat-icon>
         </button>
@@ -163,14 +173,18 @@
           class="eval"
           style="color: white; background-color: rgb(220, 59, 60); border: none"
           (click)="changeDecision('Rejected')"
-          *ngIf="!applicationDetails.is_evaluated || applicationDetails.last_revision.status === 'Accepted' || applicationDetails.last_revision.status === 'Pass'"
+          *ngIf="
+            !applicationDetails.is_evaluated ||
+            applicationDetails.last_revision.status === 'Accepted' ||
+            applicationDetails.last_revision.status === 'Pass'
+          "
         >
           Reject
           <mat-icon>clear</mat-icon>
         </button>
         <button
           mat-button
-          *ngIf="!applicationDetails.is_evaluated || this.userRole == 'hra'"
+          *ngIf="!applicationDetails.is_evaluated && this.userRole === 'hra'"
           class="eval"
           style="
             color: white;
