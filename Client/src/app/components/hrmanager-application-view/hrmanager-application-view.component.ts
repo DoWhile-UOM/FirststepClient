@@ -151,6 +151,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
         //pass cv name to pdf view component
         documentUrl: this.applicationDetails.cVurl,
       },
+      height: '90%',
+      width: '90%',
     });
   }
 
