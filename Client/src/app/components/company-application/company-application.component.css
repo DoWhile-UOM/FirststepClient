@@ -1,12 +1,12 @@
 .body {
-  padding: 3em;
+padding:5px;
   width: 60%;
   min-width: 400px;
   margin: 0 auto;
   font-size: 15.333px;
 }
 .card {
-  padding: 2em;
+  padding: 5px;
 }
 mat-grid-tile mat-form-field {
   width: 75%;
@@ -134,6 +134,7 @@ mat-icon {
   align-items: left;
   text-align: left;
   margin-top: 20px;
+  margin-right: 20px;
 }
 
 .text-button {
