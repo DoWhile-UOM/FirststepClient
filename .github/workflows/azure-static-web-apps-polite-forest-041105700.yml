@@ -40,7 +40,7 @@ jobs:
           action: "upload"
           app_location: "./Client" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: "dist/client" # Ensure this matches the output path in angular.json
+          output_location: "{angular.json#Object.values(data.projects)[0].architect.build.options.outputPath}" # Ensure this matches the output path in angular.json
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
