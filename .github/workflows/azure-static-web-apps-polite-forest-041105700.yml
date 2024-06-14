@@ -28,9 +28,12 @@ jobs:
         run: npm install
       - name: Build the Angular app
         working-directory: ./Client
-        run: npm run build -- --configuration production
-      - name: List build directory contents
-        run: ls -R ./Client/dist/client
+        run: |
+          npm run build -- --configuration production
+          echo "Build completed. Listing directory contents:"
+          ls -R ./dist
+          ls -R ./Client/dist
+          ls -R ./Client/dist/client
       - name: Verify index.html
         run: if [ ! -f ./Client/dist/client/index.html ]; then echo "index.html not found"; exit 1; fi
       - name: Build And Deploy
