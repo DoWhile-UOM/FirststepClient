@@ -2,22 +2,32 @@
   <mat-card class="body">
     <div class="upper-section">
       <div class="back-button">
-				<button mat-icon-button (click)="onBackButtonClick()">
-					<mat-icon>arrow_back</mat-icon>
-				</button>
-			</div>
+        <button mat-icon-button (click)="onBackButtonClick()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
       <img
         src="{{ applicationDetails.profile_picture }}"
         alt="Profile Picture"
-        class="profileimage"/>
+        class="profileimage"
+      />
       <div class="info">
         <div style="display: flex; align-items: center">
-          <label class="name">{{ applicationDetails.first_name }} {{ applicationDetails.last_name }}</label>
+          <label class="name"
+            >{{ applicationDetails.first_name }}
+            {{ applicationDetails.last_name }}</label
+          >
           <button
             mat-button
             class="View"
-            style="background-color: #e8e8e8; margin-left: 10px; font-size: 13px;"
-            (click)="showProfile()">Profile
+            style="
+              background-color: #e8e8e8;
+              margin-left: 10px;
+              font-size: 13px;
+            "
+            (click)="showProfile()"
+          >
+            Profile
             <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
           </button>
         </div>
@@ -25,12 +35,19 @@
         <label class="bio">{{ applicationDetails.bio }}</label>
       </div>
 
-      <span
+      <mat-chip
+        style="  color: white !important;;"
         class="status-label"
         [ngClass]="{
-          'status-rejected': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Rejected',
-          'status-passed': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Pass',
-          'status-accepted': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Accepted',
+          'status-rejected':
+            applicationDetails.is_evaluated &&
+            applicationDetails.last_revision.status === 'Rejected',
+          'status-passed':
+            applicationDetails.is_evaluated &&
+            applicationDetails.last_revision.status === 'Pass',
+          'status-accepted':
+            applicationDetails.is_evaluated &&
+            applicationDetails.last_revision.status === 'Accepted',
           'status-not-evaluated': !applicationDetails.is_evaluated
         }"
       >
@@ -39,7 +56,7 @@
             ? applicationDetails.last_revision.status
             : "Not Evaluated"
         }}
-      </span>
+      </mat-chip>
     </div>
 
     <mat-divider></mat-divider>
@@ -65,7 +82,7 @@
       </div>
       <div class="button-container">
         <div class="buttons">
-          <button mat-button class="Open" style="color: white" >Open CV</button>
+          <button mat-button class="Open" style="color: white">Open CV</button>
           <!-- <button mat-button class="Download" style="color: teal">Download CV</button> -->
         </div>
       </div>
@@ -84,13 +101,18 @@
 
       <div>
         <mat-label class="head">Comment</mat-label>
-        <span *ngIf="applicationDetails.last_revision && applicationDetails.last_revision.comment">
+        <span
+          *ngIf="
+            applicationDetails.last_revision &&
+            applicationDetails.last_revision.comment
+          "
+        >
           {{ applicationDetails.last_revision.comment }}
         </span>
         <div class="comment-buttons" *ngIf="applicationDetails.is_evaluated">
           <button
             mat-button
-            style="margin: 10px; color: grey;"
+            style="margin: 10px; color: grey"
             (click)="viewCommentHistory()"
           >
             View Comment History
@@ -99,19 +121,29 @@
         </div>
 
         <div *ngIf="!applicationDetails.is_evaluated">
-          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
+          <textarea
+            [(ngModel)]="newComment"
+            placeholder="Add a comment"
+          ></textarea>
           <div style="display: flex; justify-content: space-between"></div>
         </div>
       </div>
     </div>
 
-    <mat-divider *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()"></mat-divider>
+    <mat-divider
+      *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()"
+    ></mat-divider>
 
     <div class="comment-section" *ngIf="showComments">
-      <div *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()">
+      <div
+        *ngIf="applicationDetails.is_evaluated && shouldShowChangeDecision()"
+      >
         <mat-label class="head">Change the decision</mat-label>
         <div class="comment-decision-section">
-          <textarea [(ngModel)]="newComment" placeholder="Add a comment"></textarea>
+          <textarea
+            [(ngModel)]="newComment"
+            placeholder="Add a comment"
+          ></textarea>
         </div>
       </div>
 
@@ -121,24 +153,30 @@
           class="eval"
           style="color: white; background-color: #008080"
           (click)="changeDecision('Accepted')"
-        >
+          *ngIf="!applicationDetails.is_evaluated || applicationDetails.last_revision.status === 'Rejected' || applicationDetails.last_revision.status === 'Pass'"
+          >
           Accept
           <mat-icon>check</mat-icon>
         </button>
         <button
           mat-button
           class="eval"
-          style="color: white; background-color: rgb(220, 59, 60); border: none;"
+          style="color: white; background-color: rgb(220, 59, 60); border: none"
           (click)="changeDecision('Rejected')"
+          *ngIf="!applicationDetails.is_evaluated || applicationDetails.last_revision.status === 'Accepted' || applicationDetails.last_revision.status === 'Pass'"
         >
           Reject
           <mat-icon>clear</mat-icon>
         </button>
         <button
           mat-button
-          *ngIf="this.userRole == 'hra'"
+          *ngIf="!applicationDetails.is_evaluated || this.userRole == 'hra'"
           class="eval"
-          style="color: white; background-color: rgba(0, 0, 0, 0.25); border: none;"
+          style="
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+          "
           (click)="changeDecision('Pass')"
         >
           <mat-icon>send</mat-icon>
