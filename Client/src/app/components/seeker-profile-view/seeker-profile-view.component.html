@@ -26,11 +26,11 @@
         </div>
         <div>
           <mat-label class="head">Phone Number</mat-label>
-          <span>{{ seekerDetails.phone_number }}</span>
+          <span><a style="text-decoration: none; color: black;" href="tel:{{ seekerDetails.phone_number }}">{{ seekerDetails.phone_number }}</a></span>
         </div>
         <div>
           <mat-label class="head">Email Address</mat-label>
-          <span>{{ seekerDetails.email }}</span>
+          <span><a style="text-decoration: none; color: black;" href="mailto:{{ seekerDetails.email }}">{{ seekerDetails.email }}</a></span>
         </div>
         <div>
           <mat-label class="head">Field of Work</mat-label>
@@ -38,7 +38,7 @@
         </div>
         <div>
           <mat-label class="head">LinkedIn</mat-label>
-          <span>{{ seekerDetails.linkedin }}</span>
+          <span><a style="text-decoration: none; color: black;" href="{{ seekerDetails.linkedin }}" target="_blank">{{ seekerDetails.linkedin }}</a></span>
         </div>
         <div>
           <mat-label class="head">University</mat-label>

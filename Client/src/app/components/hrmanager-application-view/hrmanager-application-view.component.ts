@@ -32,6 +32,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatChipsModule } from '@angular/material/chips';
 
 interface Revision {
   revision_id: number;
@@ -82,7 +83,8 @@ interface ApplicationViewDto {
     MatSortModule,
     MatCardModule,
     MatDividerModule,
-    SpinnerComponent
+    SpinnerComponent,
+    MatChipsModule,
   ],
   templateUrl: './hrmanager-application-view.component.html',
   styleUrls: ['./hrmanager-application-view.component.css'],

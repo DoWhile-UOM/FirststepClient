@@ -544,8 +544,6 @@ export class SeekerProfileEditComponent implements OnInit {
 
   openUploadDialog(): void {
     const dialogRef = this.dialog.open(UploadCV, {
-      width: '400px',
-      height: '200px',
     });
 
     dialogRef.componentInstance.fileSelected.subscribe((file: File) => {
