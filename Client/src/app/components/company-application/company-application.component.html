@@ -2,11 +2,15 @@
   <app-spinner> </app-spinner>
   <mat-card class="card">
     <!--Top Section-->
-    <mat-grid-list cols="6" rowHeight="140">
+    <mat-grid-list cols="7" rowHeight="140">
       <mat-grid-tile [colspan]="1">
         <a (click)="goBack()">
-          <img src="assets/arrow.png" alt="Company Logo" class="company-logo" />
+          <img src="assets/arrow.png" alt="Company Logo" class="back-arrow" />
         </a>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <img [src]="companyApplication.company_logo" alt="Company Logo" class="md-card-image" width="100" height="100"
+          onError="this.onerror=null;this.src='assets/images/BistechLogo.png';" />
       </mat-grid-tile>
       <mat-grid-tile [colspan]="2">
         <span class="sectionHeading heading title">{{

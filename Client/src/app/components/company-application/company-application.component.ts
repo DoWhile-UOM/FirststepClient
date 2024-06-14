@@ -40,6 +40,7 @@ interface CompanyApplication {
   comment: string;
   verified_system_admin_id: number;
   company_business_scale: string;
+  company_logo: string;
 }
 interface EvaluatedCompanyDetails {
   company_id: number;
