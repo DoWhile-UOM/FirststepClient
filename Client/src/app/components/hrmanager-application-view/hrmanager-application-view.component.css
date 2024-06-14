@@ -89,13 +89,6 @@ span {
 .Open {
   background-color: teal;
   color: white;
-  margin-right: 10px;
-}
-
-.Download {
-  background-color: white;
-  color: teal;
-  border: 3px solid teal;
 }
 
 .reject {
@@ -125,35 +118,54 @@ textarea:focus {
 
 .upper-section {
   position: relative;
+  margin-bottom: 1.5em;
 }
 
 .status-label {
-  margin-right: 100px;
-  padding-right: 30px;
   position: absolute;
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  color: white;
   padding: 8px;
   border-radius: 4px;
-  font-weight:bold;
+  font-weight: bold !important;
+  color: white !important; /* Ensure text color is white */
 }
 
 .status-rejected {
-  background-color: #de3a3b;
+  background-color: rgba(222, 58, 59, 0.5) !important; /* Apply rgba color */
+  color: white !important; /* Ensure text color is white */
+  font-weight: bold !important;
+
 }
 
 .status-passed {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.25) !important; /* Apply rgba color */
+  color: white !important; /* Ensure text color is white */
+  font-weight: bold !important;
+
 }
 
 .status-accepted {
-  background-color:teal;
+  background-color: rgba(0, 128, 128, 0.6) !important; /* Apply rgba color */
+  color: white !important; /* Ensure text color is white */
+  font-weight: bold !important;
+
 }
 
 .status-not-evaluated {
-  background-color:rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.25) !important; /* Apply rgba color */
+  color: white !important; /* Ensure text color is white */
+  font-weight: bold !important;
+
+}
+
+
+.status-not-evaluated {
+  background-color: rgba(0, 0, 0, 0.25) !important; /* Ensure background color is applied */
+  color: white !important; /* Ensure text color is white */
+  font-weight: bold !important;
+
 }
 
 .comment-decision-section {

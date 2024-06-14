@@ -132,6 +132,10 @@ header nav a:hover {
     margin-top: 20px;
 }
 
+.register-company-btn{
+    width: 18em;
+}
+
 footer {
     margin-top: 20px;
 }

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Comment History</h2>
-<mat-dialog-content>
-  <div class="mat-elevation-z8">
+<div>
+  <div class="table mat-elevation-z8">
     <table mat-table [dataSource]="data">
       <ng-container matColumnDef="created_date">
         <th mat-header-cell *matHeaderCellDef>Date</th>
@@ -32,9 +32,4 @@
       <tr mat-row *matRowDef="let row; columns: ['created_date', 'employee_name', 'employee_role', 'comment', 'status'];"></tr>
     </table>
   </div>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <div class="button-container">
-    <button mat-button mat-dialog-close>Close</button>
-  </div>
-</mat-dialog-actions>
+</div>

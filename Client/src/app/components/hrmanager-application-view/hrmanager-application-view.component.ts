@@ -29,6 +29,10 @@ import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PdfViewComponent } from '../pdf-view/pdf-view.component';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatChipsModule } from '@angular/material/chips';
 
 interface Revision {
   revision_id: number;
@@ -79,6 +83,8 @@ interface ApplicationViewDto {
     MatSortModule,
     MatCardModule,
     MatDividerModule,
+    SpinnerComponent,
+    MatChipsModule,
   ],
   templateUrl: './hrmanager-application-view.component.html',
   styleUrls: ['./hrmanager-application-view.component.css'],
@@ -92,7 +98,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   newComment: string = '';
   userRole: string = '';
   userName: string = '';
-  userID: number = 0; 
+  userID: number = 0;
   isEditingComment: boolean = false;
   currentRevisionId: number | null = null;
 
@@ -103,7 +109,8 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     private acRouter: ActivatedRoute,
     private router: Router,
     private revisionService: RevisionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) {}
 
   async ngOnInit() {
@@ -111,25 +118,40 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     this.userRole = this.authService.getRole();
     this.userName = this.authService.getName();
 
+    this.spinner.show();
+
     try {
-      this.applicationId = Number(this.acRouter.snapshot.paramMap.get('applicationId'));
-    }
-    catch {
+      this.applicationId = Number(
+        this.acRouter.snapshot.paramMap.get('applicationId')
+      );
+    } catch {
       this.router.navigate(['/notfound']);
     }
 
     await this.fetchApplicationDetails();
+
+    this.spinner.hide();
   }
 
   async fetchApplicationDetails() {
     try {
-      this.applicationDetails = await this.applicationService.getApplicationDetails(this.applicationId);
-
+      this.applicationDetails =
+        await this.applicationService.getApplicationDetails(this.applicationId);
     } catch (error) {
       this.error = 'Error fetching application details';
     } finally {
       this.loading = false;
     }
+  }
+
+  // Function to open the pdf
+  openpdf() {
+    this.dialog.open(PdfViewComponent, {
+      data: {
+        //pass cv name to pdf view component
+        documentUrl: this.applicationDetails.cVurl,
+      },
+    });
   }
 
   async changeDecision(newStatus: string) {
@@ -138,9 +160,15 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       !this.newComment.trim()
     ) {
       if (newStatus === 'Rejected') {
-        this.showAlertDialog('Alert', 'Comment is mandatory when rejecting an application');
+        this.showAlertDialog(
+          'Alert',
+          'Comment is mandatory when rejecting an application'
+        );
       } else if (newStatus === 'Pass') {
-        this.showAlertDialog('Alert', 'Please state the reason for passing the application. This will be directed to an HR Manager');
+        this.showAlertDialog(
+          'Alert',
+          'Please state the reason for passing the application. This will be directed to an HR Manager'
+        );
       }
       return;
     }
@@ -162,18 +190,22 @@ export class HrmanagerApplicationViewComponent implements OnInit {
     if (
       this.userRole === 'hra' &&
       this.applicationDetails.last_revision &&
-      (this.applicationDetails.last_revision.role === 'hrm' || this.applicationDetails.last_revision.role === 'ca')
+      (this.applicationDetails.last_revision.role === 'hrm' ||
+        this.applicationDetails.last_revision.role === 'ca')
     ) {
       return false;
     }
     return true;
   }
-  
+
+  showProfile(){
+    this.router.navigate([this.authService.getRole() + '/profile-view', {seeker: this.applicationDetails.seeker_id}]);
+  }
 
   showAlertDialog(title: string, message: string): void {
     this.dialog.open(AlertDialog, {
       width: '300px',
-      data: { title: title, message: message }
+      data: { title: title, message: message },
     });
   }
 
@@ -191,7 +223,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
       await this.fetchApplicationDetails();
       this.showAlertDialog('Success', 'Application was Passed');
     } catch (error) {
-      this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      this.snackBar
+        .open(`Error changing decision to ${newStatus}:` + error, '', {
+          panelClass: ['app-notification-eror'],
+        })
+        ._dismissAfter(3000);
     }
   }
 
@@ -215,7 +251,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
           await this.fetchApplicationDetails();
           this.showAlertDialog('Success', 'Application was Accepted');
         } catch (error) {
-          this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+          this.snackBar
+            .open(`Error changing decision to ${newStatus}:` + error, '', {
+              panelClass: ['app-notification-eror'],
+            })
+            ._dismissAfter(3000);
         }
       }
     });
@@ -241,7 +281,11 @@ export class HrmanagerApplicationViewComponent implements OnInit {
           await this.fetchApplicationDetails();
           this.showAlertDialog('Success', 'Application was Rejected');
         } catch (error) {
-          this.snackBar.open(`Error changing decision to ${newStatus}:`+ error, "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+          this.snackBar
+            .open(`Error changing decision to ${newStatus}:` + error, '', {
+              panelClass: ['app-notification-eror'],
+            })
+            ._dismissAfter(3000);
         }
       }
     });
@@ -250,7 +294,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   async viewCommentHistory() {
     const dialogRef = this.dialog.open(CommentHistoryDialog, {
       width: '1000px',
-      height: '500px',
+      minHeight: '450px',
       data: await this.revisionService.getRevisionHistory(this.applicationId),
     });
   }
@@ -340,11 +384,10 @@ export class RejectDialog {
     MatDialogClose,
     MatDialogTitle,
     MatDialogContent,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './comment-history-dialog.html',
   styleUrls: ['./comment-history-dialog.css'],
-
 })
 export class CommentHistoryDialog {
   constructor(

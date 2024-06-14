@@ -84,16 +84,19 @@ export class ApplicationService {
 
   async getApplicationList(job_number: number, status: string) {
     let applicationList: any = {};
+    const url = `${Apipaths.getApplicationList}JobID=${job_number}/status=${status}`;
     await axios
-      .get(
-        `https://localhost:7213/api/Application/GetApplicationList/JobID=${job_number}/status=${status}`
-      )
+      .get(url)
       .then((response) => {
         applicationList = response.data;
       })
       .catch((error) => {
-        //console.error(error);
+        this.snackbar.open('Failed to load application list', 'Close', {
+          duration: 3000,
+        });
+        console.error("Network Error: " + error);
       });
+
 
     return applicationList;
   }
@@ -129,9 +132,7 @@ export class ApplicationService {
   async getApplicationDetails(applicationId: number) {
     let applicationDetails: any = {};
     await axios
-      .get(
-        `https://localhost:7213/api/Application/GetSeekerApplications/${applicationId}`
-      )
+      .get(Apipaths.getSeekerApplicationDetails +applicationId)
       .then((response) => {
         applicationDetails = response.data;
       })

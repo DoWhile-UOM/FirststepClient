@@ -61,7 +61,8 @@
                 matBadge="{{adData.is_expired ? '!': ''}}"
                 matBadgeColor="warn"
                 [disabled]="adData.is_expired"
-                disabledInteractive>Apply To This Job</button>  
+                disabledInteractive
+                (click)="onClickApplyJob()">Apply To This Job</button>  
         </mat-dialog-actions>      
     </mat-card>
 </div>

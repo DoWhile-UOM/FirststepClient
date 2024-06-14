@@ -39,14 +39,12 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required,Validators.email])
   });
 
-  onLogin(){
-    //console.log(this.loginForm.value);
-    //this.auth.signup(this.myForm.value)
+  async onLogin(){
     this.spinner.show();
 
-    this.auth.login(this.loginForm.value)
+    (await this.auth.login(this.loginForm.value))
     .subscribe({
-      next:(res)=>{
+      next:async (res)=>{
         //this.auth.storeToken(res.token)
         this.loginForm.reset();
         this.auth.storeToken(res.accessToken);
@@ -61,7 +59,7 @@ export class LoginComponent {
 
         if (tokenPayload.role == "seeker") {
           this.snackBar.open("We need to access to your location informations for better job recommendation for you!", "", {panelClass: ['app-notification-warning']})._dismissAfter(5000);
-          this.auth.getLocation();
+          await this.auth.getLocation();
         }
 
         this.spinner.hide();
@@ -73,5 +71,4 @@ export class LoginComponent {
     });
 
     this.spinner.hide();
-  
 }}

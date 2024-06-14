@@ -43,6 +43,7 @@ interface HRMListing {
   title: string;
   job_number: number;
   field_name: string;
+  company_id: number;
   current_status: string;
   applicationList: HRMApplicationList[];
 }
@@ -160,7 +161,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   async getApplicationList(jobID: number, status: string) {
     try {
-      var listing: HRMListing = {title: '', job_number: 0, field_name: '', current_status: '', applicationList: []};
+      var listing: HRMListing = {title: '', job_number: 0, field_name: '', company_id: 0, current_status: '', applicationList: []};
       
       if (this.userType == 'hra'){
         listing = await this.applicationService.getAssignedApplicationList(this.auth.getUserId(), jobID, status);
@@ -177,6 +178,12 @@ export class HrManagerApplicationListingComponent implements OnInit {
       
       if (!listing) {
         this.snackBar.open('Not applications found for the job id', "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        window.history.back();
+      }
+
+      if (listing.company_id != this.auth.getCompanyID()){
+        this.snackBar.open("You are not authorized to view this page", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        this.router.navigate(['/notfound']);
       }
 
       this.title = listing.title;

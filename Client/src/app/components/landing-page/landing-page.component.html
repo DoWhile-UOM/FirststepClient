@@ -18,7 +18,7 @@
         <h1>Skills speak louder than words</h1>
         <p>We help students to find their dream job while guiding companies to find their perfect team</p>
         <p>To begin your journey register as a seeker</p>
-        <button mat-raised-button color="primary" type="submit">Sign Up</button>
+        <button mat-raised-button color="primary" (click)="signup()">Sign Up</button>
         <button mat-button class="login" (click)="login()">
           <span class="Login-btn-name">Login</span>
         </button>
@@ -43,7 +43,7 @@
       </div>
     </section>
     <div class="register-company-container">
-      <button mat-raised-button color="primary"> Register your company </button>
+      <button mat-raised-button class="register-company-btn" color="primary" (click)="comReg()"> Register your company </button>
     </div>
   </main>
 

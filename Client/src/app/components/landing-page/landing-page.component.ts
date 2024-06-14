@@ -22,4 +22,12 @@ export class LandingPageComponent {
   login(){
     this.router.navigate(['/login']);
   }
+
+  signup(){
+    this.router.navigate(['/signup']);
+  }
+
+  comReg(){
+    this.router.navigate(['/CompanyReg']);
+  }
 }

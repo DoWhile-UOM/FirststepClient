@@ -27,6 +27,7 @@ import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AuthService } from '../../../services/auth.service';
 import axios, { AxiosError } from 'axios';
+import { SeekerApplicationFileUploadComponent } from '../seeker-application-file-upload/seeker-application-file-upload.component';
 
 
 interface NewSeeker {
@@ -59,7 +60,7 @@ interface VerifyOTP {
     standalone: true,
     templateUrl: './seeker-signup.component.html',
     styleUrl: './seeker-signup.component.css',
-    imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar,MatGridTile,MatGridList,MatStepper]
+    imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar,MatGridTile,MatGridList,MatStepper,SeekerApplicationFileUploadComponent]
 })
 
 export class SeekerSignupComponent implements OnInit {
@@ -72,6 +73,9 @@ export class SeekerSignupComponent implements OnInit {
 
   // File upload URL
   url = './assets/images/SeekerEdit.jpg';
+  selectedFile: File | null = null;
+  selectedImage: File | null = null;
+
 
   seekerReg: FormGroup;
 
@@ -127,17 +131,23 @@ export class SeekerSignupComponent implements OnInit {
     this.skills = this.addSkillsComponent.skills;
   }
 
-  // File selection handler
-  onselectFile(event: any) {
-    if (event.target.files && event.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
-      reader.onload = (e: any) => {
-        this.url = e.target.result;
-      };
-    }
+// File selection handler for profile picture
+onselectFile(event: any) {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files[0]) {
+    this.selectedImage = input.files[0];
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.url = e.target.result;
+    };
+    reader.readAsDataURL(this.selectedImage);
   }
+}
 
+// File selection handler for CV
+onCvSelected(file: File) {
+  this.selectedFile = file;
+}
   // Skills change handler
   changeSkillsArray(event: any) {
     const skills = event;
@@ -179,12 +189,16 @@ export class SeekerSignupComponent implements OnInit {
     } else {
       this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
+
+    this.snackbar.open("OTP was requested", "", {
+    duration: 3000,
+  });
   }
 
   // OTP timer
   async printTextAfterFiveMinutes() {
     this.isOTPRequestSent = true;
-    this.remainingTime = 60; // Initialize remaining time in seconds
+    this.remainingTime = 1800; // Initialize remaining time in seconds
     this.reqOTPBtnText = this.remainingTime.toString();
 
     const intervalId = setInterval(() => {
@@ -198,23 +212,52 @@ export class SeekerSignupComponent implements OnInit {
     }, 1000); // Update every second
   }
 
-  onRegister() {
+  async onRegister() {
     // Ensure the seekerSkills array is up-to-date
-  this.seekerReg.patchValue({
-    seekerSkills: this.skills.length ? this.skills : ['default_skill'],
-    profile_picture: this.url || 'default_profile_picture_url', // Assign temporary value if not set
-    cVurl: this.seekerReg.get('cVurl')?.value || 'default_cv_url' // Assign temporary value if not set
-  });
+    this.seekerReg.patchValue({
+      seekerSkills: this.skills.length ? this.skills : ['default_skill'],
+      profile_picture: this.url || 'default_profile_picture_url', // Assign temporary value if not set
+      cVurl: this.seekerReg.get('cVurl')?.value || 'default_cv_url', // Assign temporary value if not set
+    });
 
-    this.seekerService.SeekerRegister(this.seekerReg.value).subscribe({
+    const formData = new FormData();
+    formData.append('email', this.seekerReg.get('email')?.value);
+    formData.append('first_name', this.seekerReg.get('first_name')?.value);
+    formData.append('last_name', this.seekerReg.get('last_name')?.value);
+    formData.append('phone_number', this.seekerReg.get('phone_number')?.value);
+    formData.append('password', this.seekerReg.get('password')?.value); // Ensure password is included
+    formData.append('bio', this.seekerReg.get('bio')?.value);
+    formData.append('description', this.seekerReg.get('description')?.value);
+    formData.append('university', this.seekerReg.get('university')?.value);
+    formData.append('CVurl', this.seekerReg.get('cVurl')?.value || '');
+    formData.append('profile_picture', this.seekerReg.get('profile_picture')?.value || '');
+    formData.append('linkedin', this.seekerReg.get('linkedin')?.value);
+    formData.append('field_id', this.seekerReg.get('field_id')?.value);
+
+    // Append each skill individually
+    if (this.skills.length) {
+      this.skills.forEach((skill) => formData.append('seekerSkills', skill));
+    }
+
+    if (this.selectedFile) {
+      formData.append('cvFile', this.selectedFile);
+    }
+
+    if (this.selectedImage) {
+      formData.append('profilePictureFile', this.selectedImage);
+    }
+
+    this.seekerService.SeekerRegister(formData).subscribe({
       next: () => {
-        this._snackBar.open("Registration successful", "Close", { duration: 3000 });
+        this._snackBar.open('Registration successful', 'Close', { duration: 3000 });
       },
       error: (err) => {
         this.displayError(err);
-      }
+      },
     });
   }
+
+
 
   // Display error message
   displayError(error: HttpErrorResponse) {

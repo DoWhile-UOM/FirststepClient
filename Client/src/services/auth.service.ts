@@ -16,7 +16,7 @@ import axios from 'axios';
 export class AuthService {
   private userPayload: any; //store payload data get from token
 
-  private baseUrl: string = "https://localhost:7213/api/User"
+  private baseUrl: string = "https://firststepdowhile.azurewebsites.net/api/User"
 
   constructor(private local: LocalService, private http: HttpClient, private route: Router) {
     this.userPayload = this.decodedToken() //call decodedToken() to get payload data
@@ -26,8 +26,8 @@ export class AuthService {
     return this.http.post<any>(Apipaths.register, userObj)
   }
 
-  login(loginObj: any) {
-    return this.http.post<any>(Apipaths.authenticate, loginObj)
+  async login(loginObj: any) {
+    return await this.http.post<any>(Apipaths.authenticate, loginObj)
   }
 
   //-----OTP Service----------------------------------
@@ -146,7 +146,7 @@ export class AuthService {
       return this.userPayload.CompanyID
   }
 
-  getLocation(): Promise<any> {
+  async getLocation(): Promise<any> {
     return new Promise((resolve, reject) => {
       try{
         if (navigator.geolocation) {
