@@ -266,7 +266,8 @@ export class SeekerProfileEditComponent implements OnInit {
     this.spinner.show();
     try {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
-      formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
+      formValue.seekerSkills = this.removeDuplicates(this.skills);
+      //formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
 
       const formData = new FormData();
       formData.append('email', formValue.email);
