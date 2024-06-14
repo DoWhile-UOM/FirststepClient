@@ -215,6 +215,7 @@ export class CompanyService {
     }
     catch (error) {
       //console.error(error);
+      cmpData=false;
     }
 
     return cmpData;

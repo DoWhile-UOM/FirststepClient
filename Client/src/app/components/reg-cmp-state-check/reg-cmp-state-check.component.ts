@@ -20,6 +20,7 @@ import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { SeekerApplicationFileUploadComponent } from "../seeker-application-file-upload/seeker-application-file-upload.component";
+import { PopUpFinalComponent } from '../pop-up-final/pop-up-final.component';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -66,13 +67,15 @@ export class RegCmpStateCheckComponent {
   cmpData: CmpyData = {} as CmpyData
   uploadDoc: CompanyDocuments={} as CompanyDocuments
 
-  constructor(private snackbar: MatSnackBar, private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
+  constructor(public dialog: MatDialog,private snackbar: MatSnackBar, private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
         this.company_id = id; // convert string to integer 10 is base
         console.log('Company ID:', this.company_id);
         this.fetchData(this.company_id);
+      }else{
+        this.NotFound();
       }
     });
 
@@ -109,10 +112,16 @@ export class RegCmpStateCheckComponent {
           this.onApproved();
         } else if (approvelstate) {
           this.onRejected();
+        }else{
+          this.NotFound();
         }
+      }else{
+        this.NotFound();
       }
+      
     } catch (error) {
       console.error('Error:', error);
+      this.NotFound();
     }
     //end of fetch data
   }
@@ -125,7 +134,7 @@ export class RegCmpStateCheckComponent {
   }
 
   onApproved() {
-    this.popup.open(PopUpComponent);
+    //this.popup.open(PopUpComponent);
     this.styleService.setStyle('circle-border-color', '#00ff1a');
     this.styleService.setStyle('number-color', '#00ff1a');
     console.log('Company Approved');
@@ -173,6 +182,22 @@ export class RegCmpStateCheckComponent {
       default:
         this.uploadDoc.business_reg_certificate = file;
     }
+  }
+
+  NotFound(): void {
+    const dialogRef = this.dialog.open(PopUpFinalComponent, {
+      data: {
+        title: 'Invalid Link',
+        message: 'The link to view the status of your company registration application is invalid',
+        message2: 'Please check the link again or contact our customer care team for assistance.'
+      },
+      disableClose: true  // Disables closing the dialog
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log('User input:', result);
+    });
   }
 
 }
