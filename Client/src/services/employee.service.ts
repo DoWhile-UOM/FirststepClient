@@ -23,7 +23,6 @@ interface CmpAdminReg {
   password: string;
   first_name: string;
   last_name: string;
-  company_id: number;
 }
 
 @Injectable({
@@ -170,9 +169,9 @@ export class EmployeeService {
 
     return empData;
   }
-  async postCompanyAdminReg(adminRegData: CmpAdminReg) {
+  async postCompanyAdminReg(adminRegData: CmpAdminReg, cmpID: string) {
     try {
-      const response = await axios.post(Apipaths.postCompanyAdminReg, adminRegData);
+      const response = await axios.post(Apipaths.postCompanyAdminReg + cmpID, adminRegData);
       if (response.status === 200) {
         this.snackBar.open('Company Admin registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       } else {

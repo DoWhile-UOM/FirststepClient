@@ -30,7 +30,6 @@ interface CmpAdminReg {
   password: string;
   first_name: string;
   last_name: string;
-  company_id: number;
 }
 interface unRegCA {
   email: string;
@@ -81,6 +80,7 @@ export class CompanyAdminRegistrtionFormComponent {
   reqOTPbtntxt: string = 'Request OTP';
   isConfrimedToChangeEmail: boolean = false;
   otp: string = '';
+  canOpenOtpView: boolean = false;
 
   unRegCA: unRegCA = {} as unRegCA;
   RegCA: CmpAdminReg = {} as CmpAdminReg;
@@ -106,28 +106,18 @@ export class CompanyAdminRegistrtionFormComponent {
   //submiting the form
 
   async onSubmit(formValue: any) {
-    // const adminRegData: CmpAdminReg = {
-    //   email: formValue.email,
-    //   password_hash: formValue.password,
-    //   first_name: formValue.firstName,
-    //   last_name: formValue.lastName,
-
-    // };
-
     this.RegCA.first_name = this.unRegCA.first_name;
     this.RegCA.last_name = this.unRegCA.last_name;
     this.RegCA.email = this.unRegCA.email;
     this.RegCA.password = this.unRegCA.password_hash;
-    this.RegCA.company_id = parseInt(this.cmpID);
     console.log(this.RegCA);
     console.log(this.cmpID);
-    console.log(parseInt(this.cmpID));
     const IsVaild = this.formValidation();
     if (IsVaild) {
       try {
         this.spinner.show();
         console.log('Company Admin Registration Started');
-        await this.employeeService.postCompanyAdminReg(this.RegCA);
+        await this.employeeService.postCompanyAdminReg(this.RegCA, this.cmpID);
         this.spinner.hide();
       } catch (error) {
         this.spinner.hide();
@@ -196,6 +186,7 @@ export class CompanyAdminRegistrtionFormComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         this.isConfrimedToChangeEmail = true;
+        this.canOpenOtpView = true;
         console.log('Email is confirmed to change');
         console.log(this.isConfrimedToChangeEmail);
       }
@@ -224,7 +215,9 @@ export class CompanyAdminRegistrtionFormComponent {
     let verificationResult = await this.auth.verifyOTP(userData);
     if (verificationResult) {
       this.isEmailVerified = true;
+      this.canOpenOtpView = false;
       this.snackbar.open('OTP Verified successful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+
     } else {
       this.snackbar.open('OTP Verified failed', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     }
