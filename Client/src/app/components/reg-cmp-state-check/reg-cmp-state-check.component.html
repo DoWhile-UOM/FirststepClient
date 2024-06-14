@@ -22,7 +22,7 @@
                     <div class="circle">
                         <div class="checkmark"></div>
                     </div>
-                    <a>{{cmpData.company_registered_date}}</a>
+                    <a>{{cmpData.company_applied_date}}</a>
                 </div>
                 <hr>
                 <div class="circle-box">
@@ -36,11 +36,14 @@
         </div>
 
         <mat-divider></mat-divider>
+        <h2>Application is {{regState}}</h2>
 
         <mat-grid-list cols="1" rowHeight="100">
+
             <mat-grid-tile [colspan]="1">
 
-                <mat-form-field class="form-field" appearance="outline">
+
+                <mat-form-field *ngIf="cmpData.comment" class="form-field" appearance="outline">
                     <mat-label>Comment</mat-label>
                     <input disabled matInput type="text" class="form-control" value={{cmpData.comment}}>
 
@@ -53,7 +56,9 @@
 
         <!--Company Details-->
         <form #updateCompanyDetailsForm="ngForm">
-            <mat-grid-list cols="1" rowHeight="150">
+            <h2 *ngIf="cmpData.comment">Please resubmit the application following the instructions provided above.</h2>
+            <mat-grid-list cols="1" rowHeight="100">
+
                 <mat-grid-tile><!--Company Name-->
 
                     <mat-form-field class="form-field" appearance="outline">
@@ -124,7 +129,9 @@
                             [(ngModel)]="cmpData.company_registered_date" name="company_registered_date" required />
                     </mat-form-field>
                 </mat-grid-tile>
+            </mat-grid-list>
 
+            <mat-grid-list cols="1" rowHeight="150">
                 <mat-grid-tile>
                     <mat-form-field appearance="outline">
                         <mat-label>Company Description</mat-label>
@@ -132,38 +139,35 @@
                             name="company_description"></textarea>
                     </mat-form-field>
                 </mat-grid-tile>
-
+            </mat-grid-list>
+            <mat-grid-list cols="1" rowHeight="130">
                 <mat-grid-tile>
                     <div>
 
                         <mat-label>Company Logo</mat-label>
-                        <!-----
-                        <input matInput placeholder="Enter Email" [(ngModel)]="cmpData.company_logo"
-                            name="company_logo" />----->
+
                         <app-seeker-application-file-upload
                             (fileSelected)="onFileSelected($event,'company_logo')"></app-seeker-application-file-upload>
                     </div>
                 </mat-grid-tile>
 
                 <mat-grid-tile>
+                    <div>
+                        <mat-label>Business Registration Certificate</mat-label>
 
-                    <!----<mat-label>Business Registration Certificate</mat-label>
-                        <input matInput placeholder="Enter Email" [(ngModel)]="cmpData.business_reg_certificate"
-                            name="business_reg_certificate" />--->
-                    <app-seeker-application-file-upload
-                        (fileSelected)="onFileSelected($event,'business_reg_certificate')"></app-seeker-application-file-upload>
-
+                        <app-seeker-application-file-upload
+                            (fileSelected)="onFileSelected($event,'business_reg_certificate')"></app-seeker-application-file-upload>
+                    </div>
                 </mat-grid-tile>
 
 
                 <mat-grid-tile>
+                    <div>
+                        <mat-label>Certificate of Incorporation</mat-label>
 
-                    <!----<mat-label>Certificate of Incorporation</mat-label>
-                        <input matInput placeholder="Enter contact Number"
-                            [(ngModel)]="cmpData.certificate_of_incorporation" name="certificate_of_incorporation" />-->
-                    <app-seeker-application-file-upload
-                        (fileSelected)="onFileSelected($event,'certificate_of_incorporation')"></app-seeker-application-file-upload>
-
+                        <app-seeker-application-file-upload
+                            (fileSelected)="onFileSelected($event,'certificate_of_incorporation')"></app-seeker-application-file-upload>
+                    </div>
                 </mat-grid-tile>
 
 

@@ -37,6 +37,7 @@ export interface CmpyData {
   business_reg_no: number;
   comment: string;
   verification_status: any;
+  company_applied_date:string;
 
 }
 
@@ -100,6 +101,7 @@ export class RegCmpStateCheckComponent {
         this.styleService.setStyle('circle-border-color', '#ffbf00');
         this.styleService.setStyle('number-color', '#ffbf00');
         this.cmpData.company_registered_date = this.cmpData.company_registered_date.split('T')[0];
+        this.cmpData.company_applied_date = this.cmpData.company_applied_date.split('T')[0];
         let evalstate = this.cmpData.verification_status;
         let approvelstate = this.cmpData.comment;
 

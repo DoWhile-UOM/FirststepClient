@@ -52,7 +52,7 @@
                 <input matInput placeholder="Enter Email" formControlName="company_email" />
 
                 <mat-error
-                *ngIf="companyReg.controls['company_name'].touched && companyReg.controls['company_name'].errors">
+                  *ngIf="companyReg.controls['company_name'].touched && companyReg.controls['company_name'].errors">
                   Valid Email is required
                 </mat-error>
               </mat-form-field>
@@ -117,37 +117,38 @@
               </mat-form-field>
             </mat-grid-tile>
           </mat-grid-list>
-          
+
           <mat-grid-list cols="1" rowHeight="140">
             <mat-divider></mat-divider>
 
 
-            <mat-grid-tile class="spaced-tile">
+            <mat-grid-tile>
+              <div>
 
-              <mat-label>Company Logo</mat-label>
+                <mat-label>Company Logo</mat-label>
 
-              <app-seeker-application-file-upload
-                (fileSelected)="onFileSelected($event,'company_logo')"></app-seeker-application-file-upload>
-
+                <app-seeker-application-file-upload
+                  (fileSelected)="onFileSelected($event,'company_logo')"></app-seeker-application-file-upload>
+              </div>
             </mat-grid-tile>
 
-            <mat-grid-tile class="spaced-tile">
+            <mat-grid-tile>
+              <div>
+                <mat-label>Business Registration Certificate</mat-label>
 
-              <mat-label>Business Registration Certificate</mat-label>
-
-              <app-seeker-application-file-upload
-                (fileSelected)="onFileSelected($event,'business_reg_certificate')"></app-seeker-application-file-upload>
-
+                <app-seeker-application-file-upload
+                  (fileSelected)="onFileSelected($event,'business_reg_certificate')"></app-seeker-application-file-upload>
+              </div>
             </mat-grid-tile>
 
 
-            <mat-grid-tile class="spaced-tile">
+            <mat-grid-tile>
+              <div>
+                <mat-label>Certificate of Incorporation</mat-label>
 
-              <mat-label>Certificate of Incorporation</mat-label>
-
-              <app-seeker-application-file-upload
-                (fileSelected)="onFileSelected($event,'certificate_of_incorporation')"></app-seeker-application-file-upload>
-
+                <app-seeker-application-file-upload
+                  (fileSelected)="onFileSelected($event,'certificate_of_incorporation')"></app-seeker-application-file-upload>
+              </div>
             </mat-grid-tile>
 
           </mat-grid-list>
