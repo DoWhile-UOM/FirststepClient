@@ -72,6 +72,11 @@ export class Apipaths {
     static readonly updateProfilePicture: string = this.baseUrl + 'Seeker/UpdateProfilePicture/'; // + user_id
     static readonly deleteSeeker: string = this.baseUrl + 'Seeker/DeleteSeeker/'; // + seeker_id
 
+    //revision
+    static readonly getRevisionHistory: string = this.baseUrl + 'Revision/GetRevisionHistory/'; // + application_id
+    static readonly addRevision: string = this.baseUrl + 'Revision/CreateRevision';
+    static readonly updateRevision: string = this.baseUrl + 'Revision/UpdateRevision';
+    static readonly deleteRevision: string = this.baseUrl + 'Revision/DeleteRevision/'; // + revision_id
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
