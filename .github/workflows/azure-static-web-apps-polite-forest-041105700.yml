@@ -31,6 +31,8 @@ jobs:
         run: npm run build -- --configuration production
       - name: List build directory contents
         run: ls -R ./Client/dist/client
+      - name: Verify index.html
+        run: if [ ! -f ./Client/dist/client/index.html ]; then echo "index.html not found"; exit 1; fi
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
