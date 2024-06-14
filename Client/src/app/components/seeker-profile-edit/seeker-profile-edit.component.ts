@@ -126,6 +126,7 @@ export class SeekerProfileEditComponent implements OnInit {
   selectedFile: File | null = null;
   selectedimage: File | null = null;
   cVurl: string = '';
+  readonly fallbackImageUrl = 'https://firststep.blob.core.windows.net/firststep/systemusers_94754.png?sv=2023-11-03&st=2024-06-14T22%3A57%3A27Z&se=2024-06-15T22%3A57%3A27Z&sr=b&sp=r&sig=nmtnO0WuoVLjj%2BCTpgvfNF8pfW%2Bm9Uw0uoL6c5gEcgo%3D';
   eventOccured: boolean = false;
 
   skills: string[] = [];
@@ -179,9 +180,8 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   onImageError() {
-    this.propicUrl = 'fallback-image-url';
+    this.propicUrl = this.fallbackImageUrl;
   }
-
   async ngOnInit() {
     this.spinner.show();
     try {
