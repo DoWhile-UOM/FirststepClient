@@ -91,7 +91,7 @@ mat-icon {
 .left{
   width: 50%;
 }
-.right{
+/* .right{
   width: 50%;
   display: flex;
   
@@ -115,4 +115,45 @@ mat-icon {
   color: #fff !important;
   width: 250px;
   height: auto;
+} */
+
+.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Adjust based on your layout */
+}
+
+.box {
+  border: 1px solid #A9A9A9; /* Adjust color as needed */
+  background-color: #F9F9F9;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.text-button {
+  background-color: transparent;
+  border: none;
+  color: inherit; /* Adjust color as needed */
+  padding: 5px;
+  margin: 5px;
+  width: 100%;
+  text-align: left;
+  font-style: italic;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.text-button:hover {
+  background-color: transparent;
+  opacity: 0.7; /* Adjust for hover effect */
+}
+.pdf-icon{
+  color: rgb(177, 5, 5);
 }

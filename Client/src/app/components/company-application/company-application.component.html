@@ -104,7 +104,8 @@
             <mat-label class="lName">URL of the website:</mat-label>
           </mat-grid-tile>
           <mat-grid-tile class="labelContent">
-            <mat-label class="lContent">{{ companyApplication.company_website }}</mat-label>
+            <mat-label class="lContent" *ngIf="companyApplication.company_website!=''">{{
+              companyApplication.company_website }}</mat-label>
             <mat-label class="lContent" *ngIf="companyApplication.company_website =='' ">website has not been
               provided</mat-label>
           </mat-grid-tile>
@@ -124,10 +125,11 @@
           </mat-grid-tile>
 
           <mat-grid-tile class="labelName">
-            <mat-label class="lName">Business Scale</mat-label>
+            <mat-label class="lName">Business Scale:</mat-label>
           </mat-grid-tile>
           <mat-grid-tile class="labelContent">
-            <mat-label class="lContent">{{ companyApplication.company_business_scale}}</mat-label>
+            <mat-label class="lContent" *ngIf="companyApplication.company_business_scale!=''">{{
+              companyApplication.company_business_scale}}</mat-label>
             <mat-label class="lContent" *ngIf="companyApplication.company_business_scale == ''">Businnes has not been
               provided</mat-label>
           </mat-grid-tile>
@@ -143,12 +145,23 @@
           </mat-grid-tile>
         </mat-grid-list>
       </div>
-      <div class="right">
+
+      <!-- <div class="right">
         <button mat-raised-button class="left-certificate" (click)="openBRCerti()">open business registration
           certificate</button>
         <button mat-raised-button class="right-certificate" (click)="openIncCerti()">open
           certificate_of_incorporation</button>
 
+      </div> -->
+      <div class="right">
+        <div class="box">
+          <h3>Attached Documents</h3>
+          <button mat-button class="text-button" (click)="openBRCerti()"><mat-icon
+              class="pdf-icon">descriptionicon</mat-icon>Registration
+            Certificate.pdf</button>
+          <button mat-button class="text-button" (click)="openIncCerti()"><mat-icon
+              class="pdf-icon">descriptionicon</mat-icon>Certificate of incorporation.pdf</button>
+        </div>
       </div>
     </div>
 

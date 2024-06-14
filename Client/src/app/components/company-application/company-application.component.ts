@@ -119,9 +119,6 @@ export class CompanyApplicationComponent implements OnInit {
       this.spinner.show();
       this.companyApplication =
         await this.companyService.getCompanyApplicationById(this.companyID);
-      console.log(this.companyApplication);
-      console.log(this.companyApplication.business_reg_certificate);
-      console.log(this.companyApplication.certificate_of_incorporation);
 
       if (this.companyApplication.verified_system_admin_id !== 0) {
         this.evaluated_status = 'Evaluated';
@@ -149,7 +146,6 @@ export class CompanyApplicationComponent implements OnInit {
         this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
         this.evaluatedCompanyDetails.company_registered_date = new Date();
         this.updateEvaluatedStatus();
-        this.evaluated_status = 'Evaluated';
       } else {
         this.companyApplication.verification_status = false;
       }
@@ -173,7 +169,6 @@ export class CompanyApplicationComponent implements OnInit {
         this.evaluatedCompanyDetails.comment = this.companyApplication.comment;
         this.evaluatedCompanyDetails.company_registered_date = new Date();
         this.updateEvaluatedStatus();
-        this.evaluated_status = 'Evaluated';
       } else if (!this.companyApplication.comment) {
         this.dialog.open(CannotRejectWithoutCommentPopup);
       }
@@ -186,7 +181,10 @@ export class CompanyApplicationComponent implements OnInit {
         this.evaluatedCompanyDetails,
         this.companyID
       );
-    } finally {
+      this.evaluated_status = 'Evaluated';
+      this.spinner.hide();
+    }
+    catch (error) {
       this.spinner.hide();
     }
   }
@@ -195,7 +193,7 @@ export class CompanyApplicationComponent implements OnInit {
     this.router.navigate(['/sa/company-application']);
   }
   openBRCerti() {
-    if(this.companyApplication.business_reg_certificate == null || this.companyApplication.business_reg_certificate == ''){
+    if (this.companyApplication.business_reg_certificate == null || this.companyApplication.business_reg_certificate == '') {
       this.dialog.open(EmptyPdfPopUp);
       return;
     }
@@ -208,7 +206,7 @@ export class CompanyApplicationComponent implements OnInit {
 
   }
   openIncCerti() {
-    if(this.companyApplication.certificate_of_incorporation == null || this.companyApplication.certificate_of_incorporation == ''){
+    if (this.companyApplication.certificate_of_incorporation == null || this.companyApplication.certificate_of_incorporation == '') {
       this.dialog.open(EmptyPdfPopUp);
       return;
     }
