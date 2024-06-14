@@ -1,6 +1,6 @@
 export class Apipaths {
-    static readonly baseUrl: string = 'https://localhost:7213/api/';
-    //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
+    //static readonly baseUrl: string = 'https://localhost:7213/api/';
+    static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
@@ -42,7 +42,7 @@ export class Apipaths {
     static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
     static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
-    static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://localhost:7213/api/Company/UpdateCompanyLogo?companyId=7
+    static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
     static readonly updateUnregComapny:string =this.baseUrl + 'Company/UpdateUnregisteredCompany/';
 
     // application

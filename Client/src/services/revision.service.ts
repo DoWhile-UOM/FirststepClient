@@ -20,7 +20,7 @@ export class RevisionService {
     };
 
     try {
-      await axios.post('https://localhost:7213/api/Revision/CreateRevision', newRevision);
+      await axios.post('https://firststepdowhile.azurewebsites.net/api/Revision/CreateRevision', newRevision);
     } catch (error) {
       console.error('Error adding revision:', error);
     }
@@ -28,7 +28,7 @@ export class RevisionService {
 
   async updateRevision(revision: any) {
     try {
-      await axios.put('https://localhost:7213/api/Revision/UpdateRevision', revision);
+      await axios.put('https://firststepdowhile.azurewebsites.net/api/Revision/UpdateRevision', revision);
     } catch (error) {
       console.error('Error updating revision:', error);
     }
@@ -38,7 +38,7 @@ export class RevisionService {
   async getRevisionHistory(applicationId: number) {
     let revisionHistory: any = {};
     await axios
-      .get(`https://localhost:7213/api/Revision/GetRevisionHistory/${applicationId}`)
+      .get(`https://firststepdowhile.azurewebsites.net/api/Revision/GetRevisionHistory/${applicationId}`)
       .then((response) => {
         revisionHistory = response.data;
       })
@@ -51,7 +51,7 @@ export class RevisionService {
 
   async deleteRevision(revisionId: number) {
     try {
-      await axios.delete(`https://localhost:7213/api/Revision/DeleteRevisionById/${revisionId}`);
+      await axios.delete(`https://firststepdowhile.azurewebsites.net/api/Revision/DeleteRevisionById/${revisionId}`);
     } catch (error) {
       console.error('Error deleting revision:', error);
     }
