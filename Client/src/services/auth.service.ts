@@ -34,7 +34,7 @@ export class AuthService {
   async ResetPasswordReq(email: string) {
     try {
       const response = await axios.post(Apipaths.resetpasswordReq + email);
-      this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      this.snackBar.open('Password Reset link sent to your Email', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     } catch (error) {
       this.snackBar.open('Error Occured on Password Reset', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
@@ -57,6 +57,9 @@ export class AuthService {
       );
       if(action){
         this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+        return action;
+      }else{
+        return action;
       }
   }
 

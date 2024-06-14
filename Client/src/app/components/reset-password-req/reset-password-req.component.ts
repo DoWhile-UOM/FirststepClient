@@ -23,20 +23,9 @@ import { SpinnerComponent } from '../spinner/spinner.component';
   styleUrl: './reset-password-req.component.css'
 })
 export class ResetPasswordReqComponent {
-  hide = true;
-  token_id: string = 'nmIkuA6ZIO';
+  requestButton = false;
 
-  constructor(private router: Router,private auth: AuthService,private spinner: NgxSpinnerService,private snackBar: MatSnackBar,private route: ActivatedRoute) {
-    console.log('Company ID:', this.token_id);
-    this.route.queryParamMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {  // Check if 'id' parameter exists
-        this.token_id = id; // convert string to integer 10 is base
-        console.log('Company ID:', this.token_id);
-      }
-    });
-
-  }
+  constructor(private router: Router,private auth: AuthService,private spinner: NgxSpinnerService,private snackBar: MatSnackBar,private route: ActivatedRoute) {}
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required,Validators.email])
@@ -45,13 +34,17 @@ export class ResetPasswordReqComponent {
   onLogin() {
     //console.log(this.loginForm.value);
     //this.auth.signup(this.myForm.value)
-    this.spinner.show();
+    this.requestButton=true;
+    //this.spinner.show();
     if(!this.loginForm.value.email){
       this.snackBar.open("Please Enter the Email", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-      this.spinner.hide();
+      //this.spinner.hide();
       return;
     }
-    this.auth.ResetPasswordReq(this.loginForm.value.email);
-    this.spinner.hide();
+    //this.auth.ResetPasswordReq(this.loginForm.value.email);
+    let result=this.auth.ResetPasswordReq(this.loginForm.value.email);
+  
+    //this.requestButton=false;
+    //this.spinner.hide();
   }
 }
