@@ -57,7 +57,7 @@ interface CompanyDocuments {
 export class RegisterCompanyComponent {
   @ViewChild('stepper') stepper!: MatStepper;
 
-  isEmailVerified: boolean = true;
+  isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
   isFormVerified: boolean = false;
   verifiedemail: string = "";
@@ -136,7 +136,7 @@ export class RegisterCompanyComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.companyReg.get('company_email')?.setValue(result.emailAddress);//result.emailAddress refer to verified email
       this.isEmailVerified = result.verified;//Set email verifcation status is done
-      this.stepper.next();
+      //this.stepper.next();
     });
   }
 
@@ -157,7 +157,7 @@ export class RegisterCompanyComponent {
   }
 
   onFileSelected(file: File,name:string) {
-    console.log('File selected:', name);
+    //console.log('File selected:', name);
     //applicationData.append('cv', this.applicationData.cv);
 
     switch (name) {

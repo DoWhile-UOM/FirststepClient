@@ -59,21 +59,23 @@ p {
 
 /* Adjusting the distance between steps */
 .mat-horizontal-stepper .mat-step-header {
-  margin-right: 20px; /* Increase or decrease this value to adjust the distance */
+  margin-right: 20px;
+  /* Increase or decrease this value to adjust the distance */
 }
 
 .custom-stepper-button {
   background-color: white;
-  color:#008080;
+  color: #008080;
   border: 3px solid #008080;
 }
+
 .custom-stepper1-button {
   background-color: #008080;
-  color:white;
-  
+  color: white;
+
 }
 
-.mat-button{
+.mat-button {
   padding-left: 10px;
 
 }
@@ -109,22 +111,22 @@ mat-grid-tile mat-form-field {
   word-wrap: break-word;
 }
 
-.spaced-tile {
-  margin-top: 20px;
-  margin-bottom: 20px; 
-  height: 500px;
-}
 
+.spaced-tile {
+  padding-top: 20px;
+  font-family: "roboto";
+  
+}
 
 .mat-mdc-button-touch-target {
   width: 32px !important;
   height: 32px !important;
 }
 
-.button-with-inputbox mat-form-field{
+.button-with-inputbox mat-form-field {
   width: 55%;
 }
 
-.button-with-inputbox button{
+.button-with-inputbox button {
   width: 20%;
 }
