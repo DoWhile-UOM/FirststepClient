@@ -50,6 +50,7 @@ import {
 } from '@angular/material/progress-spinner';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
 
+
 interface SeekerProfile {
   user_id: number;
   email: string;
@@ -111,22 +112,22 @@ export class SeekerProfileEditComponent implements OnInit {
   reqOTPbtntxt: string = 'Request OTP';
   noOfCols: number = 2;
   fields: any = [];
-  // passwordFieldType: string = 'password';
-  // passwordPlaceholder: string = '********';
+  passwordFieldType: string = 'password';
+  passwordPlaceholder: string = 'Enter new password if required';
   disableViewButton: boolean = false; // Disable view button when no CV is uploaded
-
   isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
   isFormVerified: boolean = false;
 
   emailReadOnly: boolean = true;
 
-  propicUrl = '';
+  propicUrl = 'https://firststep.blob.core.windows.net/firststep/systemusers_94754.png?sv=2023-11-03&st=2024-06-14T22%3A57%3A27Z&se=2024-06-15T22%3A57%3A27Z&sr=b&sp=r&sig=nmtnO0WuoVLjj%2BCTpgvfNF8pfW%2Bm9Uw0uoL6c5gEcgo%3D';
   propicBlobName = '';
   selectedFile: File | null = null;
   selectedimage: File | null = null;
   cVurl: string = '';
   eventOccured: boolean = false;
+  @ViewChild('fileInput') fileInput: any;
 
   skills: string[] = [];
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
@@ -159,41 +160,23 @@ export class SeekerProfileEditComponent implements OnInit {
       seekerSkills: [[]],
     });
   }
-  //image upload
-  onselectFile(event: any) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      this.selectedimage = input.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.propicUrl = (e.target?.result as string) || '';
-      };
-      reader.readAsDataURL(this.selectedimage);
-    }
-    this.eventOccured = true;
-  }
-  
-  triggerFileInput() {
-    const fileInput = document.getElementById('profile-upload') as HTMLInputElement;
-    fileInput.click();
-  }
-
-  onImageError() {
-    this.propicUrl = 'fallback-image-url';
-  }
 
   async ngOnInit() {
     this.spinner.show();
     try {
-      // Fetch all job fields
-      await this.jobFieldService.getAll().then((response) => {
-        this.fields = response;
-      });
+      await this.loadSeekerProfile();
+    } catch (error) {
+      console.error(error);
+      this.snackBar.open('Failed to load profile details', 'Close', { duration: 3000 });
+    } finally {
+      this.spinner.hide();
+    }
+  }
 
+  async loadSeekerProfile() {
+    try {
       this.user_id = this.authService.getUserId();
-      // Fetch seeker profile data
       const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
-      // Populate the form with the fetched data
       this.seekerForm.patchValue({
         first_name: seeker.first_name,
         last_name: seeker.last_name,
@@ -205,55 +188,54 @@ export class SeekerProfileEditComponent implements OnInit {
         cVurl: seeker.cVurl,
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
-        password: '',
         seekerSkills: seeker.seekerSkills || [],
       });
-      this.propicUrl = seeker.profile_picture;
-      this.cVurl = seeker.cVurl; // Save the CV URL
+      this.propicUrl = seeker.profile_picture || this.propicUrl;
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
-      console.error(error);
-      this.snackBar.open('Failed to load profile details', 'Close', {
-        duration: 3000,
-      });
-    } finally {
-      this.spinner.hide();
+      console.error('Error fetching seeker profile: ', error);
+      throw error;
     }
   }
 
-  ngAfterViewInit() {
-    if (this.addSkillsComponent && this.addSkillsComponent.skills) {
-      this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
-      this.seekerForm.get('seekerSkills')?.setValue(this.skills);
+  onselectFile(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.propicUrl = (e.target?.result as string) || '';
+      };
+      reader.readAsDataURL(this.selectedFile);
     }
+    this.eventOccured = true;
   }
 
-  
+  triggerFileInput() {
+    this.fileInput.nativeElement.click();
+  }
 
   async onSubmit() {
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
       return;
     }
-
     await this.updateProfile();
   }
 
   async updateProfile() {
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
-      this.snackBar.open('Please fill in all required fields', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open('Please fill in all required fields', 'Close', { duration: 3000 });
       return;
     }
 
     this.spinner.show();
     try {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
-      formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
+      formValue.seekerSkills = this.skills; // Handle skills
 
       const formData = new FormData();
       formData.append('email', formValue.email);
@@ -267,39 +249,44 @@ export class SeekerProfileEditComponent implements OnInit {
       formData.append('profile_picture', formValue.profile_picture || '');
       formData.append('linkedin', formValue.linkedin || '');
       formData.append('field_id', formValue.field_id.toString());
-      
-       // Append each skill individually
-    if (formValue.seekerSkills) {
-      formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
-    }
 
-    if (formValue.password) {
-      formData.append('password', formValue.password);
-    }
+      if (formValue.seekerSkills) {
+        formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
+      }
 
       if (this.selectedFile) {
-        formData.append('cvFile', this.selectedFile);
+        formData.append('profilePictureFile', this.selectedFile);
+      } else {
+        formData.append('profile_picture', this.propicUrl); // Ensure the current profile picture URL is sent
       }
 
-      if (this.selectedimage) {
-        formData.append('profilePictureFile', this.selectedimage);
+      if (formValue.password) {
+        formData.append('password', formValue.password);
       }
-  
-  
+
       await this.seekerService.editSeeker(formData, this.user_id);
-      this.snackBar.open('Profile updated successfully', 'Close', {
-        duration: 2000,
-      });
+      this.snackBar.open('Profile updated successfully', 'Close', { duration: 2000 });
+      await this.loadSeekerProfile(); // Reload profile to get updated image URL
     } catch (error) {
       console.error('Error updating profile: ', error);
-      this.snackBar.open('Failed to update profile', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open('Failed to update profile', 'Close', { duration: 3000 });
     } finally {
       this.spinner.hide();
     }
   }
 
+  onImageError() {
+    this.propicUrl = 'https://firststep.blob.core.windows.net/firststep/systemusers_94754.png?sv=2023-11-03&st=2024-06-14T22%3A57%3A27Z&se=2024-06-15T22%3A57%3A27Z&sr=b&sp=r&sig=nmtnO0WuoVLjj%2BCTpgvfNF8pfW%2Bm9Uw0uoL6c5gEcgo%3D';
+  }
+
+  ngAfterViewInit() {
+    if (this.addSkillsComponent && this.addSkillsComponent.skills) {
+      this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
+      this.seekerForm.get('seekerSkills')?.setValue(this.skills);
+    }
+  }
+
+  
   showInformEmailShouldBeVerifiedPopUp() {
     const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
     dialogRef.afterClosed().subscribe((result) => {
@@ -340,35 +327,14 @@ export class SeekerProfileEditComponent implements OnInit {
     // Revert the email field to the original value
     this.seekerForm.get('email')?.setValue(this.emailcaptured);
   }
-
   async discardChanges() {
     this.spinner.show();
     try {
-      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
-      this.seekerForm.patchValue({
-        first_name: seeker.first_name,
-        last_name: seeker.last_name,
-        email: seeker.email,
-        phone_number: seeker.phone_number,
-        bio: seeker.bio,
-        description: seeker.description,
-        university: seeker.university,
-        cVurl: seeker.cVurl,
-        linkedin: seeker.linkedin,
-        field_id: seeker.field_id,
-        password: '', // Reset the password field
-        seekerSkills: seeker.seekerSkills || [],
-      });
-      this.propicUrl = seeker.profile_picture;
-      this.cVurl = seeker.cVurl;
-      this.skills = this.removeDuplicates(seeker.seekerSkills || []);
-      this.emailcaptured = seeker.email;
+      await this.loadSeekerProfile();
       this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
     } catch (error) {
-      console.error('Failed to discard changes', error);
-      this.snackBar.open('Failed to discard changes', 'Close', {
-        duration: 3000,
-      });
+      console.error(error);
+      this.snackBar.open('Failed to discard changes', 'Close', { duration: 3000 });
     } finally {
       this.spinner.hide();
     }

@@ -4,33 +4,44 @@
   min-width: 400px;
   margin: 0 auto;
 }
+
 .card {
   padding: 2em;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.form-container {
-  margin-top: 2em;
-}
-
-mat-grid-tile mat-form-field {
-  width: 100%;
-  margin: 0.75em;
-}
 .tile {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.logo {
-  width: 100px; /* Adjust the size as needed */
-  height: auto;
-  margin-right: 10px; 
+.profile-image {
+  margin: 0 auto;
+  display: block;
+}
+
+.edit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px; /* Add margin to prevent overlap */
+}
+
+mat-grid-tile mat-form-field {
+  width: 100%;
+  margin: 0.75em;
 }
 
 mat-grid-tile {
-  height: auto;
+  height: min-content;
+  margin: 0;
 }
+
+.sectionHeading {
+  margin: 6em 1em 4em 0.75em;
+}
+
 .title {
   color: #008080;
   font-size: 25px;
@@ -38,19 +49,24 @@ mat-grid-tile {
   font-weight: 700;
   word-wrap: break-word;
 }
+
 .description-text-editor {
   padding-left: 1em;
   width: calc(100% - 2.2em);
   margin-bottom: 1.2em;
   padding-top: 1em;
 }
+
 mat-form-field {
   width: 100%;
+  height: 60px;
 }
+
 .right-btn,
 .left-btn {
   width: 100%;
 }
+
 .left-btn {
   justify-content: flex-start;
 }
@@ -59,29 +75,35 @@ mat-form-field {
 .right-btn {
   display: block;
 }
+
 .button-section {
   display: flex;
   margin-top: 40px;
 }
+
 .right-btn {
   justify-content: flex-start;
   width: 50%;
   display: flex;
   padding: 5px;
 }
+
 .left-btn {
   justify-content: flex-end;
   width: 50%;
   display: flex;
 }
+
 button {
   width: 25%;
 }
+
 .apply-changes,
 .discard-changes,
 .delete-account {
   font-weight: 400;
 }
+
 .apply-changes-class {
   background-color: #008080;
   color: #ffffff;
@@ -95,7 +117,8 @@ button {
   padding: 10px;
   margin-right: 10px;
 }
-/* .apply-changes-class:hover {
+
+.discard-changes-class {
   background-color: #ffffff;
   color: #008080;
   border-width: 1px;
@@ -103,39 +126,78 @@ button {
   outline: none;
   border-radius: 5px;
   border-color: #008080;
-} */
+  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
-/* .discard-changes-class:hover {
-  background-color: #008080;
+button:hover {
+  cursor: pointer;
+}
+
+.delete-account-class {
+  background-color: #d73434;
   color: #ffffff;
   border-width: 1px;
   border-style: none;
   outline: none;
   border-radius: 5px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-} */
-button:hover {
-  cursor: pointer;
+  padding: 2px 0;
+  padding: 10px;
 }
 
-/* .delete-account-class:hover {
-  background-color: #ffffff;
-  color: #d73434;
-  border-width: 1px;
-  border-style: solid;
-  outline: none;
-  border-radius: 5px;
-  padding: 2px 0;
-} */
-
-.container-otp{
+.container-otp {
   display: flex;
   flex-direction: column;
 }
-input[type="file"] {
-  display: block;
-  margin: 10px auto;
+
+.example-button-row {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 25px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 0px 8px 8px 0;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.button-container {
+  margin-left: 10px;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  gap: 10px;
+}
+
+.button-with-inputbox mat-form-field {
+  width: 65%;
+}
+
+.button-with-inputbox button {
+  width: 35%;
+  padding: 5px;
+  margin-right: 5px;
+  margin-top: 1.5em;
+  height: 3.5em;
+}
+
+.textbox-form-field {
+  position: relative;
+  width: calc(100% - 2.2em);
+  margin: 2rem auto 0 auto;
 }
 
 .imageLoading {
@@ -144,38 +206,67 @@ input[type="file"] {
   display: block;
 }
 
-input[type="file"] {
-  display: none;
+.edit {
+  color: #008080;
+  cursor: pointer;
 }
-
 
 .custom-file-upload {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  color:#008080; 
+  color: #008080;
   margin-left: 10px;
 }
 
 .custom-file-upload mat-icon {
-  font-size: 24px !important; 
-  
+  font-size: 24px !important;
 }
-.edit{
-  color:#008080;
+
+mat-error {
+  position: absolute;
+  bottom: -1.5em;
+  left: 0;
+  width: 100%;
+  font-size: 12px;
+  color: red;
 }
-.apply-button-class{
-  background-color: #008080 !important;
-  color: #ffffff !important;
-  margin-right: 20px;
-  width: 170px !important;
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  gap: 10px;
+  margin-top: 20px;
 }
-.delete-account-class{
-  background-color: #d73434 !important;
-  color: #ffffff !important;
-  width: 170px !important;
-  
+
+button {
+  flex: 1;
+  padding: 10px;
 }
-.discard-changes-class{
-  width: 170px !important;
+
+.apply-changes-class,
+.discard-changes-class,
+.delete-account-class,
+.upload-cv-class,
+.view-cv-class {
+  font-weight: 400;
+  width: 100%;
+}
+
+.upload-cv-class,
+.view-cv-class {
+  background-color: #008080;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.upload-cv-class:hover,
+.view-cv-class:hover {
+  cursor: pointer;
+  background-color: #006666;
 }
