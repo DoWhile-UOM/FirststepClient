@@ -36,26 +36,48 @@
       </div>
 
       <mat-chip
-        class="status-label"
-        [ngClass]="{
-          'status-rejected':
-            applicationDetails.is_evaluated &&
-            applicationDetails.last_revision.status === 'Rejected',
-          'status-passed':
-            applicationDetails.is_evaluated &&
-            applicationDetails.last_revision.status === 'Pass',
-          'status-accepted':
-            applicationDetails.is_evaluated &&
-            applicationDetails.last_revision.status === 'Accepted',
-          'status-not-evaluated': !applicationDetails.is_evaluated
-        }"
-      >
-        {{
-          applicationDetails.is_evaluated
-            ? applicationDetails.last_revision.status
-            : "Not Evaluated"
-        }}
-      </mat-chip>
+  class="status-label"
+  [ngClass]="{
+    'status-rejected':
+      applicationDetails.is_evaluated &&
+      applicationDetails.last_revision.status === 'Rejected',
+    'status-passed':
+      applicationDetails.is_evaluated &&
+      applicationDetails.last_revision.status === 'Pass',
+    'status-accepted':
+      applicationDetails.is_evaluated &&
+      applicationDetails.last_revision.status === 'Accepted',
+    'status-not-evaluated': !applicationDetails.is_evaluated
+  }"
+  matTooltip="Evaluation status of the application"
+>
+  <div class="chip-content">
+    <mat-icon
+      *ngIf="applicationDetails.is_evaluated"
+      [ngClass]="{
+        'status-rejected': applicationDetails.last_revision.status === 'Rejected',
+        'status-passed': applicationDetails.last_revision.status === 'Pass',
+        'status-accepted': applicationDetails.last_revision.status === 'Accepted'
+      }"
+    >
+      {{
+        applicationDetails.last_revision.status === 'Accepted'
+          ? 'check_circle'
+          : applicationDetails.last_revision.status === 'Rejected'
+          ? 'cancel'
+          : applicationDetails.last_revision.status === 'Pass'
+          ? 'hourglass_empty'
+          : ''
+      }}
+    </mat-icon>
+    {{
+      applicationDetails.is_evaluated
+        ? applicationDetails.last_revision.status
+        : 'Not Evaluated'
+    }}
+  </div>
+</mat-chip>
+
     </div>
 
     <mat-divider></mat-divider>
