@@ -111,8 +111,8 @@ export class SeekerProfileEditComponent implements OnInit {
   reqOTPbtntxt: string = 'Request OTP';
   noOfCols: number = 2;
   fields: any = [];
-  passwordFieldType: string = 'password';
-  passwordPlaceholder: string = '********';
+  // passwordFieldType: string = 'password';
+  // passwordPlaceholder: string = '********';
   disableViewButton: boolean = false; // Disable view button when no CV is uploaded
 
   isEmailVerified: boolean = false;
@@ -172,10 +172,14 @@ export class SeekerProfileEditComponent implements OnInit {
     }
     this.eventOccured = true;
   }
-
+  
   triggerFileInput() {
     const fileInput = document.getElementById('profile-upload') as HTMLInputElement;
     fileInput.click();
+  }
+
+  onImageError() {
+    this.propicUrl = 'fallback-image-url';
   }
 
   async ngOnInit() {
@@ -201,7 +205,7 @@ export class SeekerProfileEditComponent implements OnInit {
         cVurl: seeker.cVurl,
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
-        password: this.passwordPlaceholder,
+        password: '',
         seekerSkills: seeker.seekerSkills || [],
       });
       this.propicUrl = seeker.profile_picture;
@@ -226,24 +230,7 @@ export class SeekerProfileEditComponent implements OnInit {
     }
   }
 
-  togglePasswordVisibility() {
-    this.passwordFieldType =
-      this.passwordFieldType === 'password' ? 'text' : 'password';
-  }
-
-  onPasswordFocus() {
-    // Clear the password field if it contains the placeholder
-    if (this.seekerForm.get('password')?.value === this.passwordPlaceholder) {
-      this.seekerForm.get('password')?.setValue('');
-    }
-  }
-
-  onPasswordBlur() {
-    // Restore the password placeholder if the field is empty
-    if (!this.seekerForm.get('password')?.value) {
-      this.seekerForm.get('password')?.setValue(this.passwordPlaceholder);
-    }
-  }
+  
 
   async onSubmit() {
     if (this.seekerForm.invalid) {
@@ -286,14 +273,16 @@ export class SeekerProfileEditComponent implements OnInit {
       formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
     }
 
+    if (formValue.password) {
+      formData.append('password', formValue.password);
+    }
+
       if (this.selectedFile) {
         formData.append('cvFile', this.selectedFile);
       }
 
       if (this.selectedimage) {
         formData.append('profilePictureFile', this.selectedimage);
-      } else {
-        formData.append('profile_picture', this.propicUrl); // Ensure the current profile picture URL is sent
       }
   
   
@@ -353,20 +342,30 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   async discardChanges() {
-    // Discard changes and reload the original profile data
     this.spinner.show();
     try {
-      const seeker = await this.seekerService.getSeekerEditProfile(
-        this.user_id
-      );
+      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
       this.seekerForm.patchValue({
-        ...seeker,
-        password: this.passwordPlaceholder,
+        first_name: seeker.first_name,
+        last_name: seeker.last_name,
+        email: seeker.email,
+        phone_number: seeker.phone_number,
+        bio: seeker.bio,
+        description: seeker.description,
+        university: seeker.university,
+        cVurl: seeker.cVurl,
+        linkedin: seeker.linkedin,
+        field_id: seeker.field_id,
+        password: '', // Reset the password field
         seekerSkills: seeker.seekerSkills || [],
       });
+      this.propicUrl = seeker.profile_picture;
+      this.cVurl = seeker.cVurl;
+      this.skills = this.removeDuplicates(seeker.seekerSkills || []);
+      this.emailcaptured = seeker.email;
       this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
     } catch (error) {
-      console.error(error);
+      console.error('Failed to discard changes', error);
       this.snackBar.open('Failed to discard changes', 'Close', {
         duration: 3000,
       });
@@ -374,6 +373,7 @@ export class SeekerProfileEditComponent implements OnInit {
       this.spinner.hide();
     }
   }
+  
 
   async deleteAccount() {
     const dialogRef = this.dialog.open(ConfirmDeleteProfilePopUp);
