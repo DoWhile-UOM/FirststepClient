@@ -67,7 +67,7 @@ export class RegCmpStateCheckComponent {
   cmpData: CmpyData = {} as CmpyData
   uploadDoc: CompanyDocuments={} as CompanyDocuments
 
-  constructor(public dialog: MatDialog,private snackbar: MatSnackBar, private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
+  constructor(private snackbar: MatSnackBar, private _formBuilder: FormBuilder,private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
@@ -75,7 +75,6 @@ export class RegCmpStateCheckComponent {
         console.log('Company ID:', this.company_id);
         this.fetchData(this.company_id);
       }else{
-        this.NotFound();
       }
     });
 
@@ -113,15 +112,13 @@ export class RegCmpStateCheckComponent {
         } else if (approvelstate) {
           this.onRejected();
         }else{
-          this.NotFound();
+
         }
-      }else{
-        this.NotFound();
       }
       
     } catch (error) {
       console.error('Error:', error);
-      this.NotFound();
+
     }
     //end of fetch data
   }
@@ -183,18 +180,21 @@ export class RegCmpStateCheckComponent {
         this.uploadDoc.business_reg_certificate = file;
     }
   }
-
+/*
   NotFound(): void {
-    const dialogRef = this.dialog.open(PopUpFinalComponent, {
+    const dialogRef = this.popup.open(PopUpFinalComponent, {
       data: {
-        title: 'Invalid Request',
+        title: 'Invalid Link',
         message: 'The link to view the status of your company registration application is invalid',
         message2: 'Please check the link again or contact our customer care team for assistance.'
       },
       disableClose: true  // Disables closing the dialog
     });
 
-
-  }
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log('User input:', result);
+    });
+  }*/
 
 }
