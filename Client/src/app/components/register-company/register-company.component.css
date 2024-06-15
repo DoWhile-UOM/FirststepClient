@@ -38,6 +38,10 @@ p {
   align-items: center;
 }
 
+.file-upload{
+  margin-top: 1.5em;
+}
+
 .form-container {
   border: 3px black;
   border-radius: 25px;

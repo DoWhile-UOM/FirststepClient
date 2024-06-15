@@ -42,8 +42,9 @@ export class Apipaths {
     static readonly getCompanyRegState: string = this.baseUrl + 'Company/GetRegCheckByID/';//+regurl id
     static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
-    static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
+    static readonly updateCompanyLogo: string = this.baseUrl + 'Company/UpdateCompanyLogo/';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
     static readonly updateUnregComapny: string = this.baseUrl + 'Company/UpdateUnregisteredCompany/';
+
 
     // application
     static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
@@ -87,8 +88,4 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
-
-
-
-
 }
