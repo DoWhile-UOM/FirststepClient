@@ -42,12 +42,7 @@ interface EvaluatedCompanyDetails {
   company_registered_date: Date;
   verified_system_admin_id: number;
 }
-interface CmpAdminReg {
-  email: string;
-  password_hash: string;
-  first_name: string;
-  last_name: string;
-}
+
 
 @Injectable({
   providedIn: 'root',
@@ -215,7 +210,7 @@ export class CompanyService {
     }
     catch (error) {
       //console.error(error);
-      cmpData=false;
+      cmpData = false;
     }
 
     return cmpData;
@@ -238,18 +233,7 @@ export class CompanyService {
   //   }
   // }
 
-  async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
-    try {
-      const response = await axios.post(Apipaths.postCompanyAdminReg, {
-        ...adminRegData,
-        type: type,
-        company_id: companyId
-      });
-      this.snackBar.open('Company Admin registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-    } catch (error) {
-      this.snackBar.open('Error registering company admin', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-    }
-  }
+
 
   async updateUnregCompanyDetails(company: any) { // should be chnaged
 
