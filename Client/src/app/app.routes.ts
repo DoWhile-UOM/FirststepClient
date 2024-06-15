@@ -8,6 +8,7 @@ import { CompanyAdminRegistrtionFormComponent } from './components/company-admin
 import { SeekerSignupComponent } from './components/seeker-signup/seeker-signup.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { PopUpFinalComponent } from './components/pop-up-final/pop-up-final.component';
+import { IntViewTimeslotComponent } from './components/int-view-timeslot/int-view-timeslot.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
