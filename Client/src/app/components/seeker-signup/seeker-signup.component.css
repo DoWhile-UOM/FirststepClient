@@ -37,6 +37,9 @@
   max-width: 600px;
   padding: 20px;
   box-sizing: border-box;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  background: #fff;
+
 }
 
 .heading {
@@ -134,4 +137,26 @@
   font-size: 14px;
   font-weight: bold;
   text-align: center;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+  margin-bottom: 20px; /* Adjust this value to increase the gap */
+}
+
+::ng-deep .mat-step-label {
+  padding: 0 16px; /* Adjust this value for more horizontal padding if needed */
+}
+
+::ng-deep .mat-step-header {
+  display: flex;
+  justify-content: center; /* Center the labels horizontally */
+}
+
+::ng-deep .mat-step-icon {
+  margin-right: 8px; /* Adjust this value to increase spacing between step icons and labels */
+}
+
+/* Adjust this value to control the gap between the step icons and the content container */
+.mat-stepper-horizontal, .mat-horizontal-stepper-header-container {
+  margin-bottom: 40px; /* Adjust this value to increase the gap */
 }

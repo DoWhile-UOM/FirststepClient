@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { Apipaths } from './apipaths/apipaths';
 
 @Injectable({
   providedIn: 'root'
@@ -20,15 +21,15 @@ export class RevisionService {
     };
 
     try {
-      await axios.post('https://firststepdowhile.azurewebsites.net/api/Revision/CreateRevision', newRevision);
-    } catch (error) {
+      await axios.post(Apipaths.addRevision, newRevision);
+     } catch (error) {
       console.error('Error adding revision:', error);
     }
   }
 
   async updateRevision(revision: any) {
     try {
-      await axios.put('https://firststepdowhile.azurewebsites.net/api/Revision/UpdateRevision', revision);
+      await axios.put(Apipaths.updateRevision, revision);
     } catch (error) {
       console.error('Error updating revision:', error);
     }
@@ -38,7 +39,7 @@ export class RevisionService {
   async getRevisionHistory(applicationId: number) {
     let revisionHistory: any = {};
     await axios
-      .get(`https://firststepdowhile.azurewebsites.net/api/Revision/GetRevisionHistory/${applicationId}`)
+      .get(Apipaths.getRevisionHistory + applicationId)
       .then((response) => {
         revisionHistory = response.data;
       })
@@ -51,7 +52,7 @@ export class RevisionService {
 
   async deleteRevision(revisionId: number) {
     try {
-      await axios.delete(`https://firststepdowhile.azurewebsites.net/api/Revision/DeleteRevisionById/${revisionId}`);
+      await axios.delete(Apipaths.deleteRevision + revisionId);
     } catch (error) {
       console.error('Error deleting revision:', error);
     }

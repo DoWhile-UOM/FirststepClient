@@ -1,6 +1,6 @@
 export class Apipaths {
-    //static readonly baseUrl: string = 'https://localhost:7213/api/';
-    static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
+    static readonly baseUrl: string = 'https://localhost:7213/api/';
+    //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
@@ -13,6 +13,7 @@ export class Apipaths {
     static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
     static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId:int?user_id='; // + user_id 
     static readonly updateUserDetails: string = this.baseUrl + 'User/UpdateUser';
+    static readonly postCompanyAdminReg: string = this.baseUrl + 'Employee/AddNewCompanyAdmin';// + company_id
 
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
@@ -41,9 +42,9 @@ export class Apipaths {
     static readonly getCompanyRegState: string = this.baseUrl + 'Company/GetRegCheckByID/';//+regurl id
     static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
-    static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
-    static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
-    static readonly updateUnregComapny:string =this.baseUrl + 'Company/UpdateUnregisteredCompany/';
+    static readonly updateCompanyLogo: string = this.baseUrl + 'Company/UpdateCompanyLogo/';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
+    static readonly updateUnregComapny: string = this.baseUrl + 'Company/UpdateUnregisteredCompany/';
+
 
     // application
     static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
@@ -66,12 +67,17 @@ export class Apipaths {
     static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';// + seeker_id
     static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';// + seeker_id
     static readonly getSeekerProfile: string = this.baseUrl + 'Seeker/GetSeekerProfile/';// + seeker_id
-    static readonly getSeekerEditProfile:string = this.baseUrl + 'Seeker/GetSeekerProfile/Update/';// + seeker_id
+    static readonly getSeekerEditProfile: string = this.baseUrl + 'Seeker/GetSeekerProfile/Update/';// + seeker_id
     static readonly addSeeker: string = this.baseUrl + 'Seeker/AddSeeker';
     static readonly editSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker/';// + seeker_id
     static readonly updateProfilePicture: string = this.baseUrl + 'Seeker/UpdateProfilePicture/'; // + user_id
     static readonly deleteSeeker: string = this.baseUrl + 'Seeker/DeleteSeeker/'; // + seeker_id
 
+    //revision
+    static readonly getRevisionHistory: string = this.baseUrl + 'Revision/GetRevisionHistory/'; // + application_id
+    static readonly addRevision: string = this.baseUrl + 'Revision/CreateRevision';
+    static readonly updateRevision: string = this.baseUrl + 'Revision/UpdateRevision';
+    static readonly deleteRevision: string = this.baseUrl + 'Revision/DeleteRevision/'; // + revision_id
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
@@ -87,8 +93,4 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
-
-  
-
-
 }

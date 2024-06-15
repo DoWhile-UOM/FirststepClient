@@ -1,12 +1,12 @@
 .body {
-  padding: 3em;
+padding:5px;
   width: 60%;
   min-width: 400px;
   margin: 0 auto;
   font-size: 15.333px;
 }
 .card {
-  padding: 2em;
+  padding: 5px;
 }
 mat-grid-tile mat-form-field {
   width: 75%;
@@ -134,6 +134,7 @@ mat-icon {
   align-items: left;
   text-align: left;
   margin-top: 20px;
+  margin-right: 20px;
 }
 
 .text-button {
@@ -143,7 +144,8 @@ mat-icon {
   padding: 5px;
   margin: 5px;
   width: 100%;
-  text-align: left;
+  display: flex;
+  justify-content: left;
   font-style: italic;
   font-weight: bold;
   text-decoration: underline;
@@ -156,4 +158,14 @@ mat-icon {
 }
 .pdf-icon{
   color: rgb(177, 5, 5);
+}
+.link{
+  text-decoration: none;
+  color: #000;
+}
+.link:hover{
+  color: #008080;
+}
+.comment{
+  width: 100% !important;
 }

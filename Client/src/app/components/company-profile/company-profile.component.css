@@ -59,7 +59,7 @@
     font-family: Lato;
     font-weight: 700;
     word-wrap: break-word;
-    width: 50%;
+    width: 40%;
     text-align: right;
 }
 
@@ -69,12 +69,12 @@
     font-family: Lato;
     word-wrap: break-word;
     margin-left: 1em;
-    width: 50%;
+    width: 60%;
 }
 
 .container-content{
     margin-top: 1em;
-    width: 65%;
+    width: 75%;
 }
 
 .container-content mat-grid-tile{

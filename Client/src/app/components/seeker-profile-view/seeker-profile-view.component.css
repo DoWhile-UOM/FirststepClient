@@ -18,6 +18,7 @@
   display: flex;
   justify-content: space-between;
   margin-left: 2em;
+  margin-top: 20px; /* Add space between upper section and info container */
 }
 
 .name {
@@ -54,25 +55,38 @@ button.mat-button {
 .info {
   display: flex;
   flex-direction: column;
+  font-size: 15px;
 }
 
-.personalInfo > div {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+.personalInfo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+  row-gap: 20px; /* Add space between rows */
   margin-left: 2em;
-  font-size: 15px;
-  margin: 30px 0px 30px 0px;
+}
+
+.info-row {
+  display: contents;
 }
 
 .head {
   text-align: left;
-  width: 180px;
   font-weight: 550;
+  margin-right: 20px; /* Add space between label and value */
 }
 
 span {
   text-align: left;
+  display: block;
+}
+
+.description {
+  white-space: pre-wrap; /* Ensure description text wraps properly */
+}
+
+.linkedIn {
+  white-space: pre-wrap; /* Ensure description text wraps properly */
 }
 
 .buttons {
@@ -87,14 +101,8 @@ span {
 
 .Open {
   background-color: teal;
-  color: white;
-  margin-right: 10px;
-}
-
-.Download {
-  background-color: white;
-  color: teal;
-  border: 3px solid teal;
+  color: white !important;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 hr {

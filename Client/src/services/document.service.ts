@@ -10,8 +10,8 @@ import axios from 'axios';
 })
 
 export class DocumentService {
-  private apiUrl = 'https://firststepdowhile.azurewebsites.net/api/Document';
-  private fetchUrl = 'https://firststepdowhile.azurewebsites.net/api/Document/GetSasToken';
+  private apiUrl = 'https://localhost:7213/api/Document';
+  private fetchUrl = 'https://localhost:7213/api/Document/GetSasToken';
   private containerUrl = 'https://firststep.blob.core.windows.net/firststep';
 
 

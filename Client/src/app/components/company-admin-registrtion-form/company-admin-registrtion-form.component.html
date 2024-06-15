@@ -74,7 +74,7 @@
     </mat-grid-list>
 
     <!--email verification-->
-    <div *ngIf="isConfrimedToChangeEmail==true">
+    <div *ngIf="canOpenOtpView==true">
       <mat-grid-list cols="{{ 1 }}" rowHeight="300">
         <mat-grid-tile>
           <div class="container-otp">
