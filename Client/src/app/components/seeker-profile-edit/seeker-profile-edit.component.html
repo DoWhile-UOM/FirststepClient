@@ -10,7 +10,7 @@
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="2" rowHeight="140" style="margin: 0">
         <mat-grid-tile class="tile">
-          <div>
+          <div class="profile-container">
             <img
               [src]="propicUrl || 'fallback-image-url'"
               alt="Seeker profile picture"
@@ -18,10 +18,12 @@
               width="100"
               height="auto"
               (error)="onImageError()"
-            /><br />
+            />
             <div class="edit-container">
-              <mat-icon class="edit" (click)="triggerFileInput()">edit</mat-icon>
-              <label class="custom-file-upload" (click)="triggerFileInput()">Edit image</label>
+              <button mat-button color="primary" (click)="triggerFileInput()" class="edit-button">
+                <mat-icon class="edit">edit</mat-icon>
+                Edit image
+              </button>
               <input
                 type="file"
                 id="profile-upload"
