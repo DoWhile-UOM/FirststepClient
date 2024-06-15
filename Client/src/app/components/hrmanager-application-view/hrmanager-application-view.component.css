@@ -10,6 +10,9 @@
   height: fit-content;
   width: 900px;
   padding: 3em;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+
 }
 
 .info-container {
@@ -52,7 +55,7 @@ button.mat-button {
   flex-direction: column;
 }
 
-.comment-section{
+.comment-section {
   margin-left: 2em;
 }
 
@@ -94,7 +97,7 @@ span {
 .reject {
   background-color: white;
   color: #de3a3b;
-  border: 3px solid#de3a3b;
+  border: 3px solid #de3a3b;
 }
 
 textarea {
@@ -126,46 +129,40 @@ textarea:focus {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  padding: 8px;
-  border-radius: 4px;
+  padding: 4px 8px;
+  border-radius: 20px;
   font-weight: bold !important;
   color: white !important; /* Ensure text color is white */
 }
 
 .status-rejected {
-  background-color: rgba(222, 58, 59, 0.5) !important; /* Apply rgba color */
+  background-color: rgba(222, 58, 59) !important; /* Apply rgba color */
   color: white !important; /* Ensure text color is white */
   font-weight: bold !important;
-
 }
 
 .status-passed {
-  background-color: rgba(0, 0, 0, 0.25) !important; /* Apply rgba color */
+  background-color: rgba(0, 0, 0, 0.6) !important; /* Apply rgba color */
   color: white !important; /* Ensure text color is white */
   font-weight: bold !important;
-
 }
 
 .status-accepted {
-  background-color: rgba(0, 128, 128, 0.6) !important; /* Apply rgba color */
+  background-color: rgba(0, 128, 128) !important; /* Apply rgba color */
   color: white !important; /* Ensure text color is white */
   font-weight: bold !important;
-
 }
 
 .status-not-evaluated {
-  background-color: rgba(0, 0, 0, 0.25) !important; /* Apply rgba color */
+  background-color: rgba(0, 0, 0, 0.6) !important; /* Apply rgba color */
   color: white !important; /* Ensure text color is white */
   font-weight: bold !important;
-
 }
 
-
-.status-not-evaluated {
-  background-color: rgba(0, 0, 0, 0.25) !important; /* Ensure background color is applied */
-  color: white !important; /* Ensure text color is white */
-  font-weight: bold !important;
-
+.chip-content {
+  display: flex;
+  align-items: center; /* Align items horizontally */
+  gap: 5px; /* Add some space between the icon and text */
 }
 
 .comment-decision-section {
@@ -182,12 +179,13 @@ textarea:focus {
 
 .decision-buttons {
   display: flex;
-  gap: 10px; /* Add some space between the buttons */
-  margin-top: 25px; /* Add some space above the buttons */
+  gap: 10px;
+  margin-top: 25px;
+  margin-bottom: 10px; 
 }
 
 .comment-wrapper {
   display: flex;
   align-items: flex-start;
-  gap: 20px; 
+  gap: 20px;
 }

@@ -19,6 +19,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+import { SeekerApplicationFileUploadComponent } from "../seeker-application-file-upload/seeker-application-file-upload.component";
+import { PopUpFinalComponent } from '../pop-up-final/pop-up-final.component';
 
 //interface to fetch company data
 export interface CmpyData {
@@ -27,43 +29,52 @@ export interface CmpyData {
   company_website: string;
   company_email: string;
   company_description: string;
-  company_logo: string;
+  company_logo: File|null;
   company_business_scale: string;
-  business_reg_certificate: string;
+  business_reg_certificate: File|null;
   company_registered_date: string;
-  certificate_of_incorporation: string;
+  certificate_of_incorporation: File|null;
   company_phone_number: number
   business_reg_no: number;
   comment: string;
   verification_status: any;
+  company_applied_date:string;
 
+}
+
+interface CompanyDocuments {
+  company_logo: File|null;
+  business_reg_certificate: File|null;
+  certificate_of_incorporation: File|null;
 }
 
 
 @Component({
-  selector: 'app-reg-cmp-state-check',
-  standalone: true,
-  imports: [FormsModule, CommonModule, MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel],
-  templateUrl: './reg-cmp-state-check.component.html',
-  styleUrl: './reg-cmp-state-check.component.css'
+    selector: 'app-reg-cmp-state-check',
+    standalone: true,
+    templateUrl: './reg-cmp-state-check.component.html',
+    styleUrl: './reg-cmp-state-check.component.css',
+    imports: [FormsModule, CommonModule, MatSelect, MatOptionModule, MatDividerModule, MatGridListModule, MatCardModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatStepperModule, MatIcon, MatFormField, MatLabel, SeekerApplicationFileUploadComponent]
 })
 export class RegCmpStateCheckComponent {
 
   company_id: string = 'nmIkuA6ZIO'; // sample company_id
   regState: string = 'Pending'; // sample registration state
-  isNoInput: boolean = true;
+  isNoInputMain: boolean = true;
 
   //cmpData: CmpyData[] = [];
 
   cmpData: CmpyData = {} as CmpyData
+  uploadDoc: CompanyDocuments={} as CompanyDocuments
 
-  constructor(private snackbar: MatSnackBar, private _formBuilder: FormBuilder, private popup: MatDialog, private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
+  constructor(private snackbar: MatSnackBar, private _formBuilder: FormBuilder,private styleService: StylemanageService, private route: ActivatedRoute, private company: CompanyService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
         this.company_id = id; // convert string to integer 10 is base
         console.log('Company ID:', this.company_id);
         this.fetchData(this.company_id);
+      }else{
       }
     });
 
@@ -92,6 +103,7 @@ export class RegCmpStateCheckComponent {
         this.styleService.setStyle('circle-border-color', '#ffbf00');
         this.styleService.setStyle('number-color', '#ffbf00');
         this.cmpData.company_registered_date = this.cmpData.company_registered_date.split('T')[0];
+        this.cmpData.company_applied_date = this.cmpData.company_applied_date.split('T')[0];
         let evalstate = this.cmpData.verification_status;
         let approvelstate = this.cmpData.comment;
 
@@ -99,10 +111,14 @@ export class RegCmpStateCheckComponent {
           this.onApproved();
         } else if (approvelstate) {
           this.onRejected();
+        }else{
+
         }
       }
+      
     } catch (error) {
       console.error('Error:', error);
+
     }
     //end of fetch data
   }
@@ -111,21 +127,24 @@ export class RegCmpStateCheckComponent {
     this.styleService.setStyle('circle-border-color', '#ff0000');
     this.styleService.setStyle('number-color', '#ff0000');
     this.regState = 'Rejected';
-    this.isNoInput = false;
+    this.isNoInputMain = false;
   }
 
   onApproved() {
-    this.popup.open(PopUpComponent);
+    //this.popup.open(PopUpComponent);
     this.styleService.setStyle('circle-border-color', '#00ff1a');
     this.styleService.setStyle('number-color', '#00ff1a');
     console.log('Company Approved');
     this.regState = 'Already Approved';
   }
 
-  OnResubmit() {
+  ResubmitData() {
+    this.cmpData.company_logo=this.uploadDoc.company_logo;
+    this.cmpData.business_reg_certificate=this.uploadDoc.business_reg_certificate;
+    this.cmpData.certificate_of_incorporation=this.uploadDoc.certificate_of_incorporation;
     this.styleService.setStyle('circle-border-color', '#ffbf00');
     this.styleService.setStyle('number-color', '#ffbf00');
-    this.isNoInput = true;
+    this.isNoInputMain = true;
     try {
         //this.errorMessageForCompanyName == '' &&
         //this.errorMessageForDescription == '' &&
@@ -141,5 +160,41 @@ export class RegCmpStateCheckComponent {
 
 
   }
+
+  onFileSelected(file: File,name:string) {
+    console.log('File selected:', name);
+    //applicationData.append('cv', this.applicationData.cv);
+
+    switch (name) {
+      case "company_logo":
+        this.uploadDoc.company_logo = file;
+        break;
+      case "business_reg_certificate":
+        this.uploadDoc.business_reg_certificate = file;
+        break;
+      case "certificate_of_incorporation":
+        this.uploadDoc.certificate_of_incorporation = file;
+        break;
+
+      default:
+        this.uploadDoc.business_reg_certificate = file;
+    }
+  }
+/*
+  NotFound(): void {
+    const dialogRef = this.popup.open(PopUpFinalComponent, {
+      data: {
+        title: 'Invalid Link',
+        message: 'The link to view the status of your company registration application is invalid',
+        message2: 'Please check the link again or contact our customer care team for assistance.'
+      },
+      disableClose: true  // Disables closing the dialog
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log('User input:', result);
+    });
+  }*/
 
 }

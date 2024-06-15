@@ -39,22 +39,29 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { EmailVerificationBoxComponent } from '../email-verification-box/email-verification-box.component';
 import { PopUpFinalComponent } from '../pop-up-final/pop-up-final.component';
+import { SeekerApplicationFileUploadComponent } from "../seeker-application-file-upload/seeker-application-file-upload.component";
 
+interface CompanyDocuments {
+  company_logo: File|null;
+  business_reg_certificate: File|null;
+  certificate_of_incorporation: File|null;
+}
 
 @Component({
-  selector: 'app-register-company',
-  standalone: true,
-  imports: [MatSelectModule, CommonModule, FlexLayoutServerModule, MatCardModule, MatGridListModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule],
-  templateUrl: './register-company.component.html',
-  styleUrl: './register-company.component.css'
+    selector: 'app-register-company',
+    standalone: true,
+    templateUrl: './register-company.component.html',
+    styleUrl: './register-company.component.css',
+    imports: [MatSelectModule, CommonModule, FlexLayoutServerModule, MatCardModule, MatGridListModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatStepperModule, MatIconModule, FlexLayoutModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, SeekerApplicationFileUploadComponent]
 })
 export class RegisterCompanyComponent {
   @ViewChild('stepper') stepper!: MatStepper;
 
-  isEmailVerified: boolean = true;
+  isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
   isFormVerified: boolean = false;
   verifiedemail: string = "";
+  uploadDoc: CompanyDocuments={} as CompanyDocuments
 
 
   //form group for the stepper
@@ -63,11 +70,11 @@ export class RegisterCompanyComponent {
     company_website: [''],//
     company_email: new FormControl({ value: '', disabled: true }),//
     company_description: [''],//
-    company_logo: [''],//
+    company_logo: [this.uploadDoc.company_logo],
     company_business_scale: ['', Validators.required],//
-    business_reg_certificate: [''],//
+    business_reg_certificate: [this.uploadDoc.business_reg_certificate],
     company_registered_date: ['', Validators.required],///
-    certificate_of_incorporation: [''],//
+    certificate_of_incorporation: [this.uploadDoc.certificate_of_incorporation],
     company_phone_number: ['', Validators.required],//
     business_reg_no: ['', Validators.required],//
   });
@@ -97,6 +104,9 @@ export class RegisterCompanyComponent {
         this.snackbar.open("Please Enter the Details Correctly", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       } else {
         try {
+          this.companyReg.get('certificate_of_incorporation')?.setValue(this.uploadDoc.certificate_of_incorporation);
+          this.companyReg.get('company_logo')?.setValue(this.uploadDoc.company_logo);
+          this.companyReg.get('business_reg_certificate')?.setValue(this.uploadDoc.business_reg_certificate);
           this.companyReg.get('company_email')?.enable();
           let responseRegReq = await this.company.CompanyRegister(this.companyReg.value);
 
@@ -126,7 +136,7 @@ export class RegisterCompanyComponent {
     dialogRef.afterClosed().subscribe(result => {
       this.companyReg.get('company_email')?.setValue(result.emailAddress);//result.emailAddress refer to verified email
       this.isEmailVerified = result.verified;//Set email verifcation status is done
-      this.stepper.next();
+      //this.stepper.next();
     });
   }
 
@@ -144,6 +154,26 @@ export class RegisterCompanyComponent {
       console.log('The dialog was closed');
       console.log('User input:', result);
     });
+  }
+
+  onFileSelected(file: File,name:string) {
+    //console.log('File selected:', name);
+    //applicationData.append('cv', this.applicationData.cv);
+
+    switch (name) {
+      case "company_logo":
+        this.uploadDoc.company_logo = file;
+        break;
+      case "business_reg_certificate":
+        this.uploadDoc.business_reg_certificate = file;
+        break;
+      case "certificate_of_incorporation":
+        this.uploadDoc.certificate_of_incorporation = file;
+        break;
+
+      default:
+        this.uploadDoc.business_reg_certificate = file;
+    }
   }
 
 }

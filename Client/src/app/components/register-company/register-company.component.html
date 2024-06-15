@@ -16,10 +16,10 @@
     <mat-divider></mat-divider>
 
     <!--Company Details-->
-    <mat-stepper labelPosition="bottom" #stepper color="primary" class="stepper-with-wider-nav">
+    <mat-stepper labelPosition="bottom" #stepper color="primary" class="stepper-with-wider-nav" linear>
 
       <form [formGroup]="companyReg">
-        <mat-step [editable]="true">
+        <mat-step [completed]="companyReg.controls['company_name'].valid && isEmailVerified">
 
           <mat-grid-list cols="1" rowHeight="100">
 
@@ -49,10 +49,10 @@
               <mat-form-field appearance="outline">
                 <mat-label>Email Address</mat-label>
 
-                  <input matInput placeholder="Enter Email" formControlName="company_email"/>
+                <input matInput placeholder="Enter Email" formControlName="company_email" />
 
                 <mat-error
-                  *ngIf="companyReg.controls['company_email'].touched && companyReg.controls['company_email'].errors">
+                  *ngIf="companyReg.controls['company_name'].touched && companyReg.controls['company_name'].errors">
                   Valid Email is required
                 </mat-error>
               </mat-form-field>
@@ -88,7 +88,7 @@
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Business Phone No</mat-label>
-                <input matInput placeholder="Business Phone No" formControlName="company_phone_number"/>
+                <input matInput placeholder="Business Phone No" formControlName="company_phone_number" />
               </mat-form-field>
             </mat-grid-tile>
 
@@ -96,17 +96,19 @@
               <mat-form-field appearance="outline">
                 <mat-label>Business Registration Number</mat-label>
                 <input type="number" matInput placeholder="Business Registration Number"
-                  formControlName="business_reg_no"/>
+                  formControlName="business_reg_no" />
               </mat-form-field>
             </mat-grid-tile>
 
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Company Date of Registartion</mat-label>
-                <input type="date" matInput placeholder="Enter Email" formControlName="company_registered_date"
-                  />
+                <input type="date" matInput placeholder="Enter Email" formControlName="company_registered_date" />
               </mat-form-field>
             </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="1" rowHeight="150">
 
             <mat-grid-tile>
               <mat-form-field appearance="outline">
@@ -114,28 +116,39 @@
                 <textarea matInput placeholder="Company Description" formControlName="company_description"></textarea>
               </mat-form-field>
             </mat-grid-tile>
+          </mat-grid-list>
+
+          <mat-grid-list cols="1" rowHeight="140">
+            <mat-divider></mat-divider>
+
 
             <mat-grid-tile>
-              <mat-form-field appearance="outline">
+              <div class="file-upload">
+
                 <mat-label>Company Logo</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="company_logo" />
-              </mat-form-field>
+
+                <app-seeker-application-file-upload
+                  (fileSelected)="onFileSelected($event,'company_logo')"></app-seeker-application-file-upload>
+              </div>
             </mat-grid-tile>
 
             <mat-grid-tile>
-              <mat-form-field appearance="outline">
+              <div class="file-upload">
                 <mat-label>Business Registration Certificate</mat-label>
-                <input matInput placeholder="Enter Email" formControlName="business_reg_certificate" />
-              </mat-form-field>
+
+                <app-seeker-application-file-upload
+                  (fileSelected)="onFileSelected($event,'business_reg_certificate')"></app-seeker-application-file-upload>
+              </div>
             </mat-grid-tile>
 
 
             <mat-grid-tile>
-              <mat-form-field appearance="outline">
+              <div class="file-upload">
                 <mat-label>Certificate of Incorporation</mat-label>
-                <input matInput placeholder="Enter contact Number" formControlName="certificate_of_incorporation" />
-                <button>Upload File</button>
-              </mat-form-field>
+
+                <app-seeker-application-file-upload
+                  (fileSelected)="onFileSelected($event,'certificate_of_incorporation')"></app-seeker-application-file-upload>
+              </div>
             </mat-grid-tile>
 
           </mat-grid-list>

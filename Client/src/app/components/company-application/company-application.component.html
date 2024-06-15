@@ -108,8 +108,9 @@
             <mat-label class="lName">URL of the website:</mat-label>
           </mat-grid-tile>
           <mat-grid-tile class="labelContent">
-            <mat-label class="lContent" *ngIf="companyApplication.company_website!=''">{{
-              companyApplication.company_website }}</mat-label>
+            <mat-label class="lContent" *ngIf="companyApplication.company_website!=''"><a
+                href="{{companyApplication.company_website}}" target="_blank" class="link">{{
+                companyApplication.company_website }}</a></mat-label>
             <mat-label class="lContent" *ngIf="companyApplication.company_website =='' ">website has not been
               provided</mat-label>
           </mat-grid-tile>
@@ -118,7 +119,11 @@
             <mat-label class="lName">Email:</mat-label>
           </mat-grid-tile>
           <mat-grid-tile class="labelContent">
-            <mat-label class="lContent">{{ companyApplication.company_email }}</mat-label>
+            <mat-label class="lContent">
+              <a href="mailto:{{companyApplication.company_email}}" class="lContent link">{{
+                companyApplication.company_email
+                }}</a>
+            </mat-label>
           </mat-grid-tile>
 
           <mat-grid-tile class="labelName">

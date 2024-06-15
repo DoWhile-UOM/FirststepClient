@@ -52,7 +52,7 @@ export class RevisionService {
 
   async deleteRevision(revisionId: number) {
     try {
-      await axios.delete( Apipaths.deleteRevision + revisionId);
+      await axios.delete(Apipaths.deleteRevision + revisionId);
     } catch (error) {
       console.error('Error deleting revision:', error);
     }
