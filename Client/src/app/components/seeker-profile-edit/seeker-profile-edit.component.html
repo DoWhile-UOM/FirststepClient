@@ -10,25 +10,20 @@
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
       <mat-grid-list cols="2" rowHeight="140" style="margin: 0">
         <mat-grid-tile class="tile">
-          <p *ngIf="!propicUrl">
-            <mat-spinner class="imageLoading"></mat-spinner>Loading image...
-          </p>
-          <div *ngIf="propicUrl">
+          <div class="profile-container">
             <img
-              [src]="propicUrl"
+              [src]="propicUrl || 'fallback-image-url'"
               alt="Seeker profile picture"
               class="profile-image"
               width="100"
               height="auto"
-              onError="this.onerror=null;this.src='fallback-image-url';"
-            /><br />
+              (error)="onImageError()"
+            />
             <div class="edit-container">
-              <mat-icon class="edit" (click)="triggerFileInput()"
-                >edit</mat-icon
-              >
-              <label class="custom-file-upload" (click)="triggerFileInput()"
-                >Edit image</label
-              >
+              <button mat-button color="primary" (click)="triggerFileInput()" class="edit-button">
+                <mat-icon class="edit">edit</mat-icon>
+                Edit image
+              </button>
               <input
                 type="file"
                 id="profile-upload"
@@ -38,6 +33,8 @@
             </div>
           </div>
         </mat-grid-tile>
+        
+        
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Bio</mat-label>
@@ -111,13 +108,12 @@
               matInput
               formControlName="password"
               type="password"
-              required
+              placeholder="Enter new password if required"
             />
-            <mat-error *ngIf="hasError('password')">{{
-              getErrorMessage("password")
-            }}</mat-error>
+            <mat-error *ngIf="hasError('password')">{{ getErrorMessage('password') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+        
         <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>University</mat-label>
