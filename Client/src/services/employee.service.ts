@@ -169,9 +169,9 @@ export class EmployeeService {
 
     return empData;
   }
-  async postCompanyAdminReg(adminRegData: CmpAdminReg, cmpID: string) {
+  async postCompanyAdminReg(adminRegData: CmpAdminReg) {
     try {
-      const response = await axios.post(Apipaths.postCompanyAdminReg + cmpID, adminRegData);
+      const response = await axios.post(Apipaths.postCompanyAdminReg, adminRegData);
       if (response.status === 200) {
         this.snackBar.open('Company Admin registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       } else {

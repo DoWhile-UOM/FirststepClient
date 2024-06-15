@@ -30,6 +30,7 @@ interface CmpAdminReg {
   password: string;
   first_name: string;
   last_name: string;
+  company_registration_url: string;
 }
 interface unRegCA {
   email: string;
@@ -93,7 +94,6 @@ export class CompanyAdminRegistrtionFormComponent {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
         this.cmpID = id; // convert string to integer 10 is base
-        console.log('Company ID:', this.cmpID);
       }
     });
     this.unRegCA.password_hash = '';
@@ -110,14 +110,13 @@ export class CompanyAdminRegistrtionFormComponent {
     this.RegCA.last_name = this.unRegCA.last_name;
     this.RegCA.email = this.unRegCA.email;
     this.RegCA.password = this.unRegCA.password_hash;
-    console.log(this.RegCA);
-    console.log(this.cmpID);
+    this.RegCA.company_registration_url = this.cmpID;
+    
     const IsVaild = this.formValidation();
     if (IsVaild) {
       try {
         this.spinner.show();
-        console.log('Company Admin Registration Started');
-        await this.employeeService.postCompanyAdminReg(this.RegCA, this.cmpID);
+        await this.employeeService.postCompanyAdminReg(this.RegCA);
         this.spinner.hide();
       } catch (error) {
         this.spinner.hide();
@@ -142,7 +141,6 @@ export class CompanyAdminRegistrtionFormComponent {
     } else {
       this.errorMessageForFName = '';
     }
-    console.log(this.errorMessageForFName);
   }
   validateLastName() {
     if (this.unRegCA.last_name.length == 0) {
@@ -150,7 +148,6 @@ export class CompanyAdminRegistrtionFormComponent {
     } else {
       this.errorMessageForLName = '';
     }
-    console.log(this.errorMessageForLName);
   }
   validatePassword() {
     if (this.unRegCA.password_hash.length == 0) {
@@ -158,16 +155,13 @@ export class CompanyAdminRegistrtionFormComponent {
     } else {
       this.errorMessageForPassword = '';
     }
-    console.log(this.errorMessageForPassword);
   }
   validateConfirmedPassword() {
-
     if (this.unRegCA.confirmed_password.length == 0 || this.unRegCA.password_hash != this.unRegCA.confirmed_password) {
       this.errorMessageForConfirmedPassword = 'Confirmed Password does not match';
     } else {
       this.errorMessageForConfirmedPassword = '';
     }
-    console.log(this.errorMessageForConfirmedPassword);
   }
   validateEmail() {
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -187,8 +181,6 @@ export class CompanyAdminRegistrtionFormComponent {
       if (result == true) {
         this.isConfrimedToChangeEmail = true;
         this.canOpenOtpView = true;
-        console.log('Email is confirmed to change');
-        console.log(this.isConfrimedToChangeEmail);
       }
     }
     );
@@ -232,11 +224,9 @@ export class CompanyAdminRegistrtionFormComponent {
       this.cdr.detectChanges();
       if (this.remainingTime <= 0) {
         clearInterval(intervalId); // Stop the timer when time is up
-        console.log("Timer off");
         this.isOTPRequestSent = false;
         this.reqOTPbtntxt = "Request OTP";
       }
-      console.log(this.remainingTime);
     }, 1000);
   }
 

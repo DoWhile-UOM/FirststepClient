@@ -13,7 +13,7 @@ export class Apipaths {
     static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
     static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId:int?user_id='; // + user_id 
     static readonly updateUserDetails: string = this.baseUrl + 'User/UpdateUser';
-    static readonly postCompanyAdminReg: string = this.baseUrl + 'Employee/AddNewCompanyAdmin/';// + company_id
+    static readonly postCompanyAdminReg: string = this.baseUrl + 'Employee/AddNewCompanyAdmin';// + company_id
 
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
