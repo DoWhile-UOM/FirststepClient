@@ -52,7 +52,7 @@
       <td mat-cell *matCellDef="let element; let i = index">
         <mat-checkbox
           *ngIf="task().subtasks"
-          [checked]="task().subtasks![i]?.completed"
+          [checked]="task().subtasks![i].completed"
           (change)="update($event.checked, i)">
         </mat-checkbox>
       </td>
