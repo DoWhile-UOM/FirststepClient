@@ -1,15 +1,18 @@
 .container {
     margin: 20px;
+    font-family: Arial, sans-serif;
   }
   
   .title {
     font-size: 24px;
     font-weight: bold;
+    color: #004d40; /* Teal theme color */
   }
   
   .job-number {
     font-size: 16px;
     margin-bottom: 20px;
+    color: #004d40; /* Teal theme color */
   }
   
   .interview-time {
@@ -20,6 +23,7 @@
   
   .interview-time label {
     margin-right: 10px;
+    color: #004d40; /* Teal theme color */
   }
   
   .interview-time input {
@@ -29,18 +33,51 @@
   .subtitle {
     font-size: 20px;
     margin-bottom: 10px;
+    color: #004d40; /* Teal theme color */
   }
   
-  table {
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  
+  .time-slot {
+    padding: 10px;
+    border: 1px solid #004d40; /* Teal theme color */
+    border-radius: 8px;
+    background-color: #e0f2f1; /* Light teal background */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .slot-header {
+    font-size: 16px;
+    font-weight: bold;
+    color: #004d40; /* Teal theme color */
+  }
+  
+  .slot-time {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #004d40; /* Teal theme color */
+  }
+  
+  .slot-time span {
+    font-size: 12px;
+    color: #00796b; /* Darker teal color */
+  }
+  
+  .slot-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
     width: 100%;
   }
   
-  th {
-    text-align: left;
-  }
-  
-  .actions {
-    display: flex;
-    justify-content: space-between;
+  .mat-button, .mat-icon-button {
+    color: #004d40; /* Teal theme color */
   }
   

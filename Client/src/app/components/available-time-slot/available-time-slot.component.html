@@ -7,33 +7,20 @@
       <button mat-raised-button color="primary">Allocate Time</button>
     </div>
     <h2 class="subtitle">Available Time Slots</h2>
-    <button mat-raised-button color="primary" (click)="addTimeSlot('2024-06-03', 'Wednesday', '10 AM - 11 AM')">Add Date & Time</button>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="no">
-        <th mat-header-cell *matHeaderCellDef>No</th>
-        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
-      </ng-container>
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let element">{{ element.date }}</td>
-      </ng-container>
-      <ng-container matColumnDef="day">
-        <th mat-header-cell *matHeaderCellDef>Day</th>
-        <td mat-cell *matCellDef="let element">{{ element.day }}</td>
-      </ng-container>
-      <ng-container matColumnDef="time">
-        <th mat-header-cell *matHeaderCellDef>Time</th>
-        <td mat-cell *matCellDef="let element">{{ element.time }}</td>
-      </ng-container>
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element; let i = index">
-          <button mat-button color="primary" (click)="editTimeSlot(i, '2024-06-03', 'Wednesday', '12 PM - 1 PM')">Change</button>
-          <button mat-button color="warn" (click)="deleteTimeSlot(i)">Delete</button>
-        </td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    <button mat-raised-button color="primary" (click)="addTimeSlot('2024-06-10', 'Thursday', '10 AM - 11 AM', '45 min')">Add Date & Time</button>
+    <div class="time-slots">
+      <div class="time-slot" *ngFor="let slot of timeSlots; let i = index">
+        <div class="slot-header">{{ slot.day }} {{ slot.date }}</div>
+        <div class="slot-time">{{ slot.time }} <span>{{ slot.duration }}</span></div>
+        <div class="slot-actions">
+          <button mat-icon-button color="primary" (click)="editTimeSlot(i, slot.date, slot.day, slot.time, slot.duration)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteTimeSlot(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   
