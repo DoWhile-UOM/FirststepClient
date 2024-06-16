@@ -13,9 +13,10 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTable } from '@angular/material/table';
 import { MatDivider } from '@angular/material/divider';
+import { MatCard } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 interface InterviewSchedule {
-  no: number;
   name: string;
   jobTitle: string;
   status: string;
@@ -25,33 +26,37 @@ interface InterviewSchedule {
 @Component({
   selector: 'app-daily-interview-schedules',
   standalone: true,
-  imports: [MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider],
+  imports: [MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider, MatCard, MatCardModule],
   templateUrl: './daily-interview-schedules.component.html',
   styleUrl: './daily-interview-schedules.component.css'
 })
-export class DailyInterviewSchedulesComponent {
-  displayedColumns: string[] = ['no', 'name', 'jobTitle', 'status', 'time', 'details'];
-  dataSource = new MatTableDataSource<InterviewSchedule>([]);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  constructor(private snackBar: MatSnackBar) { }
+export class DailyInterviewSchedulesComponent implements OnInit {
+  selectedDate: Date = new Date();
+  schedules: InterviewSchedule[] = [];
+timeSlots: string[] = [
+    '7:00am', '7:30am', '8:00am', '8:30am', '9:00am', '9:30am', 
+    '10:00am', '10:30am', '11:00am', '11:30am', '12:00pm'
+  ];
+  constructor(private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     // Fetch the interview schedules (this could be an API call in a real application)
-    const schedules: InterviewSchedule[] = [
-      { no: 1, name: 'Dimuth Asalanka', jobTitle: 'ASP.NET Developer', status: 'Missed', time: '10.00 AM' },
-      { no: 2, name: 'Ashan Matheesha', jobTitle: 'Senior Business Analyst', status: 'Missed', time: '11.00 AM' },
-      { no: 3, name: 'Sanka Bimasara', jobTitle: 'IOS Developer', status: 'Confirmed', time: '1.00 PM' }
+    this.schedules = [
+      { time: '8am', name: 'James Williams', jobTitle: 'Python Developer', status: 'Confirmed' },
+      { time: '9am', name: 'Willem van Helden', jobTitle: 'Software Engineer', status: 'Rescheduled' },
+      { time: '9:30am', name: 'Dianne Russel', jobTitle: 'Data Scientist', status: 'Confirmed' },
+      { time: '10:30am', name: 'Theresa Webb', jobTitle: 'Business Analyst', status: 'Confirmed' }
     ];
-    this.dataSource.data = schedules;
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  getScheduleForTimeSlot(timeSlot: string): InterviewSchedule[] {
+    return this.schedules.filter(schedule => schedule.time === timeSlot);
   }
 
-  showDetails(element: InterviewSchedule) {
-    this.snackBar.open(`Details for ${element.name}`, '', { duration: 3000 });
+  onDateChange(date: Date) {
+    this.selectedDate = date;
+    this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
+    // Fetch new schedules based on selected date
   }
 }

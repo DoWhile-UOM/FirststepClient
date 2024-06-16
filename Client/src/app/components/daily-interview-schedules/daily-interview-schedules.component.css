@@ -1,63 +1,148 @@
-.page {
-    width: 95%;
-    margin: 0 auto;
-    margin-top: 2em;
+.container {
+    padding: 20px;
+    margin: 20px;
   }
   
-  .page-title {
+  .header {
+    font-size: 2.5em; /* Bigger font size */
+    color: teal; /* Teal color */
+    margin: 20px 0 40px 0; /* Top, Right, Bottom, Left */
+  }
+  
+  .card {
+    padding: 2em;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  
+  }
+  .schedule-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
   }
-  
-  .page-header {
-    font-size: 2em; /* Make font size bigger */
-    color: teal; /* Change color to teal */
-  }
-  
-  .schedule-for-day {
-    margin-left: auto;
-  }
-  
-  .date-picker {
+
+  mat-calendar {
     width: 100%;
-    max-width: 300px; /* Set max width for the date picker */
+    max-width: 400px; /* Smaller calendar size */
+    align-items: center;
+  }
+
+  .schedule-table {
+    flex: 1;
+    max-width: 60%;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    grid-auto-rows: 50px; 
   }
   
-  mat-form-field {
-    margin: 1em 0;
+  .time-slot {
+    display: flex;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
   }
   
-  mat-divider {
-    margin: 1em 0;
-  }
-  
-  table {
-    width: 100%;
-    margin-top: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12); /* Ensure bottom border is visible */
-  }
-  
-  .missed {
-    color: red;
+  .time-label {
+    width: 80px;
     font-weight: bold;
   }
   
-  .confirmed {
+  .interview-slot {
+    flex: 1;
+    background: #e0f7fa;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .interview-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .name {
+    font-weight: bold;
+  }
+  
+  .job-title {
+    font-size: 0.9em;
+    color: #555;
+  }
+  
+  .status {
+    margin-top: 5px;
+  }
+  
+  .status.confirmed {
     color: green;
+  }
+  
+  .status.rescheduled {
+    color: orange;
+  }
+  
+  .calendar-container {
+    flex: 1;
+    max-width: 35%;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    align-items: center;
+  }
+  
+  .selected-date-details {
+    margin-top: 20px;
+  }
+  
+  .selected-date-details h3 {
+    font-size: 1.2em !important;
     font-weight: bold;
+    color: teal !important;
+    margin: 10px 0 !important;
+  }
+  .schedule-item {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .schedule-item .time {
+    width: 80px;
+    font-weight: bold;
+  }
+  
+  .schedule-item .details {
+    flex: 1;
+  }
+  
+  .schedule-item .name {
+    font-weight: bold;
+  }
+  
+  .schedule-item .job-title {
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  .slots {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgba(0,128,128,0.1);
+    border-radius: 5px;
+    margin-bottom: 3px;
+    padding: 3px 3px 3px 3px;
+    width: 300px;
   }
   
   @media (max-width: 768px) {
-    .page-title {
+    .schedule-container {
       flex-direction: column;
-      align-items: flex-start;
     }
   
-    .date-picker {
-      width: 100%;
-      margin-top: 1em;
+    .schedule-table, .calendar-container {
+      max-width: 100%;
     }
   }
   
