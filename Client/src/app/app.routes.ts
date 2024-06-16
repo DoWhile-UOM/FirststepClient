@@ -21,7 +21,7 @@ export const routes: Routes = [
   { path: 'RegCheck', component: RegCmpStateCheckComponent },
   { path: 'popupfinal', component: PopUpFinalComponent },
   { path: 'RegCompanyAdmin', component: CompanyAdminRegistrtionFormComponent },
-  { path: 'interview', component: IntViewConfirmComponent},
+  { path: 'Interview', component: IntViewConfirmComponent},
   {path: 'seekerbook', component: IntViewSeekerBookComponent},
 
   {

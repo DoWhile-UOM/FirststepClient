@@ -1,1 +1,54 @@
-<p>int-view-confirm works!</p>
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+<div class="container">
+    <h2 class="header">Applicant</h2>
+    <mat-card class="card">
+        <div class="schedule-container">
+            <div class="selected-date-details">
+                <h3>Selected applicants have not yet booked an appointment</h3>
+                <div class="slots" *ngFor="let schedule of schedules">
+                    <div class="schedule-item">
+                        <div class="details">
+                            <div class="name">{{ schedule.name }}</div>
+                            <div class="job-title">Details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="schedule-table">
+
+                <div class="time-slot" *ngFor="let timeSlot of timeSlots">
+                    <div class="time-label">{{ timeSlot }}</div>
+                    <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="{
+                confirmed: schedule.status === 'Confirmed',
+                rescheduled: schedule.status === 'Rescheduled',
+                missed: schedule.status === 'Missed'
+              }">
+                        <div class="interview-details">
+                            <div class="name">{{ schedule.name }}</div>
+                            <div class="job-title">{{ schedule.jobTitle }}</div>
+
+                            <div class="status" [ngClass]="{
+                    confirmed: schedule.status === 'Confirmed',
+                    rescheduled: schedule.status === 'Rescheduled',
+                    missed: schedule.status === 'Missed'
+                  }">
+                                {{ schedule.status }}
+                            </div>
+                            <div class="confirm-button">
+                                <button mat-raised-button color="primary">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="calendar-details-container">
+                <div class="calendar-container">
+                    <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>
