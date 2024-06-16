@@ -10,6 +10,7 @@ import { HrmanagerApplicationViewComponent } from '../components/hrmanager-appli
 import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
 
 import { DailyInterviewSchedulesComponent } from '../components/daily-interview-schedules/daily-interview-schedules.component';
+import { AvailableTimeSlotComponent } from '../components/available-time-slot/available-time-slot.component';
 
 
 
@@ -26,6 +27,7 @@ export const caRoutes: Routes = [
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
   { path: 'profile-view', component: SeekerProfileViewComponent },
 
-  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent}
+  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
+  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent}
 
 ];
