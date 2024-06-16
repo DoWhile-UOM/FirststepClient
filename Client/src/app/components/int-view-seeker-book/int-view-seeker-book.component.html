@@ -1,0 +1,61 @@
+<div class="body">
+    <mat-card class="card">
+        <h2>Select Appointment Time</h2>
+        <mat-grid-list cols="6" rowHeight="70">
+
+            <mat-grid-tile [colspan]="2">
+
+                <div class="text-icon-container">
+                    <i class="material-icons">access_time</i>
+                    <span class="icon-text">30min</span>
+                </div>
+
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="3">
+
+                <div class="text-icon-container">
+                    <i class="material-icons">work</i>
+                    <span class="icon-text">Trainee</span>
+                </div>
+
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="2">
+
+                <div class="text-icon-container">
+                    <i class="material-icons">business</i>
+                    <span class="icon-text">Bistec Global</span>
+                </div>
+
+            </mat-grid-tile>
+
+        </mat-grid-list>
+
+        <mat-divider></mat-divider>
+
+        <div class="header">
+
+            <button mat-icon-button>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <div class="date">T 10</div>
+            <button mat-icon-button>
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <div class="timezone">Test</div>
+        </div>
+        <div class="week">
+            <div class="day" *ngFor="let day of weekDays">
+                <div class="day-name">{{ day.name }}</div>
+                <div class="day-number">{{ day.number }}</div>
+                <div class="timeslots">
+                    <button color="primary" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
+                        {{ slot }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

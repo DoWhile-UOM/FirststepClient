@@ -10,6 +10,11 @@ import { HrmanagerApplicationViewComponent } from '../components/hrmanager-appli
 import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
 import { InterviewShedulingShortListComponent } from '../components/interview-sheduling-short-list/interview-sheduling-short-list.component';
 
+import { DailyInterviewSchedulesComponent } from '../components/daily-interview-schedules/daily-interview-schedules.component';
+import { AvailableTimeSlotComponent } from '../components/available-time-slot/available-time-slot.component';
+
+
+
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
   { path: 'manageRoles', component: ManageRolesComponent },
@@ -22,7 +27,8 @@ export const caRoutes: Routes = [
   { path: 'companyProfile', component: CompanyProfileEditComponent },
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
   { path: 'profile-view', component: SeekerProfileViewComponent },
+  {path:'isShortList',component:InterviewShedulingShortListComponent},
+  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
+  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent}
 
-  //interview sheduling paths
-  {path:'isShortList',component:InterviewShedulingShortListComponent}
 ];

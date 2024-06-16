@@ -10,7 +10,7 @@ import axios from 'axios';
 export class AdvertisementServices {
   public static employment_types: string[] = ['Full-time', 'Part-time', 'Contract', 'Internship', 'Temporary', 'Volunteer'];
   public static job_arrangement: string[] = ['Remote', 'On-site', 'Hybrid'];
-  public static experiences: string[] = ['Internship', 'Entry level', 'Associate', 'Mid level', 'Experienced'];
+  public static experiences: string[] = ['Internship', 'Entry level', 'Associate', 'Mid level', 'Experienced', 'Senior Level'];
 
   constructor(private snackBar: MatSnackBar) { }
 
