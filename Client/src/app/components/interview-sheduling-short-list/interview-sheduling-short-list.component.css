@@ -47,6 +47,10 @@ mat-card div{
   text-align: right;
 }
 
+.mat-column-interview {
+  text-align: right;
+}
+
 .demo-button-container {
   padding-bottom: 16px;
 }
