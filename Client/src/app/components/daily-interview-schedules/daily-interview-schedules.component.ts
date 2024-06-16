@@ -43,8 +43,8 @@ timeSlots: string[] = [
   ngOnInit() {
     // Fetch the interview schedules (this could be an API call in a real application)
     this.schedules = [
-      { time: '8am', name: 'James Williams', jobTitle: 'Python Developer', status: 'Confirmed' },
-      { time: '9am', name: 'Willem van Helden', jobTitle: 'Software Engineer', status: 'Rescheduled' },
+      { time: '8:00am', name: 'James Williams', jobTitle: 'Python Developer', status: 'Confirmed' },
+      { time: '9:00am', name: 'Willem van Helden', jobTitle: 'Software Engineer', status: 'Rescheduled' },
       { time: '9:30am', name: 'Dianne Russel', jobTitle: 'Data Scientist', status: 'Confirmed' },
       { time: '10:30am', name: 'Theresa Webb', jobTitle: 'Business Analyst', status: 'Confirmed' }
     ];

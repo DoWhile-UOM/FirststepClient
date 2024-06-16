@@ -4,26 +4,48 @@
 />
 
 <div class="container">
-  <h2 class="header">Daily Interview Schedules</h2>
-  <mat-card class="card">
-    <div class="schedule-container">
+    <h2 class="header">Daily Interview Schedules</h2>
+    <mat-card class="card">
+      <div class="schedule-container">
+        <div class="date-header">Sunday, June 16, 2024</div>
         <div class="schedule-table">
           <div class="time-slot" *ngFor="let timeSlot of timeSlots">
             <div class="time-label">{{ timeSlot }}</div>
-            <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)">
+            <div
+              class="interview-slot"
+              *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)"
+              [ngClass]="{
+                confirmed: schedule.status === 'Confirmed',
+                rescheduled: schedule.status === 'Rescheduled',
+                missed: schedule.status === 'Missed'
+              }"
+            >
               <div class="interview-details">
                 <div class="name">{{ schedule.name }}</div>
                 <div class="job-title">{{ schedule.jobTitle }}</div>
-                <div class="status" [ngClass]="{'confirmed': schedule.status === 'Confirmed', 'rescheduled': schedule.status === 'Rescheduled'}">{{ schedule.status }}</div>
+                <div
+                  class="status"
+                  [ngClass]="{
+                    confirmed: schedule.status === 'Confirmed',
+                    rescheduled: schedule.status === 'Rescheduled',
+                    missed: schedule.status === 'Missed'
+                  }"
+                >
+                  {{ schedule.status }}
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="calendar-container">
-          <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+        <div class="calendar-details-container">
+          <div class="calendar-container">
+            <mat-calendar
+              [(selected)]="selectedDate"
+              (selectedChange)="onDateChange($event)"
+            ></mat-calendar>
+          </div>
           <div class="selected-date-details">
-            <h3>Scheduled for {{ selectedDate | date: 'fullDate' }}</h3>
-            <mat-label>
+            <h3>Scheduled for this day:</h3>
             <div class="slots" *ngFor="let schedule of schedules">
               <div class="schedule-item">
                 <div class="time">{{ schedule.time }}</div>
@@ -33,9 +55,8 @@
                 </div>
               </div>
             </div>
-           </mat-label>
           </div>
         </div>
       </div>
-  </mat-card>
-</div>
+    </mat-card>
+  </div>
