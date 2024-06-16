@@ -1,0 +1,31 @@
+.page {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 2em;
+  }
+  
+  .page-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .schedule-for-day {
+    margin-left: auto;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .missed {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .confirmed {
+    color: green;
+    font-weight: bold;
+  }
+  
