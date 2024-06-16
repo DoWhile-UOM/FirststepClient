@@ -1,0 +1,137 @@
+.adTable {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+  }
+  
+  .num,
+  .field {
+    font-size: 16px;
+    font-weight: 550;
+  }
+  
+  .page {
+    width: 94%;
+    margin: 0 auto;
+    margin-top: 4em;
+    position: relative;
+  }
+  
+  p {
+    color: #008080;
+    font-size: 30px;
+    margin-right: 15px;
+  }
+  
+  .pagetitle-content {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .page-title {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .page-title-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .mat-chip-listbox {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .nu-column{
+    width: 5em;
+    text-align: center;
+  }
+  
+  .emptymsg{
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    margin-bottom: 0.5em;
+  }
+  
+  .emptymsg div{
+    margin: 0 auto;
+  }
+  
+  .edit-button{
+    margin-bottom: 1.5em;
+  }
+  
+  .num,
+  .field {
+    color: black;
+  }
+  
+  th.mat-header-cell {
+    text-align: center !important;
+  }
+  
+  button.mat-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-right: 10px; /* adjust this value to increase or decrease the space */
+    color: white !important;
+  }
+  button.mat-button:hover {
+    background-color: #008080; /* darker shade of teal */
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  }
+  
+  .buttons-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .custom-button {
+    justify-content: left;
+    align-items: left;
+    font-size: 14px;
+    cursor: pointer;
+    width: 225px;
+    height: 40px;
+  }
+  
+  .custom-button mat-icon {
+    margin-right: 14px;
+    margin-left: 10px;
+    font-size: 13px;
+  }
+  
+  .back-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-right: 1em;
+  }
+  
+  .new-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    background-color: #e0e0e0;
+    padding: 5px 5px 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  
+  .title-with-new-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
