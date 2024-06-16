@@ -5,11 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-int-view-seeker-book',
   standalone: true,
-  imports: [MatDividerModule,CommonModule,MatCardModule,MatIconModule,MatButtonModule],
+  imports: [MatGridListModule,MatDividerModule,CommonModule,MatCardModule,MatIconModule,MatButtonModule],
   templateUrl: './int-view-seeker-book.component.html',
   styleUrl: './int-view-seeker-book.component.css'
 })
