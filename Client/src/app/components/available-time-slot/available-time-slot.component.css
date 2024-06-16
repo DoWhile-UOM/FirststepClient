@@ -37,9 +37,9 @@
   }
   
   .time-slots {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .time-slot {
@@ -51,6 +51,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
   }
   
   .slot-header {
@@ -70,14 +71,4 @@
     color: #00796b; /* Darker teal color */
   }
   
-  .slot-actions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-  }
-  
-  .mat-button, .mat-icon-button {
-    color: #004d40; /* Teal theme color */
-  }
   

@@ -8,19 +8,30 @@
     </div>
     <h2 class="subtitle">Available Time Slots</h2>
     <button mat-raised-button color="primary" (click)="addTimeSlot('2024-06-10', 'Thursday', '10 AM - 11 AM', '45 min')">Add Date & Time</button>
-    <div class="time-slots">
-      <div class="time-slot" *ngFor="let slot of timeSlots; let i = index">
-        <div class="slot-header">{{ slot.day }} {{ slot.date }}</div>
-        <div class="slot-time">{{ slot.time }} <span>{{ slot.duration }}</span></div>
-        <div class="slot-actions">
-          <button mat-icon-button color="primary" (click)="editTimeSlot(i, slot.date, slot.day, slot.time, slot.duration)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteTimeSlot(i)">
-            <mat-icon>delete</mat-icon>
-          </button>
+    <mat-tab-group>
+      <mat-tab *ngFor="let date of getObjectKeys(timeSlots)">
+        <ng-template mat-tab-label>
+          {{ timeSlots[date][0].day }} {{ date }}
+        </ng-template>
+        <div class="time-slots">
+          <mat-grid-list cols="2" rowHeight="100px">
+            <mat-grid-tile *ngFor="let slot of timeSlots[date]; let i = index">
+              <div class="time-slot">
+                <div class="slot-header">{{ slot.day }} {{ slot.date }}</div>
+                <div class="slot-time">{{ slot.time }} <span>{{ slot.duration }}</span></div>
+                <div class="slot-actions">
+                  <button mat-icon-button color="primary" (click)="editTimeSlot(slot.date, i, slot.time, slot.duration)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="warn" (click)="deleteTimeSlot(slot.date, i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-grid-tile>
+          </mat-grid-list>
         </div>
-      </div>
-    </div>
+      </mat-tab>
+    </mat-tab-group>
   </div>
   
