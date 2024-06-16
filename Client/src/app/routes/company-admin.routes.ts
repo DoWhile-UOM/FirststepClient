@@ -21,14 +21,14 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList', component: JobOfferListComponent },
   { path: 'jobOfferList/newJob', component: NewJobComponent },
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
-  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent},
+  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent },
   { path: 'jobOfferList/applicationList', component: HrManagerApplicationListingComponent },
   { path: 'jobOfferList/applicationList/applicationView', component: HrmanagerApplicationViewComponent },
   { path: 'companyProfile', component: CompanyProfileEditComponent },
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
   { path: 'profile-view', component: SeekerProfileViewComponent },
-  {path:'isShortList',component:InterviewShedulingShortListComponent},
-  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
-  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent}
+  { path: 'isShortList', component: InterviewShedulingShortListComponent },
+  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent },
+  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent }
 
 ];
