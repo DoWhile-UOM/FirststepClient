@@ -38,44 +38,49 @@
   
   .time-slots {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
   
   .time-slot {
+    margin-top: 20px;
     padding: 10px;
-    border: 1px solid #004d40; /* Teal theme color */
+    border: 2px solid teal; /* Teal border */
     border-radius: 8px;
-    background-color: #e0f2f1; /* Light teal background */
+    background-color: #ffffff; /* White background */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
+    justify-content: center;
+    box-sizing: border-box;
+    width: max-content;
+    min-width: 200px;
+    height: max-content;
+    min-height: 150px;
+    font-size: 12px;
   }
   
   .slot-header {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     color: #004d40; /* Teal theme color */
   }
   
   .slot-time {
-    font-size: 14px;
+    font-size: 10px;
     margin-top: 5px;
     color: #004d40; /* Teal theme color */
   }
   
   .slot-time span {
-    font-size: 12px;
+    font-size: 10px;
     color: #00796b; /* Darker teal color */
   }
   
   .slot-actions {
-    margin-top: 10px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
+    margin-top: 5px;
   }
   
