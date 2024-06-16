@@ -8,7 +8,8 @@ import { CompanyAdminRegistrtionFormComponent } from './components/company-admin
 import { SeekerSignupComponent } from './components/seeker-signup/seeker-signup.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { PopUpFinalComponent } from './components/pop-up-final/pop-up-final.component';
-import { IntViewTimeslotComponent } from './components/int-view-timeslot/int-view-timeslot.component';
+import { IntViewConfirmComponent } from './components/int-view-confirm/int-view-confirm.component';
+import { IntViewSeekerBookComponent } from './components/int-view-seeker-book/int-view-seeker-book.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,8 @@ export const routes: Routes = [
   { path: 'RegCheck', component: RegCmpStateCheckComponent },
   { path: 'popupfinal', component: PopUpFinalComponent },
   { path: 'RegCompanyAdmin', component: CompanyAdminRegistrtionFormComponent },
+  { path: 'interview', component: IntViewConfirmComponent},
+  {path: 'seekerbook', component: IntViewSeekerBookComponent},
 
   {
     path: 'ca',

@@ -1,0 +1,68 @@
+.calendar-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+.date {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.timezone {
+  font-size: 14px;
+  color: #888;
+}
+
+.week {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.day {
+  flex: 1;
+  text-align: center;
+}
+
+.day-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.day-number {
+  font-size: 16px;
+  color: #888;
+}
+
+.timeslots {
+  margin-top: 10px;
+}
+
+.timeslot {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  border: 1px solid #008080;
+}
+
+.body {
+  padding: 3em;
+  width: 60%;
+  min-width: 400px;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 2em;
+}
+

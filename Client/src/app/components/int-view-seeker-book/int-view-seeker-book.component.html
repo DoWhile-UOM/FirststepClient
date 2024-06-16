@@ -1,0 +1,30 @@
+<div class="body">
+    <mat-card class="card">
+
+        <mat-divider></mat-divider>
+
+        <div class="header">
+
+            <button mat-icon-button>
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <div class="date">T 10</div>
+            <button mat-icon-button>
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <div class="timezone">Test</div>
+        </div>
+        <div class="week">
+            <div class="day" *ngFor="let day of weekDays">
+                <div class="day-name">{{ day.name }}</div>
+                <div class="day-number">{{ day.number }}</div>
+                <div class="timeslots">
+                    <button color="primary" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
+                        {{ slot }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>
