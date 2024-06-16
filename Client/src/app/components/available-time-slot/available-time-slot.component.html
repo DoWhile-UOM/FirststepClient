@@ -1,4 +1,11 @@
-<div class="container">
+<!-- Add these links in the head section of your HTML to include the Angular Material theme -->
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.24/angular-material.min.css" rel="stylesheet">
+  </head>
+  
+  <div class="container">
     <h1 class="title">ASP.NET Developer</h1>
     <div class="job-number">Job Number: 2752669</div>
     <div class="interview-time">
@@ -11,25 +18,21 @@
     <mat-tab-group>
       <mat-tab *ngFor="let date of getObjectKeys(timeSlots)">
         <ng-template mat-tab-label>
-          {{ timeSlots[date][0].day }} {{ date }}
+          {{ datePipe.transform(date, 'EEEE, MMM d, y') }}
         </ng-template>
         <div class="time-slots">
-          <mat-grid-list cols="2" rowHeight="100px">
-            <mat-grid-tile *ngFor="let slot of timeSlots[date]; let i = index">
-              <div class="time-slot">
-                <div class="slot-header">{{ slot.day }} {{ slot.date }}</div>
-                <div class="slot-time">{{ slot.time }} <span>{{ slot.duration }}</span></div>
-                <div class="slot-actions">
-                  <button mat-icon-button color="primary" (click)="editTimeSlot(slot.date, i, slot.time, slot.duration)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" (click)="deleteTimeSlot(slot.date, i)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </mat-grid-tile>
-          </mat-grid-list>
+          <div *ngFor="let slot of timeSlots[date]; let i = index" class="time-slot">
+            <div class="slot-header">{{ slot.day }} {{ datePipe.transform(date, 'MMM d, y') }}</div>
+            <div class="slot-time">{{ slot.time }} <span>{{ slot.duration }}</span></div>
+            <div class="slot-actions">
+              <button mat-icon-button color="primary" (click)="editTimeSlot(date, i, slot.time, slot.duration)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteTimeSlot(date, i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
         </div>
       </mat-tab>
     </mat-tab-group>

@@ -52,6 +52,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin-bottom: 10px;
   }
   
   .slot-header {
@@ -71,4 +72,10 @@
     color: #00796b; /* Darker teal color */
   }
   
+  .slot-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
   
