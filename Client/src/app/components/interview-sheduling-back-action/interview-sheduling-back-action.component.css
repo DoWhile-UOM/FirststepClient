@@ -1,0 +1,21 @@
+.container{
+    display:flex;
+    flex-direction:row;
+}
+
+.content{
+    display:flex;
+    flex-direction:column;
+    margin-left: 1em;
+}
+
+.title
+     {
+        color: #008080;
+        /*font-size: 30px in percentage*/
+        font-size: 2.5vw;
+     }
+
+.num{
+    font-size: 1.3vw;
+}
