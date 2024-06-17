@@ -11,7 +11,7 @@ export class Apipaths {
     static readonly deleteEmployee: string = this.baseUrl + 'Employee/DeleteEmployee/'; // + employee_id
     static readonly getAllHRMs: string = this.baseUrl + 'Employee/GetAllHRManagers/'; // + company_id
     static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
-    static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId:int/user_id='; // + user_id 
+    static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId='; // + user_id 
     static readonly updateUserDetails: string = this.baseUrl + 'User/UpdateUser';
     static readonly postCompanyAdminReg: string = this.baseUrl + 'Employee/AddNewCompanyAdmin';// + company_id
 
