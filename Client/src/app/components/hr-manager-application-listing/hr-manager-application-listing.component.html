@@ -28,7 +28,7 @@
         </button>
       </div>
       <div>
-        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'">
+        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'" (click)="openTaskDelegationDialog()">
           <mat-icon><i class="fa-solid fa-thumbtack" style="color: #005050;"></i></mat-icon>Assign Applications
         </button>
       </div>

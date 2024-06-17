@@ -38,6 +38,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeService } from '../../../services/employee.service';
+import { TaskDelegationPopUpComponent } from '../task-delegation-pop-up/task-delegation-pop-up.component';
 
 interface HRMListing {
   title: string;
@@ -121,6 +122,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
     private snackBar: MatSnackBar,
     private acRouter: ActivatedRoute,
     private router: Router,
+    public dialog: MatDialog,
     private auth: AuthService) {
   }
 
@@ -149,6 +151,31 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.snackBar.open("Refeshing table to show " + selected.value + " Applications ...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
     this.getApplicationList(this.jobID, selected.value);
     this.selectedFilter = selected.value;
+  }
+
+  //Task Delegation
+  openTaskDelegationDialog(): void {
+    const dialogRef = this.dialog.open(TaskDelegationPopUpComponent, {
+      width: '300px',
+      data: { jobID: this.jobID }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delegateTasks(result);
+      }
+    });
+  }
+
+  async delegateTasks(hraIdList: number[]) {
+    const hraIdsString = hraIdList.join(',');
+    try {
+      await this.applicationService.delegateTask(this.jobID, hraIdsString);
+      this.snackBar.open('Tasks assigned successfully.', '', { panelClass: ['app-notification-success'] })._dismissAfter(3000);
+      this.getApplicationList(this.jobID, this.selectedFilter);
+    } catch (error) {
+      this.snackBar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
   }
 
   async getHraList(){
