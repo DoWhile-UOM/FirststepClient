@@ -1,0 +1,58 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.mat-dialog-container {
+  padding: 20px;
+}
+
+mat-dialog-title {
+  color: #008080 !important;
+  font-family: Lato;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+mat-dialog-content {
+  width: 400px;
+  max-height: 400px;
+  overflow: auto;
+}
+
+mat-selection-list {
+  width: 100%;
+}
+
+mat-list-option {
+  font-family: Lato;
+  font-size: 18px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  font-family: Lato;
+  font-size: 16px;
+}
+
+.mat-button {
+  color: #008080;
+}
+
+.mat-button:hover {
+  background-color: #e0f7fa;
+}
+
+.mat-button.assign-button {
+  background-color: #008080;
+  color: white;
+}
+
+.mat-button.assign-button:hover {
+  background-color: #006666;
+}

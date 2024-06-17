@@ -156,7 +156,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   //Task Delegation
   openTaskDelegationDialog(): void {
     const dialogRef = this.dialog.open(TaskDelegationPopUpComponent, {
-      width: '300px',
+      width: '800px',
       data: { jobID: this.jobID }
     });
 
