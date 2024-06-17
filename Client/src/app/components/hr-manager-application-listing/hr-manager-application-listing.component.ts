@@ -39,12 +39,15 @@ import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeService } from '../../../services/employee.service';
 import { TaskDelegationPopUpComponent } from '../task-delegation-pop-up/task-delegation-pop-up.component';
+import { ConfirmDialog } from '../job-offer-list/job-offer-list.component';
 
-interface HRMListing {
+interface ApplicationListPage {
   title: string;
   job_number: number;
   field_name: string;
   company_id: number;
+  hr_manager_name: string;
+  role: string;
   current_status: string;
   applicationList: HRMApplicationList[];
 }
@@ -59,7 +62,7 @@ interface HRMApplicationList {
 }
 
 @Component({
-  selector: 'app-hr-manager-application-listing',
+  selector: 'app-hr-manager-application-adData',
   standalone: true,
   imports: [
     MatSlideToggleModule,
@@ -112,6 +115,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
   restrictPermissionForButton: boolean = false;
   unassignedApplicationCount: number = 0; 
 
+  adData: ApplicationListPage | undefined;
+
   userType: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -121,13 +126,14 @@ export class HrManagerApplicationListingComponent implements OnInit {
     private employeeService: EmployeeService,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private acRouter: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
     private auth: AuthService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.spinner.show();
 
     this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
@@ -189,14 +195,14 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   async getApplicationList(jobID: number, status: string) {
     try {
-      var listing: HRMListing = {title: '', job_number: 0, field_name: '', company_id: 0, current_status: '', applicationList: []};
+      this.adData = {title: '', job_number: 0, field_name: '', company_id: 0, current_status: '', hr_manager_name: '', role: '', applicationList: []};
       
       if (this.userType == 'hra'){
-        listing = await this.applicationService.getAssignedApplicationList(this.auth.getUserId(), jobID, status);
+        this.adData = await this.applicationService.getAssignedApplicationList(this.auth.getUserId(), jobID, status);
       }
       else if (this.userType == 'hrm' || this.userType == 'ca'){ 
         this.getHraList();
-        listing = await this.applicationService.getApplicationList(jobID, status);
+        this.adData = await this.applicationService.getApplicationList(jobID, status);
       }
       else{
         alert(this.userType);
@@ -204,23 +210,23 @@ export class HrManagerApplicationListingComponent implements OnInit {
         this.router.navigate(['/notfound']);
       }
       
-      if (!listing) {
+      if (!this.adData) {
         this.snackBar.open('Not applications found for the job id', "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
         window.history.back();
+        return;
       }
 
-      if (listing.company_id != this.auth.getCompanyID()){
+      if (this.adData.company_id != this.auth.getCompanyID()){
         this.snackBar.open("You are not authorized to view this page", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
         this.router.navigate(['/notfound']);
       }
 
-      this.title = listing.title;
-      this.job_number = listing.job_number; 
-      this.field_name = listing.field_name;
-      this.current_status = listing.current_status;
-      this.applicationList = listing.applicationList || [];
+      this.title = this.adData.title;
+      this.job_number = this.adData.job_number; 
+      this.field_name = this.adData.field_name;
+      this.current_status = this.adData.current_status;
+      this.applicationList = this.adData.applicationList || [];
       this.unassignedApplicationCount = this.applicationList.filter(app => !app.assigned_hrAssistant_id).length;
-
 
       for (let i = 0; i < this.applicationList.length; i++) {
         var submitted_date = new Date(this.applicationList[i].submitted_date);
@@ -240,6 +246,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   async assign(application_Id: number, hra_id: number){
+    this.spinner.show();
+    
     await this.applicationService.changeAssignedHRA(application_Id, hra_id);
 
     this.applicationList = this.applicationList.map((application) => {
@@ -251,6 +259,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applicationList);
     this.dataSource.paginator = this.paginator;
+
+    this.spinner.hide();
   }
 
   getHRAName(hra_id: number){
@@ -273,5 +283,32 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   explore(application_Id: number){
     this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
+  }
+
+  changeStatusOfJob(action: string){
+    this.openConfirmDialogBox('250ms', '250ms', action, this.adData?.title || '', this.jobID);
+  }
+
+  openConfirmDialogBox(enterAnimationDuration: string, exitAnimationDuration: string, dialogtitle: string, adTitle: string, adId: number): void {
+    this.dialog.open(ConfirmDialog, {
+      width: '450px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      disableClose: true,
+      data: {dialogtitle: dialogtitle, title: adTitle, id: adId}
+    });
+  }
+
+  getRoleDisplayName(): string {
+    switch (this.adData?.role) {
+      case 'hra':
+        return 'HR Assistant';
+      case 'ca':
+        return 'Company Admin';
+      case 'hrm':
+        return 'HR Manager';
+      default:
+        return this.adData?.role || '';
+    }
   }
 }
