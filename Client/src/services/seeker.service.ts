@@ -54,6 +54,7 @@ async getSeekerDetails(id: number) {
     const response = await axios.get(Apipaths.getSeekerDetails + id);
     return response.data;
   } catch (error) {
+    this.snackbar.open('Error getting seeker details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
   }
 }
 
@@ -64,7 +65,7 @@ async getSeekerProfile(id: number): Promise<SeekerProfileViewDto> {
       seekerData = response.data;
     })
     .catch((error) => {
-      console.log("Network Error: " + error);
+      this.snackbar.open('Error getting seeker profile', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     });
   return seekerData!;
 }
@@ -77,8 +78,8 @@ async getSeekerDetailsForApplication(id : number) {
     .then((response) => {
       seekerData = response.data;
     })
-    .catch (function (error) {
-      console.log("Network Error: " + error);
+    .catch ((error) => {
+      this.snackbar.open('Error getting seeker details', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     });;
 
   return seekerData;
@@ -89,7 +90,6 @@ async getSeekerEditProfile(id: number) {
     const response = await axios.get(Apipaths.getSeekerEditProfile + id);
     return response.data as SeekerProfile;
   } catch (error) {
-    console.error("Error fetching seeker profile: ", error);
     throw error;
   }
 }
@@ -101,10 +101,8 @@ async editSeeker(formData: FormData, seekerID: number) {
         'Content-Type': 'multipart/form-data'
       }
     });
-    console.log("Seeker updated successfully", response);
   } catch (error) {
-    console.error("Error updating seeker: ", error);
-    throw error;
+    this.snackbar.open('Error updating seeker', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
   }
 }
 
@@ -125,7 +123,6 @@ async updateProfilePicture(file: File, user_id: number) {
 async deleteSeeker(seekerID: number) {
   try {
     await axios.delete(Apipaths.deleteSeeker + seekerID);
-    console.log("seeker deleted successfully");
   } catch (error) {
     ///console.error(error);
   }
@@ -141,10 +138,10 @@ async addseeker(seeker: any) {
   try {
     await axios.post(Apipaths.addSeeker, seeker)
      .then((response) => {
-       console.log(response);
+      this.snackbar.open('Seeker added successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
      });
   } catch (error) {
-    console.error(error);
+    this.snackbar.open('Error adding seeker', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
   }
 }
 
