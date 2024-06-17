@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Assign HR Assistants</h1>
+<div mat-dialog-content>
+  <mat-selection-list #hralist>
+    <mat-list-option *ngFor="let hra of hraList" [value]="hra.user_id" (click)="toggleSelection(hra.user_id)">
+      {{ hra.first_name + ' ' + hra.last_name }}
+    </mat-list-option>
+  </mat-selection-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onAssign()">Assign</button>
+</div>
