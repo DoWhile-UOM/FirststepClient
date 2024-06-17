@@ -130,7 +130,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
     private auth: AuthService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.spinner.show();
 
     this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
@@ -217,6 +217,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   async assign(application_Id: number, hra_id: number){
+    this.spinner.show();
+    
     await this.applicationService.changeAssignedHRA(application_Id, hra_id);
 
     this.applicationList = this.applicationList.map((application) => {
@@ -228,6 +230,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource<HRMApplicationList>(this.applicationList);
     this.dataSource.paginator = this.paginator;
+
+    this.spinner.hide();
   }
 
   getHRAName(hra_id: number){
@@ -264,5 +268,18 @@ export class HrManagerApplicationListingComponent implements OnInit {
       disableClose: true,
       data: {dialogtitle: dialogtitle, title: adTitle, id: adId}
     });
+  }
+
+  getRoleDisplayName(): string {
+    switch (this.adData?.role) {
+      case 'hra':
+        return 'HR Assistant';
+      case 'ca':
+        return 'Company Admin';
+      case 'hrm':
+        return 'HR Manager';
+      default:
+        return this.adData?.role || '';
+    }
   }
 }

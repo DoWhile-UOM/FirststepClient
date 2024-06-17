@@ -17,7 +17,7 @@
           Edit <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
         </button>
       </div>
-      <mat-label class="num"> Job Number: {{ job_number }}</mat-label><br />
+      <mat-label class="num"> Job Number: {{ job_number }} | Created by: {{ adData?.hr_manager_name }}, {{ getRoleDisplayName() }}</mat-label><br />
       <mat-label class="field">{{ field_name }}</mat-label>
 
     </div>
@@ -26,7 +26,7 @@
         <button mat-button color="primary" class="custom-button" [matMenuTriggerFor]="menu" [disabled]="userType == 'hra' || adData?.current_status == 'interview'">
           <mat-icon><i class="fa-solid fa-chart-gantt" style="color: #005050;"></i></mat-icon>Status: {{ adData?.current_status }}
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-menu #menu="matMenu" class="menu">
           <button mat-menu-item color="primary" *ngIf="adData?.current_status == 'active'" (click)="changeStatusOfJob('Hold')">
             <mat-icon>pause</mat-icon>
             <span>Hold</span>
