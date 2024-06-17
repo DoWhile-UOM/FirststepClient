@@ -142,4 +142,18 @@ export class ApplicationService {
 
     return applicationDetails;
   }
+
+  async delegateTask(jobID: number, hraIds: string): Promise<void> {
+    const url = `${Apipaths.delegateTask}jobID=${jobID}/hra_id_list=${hraIds}`;
+    await axios.patch(url, {})
+      .then(() => {
+        this.snackbar.open('Tasks assigned successfully.', '', { panelClass: ['app-notification-success'] })._dismissAfter(3000);
+      })
+      .catch((error) => {
+        this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      });
+  }
+
+
+  
 }
