@@ -109,6 +109,8 @@ export class CompanyProfileComponent {
           this.company.company_logo = "../../../assets/Img.png";
         }
 
+        this.paginatorLength = this.company.companyAdvertisements.allAdvertisementIds.length;
+
         //this.jobList = this.company.advertisementUnderCompany;
 
         if (this.jobList.length == 0) {

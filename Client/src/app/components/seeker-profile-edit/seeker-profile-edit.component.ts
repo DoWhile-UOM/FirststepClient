@@ -214,7 +214,6 @@ export class SeekerProfileEditComponent implements OnInit {
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
-      console.error(error);
       this.snackBar.open('Failed to load profile details', 'Close', {
         duration: 3000,
       });
@@ -292,7 +291,6 @@ export class SeekerProfileEditComponent implements OnInit {
         duration: 2000,
       });
     } catch (error) {
-      console.error('Error updating profile: ', error);
       this.snackBar.open('Failed to update profile', 'Close', {
         duration: 3000,
       });
@@ -366,7 +364,6 @@ export class SeekerProfileEditComponent implements OnInit {
       this.emailcaptured = seeker.email;
       this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
     } catch (error) {
-      console.error('Failed to discard changes', error);
       this.snackBar.open('Failed to discard changes', 'Close', {
         duration: 3000,
       });
@@ -387,7 +384,6 @@ export class SeekerProfileEditComponent implements OnInit {
             duration: 2000,
           });
         } catch (error) {
-          console.error('Error deleting profile: ', error);
           this.snackBar.open('Failed to delete profile', 'Close', {
             duration: 3000,
           });
@@ -674,7 +670,6 @@ export class UploadCV {
         this.uploadSuccess = true;
         this.fileSelected.emit(file);
       } catch (error) {
-        console.error('Error uploading file: ', error);
       } finally {
         this.uploadInProgress = false;
       }
