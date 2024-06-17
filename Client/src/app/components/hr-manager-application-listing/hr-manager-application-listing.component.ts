@@ -110,6 +110,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   current_status: string = '';
   hraList: any[] = [];
   restrictPermissionForButton: boolean = false;
+  unassignedApplicationCount: number = 0; 
 
   userType: string = '';
 
@@ -157,7 +158,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   openTaskDelegationDialog(): void {
     const dialogRef = this.dialog.open(TaskDelegationPopUpComponent, {
       width: '800px',
-      data: { jobID: this.jobID }
+      data: { jobID: this.jobID, unassignedApplicationCount: this.unassignedApplicationCount }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -218,6 +219,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
       this.field_name = listing.field_name;
       this.current_status = listing.current_status;
       this.applicationList = listing.applicationList || [];
+      this.unassignedApplicationCount = this.applicationList.filter(app => !app.assigned_hrAssistant_id).length;
+
 
       for (let i = 0; i < this.applicationList.length; i++) {
         var submitted_date = new Date(this.applicationList[i].submitted_date);

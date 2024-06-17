@@ -1,5 +1,6 @@
 <h1 mat-dialog-title style="color: teal">Assign HR Assistants</h1>
 <div mat-dialog-content>
+  <p>Unassigned Applications: {{ unassignedApplicationCount }}</p>
   <mat-selection-list #hralist style="width: 100%">
     <mat-list-option
       *ngFor="let hra of hraList"

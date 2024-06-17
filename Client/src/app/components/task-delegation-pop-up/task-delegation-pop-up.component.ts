@@ -19,14 +19,17 @@ import { MatDialogTitle } from '@angular/material/dialog';
 export class TaskDelegationPopUpComponent implements OnInit {
   hraList: any[] = [];
   selectedHRAIds: number[] = [];
+  unassignedApplicationCount: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<TaskDelegationPopUpComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { jobID: number },
+    @Inject(MAT_DIALOG_DATA) public data: { jobID: number, unassignedApplicationCount: number }, 
     private employeeService: EmployeeService,
     private snackBar: MatSnackBar,
     private auth: AuthService
-  ) {}
+  ) {
+    this.unassignedApplicationCount = data.unassignedApplicationCount;
+  }
 
   ngOnInit() {
     this.getHraList();
