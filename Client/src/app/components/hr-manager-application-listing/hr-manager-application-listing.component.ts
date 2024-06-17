@@ -129,7 +129,6 @@ export class HrManagerApplicationListingComponent implements OnInit {
     private dialog: MatDialog,
     private acRouter: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog,
     private auth: AuthService) {
   }
 
@@ -247,7 +246,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   async assign(application_Id: number, hra_id: number){
     this.spinner.show();
-    
+
     await this.applicationService.changeAssignedHRA(application_Id, hra_id);
 
     this.applicationList = this.applicationList.map((application) => {
