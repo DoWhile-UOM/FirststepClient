@@ -51,11 +51,25 @@
                 <div class="day-name">{{ day.name }}</div>
                 <div class="day-number">{{ day.number }}</div>
                 <div class="timeslots">
-                    <button color="primary" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
+                    <button color="primary" (click)="showPopup(day.name,day.number,slot)" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
                         {{ slot }}
                     </button>
                 </div>
             </div>
         </div>
     </mat-card>
+</div>
+
+
+<div class="modal" [ngClass]="{'show': isPopupVisible}" (click)="closePopup()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closePopup()">&times;</span>
+        <h2>Popup Content</h2>
+        <p>This is a simple popup</p>
+        <p>Date {{currentslot.day}}, Month {{currentslot.date}} 2024</p>
+        <p>Time {{currentslot.time}}</p>
+        <button class="popup-button" mat-raised-button color="primary">Confirm</button>
+
+        <button class="popup-button" mat-raised-button color="warn">Cancel</button>
+    </div>
 </div>
