@@ -25,25 +25,26 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 export class ResetPasswordReqComponent {
   requestButton = false;
 
-  constructor(private router: Router,private auth: AuthService,private spinner: NgxSpinnerService,private snackBar: MatSnackBar,private route: ActivatedRoute) {}
+  constructor(private router: Router, private auth: AuthService, private spinner: NgxSpinnerService, private snackBar: MatSnackBar, private route: ActivatedRoute) { }
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required,Validators.email])
+    email: new FormControl('', [Validators.required, Validators.email])
   });
 
-  onLogin() {
+  async onLogin() {
     //console.log(this.loginForm.value);
     //this.auth.signup(this.myForm.value)
-    this.requestButton=true;
+    this.requestButton = true;
     //this.spinner.show();
-    if(!this.loginForm.value.email){
+    if (!this.loginForm.value.email) {
       this.snackBar.open("Please Enter the Email", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       //this.spinner.hide();
       return;
     }
     //this.auth.ResetPasswordReq(this.loginForm.value.email);
-    let result=this.auth.ResetPasswordReq(this.loginForm.value.email);
-  
+    await this.auth.ResetPasswordReqNew(this.loginForm.value.email);
+
+
     //this.requestButton=false;
     //this.spinner.hide();
   }

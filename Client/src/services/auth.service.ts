@@ -40,6 +40,21 @@ export class AuthService {
     }
   }
 
+
+  async ResetPasswordReqNew(email: string) {
+    let response: any;
+
+    await axios.post(Apipaths.resetpasswordReq + email)
+      .then((res) => {
+        response = res.data;
+        this.snackBar.open("Password Reset Email has been sent to your mailbox", "", { panelClass: ['app-notification-normal'] })._dismissAfter(5000);
+      })
+      .catch((error) => {
+        this.snackBar.open(error.response.data, "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
+      });
+  }
+
+
   async ResetPassword(restPassword: any) {
     let action: boolean = false;
     await axios.post(Apipaths.resetpassword, restPassword)
@@ -55,12 +70,12 @@ export class AuthService {
           this.snackBar.open(error.response.data.message, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
         }
       );
-      if(action){
-        this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-        return action;
-      }else{
-        return action;
-      }
+    if (action) {
+      this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      return action;
+    } else {
+      return action;
+    }
   }
 
   //-----OTP Service----------------------------------
