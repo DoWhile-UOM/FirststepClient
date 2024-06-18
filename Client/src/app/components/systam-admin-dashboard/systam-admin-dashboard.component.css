@@ -1,0 +1,56 @@
+.page-title {
+    margin-top: 4em;
+    margin-left: 4em;
+    margin-right: 4em;
+  }
+  
+  .title{
+    color: #008080;
+    font-family: Lato;
+    font-size: 30px;
+  }
+  
+  .pagetitle-content {
+    width: 97.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .title-section{
+    color: #008080;
+    font-family: Lato;
+    font-size: 25px;
+  }
+  .emptymsg {
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  th.mat-header-cell .nu-header {
+    text-align: center !important;
+  }
+  .emptymsg div {
+    margin: 0 auto;
+  }
+  .adTable,
+.emptymsg {
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+.eligibleUnregisteresCompanies{
+  width: 100%;
+}
+.side-note{
+  width: 100%;
+}
+.card{
+  display: flex;
+  flex-direction: column; /* Ensures the content is aligned vertically */
+  align-items: flex-start;
+}
+.card mat-grid-tile {
+  align-self: flex-start; /* This will align each tile to the top */
+}

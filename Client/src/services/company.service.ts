@@ -48,6 +48,12 @@ interface CmpAdminReg {
   first_name: string;
   last_name: string;
 }
+interface EligibleUnregisteredCompany {
+  company_id: number;
+  company_name: string;
+  company_email: string;
+  company_logo: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -215,7 +221,7 @@ export class CompanyService {
     }
     catch (error) {
       //console.error(error);
-      cmpData=false;
+      cmpData = false;
     }
 
     return cmpData;
@@ -268,6 +274,19 @@ export class CompanyService {
       .catch((error) => {
         console.log('Network Error: ' + error);
       });
+  }
+  async getEligibleUnregisteredCompanies() {
+    let eligibleUnregisteredCompanies: EligibleUnregisteredCompany[] = [];
+
+    try {
+      const response = await axios.get(Apipaths.getEligibleUnregisteredCompanies);
+      eligibleUnregisteredCompanies = response.data;
+      console.log('Eligible unregistered companies:', eligibleUnregisteredCompanies);
+    } catch (error) {
+      this.snackBar.open('Error fetching eligible unregistered companies', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
+
+    return eligibleUnregisteredCompanies;
   }
 
 }

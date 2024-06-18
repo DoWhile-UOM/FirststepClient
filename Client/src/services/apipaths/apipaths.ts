@@ -1,6 +1,6 @@
 export class Apipaths {
-    //static readonly baseUrl: string = 'https://localhost:7213/api/';
-    static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
+    static readonly baseUrl: string = 'https://localhost:7213/api/';
+    //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
@@ -43,8 +43,8 @@ export class Apipaths {
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
     static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
     static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
-    static readonly updateUnregComapny:string =this.baseUrl + 'Company/UpdateUnregisteredCompany/';
-
+    static readonly updateUnregComapny: string = this.baseUrl + 'Company/UpdateUnregisteredCompany/';
+    static readonly getEligibleUnregisteredCompanies: string = this.baseUrl + 'SystemAdmin/GetEligibleUnregisteredCompanies';
     // application
     static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
     static readonly changeAssignedHRA: string = this.baseUrl + 'Application/ChangeAssignedHRA/'; // + application_id
@@ -66,7 +66,7 @@ export class Apipaths {
     static readonly getSeekerDetails: string = this.baseUrl + 'Seeker/GetSeeker/';// + seeker_id
     static readonly getSeekerDetailsForApplication: string = this.baseUrl + 'Seeker/GetSeekerDetails/';// + seeker_id
     static readonly getSeekerProfile: string = this.baseUrl + 'Seeker/GetSeekerProfile/';// + seeker_id
-    static readonly getSeekerEditProfile:string = this.baseUrl + 'Seeker/GetSeekerProfile/Update/';// + seeker_id
+    static readonly getSeekerEditProfile: string = this.baseUrl + 'Seeker/GetSeekerProfile/Update/';// + seeker_id
     static readonly addSeeker: string = this.baseUrl + 'Seeker/AddSeeker';
     static readonly editSeeker: string = this.baseUrl + 'Seeker/UpdateSeeker/';// + seeker_id
     static readonly updateProfilePicture: string = this.baseUrl + 'Seeker/UpdateProfilePicture/'; // + user_id
@@ -82,13 +82,15 @@ export class Apipaths {
 
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
+    static readonly getLoggingsDetails: string = this.baseUrl + 'SystemAdmin/GetLoggingsDetails';
 
     // Azure Blob Service
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
 
-  
+
+
 
 
 }
