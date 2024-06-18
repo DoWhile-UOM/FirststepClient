@@ -121,8 +121,7 @@ mat-icon {
     .title-container img{
         width: 45px; 
         height: 45px;
-        margin-top: 0.5em;
-        margin-left: 0.5em;
+        background-color: #008080;
     }
 
     .job-title{
