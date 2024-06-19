@@ -139,6 +139,7 @@ mat-form-field {
   flex: 1;
   margin: 0 10px; /* Adjusts space between buttons */
   max-width: 150px; /* Adjust this value as needed */
+  white-space: nowrap; /* Prevents text wrapping */
 }
 
 .upload-cv-class,

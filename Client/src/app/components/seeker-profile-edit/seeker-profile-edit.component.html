@@ -106,17 +106,16 @@
         <app-add-skills [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
       </div>
       <div class="button-container">
-        <button mat-raised-button color="primary" (click)="openUploadDialog()">Upload CV</button>
-        <button mat-raised-button color="primary" [disabled]="disableViewButton" (click)="openPdfViewer()">View CV</button>
+        <button mat-raised-button color="primary" (click)="openUploadDialog()" class="button">Upload CV</button>
+        <button mat-raised-button color="primary" [disabled]="disableViewButton" (click)="openPdfViewer()" class="button">View CV</button>
       </div>
       <mat-divider></mat-divider>
-      <section>
-        <div class="example-button-row">
-          <button type="submit" mat-raised-button color="primary">Update Profile</button>
-          <button type="button" mat-raised-button id="discard" (click)="discardChanges()">Discard Changes</button>
-          <button type="button" mat-raised-button color="warn" id="delete" (click)="deleteAccount()">Delete Profile</button>
-        </div>
-      </section>
+      <div class="example-button-row">
+        <button type="submit" mat-raised-button color="primary" class="button">Update Profile</button>
+        <button type="button" mat-raised-button (click)="discardChanges()" class="button">Discard Changes</button>
+        <button type="button" mat-raised-button color="warn" (click)="deleteAccount()" class="button">Delete Profile</button>
+      </div>
+      
     </form>
   </mat-card>
 </div>
