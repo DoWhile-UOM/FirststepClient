@@ -10,8 +10,7 @@
 .stepper-container {
   width: 100%;
   max-width: 1200px;
-  /* padding: 5px; */
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .content-container {
@@ -108,8 +107,9 @@
 
 .cvupload {
   width: 100%;
-  display: grid;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .otp-field-container {
@@ -136,12 +136,38 @@
     flex-direction: column;
     padding: 20px;
   }
-  .seeker {
-    width: 100%;
-    max-width: none;
+
+  .left {
+    display: none; /* Hide the left image container on smaller screens */
   }
+
+  .right {
+    width: 100%; /* Ensure form takes full width on smaller screens */
+  }
+
   .step-card {
+    width: 100%;
     margin: 20px;
+  }
+
+  .fixed-width {
+    max-width: 100%;
+  }
+
+  .otp-field-container {
+    flex-direction: column;
+  }
+
+  .otp-field-container .fixed-width,
+  .otp-field-container button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .cvupload {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -154,8 +180,6 @@
 
 ::ng-deep .mat-horizontal-stepper-header {
   margin-bottom: 20px;
-  /* padding: 0 5px;  */
-  box-sizing: border-box; 
 }
 
 ::ng-deep .mat-step-label {
@@ -171,8 +195,7 @@
   margin-right: 8px;
 }
 
-.mat-stepper-horizontal, .mat-horizontal-stepper-header-container {
+.mat-stepper-horizontal,
+.mat-horizontal-stepper-header-container {
   margin-bottom: 40px;
-  /* padding: 0 5px;  */
-  box-sizing: border-box; 
 }

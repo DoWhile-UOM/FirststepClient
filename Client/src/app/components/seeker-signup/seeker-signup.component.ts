@@ -95,17 +95,17 @@ export class SeekerSignupComponent implements OnInit {
     private http: HttpClient
   ) {
     this.seekerReg = this._formBuilder.group({
-      first_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      last_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(128), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
-      phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
-      university: ['', [Validators.maxLength(100)]],
-      linkedin: ['', [Validators.pattern(/^(http(s)?:\/\/)?(www\.)?linkedin\.com\/.*$/)]],
-      field_id: ['', Validators.required],
+      first_name: ['', ],
+      last_name: ['', ],
+      email: ['', ],
+      password: ['',],
+      phone_number: ['',],
+      university: ['', ],
+      linkedin: ['', ],
+      field_id: ['',],
       cVurl: [''],
-      bio: ['', [Validators.required, Validators.maxLength(500)]],
-      description: ['', [Validators.required, Validators.maxLength(2000)]],
+      bio: ['', ],
+      description: ['',],
       profile_picture: [''],
       seekerSkills: [[]],
       otp_in: ['']
