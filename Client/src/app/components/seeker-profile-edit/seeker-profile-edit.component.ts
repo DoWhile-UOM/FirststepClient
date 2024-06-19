@@ -121,7 +121,8 @@ export class SeekerProfileEditComponent implements OnInit {
 
   emailReadOnly: boolean = true;
 
-  propicUrl = '';
+  readonly defaultImageUrl = './assets/images/dp.png';
+  propicUrl = this.defaultImageUrl;
   propicBlobName = '';
   selectedFile: File | null = null;
   selectedimage: File | null = null;
@@ -182,6 +183,7 @@ export class SeekerProfileEditComponent implements OnInit {
   onImageError() {
     this.propicUrl = this.fallbackImageUrl;
   }
+
   async ngOnInit() {
     this.spinner.show();
     try {
@@ -208,7 +210,7 @@ export class SeekerProfileEditComponent implements OnInit {
         password: '',
         seekerSkills: seeker.seekerSkills || [],
       });
-      this.propicUrl = seeker.profile_picture;
+      this.propicUrl = seeker.profile_picture || this.defaultImageUrl; // Use default image if none is provided
       this.cVurl = seeker.cVurl; // Save the CV URL
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
@@ -645,7 +647,6 @@ export class ConfirmDeleteProfilePopUp {
 @Component({
   selector: 'app-upload-cv',
   templateUrl: 'upload-cv.html',
-  styleUrls: ['upload-cv.css'],
   standalone: true,
   imports: [
     MatIconModule,

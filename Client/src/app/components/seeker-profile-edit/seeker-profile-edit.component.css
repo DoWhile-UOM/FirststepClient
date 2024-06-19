@@ -344,4 +344,16 @@ button {
   .button-with-inputbox button {
     width: 100%;
   }
+  
 }
+
+.app-notification-error {
+  background-color: #d9534f !important; 
+  color: #ffffff !important; 
+}
+
+.app-notification-success {
+  background-color:teal !important;
+  color: #ffffff !important;
+}
+
