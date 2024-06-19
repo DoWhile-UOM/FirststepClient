@@ -317,7 +317,7 @@ export class SeekerProfileEditComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
       width: '100%',
-      maxWidth: '600px',  // You can adjust this as needed
+      maxWidth: '400px',
       height: 'auto',
       data: { email: this.seekerForm.get('email')?.value },
     });
