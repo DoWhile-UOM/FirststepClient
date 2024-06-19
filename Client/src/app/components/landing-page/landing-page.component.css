@@ -109,6 +109,7 @@ header nav a:hover {
 .info-text {
     flex: 1;
     margin-right: 20px;
+    margin-left: 3em;
 }
 
 .info-text p {
@@ -116,7 +117,12 @@ header nav a:hover {
     margin: 10px 0;
 }
 
-.info-image {
+.top-info .info-image {
+    flex: 1;
+    max-width: 40%;
+}
+
+.info-image{
     flex: 1;
     max-width: 300px;
 }
@@ -157,55 +163,44 @@ footer .sponsor-logo img {
     margin: 10px 0;
 }
 
-@media (min-width: 768px) {
-    header nav {
-        flex-direction: row;
-    }
-
-    .hero {
-        flex-direction: row;
-    }
-
-    .info {
-        flex-direction: row;
-    }
-
-    footer .footer-content {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    footer .footer-content .sponsor-logo {
-        margin: 0 20px;
-    }
+.info-buttons{
+    display: flex;
+    flex-direction: column;
 }
 
-@media (max-width: 767px) {
+.info-buttons button{
+    margin-top: 1em;
+}
+
+@media screen and (max-width: 768px) {
     header {
-        flex-direction: column;
+        flex-direction: row;
         align-items: flex-start;
     }
 
     header nav {
-        flex-direction: column;
-        align-items: flex-start;
+        margin-top: 0.5em;
+        align-items: flex-end;
     }
 
     header nav a {
         margin: 5px 0;
     }
 
-    .hero {
-        flex-direction: column;
+    .top-info .info-image{
+        max-width: 300px;
     }
 
     .info-text {
+        margin-left: 0;
         margin-right: 0;
-        margin-bottom: 20px;
+        margin-bottom: 2em;
     }
 
     .info {
         flex-direction: column;
+        margin-bottom: 0;
+        padding: 10px;
     }
 
     footer .footer-content {

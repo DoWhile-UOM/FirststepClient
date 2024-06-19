@@ -4,24 +4,39 @@
     <span>FirstStep</span>
   </div>
   <nav>
-    <a href="#" class="signUp">Register your company</a>
-    <a href="#" class="signUp">Login</a>
+    <a href="#" *ngIf="screenWidth >= 768" class="signUp">Register your company</a>
+    <a href="#" *ngIf="screenWidth >= 768" class="signUp">Login</a>
+
+    <button *ngIf="screenWidth < 768" mat-icon-button [matMenuTriggerFor]="menu" class="medium-icon-button">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="comReg()">
+        <span>Register your company</span>
+      </button>
+      <button mat-menu-item (click)="login()">
+        <span>Login</span>
+      </button>
+    </mat-menu> 
   </nav>
 </header>
 <div class="container">
   <main>
-    <section class="hero">
-      <div class="hero-image">
+    <section class="info top-info">
+      <div class="info-image">
         <img src="assets/images/landing/upimage.png" alt="Bistec Global Logo" />
       </div>
-      <div class="hero-text">
+      <div class="info-text">
         <h1>Skills speak louder than words</h1>
         <p>We help students to find their dream job while guiding companies to find their perfect team</p>
         <p>To begin your journey register as a seeker</p>
-        <button mat-raised-button color="primary" (click)="signup()">Sign Up</button>
-        <button mat-button class="login" (click)="login()">
-          <span class="Login-btn-name">Login</span>
-        </button>
+        <div class="info-buttons">
+          <button mat-raised-button color="primary" (click)="signup()">Sign Up</button>
+          <button mat-button class="login" (click)="login()">
+            <span class="Login-btn-name">Login</span>
+          </button>
+        </div>
       </div>
     </section>
 
