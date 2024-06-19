@@ -129,7 +129,6 @@ export class HrManagerApplicationListingComponent implements OnInit {
     private dialog: MatDialog,
     private acRouter: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog,
     private auth: AuthService) {
   }
 
