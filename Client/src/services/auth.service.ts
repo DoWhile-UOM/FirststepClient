@@ -135,27 +135,19 @@ export class AuthService {
   //-----OTP Service End here---------------------------
 
   storeToken(token: string) {
-    //console.log('Token Stored')
     this.local.saveData('token', token)
-    //localStorage.setItem('token',token)
-    //console.log('Token is '+localStorage.getItem('token'))
   }
 
   storeRefreshToken(tokenValue: string) {
-    //localStorage.setItem('refreshToken', tokenValue)
     this.local.saveData('refreshToken', tokenValue)
   }
 
   getToken() {
-    //console.log("Test");
-    //localStorage.setItem('token', '')
     return this.local.getData('token');
   }
 
 
   getrefToken() {
-    //console.log("Test");
-    //localStorage.setItem('token', '')
     return this.local.getData('refreshToken');
   }
 
@@ -164,7 +156,6 @@ export class AuthService {
     try {
       return !!this.local.getData('token');
     } catch (error) {
-      //console.log(error); //raises the error
       return false;
     }
   }
@@ -179,8 +170,6 @@ export class AuthService {
     const jwtHelper = new JwtHelperService();
     const token = this.getToken()!;
     const rtoken = this.getrefToken()!;
-    //console.log('Token decoder '+token);
-    //console.log(jwtHelper.decodeToken(token))
     this.userPayload = jwtHelper.decodeToken(token);
     return jwtHelper.decodeToken(token)
   }

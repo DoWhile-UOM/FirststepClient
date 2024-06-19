@@ -45,7 +45,6 @@ export class Apipaths {
     static readonly updateCompanyLogo: string = this.baseUrl + 'Company/UpdateCompanyLogo/';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
     static readonly updateUnregComapny: string = this.baseUrl + 'Company/UpdateUnregisteredCompany/';
 
-
     // application
     static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
     static readonly changeAssignedHRA: string = this.baseUrl + 'Application/ChangeAssignedHRA/'; // + application_id
@@ -83,9 +82,9 @@ export class Apipaths {
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
-    static readonly authenticate: string = this.baseUrl + 'User/authenticate';
-    static readonly resetpasswordReq: string=this.baseUrl+'User/RestpassRequest/';
-    static readonly resetpassword: string=this.baseUrl+'User/Restpass';
+    static readonly authenticate: string = this.baseUrl + 'User/Authenticate';
+    static readonly resetpasswordReq: string = this.baseUrl + 'User/RestPasswordRequest/';
+    static readonly resetpassword: string = this.baseUrl + 'User/RestPassword';
     static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
     static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
 
