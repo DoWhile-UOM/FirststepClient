@@ -218,17 +218,21 @@ button:hover {
   gap: 10px;
 }
 
-.button-with-inputbox mat-form-field {
-  width: 65%;
+.button-with-inputbox {
+  display: flex;
+  align-items: center; /* Align items vertically centered */
+  justify-content: space-between;
 }
 
+.button-with-inputbox mat-form-field {
+  width: 70%; /* Adjust the width as needed */
+  margin-bottom: 0.5em;}
+
 .button-with-inputbox button {
-  width: 35%;
-  padding: 5px;
-  margin-right: 5px;
-  margin-top: 1.5em;
-  height: 3.5em;
-}
+  width: auto; /* Let the button take its natural width */
+  height: auto; /* Let the button take its natural height */
+  padding: 0.5em 1em; /* Add padding for better clickability */
+  margin-left: 1em; /* Add some space between the field and button */}
 
 .textbox-form-field {
   position: relative;

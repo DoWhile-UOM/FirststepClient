@@ -289,7 +289,7 @@ export class SeekerProfileEditComponent implements OnInit {
 
       await this.seekerService.editSeeker(formData, this.user_id);
       this.snackBar.open('Profile updated successfully', '', {
-        panelClass: ['app-notification-success'],
+        panelClass: ['app-notification-normal'],
         duration: 2000,
       });
     } catch (error) {
@@ -329,7 +329,7 @@ export class SeekerProfileEditComponent implements OnInit {
         this.emailcaptured = result.emailAddress;
         this.emailReadOnly = true; // Freeze email editing after updating
         this.snackBar.open('Email verified successfully', '', {
-          panelClass: ['app-notification-success'],
+          panelClass: ['app-notification-normal'],
           duration: 2000,
         });
       } else {
@@ -369,7 +369,7 @@ export class SeekerProfileEditComponent implements OnInit {
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
       this.snackBar.open('Changes discarded', '', {
-        panelClass: ['app-notification-success'],
+        panelClass: ['app-notification-normal'],
         duration: 2000,
       });
     } catch (error) {
@@ -391,7 +391,7 @@ export class SeekerProfileEditComponent implements OnInit {
         try {
           await this.seekerService.deleteSeeker(this.user_id);
           this.snackBar.open('Profile deleted successfully', '', {
-            panelClass: ['app-notification-success'],
+            panelClass: ['app-notification-normal'],
             duration: 2000,
           });
         } catch (error) {
@@ -559,7 +559,7 @@ export class SeekerProfileEditComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       if (this.selectedFile) {
         this.snackBar.open('File uploaded successfully', '', {
-          panelClass: ['app-notification-success'],
+          panelClass: ['app-notification-normal'],
           duration: 2000,
         });
       }
