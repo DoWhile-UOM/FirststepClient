@@ -7,6 +7,7 @@ import { Apipaths } from './apipaths/apipaths';
 import { catchError, firstValueFrom, lastValueFrom, map, of, tap, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import axios from 'axios';
+import { response } from 'express';
 
 
 
@@ -18,7 +19,7 @@ export class AuthService {
 
   private baseUrl: string = Apipaths.baseUrl + "User";
 
-  constructor(private local: LocalService, private http: HttpClient, private route: Router) {
+  constructor(private snackBar: MatSnackBar, private local: LocalService, private http: HttpClient, private route: Router) {
     this.userPayload = this.decodedToken() //call decodedToken() to get payload data
   }
 
@@ -28,6 +29,69 @@ export class AuthService {
 
   async login(loginObj: any) {
     return await this.http.post<any>(Apipaths.authenticate, loginObj)
+  }
+
+  async ResetPasswordReq(email: string) {
+    try {
+      const response = await axios.post(Apipaths.resetpasswordReq + email);
+      this.snackBar.open('Password Reset link sent to your Email', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    } catch (error) {
+      this.snackBar.open('Error Occured on Password Reset', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
+  }
+
+
+  async ResetPasswordReqNew(email: string) {
+    let response: any;
+
+    await axios.post(Apipaths.resetpasswordReq + email)
+      .then((res) => {
+        response = res.data;
+        this.snackBar.open("Password Reset Email has been sent to your mailbox", "", { panelClass: ['app-notification-normal'] })._dismissAfter(5000);
+      })
+      .catch((error) => {
+        this.snackBar.open(error.response.data, "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
+
+      });
+
+  }
+
+  async ResetPasswordNew(restPassword: any) {
+    let response: any;
+
+    await axios.post(Apipaths.resetpassword, restPassword)
+      .then((res) => {
+        response = res.data;
+        this.snackBar.open("Your password has been reset successfully.", "", { panelClass: ['app-notification-normal'] })._dismissAfter(5000);
+      })
+      .catch((error) => {
+        this.snackBar.open(error.response.data, "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
+
+      });
+
+  }
+
+  async ResetPassword(restPassword: any) {
+    let action: boolean = false;
+    await axios.post(Apipaths.resetpassword, restPassword)
+      .then(function (response) {
+        console.log(response.status);
+        if (response.status == 200) {
+          action = true;
+        }
+      })
+      .catch(
+        (error) => {
+          console.log("No advertisements found" + error);
+          this.snackBar.open(error.response.data.message, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+        }
+      );
+    if (action) {
+      this.snackBar.open('Password Reset Sucessful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+      return action;
+    } else {
+      return action;
+    }
   }
 
   //-----OTP Service----------------------------------
@@ -148,10 +212,10 @@ export class AuthService {
 
   async getLocation(): Promise<any> {
     return new Promise((resolve, reject) => {
-      try{
+      try {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(position => {
-            resolve({longitude: position.coords.longitude, latitude: position.coords.latitude});
+            resolve({ longitude: position.coords.longitude, latitude: position.coords.latitude });
           }, err => {
             reject(err);
           });
@@ -159,7 +223,7 @@ export class AuthService {
           reject(null);
         }
       }
-      catch(err){
+      catch (err) {
         reject(null);
       }
     });

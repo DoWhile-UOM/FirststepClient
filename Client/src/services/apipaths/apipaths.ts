@@ -84,7 +84,8 @@ export class Apipaths {
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
     static readonly authenticate: string = this.baseUrl + 'User/authenticate';
-
+    static readonly resetpasswordReq: string=this.baseUrl+'User/RestpassRequest/';
+    static readonly resetpassword: string=this.baseUrl+'User/Restpass';
     static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
     static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
 
