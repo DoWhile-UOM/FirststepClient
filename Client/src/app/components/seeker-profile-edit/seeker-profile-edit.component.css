@@ -331,9 +331,13 @@ button {
   }
 
   .button-container {
-    flex-direction: column;
-    width: 100%;
+    flex-direction: row;
     margin: 20px 0;
+    width: 100%;
+  }
+
+  .button-container button {
+    white-space: nowrap;
   }
 
   .button-with-inputbox mat-form-field {
