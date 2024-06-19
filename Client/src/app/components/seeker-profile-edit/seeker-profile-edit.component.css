@@ -25,7 +25,7 @@
 
 .profile-image {
   display: block;
-  margin-bottom: 10px; /* Adjust this value as needed */
+  margin-bottom: 10px;
 }
 
 .edit-container {
@@ -44,7 +44,7 @@
 .edit {
   color: #008080;
   cursor: pointer;
-  margin-right: 5px; /* Space between icon and text */
+  margin-right: 5px;
 }
 
 .custom-file-upload mat-icon {
@@ -87,12 +87,11 @@ mat-grid-tile {
 }
 
 .email-form-field {
-  flex: 0 0 70%;
+  flex: 0 0 65%;
 }
 
 .change-email-button {
-  flex: 0 0 30%;
-  margin-left: 1em;
+  flex: 0 0 40%;
 }
 
 mat-form-field {
@@ -105,20 +104,20 @@ mat-form-field {
 
 .button-with-inputbox {
   display: flex;
-  align-items: center; /* Align items vertically centered */
+  align-items: center;
   justify-content: space-between;
 }
 
 .button-with-inputbox mat-form-field {
-  width: 70%; /* Adjust the width as needed */
+  width: 70%;
   margin-bottom: 0.5em;
 }
 
 .button-with-inputbox button {
-  width: auto; /* Let the button take its natural width */
-  height: auto; /* Let the button take its natural height */
-  padding: 0.5em 1em; /* Add padding for better clickability */
-  margin-left: 1em; /* Add some space between the field and button */
+  width: auto;
+  height: auto;
+  padding: 0.5em 1em;
+  margin-left: 1em;
 }
 
 .textbox-form-field {
@@ -129,7 +128,7 @@ mat-form-field {
 
 .button-container {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
   gap: 20px;
@@ -137,19 +136,43 @@ mat-form-field {
 
 .button {
   flex: 1;
-  margin: 0 10px; /* Adjusts space between buttons */
-  max-width: 150px; /* Adjust this value as needed */
-  white-space: nowrap; /* Prevents text wrapping */
+  margin: 0 10px;
+  max-width: 150px;
+  overflow: hidden;
+  background-color: #008080;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.discard-button {
+  background-color: #e0e0e0;
+  color: #000000;
+}
+
+.delete-button {
+  background-color: #d32f2f;
+  color: #ffffff;
+}
+
+.button:hover, .discard-button:hover, .delete-button:hover {
+  cursor: pointer;
+  background-color: #006666;
+}
+
+.delete-button:hover {
+  background-color: #b71c1c;
 }
 
 .upload-cv-class,
 .view-cv-class {
   font-weight: 400;
   width: 100%;
-}
-
-.upload-cv-class,
-.view-cv-class {
   background-color: #008080;
   color: #ffffff;
   border: none;
@@ -165,7 +188,7 @@ mat-form-field {
   background-color: #006666;
 }
 
-.example-button-row{
+.example-button-row {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -201,7 +224,7 @@ mat-form-field {
     margin: 0.5em 0;
   }
 
-  .example-button-row{
+  .example-button-row {
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -212,22 +235,21 @@ mat-form-field {
     width: 100%;
     margin: 0.5em 0;
   }
-  
+
   .button-container {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     margin-top: 20px;
     margin-bottom: 20px;
     gap: 20px;
   }
-  
+
   .button {
     flex: 1;
-    margin: 0 10px; /* Adjusts space between buttons */
-    max-width: 150px; /* Adjust this value as needed */
-    white-space: nowrap; /* Prevents text wrapping */
+    margin: 0 10px;
+    max-width: 200px;
   }
-  
+
   .button-with-inputbox mat-form-field {
     width: 100%;
     margin-bottom: 0.5em;
