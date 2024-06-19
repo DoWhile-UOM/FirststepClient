@@ -7,7 +7,9 @@ app-advertisement-header{
 .stepper .mat-step-header {
   pointer-events: none;
 }
-
+mat-step{
+  pointer-events: none;
+}
 mat-dialog-actions {
   display: flex;
   flex-direction: row;
