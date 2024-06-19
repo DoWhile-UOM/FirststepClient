@@ -51,9 +51,25 @@ export class AuthService {
       })
       .catch((error) => {
         this.snackBar.open(error.response.data, "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
+
       });
+
   }
 
+  async ResetPasswordNew(restPassword: any) {
+    let response: any;
+
+    await axios.post(Apipaths.resetpassword, restPassword)
+      .then((res) => {
+        response = res.data;
+        this.snackBar.open("Your password has been reset successfully.", "", { panelClass: ['app-notification-normal'] })._dismissAfter(5000);
+      })
+      .catch((error) => {
+        this.snackBar.open(error.response.data, "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
+
+      });
+
+  }
 
   async ResetPassword(restPassword: any) {
     let action: boolean = false;

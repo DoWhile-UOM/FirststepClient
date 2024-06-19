@@ -25,11 +25,22 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 export class ResetPasswordReqComponent {
   requestButton = false;
 
+  requestBtnstate: boolean = false;
+  rmnTime: number = 60;
+  interval: any;
+
   constructor(private router: Router, private auth: AuthService, private spinner: NgxSpinnerService, private snackBar: MatSnackBar, private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.checkButtonStatus();
+  }
+
+
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
   });
+
 
   async onLogin() {
     //console.log(this.loginForm.value);
@@ -38,14 +49,67 @@ export class ResetPasswordReqComponent {
     //this.spinner.show();
     if (!this.loginForm.value.email) {
       this.snackBar.open("Please Enter the Email", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-      //this.spinner.hide();
+      this.requestButton = false;
       return;
     }
+    this.handleClick();
     //this.auth.ResetPasswordReq(this.loginForm.value.email);
-    await this.auth.ResetPasswordReqNew(this.loginForm.value.email);
-
-
+    await this.auth.ResetPasswordReqNew(this.loginForm.value.email)
     //this.requestButton=false;
     //this.spinner.hide();
   }
+
+  //OTP Button New fucntion
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+
+  handleClick(): void {
+
+    const currentTime = Date.now();
+    const unlockTime = currentTime + 60000; // 60 seconds later
+
+    localStorage.setItem('unlockTimePass', unlockTime.toString());
+    this.requestBtnstate = true;
+    this.startCountdown();
+  }
+
+  checkButtonStatus(): void {
+    if (this.isBrowser()) {
+      const unlockTime = localStorage.getItem('unlockTimePass');
+
+      if (unlockTime) {
+        const currentTime = Date.now();
+        const timeDifference = parseInt(unlockTime) - currentTime;
+
+        if (timeDifference > 0) {
+          this.requestBtnstate = true;
+          this.rmnTime = Math.ceil(timeDifference / 1000);
+          this.startCountdown();
+        } else {
+          localStorage.removeItem('unlockTimePass');
+        }
+      }
+    }
+  }
+
+  startCountdown(): void {
+    this.interval = setInterval(() => {
+      this.rmnTime--;
+
+      if (this.rmnTime <= 0) {
+        this.requestBtnstate = false;
+        localStorage.removeItem('unlockTimePass');
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  }
+
+  isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  }
+
+
+
+
 }
