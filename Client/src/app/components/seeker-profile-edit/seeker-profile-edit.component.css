@@ -10,16 +10,6 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.form-container {
-  margin-top: 2em;
-}
-
-.tile {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
 .profile-section {
   display: flex;
   justify-content: center;
@@ -63,7 +53,7 @@
 
 mat-grid-tile mat-form-field {
   width: 100%;
-  margin: 0.75em;
+  margin: 0.75em 0;
 }
 
 mat-grid-tile {
@@ -90,132 +80,27 @@ mat-grid-tile {
   padding-top: 1em;
 }
 
+.email-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.email-form-field {
+  flex: 0 0 70%;
+}
+
+.change-email-button {
+  flex: 0 0 30%;
+  margin-left: 1em;
+}
+
 mat-form-field {
   width: 100%;
   height: 60px;
   position: relative;
   display: block;
   margin-bottom: 1.5em;
-}
-
-.right-btn,
-.left-btn {
-  width: 100%;
-}
-
-.left-btn {
-  justify-content: flex-start;
-}
-
-.button-section,
-.right-btn {
-  display: block;
-}
-
-.button-section {
-  display: flex;
-  margin-top: 40px;
-}
-
-.right-btn {
-  justify-content: flex-start;
-  width: 50%;
-  display: flex;
-  padding: 5px;
-}
-
-.left-btn {
-  justify-content: flex-end;
-  width: 50%;
-  display: flex;
-}
-
-button {
-  width: 25%;
-}
-
-.apply-changes,
-.discard-changes,
-.delete-account {
-  font-weight: 400;
-}
-
-.apply-changes-class {
-  background-color: #008080;
-  color: #ffffff;
-  border-width: 1px;
-  border-style: none;
-  outline: none;
-  border-radius: 5px;
-  border-color: #008080;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding: 10px;
-  margin-right: 10px;
-}
-
-.discard-changes-class {
-  background-color: #ffffff;
-  color: #008080;
-  border-width: 1px;
-  border-style: solid;
-  outline: none;
-  border-radius: 5px;
-  border-color: #008080;
-  padding: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-.delete-account-class {
-  background-color: #d73434;
-  color: #ffffff;
-  border-width: 1px;
-  border-style: none;
-  outline: none;
-  border-radius: 5px;
-  padding: 2px 0;
-  padding: 10px;
-}
-
-.container-otp {
-  display: flex;
-  flex-direction: column;
-}
-
-.example-button-row {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  margin-left: 10px;
-  margin-top: 25px;
-}
-
-.example-button-row .mat-mdc-button-base {
-  margin: 0px 8px 8px 0;
-}
-
-.example-flex-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.example-button-container {
-  display: flex;
-  justify-content: space-between;
-  width: 150px;
-}
-
-.button-container {
-  margin-left: 10px;
-  margin-bottom: 20px;
-  margin-top: 30px;
-  gap: 10px;
 }
 
 .button-with-inputbox {
@@ -226,51 +111,36 @@ button:hover {
 
 .button-with-inputbox mat-form-field {
   width: 70%; /* Adjust the width as needed */
-  margin-bottom: 0.5em;}
+  margin-bottom: 0.5em;
+}
 
 .button-with-inputbox button {
   width: auto; /* Let the button take its natural width */
   height: auto; /* Let the button take its natural height */
   padding: 0.5em 1em; /* Add padding for better clickability */
-  margin-left: 1em; /* Add some space between the field and button */}
+  margin-left: 1em; /* Add some space between the field and button */
+}
 
 .textbox-form-field {
   position: relative;
-  width: calc(100% - 2.2em);
+  width: calc(100%);
   margin: 2rem auto 0 auto;
-}
-
-.imageLoading {
-  width: 50px !important;
-  margin: 0 auto;
-  display: block;
-}
-
-mat-error {
-  position: absolute;
-  bottom: -1.5em;
-  left: 0;
-  width: 100%;
-  font-size: 12px;
-  color: red;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between;
-  width: 30%;
-  gap: 10px;
+  justify-content:center;
   margin-top: 20px;
+  margin-bottom: 20px;
+  gap: 20px;
 }
 
-button {
+.button {
   flex: 1;
-  padding: 10px;
+  margin: 0 10px; /* Adjusts space between buttons */
+  max-width: 150px; /* Adjust this value as needed */
 }
 
-.apply-changes-class,
-.discard-changes-class,
-.delete-account-class,
 .upload-cv-class,
 .view-cv-class {
   font-weight: 400;
@@ -292,6 +162,13 @@ button {
 .view-cv-class:hover {
   cursor: pointer;
   background-color: #006666;
+}
+
+.example-button-row{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px;
 }
 
 /* Responsive styles */
@@ -327,23 +204,25 @@ button {
     flex-direction: column;
     align-items: stretch;
     margin-left: 0;
+    margin-top: 20px;
+    gap: 10px;
   }
 
   .example-button-row .mat-mdc-button-base {
     width: 100%;
     margin: 0.5em 0;
   }
-
+  
   .button-container {
-    flex-direction: row;
-    margin: 20px 0;
-    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .button-container button {
-    white-space: nowrap;
+  .button {
+    margin: 10px 0; /* Adjusts space between buttons on small screens */
+    max-width: 100%; /* Full width for buttons on small screens */
   }
-
+  
   .button-with-inputbox mat-form-field {
     width: 100%;
     margin-bottom: 0.5em;
@@ -352,16 +231,4 @@ button {
   .button-with-inputbox button {
     width: 100%;
   }
-  
 }
-
-.app-notification-error {
-  background-color: #d9534f !important; 
-  color: #ffffff !important; 
-}
-
-.app-notification-success {
-  background-color:teal !important;
-  color: #ffffff !important;
-}
-
