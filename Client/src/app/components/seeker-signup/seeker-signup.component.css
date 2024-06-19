@@ -146,8 +146,8 @@
   }
 
   .step-card {
-    width: 100%;
-    margin: 20px;
+    width: 100%; /* Ensure the card takes full width */
+    padding: 20px;
   }
 
   .fixed-width {
