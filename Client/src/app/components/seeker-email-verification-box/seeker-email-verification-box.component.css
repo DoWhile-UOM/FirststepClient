@@ -24,8 +24,9 @@
   }
   
   h3 {
-    font-size: 30px;
+    font-size: 15px;
     font-weight: 550;
+    color: #008080;
     font-family: "roboto";
     align-items: center;
     padding-top: 40px;
