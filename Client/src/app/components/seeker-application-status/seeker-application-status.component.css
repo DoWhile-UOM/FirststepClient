@@ -4,6 +4,10 @@ app-advertisement-header{
 .stepper {
   margin-top: 2vw;
 }
+.stepper .mat-step-header {
+  pointer-events: none;
+}
+
 mat-dialog-actions {
   display: flex;
   flex-direction: row;

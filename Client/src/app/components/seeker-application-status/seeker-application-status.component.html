@@ -7,7 +7,7 @@
 
 <mat-divider></mat-divider>
 <mat-dialog-content>
-  <mat-stepper labelPosition="bottom" #stepper class="stepper" [linear]="true">
+  <mat-stepper labelPosition="bottom" [linear]="true" #stepper class="stepper" >
     <mat-step
       [stepControl]="firstFormGroup"
       [completed]="isCompleted('Submitted')"
@@ -30,7 +30,7 @@
     </mat-step>
     <mat-step
       [stepControl]="thirdFormGroup"
-      [completed]="isCompleted('Finalized')"
+      [completed]="isCompleted('Finalized')" 
       [editable]="false"
     >
       <form [formGroup]="thirdFormGroup">
