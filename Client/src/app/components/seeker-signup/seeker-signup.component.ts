@@ -64,18 +64,17 @@ interface VerifyOTP {
 })
 
 export class SeekerSignupComponent implements OnInit {
- 
   isEmailVerified = false;
   isOTPRequestSent = false;
   remainingTime = 0;
   reqOTPBtnText = "Request OTP";
   isFormVerified = false;
 
-  // File upload URL
-  url = './assets/images/SeekerEdit.jpg';
+  hide = true; 
+
+  url = "./assets/images/dp.png";
   selectedFile: File | null = null;
   selectedImage: File | null = null;
-
 
   seekerReg: FormGroup;
 
@@ -131,23 +130,24 @@ export class SeekerSignupComponent implements OnInit {
     this.skills = this.addSkillsComponent.skills;
   }
 
-// File selection handler for profile picture
-onselectFile(event: any) {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files[0]) {
-    this.selectedImage = input.files[0];
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      this.url = e.target.result;
-    };
-    reader.readAsDataURL(this.selectedImage);
+  // File selection handler for profile picture
+  onselectFile(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedImage = input.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.url = e.target.result;
+      };
+      reader.readAsDataURL(this.selectedImage);
+    }
   }
-}
 
-// File selection handler for CV
-onCvSelected(file: File) {
-  this.selectedFile = file;
-}
+  // File selection handler for CV
+  onCvSelected(file: File) {
+    this.selectedFile = file;
+  }
+
   // Skills change handler
   changeSkillsArray(event: any) {
     const skills = event;
@@ -167,10 +167,10 @@ onCvSelected(file: File) {
     const verificationResult = await this.auth.requestOTP(userData);
 
     if (verificationResult) {
-      this.snackbar.open("OTP Sent successfully", "")._dismissAfter(3000);
+      this.snackbar.open("OTP Sent successfully", "", { duration: 3000 });
       this.printTextAfterFiveMinutes();
     } else {
-      this.snackbar.open("OTP Request failed. Please try again.", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.snackbar.open("OTP Request failed. Please try again.", "", { panelClass: ['app-notification-error'], duration: 3000 });
     }
   }
 
@@ -187,12 +187,8 @@ onCvSelected(file: File) {
       this.isEmailVerified = true;
       this.snackbar.open("OTP verification successful", "", { duration: 2000 });
     } else {
-      this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'], duration: 3000 });
     }
-
-    this.snackbar.open("OTP was requested", "", {
-    duration: 3000,
-  });
   }
 
   // OTP timer
@@ -257,7 +253,9 @@ onCvSelected(file: File) {
     });
   }
 
-
+  togglePasswordVisibility() {
+    this.hide = !this.hide;
+  }
 
   // Display error message
   displayError(error: HttpErrorResponse) {
@@ -287,4 +285,3 @@ onCvSelected(file: File) {
     }
   }
 }
-

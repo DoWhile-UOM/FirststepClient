@@ -3,6 +3,15 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.stepper-container {
+  width: 100%;
+  max-width: 1200px;
+  /* padding: 5px; */
+  box-sizing: border-box; 
 }
 
 .content-container {
@@ -10,6 +19,8 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .left {
@@ -17,6 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 
 .seeker {
@@ -30,6 +42,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 
 .step-card {
@@ -39,7 +52,6 @@
   box-sizing: border-box;
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
   background: #fff;
-
 }
 
 .heading {
@@ -47,7 +59,7 @@
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
-  line-height: 1.5; 
+  line-height: 1.5;
 }
 
 .form-container {
@@ -67,14 +79,14 @@
   justify-content: space-between;
   width: 100%;
   gap: 10px;
-  margin-top: 20px; /* Add space between buttons and top form fields */
+  margin-top: 20px;
 }
 
 .custom-stepper-button {
   padding: 10px 20px;
-  border: 2px solid #008080; /* Add border for Back button */
-  color: #008080 !important; /* Set text color */
-  background-color: transparent; /* Transparent background */
+  border: 2px solid #008080;
+  color: #008080 !important;
+  background-color: transparent;
 }
 
 .custom-stepper1-button {
@@ -115,20 +127,21 @@
   width: calc(30% - 10px);
 }
 
-/* New class for combined width */
 .combined-width {
   width: calc(100% - 10px);
 }
 
-
-/* Media Queries */
 @media (max-width: 768px) {
   .content-container {
     flex-direction: column;
+    padding: 20px;
   }
   .seeker {
     width: 100%;
     max-width: none;
+  }
+  .step-card {
+    margin: 20px;
   }
 }
 
@@ -140,23 +153,26 @@
 }
 
 ::ng-deep .mat-horizontal-stepper-header {
-  margin-bottom: 20px; /* Adjust this value to increase the gap */
+  margin-bottom: 20px;
+  /* padding: 0 5px;  */
+  box-sizing: border-box; 
 }
 
 ::ng-deep .mat-step-label {
-  padding: 0 16px; /* Adjust this value for more horizontal padding if needed */
+  padding: 0 16px;
 }
 
 ::ng-deep .mat-step-header {
   display: flex;
-  justify-content: center; /* Center the labels horizontally */
+  justify-content: center;
 }
 
 ::ng-deep .mat-step-icon {
-  margin-right: 8px; /* Adjust this value to increase spacing between step icons and labels */
+  margin-right: 8px;
 }
 
-/* Adjust this value to control the gap between the step icons and the content container */
 .mat-stepper-horizontal, .mat-horizontal-stepper-header-container {
-  margin-bottom: 40px; /* Adjust this value to increase the gap */
+  margin-bottom: 40px;
+  /* padding: 0 5px;  */
+  box-sizing: border-box; 
 }
