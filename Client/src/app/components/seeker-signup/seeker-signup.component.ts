@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -63,7 +64,7 @@ interface VerifyOTP {
     imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar,MatGridTile,MatGridList,MatStepper,SeekerApplicationFileUploadComponent]
 })
 
-export class SeekerSignupComponent implements OnInit {
+export class SeekerSignupComponent implements OnInit, AfterViewChecked {
   isEmailVerified = false;
   isOTPRequestSent = false;
   remainingTime = 0;
@@ -92,20 +93,21 @@ export class SeekerSignupComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private snackbar: MatSnackBar,
     private auth: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef
   ) {
     this.seekerReg = this._formBuilder.group({
-      first_name: ['', ],
-      last_name: ['', ],
-      email: ['', ],
-      password: ['',],
-      phone_number: ['',],
-      university: ['', ],
-      linkedin: ['', ],
-      field_id: ['',],
+      first_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      last_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(128), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
+      phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
+      university: ['', [Validators.maxLength(100)]],
+      linkedin: ['', [Validators.pattern(/^(http(s)?:\/\/)?(www\.)?linkedin\.com\/.*$/)]],
+      field_id: ['', Validators.required],
       cVurl: [''],
-      bio: ['', ],
-      description: ['',],
+      bio: ['', [Validators.required, Validators.maxLength(500)]],
+      description: ['', [Validators.required, Validators.maxLength(2000)]],
       profile_picture: [''],
       seekerSkills: [[]],
       otp_in: ['']
@@ -128,6 +130,10 @@ export class SeekerSignupComponent implements OnInit {
 
   ngAfterViewInit() {
     this.skills = this.addSkillsComponent.skills;
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   // File selection handler for profile picture

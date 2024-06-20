@@ -2,42 +2,6 @@
   <div class="stepper-container">
     <mat-stepper [linear]="true" labelPosition="bottom" #stepper color="primary">
       <form [formGroup]="seekerReg">
-<!-- Step 3: Educational Background Information -->
-<mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(2)">
-  <div class="content-container">
-    <div class="left">
-      <img src="./assets/images/signup3.png" alt="Seeker" class="seeker" />
-    </div>
-    <mat-card class="step-card right">
-      <div class="form-container">
-        <mat-label class="heading">Can we know more about your Educational background?</mat-label>
-        <mat-form-field appearance="outline" class="fixed-width">
-          <mat-label>University</mat-label>
-          <input matInput placeholder="Enter University" formControlName="university" />
-          <mat-error *ngIf="seekerReg.get('university')?.hasError('maxlength')">University name is too long</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="fixed-width">
-          <mat-label>LinkedIn Profile</mat-label>
-          <input matInput placeholder="Enter LinkedIn Profile URL" formControlName="linkedin" />
-          <mat-error *ngIf="seekerReg.get('linkedin')?.hasError('pattern')">Invalid LinkedIn URL</mat-error>
-        </mat-form-field>
-        <mat-label class="label-import">Please upload your CV</mat-label>
-        <div class="cvupload">
-          <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload>
-        </div>
-        <div class="button-container">
-          <button mat-button matStepperPrevious class="custom-stepper-button">
-            Back
-          </button>
-          <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="isFormInvalid(2)">
-            Next
-          </button>
-        </div>
-      </div>
-    </mat-card>
-  </div>
-</mat-step>
-
         <!-- Step 1: User Registration -->
         <mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(0)">
           <div class="content-container">
@@ -122,6 +86,42 @@
             </mat-card>
           </div>
         </mat-step>
+       <!-- Step 3: Educational Background Information -->
+<mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(2)">
+  <div class="content-container">
+    <div class="left">
+      <img src="./assets/images/signup3.png" alt="Seeker" class="seeker" />
+    </div>
+    <mat-card class="step-card right">
+      <div class="form-container">
+        <mat-label class="heading">Can we know more about your Educational background?</mat-label>
+        <mat-form-field appearance="outline" class="fixed-width">
+          <mat-label>University</mat-label>
+          <input matInput placeholder="Enter University" formControlName="university" />
+          <mat-error *ngIf="seekerReg.get('university')?.hasError('maxlength')">University name is too long</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="fixed-width">
+          <mat-label>LinkedIn Profile</mat-label>
+          <input matInput placeholder="Enter LinkedIn Profile URL" formControlName="linkedin" />
+          <mat-error *ngIf="seekerReg.get('linkedin')?.hasError('pattern')">Invalid LinkedIn URL</mat-error>
+        </mat-form-field>
+        <mat-label class="label-import">Please upload your CV</mat-label>
+        <div class="cvupload">
+          <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload>
+        </div>
+        <div class="button-container">
+          <button mat-button matStepperPrevious class="custom-stepper-button">
+            Back
+          </button>
+          <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="isFormInvalid(2)">
+            Next
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</mat-step>
+
 
         <!-- Step 4: Professional Background Information -->
         <mat-step [stepControl]="seekerReg" [completed]="!isFormInvalid(3)">
