@@ -1,6 +1,6 @@
 export class Apipaths {
-    //static readonly baseUrl: string = 'https://localhost:7213/api/';
-    static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
+    static readonly baseUrl: string = 'https://localhost:7213/api/';
+    //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
@@ -42,6 +42,7 @@ export class Apipaths {
     static readonly getCompanyRegState: string = this.baseUrl + 'Company/GetRegCheckByID/';//+regurl id
     static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
+    static readonly getEligibleUnregisteredCompanies: string = this.baseUrl + 'SystemAdmin/GetEligibleUnregisteredCompanies';
     static readonly updateCompanyLogo: string = this.baseUrl + 'Company/UpdateCompanyLogo/';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
     static readonly updateUnregComapny: string = this.baseUrl + 'Company/UpdateUnregisteredCompany/';
 
@@ -90,6 +91,7 @@ export class Apipaths {
 
     // user
     static readonly UserBaseUrl: string = this.baseUrl + 'User/';
+    static readonly getLoggingsDetails: string = this.baseUrl + 'SystemAdmin/GetLoggingsDetails';
 
     // Azure Blob Service
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
