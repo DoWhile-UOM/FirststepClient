@@ -21,7 +21,10 @@
                 <ng-container matColumnDef="company_email">
                     <th mat-header-cell *matHeaderCellDef>Email</th>
                     <td mat-cell *matCellDef="let element">
-                        {{ element.company_email }}
+                        <a href="mailto:{{element.company_email}}" class="link">{{
+                            element.company_email
+                            }}</a>
+                        <!-- {{ element.company_email }} -->
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
