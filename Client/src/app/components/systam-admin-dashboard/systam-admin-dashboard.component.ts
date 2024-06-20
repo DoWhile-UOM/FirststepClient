@@ -1,6 +1,5 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { CompanyService } from '../../../services/company.service';
@@ -96,17 +95,21 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
     private userService: UserService
   ) {
     this.eligibleUnregisteredCompaniesLength = 1;
+    this.loggings.eligibleUnregisteredCompaniesCount = 0;
   }
 
   ngOnInit(): void {
-    console.log('inside onInit');
     this.fetchEligibleUnregisteredCompanies();
     this.fetchLoggings();
+
+    this.loggings.eligibleUnregisteredCompaniesCount = this.eligibleUnregisteredCompaniesLength;
   }
 
   ngAfterViewInit() {
     this.fetchEligibleUnregisteredCompanies();
     this.fetchLoggings();
+
+    this.loggings.eligibleUnregisteredCompaniesCount = this.eligibleUnregisteredCompaniesLength;
   }
 
   async fetchEligibleUnregisteredCompanies() {

@@ -134,77 +134,6 @@
 
 
     <div class="bottom-section">
-        <!-- <mat-card class="comapny-user-stat">
-            <p class="center-text title-section">Statics of Company Side Users</p>
-            <div class="mat-tab-section">
-                <mat-tab-group mat-stretch-tabs="false" class="custom-tab-group" mat-align-tabs="start"
-                    (selectedTabChange)="onTabChange($event)">
-                    <mat-tab label="CA">
-                        <div class=" cmpy-user-card">
-                            <div>
-                                <span class="value">{{loggings.activeCA+loggings.inactiveCA}}</span>
-                            </div>
-                            <div>
-                                <span class="name">Total</span>
-                            </div>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="HRM">
-                        <div class=" cmpy-user-card">
-                            <div>
-                                <span class="value">{{loggings.activeHRM+loggings.inactiveHRM}}</span>
-                            </div>
-                            <div>
-                                <span class="name">Total</span>
-                            </div>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="HRA">
-                        <div class=" cmpy-user-card">
-                            <div>
-                                <span class="value">{{loggings.activeHRA+loggings.inactiveHRA}}</span>
-                            </div>
-                            <div>
-                                <span class="name">Total</span>
-                            </div>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
-
-                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" class="custom-tab-group"
-                    (selectedTabChange)="onSubTabChange($event)">
-                    <mat-tab label="Active">
-                        <div class=" cmpy-user-card">
-                            <div>
-                                <span class="value">{{active}}</span>
-                            </div>
-                            <div>
-                                <span class="name">Active</span>
-                            </div>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="Inactive">
-                        <div class=" cmpy-user-card">
-                            <div>
-                                <span class="value">{{inactive}}</span>
-                            </div>
-                            <div>
-                                <span class="name">Inactive</span>
-                            </div>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
-                <div class="content-container">
-                    <div class="text-column">
-                        <p>{{catName}}</p>
-                    </div>
-                    <div class="progress-column">
-                        <mat-progress-bar mode="determinate" [value]="percentage"></mat-progress-bar>
-                    </div>
-                </div>
-            </div>
-        </mat-card> -->
-
         <mat-card>
             <p class="center-text title-section">Statistics of Company side Users</p>
             <mat-accordion>
@@ -353,3 +282,5 @@
         </mat-card>
     </div>
 </div>
+
+<app-spinner></app-spinner>

@@ -3,22 +3,6 @@ import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import axios from 'axios';
 
-interface Logging {
-  activeTot: number;
-  inactiveTot: number;
-  activeCA: number;
-  inactiveCA: number;
-  activeHRM: number;
-  inactiveHRM: number;
-  activeHRA: number;
-  inactiveHRA: number;
-  activeSeeker: number;
-  inactiveSeeker: number;
-  activeCmpUsers: number;
-  inactiveCmpUsers: number;
-  eligibleUnregisteredCompaniesCount: number;
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -40,13 +24,11 @@ export class UserService {
         })
         .catch((error) => {
           const errorMessage = error.message || 'Unknown error occurred';
-          console.log('No loggings found');
           this.snackBar.open(`Error occurred: ${errorMessage}`, "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
         });
       return loggings;
     } catch (error) {
-      console.log('No loggings found');
-
+      this.snackBar.open(`Error occurred: ${error}`, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
 }
