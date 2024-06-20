@@ -80,7 +80,7 @@ export class AdvertisementCardComponent{
 
     this.jobDetailsDialog.open(AdvertisementViewPageComponent, {
       data: {jobID: jobId},
-      maxWidth: '70em'
+      maxWidth: '80em'
     });
   }
 

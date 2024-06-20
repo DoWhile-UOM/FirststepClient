@@ -166,3 +166,6 @@ mat-icon {
 .link:hover{
   color: #008080;
 }
+.comment{
+  width: 100% !important;
+}

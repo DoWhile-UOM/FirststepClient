@@ -9,7 +9,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { CompanyService } from '../../../services/company.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -23,13 +22,15 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { EmployeeService } from '../../../services/employee.service';
 
 
 interface CmpAdminReg {
   email: string;
-  password_hash: string;
+  password: string;
   first_name: string;
   last_name: string;
+  company_registration_url: string;
 }
 interface unRegCA {
   email: string;
@@ -80,18 +81,19 @@ export class CompanyAdminRegistrtionFormComponent {
   reqOTPbtntxt: string = 'Request OTP';
   isConfrimedToChangeEmail: boolean = false;
   otp: string = '';
+  canOpenOtpView: boolean = false;
 
   unRegCA: unRegCA = {} as unRegCA;
   RegCA: CmpAdminReg = {} as CmpAdminReg;
 
-  constructor(private route: ActivatedRoute, private companyService: CompanyService, private spinner: NgxSpinnerService, public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private cdr: ChangeDetectorRef) { }
+  constructor(private route: ActivatedRoute, private employeeService: EmployeeService, private spinner: NgxSpinnerService, public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       if (id) {  // Check if 'id' parameter exists
         this.cmpID = id; // convert string to integer 10 is base
-        console.log('Company ID:', this.cmpID);
       }
     });
     this.unRegCA.password_hash = '';
@@ -104,24 +106,17 @@ export class CompanyAdminRegistrtionFormComponent {
   //submiting the form
 
   async onSubmit(formValue: any) {
-    // const adminRegData: CmpAdminReg = {
-    //   email: formValue.email,
-    //   password_hash: formValue.password,
-    //   first_name: formValue.firstName,
-    //   last_name: formValue.lastName,
-
-    // };
-
     this.RegCA.first_name = this.unRegCA.first_name;
     this.RegCA.last_name = this.unRegCA.last_name;
     this.RegCA.email = this.unRegCA.email;
-    this.RegCA.password_hash = this.unRegCA.password_hash;
+    this.RegCA.password = this.unRegCA.password_hash;
+    this.RegCA.company_registration_url = this.cmpID;
+    
     const IsVaild = this.formValidation();
     if (IsVaild) {
       try {
         this.spinner.show();
-        console.log('Company Admin Registration Started');
-        await this.companyService.postCompanyAdminReg(this.RegCA, this.type, this.cmpID);
+        await this.employeeService.postCompanyAdminReg(this.RegCA);
         this.spinner.hide();
       } catch (error) {
         this.spinner.hide();
@@ -146,7 +141,6 @@ export class CompanyAdminRegistrtionFormComponent {
     } else {
       this.errorMessageForFName = '';
     }
-    console.log(this.errorMessageForFName);
   }
   validateLastName() {
     if (this.unRegCA.last_name.length == 0) {
@@ -154,7 +148,6 @@ export class CompanyAdminRegistrtionFormComponent {
     } else {
       this.errorMessageForLName = '';
     }
-    console.log(this.errorMessageForLName);
   }
   validatePassword() {
     if (this.unRegCA.password_hash.length == 0) {
@@ -162,16 +155,13 @@ export class CompanyAdminRegistrtionFormComponent {
     } else {
       this.errorMessageForPassword = '';
     }
-    console.log(this.errorMessageForPassword);
   }
   validateConfirmedPassword() {
-
     if (this.unRegCA.confirmed_password.length == 0 || this.unRegCA.password_hash != this.unRegCA.confirmed_password) {
       this.errorMessageForConfirmedPassword = 'Confirmed Password does not match';
     } else {
       this.errorMessageForConfirmedPassword = '';
     }
-    console.log(this.errorMessageForConfirmedPassword);
   }
   validateEmail() {
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -190,8 +180,7 @@ export class CompanyAdminRegistrtionFormComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         this.isConfrimedToChangeEmail = true;
-        console.log('Email is confirmed to change');
-        console.log(this.isConfrimedToChangeEmail);
+        this.canOpenOtpView = true;
       }
     }
     );
@@ -218,7 +207,9 @@ export class CompanyAdminRegistrtionFormComponent {
     let verificationResult = await this.auth.verifyOTP(userData);
     if (verificationResult) {
       this.isEmailVerified = true;
+      this.canOpenOtpView = false;
       this.snackbar.open('OTP Verified successful', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+
     } else {
       this.snackbar.open('OTP Verified failed', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     }
@@ -233,11 +224,9 @@ export class CompanyAdminRegistrtionFormComponent {
       this.cdr.detectChanges();
       if (this.remainingTime <= 0) {
         clearInterval(intervalId); // Stop the timer when time is up
-        console.log("Timer off");
         this.isOTPRequestSent = false;
         this.reqOTPbtntxt = "Request OTP";
       }
-      console.log(this.remainingTime);
     }, 1000);
   }
 

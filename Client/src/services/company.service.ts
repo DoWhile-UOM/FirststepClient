@@ -42,12 +42,14 @@ interface EvaluatedCompanyDetails {
   company_registered_date: Date;
   verified_system_admin_id: number;
 }
+
 interface CmpAdminReg {
   email: string;
   password_hash: string;
   first_name: string;
   last_name: string;
 }
+
 interface EligibleUnregisteredCompany {
   company_id: number;
   company_name: string;
@@ -120,16 +122,6 @@ export class CompanyService {
     }
   }
 
-  // async updateCompanyDetails(company: Company) {
-  //   await axios
-  //     .put(Apipaths.updateCompanyDetails + company_id, company)
-  //     .then(function (response) {
-  //       console.log('Company details updated successfully');
-  //     })
-  //     .catch(function (error) {
-  //       alert('Network Error: ' + error);
-  //     });
-  // }
   async updateCompanyLogo(file: File, company_id: number) {
     const formData: FormData = new FormData();
     formData.append('file', file);
@@ -140,13 +132,6 @@ export class CompanyService {
     ).catch((error) => {
       this.snackBar.open('Error updating company logo', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     });
-    // await axios.put(Apipaths.updateCompanyLogo + company_id, { company_logo: company_logo })
-    //   .then((response) => {
-    //     this.snackBar.open('Company logo updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-    //   })
-    //   .catch((error) => {
-    //     console.log('Network Error: ' + error);
-    //   });
   }
 
   async updateCompanyDetails(company: Company, company_id: number) {
@@ -227,36 +212,6 @@ export class CompanyService {
     return cmpData;
   }
 
-  //Get company Registration state details---End
-
-  //Registration company state view Start here
-  //Registration company state view ends here
-
-
-
-  //post company admin registration
-  // async postCompanyAdminReg(adminRegData: CmpAdminReg, type:string, cmpID:string) {
-  //   try {
-  //     const response = await axios.post(Apipaths.postCompanyAdminReg, adminRegData);
-  //     console.log('Company Admin Registration Successful');
-  //   } catch (error) {
-  //     console.log('Network Error: ' + error);
-  //   }
-  // }
-
-  async postCompanyAdminReg(adminRegData: CmpAdminReg, type: string, companyId: string) {
-    try {
-      const response = await axios.post(Apipaths.postCompanyAdminReg, {
-        ...adminRegData,
-        type: type,
-        company_id: companyId
-      });
-      this.snackBar.open('Company Admin registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
-    } catch (error) {
-      this.snackBar.open('Error registering company admin', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-    }
-  }
-
   async updateUnregCompanyDetails(company: any) { // should be chnaged
 
     let Id = company.company_id;
@@ -275,6 +230,7 @@ export class CompanyService {
         console.log('Network Error: ' + error);
       });
   }
+  
   async getEligibleUnregisteredCompanies() {
     let eligibleUnregisteredCompanies: EligibleUnregisteredCompany[] = [];
 
@@ -288,6 +244,4 @@ export class CompanyService {
 
     return eligibleUnregisteredCompanies;
   }
-
 }
-

@@ -13,51 +13,59 @@
       />
       <div class="info">
         <div style="display: flex; align-items: center">
-          <label class="name"
-            >{{ applicationDetails.first_name }}
-            {{ applicationDetails.last_name }}</label
-          >
+          <label class="name">{{ applicationDetails.first_name }} {{ applicationDetails.last_name }}</label>
           <button
             mat-button
             class="View"
-            style="
-              background-color: #e8e8e8;
-              margin-left: 10px;
-              font-size: 13px;
-            "
+            style="background-color: #e8e8e8; margin-left: 10px; font-size: 13px;"
             (click)="showProfile()"
           >
             Profile
             <mat-icon class="view" style="margin-left: 5px">launch</mat-icon>
           </button>
         </div>
-
         <label class="bio">{{ applicationDetails.bio }}</label>
       </div>
 
       <mat-chip
         class="status-label"
         [ngClass]="{
-          'status-rejected':
-            applicationDetails.is_evaluated &&
-            applicationDetails.last_revision.status === 'Rejected',
-          'status-passed':
-            applicationDetails.is_evaluated &&
-            applicationDetails.last_revision.status === 'Pass',
-          'status-accepted':
-            applicationDetails.is_evaluated &&
-            applicationDetails.last_revision.status === 'Accepted',
+          'status-rejected': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Rejected',
+          'status-passed': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Pass',
+          'status-accepted': applicationDetails.is_evaluated && applicationDetails.last_revision.status === 'Accepted',
           'status-not-evaluated': !applicationDetails.is_evaluated
         }"
+        matTooltip="Evaluation status of the application"
       >
-        {{
-          applicationDetails.is_evaluated
-            ? applicationDetails.last_revision.status
-            : "Not Evaluated"
-        }}
+        <div class="chip-content" style="color: white; font-weight: bold;">
+          <mat-icon
+            *ngIf="applicationDetails.is_evaluated"
+            [ngClass]="{
+              'status-rejected-icon': applicationDetails.last_revision.status === 'Rejected',
+              'status-passed-icon': applicationDetails.last_revision.status === 'Pass',
+              'status-accepted-icon': applicationDetails.last_revision.status === 'Accepted'
+            }"
+          >
+            {{
+              applicationDetails.last_revision.status === 'Accepted'
+                ? 'check_circle_outline'
+                : applicationDetails.last_revision.status === 'Rejected'
+                ? 'cancel'
+                : applicationDetails.last_revision.status === 'Pass'
+                ? 'hourglass_empty'
+                : ''
+            }}
+          </mat-icon>
+          <span class="chip-text">
+            {{
+              applicationDetails.is_evaluated
+                ? applicationDetails.last_revision.status
+                : 'Not Evaluated'
+            }}
+          </span>
+        </div>
       </mat-chip>
     </div>
-
     <mat-divider></mat-divider>
 
     <div class="info-container">

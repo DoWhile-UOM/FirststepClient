@@ -11,8 +11,9 @@ export class Apipaths {
     static readonly deleteEmployee: string = this.baseUrl + 'Employee/DeleteEmployee/'; // + employee_id
     static readonly getAllHRMs: string = this.baseUrl + 'Employee/GetAllHRManagers/'; // + company_id
     static readonly getAllHRAs: string = this.baseUrl + 'Employee/GetAllHRAssistants/'; // + company_id
-    static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId:int?user_id='; // + user_id 
+    static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId='; // + user_id 
     static readonly updateUserDetails: string = this.baseUrl + 'User/UpdateUser';
+    static readonly postCompanyAdminReg: string = this.baseUrl + 'Employee/AddNewCompanyAdmin';// + company_id
 
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
@@ -41,10 +42,10 @@ export class Apipaths {
     static readonly getCompanyRegState: string = this.baseUrl + 'Company/GetRegCheckByID/';//+regurl id
     static readonly registerCompany: string = this.baseUrl + 'Company/AddCompany';
     static readonly updateCompanyApplicationById: string = this.baseUrl + 'Company/UpdateCompanyVerification/'; //+companyId 
-    static readonly postCompanyAdminReg: string = this.baseUrl + 'User/register';
-    static readonly updateCompanyLogo: string = this.baseUrl + 'UpdateCompanyLogo?';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
-    static readonly updateUnregComapny: string = this.baseUrl + 'Company/UpdateUnregisteredCompany/';
     static readonly getEligibleUnregisteredCompanies: string = this.baseUrl + 'SystemAdmin/GetEligibleUnregisteredCompanies';
+    static readonly updateCompanyLogo: string = this.baseUrl + 'Company/UpdateCompanyLogo/';//https://firststepdowhile.azurewebsites.net/api/Company/UpdateCompanyLogo?companyId=7
+    static readonly updateUnregComapny: string = this.baseUrl + 'Company/UpdateUnregisteredCompany/';
+
     // application
     static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
     static readonly changeAssignedHRA: string = this.baseUrl + 'Application/ChangeAssignedHRA/'; // + application_id
@@ -53,6 +54,8 @@ export class Apipaths {
     static readonly getApplicationStatus: string = this.baseUrl + 'Application/status?advertisementId='; //  '&seekerId=' + seeker_id
     static readonly getApplicationList: string = this.baseUrl + 'Application/GetApplicationList/'; // + job_number + '/status=' + status
     static readonly getSeekerApplicationDetails: string = this.baseUrl + 'Application/GetSeekerApplications/'; // + application_id
+    static readonly delegateTask:string = this.baseUrl + 'Application/DelegateTask/'; // + jobID + '/hraIds=' + hraIdsString
+
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 
@@ -72,11 +75,17 @@ export class Apipaths {
     static readonly updateProfilePicture: string = this.baseUrl + 'Seeker/UpdateProfilePicture/'; // + user_id
     static readonly deleteSeeker: string = this.baseUrl + 'Seeker/DeleteSeeker/'; // + seeker_id
 
+    //revision
+    static readonly getRevisionHistory: string = this.baseUrl + 'Revision/GetRevisionHistory/'; // + application_id
+    static readonly addRevision: string = this.baseUrl + 'Revision/CreateRevision';
+    static readonly updateRevision: string = this.baseUrl + 'Revision/UpdateRevision';
+    static readonly deleteRevision: string = this.baseUrl + 'Revision/DeleteRevision/'; // + revision_id
 
     //Authentication
     static readonly register: string = this.baseUrl + 'User/register';
-    static readonly authenticate: string = this.baseUrl + 'User/authenticate';
-
+    static readonly authenticate: string = this.baseUrl + 'User/Authenticate';
+    static readonly resetpasswordReq: string = this.baseUrl + 'User/RestPasswordRequest/';
+    static readonly resetpassword: string = this.baseUrl + 'User/RestPassword';
     static readonly requestOTP: string = this.baseUrl + 'Email/RequestOTP';
     static readonly verifyOTP: string = this.baseUrl + 'Email/VerifyEmail';
 
@@ -88,9 +97,4 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
-
-
-
-
-
 }

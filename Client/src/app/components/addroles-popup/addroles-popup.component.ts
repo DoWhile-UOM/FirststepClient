@@ -62,31 +62,16 @@ export class AddrolesPopupComponent {
   
   async onSubmit() {
     this.spinner.show();
-   if (
-      !this.employee.first_name ||
-      !this.employee.last_name ||
-      !this.employee.email ||
-      !this.employee.password
-    ) {
-        this._snackBar.open("Please fill all the Fields", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
-        this.spinner.hide();
-        return false;  
-      }
-    
-    else{
      if (this.selectedRole === 'HRA') {
         await this.employeeService.addNewHRAssistant(this.employee);
       } else {
         await this.employeeService.addNewHRManager(this.employee);
       }
-
-      this._snackBar.open('Role added successfully', '', {
-        duration: 3000,
-      });
       this.spinner.hide();
-      return true;
-     
+      this.dialogRef.close();
       }
-    }
-}
+
+  
+  }
+
 

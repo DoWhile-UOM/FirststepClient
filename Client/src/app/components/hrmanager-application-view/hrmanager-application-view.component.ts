@@ -389,11 +389,22 @@ export class RejectDialog {
   templateUrl: './comment-history-dialog.html',
   styleUrls: ['./comment-history-dialog.css'],
 })
-export class CommentHistoryDialog {
+export class CommentHistoryDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CommentHistoryDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  ngOnInit(): void {
+    this.formatDates();
+  }
+  formatDates(): void {
+    for (let i = 0; i < this.data.length; i++) {
+      var createdDate = new Date(this.data[i].created_date);
+      this.data[i].created_date = createdDate.toLocaleString('default', { month: 'short' }) + " " + createdDate.getDate() + ", " + createdDate.getFullYear();
+    }
+  }
+
 
   getRoleDisplayName(role: string): string {
     switch (role) {

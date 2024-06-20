@@ -111,8 +111,8 @@ export class SeekerProfileEditComponent implements OnInit {
   reqOTPbtntxt: string = 'Request OTP';
   noOfCols: number = 2;
   fields: any = [];
-  passwordFieldType: string = 'password';
-  passwordPlaceholder: string = '********';
+  // passwordFieldType: string = 'password';
+  // passwordPlaceholder: string = '********';
   disableViewButton: boolean = false; // Disable view button when no CV is uploaded
 
   isEmailVerified: boolean = false;
@@ -126,6 +126,7 @@ export class SeekerProfileEditComponent implements OnInit {
   selectedFile: File | null = null;
   selectedimage: File | null = null;
   cVurl: string = '';
+  readonly fallbackImageUrl = 'https://firststep.blob.core.windows.net/firststep/systemusers_94754.png?sv=2023-11-03&st=2024-06-14T22%3A57%3A27Z&se=2024-06-15T22%3A57%3A27Z&sr=b&sp=r&sig=nmtnO0WuoVLjj%2BCTpgvfNF8pfW%2Bm9Uw0uoL6c5gEcgo%3D';
   eventOccured: boolean = false;
 
   skills: string[] = [];
@@ -172,12 +173,15 @@ export class SeekerProfileEditComponent implements OnInit {
     }
     this.eventOccured = true;
   }
-
+  
   triggerFileInput() {
     const fileInput = document.getElementById('profile-upload') as HTMLInputElement;
     fileInput.click();
   }
 
+  onImageError() {
+    this.propicUrl = this.fallbackImageUrl;
+  }
   async ngOnInit() {
     this.spinner.show();
     try {
@@ -201,7 +205,7 @@ export class SeekerProfileEditComponent implements OnInit {
         cVurl: seeker.cVurl,
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
-        password: this.passwordPlaceholder,
+        password: '',
         seekerSkills: seeker.seekerSkills || [],
       });
       this.propicUrl = seeker.profile_picture;
@@ -210,7 +214,6 @@ export class SeekerProfileEditComponent implements OnInit {
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
-      console.error(error);
       this.snackBar.open('Failed to load profile details', 'Close', {
         duration: 3000,
       });
@@ -226,24 +229,7 @@ export class SeekerProfileEditComponent implements OnInit {
     }
   }
 
-  togglePasswordVisibility() {
-    this.passwordFieldType =
-      this.passwordFieldType === 'password' ? 'text' : 'password';
-  }
-
-  onPasswordFocus() {
-    // Clear the password field if it contains the placeholder
-    if (this.seekerForm.get('password')?.value === this.passwordPlaceholder) {
-      this.seekerForm.get('password')?.setValue('');
-    }
-  }
-
-  onPasswordBlur() {
-    // Restore the password placeholder if the field is empty
-    if (!this.seekerForm.get('password')?.value) {
-      this.seekerForm.get('password')?.setValue(this.passwordPlaceholder);
-    }
-  }
+  
 
   async onSubmit() {
     if (this.seekerForm.invalid) {
@@ -266,7 +252,8 @@ export class SeekerProfileEditComponent implements OnInit {
     this.spinner.show();
     try {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
-      formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
+      formValue.seekerSkills = this.removeDuplicates(this.skills);
+      //formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
 
       const formData = new FormData();
       formData.append('email', formValue.email);
@@ -286,14 +273,16 @@ export class SeekerProfileEditComponent implements OnInit {
       formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
     }
 
+    if (formValue.password) {
+      formData.append('password', formValue.password);
+    }
+
       if (this.selectedFile) {
         formData.append('cvFile', this.selectedFile);
       }
 
       if (this.selectedimage) {
         formData.append('profilePictureFile', this.selectedimage);
-      } else {
-        formData.append('profile_picture', this.propicUrl); // Ensure the current profile picture URL is sent
       }
   
   
@@ -302,7 +291,6 @@ export class SeekerProfileEditComponent implements OnInit {
         duration: 2000,
       });
     } catch (error) {
-      console.error('Error updating profile: ', error);
       this.snackBar.open('Failed to update profile', 'Close', {
         duration: 3000,
       });
@@ -353,20 +341,29 @@ export class SeekerProfileEditComponent implements OnInit {
   }
 
   async discardChanges() {
-    // Discard changes and reload the original profile data
     this.spinner.show();
     try {
-      const seeker = await this.seekerService.getSeekerEditProfile(
-        this.user_id
-      );
+      const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
       this.seekerForm.patchValue({
-        ...seeker,
-        password: this.passwordPlaceholder,
+        first_name: seeker.first_name,
+        last_name: seeker.last_name,
+        email: seeker.email,
+        phone_number: seeker.phone_number,
+        bio: seeker.bio,
+        description: seeker.description,
+        university: seeker.university,
+        cVurl: seeker.cVurl,
+        linkedin: seeker.linkedin,
+        field_id: seeker.field_id,
+        password: '', // Reset the password field
         seekerSkills: seeker.seekerSkills || [],
       });
+      this.propicUrl = seeker.profile_picture;
+      this.cVurl = seeker.cVurl;
+      this.skills = this.removeDuplicates(seeker.seekerSkills || []);
+      this.emailcaptured = seeker.email;
       this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
     } catch (error) {
-      console.error(error);
       this.snackBar.open('Failed to discard changes', 'Close', {
         duration: 3000,
       });
@@ -374,6 +371,7 @@ export class SeekerProfileEditComponent implements OnInit {
       this.spinner.hide();
     }
   }
+  
 
   async deleteAccount() {
     const dialogRef = this.dialog.open(ConfirmDeleteProfilePopUp);
@@ -386,7 +384,6 @@ export class SeekerProfileEditComponent implements OnInit {
             duration: 2000,
           });
         } catch (error) {
-          console.error('Error deleting profile: ', error);
           this.snackBar.open('Failed to delete profile', 'Close', {
             duration: 3000,
           });
@@ -673,7 +670,6 @@ export class UploadCV {
         this.uploadSuccess = true;
         this.fileSelected.emit(file);
       } catch (error) {
-        console.error('Error uploading file: ', error);
       } finally {
         this.uploadInProgress = false;
       }

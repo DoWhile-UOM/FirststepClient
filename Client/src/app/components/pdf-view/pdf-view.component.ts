@@ -16,6 +16,7 @@ export class PdfViewComponent implements OnInit{
 
   public document: any;
   public resource: string = "https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib";
+  public service = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
