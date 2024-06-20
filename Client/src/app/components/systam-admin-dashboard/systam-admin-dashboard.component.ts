@@ -110,6 +110,7 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
   }
 
   async fetchEligibleUnregisteredCompanies() {
+    this.spinner.show();
     console.log('inside fetchEligibleUnregisteredCompanies');
     this.isEligibleUnregCmpaniesLoading = true;
     try {
@@ -128,6 +129,7 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
       console.error(error);
     }
     this.isEligibleUnregCmpaniesLoading = false;
+    this.spinner.hide();
   }
   async fetchLoggings() {
     try {

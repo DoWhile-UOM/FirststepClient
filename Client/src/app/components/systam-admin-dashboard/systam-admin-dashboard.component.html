@@ -131,7 +131,7 @@
 
 
     <div class="bottom-section">
-        <mat-card class="comapny-user-stat">
+        <!-- <mat-card class="comapny-user-stat">
             <p class="center-text title-section">Statics of Company Side Users</p>
             <div class="mat-tab-section">
                 <mat-tab-group mat-stretch-tabs="false" class="custom-tab-group" mat-align-tabs="start"
@@ -200,36 +200,153 @@
                     </div>
                 </div>
             </div>
+        </mat-card> -->
+
+        <mat-card>
+            <p class="center-text title-section">Statistics of Company side Users</p>
+            <mat-accordion>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header class="panel-header">
+                        <mat-panel-title> Company Admin </mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                            <div class="panel-description">
+                                <div>
+                                    <span class="value">{{loggings.inactiveCA+loggings.activeCA}}</span>
+                                </div>
+                                <div>
+                                    <span class="name">Total</span>
+                                </div>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="hidden-panel">
+                        <div class="panel-description left-panel">
+                            <div>
+                                <span class="value">{{loggings.activeCA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Active</span>
+                            </div>
+                        </div>
+
+                        <div class="panel-description right-panel">
+                            <div>
+                                <span class="value">{{loggings.inactiveCA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header class="panel-header">
+                        <mat-panel-title>HR Manager</mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                            <div class="panel-description">
+                                <div>
+                                    <span class="value">{{loggings.inactiveHRM+loggings.activeHRM}}</span>
+                                </div>
+                                <div>
+                                    <span class="name">Total</span>
+                                </div>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="hidden-panel">
+                        <div class="panel-description left-panel">
+                            <div>
+                                <span class="value">{{loggings.activeHRM}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Active</span>
+                            </div>
+                        </div>
+
+                        <div class="panel-description right-panel">
+                            <div>
+                                <span class="value">{{loggings.inactiveHRM}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header class="panel-header">
+                        <mat-panel-title>HR Assistant</mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                            <div class="panel-description">
+                                <div>
+                                    <span class="value">{{loggings.inactiveHRA+loggings.activeHRA}}</span>
+                                </div>
+                                <div>
+                                    <span class="name">Total</span>
+                                </div>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="hidden-panel">
+                        <div class="panel-description left-panel">
+                            <div>
+                                <span class="value">{{loggings.activeHRA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Active</span>
+                            </div>
+                        </div>
+
+                        <div class="panel-description right-panel">
+                            <div>
+                                <span class="value">{{loggings.inactiveHRA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+
+            </mat-accordion>
         </mat-card>
+
+
         <mat-card class="bar-chart-cmpy">
             <p class="center-text title-section">Percentages of Active Company side Users</p>
-            <div class="content-container">
-                <div class="text-column">
-                    <p>Company Admin</p>
+            <div class="percentages-of-cmy-users">
+                <div class="content-container">
+                    <div class="text-column">
+                        <p>Company Admin</p>
+                    </div>
+                    <div class="progress-column">
+                        <mat-progress-bar mode="determinate" [value]="percentageActiveCA">active</mat-progress-bar>
+                    </div>
                 </div>
-                <div class="progress-column">
-                    <mat-progress-bar mode="determinate" [value]="percentageActiveCA">active</mat-progress-bar>
+                <div class="content-container middile">
+                    <div class="text-column">
+                        <p>HR Manager</p>
+                    </div>
+                    <div class="progress-column">
+                        <mat-progress-bar mode="determinate" [value]="percentageActiveHRM">active</mat-progress-bar>
+                    </div>
                 </div>
-            </div>
-            <div class="content-container middile">
-                <div class="text-column">
-                    <p>HR Manager</p>
-                </div>
-                <div class="progress-column">
-                    <mat-progress-bar mode="determinate" [value]="percentageActiveHRM">active</mat-progress-bar>
-                </div>
-            </div>
-            <div class="content-container">
-                <div class="text-column">
-                    <p>HR Assistant</p>
-                </div>
-                <div class="progress-column">
-                    <mat-progress-bar mode="determinate" [value]="percentageActiveHRA">active</mat-progress-bar>
+                <div class="content-container">
+                    <div class="text-column">
+                        <p>HR Assistant</p>
+                    </div>
+                    <div class="progress-column">
+                        <mat-progress-bar mode="determinate" [value]="percentageActiveHRA">active</mat-progress-bar>
+                    </div>
                 </div>
             </div>
         </mat-card>
     </div>
-
-
-
 </div>
