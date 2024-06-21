@@ -121,7 +121,8 @@ export class SeekerProfileEditComponent implements OnInit {
 
   emailReadOnly: boolean = true;
 
-  propicUrl = '';
+  readonly defaultImageUrl = './assets/images/dp.png';
+  propicUrl = this.defaultImageUrl;
   propicBlobName = '';
   selectedFile: File | null = null;
   selectedimage: File | null = null;
@@ -182,6 +183,7 @@ export class SeekerProfileEditComponent implements OnInit {
   onImageError() {
     this.propicUrl = this.fallbackImageUrl;
   }
+
   async ngOnInit() {
     this.spinner.show();
     try {
@@ -208,13 +210,14 @@ export class SeekerProfileEditComponent implements OnInit {
         password: '',
         seekerSkills: seeker.seekerSkills || [],
       });
-      this.propicUrl = seeker.profile_picture;
+      this.propicUrl = seeker.profile_picture || this.defaultImageUrl; // Use default image if none is provided
       this.cVurl = seeker.cVurl; // Save the CV URL
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
-      this.snackBar.open('Failed to load profile details', 'Close', {
+      this.snackBar.open('Failed to load profile details', '', {
+        panelClass: ['app-notification-error'],
         duration: 3000,
       });
     } finally {
@@ -229,8 +232,6 @@ export class SeekerProfileEditComponent implements OnInit {
     }
   }
 
-  
-
   async onSubmit() {
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
@@ -243,7 +244,8 @@ export class SeekerProfileEditComponent implements OnInit {
   async updateProfile() {
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
-      this.snackBar.open('Please fill in all required fields', 'Close', {
+      this.snackBar.open('Please fill in all required fields', '', {
+        panelClass: ['app-notification-error'],
         duration: 3000,
       });
       return;
@@ -253,7 +255,6 @@ export class SeekerProfileEditComponent implements OnInit {
     try {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
       formValue.seekerSkills = this.removeDuplicates(this.skills);
-      //formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
 
       const formData = new FormData();
       formData.append('email', formValue.email);
@@ -268,14 +269,14 @@ export class SeekerProfileEditComponent implements OnInit {
       formData.append('linkedin', formValue.linkedin || '');
       formData.append('field_id', formValue.field_id.toString());
       
-       // Append each skill individually
-    if (formValue.seekerSkills) {
-      formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
-    }
+      // Append each skill individually
+      if (formValue.seekerSkills) {
+        formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
+      }
 
-    if (formValue.password) {
-      formData.append('password', formValue.password);
-    }
+      if (formValue.password) {
+        formData.append('password', formValue.password);
+      }
 
       if (this.selectedFile) {
         formData.append('cvFile', this.selectedFile);
@@ -284,14 +285,16 @@ export class SeekerProfileEditComponent implements OnInit {
       if (this.selectedimage) {
         formData.append('profilePictureFile', this.selectedimage);
       }
-  
-  
+
       await this.seekerService.editSeeker(formData, this.user_id);
-      this.snackBar.open('Profile updated successfully', 'Close', {
+      this.snackBar.open('Profile updated successfully', '', {
+        panelClass: ['app-notification-normal'],
         duration: 2000,
       });
     } catch (error) {
-      this.snackBar.open('Failed to update profile', 'Close', {
+      console.error('Error updating profile: ', error);
+      this.snackBar.open('Failed to update profile', '', {
+        panelClass: ['app-notification-error'],
         duration: 3000,
       });
     } finally {
@@ -312,8 +315,9 @@ export class SeekerProfileEditComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
-      width: '450px',
-      height: '100px',
+      width: '100%',
+      maxWidth: '400px',
+      height: 'auto',
       data: { email: this.seekerForm.get('email')?.value },
     });
 
@@ -323,7 +327,8 @@ export class SeekerProfileEditComponent implements OnInit {
         this.seekerForm.get('email')?.setValue(result.emailAddress);
         this.emailcaptured = result.emailAddress;
         this.emailReadOnly = true; // Freeze email editing after updating
-        this.snackBar.open('Email verified successfully', 'Close', {
+        this.snackBar.open('Email verified successfully', '', {
+          panelClass: ['app-notification-normal'],
           duration: 2000,
         });
       } else {
@@ -362,9 +367,14 @@ export class SeekerProfileEditComponent implements OnInit {
       this.cVurl = seeker.cVurl;
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
-      this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
+      this.snackBar.open('Changes discarded', '', {
+        panelClass: ['app-notification-normal'],
+        duration: 2000,
+      });
     } catch (error) {
-      this.snackBar.open('Failed to discard changes', 'Close', {
+      console.error('Failed to discard changes', error);
+      this.snackBar.open('Failed to discard changes', '', {
+        panelClass: ['app-notification-error'],
         duration: 3000,
       });
     } finally {
@@ -372,7 +382,6 @@ export class SeekerProfileEditComponent implements OnInit {
     }
   }
   
-
   async deleteAccount() {
     const dialogRef = this.dialog.open(ConfirmDeleteProfilePopUp);
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -380,11 +389,14 @@ export class SeekerProfileEditComponent implements OnInit {
         this.spinner.show();
         try {
           await this.seekerService.deleteSeeker(this.user_id);
-          this.snackBar.open('Profile deleted successfully', 'Close', {
+          this.snackBar.open('Profile deleted successfully', '', {
+            panelClass: ['app-notification-normal'],
             duration: 2000,
           });
         } catch (error) {
-          this.snackBar.open('Failed to delete profile', 'Close', {
+          console.error('Error deleting profile: ', error);
+          this.snackBar.open('Failed to delete profile', '', {
+            panelClass: ['app-notification-error'],
             duration: 3000,
           });
         } finally {
@@ -413,11 +425,10 @@ export class SeekerProfileEditComponent implements OnInit {
     let uniqueArr = Array.from(new Set(arr));
 
     if (uniqueArr.length != arr.length) {
-      this.snackBar
-        .open('Removed Duplicate Keywords and Skills', '', {
-          panelClass: ['app-notification-warning'],
-        })
-        ._dismissAfter(3000);
+      this.snackBar.open('Removed Duplicate Keywords and Skills', '', {
+        panelClass: ['app-notification-warning'],
+        duration: 3000,
+      });
     }
 
     return uniqueArr;
@@ -432,7 +443,6 @@ export class SeekerProfileEditComponent implements OnInit {
   
     return this.removeDuplicates(currentSkills);
   }
-
   
   phoneNumberErrorMessage() {
     if (this.seekerForm.get('phone_number')?.hasError('required')) {
@@ -492,13 +502,6 @@ export class SeekerProfileEditComponent implements OnInit {
     return '';
   }
 
-  // passwordErrorMessage() {
-  //   if (this.seekerForm.get('password')?.hasError('required')) {
-  //     return 'Password is required';
-  //   }
-  //   return '';
-  // }
-
   getErrorMessage(formControlName: string): string {
     //To get error message for a given form control
     const control = this.seekerForm.get(formControlName);
@@ -533,7 +536,8 @@ export class SeekerProfileEditComponent implements OnInit {
         data: { documentUrl: this.cVurl },
       });
     } else {
-      this.snackBar.open('No CV available to view', 'Close', {
+      this.snackBar.open('No CV available to view', '', {
+        panelClass: ['app-notification-warning'],
         duration: 3000,
       });
     }
@@ -553,14 +557,14 @@ export class SeekerProfileEditComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
       if (this.selectedFile) {
-        this.snackBar.open('File uploaded successfully', 'Close', {
+        this.snackBar.open('File uploaded successfully', '', {
+          panelClass: ['app-notification-normal'],
           duration: 2000,
         });
       }
     });
   }
 }
-
 // cannot-submit-without-all-inputs-are-valid-pop-up
 @Component({
   selector: 'cannot-submit-without-all-inputs-are-valid-pop-up',
@@ -643,7 +647,6 @@ export class ConfirmDeleteProfilePopUp {
 @Component({
   selector: 'app-upload-cv',
   templateUrl: 'upload-cv.html',
-  styleUrls: ['upload-cv.css'],
   standalone: true,
   imports: [
     MatIconModule,
