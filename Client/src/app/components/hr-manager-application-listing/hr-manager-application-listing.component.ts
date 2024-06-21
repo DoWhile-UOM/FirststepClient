@@ -246,7 +246,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   async assign(application_Id: number, hra_id: number){
     this.spinner.show();
-    
+
     await this.applicationService.changeAssignedHRA(application_Id, hra_id);
 
     this.applicationList = this.applicationList.map((application) => {

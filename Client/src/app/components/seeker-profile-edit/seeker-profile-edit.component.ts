@@ -216,7 +216,6 @@ export class SeekerProfileEditComponent implements OnInit {
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
     } catch (error) {
-      console.error(error);
       this.snackBar.open('Failed to load profile details', '', {
         panelClass: ['app-notification-error'],
         duration: 3000,
@@ -674,7 +673,6 @@ export class UploadCV {
         this.uploadSuccess = true;
         this.fileSelected.emit(file);
       } catch (error) {
-        console.error('Error uploading file: ', error);
       } finally {
         this.uploadInProgress = false;
       }
