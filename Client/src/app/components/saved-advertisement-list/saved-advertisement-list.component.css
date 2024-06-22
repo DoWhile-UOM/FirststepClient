@@ -19,3 +19,20 @@
     margin: 0 auto;
     margin-top: 1em;
 }
+
+@media screen and (max-width: 768px) {
+    .title{
+        width: 95%;
+        margin-bottom: 0.5em;
+        padding-top: 2.5em;
+    }
+
+    .title p{
+        font-size: 22px;
+        padding-left: 0.5em;
+    }
+
+    .container{
+        margin-top: 0.5em;
+    }
+}

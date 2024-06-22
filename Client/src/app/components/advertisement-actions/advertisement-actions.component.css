@@ -33,9 +33,18 @@
         margin-top: 0em;
         margin-right: 0em;
         margin-bottom: 0em;
+        width: fit-content;
     }
 
     .save-button, .apply-button{
         font-size: small;
+    }
+
+    .status-chip-accepted, .status-chip-rejected, .status-chip-pending{
+        margin-right: 0.7em;
+    }
+
+    .status-button{
+        width: 8.8em;
     }
 }
