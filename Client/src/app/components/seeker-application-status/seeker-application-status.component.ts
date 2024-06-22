@@ -59,6 +59,7 @@ export class SeekerApplicationStatusComponent implements OnInit{
     thirdCtrl: ['', Validators.required],
   });
 
+
   constructor(
     public dialogRef: MatDialogRef<SeekerApplicationStatusComponent>,
     public dialog: MatDialog,
@@ -82,7 +83,7 @@ async ngOnInit() {
  this.getApplicationStatus();
 }
 
-//get application by advertisment id and seeker id 
+
 getApplicationStatus(): void{
   this.applicationService.getApplicationStatus(this.applicationData.advertisement_id, this.applicationData.seeker_id).then(
     (data: Application) => {
@@ -106,7 +107,7 @@ openpdf() {
 }
   
 
-//Only the steps up to and including the current status are marked as completed, except if the current status is 'Rejected'
+//Only the steps up to  current status are marked as completed, except if the current status is 'Rejected'
 isCompleted(stepName: string): boolean {
   const statusOrder = ['Submitted', 'Screening', 'Finalized', 'Rejected'];
   const currentStatusIndex = statusOrder.indexOf(this.applicationData.status);

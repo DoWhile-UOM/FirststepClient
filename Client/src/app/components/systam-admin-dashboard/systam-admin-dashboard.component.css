@@ -1,0 +1,201 @@
+.page-title {
+    margin-top: 4em;
+    margin-left: 4em;
+    margin-right: 4em;
+  }
+  
+  .title{
+    color: #008080;
+    font-family: Lato;
+    font-size: 30px;
+  }
+  
+  .pagetitle-content {
+    width: 97.5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .title-section{
+    color: #008080;
+    font-family: Lato;
+    font-size: 25px;
+  }
+  .emptymsg {
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  th.mat-header-cell .nu-header {
+    text-align: center !important;
+  }
+  .adTable,
+.emptymsg {
+  width: 95%;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+.eligibleUnregisteresCompanies{
+  width: 75%;
+  margin: 20px;
+}
+.side-note{
+  width: 25%;
+  margin: 20px;
+}
+.card{
+  display: flex !important;
+  flex-direction: column; /* Ensures the content is aligned vertically */
+  align-items: flex-start !important;
+  justify-content: flex-start!important; /* Ensures the content is aligned horizontally */
+}
+.card mat-grid-tile {
+  display: flex !important;
+  
+  align-items: flex-start !important;
+}
+
+.panel-description {
+  display: flex;
+  flex-direction: column; /* Makes the divs stack vertically */
+  align-items: center; /* Centers the content horizontally */
+  text-align: center; /* Ensures text within each div is centered */
+}
+.panel-description .name {
+  font-size: 1em; /* Base font size for 'name' */
+}
+
+.panel-description .value {
+  font-size: 2em; /* Makes 'value' font size three times larger than 'name' */
+}
+
+.comapny-user-stat .name{
+  font-size: 1em;
+  color: #008080;
+}
+.comapny-user-stat .value{
+  font-size: 1.5em; 
+  color: #008080;
+}
+.panel-header{
+  height: 100px;
+}
+.panel-description div{
+  height: 100%;
+}
+.panel-description{
+  height: 100%;
+}
+.hidden-panel{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.left-panel{
+  margin-right: 50px;
+  color: #008080;
+}
+.right-panel{
+  margin-left: 10px;
+  margin-right: 50px;
+  color: #008080;
+}
+.total-panel{
+  color: #008080;
+  font-weight: bold;
+}
+/* app.component.css */
+.spinner-container {
+  display: flex;
+  flex-direction: row; /* Align items horizontally */
+  align-items: center; /* Center-align items vertically */
+  justify-content: center; /* Center-align items horizontally */
+}
+
+.spinner-text {
+  margin-left: 10px; /* Add some space between the spinner and the text */
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.cmpy-user-card{
+  display: flex;
+  justify-content: flex-start;
+}
+.top-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Adjust as needed */
+}
+
+.top-section > mat-card {
+  flex: 1; /* Adjust as needed, e.g., flex: 1 1 200px; for minimum width */
+  margin: 10px; /* Optional: Adds some space between the cards */
+}
+.bottom-section{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.bottom-section > mat-card {
+  flex: 1;
+  margin: 10px;
+}
+.comapny-user-stat{
+  width: 10%  !important; 
+  display: flex;
+  justify-content: flex-start;
+}
+.bar-chart-cmpy{
+  width: 90% !important;
+  padding: 10px;
+  margin: 20px;
+}
+.content-container {
+  display: flex;
+  flex-direction: row;
+}
+.mat-tab-group .mat-tab-labels {
+  min-height: 60px; /* Adjust the height as needed */
+}
+
+/* Ensure tabs are left-aligned - this is more of a reinforcement, as they should already align left with mat-align-tabs="start" */
+.mat-tab-group .mat-tab-labels .mat-tab-label {
+  justify-content: flex-start; /* Align text to the start (left) */
+}
+
+.text-column {
+  flex:1;/* Adjust as needed */
+}
+.custom-tab-group {
+  max-width: 300px; /* Adjust this value as needed */
+  margin: auto; /* Centers the tab group horizontally */
+}
+.progress-column {
+  flex: 1; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+
+}
+
+.middile{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.comapny-user-stat{
+  margin: 20px;
+}
+.percentages-of-cmy-users {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%; /* Adjust this based on your layout needs */
+}
+.link{
+  text-decoration: none;
+  color: #000;
+}
+.link:hover{
+  color: #008080;
+}
