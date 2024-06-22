@@ -13,12 +13,15 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+
 interface EligibleUnregisteredCompany {
   company_id: number;
   company_name: string;
   company_email: string;
   company_logo: string;
 }
+
 interface Logging {
   activeTot: number;
   inactiveTot: number;
@@ -47,7 +50,8 @@ interface Logging {
     MatProgressBarModule,
     MatExpansionModule,
     MatTabsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CommonModule
   ],
   templateUrl: './systam-admin-dashboard.component.html',
   styleUrls: ['./systam-admin-dashboard.component.css'],
