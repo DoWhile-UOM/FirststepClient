@@ -172,6 +172,20 @@ footer .sponsor-logo img {
     margin-top: 1em;
 }
 
+a{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    display: block;
+    padding: 0.3em 0.6em;
+    border-radius: 0.35em;
+}
+
+a:hover{
+    color: #008080;
+    background-color: #F9F9F9;
+  }
+
 @media screen and (max-width: 768px) {
     header {
         flex-direction: row;

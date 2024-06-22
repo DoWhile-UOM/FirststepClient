@@ -4,8 +4,8 @@
     <span>FirstStep</span>
   </div>
   <nav>
-    <a href="#" *ngIf="screenWidth >= 768" class="signUp">Register your company</a>
-    <a href="#" *ngIf="screenWidth >= 768" class="signUp">Login</a>
+    <a routerLink="/CompanyReg" *ngIf="screenWidth >= 768" class="signUp" routerLinkActive="active">Register Your Company</a>
+    <a routerLink="/login" *ngIf="screenWidth >= 768" class="signUp" routerLinkActive="active">Login</a>
 
     <button *ngIf="screenWidth < 768" mat-icon-button [matMenuTriggerFor]="menu" class="medium-icon-button">
       <mat-icon>menu</mat-icon>
@@ -13,7 +13,7 @@
 
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="comReg()">
-        <span>Register your company</span>
+        <span>Register Your Company</span>
       </button>
       <button mat-menu-item (click)="login()">
         <span>Login</span>

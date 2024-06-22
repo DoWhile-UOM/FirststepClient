@@ -27,3 +27,15 @@
     margin-top: 0.25em;
     background-color: rgb(255, 194, 82) !important;
 }
+
+@media screen and (max-width: 768px) {
+    .job-actions{
+        margin-top: 0em;
+        margin-right: 0em;
+        margin-bottom: 0em;
+    }
+
+    .save-button, .apply-button{
+        font-size: small;
+    }
+}
