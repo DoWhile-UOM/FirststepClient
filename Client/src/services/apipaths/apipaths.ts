@@ -54,6 +54,7 @@ export class Apipaths {
     static readonly getApplicationStatus: string = this.baseUrl + 'Application/status?advertisementId='; //  '&seekerId=' + seeker_id
     static readonly getApplicationList: string = this.baseUrl + 'Application/GetApplicationList/'; // + job_number + '/status=' + status
     static readonly getSeekerApplicationDetails: string = this.baseUrl + 'Application/GetSeekerApplications/'; // + application_id
+    static readonly getShortlistedApplications: string = this.baseUrl + 'Application/GetSelectedApplicationsDetails/'; // + advertisment_id
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
 

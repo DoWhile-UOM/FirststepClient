@@ -142,4 +142,18 @@ export class ApplicationService {
 
     return applicationDetails;
   }
+
+  async getShortlistedApplications(advertisement_id: string) {
+    let shortlistedApplications: any = {};
+    await axios
+      .get(Apipaths.getShortlistedApplications + advertisement_id)
+      .then((response) => {
+        shortlistedApplications = response.data;
+      })
+      .catch((error) => {
+        console.error('error fetching shortlist applicants:', error)
+      });
+
+    return shortlistedApplications;
+  }
 }

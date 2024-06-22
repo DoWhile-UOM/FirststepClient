@@ -1,4 +1,4 @@
-import { Component, ViewChild, computed, signal } from '@angular/core';
+import { Component, OnInit, ViewChild, computed, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from "../spinner/spinner.component";
 import { InterviewShedulingBackActionComponent } from "../interview-sheduling-back-action/interview-sheduling-back-action.component";
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ApplicationService } from '../../../services/application.service';
 
 export interface CandidateData {
-  id: number;
   name: string;
   lastRevisionBy: string;
   interview: boolean;
@@ -35,19 +35,11 @@ export interface Task {
     MatCheckboxModule
   ]
 })
-export class InterviewShedulingShortListComponent {
+export class InterviewShedulingShortListComponent implements OnInit{
   displayedColumns: string[] = ['position', 'name', 'lastRevisionBy', 'interview', 'application'];
-  candidateData: CandidateData[] = [
-    { id: 1, name: 'John Doe', lastRevisionBy: 'Jane Doe', interview: false },
-    { id: 2, name: 'Jane Doe', lastRevisionBy: 'John Doe', interview: false },
-    { id: 3, name: 'John Smith', lastRevisionBy: 'Jane Smith', interview: false },
-    { id: 4, name: 'Jane Smith', lastRevisionBy: 'John Smith', interview: false },
-    { id: 5, name: 'John Doe', lastRevisionBy: 'Jane Doe', interview: false },
-    { id: 6, name: 'Jane Doe', lastRevisionBy: 'John Doe', interview: false },
-    { id: 7, name: 'John Smith', lastRevisionBy: 'Jane Smith', interview: false },
-    { id: 8, name: 'Jane Smith', lastRevisionBy: 'John Smith', interview: false },
-    { id: 9, name: 'John Doe', lastRevisionBy: 'Jane Doe', interview: false },
-  ];
+  candidateData: CandidateData[] = [];
+  advertismnet_id: string = "1057"; // sample advertismnet_id
+  
 
   readonly task = signal<Task>({
     name: 'Select All',
@@ -61,12 +53,35 @@ export class InterviewShedulingShortListComponent {
   @ViewChild(MatTable)
   table!: MatTable<CandidateData>;
 
-  constructor() { }
+  constructor(
+    private applicationService: ApplicationService
+  ) { }
 
-  getShortlistedCandidates() {
-    // code to get the shortlisted candidates
+  ngOnInit() {
+    try{
+      this.getShortlistedCandidates();
+    }
+    catch{
+      console.log("Error in fetching the shortlisted candidates");
+    }
+   
   }
 
+  async getShortlistedCandidates() {
+    let dataSet: any[] = [];
+    await this.applicationService.getShortlistedApplications(this.advertismnet_id).then((response) => {
+      dataSet = response.data;
+    });
+      this.candidateData = dataSet.map((data, index) =>({
+        position: index + 1,
+        name: data.name,
+        lastRevisionBy: data.lastRevisionBy,
+        interview: false,
+        application: "",
+      }));
+      this.table.renderRows();
+    }
+   
   sheduleInterview() {
     // code to schedule the interview
   }
