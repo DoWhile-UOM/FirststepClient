@@ -10,7 +10,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
-
+import { InterviewService } from '../../../services/interview.service';
 interface TimeSlot {
   date: string;
   day: string;
@@ -77,9 +77,13 @@ export class AvailableTimeSlotComponent implements OnInit {
     ]
   };
 
-  constructor(private snackBar: MatSnackBar, public datePipe: DatePipe) {}
+  constructor(private snackBar: MatSnackBar, public datePipe: DatePipe,private interview:InterviewService) {}
 
   ngOnInit(): void {}
+
+  allocateTime(){
+    this.interview.start();
+  }
 
   addTimeSlot(date: string, day: string, time: string, duration: string) {
     if (!this.timeSlots[date]) {

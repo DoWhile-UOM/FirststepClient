@@ -12,74 +12,93 @@ interface Record {
   providedIn: 'root'
 })
 export class InterviewService {
-  private readonly storageKey = 'TimeSlot';
-  private readonly idKey = 'lastId';
+  private recordsKey = 'records';
+  private lastIdKey = 'lastId';
 
-  constructor() { 
-    this.addSlot('2021-07-01', 10, 12);
-    this.addSlot('2022-07-01', 12, 13);
+  constructor() {
+  }
+
+  start() {
+    console.log('Interview Service Started');
+    this.addRecord({
+      date: '2024/06/20',
+      start: 800,
+      end: 1200,
+    });
+    this.addRecord({
+      date: '2024/06/21',
+      start: 1000,
+      end: 1200,
+    });
+    console.log('divide Service Started');
+    this.divideAndPost(1, 30);
+
+
   }
 
   //Local Storage Handling Functions
   private getLastId(): number {
-    const lastId = localStorage.getItem(this.idKey);
+    const lastId = localStorage.getItem(this.lastIdKey);
     return lastId ? JSON.parse(lastId) : 0;
   }
 
   private setLastId(id: number): void {
-    localStorage.setItem(this.idKey, JSON.stringify(id));
+    localStorage.setItem(this.lastIdKey, JSON.stringify(id));
   }
 
-  getRecords(): Record[] {
-    const records = localStorage.getItem(this.storageKey);
+  private getRecords(): Record[] {
+    const records = localStorage.getItem(this.recordsKey);
     return records ? JSON.parse(records) : [];
   }
 
-  addRecord(newRecord: Omit<Record, 'id'>): void {
+  private addRecord(newRecord: Omit<Record, 'id'>): void {
     const records = this.getRecords();
     const lastId = this.getLastId();
     const recordWithId = { ...newRecord, id: lastId + 1 };
     records.push(recordWithId);
-    localStorage.setItem(this.storageKey, JSON.stringify(records));
+    localStorage.setItem(this.recordsKey, JSON.stringify(records));
     this.setLastId(lastId + 1);
   }
 
-  removeRecord(id: number): void {
-    let records = this.getRecords();
-    records = records.filter(record => record.id !== id);
-    localStorage.setItem(this.storageKey, JSON.stringify(records));
+  private divideTimeslot(record: Record, interval: number): { start: string; end: string }[] {
+    const slots = [];
+    const start = parseInt(record.start, 10);
+    const end = parseInt(record.end, 10);
+    for (let current = start; current < end; current += interval) {
+      const next = Math.min(current + interval, end);
+      slots.push({
+        start: this.formatTime(current),
+        end: this.formatTime(next),
+      });
+    }
+    return slots;
   }
 
-  clearRecords(): void {
-    localStorage.removeItem(this.storageKey);
-    localStorage.removeItem(this.idKey);
+  private formatTime(minutes: number): string {
+    const hours = Math.floor(minutes / 100);
+    const mins = minutes % 100;
+    return `${hours.toString().padStart(2, '0')}${mins.toString().padStart(2, '0')}`;
   }
 
-  //Interview Service Functions
-
-  addSlot(inDate: string, Istart: number, Iend: number): void {
-    const newRecord = {
-      date: inDate,
-      start: Istart,
-      end: Iend,
-    };
-    this.addRecord(newRecord);
-    console.log('Record added:', newRecord);
+  allocate(): void {
+    const recordId = 1;  // Example record ID
+    const interval = 30; // Interval in minutes
+    this.divideAndPost(recordId, interval);
   }
 
-  getSlot(): void {
+  private divideAndPost(recordId: number, interval: number): void {
     const records = this.getRecords();
-    console.log('All records:', records);
+    const record = records.find(rec => rec.id === recordId);
+    if (record) {
+      const slots = this.divideTimeslot(record, interval);
+      slots.forEach(slot => {
+        //this.postTimeslot(slot);
+        console.log(slot);
+      });
+    } else {
+      console.error('Record not found');
+    }
   }
 
-  removeSlot(id: number): void {
-    this.removeRecord(id);
-    console.log(`Record with id ${id} removed`);
-  }
-
-  clearSlot(): void {
-    this.clearRecords();
-    console.log('All records cleared');
-  }
 
 }
