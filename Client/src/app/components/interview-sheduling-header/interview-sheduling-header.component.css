@@ -1,9 +1,16 @@
 .container{
     display:flex;
     flex-direction:row;
+    justify-content: space-between;
+   
 }
 
-.content{
+.left{
+    display: flex;
+    flex-direction: row;
+}
+
+.jobContent {
     display:flex;
     flex-direction:column;
     margin-left: 1em;

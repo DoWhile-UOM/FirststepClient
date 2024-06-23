@@ -4,7 +4,7 @@ import { MatTable, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from "../spinner/spinner.component";
-import { InterviewShedulingBackActionComponent } from "../interview-sheduling-back-action/interview-sheduling-back-action.component";
+import { InterviewShedulingHeaderComponent } from "../interview-sheduling-header/interview-sheduling-header.component";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ApplicationService } from '../../../services/application.service';
 
@@ -13,7 +13,6 @@ export interface CandidateData {
   lastRevisionBy: string;
   interview: boolean;
   position: number;
-  application: string;
 }
 
 export interface Task {
@@ -33,7 +32,7 @@ export interface Task {
     CommonModule,
     MatTableModule,
     SpinnerComponent,
-    InterviewShedulingBackActionComponent,
+    InterviewShedulingHeaderComponent,
     MatCheckboxModule
   ]
 })
@@ -79,7 +78,6 @@ export class InterviewShedulingShortListComponent implements OnInit{
         name: item.seeker_name,
         lastRevisionBy: item.last_revision_employee_name,
         interview: false,
-        application: "view application",
       }));
       this.table.renderRows();
     }
@@ -88,9 +86,7 @@ export class InterviewShedulingShortListComponent implements OnInit{
     // code to schedule the interview
   }
 
-  confirm() {
-    // code to confirm the interview
-  }
+
 
   readonly partiallyComplete = computed(() => {
     const task = this.task();
