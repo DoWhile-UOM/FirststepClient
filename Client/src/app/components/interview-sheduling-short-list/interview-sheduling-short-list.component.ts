@@ -12,6 +12,8 @@ export interface CandidateData {
   name: string;
   lastRevisionBy: string;
   interview: boolean;
+  position: number;
+  application: string;
 }
 
 export interface Task {
@@ -69,15 +71,15 @@ export class InterviewShedulingShortListComponent implements OnInit{
 
   async getShortlistedCandidates() {
     let dataSet: any[] = [];
-    await this.applicationService.getShortlistedApplications(this.advertismnet_id).then((response) => {
-      dataSet = response.data;
+    await this.applicationService.getShortlistedApplications(this.advertismnet_id).then((data:any[]) => {
+      dataSet = data;
     });
-      this.candidateData = dataSet.map((data, index) =>({
+      this.candidateData = dataSet.map((item, index) =>({
         position: index + 1,
-        name: data.name,
-        lastRevisionBy: data.lastRevisionBy,
+        name: item.seeker_name,
+        lastRevisionBy: item.last_revision_employee_name,
         interview: false,
-        application: "",
+        application: "view application",
       }));
       this.table.renderRows();
     }

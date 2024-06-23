@@ -144,7 +144,7 @@ export class ApplicationService {
   }
 
   async getShortlistedApplications(advertisement_id: string) {
-    let shortlistedApplications: any = {};
+    let shortlistedApplications: any;
     await axios
       .get(Apipaths.getShortlistedApplications + advertisement_id)
       .then((response) => {
