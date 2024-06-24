@@ -88,6 +88,7 @@ interface HRMApplicationList {
 })
 
 export class HrManagerApplicationListingComponent implements OnInit {
+
   displayedColumns: string[] = [
     'application_Id',
     'seekerName',
@@ -244,4 +245,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
   explore(application_Id: number){
     this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
   }
+
+  shortlist() {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist', {jobID: this.jobID}]);
+    }
 }

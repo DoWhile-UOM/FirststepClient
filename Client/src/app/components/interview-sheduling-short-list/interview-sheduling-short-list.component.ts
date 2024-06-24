@@ -7,6 +7,8 @@ import { SpinnerComponent } from "../spinner/spinner.component";
 import { InterviewShedulingHeaderComponent } from "../interview-sheduling-header/interview-sheduling-header.component";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ApplicationService } from '../../../services/application.service';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
 
 export interface CandidateData {
   name: string;
@@ -39,7 +41,7 @@ export interface Task {
 export class InterviewShedulingShortListComponent implements OnInit{
   displayedColumns: string[] = ['position', 'name', 'lastRevisionBy', 'interview', 'application'];
   candidateData: CandidateData[] = [];
-  advertismnet_id: string ="1057" ; // sample advertismnet_id
+  advertismnet_id: string ='' ; // sample advertismnet_id
   
 
   readonly task = signal<Task>({
@@ -55,11 +57,15 @@ export class InterviewShedulingShortListComponent implements OnInit{
   table!: MatTable<CandidateData>;
 
   constructor(
-    private applicationService: ApplicationService
+    private applicationService: ApplicationService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
+  
     try{
+      this.advertismnet_id=this.route.snapshot.paramMap.get('jobID')!;
       this.getShortlistedCandidates();
     }
     catch{
