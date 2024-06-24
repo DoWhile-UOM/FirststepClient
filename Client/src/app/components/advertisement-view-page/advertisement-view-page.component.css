@@ -68,8 +68,6 @@ mat-dialog-content{
     margin-bottom: 2.5em;
     font-family: Lato;
     color: black !important;
-    /*increase the font size by 5points*/
-    
 }
 
 .skill-set{
@@ -114,4 +112,45 @@ mat-dialog-content{
 .apply-button{
     width: 12.5em;
     margin-top: 1em;
+}
+
+@media screen and (max-width: 768px) {
+    .detail{
+        flex-direction: column;
+        width: 99%;
+    }
+
+    .detail-outer, .detail-outer-left{
+        width: 99%;
+    }
+
+    .detail-head-left {
+        width: 8em;
+    }
+
+    .detail-inner{
+        padding: 6px;
+        margin-bottom: 0px;
+    }
+
+    .detail-data {
+        font-size: 15px;
+        padding-left: 0.75em;
+        width: 10em;
+    }
+
+    .detail-head, .detail-head-left{
+        font-size: 15px;
+    }
+
+    .full-width-dialog .mat-dialog-container {
+        max-width: 45% !important;
+    }
+
+    .skill-chip{
+        padding: 0.4em 0.8em;
+        margin-right: 0.8em;
+        border-radius: 15px;
+        font-size: 12px;
+    }
 }

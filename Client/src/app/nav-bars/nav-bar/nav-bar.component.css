@@ -89,4 +89,27 @@ a{
   font-weight: bold;
   font-size: large;
 }
-  
+
+@media screen and (max-width: 768px) {
+  .nav-bar{
+    height: 3.5em; 
+  }
+
+  .rep{
+    padding-top: 3.5em;
+  }
+
+  .right-buttons a{
+    font-size: 15px;
+    padding: 0.15em 0.4em;
+    border-radius: 0.25em;
+  }
+
+  .logo-name{
+    display: none;
+  }
+
+  .logo{
+    padding-top: 0.35em;
+  }
+}

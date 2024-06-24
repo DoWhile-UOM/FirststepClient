@@ -1,68 +1,71 @@
 <mat-card class="search-card mat-elevation-4z">
     <form #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
-        <div class="container">
-            <mat-form-field appearance="outline" class="search-element title">
-                <mat-label>Job Title</mat-label>
-                <mat-icon matPrefix color="primary">
-                    <i class="fa-solid fa-person-walking"></i>
-                </mat-icon>
-                <input matInput placeholder="What do you looking for..." name="title" ngModel>
-            </mat-form-field>
+        <mat-accordion>
+            <mat-expansion-panel class="mat-elevation-z0" [expanded]="isExpand" [hideToggle]="isExpand">
+                <mat-expansion-panel-header *ngIf="!isExpand">
+                    <mat-panel-title>Search Jobs</mat-panel-title>
+                </mat-expansion-panel-header>
 
-            <mat-form-field appearance="outline" class="search-element location">
-                <mat-label>Country</mat-label>
-                <mat-icon matPrefix color="primary">
-                    <i class="fa-solid fa-earth-americas"></i>
-                </mat-icon>
-                <input type="text"
-                    placeholder="Pick a Country"
-                    aria-label="Country"
-                    matInput #countryInput
-                    [formControl]="locationCountryControl"
-                    [matAutocomplete]="autocountry">
-                <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
-                @for (option of locationCountryFilteredOptions | async; track option) {
-                    <mat-option [value]="option">{{option}}</mat-option>
-                }
-                </mat-autocomplete>
-            </mat-form-field>
+                <div class="container">
+                    <mat-form-field appearance="outline" class="search-element title">
+                        <mat-label>Job Title</mat-label>
+                        <mat-icon matPrefix color="primary">
+                            <i class="fa-solid fa-person-walking"></i>
+                        </mat-icon>
+                        <input matInput placeholder="What do you looking for..." name="title" ngModel>
+                    </mat-form-field>
         
-            <mat-form-field appearance="outline" class="search-element location">
-                <mat-label>City</mat-label>
-                <mat-icon matPrefix color="primary">
-                    <i class="fa-solid fa-location-dot"></i>
-                </mat-icon>
-                <input type="text"
-                    placeholder="Pick a City"
-                    aria-label="City"
-                    matInput
-                    [formControl]="locationCityControl"
-                    [matAutocomplete]="autocity">
-                <mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
-                @for (option of locationCityFilteredOptions | async; track option) {
-                    <mat-option [value]="option">{{option}}</mat-option>
-                }
-                </mat-autocomplete>
-            </mat-form-field>
-        
-            <div class="searchBtn">
-                <button mat-icon-button type="submit" color="primary">
-                    <mat-icon>search</mat-icon>
-                </button> 
-            </div>
-        </div>
+                    <mat-form-field appearance="outline" class="search-element location">
+                        <mat-label>Country</mat-label>
+                        <mat-icon matPrefix color="primary">
+                            <i class="fa-solid fa-earth-americas"></i>
+                        </mat-icon>
+                        <input type="text"
+                            placeholder="Pick a Country"
+                            aria-label="Country"
+                            matInput #countryInput
+                            [formControl]="locationCountryControl"
+                            [matAutocomplete]="autocountry">
+                        <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
+                        @for (option of locationCountryFilteredOptions | async; track option) {
+                            <mat-option [value]="option">{{option}}</mat-option>
+                        }
+                        </mat-autocomplete>
+                    </mat-form-field>
+                
+                    <mat-form-field appearance="outline" class="search-element location">
+                        <mat-label>City</mat-label>
+                        <mat-icon matPrefix color="primary">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </mat-icon>
+                        <input type="text"
+                            placeholder="Pick a City"
+                            aria-label="City"
+                            matInput
+                            [formControl]="locationCityControl"
+                            [matAutocomplete]="autocity">
+                        <mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
+                        @for (option of locationCityFilteredOptions | async; track option) {
+                            <mat-option [value]="option">{{option}}</mat-option>
+                        }
+                        </mat-autocomplete>
+                    </mat-form-field>
+                
+                    <div class="searchBtn">
+                        <button mat-icon-button type="submit" color="primary">
+                            <mat-icon>search</mat-icon>
+                        </button> 
+                    </div>
+
+                    <div class="res"></div>
+                </div>
+            </mat-expansion-panel> 
+        </mat-accordion>
 
         <mat-accordion>
-            <mat-expansion-panel class="mat-elevation-z1">
+            <mat-expansion-panel class="mat-elevation-z0">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>All Filters</mat-panel-title>
-                    <!--
-                    <mat-panel-description>
-                        <mat-chip-set>
-                            <mat-chip *ngFor="let filter of filters">{{filter}}</mat-chip>
-                        </mat-chip-set>
-                    </mat-panel-description>
-                    -->
+                    <mat-panel-title>Advanced Filters</mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div class="advance-search-section">
@@ -115,10 +118,24 @@
                         </span>
                     </div>
                 </div>
-
-                
             </mat-expansion-panel>
         </mat-accordion>
+
+        <div class="searchBtn-mobile">
+            <button mat-button type="submit" color="primary">
+                <mat-icon>search</mat-icon> Search Jobs
+            </button> 
+        </div>
     </form>
 </mat-card>
-<app-spinner></app-spinner>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-clockwise"
+>
+  <p style="font-size: 20px; color: white" *ngIf="suggesting">Finding Best Jobs for You...</p>
+  <p style="font-size: 20px; color: white" *ngIf="searching">Searching for jobs...</p>
+  <p style="font-size: 20px; color: white" *ngIf="!suggesting && !searching">Loading...</p>
+</ngx-spinner>

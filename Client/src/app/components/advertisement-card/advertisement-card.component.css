@@ -29,7 +29,6 @@
     font-size: 30px; 
     font-family: Lato; 
     font-weight: 700; 
-    word-wrap: break-word
 }
   
 .company-name {
@@ -69,7 +68,6 @@
     width: 20%;
     height: 1em;
     flex-direction: column;
-
 }
 
 .job-details-section{
@@ -116,12 +114,19 @@ mat-icon {
 
     .job-card{
         flex-direction: column;
+        padding: 1em;
+        margin: 0.8em;
+    }
+
+    .title{
+        padding-left: 0.5em;
     }
 
     .title-container img{
         width: 45px; 
         height: 45px;
-        background-color: #008080;
+        padding-top: 0.7em;
+        margin-right: 0.25em;
     }
 
     .job-title{
@@ -131,12 +136,58 @@ mat-icon {
 
     .company-name {
         font-size: 15px; 
-        margin-top: 0.3em;
+        margin-top: 0.2em;
         font-weight: 600;
     }
 
     .job-field {
         font-weight: 500;
         margin-top: 0.5em;
+    }
+
+    .job-summery-outer{
+        width: 100%;
+        flex-direction: row;
+        height: 3em;
+    }
+
+    .job-details-section{
+        font-size: 14px;
+        flex-direction: row;
+    }
+
+    mat-icon {
+        font-size: 14px;
+        margin-top: 0.2em;
+        margin-right: 0em;
+        padding-right: 0em;
+    }
+
+    .summery-detail-text{
+        margin-left: 0em;
+        padding-left: 0em;
+        margin-right: 0.7em;
+    }
+
+    .button-section{
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    .job-details-inner{
+        margin-top: 0em;
+        width: 100%;
+        margin-right: 1em;
+        justify-content: space-between;
+    }
+
+    .post-date{
+        display: none;
+    }
+
+    .button-section button{
+        width: fit-content;
     }
 }

@@ -22,7 +22,7 @@
         <mat-divider class="middle-divider"></mat-divider>
 
         <div class="container-content">
-            <mat-grid-list cols="2" rowHeight="20:1">
+            <mat-grid-list cols="{{screenWidth > 768 ? 2 : 1}}" rowHeight="{{screenWidth > 768 ? 40 : 30}}" class="responsive-grid-list">
                 <mat-grid-tile>
                     <p class="detail-title">Bussiness Scale</p>
                     <p class="detail-content">{{company.company_business_scale}}</p>

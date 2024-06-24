@@ -17,8 +17,8 @@
     color: black; 
     font-size: 33px; 
     font-family: Lato; 
-    font-weight: 700; 
-    word-wrap: break-word
+    font-weight: 700;
+    word-wrap: break-word;
 }
   
 .company-name {
@@ -26,7 +26,7 @@
     font-size: 20px; 
     font-family: Lato; 
     font-weight: 700; 
-    word-wrap: break-word
+    word-wrap: break-word;
 }
   
 .job-field {
@@ -40,4 +40,31 @@
     width: 80px; 
     height: 80px;
     padding: 0em 1.5em;
+}
+
+@media screen and (max-width: 768px) {
+    .company-logo{
+        width: 50px; 
+        height: 50px;
+        padding: 0em 1.5em;
+    }
+
+    .company-name {
+        font-size: 17px; 
+        margin-bottom: 0.3em;
+        word-wrap: normal;
+    }
+
+    .job-title {
+        font-size: 23px; 
+        margin-bottom: 0.3em;
+        word-wrap: normal;
+    }
+
+    .job-field {
+        font-size: 17px; 
+        margin-top: 0.1em;
+        margin-left: 1.5em;
+        margin-bottom: 0.3em;
+    }
 }

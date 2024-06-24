@@ -1,7 +1,7 @@
 import {
   Component,
   OnInit,
-  Inject,
+  HostListener,
   ViewChild,
   Output,
   EventEmitter,
@@ -160,7 +160,23 @@ export class SeekerProfileEditComponent implements OnInit {
       password: [''],
       seekerSkills: [[]],
     });
+
+    this.getScreenSize()
   }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?: undefined) {
+    try{
+      if (window.innerWidth <= 768){
+        this.noOfCols = 1;
+      }
+      else{
+        this.noOfCols = 2;
+      }
+    }
+    catch {}
+  }
+
   //image upload
   onselectFile(event: any) {
     const input = event.target as HTMLInputElement;
