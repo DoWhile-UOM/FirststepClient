@@ -18,6 +18,7 @@
     font-size: 33px; 
     font-family: Lato; 
     font-weight: 700;
+    word-wrap: break-word;
 }
   
 .company-name {
@@ -25,6 +26,7 @@
     font-size: 20px; 
     font-family: Lato; 
     font-weight: 700; 
+    word-wrap: break-word;
 }
   
 .job-field {
@@ -49,15 +51,18 @@
 
     .company-name {
         font-size: 17px; 
-        margin-bottom: 0.5em;
+        margin-bottom: 0.3em;
+        word-wrap: normal;
     }
 
     .job-title {
         font-size: 23px; 
-        margin-bottom: 0.5em;
+        margin-bottom: 0.3em;
+        word-wrap: normal;
     }
 
     .job-field {
+        font-size: 17px; 
         margin-top: 0.1em;
         margin-left: 1.5em;
         margin-bottom: 0.3em;

@@ -99,3 +99,62 @@
     width: 95%;
     margin: 0 auto;
 }
+
+@media screen and (max-width: 768px) {
+    .card-container{
+        padding: 1em;
+    }
+
+    .company-name{
+        font-size: 23px; 
+        margin-left: 0.5em;
+        word-wrap: normal;
+    }
+    
+    .desc{
+        font-size: 13px;
+        margin-top: 0.75em;
+        margin-bottom: 1.5em;
+        margin-left: 0em;
+        word-wrap: normal;
+    }
+
+    .detail-title{
+        font-size: 14px;
+        word-wrap: normal;
+    }
+    
+    .detail-content{
+        font-size: 13px;
+        word-wrap: normal;
+    }
+
+    .company-logo img{
+        width: 50px;
+        height: 50px;
+    }
+
+    .back-button{
+        padding: 0.3em;
+        margin-right: 0em;
+        margin-top: 1em;
+    }
+
+    .back-button mat-icon{
+        font-size: medium;
+    }
+
+    .heading-container{
+        margin-left: 0em;
+    }
+
+    .container-content{
+        margin-top: 0.5em;
+        width: 100%;
+    }
+    
+    .container-content mat-grid-tile{
+        margin-top: 0.3em;
+        height: fit-content;
+    }
+}
