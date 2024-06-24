@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input  } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -102,6 +102,7 @@ throw new Error('Method not implemented.');
 	locationCityFilteredOptions: Observable<string[]>;
 
   distance: number = 0;
+  isExpand: boolean = true;
 
   constructor(
     private advertisementService: AdvertisementServices,
@@ -118,6 +119,8 @@ throw new Error('Method not implemented.');
 			startWith(''),
 			map(value => this._filterCity(value || '')),
 		);
+
+    this.getScreenSize();
   }
 
   async ngOnInit() {
@@ -130,6 +133,8 @@ throw new Error('Method not implemented.');
 
     let res = await this.auth.getLocation();
 
+    res = null;
+
     if (res != undefined && res != null){
       await this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
         .then((response) => {
@@ -138,7 +143,7 @@ throw new Error('Method not implemented.');
         });
     }
     else{
-      await this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
+      await this.advertisementService.getSeekerHomePage(this.seekerID, String(this.pageSize))
         .then((response) => {
           this.jobList = response.firstPageAdvertisements;
           this.jobIdList = response.allAdvertisementIds;
@@ -255,5 +260,18 @@ throw new Error('Method not implemented.');
 
   showAllFilters(){
 
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?: undefined) {
+    try{
+      if (window.innerWidth < 768){
+        this.isExpand = false;
+      }
+      else{
+        this.isExpand = true;
+      }
+    }
+    catch {}
   }
 }
