@@ -15,7 +15,7 @@ import { Country, City } from 'country-state-city';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerComponent } from '../spinner/spinner.component';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { MatSliderModule } from '@angular/material/slider';
 import { Router } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -64,7 +64,8 @@ interface SearchData{
     SpinnerComponent,
     MatSliderModule,
     MatExpansionModule,
-    MatChipsModule],
+    MatChipsModule, 
+    NgxSpinnerModule],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
 })
@@ -83,6 +84,9 @@ throw new Error('Method not implemented.');
 	jobArrangement: string[] = AdvertisementServices.job_arrangement;
 
   seekerID: string = ''; 
+
+  searching: boolean = false;
+  suggesting: boolean = false;
 
   @Output() newItemEvent = new EventEmitter<Job[]>();
   @Output() changePaginatorLengthEvent = new EventEmitter<number>();
@@ -117,6 +121,7 @@ throw new Error('Method not implemented.');
   }
 
   async ngOnInit() {
+    this.suggesting = true;
     this.spinner.show();
 
     this.seekerID = String(this.auth.getUserId());
@@ -149,6 +154,7 @@ throw new Error('Method not implemented.');
     this.changePaginatorLengthEvent.emit(this.jobIdList.length);
 
     this.spinner.hide();
+    this.suggesting = false;
   }
 
   async search(data: SearchData){
@@ -165,6 +171,7 @@ throw new Error('Method not implemented.');
 			return;
 		}
 
+    this.searching = true;
     this.spinner.show();
     
     var response = await this.advertisementService.searchAdsBasicAlgo(this.seekerID, data, String(this.pageSize));
@@ -183,6 +190,7 @@ throw new Error('Method not implemented.');
     this.changePaginatorLengthEvent.emit(this.jobIdList.length);
 
     this.spinner.hide();
+    this.searching = false;
   }
 
   public async changePaginator(startIndex: number, endIndex: number){

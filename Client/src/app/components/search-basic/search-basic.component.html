@@ -121,4 +121,14 @@
         </mat-accordion>
     </form>
 </mat-card>
-<app-spinner></app-spinner>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-clockwise"
+>
+  <p style="font-size: 20px; color: white" *ngIf="suggesting">Finding Best Jobs for You...</p>
+  <p style="font-size: 20px; color: white" *ngIf="searching">Searching for jobs...</p>
+  <p style="font-size: 20px; color: white" *ngIf="!suggesting && !searching">Loading...</p>
+</ngx-spinner>
