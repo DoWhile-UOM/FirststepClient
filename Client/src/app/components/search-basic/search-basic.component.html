@@ -1,8 +1,8 @@
 <mat-card class="search-card mat-elevation-4z">
     <form #searchJobForm="ngForm" (ngSubmit)="search(searchJobForm.value)">
         <mat-accordion>
-            <mat-expansion-panel class="mat-elevation-z0" [expanded]="isExpand">
-                <mat-expansion-panel-header>
+            <mat-expansion-panel class="mat-elevation-z0" [expanded]="isExpand" [hideToggle]="isExpand">
+                <mat-expansion-panel-header *ngIf="!isExpand">
                     <mat-panel-title>Search Jobs</mat-panel-title>
                 </mat-expansion-panel-header>
 
