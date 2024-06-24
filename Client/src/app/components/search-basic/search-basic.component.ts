@@ -133,8 +133,6 @@ throw new Error('Method not implemented.');
 
     let res = await this.auth.getLocation();
 
-    res = null;
-
     if (res != undefined && res != null){
       await this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
         .then((response) => {
@@ -143,7 +141,7 @@ throw new Error('Method not implemented.');
         });
     }
     else{
-      await this.advertisementService.getSeekerHomePage(this.seekerID, String(this.pageSize))
+      await this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
         .then((response) => {
           this.jobList = response.firstPageAdvertisements;
           this.jobIdList = response.allAdvertisementIds;
