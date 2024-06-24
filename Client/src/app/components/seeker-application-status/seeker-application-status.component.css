@@ -3,6 +3,7 @@ app-advertisement-header{
 }
 .stepper {
   margin-top: 2vw;
+  pointer-events: none;
 }
 .stepper .mat-step-header {
   pointer-events: none;
