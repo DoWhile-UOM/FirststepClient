@@ -39,7 +39,7 @@ export interface Task {
 export class InterviewShedulingShortListComponent implements OnInit{
   displayedColumns: string[] = ['position', 'name', 'lastRevisionBy', 'interview', 'application'];
   candidateData: CandidateData[] = [];
-  advertismnet_id: string = "1057"; // sample advertismnet_id
+  advertismnet_id: string ="1057" ; // sample advertismnet_id
   
 
   readonly task = signal<Task>({

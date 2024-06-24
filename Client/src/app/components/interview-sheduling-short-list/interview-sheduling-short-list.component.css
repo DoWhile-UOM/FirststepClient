@@ -18,6 +18,9 @@
   justify-content: space-between;
 }
 
+.application{
+  color:#008080;
+}
 .shedule-content  mat-checkbox{
   margin-right: 1.3em;
 
