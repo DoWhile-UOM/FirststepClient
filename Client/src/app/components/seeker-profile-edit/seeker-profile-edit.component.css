@@ -1,7 +1,6 @@
 .body {
   padding: 3em;
   width: 60%;
-  min-width: 400px;
   margin: 0 auto;
 }
 
@@ -195,20 +194,28 @@ mat-form-field {
   gap: 20px;
 }
 
+.des{
+  margin-top: 1em;
+  padding-bottom: 1em;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .body {
-    width: 90%;
-    padding: 1.5em;
-  }
-
-  .card {
-    padding: 1.5em;
+    width: 100%;
+    padding: 0em;
+    margin: 0;
   }
 
   .sectionHeading {
     font-size: 20px;
     margin: 3em 0.5em 2em 0.5em;
+  }
+
+  .card {
+    padding: 1.5em;
+    padding-top: 2em;
+    margin: 0;
   }
 
   .title {
@@ -229,6 +236,10 @@ mat-form-field {
     justify-content: center;
     margin-top: 20px;
     gap: 20px;
+  }
+
+  .example-button-row button{
+    height: 3.5;
   }
 
   .example-button-row .mat-mdc-button-base {
@@ -257,5 +268,5 @@ mat-form-field {
 
   .button-with-inputbox button {
     width: 100%;
-  }
+  }  
 }

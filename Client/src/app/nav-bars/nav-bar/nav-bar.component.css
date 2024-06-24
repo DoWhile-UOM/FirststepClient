@@ -106,6 +106,10 @@ a{
   }
 
   .logo-name{
-    font-size: medium;
+    display: none;
+  }
+
+  .logo{
+    padding-top: 0.35em;
   }
 }

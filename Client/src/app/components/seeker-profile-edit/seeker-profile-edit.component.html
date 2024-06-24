@@ -23,8 +23,8 @@
           </div>
         </div>
       </div>
-      <mat-grid-list cols="2" rowHeight="100px" gutterSize="10px" class="responsive-grid">
-        <mat-grid-tile colspan="2">
+      <mat-grid-list cols="{{noOfCols}}" rowHeight="70px" gutterSize="10px" class="responsive-grid">
+        <mat-grid-tile colspan="{{noOfCols}}">
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Bio</mat-label>
             <input matInput formControlName="bio" required />
@@ -46,14 +46,14 @@
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
-      <mat-grid-list cols="2" rowHeight="100px" gutterSize="10px" class="responsive-grid">
-        <mat-grid-tile colspan="2">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Description</mat-label>
-            <textarea matInput formControlName="description" required></textarea>
-            <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
-          </mat-form-field>
-        </mat-grid-tile>
+
+      <mat-form-field appearance="outline" class="full-width des">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+        <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
+      </mat-form-field>
+
+      <mat-grid-list cols="{{noOfCols}}" rowHeight="70px" gutterSize="10px" class="responsive-grid">
         <mat-grid-tile>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Phone Number</mat-label>
