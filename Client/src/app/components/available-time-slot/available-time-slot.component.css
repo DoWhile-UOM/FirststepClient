@@ -1,0 +1,58 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidenav-container {
+    width: 100%;
+  }
+
+.calendar-sidenav {
+    width: 300px;
+    border-right: 1px solid #ccc;
+    padding: 16px;
+}
+
+.schedule-container {
+    position: relative;
+    flex-grow: 1;
+    padding: 16px;
+    overflow-y: scroll;
+}
+
+.time-indicator {
+    position: absolute;
+    top: 75px;
+    /* adjust this based on current time */
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: red;
+}
+
+.event-list {
+    margin-top: 80px;
+    /* adjust this based on the start time of the schedule */
+}
+
+.event {
+    margin-bottom: 16px;
+    background-color: #fbc02d;
+}
+
+.event-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.event-title {
+    font-weight: bold;
+    flex: 1;
+}
+
+.event-time {
+    font-size: 0.875em;
+    color: rgba(0, 0, 0, 0.54);
+    white-space: nowrap;
+    margin-left: 8px;
+}

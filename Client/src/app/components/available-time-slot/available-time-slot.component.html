@@ -1,0 +1,28 @@
+<div class="container">
+    <mat-sidenav-container class="sidenav-container">
+
+        <mat-sidenav mode="side" opened class="calendar-sidenav">
+            <mat-calendar ngSkipHydration [(selected)]="selectedDate"></mat-calendar>
+            <button mat-raised-button class="apply-button" color="primary">Add Date</button>
+        </mat-sidenav>
+
+        
+
+        <mat-sidenav-content>
+            <div class="schedule-container">
+                <div class="time-indicator"></div>
+                <div class="event-list">
+                    <mat-card class="event" *ngFor="let event of events">
+                        <mat-card-content>
+                            <div class="event-details">
+                                <span class="event-title">{{ event.title }}</span>
+                                <span class="event-time">{{ event.time }}</span>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-sidenav-content>
+
+    </mat-sidenav-container>
+</div>
