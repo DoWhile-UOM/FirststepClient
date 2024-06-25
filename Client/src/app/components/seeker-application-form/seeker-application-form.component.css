@@ -15,12 +15,8 @@ mat-card {
 }
 
 .textSection {
-  width: 200px;
+  width: 15em;
   font-weight: bold;
-}
-
-.fieldSection {
-  margin-left: 27px;
 }
 
 .doc {
@@ -35,25 +31,24 @@ mat-card-title {
   align-items: center;
   justify-content: center;
   color: #008080;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  font-size: 1.5vw;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  font-size: 20px;
   font-style: normal;
   line-height: normal;
 }
 
 mat-card-content {
   color: #000;
-  font-size: 1vw;
   font-style: normal;
   line-height: normal;
 }
 
 .textSection div {
-  margin-top: 20px;
+  margin-top: 1em;
 }
 .fieldSection div {
-  margin-top: 20px;
+  margin-top: 1em;
 }
 
 .checkbox-text {
@@ -61,52 +56,46 @@ mat-card-content {
 }
 
 @media screen and (max-width: 768px){
-  .mat-dialog-container {
-    width: 100vw;
-    height: 100vh;
-    max-width: 100vw;
-    max-height: 100vh;
-    margin: 0;
-    padding: 0;
-    border-radius: 0;
-    overflow: hidden;
-  }
 
   mat-card {
-    height: 100%;
     padding: 2%;
-    overflow-y: auto;
   }
 
-  .detailsField {
-    flex-direction: column;
-    align-items: center;
-  }
 
   .textSection {
     width: auto;
-    text-align: center;
+    font-size: 14px;
   }
 
   .fieldSection {
     margin-left: 0;
-    text-align: center;
-  }
-
-  .doc {
-    flex-direction: column;
+    font-size: 14px;
   }
 
   mat-card-title {
-    font-size: 4vw;
+    font-size: 18px;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
   }
 
   mat-card-content {
-    font-size: 3vw;
+    font-size: 14px;
   }
 
   .textSection div,
   .fieldSection div {
-    margin-top: 10px;
+    margin-top: 0.5em;
   }
+
+  .checkbox-text {
+    font-size: 14px;
+  }
+
+  .textSection {
+    width: 10em;
+  }
+  .fieldSection {
+    margin-left: 10px;
+  }
+
 }
