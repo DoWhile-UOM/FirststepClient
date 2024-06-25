@@ -3,20 +3,37 @@
 
         <mat-sidenav mode="side" opened class="calendar-sidenav">
             <mat-calendar ngSkipHydration [(selected)]="selectedDate"></mat-calendar>
-            <button mat-raised-button class="apply-button" color="primary">Add Date</button>
-        </mat-sidenav>
 
-        
+            <p>Selected date: {{formattedDate}}</p>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Start Time</mat-label>
+                    <input matInput [ngxTimepicker]="startTimepicker" [placeholder]="'HHmm'"
+                           #startTimepickerInput>
+                    <ngx-material-timepicker #startTimepicker (timeSet)="onStartTimeSet($event)"></ngx-material-timepicker>
+                  </mat-form-field>
+                
+                  <mat-form-field appearance="fill">
+                    <mat-label>End Time</mat-label>
+                    <input matInput [ngxTimepicker]="endTimepicker" [placeholder]="'HHmm'"
+                           #endTimepickerInput>
+                    <ngx-material-timepicker #endTimepicker (timeSet)="onEndTimeSet($event)"></ngx-material-timepicker>
+                  </mat-form-field>
+                
+                  <button mat-raised-button class="apply-button" (click)="print()" color="primary">Add Slot</button>
+            </div>
+        </mat-sidenav>
 
         <mat-sidenav-content>
             <div class="schedule-container">
                 <div class="time-indicator"></div>
                 <div class="event-list">
-                    <mat-card class="event" *ngFor="let event of events">
+                    <mat-card class="event" *ngFor="let record of getRecordsByDay(formattedDate)">
                         <mat-card-content>
                             <div class="event-details">
-                                <span class="event-title">{{ event.title }}</span>
-                                <span class="event-time">{{ event.time }}</span>
+                                <span class="event-title">{{ record.start }}</span>
+                                <span class="event-time">{{ record.end }}</span>
                             </div>
                         </mat-card-content>
                     </mat-card>
