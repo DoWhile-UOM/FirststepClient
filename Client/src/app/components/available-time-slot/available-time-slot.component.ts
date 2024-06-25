@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { InterviewService } from '../../../services/interview.service';
 
 @Component({
   selector: 'app-available-time-slot',
@@ -25,6 +27,8 @@ export class AvailableTimeSlotComponent {
   startTime: number = 0;     // Variable to store start time
   endTime: number = 0;       // Variable to store end time
 
+  constructor(private snackBar: MatSnackBar, private interview: InterviewService) { }
+
   onStartTimeSet(event: any) {
     this.startTime = this.formatTimeTo24Hour(event);
   }
@@ -33,21 +37,6 @@ export class AvailableTimeSlotComponent {
   onEndTimeSet(event: any) {
     this.endTime = this.formatTimeTo24Hour(event);
   }
-
-  events = [
-    {
-      title: '(Lab) Database Management Systems',
-      time: '8:15 AM – 10:15 AM'
-    },
-    {
-      title: 'Fundamentals of Business Economics',
-      time: '10:30 AM – 12:30 PM'
-    },
-    {
-      title: 'Statistical Inference',
-      time: '3:30 PM – 5:30 PM'
-    }
-  ];
 
   records = [
     { id: 1, day: '20240625', start: 830, end: 1100 },
@@ -83,15 +72,21 @@ export class AvailableTimeSlotComponent {
   }
 
   print() {
-    console.log({ day: this.formattedDate, start: this.startTime, end: this.endTime });
-    if(this.startTime < this.endTime){
+    let response: any = this.interview.checkForOverlaps(this.records, { id: 1, day: this.formattedDate, start: this.startTime, end: this.endTime });
+    if (response.length > 0) {
+      this.snackBar.open('The time slot overlaps with an existing time slot.', '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      return;
+    }
+
+    if (this.startTime < this.endTime) {
       this.addRecord({ day: this.formattedDate, start: this.startTime, end: this.endTime });
-    }else{
-      
+      this.snackBar.open('The time slot has been successfully added.', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    } else {
+      this.snackBar.open('Please ensure that the Start Time precedes the End Time', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
 
   }
-  
+
 
   formatTimeTo24Hour(timeString: string): number {
     // Split the time string into hours, minutes, and period (AM/PM)
@@ -103,15 +98,15 @@ export class AvailableTimeSlotComponent {
     // Convert hours to 24-hour format
     let hours24 = hours;
     if (period === 'PM' && hours < 12) {
-        hours24 += 12;
+      hours24 += 12;
     } else if (period === 'AM' && hours === 12) {
-        hours24 = 0;
+      hours24 = 0;
     }
 
     // Combine hours and minutes into a number (HHmm)
     const formattedTime = hours24 * 100 + minutes;
 
     return formattedTime;
-}
+  }
 
 }

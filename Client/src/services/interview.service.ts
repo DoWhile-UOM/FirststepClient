@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 interface Record {
   id: number;
-  date: string;
+  day: string;
   start: number;
   end: number;
 }
@@ -49,6 +49,25 @@ export class InterviewService {
     }
 
     return timeSlots;
+  }
+
+  checkForOverlaps(records: Record[], input: Record): Record[] {
+    const overlaps: Record[] = [];
+
+    // Iterate through existing records to check for overlaps
+    for (const record of records) {
+      if (record.day === input.day) {
+        // Check if the time ranges overlap
+        const startOverlap = input.start < record.end;
+        const endOverlap = input.end > record.start;
+
+        if (startOverlap && endOverlap) {
+          overlaps.push(record);
+        }
+      }
+    }
+
+    return overlaps;
   }
 
 
