@@ -35,7 +35,7 @@ interface AppointmentSchedule {
 })
 
 export class DailyInterviewSchedulesComponent implements OnInit {
-  selectedDate: Date = new Date('2024-06-25'); // Set default date to 2024-06-25
+  selectedDate: Date = new Date('2024-06-26'); // Set default date to 2024-06-25
   schedules: AppointmentSchedule[] = [];
   timeSlots: string[] = [
     '7:00am', '7:30am', '8:00am', '8:30am', '9:00am', '9:30am', 

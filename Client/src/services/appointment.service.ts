@@ -22,13 +22,14 @@ export class AppointmentService {
   async getSchedulesByDate(date: Date): Promise<AppointmentSchedule[]> {
     const formattedDate = date.toISOString().split('T')[0];
     try {
-      const response = await axios.get('https://localhost:7213/api/Appointment/'+formattedDate);
+      const response = await axios.get(`https://localhost:7213/api/Appointment/GetByDate/${formattedDate}`);
       // const response = await axios.get(`${this.apiUrl}/${formattedDate}`);
       return response.data.map((schedule: any) => ({
         ...schedule,
         status: this.mapStatus(schedule.status), // Map enum to string
         first_name: schedule.first_name || 'N/A', // Handle null values
         last_name: schedule.last_name || 'N/A', // Handle null values
+        end_time: schedule.end_time // Ensure end_time is included
       }));
     } catch (error) {
       console.error("Network Error: " + error);
@@ -38,7 +39,7 @@ export class AppointmentService {
 
   async updateAppointmentStatus(appointmentId: number, status: string): Promise<void> {
     try {
-      await axios.patch(`https://localhost:7213/api/Appointment/`+appointmentId , { status });
+      await axios.patch(`https://localhost:7213/api/Appointment/UpdateStatus/appointment=${appointmentId}/status=${status}`);
       this.snackbar.open('Status updated successfully', '', { duration: 3000 });
     } catch (error) {
       console.error("Network Error: " + error);
