@@ -50,7 +50,15 @@
                 <div *ngFor="let skill of adData.skills" class="skill-chip">{{skill.skill_name[0].toUpperCase() + skill.skill_name.slice(1)}}</div>
             </div>
             
-            <div class="section" [innerHTML]="adData.job_description"></div>
+            <div class="section" [innerHTML]="getDescription()"></div>     
+            
+            <button 
+                mat-button
+                color="primary"
+                (click)="onClickCompany()">
+                More job from {{adData.company_name}}
+                <mat-icon>open_in_new</mat-icon>
+            </button> 
         </mat-dialog-content>
 
         <mat-dialog-actions>
@@ -62,7 +70,15 @@
                 matBadgeColor="warn"
                 [disabled]="adData.is_expired"
                 disabledInteractive
-                (click)="onClickApplyJob()">Apply To This Job</button>  
+                (click)="onClickApplyJob()">Apply To This Job
+            </button>  
+                
+            <button 
+                mat-stroked-button
+                class="close-button" 
+                color="primary" 
+                mat-dialog-close>Close
+            </button>  
         </mat-dialog-actions>      
     </mat-card>
 </div>

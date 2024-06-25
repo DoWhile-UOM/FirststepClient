@@ -114,6 +114,10 @@ mat-dialog-content{
     margin-top: 1em;
 }
 
+.close-button{
+    margin-top: 1em;
+}
+
 @media screen and (max-width: 768px) {
     .detail{
         flex-direction: column;

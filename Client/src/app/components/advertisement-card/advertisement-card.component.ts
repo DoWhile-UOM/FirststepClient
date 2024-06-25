@@ -69,17 +69,19 @@ export class AdvertisementCardComponent{
   }
 
   onClickMoreDetails() {
-    let jobId = 0;
+    let jobId = 0, comId = 0;
 
     if (this.isApplicationPage) {
       jobId = this.appliedJob.advertisement_id;
+      comId = this.appliedJob.company_id;
     }
     else{
       jobId = this.job.advertisement_id;
+      comId = this.job.company_id;
     }
 
     this.jobDetailsDialog.open(AdvertisementViewPageComponent, {
-      data: {jobID: jobId},
+      data: {jobID: jobId, comID: comId},
       maxWidth: '80em',
       maxHeight: '80em'
     });

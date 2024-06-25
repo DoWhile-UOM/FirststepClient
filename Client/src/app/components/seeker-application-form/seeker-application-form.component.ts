@@ -20,6 +20,8 @@ import { SeekerApplicationFileUploadComponent } from '../seeker-application-file
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { error } from 'console';
+import { response } from 'express';
 
 interface Seeker {
   email: string;
@@ -138,17 +140,11 @@ export class SeekerApplicationFormComponent implements OnInit {
       applicationData.append('cv', this.applicationData.cv);
     }
     
-    
-    try {
-      // check sucess message from the application service
-      await this.applicationService.submitSeekerApplication(applicationData);
+    let response = await this.applicationService.submitSeekerApplication(applicationData);
 
-      this.router.navigate([
-        'seeker/home/applicationForm/applicationFormconfirm',
-      ]);
+    if (response == true){
+      this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm', {company: this.jobData.company_name}]);
       this.dialogRef.close();
-    } catch (error) {
-      console.error('Error submiting application with cv: ', error);
     }
 
     this.spinner.hide();

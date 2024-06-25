@@ -37,7 +37,7 @@
             <div *ngIf="useDefaultCv">
               <app-file-download 
               [cvUrl]="SeekerDetails.defualt_cv_url"
-              [cvName]="SeekerDetails.cVurl"
+              [cvName]="SeekerDetails.first_name + ' ' + SeekerDetails.last_name + '_CV.pdf'"
                ></app-file-download>
             </div>
             <br />
