@@ -3,6 +3,16 @@ mat-card {
   padding: 3%;
 }
 
+.warn-msg{
+  color: red;
+  font-size: medium;
+  margin-top: 0.5em;
+}
+
+mat-dialog-content{
+  color: black !important;
+}
+
 .detailsField {
   display: flex;
   flex-direction: row;

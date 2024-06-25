@@ -93,7 +93,8 @@ export class AdvertisementViewPageComponent {
         company_name:  this.adData.company_name, 
         job_title:  this.adData.title, 
         job_field:  this.adData.field_name,
-        company_logo_url:  this.adData.company_logo_url}
+        company_logo_url:  this.adData.company_logo_url,
+        canApply: this.data.canApply}
     }); 
   }
 

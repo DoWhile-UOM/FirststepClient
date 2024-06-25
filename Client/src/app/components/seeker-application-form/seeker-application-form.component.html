@@ -10,46 +10,45 @@
   <mat-divider></mat-divider>
 
   <mat-dialog-content>
-    <mat-card-content>
-      <mat-card-title>Application Form</mat-card-title>
-      <div class="detailsField">
-        <div class="textSection">
-          <div>First Name</div>
-          <div>Last Name</div>
-          <div>Email</div>
-          <div>phone number</div>
-          <div>Linkedin</div>
-          <div>CV</div>
-        </div>
-        <div class="fieldSection">
-          <div>{{ SeekerDetails.first_name }}</div>
-          <div>{{ SeekerDetails.last_name }}</div>
-          <div>{{ SeekerDetails.email }}</div>
-          <div>{{ SeekerDetails.phone_number }}</div>
-          <div>{{ SeekerDetails.linkedin }}</div>
-          <!--change in backend-->
-          <div class="document">
-            <div *ngIf="!useDefaultCv">
-              <app-seeker-application-file-upload
-                (fileSelected)="onCvSelected($event)"
-              ></app-seeker-application-file-upload>
-            </div>
-            <div *ngIf="useDefaultCv">
-              <app-file-download 
-              [cvUrl]="SeekerDetails.defualt_cv_url"
-              [cvName]="SeekerDetails.first_name + ' ' + SeekerDetails.last_name + '_CV.pdf'"
-               ></app-file-download>
-            </div>
-            <br />
-            <mat-checkbox color="primary" [(ngModel)]="useDefaultCv"
-              ><span class="checkbox-text"
-                >Use default CV in profile</span
-              ></mat-checkbox
-            >
+    <mat-card-title>Application Form</mat-card-title>
+    <div class="detailsField">
+      <div class="textSection">
+        <div>First Name</div>
+        <div>Last Name</div>
+        <div>Email</div>
+        <div>phone number</div>
+        <div>Linkedin</div>
+        <div>CV</div>
+      </div>
+      <div class="fieldSection">
+        <div>{{ SeekerDetails.first_name }}</div>
+        <div>{{ SeekerDetails.last_name }}</div>
+        <div>{{ SeekerDetails.email }}</div>
+        <div>{{ SeekerDetails.phone_number }}</div>
+        <div>{{ SeekerDetails.linkedin }}</div>
+        <!--change in backend-->
+        <div class="document">
+          <div *ngIf="!useDefaultCv">
+            <app-seeker-application-file-upload
+              (fileSelected)="onCvSelected($event)"
+            ></app-seeker-application-file-upload>
           </div>
+          <div *ngIf="useDefaultCv">
+            <app-file-download 
+            [cvUrl]="SeekerDetails.defualt_cv_url"
+            [cvName]="SeekerDetails.first_name + ' ' + SeekerDetails.last_name + '_CV.pdf'"
+              ></app-file-download>
+          </div>
+          <br />
+          <mat-checkbox color="primary" [(ngModel)]="useDefaultCv"
+            ><span class="checkbox-text"
+              >Use default CV in profile</span
+            ></mat-checkbox
+          >
         </div>
       </div>
-    </mat-card-content>
+    </div>
+    <p *ngIf="!canApply" class="warn-msg">You are already submitted an application for this job advertisement!</p>
   </mat-dialog-content>
 
   <mat-dialog-actions>
