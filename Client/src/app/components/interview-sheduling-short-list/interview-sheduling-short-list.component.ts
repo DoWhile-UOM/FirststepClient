@@ -10,18 +10,20 @@ import { ApplicationService } from '../../../services/application.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
-export interface CandidateData {
+ interface CandidateData {
   name: string;
   lastRevisionBy: string;
   interview: boolean;
   position: number;
 }
 
-export interface Task {
+ interface Task {
   name: string;
   completed: boolean;
   subtasks?: Task[];
 }
+
+
 
 @Component({
   selector: 'app-interview-sheduling-short-list',
@@ -42,6 +44,7 @@ export class InterviewShedulingShortListComponent implements OnInit{
   displayedColumns: string[] = ['position', 'name', 'lastRevisionBy', 'interview', 'application'];
   candidateData: CandidateData[] = [];
   advertismnet_id: string ='' ; // sample advertismnet_id
+  advertisment_title:string=''; // sample advertisment_title	
   
 
   readonly task = signal<Task>({
@@ -60,12 +63,16 @@ export class InterviewShedulingShortListComponent implements OnInit{
     private applicationService: ApplicationService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) { 
+   
+  }
 
   ngOnInit() {
   
     try{
-      this.advertismnet_id=this.route.snapshot.paramMap.get('jobID')!;
+     /* this.advertismnet_id=this.route.snapshot.paramMap.get('jobID')!;*/
+      this.advertisment_title=this.route.snapshot.paramMap.get('jobTitle')!;
+      this.advertismnet_id='1057';
       this.getShortlistedCandidates();
     }
     catch{
@@ -83,7 +90,7 @@ export class InterviewShedulingShortListComponent implements OnInit{
         position: index + 1,
         name: item.seeker_name,
         lastRevisionBy: item.last_revision_employee_name,
-        interview: false,
+        interview:false,
       }));
       this.table.renderRows();
     }

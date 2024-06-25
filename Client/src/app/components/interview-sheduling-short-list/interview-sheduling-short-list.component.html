@@ -1,7 +1,10 @@
 <div class="container">
   <div class="page-title">
     <div>
-      <app-interview-sheduling-header></app-interview-sheduling-header>
+      <app-interview-sheduling-header
+      [job_title]="this.advertisment_title"
+      [job_id]="this.advertismnet_id">
+    </app-interview-sheduling-header>
     </div>
     <div class="pagetitle-content">
       <span>

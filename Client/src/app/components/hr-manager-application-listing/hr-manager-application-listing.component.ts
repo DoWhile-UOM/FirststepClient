@@ -247,6 +247,6 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   shortlist() {
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist', {jobID: this.jobID}]);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist', {jobID: this.jobID, jobTitle: this.title}]);
     }
 }
