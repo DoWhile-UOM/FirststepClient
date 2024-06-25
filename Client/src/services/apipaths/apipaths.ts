@@ -1,6 +1,6 @@
 export class Apipaths {
-    //static readonly baseUrl: string = 'https://localhost:7213/api/';
-    static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
+    static readonly baseUrl: string = 'https://localhost:7213/api/';
+    //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
@@ -50,6 +50,7 @@ export class Apipaths {
     static readonly getApplicationDetails: string = this.baseUrl + 'Application/GetApplicationById/'; // + application_id
     static readonly changeAssignedHRA: string = this.baseUrl + 'Application/ChangeAssignedHRA/'; // + application_id
     static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
+    static readonly resubmitApplication: string = this.baseUrl + 'Application/ResubmitApplication';
     static readonly getassignedApplications: string = this.baseUrl + 'Application/GetAssignedApplicationList/'; // + hra_id
     static readonly getApplicationStatus: string = this.baseUrl + 'Application/status?advertisementId='; //  '&seekerId=' + seeker_id
     static readonly getApplicationList: string = this.baseUrl + 'Application/GetApplicationList/'; // + job_number + '/status=' + status

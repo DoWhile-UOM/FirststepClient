@@ -26,8 +26,37 @@ export class ApplicationService {
     })
     .catch(
       (error) => {
-       this.snackbar.open("Error occurred submitting application :" + error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
-       response = false;
+        if (error.response.status == 409) {
+          this.snackbar.open("Can't Resubmit an application", "",{panelClass: ['app-notification-warning']})._dismissAfter(5000);
+        }
+        else {
+          this.snackbar.open("Error occurred submitting application :" + error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+        response = false;
+      }
+    );
+
+    return response;
+  }
+
+  async resubmitSeekerApplication(applicationData: FormData): Promise<boolean> {
+    let response = false;
+
+    await axios.put(
+      Apipaths.resubmitApplication,
+      applicationData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    ).then(function (res) {
+      response = true;
+    })
+    .catch(
+      (error) => {
+        this.snackbar.open("Error occurred submitting application :" + error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        response = false;
       }
     );
 
@@ -160,7 +189,4 @@ export class ApplicationService {
         this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
-
-
-  
 }

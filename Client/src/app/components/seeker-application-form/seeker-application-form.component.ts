@@ -77,7 +77,7 @@ export class SeekerApplicationFormComponent implements OnInit {
   jobData: Job = {} as Job;
   user_id: number = 0;
   useDefaultCv: boolean = false;
-  
+  canApply: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<SeekerApplicationFormComponent>,
@@ -95,6 +95,7 @@ export class SeekerApplicationFormComponent implements OnInit {
     this.jobData.title = data.job_title;
     this.jobData.field_name = data.job_field;
     this.jobData.company_logo_url = data.company_logo_url;
+    this.canApply = data.canApply;
   }
 
   async ngOnInit() {
@@ -140,7 +141,14 @@ export class SeekerApplicationFormComponent implements OnInit {
       applicationData.append('cv', this.applicationData.cv);
     }
     
-    let response = await this.applicationService.submitSeekerApplication(applicationData);
+    let response
+    
+    if (this.canApply == true){
+      response = await this.applicationService.submitSeekerApplication(applicationData);
+    }
+    else{
+      response = await this.applicationService.resubmitSeekerApplication(applicationData);
+    }
 
     if (response == true){
       this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm', {company: this.jobData.company_name}]);
