@@ -4,11 +4,11 @@
   <div class="interview-time">
     <label for="interview-time">per interview time</label>
     <input id="interview-time" type="text" value="30 min">
-    <button mat-raised-button (click)="allocateTime()" color="primary">Allocate Time</button>
+    <button mat-raised-button  color="primary">Allocate Time</button>
   </div>
   <h2 class="subtitle">Available Time Slots</h2>
   <button mat-raised-button color="primary"
-    (click)="addTimeSlot('2024-06-10', 'Thursday', '10 AM - 11 AM', '45 min')">Add Date & Time</button>
+    >Add Date & Time</button>
   <mat-tab-group>
     <mat-tab *ngFor="let date of getObjectKeys(timeSlots)">
       <ng-template mat-tab-label>
@@ -19,10 +19,10 @@
           <div class="slot-header">{{ slot.day }} {{ datePipe.transform(date, 'MMM d, y') }}</div>
           <div class="slot-time">{{ slot.time }} <span>{{ slot.duration }}</span></div>
           <div class="slot-actions">
-            <button mat-icon-button color="primary" (click)="editTimeSlot(date, i, slot.time, slot.duration)">
+            <button mat-icon-button color="primary" >
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" (click)="deleteTimeSlot(date, i)">
+            <button mat-icon-button color="warn">
               <mat-icon>delete</mat-icon>
             </button>
           </div>

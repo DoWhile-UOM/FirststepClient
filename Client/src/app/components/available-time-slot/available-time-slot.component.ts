@@ -79,31 +79,11 @@ export class AvailableTimeSlotComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar, public datePipe: DatePipe,private interview:InterviewService) {}
 
-  ngOnInit(): void {}
-
-  allocateTime(){
-    this.interview.start();
-  }
-
-  addTimeSlot(date: string, day: string, time: string, duration: string) {
-    if (!this.timeSlots[date]) {
-      this.timeSlots[date] = [];
-    }
-    this.timeSlots[date].push({ date, day, time, duration });
-    this.snackBar.open('Time slot added', 'Close', { duration: 3000 });
-  }
-
-  editTimeSlot(date: string, index: number, time: string, duration: string) {
-    this.timeSlots[date][index] = { ...this.timeSlots[date][index], time, duration };
-    this.snackBar.open('Time slot edited', 'Close', { duration: 3000 });
-  }
-
-  deleteTimeSlot(date: string, index: number) {
-    this.timeSlots[date].splice(index, 1);
-    if (this.timeSlots[date].length === 0) {
-      delete this.timeSlots[date];
-    }
-    this.snackBar.open('Time slot deleted', 'Close', { duration: 3000 });
+  ngOnInit(): void {
+    const slot = { id: 1, day: '20240625', start: 830, end: 1000 };
+    const duration = 50; // duration in minutes
+    const smallerSlots = this.interview.splitIntoSlots(slot, duration);
+    console.log(smallerSlots);
   }
 
   getObjectKeys(obj: object): string[] {
