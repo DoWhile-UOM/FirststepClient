@@ -41,7 +41,10 @@ export class InterviewService {
 
       if (endTime <= slot.end) {
         const timeString = `${slot.day}T${formatTime(currentHour, currentMinutes)}`;
-        this.slots.push(timeString);
+        const dateFromString = new Date(timeString);
+        //console.log(timeString);
+        const isoStringFromString = dateFromString.toISOString();
+        this.slots.push(isoStringFromString);
       }
 
       currentHour = nextHour;
@@ -53,16 +56,16 @@ export class InterviewService {
 
 
 
-  async postSplittedTimeSlots(records: Record[], duration: number) {
+  async postSplittedTimeSlots(records: Record[], duration: number, advertisement_id: number, company_id: number) {
     records.forEach((record: Record) => {
       this.splitIntoSlots(record, duration);
     });
     console.log(this.slots);
 
     const slotRequest: any = {
-      company_id: 7,
-      advertisement_id: 1052,
-      duration: 30,
+      company_id: company_id,
+      advertisement_id: advertisement_id,
+      duration: duration,
       time_slots: this.slots
     };
 
