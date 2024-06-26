@@ -24,6 +24,13 @@ interface Task {
   subtasks?: { name: string; completed: boolean }[];
 }
 
+
+interface interview{
+  application_id:number;
+  is_called:boolean;
+}
+
+
 @Component({
   selector: 'app-interview-sheduling-short-list',
   standalone: true,
