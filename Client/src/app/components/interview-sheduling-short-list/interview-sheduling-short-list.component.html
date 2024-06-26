@@ -16,7 +16,6 @@
           [indeterminate]="partiallyComplete()"
           (change)="update($event.checked)">Select All
         </mat-checkbox>
-        
       </span>
     </div>
   </div>
@@ -54,7 +53,6 @@
       <th mat-header-cell *matHeaderCellDef>Interview</th>
       <td mat-cell *matCellDef="let element; let i = index">
         <mat-checkbox
-          *ngIf="task().subtasks"
           [checked]="task().subtasks![i].completed"
           (change)="update($event.checked, i)">
         </mat-checkbox>

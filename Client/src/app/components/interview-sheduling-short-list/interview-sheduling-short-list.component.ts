@@ -10,20 +10,18 @@ import { ApplicationService } from '../../../services/application.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
- interface CandidateData {
+interface CandidateData {
   name: string;
   lastRevisionBy: string;
   interview: boolean;
   position: number;
 }
 
- interface Task {
+interface Task {
   name: string;
   completed: boolean;
-  subtasks?: Task[];
+  subtasks?: { name: string; completed: boolean }[];
 }
-
-
 
 @Component({
   selector: 'app-interview-sheduling-short-list',
@@ -40,66 +38,64 @@ import { Observable } from 'rxjs';
     MatCheckboxModule
   ]
 })
-export class InterviewShedulingShortListComponent implements OnInit{
+export class InterviewShedulingShortListComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'lastRevisionBy', 'interview', 'application'];
   candidateData: CandidateData[] = [];
-  advertismnet_id: string ='' ; // sample advertismnet_id
-  advertisment_title:string=''; // sample advertisment_title	
-  
+  advertismnet_id: string = ''; // sample advertismnet_id
+  advertisment_title: string = ''; // sample advertisment_title
 
   readonly task = signal<Task>({
     name: 'Select All',
     completed: false,
-    subtasks: this.candidateData.map(() => ({
-      name: '',
-      completed: false,
-    })),
+    subtasks: [],
   });
 
-  @ViewChild(MatTable)
-  table!: MatTable<CandidateData>;
+  @ViewChild(MatTable) table!: MatTable<CandidateData>;
 
   constructor(
     private applicationService: ApplicationService,
     private route: ActivatedRoute,
     private router: Router
-  ) { 
-   
-  }
+  ) {}
 
   ngOnInit() {
-  
-    try{
-     /* this.advertismnet_id=this.route.snapshot.paramMap.get('jobID')!;*/
-      this.advertisment_title=this.route.snapshot.paramMap.get('jobTitle')!;
-      this.advertismnet_id='1057';
+    try {
+      this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
+      this.advertismnet_id = '1057';
       this.getShortlistedCandidates();
-    }
-    catch{
+    } catch {
       console.log("Error in fetching the shortlisted candidates");
     }
-   
   }
 
   async getShortlistedCandidates() {
     let dataSet: any[] = [];
-    await this.applicationService.getShortlistedApplications(this.advertismnet_id).then((data:any[]) => {
+    await this.applicationService.getShortlistedApplications(this.advertismnet_id).then((data: any[]) => {
       dataSet = data;
     });
-      this.candidateData = dataSet.map((item, index) =>({
-        position: index + 1,
-        name: item.seeker_name,
-        lastRevisionBy: item.last_revision_employee_name,
-        interview:false,
-      }));
-      this.table.renderRows();
-    }
-   
-  sheduleInterview() {
-    // code to schedule the interview
+    this.candidateData = dataSet.map((item, index) => ({
+      position: index + 1,
+      name: item.seeker_name,
+      lastRevisionBy: item.last_revision_employee_name,
+      interview: false,
+    }));
+
+    // Initialize task subtasks based on candidate data
+    this.task.update(() => ({
+      name: 'Select All',
+      completed: false,
+      subtasks: this.candidateData.map(candidate => ({
+        name: candidate.name,
+        completed: candidate.interview,
+      })),
+    }));
+
+    this.table.renderRows();
   }
 
-
+  scheduleInterview() {
+    // code to schedule the interview
+  }
 
   readonly partiallyComplete = computed(() => {
     const task = this.task();
@@ -114,9 +110,11 @@ export class InterviewShedulingShortListComponent implements OnInit{
       if (index === undefined) {
         task.completed = completed;
         task.subtasks?.forEach(t => (t.completed = completed));
+        this.candidateData.forEach(candidate => (candidate.interview = completed));
       } else if (task.subtasks) {
         task.subtasks[index].completed = completed;
         task.completed = task.subtasks.every(t => t.completed);
+        this.candidateData[index].interview = completed;
       }
       return { ...task };
     });
