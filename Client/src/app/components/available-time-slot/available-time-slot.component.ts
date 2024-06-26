@@ -41,8 +41,8 @@ export class AvailableTimeSlotComponent {
   }
 
   records = [
-    { id: 1, day: '20240625', start: 830, end: 1100 },
-    { id: 2, day: '20240626', start: 1300, end: 1500 }
+    { id: 1, day: '20240625', start: 100, end: 200 },
+    { id: 2, day: '20240626', start: 2300, end: 2400 }
   ];
 
   ngOnInit() {
@@ -113,8 +113,7 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
-    const result = this.interview.splitIntoSlots(this.records[0], 35);
-    this.interview.postSplittedTimeSlots(this.records, 35);
+    this.interview.postSplittedTimeSlots(this.records, 30);
   }
 
 

@@ -1,5 +1,7 @@
 import { Time } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Apipaths } from './apipaths/apipaths';
+import axios from 'axios';
 
 interface Record {
   id: number;
@@ -13,11 +15,11 @@ interface Record {
 })
 export class InterviewService {
 
-  slots:string[]=[];
+  slots: string[] = [];
   constructor() {
   }
 
-  splitIntoSlots(slot: { id: number, day: string, start: number, end: number }, duration: number):void {
+  splitIntoSlots(slot: { id: number, day: string, start: number, end: number }, duration: number): void {
     const timeSlots = [];
     const startHour = Math.floor(slot.start / 100);
     const startMinutes = slot.start % 100;
@@ -51,10 +53,25 @@ export class InterviewService {
 
 
 
-  postSplittedTimeSlots(records: Record[], duration: number) {
+  async postSplittedTimeSlots(records: Record[], duration: number) {
     records.forEach((record: Record) => {
-      console.log(record);
-  });
+      this.splitIntoSlots(record, duration);
+    });
+    console.log(this.slots);
+
+    const slotRequest: any = {
+      company_id: 7,
+      advertisement_id: 1052,
+      duration: 30,
+      time_slots: this.slots
+    };
+
+    try {
+      const response = await axios.post(Apipaths.CreateAppointmentSlot, slotRequest);
+    } catch (error: any) {
+      console.error('Network Error: ', error);;
+    }
+
   }
 
   checkForOverlaps(records: Record[], input: Record): Record[] {
