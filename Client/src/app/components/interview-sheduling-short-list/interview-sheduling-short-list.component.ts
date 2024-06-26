@@ -9,6 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ApplicationService } from '../../../services/application.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
+import {MatIconModule} from '@angular/material/icon';
 
 interface CandidateData {
   name: string;
@@ -35,10 +36,12 @@ interface Task {
     MatTableModule,
     SpinnerComponent,
     InterviewShedulingHeaderComponent,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatIconModule
   ]
 })
 export class InterviewShedulingShortListComponent implements OnInit {
+
   displayedColumns: string[] = ['position', 'name', 'lastRevisionBy', 'interview', 'application'];
   candidateData: CandidateData[] = [];
   advertismnet_id: string = ''; // sample advertismnet_id
@@ -61,6 +64,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
   ngOnInit() {
     try {
       this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
+      /*this.advertisment_title = this.route.snapshot.paramMap.get('jobID')!;*/
       this.advertismnet_id = '1057';
       this.getShortlistedCandidates();
     } catch {
@@ -92,6 +96,10 @@ export class InterviewShedulingShortListComponent implements OnInit {
 
     this.table.renderRows();
   }
+
+ /* explore(application_Id: number){
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
+  }*/
 
   scheduleInterview() {
     // code to schedule the interview
