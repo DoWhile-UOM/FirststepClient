@@ -96,4 +96,5 @@ export class Apipaths {
 
     //Interview
     static readonly CreateAppointmentSlot: string = this.baseUrl + 'Appointment/CreateAppointments';
+    static readonly GetFreeAppointmentSlot: string = this.baseUrl + 'Appointment/GetAvailabelSlots/';
 }

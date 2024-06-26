@@ -2,12 +2,18 @@ import { Time } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
 import axios from 'axios';
+import { AdvertisementActionsComponent } from '../app/components/advertisement-actions/advertisement-actions.component';
 
 interface Record {
   id: number;
   day: string; // Assuming this is in "YYYY-MM-DD" format
   start: number; // Start time in hours (24-hour format)
   end: number; // End time in hours (24-hour format)
+}
+
+interface Appointment {
+  appointment_id: number;
+  start_time: string;
 }
 
 @Injectable({
@@ -121,6 +127,17 @@ export class InterviewService {
     return sortedRecords;
   }
 
+  async getAvailableSlots(AdvertisementId: number):Promise<Appointment[]> {
+    let appointments: Appointment[] = [];
+    try {
+      const response = await axios.get(Apipaths.GetFreeAppointmentSlot + AdvertisementId);
 
+      appointments = response.data as Appointment[];
+
+    } catch (error: any) {
+      console.error('Network Error: ', error);
+    }
+    return appointments;
+  }
 
 }

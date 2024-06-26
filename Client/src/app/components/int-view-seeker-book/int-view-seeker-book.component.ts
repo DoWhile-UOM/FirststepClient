@@ -6,15 +6,24 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { InterviewService } from '../../../services/interview.service';
 
 @Component({
   selector: 'app-int-view-seeker-book',
   standalone: true,
-  imports: [MatGridListModule,MatDividerModule,CommonModule,MatCardModule,MatIconModule,MatButtonModule],
+  imports: [MatGridListModule, MatDividerModule, CommonModule, MatCardModule, MatIconModule, MatButtonModule],
   templateUrl: './int-view-seeker-book.component.html',
   styleUrl: './int-view-seeker-book.component.css'
 })
 export class IntViewSeekerBookComponent {
+
+  constructor(private interview: InterviewService) {
+  }
+
+  ngOnInit() {
+    this.loadSlot();
+  }
+
   weekDays = [
     { name: 'WED', number: 11, timeSlots: ['10:00am', '10:30am', '11:00am', '11:30am', '12:00pm', '12:30pm'] },
     { name: 'THU', number: 12, timeSlots: [] },
@@ -25,18 +34,27 @@ export class IntViewSeekerBookComponent {
   ];
 
   isPopupVisible: boolean = false;
-  currentslot={day:'',date:0,time:''};
+  currentslot = { day: '', date: 0, time: '' };
 
-  showPopup(day:string,date:number,time:string) {
+  showPopup(day: string, date: number, time: string) {
     this.isPopupVisible = true;
-    this.currentslot={day:day,date:date,time:time};
-    console.log('Date '+date+' Time '+time);
+    this.currentslot = { day: day, date: date, time: time };
+    console.log('Date ' + date + ' Time ' + time);
   }
 
   closePopup() {
     this.isPopupVisible = false;
   }
 
+  async loadSlot() {
+    try {
+      const result = await this.interview.getAvailableSlots(1053);
+      console.log(result);
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
 
 }
