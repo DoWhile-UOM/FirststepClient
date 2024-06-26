@@ -112,6 +112,9 @@ export class HrManagerApplicationListingComponent implements OnInit {
   hraList: any[] = [];
   restrictPermissionForButton: boolean = false;
 
+  selectedApplicationId: number | null = null;//pass application id
+
+
   userType: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -243,11 +246,24 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', {jobID: this.jobID}]);
   }
 
-  explore(application_Id: number){
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
-  }
+  // explore(application_Id: number){
+  //   this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
+  // }
 //pass application id
-  shortlist() {
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist', {jobID: this.jobID, jobTitle: this.title,}]);
-    }
+setSelectedApplicationId(application_Id: number) {
+  this.selectedApplicationId = application_Id;
+}
+
+shortlist() {
+  if (this.selectedApplicationId !== null) {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist', { jobID: this.jobID, jobTitle: this.title, applicationId: this.selectedApplicationId }]);
+  } else {
+    this.snackBar.open("No application selected for scheduling", "", { panelClass: ['app-notification-warning'] })._dismissAfter(3000);
+  }
+}
+
+explore(application_Id: number) {
+  this.setSelectedApplicationId(application_Id);
+  this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', { applicationId: application_Id }]);
+}
 }
