@@ -26,6 +26,7 @@ export class AvailableTimeSlotComponent {
   calendarLoaded: boolean = false;
   startTime: number = 0;     // Variable to store start time
   endTime: number = 0;       // Variable to store end time
+  isAddTimeDisabled: boolean = true;
 
   constructor(private snackBar: MatSnackBar, private interview: InterviewService) { }
 
@@ -36,6 +37,7 @@ export class AvailableTimeSlotComponent {
   // Event handler for end time set
   onEndTimeSet(event: any) {
     this.endTime = this.formatTimeTo24Hour(event);
+    this.isAddTimeDisabled= false;
   }
 
   records = [
@@ -69,6 +71,7 @@ export class AvailableTimeSlotComponent {
     const newId = this.records.length > 0 ? Math.max(...this.records.map(record => record.id)) + 1 : 1;
     const recordWithId = { id: newId, ...newRecord };
     this.records.push(recordWithId);
+    this.records=this.interview.arrangeByStartTime(this.records);
   }
 
   print() {

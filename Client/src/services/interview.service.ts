@@ -70,6 +70,31 @@ export class InterviewService {
     return overlaps;
   }
 
+  arrangeByStartTime(records: Record[]): Record[] {
+    // Group records by day
+    const groupedRecords: { [day: string]: Record[] } = {};
+
+    records.forEach(record => {
+      if (!groupedRecords[record.day]) {
+        groupedRecords[record.day] = [];
+      }
+      groupedRecords[record.day].push(record);
+    });
+
+    // Sort records within each group by start time
+    for (const day in groupedRecords) {
+      groupedRecords[day].sort((a, b) => a.start - b.start);
+    }
+
+    // Flatten the grouped records back into a single array
+    const sortedRecords: Record[] = [];
+    for (const day in groupedRecords) {
+      sortedRecords.push(...groupedRecords[day]);
+    }
+
+    return sortedRecords;
+  }
+
 
 
 }

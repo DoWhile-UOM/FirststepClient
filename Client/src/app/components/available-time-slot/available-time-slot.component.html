@@ -21,7 +21,7 @@
                     <ngx-material-timepicker #endTimepicker (timeSet)="onEndTimeSet($event)"></ngx-material-timepicker>
                   </mat-form-field>
                 
-                  <button mat-raised-button class="apply-button" (click)="print()" color="primary">Add Slot</button>
+                  <button [disabled]="isAddTimeDisabled" mat-raised-button class="apply-button" (click)="print()" color="primary">Add Slot</button>
             </div>
         </mat-sidenav>
 
