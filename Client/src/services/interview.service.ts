@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
 import axios from 'axios';
 import { AdvertisementActionsComponent } from '../app/components/advertisement-actions/advertisement-actions.component';
-import https from 'https';
 
 interface Record {
   id: number;
@@ -16,12 +15,6 @@ interface Appointment {
   appointment_id: number;
   start_time: string;
 }
-
-const axiosClient = axios.create({
-  httpsAgent: new https.Agent({
-    rejectUnauthorized: false, // Disable SSL certificate validation
-  }),
-});
 
 @Injectable({
   providedIn: 'root'
@@ -134,13 +127,12 @@ export class InterviewService {
     return sortedRecords;
   }
 
-  async getAvailableSlots(AdvertisementId: number) {
-    var appointments: any;
+  async getAvailableSlots(AdvertisementId: number): Promise<Appointment[]> {
+    let appointments: Appointment[] = [];
     try {
-      await axiosClient.get(Apipaths.GetFreeAppointmentSlot + AdvertisementId)
-        .then((response) => {
-          appointments = response.data as Appointment[];
-        });
+      const response = await axios.get(Apipaths.GetFreeAppointmentSlot + AdvertisementId);
+
+      appointments = response.data as Appointment[];
 
     } catch (error: any) {
       console.error('Network Error: ', error);

@@ -48,7 +48,7 @@ export class IntViewSeekerBookComponent {
 
   async loadSlot() {
     try {
-      let result = await this.interview.getAvailableSlots(1053);
+      const result = await this.interview.getAvailableSlots(1053);
       console.log(result);
 
     } catch (err) {
