@@ -3,7 +3,12 @@ import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 import { A } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 
+interface interview{
+  application_id:number;
+  is_called:boolean;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -158,4 +163,15 @@ export class ApplicationService {
   }
 
 
+  async setToInterview(interview: interview): Promise<void>{
+    await axios
+      .patch(Apipaths.setToInterview, interview)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error setting interview:', error);
+      });
+
+  }
 }
