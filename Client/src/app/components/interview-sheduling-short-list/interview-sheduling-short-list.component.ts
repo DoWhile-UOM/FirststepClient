@@ -55,7 +55,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
     'application',
   ];
   candidateData: CandidateData[] = [];
-  advertismnet_id: string = '';
+  advertisment_id: string = '';
   advertisment_title: string = '';
 
   readonly task = signal<Task>({
@@ -75,7 +75,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
   ngOnInit() {
     try {
       this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
-      this.advertismnet_id = this.route.snapshot.paramMap.get('jobID')!;
+     this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
       this.getShortlistedCandidates();
     } catch {
       console.log('Error in fetching the shortlisted candidates');
@@ -85,7 +85,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
   async getShortlistedCandidates() {
     let dataSet: any[] = [];
     await this.applicationService
-      .getShortlistedApplications(this.advertismnet_id)
+      .getShortlistedApplications(this.advertisment_id)
       .then((data: any[]) => {
         dataSet = data;
       });
