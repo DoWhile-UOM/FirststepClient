@@ -37,7 +37,7 @@ export class AvailableTimeSlotComponent {
   // Event handler for end time set
   onEndTimeSet(event: any) {
     this.endTime = this.formatTimeTo24Hour(event);
-    this.isAddTimeDisabled= false;
+    this.isAddTimeDisabled = false;
   }
 
   records = [
@@ -71,7 +71,7 @@ export class AvailableTimeSlotComponent {
     const newId = this.records.length > 0 ? Math.max(...this.records.map(record => record.id)) + 1 : 1;
     const recordWithId = { id: newId, ...newRecord };
     this.records.push(recordWithId);
-    this.records=this.interview.arrangeByStartTime(this.records);
+    this.records = this.interview.arrangeByStartTime(this.records);
   }
 
   print() {
@@ -113,7 +113,8 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
-    this.interview.postRecords(this.records,30);
+    const result = this.interview.splitIntoSlots(this.records[0], 35);
+    console.log(result);
   }
 
 

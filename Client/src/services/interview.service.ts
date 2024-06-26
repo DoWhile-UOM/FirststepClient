@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 
 interface Record {
   id: number;
-  day: string;
-  start: number;
-  end: number;
+  day: string; // Assuming this is in "YYYY-MM-DD" format
+  start: number; // Start time in hours (24-hour format)
+  end: number; // End time in hours (24-hour format)
 }
 
 @Injectable({
@@ -13,31 +13,22 @@ interface Record {
 })
 export class InterviewService {
 
+  slots:string[]=[];
   constructor() {
   }
-
-  postRecords(records: Record[], duration: number): void{
-    let allSlots: string[] = [];
-  
-    records.forEach(record => {
-      const slots = this.splitIntoSlots(record, duration);
-      allSlots = allSlots.concat(slots);
-    });
-
-    console.log(allSlots);
-  }
-
 
   splitIntoSlots(slot: { id: number, day: string, start: number, end: number }, duration: number): string[] {
     const timeSlots = [];
     const startHour = Math.floor(slot.start / 100);
     const startMinutes = slot.start % 100;
-    const endHour = Math.floor(slot.end / 100);
-    const endMinutes = slot.end % 100;
     let currentHour = startHour;
     let currentMinutes = startMinutes;
 
-    const dayString = `${slot.day.substring(0, 4)}-${slot.day.substring(4, 6)}-${slot.day.substring(6, 8)}`;
+    const formatTime = (hour: number, minutes: number) => {
+      const hourString = hour.toString().padStart(2, '0');
+      const minuteString = minutes.toString().padStart(2, '0');
+      return `${hourString}:${minuteString}:00.000Z`;
+    };
 
     while (currentHour * 100 + currentMinutes < slot.end) {
       const nextMinutes = (currentMinutes + duration) % 60;
@@ -46,20 +37,26 @@ export class InterviewService {
       const startTime = currentHour * 100 + currentMinutes;
       const endTime = nextHour * 100 + nextMinutes;
 
-      const isFullSlot = endTime <= slot.end;
-
-      const startDateTime = new Date(`${dayString}T${String(currentHour).padStart(2, '0')}:${String(currentMinutes).padStart(2, '0')}:00`);
-      timeSlots.push(startDateTime.toISOString());
-
-      if (!isFullSlot) break;
+      if (endTime <= slot.end) {
+        const timeString = `${slot.day}T${formatTime(currentHour, currentMinutes)}`;
+        this.slots.push(timeString);
+      }
 
       currentHour = nextHour;
       currentMinutes = nextMinutes;
     }
 
-    return timeSlots;
+    return this.slots;
   }
 
+
+
+
+  postSplittedTimeSlots(records: Record[], duration: number) {
+    records.forEach(record => {
+      //this.splitIntoSlots(records, duration);
+    });
+  }
 
   checkForOverlaps(records: Record[], input: Record): Record[] {
     const overlaps: Record[] = [];
