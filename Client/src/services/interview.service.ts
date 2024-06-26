@@ -17,7 +17,7 @@ export class InterviewService {
   constructor() {
   }
 
-  splitIntoSlots(slot: { id: number, day: string, start: number, end: number }, duration: number): string[] {
+  splitIntoSlots(slot: { id: number, day: string, start: number, end: number }, duration: number):void {
     const timeSlots = [];
     const startHour = Math.floor(slot.start / 100);
     const startMinutes = slot.start % 100;
@@ -46,16 +46,15 @@ export class InterviewService {
       currentMinutes = nextMinutes;
     }
 
-    return this.slots;
   }
 
 
 
 
   postSplittedTimeSlots(records: Record[], duration: number) {
-    records.forEach(record => {
-      //this.splitIntoSlots(records, duration);
-    });
+    records.forEach((record: Record) => {
+      console.log(record);
+  });
   }
 
   checkForOverlaps(records: Record[], input: Record): Record[] {

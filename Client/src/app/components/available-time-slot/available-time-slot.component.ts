@@ -114,7 +114,7 @@ export class AvailableTimeSlotComponent {
 
   allocateTime() {
     const result = this.interview.splitIntoSlots(this.records[0], 35);
-    console.log(result);
+    this.interview.postSplittedTimeSlots(this.records, 35);
   }
 
 
