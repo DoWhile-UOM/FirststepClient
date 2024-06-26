@@ -16,7 +16,19 @@ export class InterviewService {
   constructor() {
   }
 
-  splitIntoSlots(slot: { id: number, day: string, start: number, end: number }, duration: number): { id: number, day: string, start: number, end: number, full: boolean }[] {
+  postRecords(records: Record[], duration: number): void{
+    let allSlots: string[] = [];
+  
+    records.forEach(record => {
+      const slots = this.splitIntoSlots(record, duration);
+      allSlots = allSlots.concat(slots);
+    });
+
+    console.log(allSlots);
+  }
+
+
+  splitIntoSlots(slot: { id: number, day: string, start: number, end: number }, duration: number): string[] {
     const timeSlots = [];
     const startHour = Math.floor(slot.start / 100);
     const startMinutes = slot.start % 100;
@@ -24,6 +36,8 @@ export class InterviewService {
     const endMinutes = slot.end % 100;
     let currentHour = startHour;
     let currentMinutes = startMinutes;
+
+    const dayString = `${slot.day.substring(0, 4)}-${slot.day.substring(4, 6)}-${slot.day.substring(6, 8)}`;
 
     while (currentHour * 100 + currentMinutes < slot.end) {
       const nextMinutes = (currentMinutes + duration) % 60;
@@ -34,13 +48,8 @@ export class InterviewService {
 
       const isFullSlot = endTime <= slot.end;
 
-      timeSlots.push({
-        id: slot.id,
-        day: slot.day,
-        start: startTime,
-        end: isFullSlot ? endTime : slot.end,
-        full: isFullSlot
-      });
+      const startDateTime = new Date(`${dayString}T${String(currentHour).padStart(2, '0')}:${String(currentMinutes).padStart(2, '0')}:00`);
+      timeSlots.push(startDateTime.toISOString());
 
       if (!isFullSlot) break;
 
@@ -50,6 +59,7 @@ export class InterviewService {
 
     return timeSlots;
   }
+
 
   checkForOverlaps(records: Record[], input: Record): Record[] {
     const overlaps: Record[] = [];

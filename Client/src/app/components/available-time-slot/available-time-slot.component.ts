@@ -112,4 +112,9 @@ export class AvailableTimeSlotComponent {
     return formattedTime;
   }
 
+  allocateTime() {
+    this.interview.postRecords(this.records,30);
+  }
+
+
 }
