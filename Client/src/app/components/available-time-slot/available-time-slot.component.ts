@@ -112,6 +112,25 @@ export class AvailableTimeSlotComponent {
     return formattedTime;
   }
 
+  formatTime(input: number): string {
+    let timeString = input.toString();
+    
+    if (timeString.length < 3) {
+      timeString = '0' + timeString;
+    }
+    
+    const hours = parseInt(timeString.slice(0, -2), 10);
+    const minutes = timeString.slice(-2);
+    
+
+    const period = hours < 12 ? 'AM' : 'PM';
+    
+
+    const formattedHours = hours % 12 || 12;
+
+    return `${formattedHours}:${minutes} ${period}`;
+  }
+
   allocateTime() {
     this.interview.postSplittedTimeSlots(this.records, 30,7,1053);
   }

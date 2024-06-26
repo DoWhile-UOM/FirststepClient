@@ -33,8 +33,8 @@
                     <mat-card class="event" *ngFor="let record of getRecordsByDay(formattedDate)">
                         <mat-card-content>
                             <div class="event-details">
-                                <span class="event-title">{{ record.start }}</span>
-                                <span class="event-time">{{ record.end }}</span>
+                                <span class="event-title">{{ formatTime(record.start) }} - {{ formatTime(record.end) }}</span>
+                                <span class="event-time">{{ formatTime(record.end) }}</span>
                             </div>
                         </mat-card-content>
                     </mat-card>
