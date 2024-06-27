@@ -36,6 +36,7 @@ interface Job {
   posted_date: string;
   is_saved: boolean;
   is_expired: boolean;
+  can_apply: boolean;
 }
 
 interface SearchData{

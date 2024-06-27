@@ -12,6 +12,21 @@
         background: #f9f9f9;
       }
 
+  @media screen and (max-width: 768px) {
+    /* Hide text on mobile screens */
+    #Documentdownloadcontainer {
+      height: auto;
+      align-items: center;
+      flex-direction: row;
+      width: auto;
+      border: none;
+      background: none;
+    }
+    .fileTopic{
+      display: none;
+    }
+  }
+
     
   
   

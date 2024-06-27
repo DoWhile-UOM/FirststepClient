@@ -22,6 +22,7 @@ interface Job {
   posted_date: string;
   is_saved: boolean;
   is_expired: boolean;
+  can_apply: boolean;
 }
 
 interface AppliedJob {
@@ -69,17 +70,20 @@ export class AdvertisementCardComponent{
   }
 
   onClickMoreDetails() {
-    let jobId = 0;
+    let jobId = 0, comId = 0, canApply = false;
 
     if (this.isApplicationPage) {
       jobId = this.appliedJob.advertisement_id;
+      comId = this.appliedJob.company_id;
     }
     else{
       jobId = this.job.advertisement_id;
+      comId = this.job.company_id;
+      canApply = this.job.can_apply;
     }
 
     this.jobDetailsDialog.open(AdvertisementViewPageComponent, {
-      data: {jobID: jobId},
+      data: {jobID: jobId, comID: comId, canApply: canApply},
       maxWidth: '80em',
       maxHeight: '80em'
     });

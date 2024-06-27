@@ -20,6 +20,8 @@ import { SeekerApplicationFileUploadComponent } from '../seeker-application-file
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { error } from 'console';
+import { response } from 'express';
 
 interface Seeker {
   email: string;
@@ -75,7 +77,7 @@ export class SeekerApplicationFormComponent implements OnInit {
   jobData: Job = {} as Job;
   user_id: number = 0;
   useDefaultCv: boolean = false;
-  
+  canApply: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<SeekerApplicationFormComponent>,
@@ -93,6 +95,7 @@ export class SeekerApplicationFormComponent implements OnInit {
     this.jobData.title = data.job_title;
     this.jobData.field_name = data.job_field;
     this.jobData.company_logo_url = data.company_logo_url;
+    this.canApply = data.canApply;
   }
 
   async ngOnInit() {
@@ -138,17 +141,18 @@ export class SeekerApplicationFormComponent implements OnInit {
       applicationData.append('cv', this.applicationData.cv);
     }
     
+    let response
     
-    try {
-      // check sucess message from the application service
-      await this.applicationService.submitSeekerApplication(applicationData);
+    if (this.canApply == true){
+      response = await this.applicationService.submitSeekerApplication(applicationData);
+    }
+    else{
+      response = await this.applicationService.resubmitSeekerApplication(applicationData);
+    }
 
-      this.router.navigate([
-        'seeker/home/applicationForm/applicationFormconfirm',
-      ]);
+    if (response == true){
+      this.router.navigate(['seeker/home/applicationForm/applicationFormconfirm', {company: this.jobData.company_name}]);
       this.dialogRef.close();
-    } catch (error) {
-      console.error('Error submiting application with cv: ', error);
     }
 
     this.spinner.hide();

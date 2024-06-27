@@ -4,12 +4,14 @@ import { MatCardModule } from '@angular/material/card';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialog, MatDialogClose } from '@angular/material/dialog';
 import { countries } from 'country-data';
 import { Country } from 'country-state-city';
 import { MatBadgeModule } from '@angular/material/badge';
 import { SeekerApplicationFormComponent } from '../seeker-application-form/seeker-application-form.component';
 import { AuthService } from '../../../services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 interface Skill{
   skill_name: string;
@@ -39,7 +41,7 @@ interface Job{
 @Component({
   selector: 'app-advertisement-view-page',
   standalone: true,
-  imports: [AdvertisementHeaderComponent, MatCardModule, CommonModule, MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent, MatBadgeModule],
+  imports: [AdvertisementHeaderComponent, MatCardModule, CommonModule, MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogContent, MatDialogClose, MatBadgeModule, MatIconModule],
   templateUrl: './advertisement-view-page.component.html',
   styleUrl: './advertisement-view-page.component.css'
 })
@@ -50,6 +52,7 @@ export class AdvertisementViewPageComponent {
   constructor(
     private adService: AdvertisementServices,
     private auth: AuthService,
+    private router: Router,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AdvertisementViewPageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -90,7 +93,17 @@ export class AdvertisementViewPageComponent {
         company_name:  this.adData.company_name, 
         job_title:  this.adData.title, 
         job_field:  this.adData.field_name,
-        company_logo_url:  this.adData.company_logo_url}
+        company_logo_url:  this.adData.company_logo_url,
+        canApply: this.data.canApply}
     }); 
+  }
+
+  onClickCompany(){
+    this.router.navigate(['seeker/home/company-profile', {company_id: this.data.comID}]);
+    this.dialogRef.close();
+  }
+
+  getDescription(){
+    return this.adData.job_description.replace(/\n\s*\n/g, '\n');
   }
 }

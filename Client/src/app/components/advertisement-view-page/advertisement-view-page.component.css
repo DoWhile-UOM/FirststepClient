@@ -114,7 +114,16 @@ mat-dialog-content{
     margin-top: 1em;
 }
 
+.close-button{
+    margin-top: 1em;
+    margin-left: 1.5em;
+}
+
 @media screen and (max-width: 768px) {
+    mat-card{
+        padding: 1.5%;
+    }
+
     .detail{
         flex-direction: column;
         width: 99%;
@@ -152,5 +161,15 @@ mat-dialog-content{
         margin-right: 0.8em;
         border-radius: 15px;
         font-size: 12px;
+    }
+
+    .apply-button{
+        width: 10em;
+        font-size: medium;
+        margin-top: 0.75em;
+    }
+    
+    .close-button{
+        margin-top: 0.75em;
     }
 }

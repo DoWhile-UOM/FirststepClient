@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, booleanAttribute } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
-import { A } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -10,21 +10,57 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ApplicationService {
   constructor(private snackbar: MatSnackBar) {}
 
-  async submitSeekerApplication(applicationData: FormData): Promise<void> {
-    try {
-      const response = await axios.post(
-        Apipaths.submitApplication,
-        applicationData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+  async submitSeekerApplication(applicationData: FormData): Promise<boolean> {
+    let response = false;
+
+    await axios.post(
+      Apipaths.submitApplication,
+      applicationData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    ).then(function (res) {
+      response = true;
+    })
+    .catch(
+      (error) => {
+        if (error.response.status == 409) {
+          this.snackbar.open("Can't Resubmit an application", "",{panelClass: ['app-notification-warning']})._dismissAfter(5000);
         }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error submiting application: ', error);
-    }
+        else {
+          this.snackbar.open("Error occurred submitting application :" + error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+        response = false;
+      }
+    );
+
+    return response;
+  }
+
+  async resubmitSeekerApplication(applicationData: FormData): Promise<boolean> {
+    let response = false;
+
+    await axios.put(
+      Apipaths.resubmitApplication,
+      applicationData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    ).then(function (res) {
+      response = true;
+    })
+    .catch(
+      (error) => {
+        this.snackbar.open("Error occurred submitting application :" + error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        response = false;
+      }
+    );
+
+    return response;
   }
 
   async changeAssignedHRA(application_id: number, hra_id: number) {
@@ -153,7 +189,4 @@ export class ApplicationService {
         this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
-
-
-  
 }

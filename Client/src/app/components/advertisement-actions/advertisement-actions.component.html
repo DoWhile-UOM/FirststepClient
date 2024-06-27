@@ -13,7 +13,7 @@
         mat-raised-button 
         class="apply-button"
         color="primary"
-        matBadge="{{expired? '!' : ''}}"
+        matBadge="{{(expired || !canApply)? '!' : ''}}"
         matBadgeColor="warn"
         [disabled]="expired"
         (click)="onClickApply()"
