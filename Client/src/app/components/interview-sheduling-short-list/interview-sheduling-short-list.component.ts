@@ -10,6 +10,8 @@ import { ApplicationService } from '../../../services/application.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../../services/auth.service';
+import { app } from '../../../../server';
 
 interface CandidateData {
   application_id: number;
@@ -69,13 +71,15 @@ export class InterviewShedulingShortListComponent implements OnInit {
   constructor(
     private applicationService: ApplicationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
     try {
       this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
-     this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
+      /*this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;*/
+      this.advertisment_id = '1057';
       this.getShortlistedCandidates();
     } catch {
       console.log('Error in fetching the shortlisted candidates');
@@ -110,7 +114,9 @@ export class InterviewShedulingShortListComponent implements OnInit {
     this.table.renderRows();
   }
 
-  explore() {}
+  explore(application_id: number) {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_id}]);
+  }
 
   readonly partiallyComplete = computed(() => {
     const task = this.task();
