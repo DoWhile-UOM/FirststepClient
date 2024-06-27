@@ -26,3 +26,23 @@
   margin-top: 10px;
   color: #008080;
 }
+
+@media screen and (max-width: 768px) {
+  /* Hide text on mobile screens */
+  #Documentsubmissioncontainer {
+    height: auto;
+    align-items: center;
+    flex-direction: row;
+    width: auto;
+    border: none;
+    background: none;
+  }
+
+  #Documentsubmissioncontainer span {
+    display: none; /* Hide the upload button */
+  }
+
+  #Documentsubmissioncontainer .spanicon {
+    margin-right: 10px; /* Add some spacing between icon and spinner */
+  }
+}

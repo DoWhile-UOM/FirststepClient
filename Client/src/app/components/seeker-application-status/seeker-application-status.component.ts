@@ -16,7 +16,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
-
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 //interface application status
 
@@ -58,6 +58,8 @@ export class SeekerApplicationStatusComponent implements OnInit{
   thirdFormGroup = this._formBuilder.group({
     thirdCtrl: ['', Validators.required],
   });
+  //stepperOrientation
+  stepperOrientation: 'horizontal' | 'vertical' = 'horizontal';
 
 
   constructor(
@@ -65,6 +67,7 @@ export class SeekerApplicationStatusComponent implements OnInit{
     public dialog: MatDialog,
     private _formBuilder: FormBuilder,
     private applicationService: ApplicationService, 
+    private breakpointObserver: BreakpointObserver,
     @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
       // assign data from application card 
@@ -81,6 +84,16 @@ export class SeekerApplicationStatusComponent implements OnInit{
   
 async ngOnInit() {
  this.getApplicationStatus();
+
+ this.breakpointObserver.observe([Breakpoints.Handset])
+ .subscribe(result => {
+  if (result.matches) {
+    this.stepperOrientation = 'vertical';
+  } else {
+    this.stepperOrientation = 'horizontal';
+  }
+});
+
 }
 
 

@@ -3,6 +3,7 @@ app-advertisement-header{
 }
 .stepper {
   margin-top: 2vw;
+  pointer-events: none;
 }
 .stepper .mat-step-header {
   pointer-events: none;
@@ -16,11 +17,29 @@ mat-dialog-actions {
   align-items: center;
   justify-content: center;
   color: #000;
-  font-size: 1vw;
+  font-size: medium;
   justify-content: space-between;
   margin-top: 1vw;
   margin-bottom: 1vw;
   width: 35%;
   align-self: center;
   font-weight: bold;
+}
+
+.rejected-message{
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  mat-dialog-actions {
+    flex-direction: row; 
+    width: auto;
+    margin-top: 1em; 
+    margin-bottom: 1em; 
+
+  }
+
+  .cv-btn{
+    margin-left: 15px;
+  }
 }
