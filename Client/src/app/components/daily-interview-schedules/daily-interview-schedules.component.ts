@@ -38,29 +38,37 @@ interface AppointmentSchedule {
 export class DailyInterviewSchedulesComponent implements OnInit {
   selectedDate: Date = new Date();  
   schedules: AppointmentSchedule[] = [];
-  timeSlots: string[] = [
-    '7:00am', '7:30am', '8:00am', '8:30am', '9:00am', '9:30am',
-    '10:00am', '10:30am', '11:00am', '11:30am', '12:00pm', '12:30pm',
-    '1:00pm', '1:30pm', '2:00pm', '2:30pm', '3:00pm', '3:30pm',
-    '4:00pm', '4:30pm', '5:00pm', '5:30pm', '6:00pm', '6:30pm',
-    '7:00pm', '7:30pm', '8:00pm', '8:30pm', '9:00pm', '9:30pm',
-    '10:00pm', '10:30pm', '11:00pm', '11:30pm', '12:00am'
-];
-
+  timeSlots: { label: string, start: Date, end: Date }[] = [];
 
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
+    this.generateTimeSlots();
     this.fetchSchedules(this.selectedDate);
   }
 
-  getScheduleForTimeSlot(timeSlot: string): AppointmentSchedule[] {
+  generateTimeSlots() {
+    const startHour = 7;
+    const endHour = 23;
+    for (let hour = startHour; hour <= endHour; hour++) {
+      for (let minute of [0, 30]) {
+        const timeLabel = `${hour}:${minute.toString().padStart(2, '0')}${hour < 12 ? 'am' : 'pm'}`;
+        const startTime = new Date();
+        startTime.setHours(hour, minute, 0, 0);
+        const endTime = new Date(startTime);
+        endTime.setMinutes(startTime.getMinutes() + 30);
+        this.timeSlots.push({ label: timeLabel, start: startTime, end: endTime });
+      }
+    }
+  }
+
+  getScheduleForTimeSlot(timeSlot: { label: string, start: Date, end: Date }): AppointmentSchedule[] {
     return this.schedules.filter(schedule => {
-      const scheduleTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
-      return scheduleTime === timeSlot;
+      const scheduleStartTime = new Date(schedule.start_time);
+      const scheduleEndTime = new Date(schedule.end_time);
+      return scheduleStartTime >= timeSlot.start && scheduleEndTime <= timeSlot.end;
     });
   }
-  
 
   onDateChange(date: Date) {
     this.selectedDate = date;
@@ -72,22 +80,10 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.appointmentService.getSchedulesByDate(date).then(
       (schedules: AppointmentSchedule[]) => {
         this.schedules = schedules;
-        console.log("Fetched Schedules: ", schedules);
+        console.log('Fetched Schedules:', this.schedules); // Debugging line
       },
       (error) => {
         this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
-      }
-    );
-  }
-
-  updateStatus(appointmentId: number, status: string) {
-    this.appointmentService.updateAppointmentStatus(appointmentId, status).then(
-      () => {
-        this.snackBar.open('Status updated successfully', '', { duration: 3000 });
-        this.fetchSchedules(this.selectedDate); // Refresh the schedules
-      },
-      (error) => {
-        this.snackBar.open('Failed to update status', '', { duration: 3000 });
       }
     );
   }
