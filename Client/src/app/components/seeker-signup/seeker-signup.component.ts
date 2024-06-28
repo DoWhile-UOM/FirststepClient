@@ -100,7 +100,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       first_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       last_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(128), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
+      password: [''],
       phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
       university: ['', [Validators.maxLength(100)]],
       linkedin: ['', [Validators.pattern(/^(http(s)?:\/\/)?(www\.)?linkedin\.com\/.*$/)]],
