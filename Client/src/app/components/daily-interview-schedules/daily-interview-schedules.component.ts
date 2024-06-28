@@ -24,6 +24,7 @@ interface AppointmentSchedule {
   title: string;
   status: string;
   start_time: string;
+  end_time: string;
 }
 
 @Component({
@@ -35,12 +36,17 @@ interface AppointmentSchedule {
 })
 
 export class DailyInterviewSchedulesComponent implements OnInit {
-  selectedDate: Date = new Date('2024-06-26'); // Set default date to 2024-06-25
+  selectedDate: Date = new Date();  
   schedules: AppointmentSchedule[] = [];
   timeSlots: string[] = [
-    '7:00am', '7:30am', '8:00am', '8:30am', '9:00am', '9:30am', 
-    '10:00am', '10:30am', '11:00am', '11:30am', '12:00pm'
-  ];
+    '7:00am', '7:30am', '8:00am', '8:30am', '9:00am', '9:30am',
+    '10:00am', '10:30am', '11:00am', '11:30am', '12:00pm', '12:30pm',
+    '1:00pm', '1:30pm', '2:00pm', '2:30pm', '3:00pm', '3:30pm',
+    '4:00pm', '4:30pm', '5:00pm', '5:30pm', '6:00pm', '6:30pm',
+    '7:00pm', '7:30pm', '8:00pm', '8:30pm', '9:00pm', '9:30pm',
+    '10:00pm', '10:30pm', '11:00pm', '11:30pm', '12:00am'
+];
+
 
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
@@ -50,10 +56,11 @@ export class DailyInterviewSchedulesComponent implements OnInit {
 
   getScheduleForTimeSlot(timeSlot: string): AppointmentSchedule[] {
     return this.schedules.filter(schedule => {
-      const scheduleTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const scheduleTime = new Date(schedule.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
       return scheduleTime === timeSlot;
     });
   }
+  
 
   onDateChange(date: Date) {
     this.selectedDate = date;
@@ -65,6 +72,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.appointmentService.getSchedulesByDate(date).then(
       (schedules: AppointmentSchedule[]) => {
         this.schedules = schedules;
+        console.log("Fetched Schedules: ", schedules);
       },
       (error) => {
         this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });

@@ -4,7 +4,7 @@
 />
 
 <div class="container">
-  <h2 class="header">Daily Interview Schedules</h2>
+  <h2 class="header">{{ selectedDate | date: 'fullDate' }}</h2>
   <mat-card class="card">
     <div class="schedule-container">
       <div class="date-header">{{ selectedDate | date: 'fullDate' }}</div>
@@ -19,20 +19,20 @@
             <div class="interview-details">
               <div class="name">{{ schedule.first_name }} {{ schedule.last_name }}</div>
               <div class="job-title">{{ schedule.title }}</div>
-              <div class="status">{{ schedule.status }}</div>
+              <div class="status">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</div>
             </div>
           </div>
         </div>
       </div>
       <div class="calendar-details-container">
         <div class="calendar-container">
-          <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+          <mat-calendar ngskiphydration [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
         </div>
         <div class="selected-date-details">
-          <h3>Scheduled for this day:</h3>
+          <h3>Scheduled for {{ selectedDate | date: 'fullDate' }}:</h3>
           <div class="slots" *ngFor="let schedule of schedules">
             <div class="schedule-item">
-              <div class="time">{{ schedule.start_time | date: 'shortTime' }}</div>
+              <div class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</div>
               <div class="details">
                 <div class="name">{{ schedule.first_name }} {{ schedule.last_name }}</div>
                 <div class="job-title">{{ schedule.title }}</div>

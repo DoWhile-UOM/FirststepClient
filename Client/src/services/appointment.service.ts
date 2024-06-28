@@ -10,6 +10,7 @@ interface AppointmentSchedule {
   title: string;
   status: string;
   start_time: string;
+  end_time: string;
 }
 
 @Injectable({
