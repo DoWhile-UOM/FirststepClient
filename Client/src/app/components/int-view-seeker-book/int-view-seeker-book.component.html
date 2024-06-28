@@ -47,11 +47,10 @@
             <div class="timezone">Test</div>
         </div>
         <div class="week">
-            <div class="day" *ngFor="let day of weekDays">
-                <div class="day-name">{{ day.name }}</div>
-                <div class="day-number">{{ day.number }}</div>
+            <div class="day" *ngFor="let day of schedule2">
+                <div class="day-name">{{ day.number }}</div>
                 <div class="timeslots">
-                    <button color="primary" (click)="showPopup(day.name,day.number,slot)" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
+                    <button color="primary" (click)="showPopup(day.number,day.number,slot)" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
                         {{ slot }}
                     </button>
                 </div>
