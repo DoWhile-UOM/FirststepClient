@@ -78,8 +78,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
   ngOnInit() {
     try {
       this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
-      /*this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;*/
-      this.advertisment_id = '1057';
+      this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
       this.getShortlistedCandidates();
     } catch {
       console.log('Error in fetching the shortlisted candidates');
