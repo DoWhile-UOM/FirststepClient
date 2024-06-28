@@ -78,7 +78,8 @@ export class InterviewShedulingShortListComponent implements OnInit {
   ngOnInit() {
     try {
       this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
-      this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
+      /*this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;*/
+      this.advertisment_id = '1057';
       this.getShortlistedCandidates();
     } catch {
       console.log('Error in fetching the shortlisted candidates');
@@ -97,7 +98,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
       position: index + 1,
       name: item.seeker_name,
       lastRevisionBy: item.last_revision_employee_name,
-      interview: false,
+      interview: item.application_status,
     }));
 
     // Initialize task subtasks based on candidate data
