@@ -51,7 +51,6 @@ export class IntViewSeekerBookComponent {
     const slots = result['slot'];
     this.advertismentDetails = result['details'];
     this.schedule2 = this.getFormattedSchedule(slots);
-
   }
 
   getFormattedSchedule(schedule: { appointment_id: number; start_time: string }[]) {

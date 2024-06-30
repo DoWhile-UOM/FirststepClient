@@ -175,24 +175,13 @@ export class InterviewService {
     return advertisement;
   }
 
-  async bookSlotSeeker(AdvertisementId: number): Promise<advertisement> {
-    let appointments: Appointment[] = [];
-    let addetails: advertisementDetials = { interview_duration: 0, title: '', company_name: '' };
-    let advertisement: advertisement = { details: addetails, slot: appointments };
+  async bookSlotSeeker(appointment_id: number,seeker_id:number){
     try {
-      const response = await axios.get(Apipaths.GetFreeAppointmentSlot + AdvertisementId);
-
-      appointments = response.data["slot"] as Appointment[];
-      addetails["interview_duration"] = response.data["interview_duration"];
-      addetails["title"] = response.data["title"];
-      addetails["company_name"] = response.data["company_name"];
-      advertisement["slot"] = appointments;
-      advertisement["details"] = addetails;
-
+      const response = await axios.get(Apipaths.BookSlotSeeker+'appointment=${appointment_id}/seeker=${seeker_id}');
+      
     } catch (error: any) {
       console.error('Network Error: ', error);
     }
-    return advertisement;
   }
 
 }
