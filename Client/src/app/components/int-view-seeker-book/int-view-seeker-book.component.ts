@@ -8,6 +8,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { InterviewService } from '../../../services/interview.service';
 
+interface advertisementDetials {
+  interview_duration: number;
+  title: string;
+  company_name: string;
+}
+
 @Component({
   selector: 'app-int-view-seeker-book',
   standalone: true,
@@ -16,6 +22,7 @@ import { InterviewService } from '../../../services/interview.service';
   styleUrl: './int-view-seeker-book.component.css'
 })
 export class IntViewSeekerBookComponent {
+  advertismentDetails: advertisementDetials = { interview_duration: 0, title: '', company_name: '' };
 
   constructor(private interview: InterviewService) {
     this.loadSlot();
@@ -25,17 +32,6 @@ export class IntViewSeekerBookComponent {
   ngOnInit() {
     console.log(this.schedule2);
   }
-
-  weekDays = [
-    { name: 'WED', number: 11, timeSlots: ['10:00am', '10:30am', '11:00am', '11:30am', '12:00pm', '12:30pm'] },
-    { name: 'THU', number: 12, timeSlots: [] },
-    { name: 'FRI', number: 13, timeSlots: [] },
-    { name: 'SAT', number: 14, timeSlots: [] },
-    { name: 'SUN', number: 15, timeSlots: [] },
-    { name: 'MON', number: 16, timeSlots: ['10:00am', '10:30am', '11:00am', '11:30am', '12:00pm', '12:30pm', '1:00pm', '1:30pm', '2:00pm', '2:30pm'] },
-  ];
-
-  schedule = [{ "appointment_id": 6, "start_time": "2024-06-25T01:00:00" }, { "appointment_id": 7, "start_time": "2024-06-25T01:30:00" }, { "appointment_id": 8, "start_time": "2024-06-26T23:00:00" }, { "appointment_id": 9, "start_time": "2024-06-26T23:30:00" }];
 
   isPopupVisible: boolean = false;
   currentslot = { day: '', date: 0, time: '' };
@@ -51,14 +47,11 @@ export class IntViewSeekerBookComponent {
   }
 
   async loadSlot() {
-    try {
-      const result = await this.interview.getAvailableSlots(1053);
-      console.log(result);
-      this.schedule2 = this.getFormattedSchedule(result);
+    let result = await this.interview.getAvailableSlots2(22);
+    const slots = result['slot'];
+    this.advertismentDetails = result['details'];
+    this.schedule2 = this.getFormattedSchedule(slots);
 
-    } catch (err) {
-      console.log(err);
-    }
   }
 
   getFormattedSchedule(schedule: { appointment_id: number; start_time: string }[]) {

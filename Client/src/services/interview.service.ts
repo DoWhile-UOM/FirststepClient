@@ -4,6 +4,7 @@ import { Apipaths } from './apipaths/apipaths';
 import axios from 'axios';
 import { AdvertisementActionsComponent } from '../app/components/advertisement-actions/advertisement-actions.component';
 
+
 interface Record {
   id: number;
   day: string; // Assuming this is in "YYYY-MM-DD" format
@@ -15,6 +16,18 @@ interface Appointment {
   appointment_id: number;
   start_time: string;
 }
+
+interface advertisement {
+  details: advertisementDetials;
+  slot: Appointment[];
+}
+
+interface advertisementDetials {
+  interview_duration: number;
+  title: string;
+  company_name: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -127,17 +140,59 @@ export class InterviewService {
     return sortedRecords;
   }
 
-  async getAvailableSlots(AdvertisementId: number): Promise<Appointment[]> {
+  async getAvailableSlots(AdvertisementId: number): Promise<advertisement> {
     let appointments: Appointment[] = [];
+    let addetails: advertisementDetials = { interview_duration: 0, title: '', company_name: '' };
+    let advertisement: advertisement = { details: addetails, slot: appointments };
     try {
       const response = await axios.get(Apipaths.GetFreeAppointmentSlot + AdvertisementId);
 
-      appointments = response.data as Appointment[];
+      appointments = response.data["slot"] as Appointment[];
+      addetails["interview_duration"] = response.data["interview_duration"];
+      addetails["title"] = response.data["title"];
+      addetails["company_name"] = response.data["company_name"];
+      advertisement["slot"] = appointments;
+      advertisement["details"] = addetails;
 
     } catch (error: any) {
       console.error('Network Error: ', error);
     }
-    return appointments;
+    return advertisement;
+  }
+
+  async getAvailableSlots2(AdvertisementId: number): Promise<advertisement> {
+    let appointments: Appointment[] = [];
+    let addetails: advertisementDetials = { interview_duration: 0, title: '', company_name: '' };
+    let advertisement: advertisement = { details: addetails, slot: appointments };
+
+    const response = await axios.get(Apipaths.GetFreeAppointmentSlot + AdvertisementId);
+    appointments = response.data["slot"] as Appointment[];
+    addetails["interview_duration"] = response.data["interview_duration"];
+    addetails["title"] = response.data["title"];
+    addetails["company_name"] = response.data["company_name"];
+    advertisement["slot"] = appointments;
+    advertisement["details"] = addetails;
+    return advertisement;
+  }
+
+  async bookSlotSeeker(AdvertisementId: number): Promise<advertisement> {
+    let appointments: Appointment[] = [];
+    let addetails: advertisementDetials = { interview_duration: 0, title: '', company_name: '' };
+    let advertisement: advertisement = { details: addetails, slot: appointments };
+    try {
+      const response = await axios.get(Apipaths.GetFreeAppointmentSlot + AdvertisementId);
+
+      appointments = response.data["slot"] as Appointment[];
+      addetails["interview_duration"] = response.data["interview_duration"];
+      addetails["title"] = response.data["title"];
+      addetails["company_name"] = response.data["company_name"];
+      advertisement["slot"] = appointments;
+      advertisement["details"] = addetails;
+
+    } catch (error: any) {
+      console.error('Network Error: ', error);
+    }
+    return advertisement;
   }
 
 }

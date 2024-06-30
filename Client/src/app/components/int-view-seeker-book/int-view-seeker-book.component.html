@@ -1,22 +1,13 @@
 <div class="body">
     <mat-card class="card">
         <h2>Select Appointment Time</h2>
-        <mat-grid-list cols="6" rowHeight="70">
+        <mat-grid-list cols="3" rowHeight="70">
 
-            <mat-grid-tile [colspan]="2">
+            <mat-grid-tile [colspan]="1">
 
                 <div class="text-icon-container">
                     <i class="material-icons">access_time</i>
-                    <span class="icon-text">30min</span>
-                </div>
-
-            </mat-grid-tile>
-
-            <mat-grid-tile [colspan]="3">
-
-                <div class="text-icon-container">
-                    <i class="material-icons">work</i>
-                    <span class="icon-text">Trainee</span>
+                    <span class="icon-text">{{advertismentDetails['interview_duration']}}min</span>
                 </div>
 
             </mat-grid-tile>
@@ -24,8 +15,17 @@
             <mat-grid-tile [colspan]="2">
 
                 <div class="text-icon-container">
+                    <i class="material-icons">work</i>
+                    <span class="icon-text">{{advertismentDetails['title']}}</span>
+                </div>
+
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="1">
+
+                <div class="text-icon-container">
                     <i class="material-icons">business</i>
-                    <span class="icon-text">Bistec Global</span>
+                    <span class="icon-text">{{advertismentDetails['company_name']}}</span>
                 </div>
 
             </mat-grid-tile>
