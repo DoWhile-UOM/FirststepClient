@@ -26,6 +26,7 @@ export class IntViewSeekerBookComponent {
 
   constructor(private interview: InterviewService) {
     this.loadSlot();
+    
   }
   schedule2: any;
 
@@ -51,13 +52,14 @@ export class IntViewSeekerBookComponent {
     const slots = result['slot'];
     this.advertismentDetails = result['details'];
     this.schedule2 = this.getFormattedSchedule(slots);
+    //console.log(this.schedule2);
   }
 
   getFormattedSchedule(schedule: { appointment_id: number; start_time: string }[]) {
+    let slotData:{ id: number, start: string}={id:0, start:''};
     const weekDays: { number: string; timeSlots: string[] }[] = [];
     const groupedSchedule: { [date: string]: { appointment_id: number; start_time: string }[] } = {};
 
-    // Group schedule by date
     schedule.forEach(slot => {
       const date = new Date(slot.start_time).toISOString().split('T')[0];
       if (!groupedSchedule[date]) {
@@ -66,15 +68,15 @@ export class IntViewSeekerBookComponent {
       groupedSchedule[date].push(slot);
     });
 
-    // Format the grouped schedule into the desired format
     for (const date in groupedSchedule) {
-      const timeSlots = groupedSchedule[date].map(slot => {
+      let timeSlots = groupedSchedule[date].map(slot => {
         const time = new Date(slot.start_time).toLocaleTimeString('en-US', {
           hour: 'numeric',
           minute: 'numeric',
           hour12: true
         });
-        return time;
+        slotData={id:slot.appointment_id, start:time};
+        return slotData;
       });
       const formattedDate = date;
       weekDays.push({ number: formattedDate, timeSlots });
