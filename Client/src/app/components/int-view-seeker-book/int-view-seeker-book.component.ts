@@ -35,12 +35,17 @@ export class IntViewSeekerBookComponent {
   }
 
   isPopupVisible: boolean = false;
-  currentslot = { day: '', date: 0, time: '' };
+  currentslot = { day: '', date: 0, time: '' ,id:0};
 
-  showPopup(day: string, date: number, time: string) {
+  showPopup(day: string, date: number, time: string,aid:number) {
     this.isPopupVisible = true;
-    this.currentslot = { day: day, date: date, time: time };
+    this.currentslot = { day: day, date: date, time: time ,id:aid};
     console.log('Date ' + date + ' Time ' + time);
+  }
+
+  confirmTime(appointment_id:number) {
+    this.interview.bookSlotSeeker(appointment_id,22);
+    console.log('Appointment ID ' + appointment_id);
   }
 
   closePopup() {
@@ -57,7 +62,7 @@ export class IntViewSeekerBookComponent {
 
   getFormattedSchedule(schedule: { appointment_id: number; start_time: string }[]) {
     let slotData:{ id: number, start: string}={id:0, start:''};
-    const weekDays: { number: string; timeSlots: string[] }[] = [];
+    const weekDays: { number: string; timeSlots: typeof slotData[] }[] = [];
     const groupedSchedule: { [date: string]: { appointment_id: number; start_time: string }[] } = {};
 
     schedule.forEach(slot => {

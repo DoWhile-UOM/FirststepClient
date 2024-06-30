@@ -50,8 +50,8 @@
             <div class="day" *ngFor="let day of schedule2">
                 <div class="day-name">{{ day.number }}</div>
                 <div class="timeslots">
-                    <button color="primary" (click)="showPopup(day.number,day.number,slot)" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
-                        {{ slot }}
+                    <button color="primary" (click)="showPopup(day.number,day.number,slot['start'],slot['id'])" mat-button *ngFor="let slot of day.timeSlots" class="timeslot">
+                        {{ slot['start'] }}
                     </button>
                 </div>
             </div>
@@ -63,12 +63,12 @@
 <div class="modal" [ngClass]="{'show': isPopupVisible}" (click)="closePopup()">
     <div class="modal-content" (click)="$event.stopPropagation()">
         <span class="close" (click)="closePopup()">&times;</span>
-        <h2>Popup Content</h2>
-        <p>This is a simple popup</p>
-        <p>Date {{currentslot.day}}, Month {{currentslot.date}} 2024</p>
+        <h2>Confirm Appointment</h2>
+        <p>By confirming, your interview appointment will be booked. This cannot be changed without contacting the relevant company</p>
+        <p>Date {{currentslot.day}}</p>
         <p>Time {{currentslot.time}}</p>
-        <button class="popup-button" mat-raised-button color="primary">Confirm</button>
+        <button class="popup-button" mat-raised-button color="primary" (click)="confirmTime(currentslot.id)">Confirm</button>
 
-        <button class="popup-button" mat-raised-button color="warn">Cancel</button>
+        <button class="popup-button" mat-raised-button color="warn" (click)="closePopup()">Cancel</button>
     </div>
 </div>

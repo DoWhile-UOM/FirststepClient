@@ -177,8 +177,8 @@ export class InterviewService {
 
   async bookSlotSeeker(appointment_id: number,seeker_id:number){
     try {
-      const response = await axios.get(Apipaths.BookSlotSeeker+'appointment=${appointment_id}/seeker=${seeker_id}');
-      
+      const response = await axios.patch(Apipaths.BookSlotSeeker+'appointment='+appointment_id+'/seeker='+seeker_id);
+
     } catch (error: any) {
       console.error('Network Error: ', error);
     }
