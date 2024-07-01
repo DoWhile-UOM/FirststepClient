@@ -1,11 +1,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="container">
-  <!-- Display the selected date -->
   <h2 class="header">{{ selectedDate | date: 'fullDate' }}</h2>
   <mat-card class="card">
     <div class="schedule-container">
-      <!-- Schedule table showing time slots and their corresponding interviews -->
       <div class="schedule-table">
         <div class="time-slot" *ngFor="let timeSlot of timeSlots">
           <div class="time-label">{{ timeSlot.label }}</div>
@@ -21,13 +19,12 @@
           </div>
         </div>
       </div>
-      <!-- Calendar and details of today's schedule -->
       <div class="calendar-details-container">
         <div class="calendar-container">
           <mat-calendar ngskiphydration [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
         </div>
         <div class="selected-date-details">
-          <h3>Scheduled for Today:</h3>
+          <h3>Scheduled for {{ selectedDate | date: 'fullDate' }}:</h3>
           <div class="slots" *ngFor="let schedule of schedules">
             <div class="schedule-item">
               <div class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</div>
@@ -37,7 +34,6 @@
               </div>
             </div>
           </div>
-          <div *ngIf="schedules.length === 0">No schedules for today.</div> <!-- Debugging line -->
         </div>
       </div>
     </div>
