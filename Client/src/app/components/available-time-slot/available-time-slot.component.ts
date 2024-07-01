@@ -34,11 +34,11 @@ export class AvailableTimeSlotComponent {
   constructor(private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
-      if (id) {  // Check if 'id' parameter exists
-        this.advertismentId = Number(id); //
-      }
-      if(this.advertismentId == 0 ||this.auth.getCompanyID() == null){
-        this.snackBar.open('Invalid Request.', '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.advertismentId = Number(id); //
+      if(!id || this.advertismentId == 0 ||this.auth.getCompanyID() == null){
+        this.snackBar.open('Invalid Request.', '', { panelClass: ['app-notification-error'] });
+      }else{
+        this.advertismentId = Number(id);
       }
     });
   }
