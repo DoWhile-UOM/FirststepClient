@@ -44,8 +44,9 @@ export class DailyInterviewSchedulesComponent implements OnInit {
 
   ngOnInit() {
     this.generateTimeSlots();
-    this.fetchSchedules(this.selectedDate);
+    this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
   }
+  
 
   generateTimeSlots() {
     const startHour = 7;
@@ -68,15 +69,9 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       const scheduleEndTime = new Date(schedule.end_time);
       return scheduleStartTime >= timeSlot.start && scheduleEndTime <= timeSlot.end;
     });
-  }
+  } 
 
-  onDateChange(date: Date) {
-    this.selectedDate = date;
-    this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    this.fetchSchedules(date);
-  }
-
-  fetchSchedules(date: Date) {
+  fetchSchedules(date: string) {
     this.appointmentService.getSchedulesByDate(date).then(
       (schedules: AppointmentSchedule[]) => {
         this.schedules = schedules;
@@ -87,6 +82,20 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       }
     );
   }
+  
+  onDateChange(date: Date) {
+    this.selectedDate = date;
+    this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
+    this.fetchSchedules(this.adjustDateToUTC(date));
+  }
+  
+  
+  adjustDateToUTC(date: Date): string {
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    const adjustedDate = new Date(date.getTime() - userTimezoneOffset);
+    return adjustedDate.toISOString().split('T')[0];
+  }
+  
 
   getStatusClass(status: string): string {
     switch (status) {

@@ -20,11 +20,10 @@ export class AppointmentService {
 
   constructor(private snackbar: MatSnackBar) {}
 
-  async getSchedulesByDate(date: Date): Promise<AppointmentSchedule[]> {
-    const formattedDate = date.toISOString().split('T')[0];
+  async getSchedulesByDate(date: Date | string): Promise<AppointmentSchedule[]> {
+    const formattedDate = typeof date === 'string' ? date : date.toISOString().split('T')[0];
     try {
       const response = await axios.get(`https://localhost:7213/api/Appointment/GetByDate/${formattedDate}`);
-      // const response = await axios.get(`${this.apiUrl}/${formattedDate}`);
       return response.data.map((schedule: any) => ({
         ...schedule,
         status: this.mapStatus(schedule.status), // Map enum to string
@@ -48,7 +47,7 @@ export class AppointmentService {
       throw error;
     }
   }
-
+  
   private mapStatus(status: number): string {
     switch (status) {
       case 0:
