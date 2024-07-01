@@ -36,20 +36,23 @@ interface AppointmentSchedule {
 })
 
 export class DailyInterviewSchedulesComponent implements OnInit {
-  selectedDate: Date = new Date();  
-  schedules: AppointmentSchedule[] = [];
-  timeSlots: { label: string, start: Date, end: Date }[] = [];
+  selectedDate: Date = new Date();  // Initialize the selected date to today's date
+  schedules: AppointmentSchedule[] = [];  // Array to hold schedules for the selected date
+  timeSlots: { label: string, start: Date, end: Date }[] = [];  // Array to hold time slots
+  todaysSchedules: AppointmentSchedule[] = [];  // Array to hold today's schedules
 
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
-    this.generateTimeSlots();
-    this.fetchSchedules(this.selectedDate);
+    console.log("ngOnInit called");
+    this.generateTimeSlots();  // Generate time slots for the schedule
+    this.fetchSchedules(this.selectedDate);  // Fetch schedules for the selected date
   }
 
+  // Method to generate time slots from 7am to 11pm, with 30-minute intervals
   generateTimeSlots() {
-    const startHour = 7;
-    const endHour = 23;
+    const startHour = 7;  // Starting hour
+    const endHour = 23;  // Ending hour
     for (let hour = startHour; hour <= endHour; hour++) {
       for (let minute of [0, 30]) {
         const timeLabel = `${hour}:${minute.toString().padStart(2, '0')}${hour < 12 ? 'am' : 'pm'}`;
@@ -62,6 +65,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     }
   }
 
+  // Method to get the schedules for a specific time slot
   getScheduleForTimeSlot(timeSlot: { label: string, start: Date, end: Date }): AppointmentSchedule[] {
     return this.schedules.filter(schedule => {
       const scheduleStartTime = new Date(schedule.start_time);
@@ -70,23 +74,30 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     });
   }
 
+  // Method to handle date change from the calendar
   onDateChange(date: Date) {
+    console.log(`Date changed to: ${date.toDateString()}`);
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    this.fetchSchedules(date);
+    this.fetchSchedules(date);  // Fetch schedules for the newly selected date
   }
 
+  // Method to fetch schedules for the selected date
   fetchSchedules(date: Date) {
+    console.log(`Fetching schedules for selected date: ${date.toDateString()}`); // Debugging line
     this.appointmentService.getSchedulesByDate(date).then(
       (schedules: AppointmentSchedule[]) => {
         this.schedules = schedules;
         console.log('Fetched Schedules:', this.schedules); // Debugging line
       },
       (error) => {
+        const errorMsg = error.toString().slice(0, 200); // Truncate error message
+        console.error('Error fetching schedules:', errorMsg);
         this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
       }
     );
   }
+  
 
   getStatusClass(status: string): string {
     switch (status) {
