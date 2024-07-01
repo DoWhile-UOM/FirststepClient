@@ -3,7 +3,12 @@ import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 import { A } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 
+interface interview{
+  application_id:number;
+  is_called:boolean;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -141,5 +146,32 @@ export class ApplicationService {
       });
 
     return applicationDetails;
+  }
+
+  async getShortlistedApplications(advertisement_id: string) {
+    let shortlistedApplications: any;
+    await axios
+      .get(Apipaths.getShortlistedApplications + advertisement_id)
+      .then((response) => {
+        shortlistedApplications = response.data;
+      })
+      .catch((error) => {
+        console.error('error fetching shortlist applicants:', error)
+      });
+
+    return shortlistedApplications;
+  }
+
+
+  async setToInterview(interview: interview): Promise<void>{
+    await axios
+      .patch(Apipaths.setToInterview, interview)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error setting interview:', error);
+      });
+
   }
 }

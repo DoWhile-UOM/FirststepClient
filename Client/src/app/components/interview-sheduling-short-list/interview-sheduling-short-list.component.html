@@ -1,7 +1,11 @@
 <div class="container">
   <div class="page-title">
     <div>
-      <app-interview-sheduling-back-action></app-interview-sheduling-back-action>
+      <app-interview-sheduling-header
+        [job_title]="this.advertisment_title"
+        [job_id]="this.advertisment_id"
+      >
+      </app-interview-sheduling-header>
     </div>
     <div class="pagetitle-content">
       <span>
@@ -11,11 +15,9 @@
         <mat-checkbox
           [checked]="task().completed"
           [indeterminate]="partiallyComplete()"
-          (change)="update($event.checked)">Select All
+          (change)="update($event.checked)"
+          >Select All
         </mat-checkbox>
-        <button mat-raised-button color="primary" (click)="confirm()" class="demo-button">
-          Confirm Interview
-        </button>
       </span>
     </div>
   </div>
@@ -34,7 +36,9 @@
   >
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>No.</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.position }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
@@ -51,9 +55,9 @@
       <th mat-header-cell *matHeaderCellDef>Interview</th>
       <td mat-cell *matCellDef="let element; let i = index">
         <mat-checkbox
-          *ngIf="task().subtasks"
           [checked]="task().subtasks![i].completed"
-          (change)="update($event.checked, i)">
+          (change)="update($event.checked, i)"
+        >
         </mat-checkbox>
       </td>
     </ng-container>
@@ -61,7 +65,14 @@
     <ng-container matColumnDef="application">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        View Application
+        <button
+          mat-button
+          color="primary"
+          class="small-icon-button"
+          (click)="explore(element.application_id)"
+        >
+          <mat-icon>explore</mat-icon>
+        </button>
       </td>
     </ng-container>
 

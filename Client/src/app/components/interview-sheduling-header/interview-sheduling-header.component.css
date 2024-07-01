@@ -1,9 +1,16 @@
 .container{
     display:flex;
     flex-direction:row;
+    justify-content: space-between;
+   
 }
 
-.content{
+.left{
+    display: flex;
+    flex-direction: row;
+}
+
+.jobContent {
     display:flex;
     flex-direction:column;
     margin-left: 1em;
@@ -13,9 +20,10 @@
      {
         color: #008080;
         /*font-size: 30px in percentage*/
-        font-size: 2.5vw;
+        font-size: 30px;
      }
 
 .num{
-    font-size: 1.3vw;
+    font-size: 1.1vw;
+    font-weight: 550;
 }

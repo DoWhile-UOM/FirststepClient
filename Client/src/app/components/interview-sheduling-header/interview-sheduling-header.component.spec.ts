@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InterviewShedulingBackActionComponent } from './interview-sheduling-back-action.component';
+import { InterviewShedulingHeaderComponent } from './interview-sheduling-header.component';
 
 describe('InterviewShedulingBackActionComponent', () => {
-  let component: InterviewShedulingBackActionComponent;
-  let fixture: ComponentFixture<InterviewShedulingBackActionComponent>;
+  let component: InterviewShedulingHeaderComponent;
+  let fixture: ComponentFixture<InterviewShedulingHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InterviewShedulingBackActionComponent]
+      imports: [InterviewShedulingHeaderComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(InterviewShedulingBackActionComponent);
+    fixture = TestBed.createComponent(InterviewShedulingHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

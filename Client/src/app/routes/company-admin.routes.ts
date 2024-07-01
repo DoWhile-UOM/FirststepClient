@@ -27,8 +27,9 @@ export const caRoutes: Routes = [
   { path: 'companyProfile', component: CompanyProfileEditComponent },
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
   { path: 'profile-view', component: SeekerProfileViewComponent },
-  { path: 'isShortList', component: InterviewShedulingShortListComponent },
-  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent },
-  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent }
+  { path: 'jobOfferList/applicationList/shortlist',component:InterviewShedulingShortListComponent},
+  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
+  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent}
+
 
 ];

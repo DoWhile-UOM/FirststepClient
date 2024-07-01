@@ -1,0 +1,18 @@
+<div class="container">
+<span class="left">
+  <div class="back-button">
+    <button mat-icon-button (click)="onBackButtonClick()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+  <div class="jobContent">
+     <div class="title">Applications: {{job_title}}</div><br>
+     <div class="num">Job Number: {{job_id}}</div>
+  </div>
+</span>
+<span class="right">
+    <button mat-raised-button color="primary" (click)="confirm()" class="demo-button">
+      Confirm Interview
+    </button>
+</span>
+</div>

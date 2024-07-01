@@ -38,6 +38,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeService } from '../../../services/employee.service';
+import { application } from 'express';
 
 interface HRMListing {
   title: string;
@@ -88,6 +89,7 @@ interface HRMApplicationList {
 })
 
 export class HrManagerApplicationListingComponent implements OnInit {
+
   displayedColumns: string[] = [
     'application_Id',
     'seekerName',
@@ -244,4 +246,8 @@ export class HrManagerApplicationListingComponent implements OnInit {
   explore(application_Id: number){
     this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
   }
+
+  shortlist() {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist', {jobID: this.jobID, jobTitle: this.title,}]);
+    }
 }
