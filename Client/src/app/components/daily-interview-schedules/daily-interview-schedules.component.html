@@ -8,22 +8,28 @@
         <div class="time-slot" *ngFor="let timeSlot of timeSlots">
           <div class="time-label">{{ timeSlot.label }}</div>
           <div class="interview-slot-container">
-            <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="getStatusClass(schedule.status)">
-              <div class="interview-details">
-                <div class="details">
-                  <div class="name">{{ schedule.first_name }} {{ schedule.last_name }}</div>
-                  <div class="job-title">{{ schedule.title }}</div>
-                  <div class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</div>
-                  <div class="status">
-                    <span>{{ schedule.status }}</span>
-                    <button mat-button (click)="updateStatus(schedule.appointment_id, 'Complete')">Complete</button>
-                    <button mat-button (click)="updateStatus(schedule.appointment_id, 'Missed')">Miss</button>
+              <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="getStatusClass(schedule.status)">
+                  <div class="interview-details">
+                      <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
+                      <span class="job-title">{{ schedule.title }}</span>
+                      <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
+                      <span *ngIf="schedule.status === 'Pending' || schedule.status === 'Booked'">
+                          <select (change)="updateStatus($event, schedule.appointment_id)">
+                              <option value="Pending" [selected]="schedule.status === 'Pending'">Pending</option>
+                              <option value="Booked" [selected]="schedule.status === 'Booked'">Booked</option>
+                              <option value="Complete">Complete</option>
+                              <option value="Missed">Missed</option>
+                          </select>
+                      </span>
+                      <span *ngIf="schedule.status === 'Complete' || schedule.status === 'Missed'">
+                          {{ schedule.status }}
+                      </span>
                   </div>
-                </div>
               </div>
-            </div>
           </div>
-        </div>
+      </div>
+      
+      
       </div>
       <div class="calendar-details-container">
         <div class="calendar-container">

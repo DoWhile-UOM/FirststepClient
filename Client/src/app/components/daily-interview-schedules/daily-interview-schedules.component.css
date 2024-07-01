@@ -121,6 +121,10 @@
   align-items: center;
 }
 
+.status-dropdown {
+  margin-left: 10px;
+}
+
 .calendar-details-container {
   display: flex;
   flex-direction: column;
@@ -188,6 +192,22 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
+}
+
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.name, .job-title, .time, .status-buttons {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.status-buttons button {
+  margin-left: 10px;
 }
 
 @media (max-width: 768px) {
