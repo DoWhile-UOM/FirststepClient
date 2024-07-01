@@ -47,34 +47,47 @@
   flex-direction: row; /* Ensure each time slot and interview slot are in a row */
   align-items: center;
   border-bottom: 1px solid #e0e0e0; /* Optional: Add a bottom border for separation */
-  padding: 10px 10px 20px 10px;
+  padding: 10px 0; /* Adjust padding */
 }
 
 .time-label {
   width: 80px; /* Fixed width for time labels */
   font-weight: bold;
+  color: teal; /* Teal color for time labels */
+}
+
+.interview-slot-container {
+  flex: 1; /* Make interview slot container take the remaining space */
+  display: flex;
+  flex-direction: column;
 }
 
 .interview-slot {
   flex: 1; /* Make interview slot take the remaining space */
-  padding: 5px;
+  padding: 10px; /* Add padding inside the slot */
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: center;
-  margin-left: 10px; /* Optional: Add margin for separation */
+  flex-direction: column; /* Stack details vertically */
+  background: #e0f7fa; /* Light background for slots */
+  margin-bottom: 10px; /* Space between interview slots */
 }
 
 .interview-slot.booked {
-  background: grey; /* Grey for booked */
+  background: #b0bec5; /* Grey for booked */
 }
 
 .interview-slot.missed {
-  background: red; /* Red for missed */
+  background: #ffcdd2; /* Light red for missed */
 }
 
 .interview-slot.complete {
-  background: teal; /* Teal for complete */
+  background: #b2dfdb; /* Teal for complete */
+}
+
+.status {
+  font-weight: bold;
+  margin-top: 5px;
 }
 
 .status.booked {
@@ -103,8 +116,10 @@
   color: #555;
 }
 
-.status {
+.time {
   margin-top: 5px;
+  font-size: 0.9em;
+  color: #555;
 }
 
 .calendar-details-container {
@@ -145,7 +160,7 @@
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 250px; /* Fixed width */
+  width: 100%; /* Ensure it takes full width */
 }
 
 .schedule-item .time {
