@@ -12,6 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { InterviewService } from '../../../services/interview.service';
+import { AuthService } from '../../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-available-time-slot',
@@ -22,13 +24,24 @@ import { InterviewService } from '../../../services/interview.service';
   styleUrls: ['./available-time-slot.component.css']
 })
 export class AvailableTimeSlotComponent {
+  advertismentId: number = 0;
   selectedDate: Date = new Date();
   calendarLoaded: boolean = false;
   startTime: number = 0;     // Variable to store start time
   endTime: number = 0;       // Variable to store end time
   isAddTimeDisabled: boolean = true;
 
-  constructor(private snackBar: MatSnackBar, private interview: InterviewService) { }
+  constructor(private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
+    this.route.queryParamMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {  // Check if 'id' parameter exists
+        this.advertismentId = Number(id); //
+      }
+      if(this.advertismentId == 0 ||this.auth.getCompanyID() == null){
+        this.snackBar.open('Invalid Request.', '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      }
+    });
+  }
 
   onStartTimeSet(event: any) {
     this.startTime = this.formatTimeTo24Hour(event);
@@ -114,17 +127,17 @@ export class AvailableTimeSlotComponent {
 
   formatTime(input: number): string {
     let timeString = input.toString();
-    
+
     if (timeString.length < 3) {
       timeString = '0' + timeString;
     }
-    
+
     const hours = parseInt(timeString.slice(0, -2), 10);
     const minutes = timeString.slice(-2);
-    
+
 
     const period = hours < 12 ? 'AM' : 'PM';
-    
+
 
     const formattedHours = hours % 12 || 12;
 
@@ -132,7 +145,8 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
-    this.interview.postSplittedTimeSlots(this.records, 30,7,1051);
+    //this.interview.postSplittedTimeSlots(this.records, 30,1051,this.auth.getCompanyID());
+    console.log(this.auth.getCompanyID()+" "+this.advertismentId);
   }
 
 
