@@ -44,7 +44,7 @@ export class IntViewSeekerBookComponent {
   }
 
   confirmTime(appointment_id:number) {
-    this.interview.bookSlotSeeker(appointment_id,22);
+    this.interview.bookSlotSeeker(appointment_id,4159);//change 4159 to the actual seeker id
     console.log('Appointment ID ' + appointment_id);
   }
 
@@ -53,7 +53,7 @@ export class IntViewSeekerBookComponent {
   }
 
   async loadSlot() {
-    let result = await this.interview.getAvailableSlots2(22);
+    let result = await this.interview.getAvailableSlots2(1051);
     const slots = result['slot'];
     this.advertismentDetails = result['details'];
     this.schedule2 = this.getFormattedSchedule(slots);

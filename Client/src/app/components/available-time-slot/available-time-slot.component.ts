@@ -132,7 +132,7 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
-    this.interview.postSplittedTimeSlots(this.records, 30,7,1053);
+    this.interview.postSplittedTimeSlots(this.records, 30,7,1051);
   }
 
 
