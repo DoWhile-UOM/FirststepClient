@@ -47,47 +47,40 @@
   flex-direction: row; /* Ensure each time slot and interview slot are in a row */
   align-items: center;
   border-bottom: 1px solid #e0e0e0; /* Optional: Add a bottom border for separation */
-  padding: 10px 0; /* Adjust padding */
+  padding: 10px 10px 20px 10px;
 }
 
 .time-label {
   width: 80px; /* Fixed width for time labels */
   font-weight: bold;
-  color: teal; /* Teal color for time labels */
 }
 
 .interview-slot-container {
-  flex: 1; /* Make interview slot container take the remaining space */
-  display: flex;
-  flex-direction: column;
+  flex: 1; /* Make interview slot take the remaining space */
 }
 
 .interview-slot {
-  flex: 1; /* Make interview slot take the remaining space */
-  padding: 10px; /* Add padding inside the slot */
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column; /* Stack details vertically */
-  background: #e0f7fa; /* Light background for slots */
-  margin-bottom: 10px; /* Space between interview slots */
+  background: #e0f7fa; /* Light teal */
+  margin-bottom: 10px; /* Add margin to separate each slot */
 }
 
 .interview-slot.booked {
-  background: #b0bec5; /* Grey for booked */
+  background: grey; /* Grey for booked */
 }
 
 .interview-slot.missed {
-  background: #ffcdd2; /* Light red for missed */
+  background: red; /* Red for missed */
 }
 
 .interview-slot.complete {
-  background: #b2dfdb; /* Teal for complete */
-}
-
-.status {
-  font-weight: bold;
-  margin-top: 5px;
+  background: teal; /* Teal for complete */
 }
 
 .status.booked {
@@ -104,22 +97,28 @@
 
 .interview-details {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .name {
   font-weight: bold;
+  margin-right: 10px;
 }
 
 .job-title {
   font-size: 0.9em;
   color: #555;
+  margin-right: 10px;
 }
 
 .time {
-  margin-top: 5px;
-  font-size: 0.9em;
-  color: #555;
+  margin-right: 10px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
 }
 
 .calendar-details-container {
@@ -153,14 +152,12 @@
 
 .schedule-item {
   display: flex;
-  grid-template-columns: auto 1fr; /* Two columns: auto width for time, remaining space for details */
   align-items: center;
   padding: 10px;
   margin-bottom: 10px;
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 100%; /* Ensure it takes full width */
 }
 
 .schedule-item .time {
@@ -170,20 +167,20 @@
 }
 
 .schedule-item .details {
+  display: flex;
   flex: 1;
+  justify-content: space-between;
 }
 
 .schedule-item .name {
   font-weight: bold;
-  padding: 2px 5px;
-  border-radius: 3px;
+  margin-right: 10px;
 }
 
 .schedule-item .job-title {
   font-size: 0.9em;
   color: #555;
-  padding: 2px 5px;
-  border-radius: 3px;
+  margin-right: 10px;
 }
 
 .slots {

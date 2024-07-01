@@ -96,6 +96,21 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     return adjustedDate.toISOString().split('T')[0];
   }
   
+  updateStatus(appointmentId: number, status: string): void {
+  this.appointmentService.updateAppointmentStatus(appointmentId, status).then(
+    () => {
+      this.snackBar.open('Status updated successfully', '', { duration: 3000 });
+      this.fetchSchedules(this.adjustDateToUTC(this.selectedDate)); // Refresh the schedules
+    },
+    (error) => {
+      this.snackBar.open('Failed to update status', '', { duration: 3000 });
+      console.error("Error updating status:", error); // Log the error for debugging
+
+    }
+  );
+}
+
+  
 
   getStatusClass(status: string): string {
     switch (status) {

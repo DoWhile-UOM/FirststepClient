@@ -10,10 +10,16 @@
           <div class="interview-slot-container">
             <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="getStatusClass(schedule.status)">
               <div class="interview-details">
-                <div class="name">{{ schedule.first_name }} {{ schedule.last_name }}</div>
-                <div class="job-title">{{ schedule.title }}</div>
-                <div class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</div>
-                <div class="status">{{ schedule.status }}</div>
+                <div class="details">
+                  <div class="name">{{ schedule.first_name }} {{ schedule.last_name }}</div>
+                  <div class="job-title">{{ schedule.title }}</div>
+                  <div class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</div>
+                  <div class="status">
+                    <span>{{ schedule.status }}</span>
+                    <button mat-button (click)="updateStatus(schedule.appointment_id, 'Complete')">Complete</button>
+                    <button mat-button (click)="updateStatus(schedule.appointment_id, 'Missed')">Miss</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -31,6 +37,7 @@
               <div class="details">
                 <div class="name">{{ schedule.first_name }} {{ schedule.last_name }}</div>
                 <div class="job-title">{{ schedule.title }}</div>
+                <div class="status">{{ schedule.status }}</div>
               </div>
             </div>
           </div>
