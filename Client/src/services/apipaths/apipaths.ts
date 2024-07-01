@@ -95,4 +95,9 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
+
+    //Interview
+    static readonly CreateAppointmentSlot: string = this.baseUrl + 'Appointment/CreateAppointments';
+    static readonly GetFreeAppointmentSlot: string = this.baseUrl + 'Appointment/GetAvailabelSlots/';
+    static readonly BookSlotSeeker: string = this.baseUrl + 'Appointment/BookAppointment/';
 }

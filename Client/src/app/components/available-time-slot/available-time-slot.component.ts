@@ -1,108 +1,139 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableModule } from '@angular/material/table';
+import { Component } from '@angular/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatCalendarBody } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatCalendar } from '@angular/material/datepicker';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule, DatePipe } from '@angular/common';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatTabsModule } from '@angular/material/tabs';
-import { FormsModule } from '@angular/forms';
-
-interface TimeSlot {
-  date: string;
-  day: string;
-  time: string;
-  duration: string;
-}
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { InterviewService } from '../../../services/interview.service';
 
 @Component({
   selector: 'app-available-time-slot',
   standalone: true,
-  imports: [
-    MatTableModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
-    CommonModule,
-    MatGridListModule,
-    MatTabsModule,
-    FormsModule
-  ],
-  providers: [DatePipe],
+  imports: [MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
+  providers: [],
   templateUrl: './available-time-slot.component.html',
   styleUrls: ['./available-time-slot.component.css']
 })
-export class AvailableTimeSlotComponent implements OnInit {
-  timeSlots: { [key: string]: TimeSlot[] } = {
-    '2024-05-31': [
-      { date: '2024-05-31', day: 'Friday', time: '6 AM - 9 AM', duration: '30 min' },
-      { date: '2024-05-31', day: 'Friday', time: '6 AM - 9 AM', duration: '30 min' },
-      { date: '2024-05-31', day: 'Friday', time: '6 AM - 9 AM', duration: '30 min' },
-      { date: '2024-05-31', day: 'Friday', time: '6 AM - 9 AM', duration: '30 min' }
+export class AvailableTimeSlotComponent {
+  selectedDate: Date = new Date();
+  calendarLoaded: boolean = false;
+  startTime: number = 0;     // Variable to store start time
+  endTime: number = 0;       // Variable to store end time
+  isAddTimeDisabled: boolean = true;
 
-    ],
-    '2024-06-01': [
-      { date: '2024-06-01', day: 'Saturday', time: '9 AM - 10 AM', duration: '60 min' },
-      { date: '2024-06-01', day: 'Saturday', time: '10 AM - 11 AM', duration: '30 min' }
-    ],
-    '2024-06-02': [
-      { date: '2024-06-02', day: 'Sunday', time: '10 AM - 11 AM', duration: '30 min' },
-      { date: '2024-06-02', day: 'Sunday', time: '11 AM - 12 PM', duration: '30 min' }
-    ],
-    '2024-06-03': [
-      { date: '2024-06-03', day: 'Monday', time: '11 AM - 12 PM', duration: '30 min' }
-    ],
-    '2024-06-04': [
-      { date: '2024-06-04', day: 'Tuesday', time: '1 PM - 2 PM', duration: '60 min' }
-    ],
-    '2024-06-05': [
-      { date: '2024-06-05', day: 'Wednesday', time: '2 PM - 3 PM', duration: '30 min' }
-    ],
-    '2024-06-06': [
-      { date: '2024-06-06', day: 'Thursday', time: '3 PM - 4 PM', duration: '30 min' }
-    ],
-    '2024-06-07': [
-      { date: '2024-06-07', day: 'Friday', time: '4 PM - 5 PM', duration: '30 min' }
-    ],
-    '2024-06-08': [
-      { date: '2024-06-08', day: 'Saturday', time: '5 PM - 6 PM', duration: '60 min' }
-    ],
-    '2024-06-09': [
-      { date: '2024-06-09', day: 'Sunday', time: '6 PM - 7 PM', duration: '30 min' }
-    ]
-  };
+  constructor(private snackBar: MatSnackBar, private interview: InterviewService) { }
 
-  constructor(private snackBar: MatSnackBar, public datePipe: DatePipe) {}
+  onStartTimeSet(event: any) {
+    this.startTime = this.formatTimeTo24Hour(event);
+  }
 
-  ngOnInit(): void {}
+  // Event handler for end time set
+  onEndTimeSet(event: any) {
+    this.endTime = this.formatTimeTo24Hour(event);
+    this.isAddTimeDisabled = false;
+  }
 
-  addTimeSlot(date: string, day: string, time: string, duration: string) {
-    if (!this.timeSlots[date]) {
-      this.timeSlots[date] = [];
+  records = [
+    { id: 1, day: '2024-06-25', start: 100, end: 200 },
+    { id: 2, day: '2024-06-26', start: 2300, end: 2400 }
+  ];
+
+  ngOnInit() {
+    // Delay loading of the calendar to avoid hydration issues
+    setTimeout(() => {
+      this.calendarLoaded = true;
+    }, 100);
+  }
+
+  get formattedDate(): string {
+    return this.selectedDate ? this.formatDate(this.selectedDate) : '';
+  }
+
+  getRecordsByDay(day: string) {
+    return this.records.filter(record => record.day === day);
+  }
+
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-indexed
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
+  addRecord(newRecord: { day: string, start: number, end: number }) {
+    const newId = this.records.length > 0 ? Math.max(...this.records.map(record => record.id)) + 1 : 1;
+    const recordWithId = { id: newId, ...newRecord };
+    this.records.push(recordWithId);
+    this.records = this.interview.arrangeByStartTime(this.records);
+  }
+
+  print() {
+    let response: any = this.interview.checkForOverlaps(this.records, { id: 1, day: this.formattedDate, start: this.startTime, end: this.endTime });
+    if (response.length > 0) {
+      this.snackBar.open('The time slot overlaps with an existing time slot.', '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      return;
     }
-    this.timeSlots[date].push({ date, day, time, duration });
-    this.snackBar.open('Time slot added', 'Close', { duration: 3000 });
-  }
 
-  editTimeSlot(date: string, index: number, time: string, duration: string) {
-    this.timeSlots[date][index] = { ...this.timeSlots[date][index], time, duration };
-    this.snackBar.open('Time slot edited', 'Close', { duration: 3000 });
-  }
-
-  deleteTimeSlot(date: string, index: number) {
-    this.timeSlots[date].splice(index, 1);
-    if (this.timeSlots[date].length === 0) {
-      delete this.timeSlots[date];
+    if (this.startTime < this.endTime) {
+      this.addRecord({ day: this.formattedDate, start: this.startTime, end: this.endTime });
+      this.snackBar.open('The time slot has been successfully added.', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+    } else {
+      this.snackBar.open('Please ensure that the Start Time precedes the End Time', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
-    this.snackBar.open('Time slot deleted', 'Close', { duration: 3000 });
+
   }
 
-  getObjectKeys(obj: object): string[] {
-    return Object.keys(obj).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+  formatTimeTo24Hour(timeString: string): number {
+    // Split the time string into hours, minutes, and period (AM/PM)
+    const [time, period] = timeString.split(' ');
+
+    // Split hours and minutes
+    const [hours, minutes] = time.split(':').map(part => parseInt(part, 10));
+
+    // Convert hours to 24-hour format
+    let hours24 = hours;
+    if (period === 'PM' && hours < 12) {
+      hours24 += 12;
+    } else if (period === 'AM' && hours === 12) {
+      hours24 = 0;
+    }
+
+    // Combine hours and minutes into a number (HHmm)
+    const formattedTime = hours24 * 100 + minutes;
+
+    return formattedTime;
   }
+
+  formatTime(input: number): string {
+    let timeString = input.toString();
+    
+    if (timeString.length < 3) {
+      timeString = '0' + timeString;
+    }
+    
+    const hours = parseInt(timeString.slice(0, -2), 10);
+    const minutes = timeString.slice(-2);
+    
+
+    const period = hours < 12 ? 'AM' : 'PM';
+    
+
+    const formattedHours = hours % 12 || 12;
+
+    return `${formattedHours}:${minutes} ${period}`;
+  }
+
+  allocateTime() {
+    this.interview.postSplittedTimeSlots(this.records, 30,7,1051);
+  }
+
+
 }

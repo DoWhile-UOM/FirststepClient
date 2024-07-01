@@ -1,86 +1,59 @@
 .container {
-    margin: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #004d40; /* Teal theme color */
-  }
-  
-  .job-number {
-    font-size: 16px;
-    margin-bottom: 20px;
-    color: #004d40; /* Teal theme color */
-  }
-  
-  .interview-time {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    height: 100vh;
+}
+
+.sidenav-container {
+    width: 100%;
   }
-  
-  .interview-time label {
-    margin-right: 10px;
-    color: #004d40; /* Teal theme color */
-  }
-  
-  .interview-time input {
-    margin-right: 10px;
-  }
-  
-  .subtitle {
-    font-size: 20px;
-    margin-bottom: 10px;
-    color: #004d40; /* Teal theme color */
-  }
-  
-  .time-slots {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .time-slot {
-    margin-top: 20px;
-    padding: 10px;
-    border: 2px solid teal; /* Teal border */
-    border-radius: 8px;
-    background-color: #ffffff; /* White background */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    width: max-content;
-    min-width: 200px;
-    height: max-content;
-    min-height: 150px;
-    font-size: 12px;
-  }
-  
-  .slot-header {
-    font-size: 12px;
-    font-weight: bold;
-    color: #004d40; /* Teal theme color */
-  }
-  
-  .slot-time {
-    font-size: 10px;
-    margin-top: 5px;
-    color: #004d40; /* Teal theme color */
-  }
-  
-  .slot-time span {
-    font-size: 10px;
-    color: #00796b; /* Darker teal color */
-  }
-  
-  .slot-actions {
+
+.calendar-sidenav {
+    width: 300px;
+    border-right: 1px solid #ccc;
+    padding: 16px;
+}
+
+.schedule-container {
+    position: relative;
+    flex-grow: 1;
+    padding: 16px;
+    overflow-y: scroll;
+}
+
+.time-indicator {
+    position: absolute;
+    top: 75px;
+    /* adjust this based on current time */
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: red;
+}
+
+.event-list {
+    margin-top: 80px;
+    /* adjust this based on the start time of the schedule */
+}
+
+.event {
+    margin-bottom: 16px;
+    background-color: #fbc02d;
+}
+
+.event-details {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    margin-top: 5px;
-  }
-  
+}
+
+.event-title {
+    font-weight: bold;
+    font-size: 1.25em;
+    flex: 1;
+}
+
+.event-time {
+    font-size: 0.875em;
+    color: rgba(0, 0, 0, 0.54);
+    white-space: nowrap;
+    margin-left: 8px;
+}
