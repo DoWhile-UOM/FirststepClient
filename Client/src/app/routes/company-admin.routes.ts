@@ -21,7 +21,7 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList', component: JobOfferListComponent },
   { path: 'jobOfferList/newJob', component: NewJobComponent },
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
-  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent},
+  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent },
   { path: 'jobOfferList/applicationList', component: HrManagerApplicationListingComponent },
   { path: 'jobOfferList/applicationList/applicationView', component: HrmanagerApplicationViewComponent },
   { path: 'companyProfile', component: CompanyProfileEditComponent },
@@ -30,5 +30,6 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList/applicationList/shortlist',component:InterviewShedulingShortListComponent},
   { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
   { path: 'availableTimeSlot', component: AvailableTimeSlotComponent}
+
 
 ];
