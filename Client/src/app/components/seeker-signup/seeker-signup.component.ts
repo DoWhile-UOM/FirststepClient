@@ -113,7 +113,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       first_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       last_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
-      password: [''],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
       phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
       university: ['', [Validators.maxLength(100)]],
       linkedin: ['', [Validators.pattern(/^(http(s)?:\/\/)?(www\.)?linkedin\.com\/.*$/)]],
@@ -247,6 +247,18 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
 
     if (this.locationCountryControl.value == null || this.locationCityControl.value == null){
       this.snackbar.open("Please select location", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+      return;
+    }
+
+    // Password validation error check and snackbar message display
+    if (this.seekerReg.get('password')?.hasError('required')) {
+      this.snackbar.open('Password is required', 'Close', { duration: 3000 });
+      return;
+    } else if (this.seekerReg.get('password')?.hasError('minlength') || this.seekerReg.get('password')?.hasError('maxlength')) {
+      this.snackbar.open('Password must be between 8 and 20 characters long', 'Close', { duration: 3000 });
+      return;
+    } else if (this.seekerReg.get('password')?.hasError('pattern')) {
+      this.snackbar.open('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character from @$!%*?&.', 'Close', { duration: 3000 });
       return;
     }
 

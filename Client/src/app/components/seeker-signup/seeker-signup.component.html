@@ -208,12 +208,14 @@
                 <mat-form-field appearance="outline" class="fixed-width">
                   <mat-label>Bio</mat-label>
                   <input matInput placeholder="Enter Bio" formControlName="bio" />
+                  <mat-hint>e.g., Passionate software developer with 5 years of experience.</mat-hint>
                   <mat-error *ngIf="seekerReg.get('bio')?.hasError('required')">Bio is required</mat-error>
                   <mat-error *ngIf="seekerReg.get('bio')?.hasError('maxlength')">Bio is too long</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="fixed-width">
                   <mat-label>Description</mat-label>
                   <input matInput placeholder="Enter Description" formControlName="description" />
+                  <mat-hint>e.g., Experienced in developing web applications using Angular, React, and Node.js.</mat-hint>
                   <mat-error *ngIf="seekerReg.get('description')?.hasError('required')">Description is required</mat-error>
                   <mat-error *ngIf="seekerReg.get('description')?.hasError('maxlength')">Description is too long</mat-error>
                 </mat-form-field>
