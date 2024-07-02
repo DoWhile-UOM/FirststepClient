@@ -110,14 +110,16 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       description: ['', [Validators.required, Validators.maxLength(2000)]],
       profile_picture: [''],
       seekerSkills: [[]],
-      otp_in: ['']
+      otp_in: [''],
+      //location
+      // location_1: [''],
+      // location_2: [''],
     });
   }
 
   async ngOnInit() {
     await this.jobFieldService.getAll().then((response) => {
       this.fields = response;
-      console.log(this.fields);
     });
 
     // OTP
@@ -207,7 +209,6 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       this.remainingTime--;
       if (this.remainingTime <= 0) {
         clearInterval(intervalId); // Stop the timer when time is up
-        console.log("Timer off");
         this.isOTPRequestSent = false;
         this.reqOTPBtnText = "Request OTP";
       }
@@ -274,16 +275,18 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
     this._snackBar.open(message, "Close", { duration: 5000 });
   }
 
+  //Stepper Control
+
   isFormInvalid(step: number): boolean {
     switch (step) {
       case 0:
-        return this.seekerReg.get('first_name')?.invalid || this.seekerReg.get('last_name')?.invalid || this.seekerReg.get('phone_number')?.invalid || false;
+        return this.seekerReg.get('first_name')?.invalid || this.seekerReg.get('last_name')?.invalid || false;
       case 1:
         return this.seekerReg.get('email')?.invalid || this.seekerReg.get('password')?.invalid || this.seekerReg.get('otp_in')?.invalid || !this.isEmailVerified || false;
       case 2:
         return this.seekerReg.get('university')?.invalid || this.seekerReg.get('linkedin')?.invalid || false;
       case 3:
-        return this.seekerReg.get('field_id')?.invalid || this.seekerReg.get('seekerSkills')?.invalid || false;
+        return this.seekerReg.get('field_id')?.invalid || this.seekerReg.get('seekerSkills')?.invalid || this.seekerReg.get('phone_number')?.invalid ||false;
       case 4:
         return this.seekerReg.get('bio')?.invalid || this.seekerReg.get('description')?.invalid || false;
       default:

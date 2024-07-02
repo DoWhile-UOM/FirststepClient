@@ -21,12 +21,19 @@
                   <input matInput placeholder="Enter Last name" formControlName="last_name" required />
                   <mat-error *ngIf="seekerReg.get('last_name')?.hasError('required')">Last name is required</mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="fixed-width">
-                  <mat-label>Contact Number</mat-label>
-                  <input matInput placeholder="Enter contact Number" formControlName="phone_number" required />
-                  <mat-error *ngIf="seekerReg.get('phone_number')?.hasError('required')">Contact number is required</mat-error>
-                  <mat-error *ngIf="seekerReg.get('phone_number')?.hasError('pattern')">Invalid contact number</mat-error>
+
+                <!--Add location -->
+                
+                <!-- <mat-form-field appearance="outline" class="fixed-width" formControlName="location_1">
+                  <mat-label>Location 1</mat-label>
+                  
                 </mat-form-field>
+                <mat-form-field appearance="outline" class="fixed-width" formControlName="location_2">
+                  <mat-label>Location 2</mat-label>
+          
+                </mat-form-field> -->
+
+                <!-- End-->
                 <div class="button-container">
                   <button mat-button matStepperNext class="custom-stepper1-button" [disabled]="isFormInvalid(0)">
                     Next
@@ -105,10 +112,12 @@
           <input matInput placeholder="Enter LinkedIn Profile URL" formControlName="linkedin" />
           <mat-error *ngIf="seekerReg.get('linkedin')?.hasError('pattern')">Invalid LinkedIn URL</mat-error>
         </mat-form-field>
-        <mat-label class="label-import">Please upload your CV</mat-label>
-        <div class="cvupload">
-          <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload>
-        </div>
+        <mat-form-field appearance="outline" class="fixed-width">
+          <mat-label>Contact Number</mat-label>
+          <input matInput placeholder="Enter contact Number" formControlName="phone_number" required />
+          <mat-error *ngIf="seekerReg.get('phone_number')?.hasError('required')">Contact number is required</mat-error>
+          <mat-error *ngIf="seekerReg.get('phone_number')?.hasError('pattern')">Invalid contact number</mat-error>
+        </mat-form-field>
         <div class="button-container">
           <button mat-button matStepperPrevious class="custom-stepper-button">
             Back
@@ -139,6 +148,10 @@
                   </mat-select>
                   <mat-error *ngIf="seekerReg.get('field_id')?.hasError('required')">Field is required</mat-error>
                 </mat-form-field>
+                <mat-label class="label-import">Please upload your CV</mat-label>
+                <div class="cvupload">
+                    <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload>
+                </div>
                 <div class="skill-part fixed-width">
                   <mat-label class="label-import" style="text-align: center;">Add Your Skills</mat-label>
                   <div class="skillchip">
