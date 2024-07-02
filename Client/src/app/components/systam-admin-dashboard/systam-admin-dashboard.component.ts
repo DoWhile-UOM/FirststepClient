@@ -205,7 +205,7 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
       }
       else if (this.tab === 'hra') {
         this.percentage = this.percentageActiveHRA;
-        this.catName = 'Active HR Assistants';
+        this.catName = 'Active Talent Acquisition Specialists';
       }
     }
     else {
@@ -219,7 +219,7 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
       }
       else if (this.tab === 'hra') {
         this.percentage = 100 - this.percentageActiveHRA;
-        this.catName = 'HR Assistants';
+        this.catName = 'Talent Acquisition Specialists';
       }
     }
   }
