@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -24,7 +24,6 @@ import {
   MatDialogContent,
   MatDialogActions,
   MatDialogClose,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -37,18 +36,16 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ChangeDetectorRef } from '@angular/core';
-import { merge } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
-import {
-  MatProgressSpinnerModule,
-  MatSpinner,
-} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
+import { Observable } from 'rxjs';
+import { Country, City } from 'country-state-city';
+import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 interface SeekerProfile {
   user_id: number;
@@ -66,6 +63,8 @@ interface SeekerProfile {
   field_id: number;
   field_name?: string;
   seekerSkills?: string[];
+  country?: string;
+  city?: string;
   cvFile?: File; // New CV file
   profilePictureFile?: File; // New profile picture file
 }
@@ -96,6 +95,7 @@ interface SeekerProfile {
     AddSkillsComponent,
     MatProgressSpinnerModule,
     PdfViewComponent,
+    MatAutocompleteModule
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -120,6 +120,16 @@ export class SeekerProfileEditComponent implements OnInit {
   isFormVerified: boolean = false;
 
   emailReadOnly: boolean = true;
+
+  // for location country autocomplete
+	locationCountryControl = new FormControl('');
+	countries: string[] = [];
+	locationCountryFilteredOptions: Observable<string[]>;
+
+	// for city autocomplete
+	locationCityControl = new FormControl('');
+	cities: string[] = []; 
+	locationCityFilteredOptions: Observable<string[]>;
 
   readonly defaultImageUrl = './assets/images/dp.png';
   propicUrl = this.defaultImageUrl;
@@ -161,6 +171,16 @@ export class SeekerProfileEditComponent implements OnInit {
       seekerSkills: [[]],
     });
 
+    this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCountry(value || '')),
+		);
+
+		this.locationCityFilteredOptions = this.locationCityControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCity(value || '')),
+		);
+
     this.getScreenSize()
   }
 
@@ -176,6 +196,49 @@ export class SeekerProfileEditComponent implements OnInit {
     }
     catch {}
   }
+
+  onSelectedCountryChanged(selectedCountry: string){
+    // check whether the selected country is valid
+    if (selectedCountry == undefined || selectedCountry == ''){
+      return;
+    }
+    else if (this.countries.indexOf(selectedCountry) == -1){
+      return;
+    }
+
+		this.locationCityControl.setValue('');
+		this.cities = [];
+
+    this.spinner.show();
+
+		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
+
+		if (countryCode == undefined){
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      this.locationCountryControl.setValue('');
+      
+      this.spinner.hide();
+			return;
+		}
+		
+		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
+
+    this.snackBar.open("Reset City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+
+    this.spinner.hide();
+	}
+
+  private _filterCountry(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.countries.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	private _filterCity(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
 
   //image upload
   onselectFile(event: any) {
@@ -209,8 +272,10 @@ export class SeekerProfileEditComponent implements OnInit {
       });
 
       this.user_id = this.authService.getUserId();
+
       // Fetch seeker profile data
       const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
+
       // Populate the form with the fetched data
       this.seekerForm.patchValue({
         first_name: seeker.first_name,
@@ -226,11 +291,20 @@ export class SeekerProfileEditComponent implements OnInit {
         password: '',
         seekerSkills: seeker.seekerSkills || [],
       });
+
       this.propicUrl = seeker.profile_picture || this.defaultImageUrl; // Use default image if none is provided
       this.cVurl = seeker.cVurl; // Save the CV URL
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
+
+      this.countries = Country.getAllCountries().map(country => country.name);
+
+      this.locationCountryControl.setValue(seeker.country);
+
+      this.onSelectedCountryChanged(seeker.country);
+			this.locationCityControl.setValue(seeker.city);
+
     } catch (error) {
       this.snackBar.open('Failed to load profile details', '', {
         panelClass: ['app-notification-error'],
@@ -272,6 +346,15 @@ export class SeekerProfileEditComponent implements OnInit {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
       formValue.seekerSkills = this.removeDuplicates(this.skills);
 
+      if (this.locationCountryControl.value == null || this.locationCityControl.value == null){
+        this.snackBar.open('Please select a country and city', '', {
+          panelClass: ['app-notification-error'],
+          duration: 3000,
+        });
+        this.spinner.hide();
+        return;
+      }
+
       const formData = new FormData();
       formData.append('email', formValue.email);
       formData.append('first_name', formValue.first_name);
@@ -284,6 +367,9 @@ export class SeekerProfileEditComponent implements OnInit {
       formData.append('profile_picture', formValue.profile_picture || '');
       formData.append('linkedin', formValue.linkedin || '');
       formData.append('field_id', formValue.field_id.toString());
+
+      formData.append('country', this.locationCountryControl.value);
+      formData.append('city', this.locationCityControl.value);
       
       // Append each skill individually
       if (formValue.seekerSkills) {
