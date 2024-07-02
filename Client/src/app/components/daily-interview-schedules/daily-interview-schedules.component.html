@@ -3,7 +3,36 @@
 <div class="container">
   <h2 class="header">Daily Interview Schedules</h2>
   <mat-card class="card">
+    <h3 class="sub-header">Up Next</h3>
+    <div class="up-next-container">
+      <div *ngIf="upNextSchedule" class="up-next-box">
+        <div class="up-next-details">
+          <span class="time">{{ upNextSchedule.start_time | date: 'shortTime' }} - {{ upNextSchedule.end_time | date: 'shortTime' }}</span>
+          <span class="name">{{ upNextSchedule.first_name }} {{ upNextSchedule.last_name }}</span>
+          <span class="job-title" style="color: white;">{{ upNextSchedule.title }}</span>
+          <span class="status">{{ upNextSchedule.status }}</span>
+        </div>
+      </div>
+    </div>
     <div class="schedule-container">
+      <div class="calendar-details-container">
+        <div class="calendar-container">
+          <mat-calendar ngskiphydration [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+        </div>
+        <div class="selected-date-details">
+          <h3>Scheduled for {{ selectedDate | date: 'fullDate' }}:</h3>
+          <div class="slots" *ngFor="let schedule of todaySchedules">
+            <div class="schedule-item">
+              <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
+              <div class="details">
+                <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
+                <span class="job-title">{{ schedule.title }}</span>
+                <span class="status">{{ schedule.status }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="schedule-table">
         <h3 class="sub-header">{{ selectedDate | date: 'fullDate' }}</h3>
         <div class="time-slot" *ngFor="let timeSlot of timeSlots">
@@ -11,9 +40,9 @@
           <div class="interview-slot-container">
             <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="getStatusClass(schedule.status)">
               <div class="interview-details">
+                <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
                 <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
                 <span class="job-title">{{ schedule.title }}</span>
-                <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
                 <span *ngIf="schedule.status === 'Pending' || schedule.status === 'Booked'">
                   <select (change)="updateStatus($event, schedule.appointment_id)">
                     <option value="Pending" [selected]="schedule.status === 'Pending'">Pending</option>
@@ -25,24 +54,6 @@
                 <span *ngIf="schedule.status === 'Complete' || schedule.status === 'Missed'">
                   {{ schedule.status }}
                 </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="calendar-details-container">
-        <div class="calendar-container">
-          <mat-calendar ngskiphydration [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
-        </div>
-        <div class="selected-date-details">
-          <h3>Scheduled for {{ selectedDate | date: 'fullDate' }}:</h3>
-          <div class="slots" *ngFor="let schedule of schedules">
-            <div class="schedule-item">
-              <div class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</div>
-              <div class="details">
-                <div class="name">{{ schedule.first_name }} {{ schedule.last_name }}</div>
-                <div class="job-title">{{ schedule.title }}</div>
-                <div class="status">{{ schedule.status }}</div>
               </div>
             </div>
           </div>

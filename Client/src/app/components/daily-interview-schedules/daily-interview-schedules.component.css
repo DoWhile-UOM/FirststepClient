@@ -21,6 +21,25 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
+.up-next-container {
+  margin-bottom: 20px; /* Space between Up Next and the rest */
+}
+
+.up-next-box {
+  padding: 15px;
+  background:teal;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.up-next-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .schedule-container {
   display: flex;
   justify-content: space-between;
@@ -101,6 +120,7 @@
 .interview-details {
   display: flex;
   justify-content: space-between;
+  align-items: center; /* Align items in the center vertically */
   width: 100%;
 }
 

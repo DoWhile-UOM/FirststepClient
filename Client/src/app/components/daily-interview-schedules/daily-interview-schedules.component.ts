@@ -40,47 +40,57 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   selectedDate: Date = new Date();
   schedules: AppointmentSchedule[] = [];
   timeSlots: { label: string, start: Date, end: Date }[] = [];
+  upNextSchedule: AppointmentSchedule | null = null;
+  todaySchedules: AppointmentSchedule[] = [];
 
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
-    this.generateTimeSlotsForSelectedDate();
+    this.generateTimeSlots();
     this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
+    this.loadTodaySchedules();
   }
 
   onDateChange(date: Date) {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
     this.fetchSchedules(this.adjustDateToUTC(date));
-    this.generateTimeSlotsForSelectedDate(); // Regenerate time slots based on selected date
+    this.generateTimeSlotsForSelectedDate();
+  }
+
+  generateTimeSlots() {
+    this.generateTimeSlotsForSelectedDate();
   }
 
   generateTimeSlotsForSelectedDate() {
-    // Clear previous time slots
     this.timeSlots = [];
-
     const startHour = 7;
     const endHour = 23;
     for (let hour = startHour; hour <= endHour; hour++) {
       for (let minute of [0, 30]) {
         const timeLabel = `${hour % 12 === 0 ? 12 : hour % 12}:${minute.toString().padStart(2, '0')}${hour < 12 ? 'am' : 'pm'}`;
-
-        // Set startTime and endTime based on the selectedDate
         const startTime = new Date(this.selectedDate);
         startTime.setHours(hour, minute, 0, 0);
         const endTime = new Date(startTime);
         endTime.setMinutes(startTime.getMinutes() + 30);
-
         this.timeSlots.push({ label: timeLabel, start: startTime, end: endTime });
       }
     }
+  }
+
+  getScheduleForTimeSlot(timeSlot: { label: string, start: Date, end: Date }): AppointmentSchedule[] {
+    return this.schedules.filter(schedule => {
+      const scheduleStartTime = new Date(schedule.start_time);
+      const scheduleEndTime = new Date(schedule.end_time);
+      return scheduleStartTime >= timeSlot.start && scheduleEndTime <= timeSlot.end;
+    });
   }
 
   fetchSchedules(date: string) {
     this.appointmentService.getSchedulesByDate(date).then(
       (schedules: AppointmentSchedule[]) => {
         this.schedules = schedules;
-        console.log('Fetched Schedules:', this.schedules); // Debugging line
+        this.loadTodaySchedules();
       },
       (error) => {
         this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
@@ -88,17 +98,21 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     );
   }
 
-  getScheduleForTimeSlot(timeSlot: { label: string, start: Date, end: Date }): AppointmentSchedule[] {
-    console.log('Getting schedules for time slot:', timeSlot.label);
-    const schedulesForSlot = this.schedules.filter(schedule => {
-      const scheduleStart = new Date(schedule.start_time).getTime();
-      const scheduleEnd = new Date(schedule.end_time).getTime();
-
-      // Compare both date and time components
-      return scheduleStart >= timeSlot.start.getTime() && scheduleEnd <= timeSlot.end.getTime();
+  loadTodaySchedules() {
+    const todayDate = new Date().toDateString();
+    this.todaySchedules = this.schedules.filter(schedule => {
+      const scheduleDate = new Date(schedule.start_time).toDateString();
+      return scheduleDate === todayDate;
     });
-    console.log(`Schedules for time slot ${timeSlot.label}:`, schedulesForSlot);
-    return schedulesForSlot;
+
+    const currentTime = new Date();
+    this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
+  }
+
+  adjustDateToUTC(date: Date): string {
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    const adjustedDate = new Date(date.getTime() - userTimezoneOffset);
+    return adjustedDate.toISOString().split('T')[0];
   }
 
   updateStatus(event: Event, appointmentId: number) {
@@ -108,18 +122,13 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
         () => {
           this.snackBar.open('Status updated successfully', '', { duration: 3000 });
-          this.fetchSchedules(this.adjustDateToUTC(this.selectedDate)); // Refresh the schedules
+          this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
         },
         (error) => {
           this.snackBar.open('Failed to update status', '', { duration: 3000 });
         }
       );
     }
-  }
-
-  adjustDateToUTC(date: Date): string {
-    const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    return utcDate.toISOString().split('T')[0];
   }
 
   getStatusClass(status: string): string {
