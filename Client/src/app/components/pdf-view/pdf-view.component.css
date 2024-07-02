@@ -10,7 +10,7 @@ ejs-pdfviewer{
 
 .back-button{
   position: absolute;
-  top: 2.5em;
-  left: 2.5em;
+  top: 1.5em;
+  left: 1.5em;
   z-index: 1000;
 }
