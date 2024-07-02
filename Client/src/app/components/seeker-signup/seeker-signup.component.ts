@@ -27,9 +27,12 @@ import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AuthService } from '../../../services/auth.service';
-import axios, { AxiosError } from 'axios';
 import { SeekerApplicationFileUploadComponent } from '../seeker-application-file-upload/seeker-application-file-upload.component';
-
+import { Country, City } from 'country-state-city';
+import { map, startWith } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { Router } from '@angular/router';
 
 interface NewSeeker {
   first_name: string;
@@ -56,14 +59,14 @@ interface VerifyOTP {
   email: string | null | undefined;
   otp: string | null | undefined;
 }
+
 @Component({
     selector: 'app-seeker-signup',
     standalone: true,
     templateUrl: './seeker-signup.component.html',
     styleUrl: './seeker-signup.component.css',
-    imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar,MatGridTile,MatGridList,MatStepper,SeekerApplicationFileUploadComponent]
+    imports: [MatInputModule, MatFormFieldModule, SpinnerComponent, MatButtonModule, MatStepperModule, MatIconModule, MatCheckboxModule, MatAutocompleteModule, MatChipsModule, MatDividerModule, MatCardModule, MatSelectModule, MatOptionModule, CommonModule, FormsModule, ReactiveFormsModule, FileUploadComponent, JobOfferListComponent, AddSkillsComponent, MatToolbar,MatGridTile,MatGridList,MatStepper,SeekerApplicationFileUploadComponent]
 })
-
 export class SeekerSignupComponent implements OnInit, AfterViewChecked {
   isEmailVerified = false;
   isOTPRequestSent = false;
@@ -86,21 +89,31 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
   @ViewChild('stepper') stepper!: MatStepper;
 
+  // for location country autocomplete
+	locationCountryControl = new FormControl();
+	countries: string[] = [];
+	locationCountryFilteredOptions: Observable<string[]>;
+
+	// for city autocomplete
+	locationCityControl = new FormControl();
+	cities: string[] = []; 
+	locationCityFilteredOptions: Observable<string[]>;
+
   constructor(
     private _formBuilder: FormBuilder,
     private jobFieldService: JobfieldService,
     private seekerService: SeekerService,
-    private _snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,
     private snackbar: MatSnackBar,
     private auth: AuthService,
-    private http: HttpClient,
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) {
     this.seekerReg = this._formBuilder.group({
       first_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       last_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(128), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
+      password: [''],
       phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
       university: ['', [Validators.maxLength(100)]],
       linkedin: ['', [Validators.pattern(/^(http(s)?:\/\/)?(www\.)?linkedin\.com\/.*$/)]],
@@ -110,15 +123,26 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       description: ['', [Validators.required, Validators.maxLength(2000)]],
       profile_picture: [''],
       seekerSkills: [[]],
-      otp_in: ['']
+      otp_in: [''],
     });
+
+    this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCountry(value || '')),
+		);
+
+		this.locationCityFilteredOptions = this.locationCityControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCity(value || '')),
+		);
   }
 
   async ngOnInit() {
     await this.jobFieldService.getAll().then((response) => {
       this.fields = response;
-      console.log(this.fields);
     });
+
+    this.countries = Country.getAllCountries().map(country => country.name);
 
     // OTP
     this.seekerReg.statusChanges.subscribe(status => {
@@ -207,7 +231,6 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       this.remainingTime--;
       if (this.remainingTime <= 0) {
         clearInterval(intervalId); // Stop the timer when time is up
-        console.log("Timer off");
         this.isOTPRequestSent = false;
         this.reqOTPBtnText = "Request OTP";
       }
@@ -222,6 +245,11 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       cVurl: this.seekerReg.get('cVurl')?.value || 'default_cv_url', // Assign temporary value if not set
     });
 
+    if (this.locationCountryControl.value == null || this.locationCityControl.value == null){
+      this.snackbar.open("Please select location", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+      return;
+    }
+
     const formData = new FormData();
     formData.append('email', this.seekerReg.get('email')?.value);
     formData.append('first_name', this.seekerReg.get('first_name')?.value);
@@ -235,6 +263,8 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
     formData.append('profile_picture', this.seekerReg.get('profile_picture')?.value || '');
     formData.append('linkedin', this.seekerReg.get('linkedin')?.value);
     formData.append('field_id', this.seekerReg.get('field_id')?.value);
+    formData.append('country', this.locationCountryControl.value);
+    formData.append('city', this.locationCityControl.value)
 
     // Append each skill individually
     if (this.skills.length) {
@@ -251,7 +281,9 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
 
     this.seekerService.SeekerRegister(formData).subscribe({
       next: () => {
-        this._snackBar.open('Registration successful', 'Close', { duration: 3000 });
+        this.snackbar.open('Registration successful', 'Close', { duration: 3000 });
+
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         this.displayError(err);
@@ -271,23 +303,68 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
     } else {
       message = `Server returned code ${error.status}, error message is: ${error.statusText}; Details: ${error.error}`;
     }
-    this._snackBar.open(message, "Close", { duration: 5000 });
+    this.snackbar.open(message, "Close", { duration: 5000 });
   }
+
+  //Stepper Control
 
   isFormInvalid(step: number): boolean {
     switch (step) {
       case 0:
-        return this.seekerReg.get('first_name')?.invalid || this.seekerReg.get('last_name')?.invalid || this.seekerReg.get('phone_number')?.invalid || false;
+        return this.seekerReg.get('first_name')?.invalid || this.seekerReg.get('last_name')?.invalid || false;
       case 1:
         return this.seekerReg.get('email')?.invalid || this.seekerReg.get('password')?.invalid || this.seekerReg.get('otp_in')?.invalid || !this.isEmailVerified || false;
       case 2:
         return this.seekerReg.get('university')?.invalid || this.seekerReg.get('linkedin')?.invalid || false;
       case 3:
-        return this.seekerReg.get('field_id')?.invalid || this.seekerReg.get('seekerSkills')?.invalid || false;
+        return this.seekerReg.get('field_id')?.invalid || this.seekerReg.get('seekerSkills')?.invalid || this.seekerReg.get('phone_number')?.invalid ||false;
       case 4:
         return this.seekerReg.get('bio')?.invalid || this.seekerReg.get('description')?.invalid || false;
       default:
         return true;
     }
   }
+
+  onSelectedCountryChanged(selectedCountry: string){
+    // check whether the selected country is valid
+    if (selectedCountry == undefined || selectedCountry == ''){
+      return;
+    }
+    else if (this.countries.indexOf(selectedCountry) == -1){
+      return;
+    }
+
+		this.locationCityControl.setValue('');
+		this.cities = [];
+
+    this.spinner.show();
+
+		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
+
+		if (countryCode == undefined){
+      this.snackbar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      this.locationCountryControl.setValue('');
+      
+      this.spinner.hide();
+			return;
+		}
+		
+		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
+
+    this.snackbar.open("Reset City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+
+    this.spinner.hide();
+	}
+
+  private _filterCountry(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.countries.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	private _filterCity(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
 }

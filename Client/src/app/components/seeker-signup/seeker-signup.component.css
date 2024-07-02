@@ -30,6 +30,10 @@
   padding: 10px;
 }
 
+.otp-btn{
+  margin-bottom: 2em;
+}
+
 .seeker {
   width: 100%;
   height: auto;

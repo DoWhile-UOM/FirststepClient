@@ -129,6 +129,34 @@
     </form>
 </mat-card>
 
+<div class="filter-job-button" *ngIf="!isSearch">
+    <button mat-button [matMenuTriggerFor]="menu">Suggest {{jobSuggesion}}</button>
+
+    <mat-menu #menu="matMenu" class="menu">
+        <button mat-menu-item color="primary" (click)="changeSuggestion(true)">
+          <span>
+            <div class="suggestion">Jobs Near to Me</div>
+            <div class="suggestion-des">Based on your current location</div>
+          </span>
+          <mat-icon matPrefix color="primary">
+            <i class="fa-solid fa-location-dot"></i>
+            </mat-icon>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item color="primary" (click)="changeSuggestion(false)">
+            <span class="menu-container">
+              <div class="suggestion">Jobs More Relevant to Me</div>
+              <div class="suggestion-des">Based on location in your profile</div>
+            </span>
+            <mat-icon matPrefix color="primary">
+                <i class="fa-solid fa-chart-line"></i>
+            </mat-icon>
+          </button>
+      </mat-menu>
+</div>
+
 <ngx-spinner
   bdColor="rgba(51,51,51,0.8)"
   size="medium"

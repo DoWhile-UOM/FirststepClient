@@ -21,6 +21,8 @@ import { Router } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips';
 import { AuthService } from '../../../services/auth.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 interface Job {
   advertisement_id: number;
@@ -66,6 +68,8 @@ interface SearchData{
     MatSliderModule,
     MatExpansionModule,
     MatChipsModule, 
+    MatMenuModule,
+    MatDividerModule,
     NgxSpinnerModule],
   templateUrl: './search-basic.component.html',
   styleUrl: './search-basic.component.css'
@@ -88,6 +92,9 @@ throw new Error('Method not implemented.');
 
   searching: boolean = false;
   suggesting: boolean = false;
+
+  jobSuggesion: string = '';
+  isSearch: boolean = false;
 
   @Output() newItemEvent = new EventEmitter<Job[]>();
   @Output() changePaginatorLengthEvent = new EventEmitter<number>();
@@ -128,6 +135,8 @@ throw new Error('Method not implemented.');
     this.suggesting = true;
     this.spinner.show();
 
+    this.isSearch = false;
+
     this.seekerID = String(this.auth.getUserId());
     
     this.countries = Country.getAllCountries().map(country => country.name);
@@ -140,6 +149,8 @@ throw new Error('Method not implemented.');
           this.jobList = response.firstPageAdvertisements;
           this.jobIdList = response.allAdvertisementIds;
         });
+
+      this.jobSuggesion = 'Jobs Near to Me';
     }
     else{
       await this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
@@ -147,6 +158,8 @@ throw new Error('Method not implemented.');
           this.jobList = response.firstPageAdvertisements;
           this.jobIdList = response.allAdvertisementIds;
         });
+
+      this.jobSuggesion = 'Jobs More Relevant to Me';
     }
 
     if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
@@ -164,6 +177,8 @@ throw new Error('Method not implemented.');
   async search(data: SearchData){
     data.country = this.locationCountryControl.value!;
     data.city = this.locationCityControl.value!;
+
+    this.isSearch = true;
 
     // validate location
     if (this.countries.indexOf(data.country) == -1){
@@ -256,6 +271,48 @@ throw new Error('Method not implemented.');
 
 		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
 	}
+
+  async changeSuggestion(suggest: boolean){
+    this.suggesting = true;
+    this.spinner.show();
+
+    if (suggest && this.jobSuggesion != 'Jobs Near to Me'){
+      let res = await this.auth.getLocation();
+
+      await this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
+        .then((response) => {
+          this.jobList = response.firstPageAdvertisements;
+          this.jobIdList = response.allAdvertisementIds;
+        });
+
+      this.jobSuggesion = 'Jobs Near to Me';
+    }
+    else if (!suggest && this.jobSuggesion != 'Jobs More Relevant to Me'){
+      await this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
+        .then((response) => {
+          this.jobList = response.firstPageAdvertisements;
+          this.jobIdList = response.allAdvertisementIds;
+        });
+
+      this.jobSuggesion = 'Jobs More Relevant to Me';
+    }
+    else{
+      this.spinner.hide();
+      this.suggesting = false;
+    }
+
+    if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
+      this.spinner.hide();
+      return;
+    }
+
+    this.newItemEvent.emit(this.jobList);
+    this.changePaginatorLengthEvent.emit(this.jobIdList.length);
+
+    this.isSearch = false;
+    this.spinner.hide();
+    this.suggesting = false;
+  }
 
   showAllFilters(){
 

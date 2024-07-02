@@ -21,7 +21,8 @@ interface SeekerProfile {
   field_name?: string;
   seekerSkills?: string[];
   cvFile?: File;
-
+  country: string;
+  city: string;
 }
 export interface SeekerProfileViewDto {
   email: string;
