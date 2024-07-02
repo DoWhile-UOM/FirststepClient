@@ -44,6 +44,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   timeSlots: { label: string, start: Date, end: Date }[] = [];
   upNextSchedule: AppointmentSchedule | null = null;
   todaySchedules: AppointmentSchedule[] = [];
+  noMoreSchedulesMessage: string = '';
 
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
@@ -109,6 +110,12 @@ export class DailyInterviewSchedulesComponent implements OnInit {
 
     const currentTime = new Date();
     this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
+
+    if (!this.upNextSchedule) {
+      this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
+    } else {
+      this.noMoreSchedulesMessage = '';
+    }
   }
 
   adjustDateToUTC(date: Date): string {

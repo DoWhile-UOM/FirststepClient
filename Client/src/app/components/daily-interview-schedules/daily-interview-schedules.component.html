@@ -5,32 +5,22 @@
   <mat-card class="card">
     <h3 class="sub-header">Up Next</h3>
     <div class="up-next-container">
-      <div *ngIf="upNextSchedule" class="up-next-box">
+      <div *ngIf="upNextSchedule; else noMoreSchedules" class="up-next-box">
         <div class="up-next-details">
           <span class="time">{{ upNextSchedule.start_time | date: 'shortTime' }} - {{ upNextSchedule.end_time | date: 'shortTime' }}</span>
           <span class="name">{{ upNextSchedule.first_name }} {{ upNextSchedule.last_name }}</span>
           <span class="job-title" style="color: white;">{{ upNextSchedule.title }}</span>
-          <span class="status" style="font-size: 12px;">{{ upNextSchedule.status }}</span>
+          <span class="status">{{ upNextSchedule.status }}</span>
         </div>
       </div>
+      <ng-template #noMoreSchedules>
+        <div class="no-more-schedules">{{ noMoreSchedulesMessage }}</div>
+      </ng-template>
     </div>
     <div class="schedule-container">
       <div class="calendar-details-container">
         <div class="calendar-container">
           <mat-calendar ngskiphydration [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
-        </div>
-        <div class="selected-date-details">
-          <h3>Scheduled for {{ selectedDate | date: 'fullDate' }}:</h3>
-          <div class="slots" *ngFor="let schedule of todaySchedules">
-            <div class="schedule-item">
-              <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
-              <div class="details">
-                <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
-                <span class="job-title">{{ schedule.title }}</span>
-                <span class="status">{{ schedule.status }}</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="schedule-table">
