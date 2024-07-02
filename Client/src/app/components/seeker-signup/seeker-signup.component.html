@@ -82,7 +82,7 @@
                     <mat-error *ngIf="seekerReg.get('email')?.hasError('email')">Valid Email is required</mat-error>
                   </mat-form-field>
                   <button mat-button class="otp-btn" (click)="requestOTP()" [disabled]="isOTPRequestSent" id="otpreqbtn">
-                    {{ reqOTPBtnText }} {{ remainingTime }}
+                    {{ reqOTPBtnText }}
                   </button>
                 </div>
                 <div class="otp-field-container">
@@ -92,6 +92,8 @@
                   </mat-form-field>
                   <button mat-button class="otp-btn" (click)="VerifyOTP()">Verify OTP</button>
                 </div>
+                <mat-hint *ngIf="timerHintMessage">{{ timerHintMessage }}</mat-hint>
+                
                 <mat-form-field appearance="outline" class="combined-width">
                   <mat-label>Enter Password</mat-label>
                   <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" placeholder="Enter Password" required />
@@ -99,8 +101,11 @@
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                   </button>
                   <mat-error *ngIf="seekerReg.get('password')?.hasError('required')">Password is required</mat-error>
+                  <mat-error *ngIf="seekerReg.get('password')?.hasError('minlength')">Password must be at least 8 characters long</mat-error>
+                  <mat-error *ngIf="seekerReg.get('password')?.hasError('maxlength')">Password cannot be more than 20 characters long</mat-error>
                   <mat-error *ngIf="seekerReg.get('password')?.hasError('pattern')">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character</mat-error>
                 </mat-form-field>
+                
                 <div class="button-container">
                   <button mat-button matStepperPrevious class="custom-stepper-button">
                     Back
@@ -208,12 +213,14 @@
                 <mat-form-field appearance="outline" class="fixed-width">
                   <mat-label>Bio</mat-label>
                   <input matInput placeholder="Enter Bio" formControlName="bio" />
+                  <mat-hint>e.g., Passionate software developer with 5 years of experience.</mat-hint>
                   <mat-error *ngIf="seekerReg.get('bio')?.hasError('required')">Bio is required</mat-error>
                   <mat-error *ngIf="seekerReg.get('bio')?.hasError('maxlength')">Bio is too long</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="fixed-width">
                   <mat-label>Description</mat-label>
                   <input matInput placeholder="Enter Description" formControlName="description" />
+                  <mat-hint>e.g., Experienced in developing web applications using Angular, React, and Node.js.</mat-hint>
                   <mat-error *ngIf="seekerReg.get('description')?.hasError('required')">Description is required</mat-error>
                   <mat-error *ngIf="seekerReg.get('description')?.hasError('maxlength')">Description is too long</mat-error>
                 </mat-form-field>
