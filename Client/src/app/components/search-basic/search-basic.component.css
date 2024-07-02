@@ -9,6 +9,27 @@
     justify-content: center;
 }
 
+.filter-job-button{
+    max-width: 94%;
+    display: flex;
+    justify-content: end;
+    margin: 0 auto;
+}
+
+.menu-container{
+    margin-top: 0.25em !important;
+}
+
+.suggestion{
+    font-size: medium;
+    font-weight: 700;
+}
+
+.suggestion-des{
+    font-size: small;
+    font-weight: 400;
+}
+
 .container{
     margin-top: 1.5em;
     padding: 0.5em;
