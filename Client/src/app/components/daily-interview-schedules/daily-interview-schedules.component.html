@@ -10,7 +10,7 @@
           <span class="time">{{ upNextSchedule.start_time | date: 'shortTime' }} - {{ upNextSchedule.end_time | date: 'shortTime' }}</span>
           <span class="name">{{ upNextSchedule.first_name }} {{ upNextSchedule.last_name }}</span>
           <span class="job-title" style="color: white;">{{ upNextSchedule.title }}</span>
-          <span class="status">{{ upNextSchedule.status }}</span>
+          <span class="status" style="font-size: 12px;">{{ upNextSchedule.status }}</span>
         </div>
       </div>
     </div>
@@ -44,13 +44,13 @@
                 <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
                 <span class="job-title">{{ schedule.title }}</span>
                 <span *ngIf="schedule.status === 'Pending' || schedule.status === 'Booked'">
-                  <select (change)="updateStatus($event, schedule.appointment_id)">
-                    <option value="Pending" [selected]="schedule.status === 'Pending'">Pending</option>
-                    <option value="Booked" [selected]="schedule.status === 'Booked'">Booked</option>
-                    <option value="Complete">Complete</option>
-                    <option value="Missed">Missed</option>
-                  </select>
-                </span>
+                  <mat-select [value]="schedule.status" (selectionChange)="updateStatus($event, schedule.appointment_id)" class="status-dropdown">
+                    <mat-option value="Pending">Pending</mat-option>
+                    <mat-option value="Booked">Booked</mat-option>
+                    <mat-option value="Complete">Complete</mat-option>
+                    <mat-option value="Missed">Missed</mat-option>
+                  </mat-select>
+                </span>          
                 <span *ngIf="schedule.status === 'Complete' || schedule.status === 'Missed'">
                   {{ schedule.status }}
                 </span>

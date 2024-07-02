@@ -16,6 +16,8 @@ import { MatDivider } from '@angular/material/divider';
 import { MatCard } from '@angular/material/card';
 import { MatCardModule } from '@angular/material/card';
 import { AppointmentService } from '../../../services/appointment.service';
+import { MatSelectChange } from '@angular/material/select';
+
 
 
 interface AppointmentSchedule {
@@ -115,20 +117,17 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     return adjustedDate.toISOString().split('T')[0];
   }
 
-  updateStatus(event: Event, appointmentId: number) {
-    const selectElement = event.target as HTMLSelectElement | null;
-    if (selectElement) {
-      const newStatus = selectElement.value;
-      this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
-        () => {
-          this.snackBar.open('Status updated successfully', '', { duration: 3000 });
-          this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
-        },
-        (error) => {
-          this.snackBar.open('Failed to update status', '', { duration: 3000 });
-        }
-      );
-    }
+  updateStatus(event: MatSelectChange, appointmentId: number) {
+    const newStatus = event.value;
+    this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
+      () => {
+        this.snackBar.open('Status updated successfully', '', { duration: 3000 });
+        this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
+      },
+      (error) => {
+        this.snackBar.open('Failed to update status', '', { duration: 3000 });
+      }
+    );
   }
 
   getStatusClass(status: string): string {

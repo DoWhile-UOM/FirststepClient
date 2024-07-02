@@ -27,7 +27,7 @@
 
 .up-next-box {
   padding: 15px;
-  background:teal;
+  background: teal;
   color: white;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -102,7 +102,7 @@
 }
 
 .interview-slot.complete {
-  background:#80CBC4; /* Teal for complete */
+  background: #80CBC4; /* Teal for complete */
 }
 
 .status.booked {
@@ -146,6 +146,11 @@
 
 .status-dropdown {
   margin-left: 10px;
+  width: 120px;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0 !important; /* Remove padding for a more compact look */
 }
 
 .calendar-details-container {
@@ -155,6 +160,7 @@
   gap: 20px;
   flex: 1;
   max-width: 400px; /* Ensure calendar size is appropriate */
+  margin-right: 20px; /* Add more space between the calendar and the schedule table */
 }
 
 .calendar-container {
@@ -232,6 +238,56 @@
 .status-buttons button {
   margin-left: 10px;
 }
+
+/* Status dropdown  */
+.status-dropdown {
+  width: 150px;
+  margin-left: 10px;
+}
+
+.mat-select {
+  background-color: #D3D3D3; /* Match the background of interview slots */
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+.mat-select-trigger {
+  display: flex;
+  align-items: center;
+}
+
+.mat-option-text {
+  display: flex;
+  align-items: center;
+}
+
+/* Ensure dropdown options have appropriate styling and color */
+.mat-option {
+  padding: 10px;
+  background-color: #fff;
+}
+
+.mat-option:hover {
+  background-color: #f0f0f0;
+}
+
+/* Colors for the different status options */
+.mat-option[value="Pending"] {
+  color: teal;
+}
+
+.mat-option[value="Booked"] {
+  color: orange;
+}
+
+.mat-option[value="Complete"] {
+  color: green;
+}
+
+.mat-option[value="Missed"] {
+  color: red;
+}
+
 
 @media (max-width: 768px) {
   .schedule-container {
