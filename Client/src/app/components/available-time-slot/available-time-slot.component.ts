@@ -35,8 +35,8 @@ export class AvailableTimeSlotComponent {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       this.advertismentId = Number(id); //
-      if(!id || this.advertismentId == 0 ||this.auth.getCompanyID() == null){
-        this.snackBar.open('Invalid Request.', '', { panelClass: ['app-notification-error'] });
+      if(id==null || this.advertismentId == 0 ||this.auth.getCompanyID() == null){
+        this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
       }else{
         this.advertismentId = Number(id);
       }
