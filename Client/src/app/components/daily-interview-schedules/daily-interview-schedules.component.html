@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="container">
-  <h2 class="header">{{ selectedDate | date: 'fullDate' }}</h2>
+  <h2 class="header">Daily Interview Schedules</h2>
   <mat-card class="card">
     <div class="schedule-container">
       <div class="schedule-table">
+        <h3 class="sub-header">{{ selectedDate | date: 'fullDate' }}</h3>
         <div class="time-slot" *ngFor="let timeSlot of timeSlots">
           <div class="time-label">{{ timeSlot.label }}</div>
           <div class="interview-slot-container">
