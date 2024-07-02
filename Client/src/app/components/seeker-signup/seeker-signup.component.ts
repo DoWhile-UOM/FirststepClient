@@ -32,6 +32,7 @@ import { Country, City } from 'country-state-city';
 import { map, startWith } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { Router } from '@angular/router';
 
 interface NewSeeker {
   first_name: string;
@@ -105,7 +106,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
     private spinner: NgxSpinnerService,
     private snackbar: MatSnackBar,
     private auth: AuthService,
-    
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) {
     this.seekerReg = this._formBuilder.group({
@@ -281,6 +282,8 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
     this.seekerService.SeekerRegister(formData).subscribe({
       next: () => {
         this.snackbar.open('Registration successful', 'Close', { duration: 3000 });
+
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         this.displayError(err);

@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -86,7 +86,16 @@ export class CompanyAdminRegistrtionFormComponent {
   unRegCA: unRegCA = {} as unRegCA;
   RegCA: CmpAdminReg = {} as CmpAdminReg;
 
-  constructor(private route: ActivatedRoute, private employeeService: EmployeeService, private spinner: NgxSpinnerService, public dialog: MatDialog, private snackbar: MatSnackBar, private auth: AuthService, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private employeeService: EmployeeService, 
+    private spinner: NgxSpinnerService, 
+    public dialog: MatDialog, 
+    private snackbar: MatSnackBar, 
+    private auth: AuthService, 
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 
@@ -116,7 +125,10 @@ export class CompanyAdminRegistrtionFormComponent {
     if (IsVaild) {
       try {
         this.spinner.show();
+
         await this.employeeService.postCompanyAdminReg(this.RegCA);
+        this.router.navigate(['/login']);
+        
         this.spinner.hide();
       } catch (error) {
         this.spinner.hide();
