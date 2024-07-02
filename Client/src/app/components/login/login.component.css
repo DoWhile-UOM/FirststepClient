@@ -95,6 +95,7 @@ matInput {
   text-decoration: none;
   margin-left: 5px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 @media screen and (max-width: 480px) {
   mat-card {

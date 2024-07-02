@@ -1,19 +1,16 @@
-
-mat-dialog-content{
-  width:auto;
-  height:auto;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-
+ejs-pdfviewer{
+  width: 120vh;
+  height: 80vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5em;
 }
-   
-  ejs-pdfviewer{
-    width:1000px;
-    height:100%;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-  }
+
+.back-button{
+  position: absolute;
+  top: 2.5em;
+  left: 2.5em;
+  z-index: 1000;
+}
