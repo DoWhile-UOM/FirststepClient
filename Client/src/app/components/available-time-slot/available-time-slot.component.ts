@@ -14,32 +14,37 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { InterviewService } from '../../../services/interview.service';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-available-time-slot',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
+  imports: [MatIcon,MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
   providers: [],
   templateUrl: './available-time-slot.component.html',
   styleUrls: ['./available-time-slot.component.css']
 })
 export class AvailableTimeSlotComponent {
-  advertismentId: number = 0;
+  interViewDuration: number = 0;
+  isPopupVisible: boolean = false;
+  advertismentId: number = 1049;//-----------------hardcoded for testing--------------------
   selectedDate: Date = new Date();
   calendarLoaded: boolean = false;
   startTime: number = 0;     // Variable to store start time
   endTime: number = 0;       // Variable to store end time
   isAddTimeDisabled: boolean = true;
+  userType: string = 'ca';
 
   constructor(private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       this.advertismentId = Number(id); //
+      /*-----------------hardcoded for testing--------------------
       if(id==null || this.advertismentId == 0 ||this.auth.getCompanyID() == null){
         this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
       }else{
         this.advertismentId = Number(id);
-      }
+      }*/
     });
   }
 
@@ -59,7 +64,8 @@ export class AvailableTimeSlotComponent {
   ];
 
   ngOnInit() {
-    // Delay loading of the calendar to avoid hydration issues
+    //this.userType = this.auth.getRole();-----hardcoded for testing--------------------
+
     setTimeout(() => {
       this.calendarLoaded = true;
     }, 100);
@@ -145,8 +151,17 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
+    this.isPopupVisible=true;
     //this.interview.postSplittedTimeSlots(this.records, 30,1051,this.auth.getCompanyID());
     console.log(this.auth.getCompanyID()+" "+this.advertismentId);
+  }
+
+  closePopup() {
+    this.isPopupVisible = false;
+  }
+
+  dummy(){
+
   }
 
 

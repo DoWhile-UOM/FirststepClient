@@ -9,31 +9,68 @@
             <div>
                 <mat-form-field appearance="fill">
                     <mat-label>Start Time</mat-label>
-                    <input matInput [ngxTimepicker]="startTimepicker" [placeholder]="'HHmm'"
-                           #startTimepickerInput>
-                    <ngx-material-timepicker #startTimepicker (timeSet)="onStartTimeSet($event)"></ngx-material-timepicker>
-                  </mat-form-field>
-                
-                  <mat-form-field appearance="fill">
+                    <input matInput [ngxTimepicker]="startTimepicker" [placeholder]="'HHmm'" #startTimepickerInput>
+                    <ngx-material-timepicker #startTimepicker
+                        (timeSet)="onStartTimeSet($event)"></ngx-material-timepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
                     <mat-label>End Time</mat-label>
-                    <input matInput [ngxTimepicker]="endTimepicker" [placeholder]="'HHmm'"
-                           #endTimepickerInput>
+                    <input matInput [ngxTimepicker]="endTimepicker" [placeholder]="'HHmm'" #endTimepickerInput>
                     <ngx-material-timepicker #endTimepicker (timeSet)="onEndTimeSet($event)"></ngx-material-timepicker>
-                  </mat-form-field>
-                
-                  <button [disabled]="isAddTimeDisabled" mat-raised-button class="apply-button" (click)="print()" color="primary">Add Slot</button>
-                  <button mat-raised-button class="apply-button" (click)="allocateTime()" color="primary">Allocate Time</button>
+                </mat-form-field>
+
+                <button [disabled]="isAddTimeDisabled" mat-raised-button class="apply-button" (click)="print()"
+                    color="primary">Add Slot</button>
             </div>
         </mat-sidenav>
 
         <mat-sidenav-content>
+            <!----Title Header start-->
+            <div class="proceed-header">
+                <div class="page-title">
+                    <div class="back-button">
+                        <button mat-icon-button (click)="dummy()">
+                            <mat-icon>arrow_back</mat-icon>
+                        </button>
+                    </div>
+                    <div class="page-title-content">
+                        <div class="title-with-new-button">
+                            <p class="addtitle">Applications : [title]</p>
+                            <button mat-button (click)="dummy()" class="edit-button" *ngIf="userType != 'hra'">
+                                Edit <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
+                            </button>
+                        </div>
+                        <mat-label class="num"> Job Number: job_number </mat-label><br />
+                        <mat-label class="field"> field_name </mat-label>
+
+                    </div>
+                    <div class="buttons-right">
+                        <div>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Interview Duration </mat-label>
+                                <input matInput [placeholder]="'Minutes'">
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button mat-raised-button class="apply-button" (click)="allocateTime()"
+                                color="primary">Allocate
+                                Time</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!----Title Header end-->
             <div class="schedule-container">
-                <div class="time-indicator"></div>
                 <div class="event-list">
                     <mat-card class="event" *ngFor="let record of getRecordsByDay(formattedDate)">
                         <mat-card-content>
                             <div class="event-details">
-                                <span class="event-title">{{ formatTime(record.start) }} - {{ formatTime(record.end) }}</span>
+                                <span class="event-title">{{ formatTime(record.start) }} - {{ formatTime(record.end)
+                                    }}</span>
                                 <span class="event-time">{{ formatTime(record.end) }}</span>
                             </div>
                         </mat-card-content>
@@ -43,4 +80,17 @@
         </mat-sidenav-content>
 
     </mat-sidenav-container>
+</div>
+
+<div class="modal" [ngClass]="{'show': isPopupVisible}" (click)="closePopup()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closePopup()">&times;</span>
+        <h2>Confirm Appointment</h2>
+        <p>By confirming, Seekers will be notified to book an interview appointment through the portal, choosing their
+            preferred time slot from the available options.</p>
+        <p>Interview Duration: {{interViewDuration}} minutes</p>
+        <button class="popup-button" mat-raised-button color="primary">Confirm</button>
+
+        <button class="popup-button" mat-raised-button color="warn" (click)="closePopup()">Cancel</button>
+    </div>
 </div>
