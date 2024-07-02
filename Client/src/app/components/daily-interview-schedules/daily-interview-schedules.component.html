@@ -1,62 +1,54 @@
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
 <div class="container">
-    <h2 class="header">Daily Interview Schedules</h2>
-    <mat-card class="card">
-      <div class="schedule-container">
-        <div class="date-header">Sunday, June 16, 2024</div>
-        <div class="schedule-table">
-          <div class="time-slot" *ngFor="let timeSlot of timeSlots">
-            <div class="time-label">{{ timeSlot }}</div>
-            <div
-              class="interview-slot"
-              *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)"
-              [ngClass]="{
-                confirmed: schedule.status === 'Confirmed',
-                rescheduled: schedule.status === 'Rescheduled',
-                missed: schedule.status === 'Missed'
-              }"
-            >
-              <div class="interview-details">
-                <div class="name">{{ schedule.name }}</div>
-                <div class="job-title">{{ schedule.jobTitle }}</div>
-                <div
-                  class="status"
-                  [ngClass]="{
-                    confirmed: schedule.status === 'Confirmed',
-                    rescheduled: schedule.status === 'Rescheduled',
-                    missed: schedule.status === 'Missed'
-                  }"
-                >
-                  {{ schedule.status }}
-                </div>
-              </div>
-            </div>
-          </div>
+  <h2 class="header">Daily Interview Schedules</h2>
+  <mat-card class="card">
+    <h3 class="sub-header">Up Next Today</h3>
+    <div class="up-next-container">
+      <div *ngIf="upNextSchedule; else noMoreSchedules" class="up-next-box">
+        <div class="up-next-details">
+          <span class="time">{{ upNextSchedule.start_time | date: 'shortTime' }} - {{ upNextSchedule.end_time | date: 'shortTime' }}</span>
+          <span class="name">{{ upNextSchedule.first_name }} {{ upNextSchedule.last_name }}</span>
+          <span class="job-title" style="color: white;">{{ upNextSchedule.title }}</span>
+          <span class="status">{{ upNextSchedule.status }}</span>
         </div>
-        <div class="calendar-details-container">
-          <div class="calendar-container">
-            <mat-calendar
-              [(selected)]="selectedDate"
-              (selectedChange)="onDateChange($event)"
-            ></mat-calendar>
-          </div>
-          <div class="selected-date-details">
-            <h3>Scheduled for this day:</h3>
-            <div class="slots" *ngFor="let schedule of schedules">
-              <div class="schedule-item">
-                <div class="time">{{ schedule.time }}</div>
-                <div class="details">
-                  <div class="name">{{ schedule.name }}</div>
-                  <div class="job-title">{{ schedule.jobTitle }}</div>
-                </div>
+      </div>
+      <ng-template #noMoreSchedules>
+        <div class="no-more-schedules">{{ noMoreSchedulesMessage }}</div>
+      </ng-template>
+    </div>
+    <div class="schedule-container">
+      <div class="calendar-details-container">
+        <div class="calendar-container">
+          <mat-calendar ngskiphydration [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+        </div>
+      </div>
+      <div class="schedule-table">
+        <h3 class="sub-header">{{ selectedDate | date: 'fullDate' }}</h3>
+        <div class="time-slot" *ngFor="let timeSlot of timeSlots">
+          <div class="time-label">{{ timeSlot.label }}</div>
+          <div class="interview-slot-container">
+            <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="getStatusClass(schedule.status)">
+              <div class="interview-details">
+                <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
+                <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
+                <span class="job-title">{{ schedule.title }}</span>
+                <span *ngIf="schedule.status === 'Pending' || schedule.status === 'Booked'">
+                  <mat-select [value]="schedule.status" (selectionChange)="updateStatus($event, schedule.appointment_id)" class="status-dropdown">
+                    <mat-option value="Pending">Pending</mat-option>
+                    <mat-option value="Booked">Booked</mat-option>
+                    <mat-option value="Complete">Complete</mat-option>
+                    <mat-option value="Missed">Missed</mat-option>
+                  </mat-select>
+                </span>          
+                <span *ngIf="schedule.status === 'Complete' || schedule.status === 'Missed'">
+                  {{ schedule.status }}
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </mat-card>
-  </div>
+    </div>
+  </mat-card>
+</div>

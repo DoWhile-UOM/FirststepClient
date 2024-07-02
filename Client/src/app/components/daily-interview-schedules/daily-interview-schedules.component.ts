@@ -15,12 +15,19 @@ import { MatTable } from '@angular/material/table';
 import { MatDivider } from '@angular/material/divider';
 import { MatCard } from '@angular/material/card';
 import { MatCardModule } from '@angular/material/card';
+import { AppointmentService } from '../../../services/appointment.service';
+import { MatSelectChange } from '@angular/material/select';
 
-interface InterviewSchedule {
-  name: string;
-  jobTitle: string;
+
+
+interface AppointmentSchedule {
+  appointment_id: number;
+  first_name: string;
+  last_name: string;
+  title: string;
   status: string;
-  time: string;
+  start_time: string;
+  end_time: string;
 }
 
 @Component({
@@ -33,30 +40,126 @@ interface InterviewSchedule {
 
 export class DailyInterviewSchedulesComponent implements OnInit {
   selectedDate: Date = new Date();
-  schedules: InterviewSchedule[] = [];
-timeSlots: string[] = [
-    '7:00am', '7:30am', '8:00am', '8:30am', '9:00am', '9:30am', 
-    '10:00am', '10:30am', '11:00am', '11:30am', '12:00pm'
-  ];
-  constructor(private snackBar: MatSnackBar) {}
+  schedules: AppointmentSchedule[] = [];
+  timeSlots: { label: string, start: Date, end: Date }[] = [];
+  upNextSchedule: AppointmentSchedule | null = null;
+  todaySchedules: AppointmentSchedule[] = [];
+  noMoreSchedulesMessage: string = '';
+
+  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
-    // Fetch the interview schedules (this could be an API call in a real application)
-    this.schedules = [
-      { time: '8:00am', name: 'James Williams', jobTitle: 'Python Developer', status: 'Confirmed' },
-      { time: '9:00am', name: 'Willem van Helden', jobTitle: 'Software Engineer', status: 'Rescheduled' },
-      { time: '9:30am', name: 'Dianne Russel', jobTitle: 'Data Scientist', status: 'Confirmed' },
-      { time: '10:30am', name: 'Theresa Webb', jobTitle: 'Business Analyst', status: 'Confirmed' }
-    ];
-  }
-
-  getScheduleForTimeSlot(timeSlot: string): InterviewSchedule[] {
-    return this.schedules.filter(schedule => schedule.time === timeSlot);
+    this.generateTimeSlots();
+    this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
+    this.fetchTodaySchedules();
   }
 
   onDateChange(date: Date) {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    // Fetch new schedules based on selected date
+    this.fetchSchedules(this.adjustDateToUTC(date));
+    this.generateTimeSlotsForSelectedDate();
+  }
+  
+
+  generateTimeSlots() {
+    this.generateTimeSlotsForSelectedDate();
+  }
+
+  generateTimeSlotsForSelectedDate() {
+    this.timeSlots = [];
+    const startHour = 7;
+    const endHour = 23;
+    for (let hour = startHour; hour <= endHour; hour++) {
+      for (let minute of [0, 30]) {
+        const timeLabel = `${hour % 12 === 0 ? 12 : hour % 12}:${minute.toString().padStart(2, '0')}${hour < 12 ? 'am' : 'pm'}`;
+        const startTime = new Date(this.selectedDate);
+        startTime.setHours(hour, minute, 0, 0);
+        const endTime = new Date(startTime);
+        endTime.setMinutes(startTime.getMinutes() + 30);
+        this.timeSlots.push({ label: timeLabel, start: startTime, end: endTime });
+      }
+    }
+  }
+
+  getScheduleForTimeSlot(timeSlot: { label: string, start: Date, end: Date }): AppointmentSchedule[] {
+    return this.schedules.filter(schedule => {
+      const scheduleStartTime = new Date(schedule.start_time);
+      const scheduleEndTime = new Date(schedule.end_time);
+      return scheduleStartTime >= timeSlot.start && scheduleEndTime <= timeSlot.end;
+    });
+  }
+
+  fetchTodaySchedules() {
+    const today = new Date();
+    this.appointmentService.getSchedulesByDate(this.adjustDateToUTC(today)).then(
+      (schedules: AppointmentSchedule[]) => {
+        this.todaySchedules = schedules;
+        this.loadTodaySchedules();
+      },
+      (error) => {
+        this.snackBar.open('Failed to fetch today\'s schedules', '', { duration: 3000 });
+      }
+    );
+  }
+  
+  fetchSchedules(date: string) {
+    this.appointmentService.getSchedulesByDate(date).then(
+      (schedules: AppointmentSchedule[]) => {
+        this.schedules = schedules;
+      },
+      (error) => {
+        this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
+      }
+    );
+  }
+
+  loadTodaySchedules() {
+    const todayDate = new Date().toDateString();
+    this.todaySchedules = this.todaySchedules.filter(schedule => {
+      const scheduleDate = new Date(schedule.start_time).toDateString();
+      return scheduleDate === todayDate;
+    });
+  
+    const currentTime = new Date();
+    this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
+  
+    if (!this.upNextSchedule) {
+      this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
+    } else {
+      this.noMoreSchedulesMessage = '';
+    }
+  }
+
+  adjustDateToUTC(date: Date): string {
+    const userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    const adjustedDate = new Date(date.getTime() - userTimezoneOffset);
+    return adjustedDate.toISOString().split('T')[0];
+  }
+
+  updateStatus(event: MatSelectChange, appointmentId: number) {
+    const newStatus = event.value;
+    this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
+      () => {
+        this.snackBar.open('Status updated successfully', '', { duration: 3000 });
+        this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
+      },
+      (error) => {
+        this.snackBar.open('Failed to update status', '', { duration: 3000 });
+      }
+    );
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Booked':
+        return 'booked';
+      case 'Missed':
+        return 'missed';
+      case 'Complete':
+        return 'complete';
+      default:
+        return '';
+    }
   }
 }

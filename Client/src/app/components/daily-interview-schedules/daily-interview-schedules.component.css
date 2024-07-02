@@ -1,188 +1,301 @@
 .container {
-    padding: 20px;
-    margin: 20px;
-  }
-  
-  .header {
-    font-size: 2.5em; /* Bigger font size */
-    color: teal; /* Teal color */
-    margin: 20px 0 40px 0; /* Top, Right, Bottom, Left */
-  }
-  
-  .card {
-    padding: 2em 2em 2em 2em;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-  }
-  
+  padding: 20px;
+  margin: 20px;
+}
+
+.header {
+  font-size: 2em; /* Bigger font size */
+  color: teal; /* Teal color */
+  margin: 20px 0 40px 0; /* Top, Right, Bottom, Left */
+}
+
+.sub-header {
+  font-size: 1.3em; /* Bigger font size */
+  margin-bottom: 20px; /* Bottom margin */
+  padding: 5px;
+  font-weight: bold;
+}
+
+.card {
+  padding: 2em 2em 2em 2em;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.up-next-container {
+  margin-bottom: 20px; /* Space between Up Next and the rest */
+}
+
+.up-next-box {
+  padding: 15px;
+  background: teal;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.up-next-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schedule-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap; /* Ensure wrapping in smaller screens */
+}
+
+.date-header {
+  width: 100%;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.schedule-table {
+  display: flex;
+  flex-direction: column; /* Updated to column layout */
+  gap: 10px;
+  background: #fafafa; /* Lighter shade */
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-grow: 2; /* Take more space */
+  flex-basis: 0;
+}
+
+.time-slot {
+  display: flex;
+  flex-direction: row; /* Ensure each time slot and interview slot are in a row */
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0; /* Optional: Add a bottom border for separation */
+  padding: 10px 10px 20px 10px;
+}
+
+.time-label {
+  width: 80px; /* Fixed width for time labels */
+  font-weight: bold;
+}
+
+.interview-slot-container {
+  flex: 1; /* Make interview slot take the remaining space */
+}
+
+.interview-slot {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #D3D3D3; 
+  margin-bottom: 10px; /* Add margin to separate each slot */
+}
+
+.interview-slot.missed {
+  background: #EE9999; /* Red for missed */
+}
+
+.interview-slot.complete {
+  background: #80CBC4; /* Teal for complete */
+}
+
+.status.booked {
+  color: white;
+}
+
+.status.missed {
+  color: white;
+}
+
+.status.complete {
+  color: white;
+}
+
+.interview-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Align items in the center vertically */
+  width: 100%;
+}
+
+.name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.job-title {
+  font-size: 0.9em;
+  color: #555;
+  margin-right: 10px;
+}
+
+.time {
+  margin-right: 10px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.status-dropdown {
+  margin-left: 10px;
+  width: 120px;
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0 !important; /* Remove padding for a more compact look */
+}
+
+.calendar-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 1;
+  max-width: 400px; /* Ensure calendar size is appropriate */
+  margin-right: 20px; /* Add more space between the calendar and the schedule table */
+}
+
+.calendar-container {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Border shadow around the calendar */
+}
+
+.selected-date-details {
+  width: 100%; /* Ensure full width */
+  padding-top: 20px; /* Add padding to separate from calendar */
+}
+
+.selected-date-details h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: teal;
+  margin: 10px 0;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-item .time {
+  font-weight: bold;
+  margin-right: 10px; /* Gap between time and name */
+  color: teal;
+}
+
+.schedule-item .details {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.schedule-item .name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.schedule-item .job-title {
+  font-size: 0.9em;
+  color: #555;
+  margin-right: 10px;
+}
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.name, .job-title, .time, .status-buttons {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.status-buttons button {
+  margin-left: 10px;
+}
+
+/* Status dropdown  */
+.status-dropdown {
+  width: 150px;
+  margin-left: 10px;
+}
+
+.mat-select {
+  background-color: #D3D3D3; /* Match the background of interview slots */
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+.mat-select-trigger {
+  display: flex;
+  align-items: center;
+}
+
+.mat-option-text {
+  display: flex;
+  align-items: center;
+}
+
+/* Ensure dropdown options have appropriate styling and color */
+.mat-option {
+  padding: 10px;
+  background-color: #fff;
+}
+
+.mat-option:hover {
+  background-color: #f0f0f0;
+}
+
+/* Colors for the different status options */
+.mat-option[value="Pending"] {
+  color: teal;
+}
+
+.mat-option[value="Booked"] {
+  color: orange;
+}
+
+.mat-option[value="Complete"] {
+  color: green;
+}
+
+.mat-option[value="Missed"] {
+  color: red;
+}
+
+
+@media (max-width: 768px) {
   .schedule-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    flex-wrap: wrap; /* Ensure wrapping in smaller screens */
-  }
-  
-  .date-header {
-    width: 100%;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    font-weight: bold;
-    padding-left: 10px;
-  }
-  
-  .schedule-table {
-    display: flex;
-    flex-direction: column; /* Updated to column layout */
-    gap: 10px;
-    background: #fafafa; /* Lighter shade */
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex-grow: 2; /* Take more space */
-    flex-basis: 0;
-  }
-  
-  .time-slot {
-    display: flex;
-    flex-direction: row; /* Ensure each time slot and interview slot are in a row */
-    align-items: center;
-    border-bottom: 1px solid #e0e0e0; /* Optional: Add a bottom border for separation */
-    padding: 10px 10px 20px 10px;
-  }
-  
-  .time-label {
-    width: 80px; /* Fixed width for time labels */
-    font-weight: bold;
-  }
-  
-  .interview-slot {
-    flex: 1; /* Make interview slot take the remaining space */
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    margin-left: 10px; /* Optional: Add margin for separation */
-  }
-  
-  .interview-slot.confirmed {
-    background: rgba(0, 128, 128, 0.1); /* Light teal for confirmed */
-  }
-  
-  .interview-slot.rescheduled,
-  .interview-slot.missed {
-    background: #fdecea; /* Light red for rescheduled or missed */
-  }
-  
-  .status.confirmed {
-    color: teal;
-  }
-  
-  .status.rescheduled {
-    color: orange;
-  }
-  
-  .status.missed {
-    color: red;
-  }
-  
-  .interview-details {
-    display: flex;
     flex-direction: column;
   }
-  
-  .name {
-    font-weight: bold;
-  }
-  
-  .job-title {
-    font-size: 0.9em;
-    color: #555;
-  }
-  
-  .status {
-    margin-top: 5px;
-  }
-  
+
+  .schedule-table,
   .calendar-details-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1;
-    max-width: 400px; /* Ensure calendar size is appropriate */
+    max-width: 100%;
   }
-  
-  .calendar-container {
-    width: 100%;
-    padding: 10px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Border shadow around the calendar */
-  }
-  
-  .selected-date-details {
-    width: 100%; /* Ensure full width */
-    padding-top: 20px; /* Add padding to separate from calendar */
-  }
-  
-  .selected-date-details h3 {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: teal;
-    margin: 10px 0;
-  }
-  
-  .schedule-item {
-    display: flex;
-    grid-template-columns: auto 1fr; /* Two columns: auto width for time, remaining space for details */
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 250px; /* Fixed width */
-  }
-  
-  .schedule-item .time {
-    font-weight: bold;
-    margin-right: 10px; /* Gap between time and name */
-    color: teal;
-  }
-  
-  .schedule-item .details {
-    flex: 1;
-  }
-  
-  .schedule-item .name {
-    font-weight: bold;
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
-  
-  .schedule-item .job-title {
-    font-size: 0.9em;
-    color: #555;
-    padding: 2px 5px;
-    border-radius: 3px;
-  }
-  
-  .slots {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-  
-  @media (max-width: 768px) {
-    .schedule-container {
-      flex-direction: column;
-    }
-  
-    .schedule-table,
-    .calendar-details-container {
-      max-width: 100%;
-    }
-  }
-  
+}
