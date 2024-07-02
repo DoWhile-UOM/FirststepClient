@@ -4,14 +4,9 @@ on:
   push:
     branches:
       - production
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    branches:
-      - production
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
@@ -46,7 +41,6 @@ jobs:
           output_location: "dist/client/browser" # Ensure this matches the output path in angular.json
 
   close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
