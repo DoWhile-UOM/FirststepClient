@@ -6,7 +6,6 @@ import { ApplicationAdvertisementListComponent } from '../components/application
 import { CompanyProfileComponent } from '../components/company-profile/company-profile.component';
 import { SeekerApplicationFormComponent } from '../components/seeker-application-form/seeker-application-form.component';
 import { SeekerApplicationFormConfirmComponent } from '../components/seeker-application-form-confirm/seeker-application-form-confirm.component';
-import { SeekerApplicationStatusComponent } from '../components/seeker-application-status/seeker-application-status.component';
 import { SeekerProfileEditComponent } from '../components/seeker-profile-edit/seeker-profile-edit.component';
 
 export const routes: Routes = [
@@ -20,5 +19,4 @@ export const routes: Routes = [
   // need to be verified
   { path: 'home/applicationForm', component: SeekerApplicationFormComponent },
   { path: 'home/applicationForm/applicationFormconfirm', component:SeekerApplicationFormConfirmComponent  },
-  { path: 'profile-view', component:SeekerApplicationStatusComponent },
 ];
