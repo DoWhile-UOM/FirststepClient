@@ -51,7 +51,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   ngOnInit() {
     this.generateTimeSlots();
     this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
-    this.loadTodaySchedules();
+    this.fetchTodaySchedules();
   }
 
   onDateChange(date: Date) {
@@ -60,6 +60,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.fetchSchedules(this.adjustDateToUTC(date));
     this.generateTimeSlotsForSelectedDate();
   }
+  
 
   generateTimeSlots() {
     this.generateTimeSlotsForSelectedDate();
@@ -89,11 +90,23 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     });
   }
 
+  fetchTodaySchedules() {
+    const today = new Date();
+    this.appointmentService.getSchedulesByDate(this.adjustDateToUTC(today)).then(
+      (schedules: AppointmentSchedule[]) => {
+        this.todaySchedules = schedules;
+        this.loadTodaySchedules();
+      },
+      (error) => {
+        this.snackBar.open('Failed to fetch today\'s schedules', '', { duration: 3000 });
+      }
+    );
+  }
+  
   fetchSchedules(date: string) {
     this.appointmentService.getSchedulesByDate(date).then(
       (schedules: AppointmentSchedule[]) => {
         this.schedules = schedules;
-        this.loadTodaySchedules();
       },
       (error) => {
         this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
@@ -103,14 +116,14 @@ export class DailyInterviewSchedulesComponent implements OnInit {
 
   loadTodaySchedules() {
     const todayDate = new Date().toDateString();
-    this.todaySchedules = this.schedules.filter(schedule => {
+    this.todaySchedules = this.todaySchedules.filter(schedule => {
       const scheduleDate = new Date(schedule.start_time).toDateString();
       return scheduleDate === todayDate;
     });
-
+  
     const currentTime = new Date();
     this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
-
+  
     if (!this.upNextSchedule) {
       this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
     } else {
