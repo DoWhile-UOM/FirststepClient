@@ -59,6 +59,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
   candidateData: CandidateData[] = [];
   advertisment_id: string = '';
   advertisment_title: string = '';
+  job_number: string = '';  
 
   readonly task = signal<Task>({
     name: 'Select All',
@@ -79,6 +80,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
     try {
       this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
       this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
+      this.job_number = this.route.snapshot.paramMap.get('jobNumber')!;
       this.getShortlistedCandidates();
     } catch {
       console.log('Error in fetching the shortlisted candidates');
