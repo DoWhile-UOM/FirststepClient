@@ -17,6 +17,7 @@ export class InterviewShedulingHeaderComponent {
   @Input() job_number: string = "";
   @Input() job_id: string = "";
 
+
 constructor(private router:Router,private auth:AuthService) { }
 
   onBackButtonClick(){

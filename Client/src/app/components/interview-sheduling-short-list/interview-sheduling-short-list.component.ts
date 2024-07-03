@@ -19,6 +19,7 @@ interface CandidateData {
   lastRevisionBy: string;
   interview: boolean;
   position: number;
+  title:string;
 }
 
 interface Task {
@@ -78,7 +79,6 @@ export class InterviewShedulingShortListComponent implements OnInit {
 
   ngOnInit() {
     try {
-      this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
       this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
       this.job_number = this.route.snapshot.paramMap.get('jobNumber')!;
       this.getShortlistedCandidates();
@@ -100,8 +100,9 @@ export class InterviewShedulingShortListComponent implements OnInit {
       name: item.seeker_name,
       lastRevisionBy: item.last_revision_employee_name,
       interview: item.application_status,
+      title: item.title,
     }));
-
+    this.advertisment_title = this.candidateData[0].title;
     // Initialize task subtasks based on candidate data
     this.task.update(() => ({
       name: 'Select All',

@@ -4,6 +4,7 @@
       <app-interview-sheduling-header
         [job_title]="this.advertisment_title"
         [job_number]="this.job_number"
+        [job_id]="this.advertisment_id"
       >
       </app-interview-sheduling-header>
     </div>
@@ -24,7 +25,7 @@
 
   <mat-card *ngIf="candidateData.length <= 0">
     <div>
-      <p class="center-text">Can't Find Any Results!</p>
+      <p class="center-text">No applications available for interviews at the moment. Please check back later!</p>
     </div>
   </mat-card>
 
