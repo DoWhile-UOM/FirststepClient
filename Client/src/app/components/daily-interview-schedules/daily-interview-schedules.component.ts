@@ -152,13 +152,13 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   getStyleForSchedule(schedule: AppointmentSchedule) {
     const scheduleStartTime = new Date(schedule.start_time);
     const scheduleEndTime = new Date(schedule.end_time);
-    const duration = (scheduleEndTime.getTime() - scheduleStartTime.getTime()) / (1000 * 60); // Duration in minutes
-    const startHour = scheduleStartTime.getHours();
-    const startMinutes = scheduleStartTime.getMinutes();
-    
+    const startMinutes = scheduleStartTime.getHours() * 60 + scheduleStartTime.getMinutes();
+    const endMinutes = scheduleEndTime.getHours() * 60 + scheduleEndTime.getMinutes();
+    const duration = endMinutes - startMinutes; // Duration in minutes
+  
     return {
-      top: `${(startHour * 60 + startMinutes) * (100 / 1440)}%`, // Position based on start time in minutes
-      height: `${(duration / 60) * 100}%`, // Height based on duration in minutes
+      top: `${(startMinutes / 1440) * 100}%`, // Position based on start time in minutes (1440 minutes in a day)
+      height: `${(duration / 1440) * 100}%`, // Height based on duration
       left: '0',
       right: '0'
     };

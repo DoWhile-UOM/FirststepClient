@@ -74,7 +74,7 @@
   flex-direction: column;
   position: relative;
   border-bottom: 1px solid transparent; /* Remove the light grey line */
-  height: 60px; /* Each hour slot is 60px high */
+  height: 80px; /* Each hour slot is 80px high */
 }
 
 .time-slot-header {
@@ -108,12 +108,12 @@
 
 .interview-slot {
   position: absolute;
-  left: 10% !important; /* Adjust to leave space for the time label */
-  right: 15%;
+  left: 8% !important; /* Adjust to leave space for the time label */
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background: #D3D3D3;
