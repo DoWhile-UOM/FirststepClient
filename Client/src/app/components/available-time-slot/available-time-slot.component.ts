@@ -23,6 +23,11 @@ interface IRecord{
   start:number;
   end:number;
 }
+interface IAppointmentDetails{
+  duration:number;
+  comment:string;
+  title:string;
+}
 @Component({
   selector: 'app-available-time-slot',
   standalone: true,
@@ -45,6 +50,7 @@ export class AvailableTimeSlotComponent {
   userType: string = 'ca';
   appointmentDetails: FormGroup;
   records: IRecord[] = [];
+  appointment: IAppointmentDetails = {duration: 0,comment: '',title: ''};
 
   constructor(private formAPD: FormBuilder, private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
     this.route.queryParamMap.subscribe(params => {
@@ -67,11 +73,17 @@ export class AvailableTimeSlotComponent {
   onChanges(): void {
 
     this.appointmentDetails.get('duration')?.valueChanges.subscribe(val => {
-      this.interViewDuration = val;
-      if (this.interViewDuration > 0) {
+      this.appointment.duration = val;
+      if (this.appointment.duration > 0) {
         this.isFormFilled = true;
       }
       console.log(this.interViewDuration);
+    });
+    this.appointmentDetails.get('title')?.valueChanges.subscribe(val => {
+      this.appointment.title = val;
+    });
+    this.appointmentDetails.get('comments')?.valueChanges.subscribe(val => {
+      this.appointment.comment = val;
     });
   }
 
@@ -91,6 +103,7 @@ export class AvailableTimeSlotComponent {
     setTimeout(() => {
       this.calendarLoaded = true;
     }, 100);
+    this.onChanges();
   }
 
   get formattedDate(): string {
