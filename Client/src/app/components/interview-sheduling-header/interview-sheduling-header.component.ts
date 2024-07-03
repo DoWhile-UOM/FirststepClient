@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { I } from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-interview-sheduling-header',
   standalone: true,
@@ -13,6 +14,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class InterviewShedulingHeaderComponent {
   @Input() job_title: string = "";
+  @Input() job_number: string = "";
   @Input() job_id: string = "";
 
 constructor(private router:Router,private auth:AuthService) { }
