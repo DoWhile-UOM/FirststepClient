@@ -28,6 +28,7 @@ interface AppointmentSchedule {
   status: string;
   start_time: string;
   end_time: string;
+  // seeker_id?: number;
 }
 
 @Component({
@@ -49,7 +50,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
-    this.generateTimeSlots();
+    // this.generateTimeSlots();
     this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
     this.fetchTodaySchedules();
   }
@@ -58,27 +59,23 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
     this.fetchSchedules(this.adjustDateToUTC(date));
-    this.generateTimeSlotsForSelectedDate();
+    // this.generateTimeSlotsForSelectedDate();
   }
   
 
-  generateTimeSlots() {
-    this.generateTimeSlotsForSelectedDate();
-  }
-
   generateTimeSlotsForSelectedDate() {
     this.timeSlots = [];
-    const startHour = 7;
-    const endHour = 23;
+    const startHour = 0; // Start from midnight
+    const endHour = 23; // End at 11 PM
+
     for (let hour = startHour; hour <= endHour; hour++) {
-      for (let minute of [0, 30]) {
-        const timeLabel = `${hour % 12 === 0 ? 12 : hour % 12}:${minute.toString().padStart(2, '0')}${hour < 12 ? 'am' : 'pm'}`;
-        const startTime = new Date(this.selectedDate);
-        startTime.setHours(hour, minute, 0, 0);
-        const endTime = new Date(startTime);
-        endTime.setMinutes(startTime.getMinutes() + 30);
-        this.timeSlots.push({ label: timeLabel, start: startTime, end: endTime });
-      }
+      const start = new Date(this.selectedDate);
+      start.setHours(hour, 0, 0, 0);
+      const end = new Date(start);
+      end.setHours(hour + 1, 0, 0, 0);
+      const timeLabel = `${start.getHours() % 12 === 0 ? 12 : start.getHours() % 12}:00${start.getHours() < 12 ? 'am' : 'pm'}`;
+
+      this.timeSlots.push({ label: timeLabel, start, end });
     }
   }
 
@@ -86,7 +83,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     return this.schedules.filter(schedule => {
       const scheduleStartTime = new Date(schedule.start_time);
       const scheduleEndTime = new Date(schedule.end_time);
-      return scheduleStartTime >= timeSlot.start && scheduleEndTime <= timeSlot.end;
+      return scheduleStartTime < timeSlot.end && scheduleEndTime > timeSlot.start;
     });
   }
 
@@ -96,17 +93,19 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       (schedules: AppointmentSchedule[]) => {
         this.todaySchedules = schedules;
         this.loadTodaySchedules();
+        this.generateTimeSlotsForSelectedDate();  // Generate time slots based on today's schedules
       },
       (error) => {
         this.snackBar.open('Failed to fetch today\'s schedules', '', { duration: 3000 });
       }
     );
   }
-  
+
   fetchSchedules(date: string) {
     this.appointmentService.getSchedulesByDate(date).then(
       (schedules: AppointmentSchedule[]) => {
         this.schedules = schedules;
+        this.generateTimeSlotsForSelectedDate();  // Generate time slots based on the fetched schedules
       },
       (error) => {
         this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
@@ -120,10 +119,10 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       const scheduleDate = new Date(schedule.start_time).toDateString();
       return scheduleDate === todayDate;
     });
-  
+
     const currentTime = new Date();
     this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
-  
+
     if (!this.upNextSchedule) {
       this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
     } else {
@@ -149,6 +148,25 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       }
     );
   }
+
+  getStyleForSchedule(schedule: AppointmentSchedule) {
+    const scheduleStartTime = new Date(schedule.start_time);
+    const scheduleEndTime = new Date(schedule.end_time);
+    const duration = (scheduleEndTime.getTime() - scheduleStartTime.getTime()) / (1000 * 60); // Duration in minutes
+    const startMinutes = scheduleStartTime.getMinutes();
+    
+    return {
+      top: `${(startMinutes / 60) * 100}%`,
+      height: `${(duration / 60) * 100}%`
+    };
+  }
+
+  // viewSeekerProfile(seekerId: number | undefined) {
+  //   if (seekerId) {
+  //     this.router.navigate([`/seeker-profile/${seekerId}`]);
+  //   }
+  // }
+  
 
   getStatusClass(status: string): string {
     switch (status) {
