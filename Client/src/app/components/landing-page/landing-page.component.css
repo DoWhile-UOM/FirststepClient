@@ -47,7 +47,7 @@ header nav a:hover {
 }
 
 .container {
-    max-width: 1000px;
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
 }
@@ -82,12 +82,12 @@ header nav a:hover {
 }
 
 .hero-text h1 {
-    font-size: 2em;
+    font-size: 5em;
     margin-bottom: 10px;
 }
 
 .hero-text p {
-    font-size: 1em;
+    font-size: 2em;
     margin: 5px 0;
 }
 
@@ -112,24 +112,27 @@ header nav a:hover {
     margin-left: 3em;
 }
 
+.info-text h1 {
+    font-size: 32px;
+    font-weight: 800;
+}
+
 .info-text p {
-    font-size: 1em;
+    font-size: 20px;
+    line-height: 30px;
+    line-break: loose;
     margin: 10px 0;
 }
 
-.top-info .info-image {
-    flex: 1;
-    max-width: 40%;
-}
-
-.info-image{
-    flex: 1;
-    max-width: 300px;
+.info-image {
+    width: 450px;
+    height: 450px;
 }
 
 .info-image img {
-    width: 100%;
-    border-radius: 10px;
+    width: 450px;
+    height: 450px;
+    
 }
 
 .register-company-container {
