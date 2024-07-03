@@ -46,8 +46,16 @@
             </div>
             <hr>
             
-            <div class="skill-set">
-                <div *ngFor="let skill of adData.skills" class="skill-chip">{{skill.skill_name[0].toUpperCase() + skill.skill_name.slice(1)}}</div>
+            <div class="skill-list">
+                <div class="skill-set-title" *ngIf="adData.matchingSkills.length > 0">Skills you have.</div>
+                <div class="skill-set" *ngIf="adData.matchingSkills.length > 0">
+                    <div *ngFor="let skill of adData.matchingSkills" class="skill-chip">{{skill.skill_name[0].toUpperCase() + skill.skill_name.slice(1)}}</div>
+                </div>
+
+                <div class="skill-set-title" *ngIf="adData.missingSkills.length > 0">Skills that missing in your profie.</div>
+                <div class="skill-set" *ngIf="adData.missingSkills.length > 0">
+                    <div *ngFor="let skill of adData.missingSkills" class="skill-chip-dis">{{skill.skill_name[0].toUpperCase() + skill.skill_name.slice(1)}}</div>
+                </div>
             </div>
             
             <div class="section" [innerHTML]="getDescription()"></div>     

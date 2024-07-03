@@ -130,16 +130,22 @@
 </mat-card>
 
 <div class="filter-job-button" *ngIf="!isSearch">
-    <button mat-button [matMenuTriggerFor]="menu">Suggest {{jobSuggesion}}</button>
+    <button mat-button [matMenuTriggerFor]="menu" class="filter-job-button-main" color="primary">
+        Suggest {{jobSuggesion}}
+        <mat-icon matPrefix color="primary">
+            <i class="fa-solid fa-location-dot" *ngIf="this.jobSuggesion == 'Jobs Near to Me'"></i>
+            <i class="fa-solid fa-chart-line" *ngIf="this.jobSuggesion != 'Jobs Near to Me'"></i>
+        </mat-icon>
+    </button>
 
     <mat-menu #menu="matMenu" class="menu">
         <button mat-menu-item color="primary" (click)="changeSuggestion(true)">
-          <span>
-            <div class="suggestion">Jobs Near to Me</div>
-            <div class="suggestion-des">Based on your current location</div>
-          </span>
-          <mat-icon matPrefix color="primary">
-            <i class="fa-solid fa-location-dot"></i>
+            <span>
+                <div class="suggestion">Jobs Near to Me</div>
+                <div class="suggestion-des">Based on your current location</div>
+            </span>
+            <mat-icon matPrefix color="primary">
+                <i class="fa-solid fa-location-dot"></i>
             </mat-icon>
         </button>
 
@@ -147,8 +153,8 @@
 
         <button mat-menu-item color="primary" (click)="changeSuggestion(false)">
             <span class="menu-container">
-              <div class="suggestion">Jobs More Relevant to Me</div>
-              <div class="suggestion-des">Based on location in your profile</div>
+                <div class="suggestion">Jobs More Relevant to Me</div>
+                <div class="suggestion-des">Based on location in your profile</div>
             </span>
             <mat-icon matPrefix color="primary">
                 <i class="fa-solid fa-chart-line"></i>

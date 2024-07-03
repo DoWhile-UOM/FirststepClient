@@ -70,8 +70,9 @@ mat-dialog-content{
     color: black !important;
 }
 
-.skill-set{
-    margin-top: 1em;
+.skill-set-title{
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
 }
 
 .heading {
@@ -92,7 +93,7 @@ mat-dialog-content{
     margin-top: 0.25em;
 }
 
-.skill-chip{
+.skill-chip, .skill-chip-dis{
     background-color: #0a9a8d;
     color: white;
     padding: 0.6em 1em;
@@ -102,11 +103,19 @@ mat-dialog-content{
     margin-bottom: 0.5em;
 }
 
+.skill-chip-dis{
+    background-color: #D0D0D0;
+    color: black;
+}
+
 .skill-set{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 2em;
+}
+
+.skill-list{
+    margin-bottom: 1em;
 }
 
 .apply-button{

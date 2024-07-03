@@ -35,7 +35,8 @@ interface Job{
 	company_name: string;
   company_logo_url: string;
   is_expired: boolean;
-  skills: Skill[];
+  matchingSkills: Skill[];
+  missingSkills: Skill[];
 }
 
 @Component({
@@ -57,12 +58,11 @@ export class AdvertisementViewPageComponent {
     public dialogRef: MatDialogRef<AdvertisementViewPageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       if (data.jobID == null) {
-        console.log("No job ID found");
         return;
       }
   
       (async () => {
-        this.adData = await this.adService.getAdvertisementById(data.jobID);
+        this.adData = await this.adService.getAdvertisementById(data.jobID, auth.getUserId());
 
         if (this.adData.submission_deadline == "Jan 1, 1970"){
           this.isNullDeadline = true;
