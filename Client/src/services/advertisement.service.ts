@@ -186,10 +186,10 @@ export class AdvertisementServices {
     return jobList;
   }
 
-  async getAdvertisementById(jobID: string) {
+  async getAdvertisementById(jobID: string, seekerID: string) {
     let adData: any = {};
 
-    await axios.get(Apipaths.getJobDetails + jobID)
+    await axios.get(Apipaths.getJobDetails + jobID + '/' + seekerID)
       .then(function (response) {
         adData = response.data;
 

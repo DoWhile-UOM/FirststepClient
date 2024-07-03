@@ -38,7 +38,7 @@ export class TaskDelegationPopUpComponent implements OnInit {
   async getHraList() {
     try {
       this.hraList = await this.employeeService.getAllHRAs(this.auth.getCompanyID());
-      console.log('HR Assistants:', this.hraList);
+      console.log('Talent Acquisition Specialists:', this.hraList);
 
     } catch (error) {
       this.snackBar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);

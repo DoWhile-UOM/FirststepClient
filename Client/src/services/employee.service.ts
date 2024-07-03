@@ -116,12 +116,12 @@ export class EmployeeService {
       await axios.post(Apipaths.addNewHRAssistant, employee)
         .then((response) => {
           console.log(response);
-          this.snackBar.open('HR Assistant added successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
+          this.snackBar.open('Talent Acquisition Specialist added successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
         });
     }
     catch (error) {
       console.error(error);
-      this.snackBar.open('Error adding HR Assistant', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.snackBar.open('Error adding Talent Acquisition Specialist', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
 

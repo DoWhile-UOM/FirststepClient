@@ -72,6 +72,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
   isOTPRequestSent = false;
   remainingTime = 0;
   reqOTPBtnText = "Request OTP";
+  timerHintMessage = '';
   isFormVerified = false;
 
   hide = true; 
@@ -113,7 +114,12 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       first_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       last_name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email]],
-      password: [''],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20),
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+      ]],
       phone_number: ['', [Validators.required, Validators.pattern(/^\d{7,15}$/)]],
       university: ['', [Validators.maxLength(100)]],
       linkedin: ['', [Validators.pattern(/^(http(s)?:\/\/)?(www\.)?linkedin\.com\/.*$/)]],
@@ -125,6 +131,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       seekerSkills: [[]],
       otp_in: [''],
     });
+    
 
     this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
 			startWith(''),
@@ -198,7 +205,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
 
     if (verificationResult) {
       this.snackbar.open("OTP Sent successfully", "", { duration: 3000 });
-      this.printTextAfterFiveMinutes();
+      this.startOtpTimer();
     } else {
       this.snackbar.open("OTP Request failed. Please try again.", "", { panelClass: ['app-notification-error'], duration: 3000 });
     }
@@ -222,19 +229,28 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
   }
 
   // OTP timer
-  async printTextAfterFiveMinutes() {
+  startOtpTimer() {
     this.isOTPRequestSent = true;
     this.remainingTime = 1800; // Initialize remaining time in seconds
-    this.reqOTPBtnText = this.remainingTime.toString();
+    this.updateOtpBtnText();
+    this.timerHintMessage = '';
 
     const intervalId = setInterval(() => {
       this.remainingTime--;
+      this.updateOtpBtnText();
+
       if (this.remainingTime <= 0) {
         clearInterval(intervalId); // Stop the timer when time is up
         this.isOTPRequestSent = false;
         this.reqOTPBtnText = "Request OTP";
+        this.timerHintMessage = 'Timer ran out. Please request an OTP again.';
       }
     }, 1000); // Update every second
+  }
+
+  updateOtpBtnText() {
+    const minutes = Math.floor(this.remainingTime / 60);
+    this.reqOTPBtnText = `${minutes} min`;
   }
 
   async onRegister() {
@@ -247,6 +263,18 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
 
     if (this.locationCountryControl.value == null || this.locationCityControl.value == null){
       this.snackbar.open("Please select location", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+      return;
+    }
+
+    // Password validation error check and snackbar message display
+    if (this.seekerReg.get('password')?.hasError('required')) {
+      this.snackbar.open('Password is required', 'Close', { duration: 3000 });
+      return;
+    } else if (this.seekerReg.get('password')?.hasError('minlength') || this.seekerReg.get('password')?.hasError('maxlength')) {
+      this.snackbar.open('Password must be between 8 and 20 characters long', 'Close', { duration: 3000 });
+      return;
+    } else if (this.seekerReg.get('password')?.hasError('pattern')) {
+      this.snackbar.open('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character from @$!%*?&.', 'Close', { duration: 3000 });
       return;
     }
 
@@ -309,21 +337,22 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
   //Stepper Control
 
   isFormInvalid(step: number): boolean {
-    switch (step) {
-      case 0:
-        return this.seekerReg.get('first_name')?.invalid || this.seekerReg.get('last_name')?.invalid || false;
-      case 1:
-        return this.seekerReg.get('email')?.invalid || this.seekerReg.get('password')?.invalid || this.seekerReg.get('otp_in')?.invalid || !this.isEmailVerified || false;
-      case 2:
-        return this.seekerReg.get('university')?.invalid || this.seekerReg.get('linkedin')?.invalid || false;
-      case 3:
-        return this.seekerReg.get('field_id')?.invalid || this.seekerReg.get('seekerSkills')?.invalid || this.seekerReg.get('phone_number')?.invalid ||false;
-      case 4:
-        return this.seekerReg.get('bio')?.invalid || this.seekerReg.get('description')?.invalid || false;
-      default:
-        return true;
-    }
+  switch (step) {
+    case 0:
+      return this.seekerReg.get('first_name')?.invalid || this.seekerReg.get('last_name')?.invalid || false;
+    case 1:
+      return this.seekerReg.get('email')?.invalid || this.seekerReg.get('password')?.invalid || this.seekerReg.get('otp_in')?.invalid || !this.isEmailVerified || false;
+    case 2:
+      return this.seekerReg.get('university')?.invalid || this.seekerReg.get('linkedin')?.invalid || false;
+    case 3:
+      return this.seekerReg.get('field_id')?.invalid || this.seekerReg.get('seekerSkills')?.invalid || this.seekerReg.get('phone_number')?.invalid ||false;
+    case 4:
+      return this.seekerReg.get('bio')?.invalid || this.seekerReg.get('description')?.invalid || false;
+    default:
+      return true;
   }
+}
+
 
   onSelectedCountryChanged(selectedCountry: string){
     // check whether the selected country is valid

@@ -301,7 +301,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
   getRoleDisplayName(): string {
     switch (this.adData?.role) {
       case 'hra':
-        return 'HR Assistant';
+        return 'Talent Acquisition Specialist';
       case 'ca':
         return 'Company Admin';
       case 'hrm':

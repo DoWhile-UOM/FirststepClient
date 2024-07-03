@@ -74,7 +74,7 @@ export class ApplicationService {
       )
       .then((response) => {
         this.snackbar
-          .open('Sucessfully Change HR Assistant!', '', {
+          .open('Sucessfully Change Talent Acquisition Specialist!', '', {
             panelClass: ['app-notification-normal'],
           })
           ._dismissAfter(3000);
