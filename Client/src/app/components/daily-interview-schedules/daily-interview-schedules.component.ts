@@ -48,16 +48,42 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
-    this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
-    this.fetchTodaySchedules();
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate));
   }
 
   onDateChange(date: Date) {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    this.fetchSchedules(this.adjustDateToUTC(date));
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date));
   }
-  
+
+  fetchSchedulesAndTodaySchedules(date: string) {
+    this.appointmentService.getSchedulesByDate(date).then(
+      (schedules: AppointmentSchedule[]) => {
+        this.schedules = schedules;
+        this.todaySchedules = schedules.filter(schedule => {
+          const scheduleDate = new Date(schedule.start_time).toDateString();
+          return scheduleDate === new Date().toDateString();
+        });
+        this.loadTodaySchedules();
+        this.generateTimeSlotsForSelectedDate();
+      },
+      (error) => {
+        this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
+      }
+    );
+  }
+
+  loadTodaySchedules() {
+    const currentTime = new Date();
+    this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
+
+    if (!this.upNextSchedule) {
+      this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
+    } else {
+      this.noMoreSchedulesMessage = '';
+    }
+  }
 
   generateTimeSlotsForSelectedDate() {
     this.timeSlots = [];
@@ -83,49 +109,6 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     });
   }
 
-  fetchTodaySchedules() {
-    const today = new Date();
-    this.appointmentService.getSchedulesByDate(this.adjustDateToUTC(today)).then(
-      (schedules: AppointmentSchedule[]) => {
-        this.todaySchedules = schedules;
-        this.loadTodaySchedules();
-        this.generateTimeSlotsForSelectedDate();  // Generate time slots based on today's schedules
-      },
-      (error) => {
-        this.snackBar.open('Failed to fetch today\'s schedules', '', { duration: 3000 });
-      }
-    );
-  }
-
-  fetchSchedules(date: string) {
-    this.appointmentService.getSchedulesByDate(date).then(
-      (schedules: AppointmentSchedule[]) => {
-        this.schedules = schedules;
-        this.generateTimeSlotsForSelectedDate();  // Generate time slots based on the fetched schedules
-      },
-      (error) => {
-        this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
-      }
-    );
-  }
-
-  loadTodaySchedules() {
-    const todayDate = new Date().toDateString();
-    this.todaySchedules = this.todaySchedules.filter(schedule => {
-      const scheduleDate = new Date(schedule.start_time).toDateString();
-      return scheduleDate === todayDate;
-    });
-
-    const currentTime = new Date();
-    this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
-
-    if (!this.upNextSchedule) {
-      this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
-    } else {
-      this.noMoreSchedulesMessage = '';
-    }
-  }
-
   adjustDateToUTC(date: Date): string {
     const userTimezoneOffset = date.getTimezoneOffset() * 60000;
     const adjustedDate = new Date(date.getTime() - userTimezoneOffset);
@@ -137,7 +120,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
       () => {
         this.snackBar.open('Status updated successfully', '', { duration: 3000 });
-        this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
+        this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate));
       },
       (error) => {
         this.snackBar.open('Failed to update status', '', { duration: 3000 });
@@ -152,25 +135,23 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     const startMinutes = scheduleStartTime.getMinutes();
     const endHour = scheduleEndTime.getHours();
     const endMinutes = scheduleEndTime.getMinutes();
-  
+
     const totalMinutesInDay = 24 * 60;
     const startTotalMinutes = startHour * 60 + startMinutes;
     const endTotalMinutes = endHour * 60 + endMinutes;
-  
+
     const top = (startTotalMinutes / totalMinutesInDay) * 100;
     const height = ((endTotalMinutes - startTotalMinutes) / totalMinutesInDay) * 100;
-  
+
     return {
       top: `${top}%`,
       height: `${height}%`,
-      left: '8%',
-      right: '0%',
+      left: '10%',
+      right: '15%',
       position: 'absolute'
     };
   }
-  
-  
-  
+
   getStatusClass(status: string): string {
     switch (status) {
       case 'Booked':
@@ -184,7 +165,6 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     }
   }
 }
-
   // viewSeekerProfile(seekerId: number | undefined) {
   //   if (seekerId) {
   //     this.router.navigate([`/seeker-profile/${seekerId}`]);
