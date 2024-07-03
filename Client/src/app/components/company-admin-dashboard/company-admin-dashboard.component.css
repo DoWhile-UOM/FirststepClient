@@ -5,23 +5,13 @@
     padding: 1rem;
   }
   
-  .header-card {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    margin-bottom: 1rem;
-  }
-  
   .header-content {
     display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 1rem;
+    align-self: start;
+    margin: 10px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: teal;
   }
   
   .greeting {
