@@ -65,24 +65,51 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.time-slot {
+.time-slot-container {
   position: relative;
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
+}
+
+.time-slot {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-bottom: 1px solid transparent; /* Remove the light grey line */
+  height: 60px; /* Each hour slot is 60px high */
+}
+
+.time-slot-header {
+  display: flex;
+  align-items: center;
+  height: 20px; /* Adjust the height of the header as needed */
+  position: relative; /* Ensure the header is positioned correctly */
 }
 
 .time-label {
   font-weight: bold;
+  margin-right: 10px;
+  z-index: 1; /* Ensure the time label is always on top */
+  background: #fafafa; /* Match the background color to cover the line */
+}
+
+.time-line {
+  flex-grow: 1;
+  border-bottom: 1px solid #000;
+  position: absolute;
+  top: 50%; /* Center the line vertically */
+  left: 0;
+  right: 0;
+  z-index: 0; /* Ensure the line is behind the label */
 }
 
 .interview-slot-container {
   position: relative;
+  height: 100%; /* Ensure container takes full height */
 }
 
 .interview-slot {
   position: absolute;
-  left: 0;
-  width: 100%;
+  left: 10% !important; /* Adjust to leave space for the time label */
+  right: 15%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -90,6 +117,7 @@
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background: #D3D3D3;
+  z-index: 2; /* Ensure the slot is on top of the line */
 }
 
 .interview-slot.missed {

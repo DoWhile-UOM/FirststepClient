@@ -153,13 +153,17 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     const scheduleStartTime = new Date(schedule.start_time);
     const scheduleEndTime = new Date(schedule.end_time);
     const duration = (scheduleEndTime.getTime() - scheduleStartTime.getTime()) / (1000 * 60); // Duration in minutes
+    const startHour = scheduleStartTime.getHours();
     const startMinutes = scheduleStartTime.getMinutes();
     
     return {
-      top: `${(startMinutes / 60) * 100}%`,
-      height: `${(duration / 60) * 100}%`
+      top: `${(startHour * 60 + startMinutes) * (100 / 1440)}%`, // Position based on start time in minutes
+      height: `${(duration / 60) * 100}%`, // Height based on duration in minutes
+      left: '0',
+      right: '0'
     };
   }
+  
 
   // viewSeekerProfile(seekerId: number | undefined) {
   //   if (seekerId) {
