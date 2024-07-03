@@ -146,8 +146,8 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     return {
       top: `${top}%`,
       height: `${height}%`,
-      left: '10%',
-      right: '15%',
+      left: '8%',
+      right: '0%',
       position: 'absolute'
     };
   }
