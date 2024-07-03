@@ -8,6 +8,7 @@ import { RoleProfileEditComponent } from '../components/role-profile-edit/role-p
 import { HrManagerApplicationListingComponent } from '../components/hr-manager-application-listing/hr-manager-application-listing.component';
 import { HrmanagerApplicationViewComponent } from '../components/hrmanager-application-view/hrmanager-application-view.component';
 import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
+import { CompanyAdminDashboardComponent } from '../components/company-admin-dashboard/company-admin-dashboard.component';
 
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
@@ -20,5 +21,6 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList/applicationList/applicationView', component: HrmanagerApplicationViewComponent },
   { path: 'companyProfile', component: CompanyProfileEditComponent },
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
-  { path: 'profile-view', component: SeekerProfileViewComponent }
+  { path: 'profile-view', component: SeekerProfileViewComponent },
+  { path: 'dashboard', component: CompanyAdminDashboardComponent}
 ];
