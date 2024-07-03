@@ -10,14 +10,14 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Start Time</mat-label>
                     <input matInput [ngxTimepicker]="startTimepicker" [placeholder]="'HHmm'" #startTimepickerInput>
-                    <ngx-material-timepicker #startTimepicker
+                    <ngx-material-timepicker color="primary" #startTimepicker
                         (timeSet)="onStartTimeSet($event)"></ngx-material-timepicker>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
                     <mat-label>End Time</mat-label>
                     <input matInput [ngxTimepicker]="endTimepicker" [placeholder]="'HHmm'" #endTimepickerInput>
-                    <ngx-material-timepicker #endTimepicker (timeSet)="onEndTimeSet($event)"></ngx-material-timepicker>
+                    <ngx-material-timepicker color="primary" #endTimepicker (timeSet)="onEndTimeSet($event)"></ngx-material-timepicker>
                 </mat-form-field>
 
                 <button [disabled]="isAddTimeDisabled" mat-raised-button class="apply-button" (click)="print()"
@@ -46,14 +46,12 @@
 
                     </div>
                     <div class="buttons-right">
-                        <div>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Interview Duration </mat-label>
-                                <input matInput [placeholder]="'Minutes'">
-                            </mat-form-field>
+                        <div class="buttons-right-inside">
+                            <button mat-raised-button class="apply-button" (click)="openPopup()"
+                                color="primary">Edit Appointment</button>
                         </div>
-                        <div>
-                            <button mat-raised-button class="apply-button" (click)="allocateTime()"
+                        <div class="buttons-right-inside">
+                            <button mat-raised-button class="apply-button" (click)="openAllocateopup()"
                                 color="primary">Allocate
                                 Time</button>
                         </div>
@@ -89,8 +87,37 @@
         <p>By confirming, Seekers will be notified to book an interview appointment through the portal, choosing their
             preferred time slot from the available options.</p>
         <p>Interview Duration: {{interViewDuration}} minutes</p>
-        <button class="popup-button" mat-raised-button color="primary">Confirm</button>
+        <button class="popup-button" mat-raised-button color="primary" (click)="allocateTime()">Confirm</button>
 
         <button class="popup-button" mat-raised-button color="warn" (click)="closePopup()">Cancel</button>
+    </div>
+</div>
+
+<div class="modal2" [ngClass]="{'show': isIntroPopupVisible}">
+    <!---Request user to enter interval duration--->
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closeAppointmentPopup()" *ngIf="isFormFilled">&times;</span>
+        <h2>Appointment Details</h2>
+
+        <form [formGroup]="appointmentDetails" class="appointment-form">
+            <mat-form-field appearance="fill">
+                <mat-label>Appointmnet Title</mat-label>
+                <input matInput formControlName="title" [placeholder]="'Add Title'">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Appointment Duration </mat-label>
+                <input matInput type="number" formControlName="duration" [placeholder]="'Minutes'">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Special Comments </mat-label>
+                <input matInput formControlName="comments" [placeholder]="'Minutes'">
+            </mat-form-field>
+        </form>
+        <button class="popup-button" mat-raised-button (click)="closeAppointmentPopup()" color="primary">Confirm</button>
+
+        <button class="popup-button" mat-raised-button color="warn"
+            (click)="closeAppointmentPopup()" *ngIf="isFormFilled">Cancel</button>
     </div>
 </div>

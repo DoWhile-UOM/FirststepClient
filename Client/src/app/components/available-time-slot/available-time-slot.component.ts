@@ -15,17 +15,26 @@ import { InterviewService } from '../../../services/interview.service';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
+interface IRecord{
+  id:number;
+  day:string;
+  start:number;
+  end:number;
+}
 @Component({
   selector: 'app-available-time-slot',
   standalone: true,
-  imports: [MatIcon,MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
+  imports: [ReactiveFormsModule, MatIcon, MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
   providers: [],
   templateUrl: './available-time-slot.component.html',
   styleUrls: ['./available-time-slot.component.css']
 })
 export class AvailableTimeSlotComponent {
   interViewDuration: number = 0;
+  isFormFilled: boolean = false;
+  isIntroPopupVisible: boolean = true;
   isPopupVisible: boolean = false;
   advertismentId: number = 1049;//-----------------hardcoded for testing--------------------
   selectedDate: Date = new Date();
@@ -34,8 +43,10 @@ export class AvailableTimeSlotComponent {
   endTime: number = 0;       // Variable to store end time
   isAddTimeDisabled: boolean = true;
   userType: string = 'ca';
+  appointmentDetails: FormGroup;
+  records: IRecord[] = [];
 
-  constructor(private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
+  constructor(private formAPD: FormBuilder, private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       this.advertismentId = Number(id); //
@@ -45,6 +56,22 @@ export class AvailableTimeSlotComponent {
       }else{
         this.advertismentId = Number(id);
       }*/
+    });
+    this.appointmentDetails = this.formAPD.group({
+      title: [''],
+      duration: ['', Validators.required],
+      comments: ['']
+    });
+  }
+
+  onChanges(): void {
+
+    this.appointmentDetails.get('duration')?.valueChanges.subscribe(val => {
+      this.interViewDuration = val;
+      if (this.interViewDuration > 0) {
+        this.isFormFilled = true;
+      }
+      console.log(this.interViewDuration);
     });
   }
 
@@ -57,11 +84,6 @@ export class AvailableTimeSlotComponent {
     this.endTime = this.formatTimeTo24Hour(event);
     this.isAddTimeDisabled = false;
   }
-
-  records = [
-    { id: 1, day: '2024-06-25', start: 100, end: 200 },
-    { id: 2, day: '2024-06-26', start: 2300, end: 2400 }
-  ];
 
   ngOnInit() {
     //this.userType = this.auth.getRole();-----hardcoded for testing--------------------
@@ -151,16 +173,28 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
-    this.isPopupVisible=true;
+    this.isPopupVisible = true;
     //this.interview.postSplittedTimeSlots(this.records, 30,1051,this.auth.getCompanyID());
-    console.log(this.auth.getCompanyID()+" "+this.advertismentId);
+    console.log(this.auth.getCompanyID() + " " + this.advertismentId);
+  }
+
+  closeAppointmentPopup() {
+    this.isIntroPopupVisible = false;
   }
 
   closePopup() {
     this.isPopupVisible = false;
   }
 
-  dummy(){
+  openPopup() {
+    this.isIntroPopupVisible = true;
+  }
+
+  openAllocateopup(){
+    this.isPopupVisible = true;
+  }
+
+  dummy() {
 
   }
 
