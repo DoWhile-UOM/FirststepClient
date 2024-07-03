@@ -18,8 +18,6 @@ import { MatCardModule } from '@angular/material/card';
 import { AppointmentService } from '../../../services/appointment.service';
 import { MatSelectChange } from '@angular/material/select';
 
-
-
 interface AppointmentSchedule {
   appointment_id: number;
   first_name: string;
@@ -50,7 +48,6 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
-    // this.generateTimeSlots();
     this.fetchSchedules(this.adjustDateToUTC(this.selectedDate));
     this.fetchTodaySchedules();
   }
@@ -59,7 +56,6 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
     this.fetchSchedules(this.adjustDateToUTC(date));
-    // this.generateTimeSlotsForSelectedDate();
   }
   
 
@@ -152,26 +148,29 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   getStyleForSchedule(schedule: AppointmentSchedule) {
     const scheduleStartTime = new Date(schedule.start_time);
     const scheduleEndTime = new Date(schedule.end_time);
-    const duration = (scheduleEndTime.getTime() - scheduleStartTime.getTime()) / (1000 * 60); // Duration in minutes
     const startHour = scheduleStartTime.getHours();
     const startMinutes = scheduleStartTime.getMinutes();
-    
+    const endHour = scheduleEndTime.getHours();
+    const endMinutes = scheduleEndTime.getMinutes();
+  
+    const totalMinutesInDay = 24 * 60;
+    const startTotalMinutes = startHour * 60 + startMinutes;
+    const endTotalMinutes = endHour * 60 + endMinutes;
+  
+    const top = (startTotalMinutes / totalMinutesInDay) * 100;
+    const height = ((endTotalMinutes - startTotalMinutes) / totalMinutesInDay) * 100;
+  
     return {
-      top: `${(startHour * 60 + startMinutes) * (100 / 1440)}%`, // Position based on start time in minutes
-      height: `${(duration / 60) * 100}%`, // Height based on duration in minutes
-      left: '0',
-      right: '0'
+      top: `${top}%`,
+      height: `${height}%`,
+      left: '8%',
+      right: '0%',
+      position: 'absolute'
     };
   }
   
-
-  // viewSeekerProfile(seekerId: number | undefined) {
-  //   if (seekerId) {
-  //     this.router.navigate([`/seeker-profile/${seekerId}`]);
-  //   }
-  // }
   
-
+  
   getStatusClass(status: string): string {
     switch (status) {
       case 'Booked':
@@ -185,3 +184,12 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     }
   }
 }
+
+  // viewSeekerProfile(seekerId: number | undefined) {
+  //   if (seekerId) {
+  //     this.router.navigate([`/seeker-profile/${seekerId}`]);
+  //   }
+  // }
+  
+
+  
