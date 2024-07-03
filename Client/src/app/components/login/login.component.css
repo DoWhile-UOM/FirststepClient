@@ -1,34 +1,45 @@
 .page{
   width: 100%;
   background-image: url("../../../assets/images/Background.jpg");
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100%;
+  position: absolute;
 }
 
 .body {
+  position: fixed;
   font-family: "Lato", sans-serif;
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 95.5vh;
+  width: 100%;
+  height: 100%;
   padding: 20px;
 }
+
 .title {
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
-  text-align: center; /* Center the text horizontally */
+  text-align: center; 
 }
+
 mat-card {
   border-radius: 10px;
   min-width: 25em;
   width: 30%;
   align-self: center;
 }
+
 .body-card {
-  box-shadow: 2px 2px 5px #888888;
+  box-shadow: 2px 2px 5px;
 }
+
 .card {
   text-align: center;
   display: flex;
@@ -36,15 +47,18 @@ mat-card {
   width: 100%;
   padding: 20px;
 }
+
 mat-card-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 10px;
 }
+
 mat-label {
   font-family: "Lato", sans-serif;
 }
+
 mat-form-field {
   width: 75%;
   height: 4px;
@@ -52,6 +66,7 @@ mat-form-field {
   margin-bottom: 50px;
   margin-top: 20px;
 }
+
 .forgot-password {
   margin-bottom: 20px;
   margin: 0 auto;
@@ -97,6 +112,7 @@ matInput {
   margin-bottom: 10px;
   cursor: pointer;
 }
+
 @media screen and (max-width: 480px) {
   mat-card {
     width: 95%;
