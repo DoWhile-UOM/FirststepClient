@@ -58,17 +58,10 @@
   }
 
   /*application styles*/
-  .app-content {
-    display: flex;
+  .up-content{
+    display:flex;
+    justify-content: space-between;
   }
-  
-  .lgraph {
-    flex: 4;
 
-  }
   
-  .adList {
-    flex: 1;
-    padding: 10px; /* Optional: for some padding inside the adList */
-  }
   
