@@ -56,4 +56,12 @@
     grid-column: span 1;
     grid-row: span 2; 
   }
+
+  /*application styles*/
+  .up-content{
+    display:flex;
+    justify-content: space-between;
+  }
+
+  
   

@@ -1,46 +1,60 @@
 <div class="dashboard-container">
-      <div class="header-content">
-        <div class="greeting">
-          <h1>Hello, Ashan!</h1>
-        </div>
-      </div>
-  
-    <div class="main-content">
-      <mat-card class="card applications-card">
-        <h2>Applications for Job Advertisements</h2>
-        <!-- <app-chart></app-chart> Placeholder for your chart component -->
-      </mat-card>
-  
-      <mat-card class="card status-card">
-        <h2>Application By Status</h2>
-        <!-- <app-pie-chart></app-pie-chart> Placeholder for your pie chart component -->
-      </mat-card>
-  
-      <mat-card class="card response-times-card">
-        <h2>Average Response Time</h2>
-        <p>42 h</p>
-        <h2>Average Evaluation Time</h2>
-        <p>46 h</p>
-        <h2>Average Completion Time</h2>
-        <p>48 h</p>
-      </mat-card>
-  
-      <mat-card class="card interviews-card">
-        <h2>Daily Number of Interviews</h2>
-        <!-- <app-bar-chart></app-bar-chart> Placeholder for your bar chart component -->
-        <p>Applications called for Interviews: 5%</p>
-      </mat-card>
-  
-      <mat-card class="card employees-card">
-        <h2>Employees in the Company</h2>
-        <!-- <app-pie-chart-employees></app-pie-chart-employees> Placeholder for your employees pie chart component -->
-      </mat-card>
-  
-      <mat-card class="card actions-card">
-        <button mat-raised-button color="primary">Create a role account</button>
-        <button mat-raised-button color="accent">Create job advertisement</button>
-        <button mat-raised-button color="warn">Edit advertisement details</button>
-      </mat-card>
+  <div class="header-content">
+    <div class="greeting">
+      <h1>Hello, Ashan!</h1>
     </div>
   </div>
-  
+
+  <div class="main-content">
+    <mat-card class="card applications-card">
+      <div class="up-content">
+        <div class="app-title">
+          <h2>Applications for Job Advertisements</h2>
+        </div>
+        <div class="ad-menu">
+          <button mat-button [matMenuTriggerFor]="menu">Job Advertisements<mat-icon>arrow_drop_down</mat-icon></button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <app-line-graph></app-line-graph>
+    </mat-card>
+
+    <mat-card class="card status-card">
+      <h2>Application By Status</h2>
+      <app-doughnut-graph-status></app-doughnut-graph-status>
+    </mat-card>
+
+    <mat-card class="card response-times-card">
+      <h2>Average Response Time</h2>
+      <p>42 h</p>
+      <h2>Average Evaluation Time</h2>
+      <p>46 h</p>
+      <h2>Average Completion Time</h2>
+      <p>48 h</p>
+    </mat-card>
+
+    <mat-card class="card interviews-card">
+      <h2>Daily Number of Interviews</h2>
+      <!-- <app-bar-chart></app-bar-chart> Placeholder for your bar chart component -->
+      <p>Applications called for Interviews: 5%</p>
+    </mat-card>
+
+    <mat-card class="card employees-card">
+      <h2>Employees in the Company</h2>
+      <!-- <app-pie-chart-employees></app-pie-chart-employees> Placeholder for your employees pie chart component -->
+    </mat-card>
+
+    <mat-card class="card actions-card">
+      <a mat-button href="https://www.google.com/" target="_blank"
+        >Create a role account <mat-icon>open_in_new</mat-icon></a
+      >
+      <a mat-button href="https://www.google.com/" target="_blank"
+        >Create job advertisement <mat-icon>open_in_new</mat-icon></a
+      >
+    </mat-card>
+  </div>
+</div>
