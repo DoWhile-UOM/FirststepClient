@@ -56,4 +56,19 @@
     grid-column: span 1;
     grid-row: span 2; 
   }
+
+  /*application styles*/
+  .app-content {
+    display: flex;
+  }
+  
+  .lgraph {
+    flex: 4;
+
+  }
+  
+  .adList {
+    flex: 1;
+    padding: 10px; /* Optional: for some padding inside the adList */
+  }
   
