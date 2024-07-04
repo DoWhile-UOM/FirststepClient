@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
 import { app } from '../../../../server';
+import { AdvertisementServices } from '../../../services/advertisement.service';
 
 interface CandidateData {
   application_id: number;
@@ -19,7 +20,6 @@ interface CandidateData {
   lastRevisionBy: string;
   interview: boolean;
   position: number;
-  title:string;
 }
 
 interface Task {
@@ -58,9 +58,9 @@ export class InterviewShedulingShortListComponent implements OnInit {
     'application',
   ];
   candidateData: CandidateData[] = [];
-  advertisment_id: string = '';
+  advertisment_id: number = 0;
   advertisment_title: string = '';
-  job_number: string = '';  
+  job_number: number = 0;  
 
   readonly task = signal<Task>({
     name: 'Select All',
@@ -72,19 +72,24 @@ export class InterviewShedulingShortListComponent implements OnInit {
 
   constructor(
     private applicationService: ApplicationService,
+    private advertismentServices: AdvertisementServices,
     private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService
   ) {}
 
   ngOnInit() {
-    try {
-      this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
-      this.job_number = this.route.snapshot.paramMap.get('jobNumber')!;
-      this.getShortlistedCandidates();
-    } catch {
-      console.log('Error in fetching the shortlisted candidates');
-    }
+     const jobData = this.advertismentServices.getJobData();
+     if(jobData){
+       this.advertisment_id = jobData.jobID;
+       this.job_number = jobData.jobNumber;
+       this.advertisment_title = jobData.jobTitle;
+       this.getShortlistedCandidates();
+     }
+     else{
+      console.log('No job data found');
+     }
+     
   }
 
   async getShortlistedCandidates() {
@@ -100,9 +105,7 @@ export class InterviewShedulingShortListComponent implements OnInit {
       name: item.seeker_name,
       lastRevisionBy: item.last_revision_employee_name,
       interview: item.application_status,
-      title: item.title,
     }));
-    this.advertisment_title = this.candidateData[0].title;
     // Initialize task subtasks based on candidate data
     this.task.update(() => ({
       name: 'Select All',

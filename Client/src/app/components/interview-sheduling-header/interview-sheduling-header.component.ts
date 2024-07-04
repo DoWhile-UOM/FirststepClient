@@ -14,8 +14,8 @@ import { I } from '@angular/cdk/keycodes';
 })
 export class InterviewShedulingHeaderComponent {
   @Input() job_title: string = "";
-  @Input() job_number: string = "";
-  @Input() job_id: string = "";
+  @Input() job_number: number = 0;
+  @Input() job_id: number = 0;
 
 
 constructor(private router:Router,private auth:AuthService) { }

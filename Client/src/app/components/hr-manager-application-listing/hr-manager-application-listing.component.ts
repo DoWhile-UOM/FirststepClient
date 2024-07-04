@@ -39,6 +39,8 @@ import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeService } from '../../../services/employee.service';
 import { application } from 'express';
+import { AdvertisementServices } from '../../../services/advertisement.service';
+
 
 interface HRMListing {
   title: string;
@@ -118,6 +120,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   constructor(
     private applicationService: ApplicationService,
+    private advertisementServices: AdvertisementServices,
     private employeeService: EmployeeService,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
@@ -248,6 +251,12 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   shortlist() {
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist', {jobID: this.jobID,jobNumber:this.job_number}]);
+    const jobData = {
+      jobID: this.jobID,
+      jobTitle: this.title,
+      jobNumber: this.job_number,
+    };
+    this.advertisementServices.setJobData(jobData);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist']);
     }
 }
