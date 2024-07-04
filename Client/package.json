@@ -10,8 +10,8 @@
     "serve:ssr:Client": "node dist/client/server/server.mjs"
   },
   "engines": {
-  "node": "18.19.1",
-  "npm": ">=8.0.0"
+    "node": "18.19.1",
+    "npm": ">=8.0.0"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "@angular/ssr": "^17.1.1",
     "@auth0/angular-jwt": "^5.2.0",
     "@azure/storage-blob": "^12.17.0",
+    "@canvasjs/angular-charts": "^1.2.0",
     "@syncfusion/ej2-angular-pdfviewer": "^24.2.7",
     "@syncfusion/ej2-angular-richtexteditor": "^24.2.7",
     "axios": "^1.6.7",
