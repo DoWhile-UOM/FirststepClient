@@ -11,9 +11,7 @@ import { title } from 'process';
 })
 export class LineGraphComponent {
   chartOptions = {
-    title: {
-      text: "Applications Submitted During the Week"
-    },
+   
     axisX:{
       title: "Day of the Week"
     },
