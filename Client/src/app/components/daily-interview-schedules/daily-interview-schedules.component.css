@@ -88,13 +88,14 @@
 .time-label {
   font-weight: bold;
   margin-right: 10px;
+  color:#d3d3d3;
   z-index: 1; /* Ensure the time label is always on top */
   background: #fafafa; /* Match the background color to cover the line */
 }
 
 .time-line {
   flex-grow: 1;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #d3d3d3;
   position: absolute;
   top: 50%; /* Center the line vertically */
   left: 0;
