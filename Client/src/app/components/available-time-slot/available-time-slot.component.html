@@ -44,7 +44,7 @@
                         <mat-label class="num"> Job Number: job_number </mat-label><br />
                         <mat-label class="field"> field_name </mat-label>
                         <mat-label class="num"> Appointmnet Title: {{appointment.title}}</mat-label><br />
-                        <mat-label class="num"> Appointment Duration: {{appointment.duration}} </mat-label>
+                        <mat-label class="num"> Appointment Duration: {{appointment.duration}} minutes</mat-label>
                         <mat-label class="num"> Special Comments: {{appointment.comment}}</mat-label>
 
                     </div>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="buttons-right-inside">
                             <button mat-raised-button class="apply-button" (click)="openAllocateopup()"
-                                color="primary">Allocate
+                                color="primary" *ngIf="isFormFilled">Allocate
                                 Time</button>
                         </div>
 
@@ -89,7 +89,7 @@
         <h2>Confirm Appointment</h2>
         <p>By confirming, Seekers will be notified to book an interview appointment through the portal, choosing their
             preferred time slot from the available options.</p>
-        <p>Interview Duration: {{interViewDuration}} minutes</p>
+        <p>Interview Duration: {{appointment.duration}} minutes</p>
         <button class="popup-button" mat-raised-button color="primary" (click)="allocateTime()">Confirm</button>
 
         <button class="popup-button" mat-raised-button color="warn" (click)="closePopup()">Cancel</button>

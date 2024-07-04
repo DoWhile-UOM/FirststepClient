@@ -76,6 +76,8 @@ export class AvailableTimeSlotComponent {
       this.appointment.duration = val;
       if (this.appointment.duration > 0) {
         this.isFormFilled = true;
+      }else{
+        this.isFormFilled = false;
       }
       console.log(this.interViewDuration);
     });
