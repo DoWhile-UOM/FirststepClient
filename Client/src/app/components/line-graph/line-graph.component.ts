@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { title } from 'process';
 
 @Component({
   selector: 'app-line-graph',
@@ -13,14 +14,23 @@ export class LineGraphComponent {
     title: {
       text: "Applications Submitted During the Week"
     },
+    axisX:{
+      title: "Day of the Week"
+    },
+    axisY:{
+      title: "Number of Applications"
+    },
     data: [{
-      type: "column",
+      type: "line",
       dataPoints: [
-      { label: "Apple",  y: 10  },
-      { label: "Orange", y: 15  },
-      { label: "Banana", y: 25  },
-      { label: "Mango",  y: 30  },
-      { label: "Grape",  y: 28  }
+        { x: new Date(2021, 0, 1), y: 450 },
+        { x: new Date(2021, 0, 2), y: 414 },
+        { x: new Date(2021, 0, 3), y: 520 },
+        { x: new Date(2021, 0, 4), y: 460 },
+        { x: new Date(2021, 0, 5), y: 450 },
+        { x: new Date(2021, 0, 6), y: 500 },
+        { x: new Date(2021, 0, 7), y: 480 }
+    
       ]
     }]                
     };
