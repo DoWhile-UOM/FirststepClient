@@ -110,12 +110,7 @@ export class ApplicationService {
   async getApplicationStatus(advertisement_id: number, seeker_id: number) {
     let applicationStatusDetails: any = {};
     await axios
-      .get(
-        Apipaths.getApplicationStatus +
-          advertisement_id +
-          '&seekerId=' +
-          seeker_id
-      )
+      .get(Apipaths.getApplicationStatus + advertisement_id + '/' + seeker_id)
       .then((response) => {
         applicationStatusDetails = response.data;
         //format date
