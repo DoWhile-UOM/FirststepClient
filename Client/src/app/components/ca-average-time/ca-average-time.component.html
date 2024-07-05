@@ -1,1 +1,14 @@
-<p>ca-average-time works!</p>
+<mat-card *ngIf="averageTimes" class="average-time-card">
+    <div class="average-time-item">
+      <span class="title">Average Response Time</span>
+      <span class="time">{{ averageTimes.avgResponseTime }} h</span>
+    </div>
+    <div class="average-time-item">
+      <span class="title">Average Evaluation Time</span>
+      <span class="time">{{ averageTimes.avgScreeningTime }} h</span>
+    </div>
+    <div class="average-time-item">
+      <span class="title">Average Completion Time</span>
+      <span class="time">{{ averageTimes.avgCompletionTime }} h</span>
+    </div>
+  </mat-card>
