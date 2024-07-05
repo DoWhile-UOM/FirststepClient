@@ -196,7 +196,7 @@ export class EmployeeService {
 
   async getEmployeeStats(companyId: number): Promise<any> {
     try {
-      const response = await axios.get(`${Apipaths.getEmployeeStat}/${companyId}`);
+      const response = await axios.get(Apipaths.getEmployeeStat + companyId);
       return response.data;
     } catch (error) {
       this.snackBar.open('Failed to load employee stats', 'Close', {

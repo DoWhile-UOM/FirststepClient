@@ -22,12 +22,13 @@ export class CaAverageTimeComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const companyId = 7; // Hardcoded company ID
-    this.companyName = "BISTEC Global Services"; // Hardcoded company name
+    //test
+    //const companyId = 7; 
+    //this.companyName = "BISTEC Global Services";
 
 
-    // const companyId = this.authService.getCompanyID();
-    // this.companyName = this.authService.getCompanyName();
+    const companyId = this.authService.getCompanyID();
+    this.companyName = this.authService.getCompanyName();
 
     if (companyId) {
       this.applicationService.getAverageTimes(companyId).then(data => {

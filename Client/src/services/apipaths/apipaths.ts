@@ -14,7 +14,7 @@ export class Apipaths {
     static readonly getUserDetails: string = this.baseUrl + 'User/GetUser/userId='; // + user_id 
     static readonly updateUserDetails: string = this.baseUrl + 'User/UpdateUser';
     static readonly postCompanyAdminReg: string = this.baseUrl + 'Employee/AddNewCompanyAdmin';// + company_id
-    static readonly getEmployeeStat: string = this.baseUrl + 'Employee/GetEmployeeStat/'; // + company_id
+    static readonly getEmployeeStat: string = this.baseUrl + 'Employee/GetEmployeeStats/'; // + company_id
 
     // advertisements
     static readonly getJobDetails: string = this.baseUrl + 'Advertisement/GetAdvertisementById/'; // + advertisement_id
