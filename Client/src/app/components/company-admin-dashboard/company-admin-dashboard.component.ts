@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DoughnutGraphStatusComponent } from "../doughnut-graph-status/doughnut-graph-status.component";
 import { MatMenuModule } from '@angular/material/menu';
+import { CaEmployeeStatComponent } from "../ca-employee-stat/ca-employee-stat.component";
+import { CaAverageTimeComponent } from '../ca-average-time/ca-average-time.component';
 
 
 @Component({
@@ -13,7 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
     standalone: true,
     templateUrl: './company-admin-dashboard.component.html',
     styleUrl: './company-admin-dashboard.component.css',
-    imports: [MatCardModule, MatCard, LineGraphComponent, MatButtonModule, MatIconModule, DoughnutGraphStatusComponent,MatMenuModule]
+    imports: [MatCardModule, MatCard, LineGraphComponent, MatButtonModule, MatIconModule, DoughnutGraphStatusComponent, MatMenuModule, CaEmployeeStatComponent, CaAverageTimeComponent]
 })
 export class CompanyAdminDashboardComponent {
 

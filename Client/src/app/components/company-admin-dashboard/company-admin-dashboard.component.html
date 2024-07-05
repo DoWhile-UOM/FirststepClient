@@ -28,24 +28,12 @@
       <app-doughnut-graph-status></app-doughnut-graph-status>
     </mat-card>
 
-    <mat-card class="card response-times-card">
-      <h2>Average Response Time</h2>
-      <p>42 h</p>
-      <h2>Average Evaluation Time</h2>
-      <p>46 h</p>
-      <h2>Average Completion Time</h2>
-      <p>48 h</p>
-    </mat-card>
-
-    <mat-card class="card interviews-card">
-      <h2>Daily Number of Interviews</h2>
-      <!-- <app-bar-chart></app-bar-chart> Placeholder for your bar chart component -->
-      <p>Applications called for Interviews: 5%</p>
-    </mat-card>
+    <div class="card response-times-card">
+      <app-ca-average-time></app-ca-average-time>
+    </div>
 
     <mat-card class="card employees-card">
-      <h2>Employees in the Company</h2>
-      <!-- <app-pie-chart-employees></app-pie-chart-employees> Placeholder for your employees pie chart component -->
+      <app-ca-employee-stat></app-ca-employee-stat>
     </mat-card>
 
     <mat-card class="card actions-card">

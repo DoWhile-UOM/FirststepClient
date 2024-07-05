@@ -57,35 +57,41 @@ export class CaEmployeeStatComponent implements OnInit {
         color: columnColors[this.hraEvaluations.indexOf(item) % columnColors.length]      }));
 
 
-      this.columnChartOptions = {
-        title: {
-          text: ''
-        },
-        animationEnabled: true,
-        data: [{
-          type: 'column',
-          dataPoints: performanceDataPoints
-        }]
-      };
+        this.columnChartOptions = {
+          axisY: {
+            labelFontFamily: 'Roboto',
+            labelFontSize: 14,
+            labelFontColor: '#666'
+          },
+          axisX: {
+            labelFontFamily: 'Roboto',
+            labelFontSize: 14,
+            labelFontColor: '#666',
+            labelFormatter: () => ''
+          },
+          animationEnabled: true,
+          data: [{
+            type: 'column',
+            dataPoints: performanceDataPoints
+          }]
+        };
 
-      const doughnutColors = ['#451CC9', '#A1C91C'];
-      this.doughnutChartOptions = {
-        title: {
-          text: ''
-        },
-        animationEnabled: true,
-        data: [{
-          type: 'doughnut',
-          yValueFormatString: "#,###",
-          indexLabel: "{name}",
-          dataPoints: [
-            { y: data.hrmCount, name: "HRM",color: doughnutColors[0] },
-            { y: data.hraCount, name: "TA Specialist",color: doughnutColors[1] }
-          ]
-        }]
-      };
-
-      console.log('Doughnut Chart Options:', this.doughnutChartOptions); // Debugging line
+        const doughnutColors = ['#451CC9', '#A1C91C'];        
+        this.doughnutChartOptions = {
+          animationEnabled: true,
+          data: [{
+            type: 'doughnut',
+            yValueFormatString: "#,###",
+            indexLabel: "{name}",
+            indexLabelFontFamily: 'Roboto',
+            indexLabelFontSize: 14,
+            indexLabelFontColor: '#666',
+            dataPoints: [
+              { y: data.hrmCount, name: "HRM", color: doughnutColors[0] },
+              { y: data.hraCount, name: "TA Specialist", color: doughnutColors[1] }
+            ]
+          }]
+        };
 
       this.cdr.detectChanges(); // Manually trigger change detection
 
@@ -94,8 +100,4 @@ export class CaEmployeeStatComponent implements OnInit {
     }
   }
 
-  getColor(index: number) {
-    const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#FF8C33', '#33FFF5'];
-    return colors[index % colors.length];
-  }
 }
