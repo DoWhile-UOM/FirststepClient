@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,7 +23,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { EmployeeService } from '../../../services/employee.service';
+import { EmailVerificationBoxComponent } from '../email-verification-box/email-verification-box.component';
 
+import { MatAutocompleteModule, } from '@angular/material/autocomplete';
+import { EventEmitter, Output } from '@angular/core';
 
 interface CmpAdminReg {
   email: string;
@@ -40,10 +43,10 @@ interface unRegCA {
   confirmed_password: string;
 }
 interface requestOTP {
-  email: string;
+  email: string | null | undefined;
 }
 interface verifyOTP {
-  email: string;
+  email: string | null | undefined;
   otp: string | null | undefined;
 
 }
@@ -87,12 +90,12 @@ export class CompanyAdminRegistrtionFormComponent {
   RegCA: CmpAdminReg = {} as CmpAdminReg;
 
   constructor(
-    private route: ActivatedRoute, 
-    private employeeService: EmployeeService, 
-    private spinner: NgxSpinnerService, 
-    public dialog: MatDialog, 
-    private snackbar: MatSnackBar, 
-    private auth: AuthService, 
+    private route: ActivatedRoute,
+    private employeeService: EmployeeService,
+    private spinner: NgxSpinnerService,
+    public dialog: MatDialog,
+    private snackbar: MatSnackBar,
+    private auth: AuthService,
     private cdr: ChangeDetectorRef,
     private router: Router
   ) { }
@@ -120,7 +123,7 @@ export class CompanyAdminRegistrtionFormComponent {
     this.RegCA.email = this.unRegCA.email;
     this.RegCA.password = this.unRegCA.password_hash;
     this.RegCA.company_registration_url = this.cmpID;
-    
+
     const IsVaild = this.formValidation();
     if (IsVaild) {
       try {
@@ -128,7 +131,7 @@ export class CompanyAdminRegistrtionFormComponent {
 
         await this.employeeService.postCompanyAdminReg(this.RegCA);
         this.router.navigate(['/login']);
-        
+
         this.spinner.hide();
       } catch (error) {
         this.spinner.hide();
@@ -192,10 +195,49 @@ export class CompanyAdminRegistrtionFormComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
         this.isConfrimedToChangeEmail = true;
-        this.canOpenOtpView = true;
+        //this.canOpenOtpView = true;
+        //this.openEmailVerificationDialog();
+        this.openEmailAuthPopupWithEmail();
       }
     }
     );
+  }
+
+  //Ashan's pop up
+  openEmailVerificationDialog() {
+    const emailVerificationDialogRef = this.dialog.open(EmailVerificationBoxComponent, {
+      width: '600px', // Set width as needed
+      data: { email: this.unRegCA.email } // Pass any data you need for the email verification
+    });
+    emailVerificationDialogRef.afterClosed().subscribe(result => {
+      // Handle the result from the email verification dialog
+      console.log('The email verification dialog was closed. Result:', result);
+      if (result === true) {
+        this.isEmailVerified = true;
+      } else {
+        // Handle email verification failure or cancellation
+      }
+    });
+  }
+  //customized email authentication pop up
+  openEmailAuthPopupWithEmail() {
+    const email = this.unRegCA.email;
+    const emailAuthenticationDialogRef = this.dialog.open(EmailAuthenticationPopUp, {
+      width: '600px',
+      data: { email: this.unRegCA.email } // Pass email to popup
+    });
+
+    emailAuthenticationDialogRef.afterClosed().subscribe((result) => {
+      // Handle the result from the email verification dialog
+      console.log('The email verification dialog was closed. Result:', result.verified);
+      if (result.verified == true) {
+        console.log(this.isEmailVerified);
+        this.isEmailVerified = true;
+        console.log(this.isEmailVerified);
+      } else {
+        // Handle email verification failure or cancellation
+      }
+    });
   }
 
   async requestOTP() {
@@ -277,5 +319,147 @@ export class ConfirmToChangeEmail {
   constructor(public dialogRef: MatDialogRef<ConfirmToChangeEmail>) { }
   okAction() {
     this.dialogRef.close(true);
+  }
+}
+
+//email-authentication-pop-up
+@Component({
+  selector: 'email-authentication-pop-up',
+  standalone: true,
+  templateUrl: 'email-authentication-pop-up.html',
+  imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatButtonModule,
+    FormsModule,
+    CommonModule, FlexLayoutServerModule, MatGridListModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatIconModule, MatDividerModule, MatCardModule, MatAutocompleteModule
+  ],
+})
+export class EmailAuthenticationPopUp {
+  requestBtnstate: boolean = false;
+  verifyBtnstate: boolean = true;
+  rmnTime: number = 60;
+  interval: any;
+  useremailAddress: string = '';
+  CAReg = this._formBuilder.group({
+    ca_email: ['', [Validators.required, Validators.email]],//
+    otp_in: ['', Validators.required]
+  });
+  @Output() otpVerified: EventEmitter<boolean> = new EventEmitter();
+  constructor(public dialogRef: MatDialogRef<EmailAuthenticationPopUp>, @Inject(MAT_DIALOG_DATA) public data: any, private _formBuilder: FormBuilder, private snackbar: MatSnackBar, private auth: AuthService) { }
+  ngOnInit() {
+    this.useremailAddress = this.data.email;
+    this.checkButtonStatus();
+  }
+
+  async requestOTP() {
+
+    const userData: requestOTP = {
+      email: this.CAReg.get('ca_email')?.value
+    }
+
+    if (!this.isValidEmail(userData)) {
+      this.snackbar.open("Please Enter the Email Address", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      return;
+    }
+    this.requestBtnstate = true;
+
+    let verificationResult = await this.auth.requestOTP(userData)
+
+    if (verificationResult == true) {
+      this.snackbar.open("OTP Sent successful", "")._dismissAfter(3000);
+      this.handleClick();
+      this.verifyBtnstate = false;
+      //this.printTextAfterFiveMinutes();
+    } else {
+      this.snackbar.open("OTP Request failed Please try Again", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      this.requestBtnstate = false;
+      return;
+    }
+  }
+
+  async VerifyOTP() {
+    console.log(this.CAReg.get('otp_in')?.value);
+
+    const userData: verifyOTP = {
+      email: this.CAReg.get('ca_email')?.value,
+      otp: this.CAReg.get('otp_in')?.value
+    }
+
+    let verificationResult = await this.auth.verifyOTP(userData);
+
+    if (verificationResult == true) {
+      //this.isEmailVerified = true;
+      this.snackbar.open("OTP verification successful", "", { duration: 2000 });
+      this.requestBtnstate = true;
+      this.verifyBtnstate = true;
+      this.closeDialog();
+    } else {
+      this.snackbar.open("OTP verification failed", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+    }
+
+  }
+  isValidEmail(userData: requestOTP): boolean {
+    const email = userData.email || "";
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
+  }
+  handleClick(): void {
+
+    const currentTime = Date.now();
+    const unlockTime = currentTime + 60000; // 60 seconds later
+
+    localStorage.setItem('unlockTime', unlockTime.toString());
+    this.requestBtnstate = true;
+    this.startCountdown();
+  }
+  checkButtonStatus(): void {
+    if (this.isBrowser()) {
+      const unlockTime = localStorage.getItem('unlockTime');
+
+      if (unlockTime) {
+        const currentTime = Date.now();
+        const timeDifference = parseInt(unlockTime) - currentTime;
+
+        if (timeDifference > 0) {
+          this.requestBtnstate = true;
+          this.rmnTime = Math.ceil(timeDifference / 1000);
+          this.startCountdown();
+        } else {
+          localStorage.removeItem('unlockTime');
+        }
+      }
+    }
+  }
+  startCountdown(): void {
+    this.interval = setInterval(() => {
+      this.rmnTime--;
+
+      if (this.rmnTime <= 0) {
+        this.requestBtnstate = false;
+        localStorage.removeItem('unlockTime');
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  }
+  isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  }
+
+  closeDialog(): void {
+    const additionalData = {
+      emailAddress: this.useremailAddress,
+      verified: true // Example boolean value
+    };
+    this.dialogRef.close(additionalData);
+  }
+
+  cancelDialog(): void {
+    this.dialogRef.close();
   }
 }
