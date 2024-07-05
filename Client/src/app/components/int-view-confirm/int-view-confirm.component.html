@@ -5,50 +5,68 @@
     <h2 class="header">Applicant</h2>
     <mat-card class="card">
         <div class="schedule-container">
-            <div class="selected-not-booked">
-                <h3>Selected applicants have not yet booked an appointment</h3>
-                <div class="slots" *ngFor="let schedule of schedules">
-                    <div class="schedule-item">
-                        <div class="details">
-                            <div class="name">{{ schedule.name }}</div>
-                            <div class="job-title">Details</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="schedule-table">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-                <div class="time-slot" *ngFor="let timeSlot of timeSlots">
-                    <div class="time-label">{{ timeSlot }}</div>
-                    <div class="interview-slot" *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="{
-                confirmed: schedule.status === 'Confirmed',
-                rescheduled: schedule.status === 'Rescheduled',
-                missed: schedule.status === 'Missed'
-              }">
-                        <div class="interview-details">
-                            <div class="name">{{ schedule.name }}</div>
-                            <div class="job-title">{{ schedule.jobTitle }}</div>
+                    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
 
-                            <div class="status" [ngClass]="{
-                    confirmed: schedule.status === 'Confirmed',
-                    rescheduled: schedule.status === 'Rescheduled',
-                    missed: schedule.status === 'Missed'
-                  }">
-                                {{ schedule.status }}
-                            </div>
-                            <div class="confirm-button">
-                                <button mat-raised-button color="primary">Confirm</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef> Name </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef> Time </th>
+                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                        <th mat-header-cell *matHeaderCellDef> Date </th>
+                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
             </div>
             <div class="calendar-details-container">
                 <div class="calendar-container">
-                    <mat-calendar [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+                    <div class="buttons-right-inside">
+                        <button mat-raised-button class="apply-button" color="primary" (click)="openpopup()">Proceed to interview</button>
+                    </div>
+                </div>
+                <div class="calendar-container">
+                    <h3>Selected applicants have not yet booked an appointment</h3>
+                    <div class="slots" *ngFor="let schedule of schedules">
+                        <div class="schedule-item">
+                            <div class="details">
+                                <div class="name">{{ schedule.name }}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </mat-card>
+</div>
+
+
+
+<div class="modal" [ngClass]="{'show': isPopupVisible}" (click)="closePopup()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <span class="close" (click)="closePopup()">&times;</span>
+        <h2>Confirm Appointment</h2>
+        <p>By confirming, Seekers will be notified to book an interview appointment through the portal, choosing their
+            preferred time slot from the available options.</p>
+
+        <button class="popup-button" mat-raised-button color="primary" (click)="openpopup()">Confirm</button>
+
+        <button class="popup-button" mat-raised-button color="warn" (click)="closePopup()">Cancel</button>
+    </div>
 </div>

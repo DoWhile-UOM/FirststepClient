@@ -19,10 +19,19 @@ import { MatCardModule } from '@angular/material/card';
 
 interface InterviewSchedule {
   name: string;
-  jobTitle: string;
-  status: string;
-  time: string;
 }
+interface PeriodicElement {
+  name: string;
+  weight: number;
+  symbol: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { name: 'Helium', weight: 4.0026, symbol: 'He' },
+  { name: 'Lithium', weight: 6.941, symbol: 'Li' },
+
+];
 
 @Component({
   selector: 'app-int-view-confirm',
@@ -32,6 +41,9 @@ interface InterviewSchedule {
   styleUrl: './int-view-confirm.component.css'
 })
 export class IntViewConfirmComponent {
+  displayedColumns: string[] = ['name', 'weight', 'symbol'];
+  dataSource = ELEMENT_DATA;
+  isPopupVisible:boolean = false;
   selectedDate: Date = new Date();
   schedules: InterviewSchedule[] = [];
   timeSlots: string[] = [
@@ -43,20 +55,25 @@ export class IntViewConfirmComponent {
   ngOnInit() {
     // Fetch the interview schedules (this could be an API call in a real application)
     this.schedules = [
-      { time: '8:00am', name: 'James Williams', jobTitle: 'Online', status: 'Confirmed' },
-      { time: '9:00am', name: 'Willem van Helden', jobTitle: 'Online', status: 'Confirmed' },
-      { time: '9:30am', name: 'Dianne Russel', jobTitle: 'Online', status: 'Confirmed' },
-      { time: '10:30am', name: 'Theresa Webb', jobTitle: 'Online', status: 'Confirmed' }
+      { name: 'James Williams' },
+      { name: 'Willem van Helden' },
+      { name: 'Dianne Russel' },
+      { name: 'Theresa Webb' }
     ];
   }
 
-  getScheduleForTimeSlot(timeSlot: string): InterviewSchedule[] {
-    return this.schedules.filter(schedule => schedule.time === timeSlot);
-  }
 
   onDateChange(date: Date) {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
     // Fetch new schedules based on selected date
+  }
+
+  closePopup() {
+    this.isPopupVisible = false;
+  }
+
+  openpopup(){
+    this.isPopupVisible = true;
   }
 }

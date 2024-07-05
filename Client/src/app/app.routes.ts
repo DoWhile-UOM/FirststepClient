@@ -8,7 +8,6 @@ import { CompanyAdminRegistrtionFormComponent } from './components/company-admin
 import { SeekerSignupComponent } from './components/seeker-signup/seeker-signup.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { PopUpFinalComponent } from './components/pop-up-final/pop-up-final.component';
-import { IntViewConfirmComponent } from './components/int-view-confirm/int-view-confirm.component';
 
 //test
 import { DailyInterviewSchedulesComponent } from './components/daily-interview-schedules/daily-interview-schedules.component';
@@ -23,7 +22,6 @@ export const routes: Routes = [
   { path: 'RegCheck', component: RegCmpStateCheckComponent },
   { path: 'popupfinal', component: PopUpFinalComponent },
   { path: 'RegCompanyAdmin', component: CompanyAdminRegistrtionFormComponent },
-  { path: 'Interview', component: IntViewConfirmComponent},
 
   {
     path: 'ca',
