@@ -12,9 +12,6 @@ import { text } from 'stream/consumers';
 export class DoughnutGraphStatusComponent {
 
   chartOptions = {
-    title:{
-      text: "Applications Status"
-    },
     data: [{
       type: "doughnut",
       showInLegend: true,

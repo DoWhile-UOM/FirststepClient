@@ -501,4 +501,21 @@ export class AdvertisementServices {
 
     return jobList;
   }
+
+  async getCompanyAdvertisementTitleList(companyID: string){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getCompanyAdvertisementTitleList + companyID)
+      .then(function (response) {
+        jobList = response.data;
+      })
+      .catch(
+        (error) => {
+        //console the error
+        console.log(error);
+        }
+      );
+
+    return jobList;
+  }
 }
