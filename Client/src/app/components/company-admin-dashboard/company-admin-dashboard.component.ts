@@ -8,7 +8,7 @@ import { DoughnutGraphStatusComponent } from "../doughnut-graph-status/doughnut-
 import { MatMenuModule } from '@angular/material/menu';
 import { CaEmployeeStatComponent } from "../ca-employee-stat/ca-employee-stat.component";
 import { CaAverageTimeComponent } from '../ca-average-time/ca-average-time.component';
-
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
     selector: 'app-company-admin-dashboard',
@@ -18,5 +18,16 @@ import { CaAverageTimeComponent } from '../ca-average-time/ca-average-time.compo
     imports: [MatCardModule, MatCard, LineGraphComponent, MatButtonModule, MatIconModule, DoughnutGraphStatusComponent, MatMenuModule, CaEmployeeStatComponent, CaAverageTimeComponent]
 })
 export class CompanyAdminDashboardComponent {
+
+    public userName: string = '';
+
+    constructor(private authService: AuthService) { }
+
+    ngOnInit() {
+        this.authService.getRole();
+        this.authService.getCompanyID();
+        this.authService.getCompanyName();
+        this.userName=this.authService.getName();
+    }
 
 }
