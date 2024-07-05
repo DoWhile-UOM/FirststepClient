@@ -7,7 +7,7 @@ import { text } from 'stream/consumers';
   standalone: true,
   imports: [CanvasJSAngularChartsModule],
   templateUrl: './doughnut-graph-status.component.html',
-  styleUrl: './doughnut-graph-status.component.css'
+  styleUrl: './doughnut-graph-status.component.css',
 })
 export class DoughnutGraphStatusComponent {
 
