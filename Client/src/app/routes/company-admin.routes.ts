@@ -11,8 +11,7 @@ import { SeekerProfileViewComponent } from '../components/seeker-profile-view/se
 import { CompanyAdminDashboardComponent } from '../components/company-admin-dashboard/company-admin-dashboard.component';
 
 //test
-import { CaAverageTimeComponent } from '../components/ca-average-time/ca-average-time.component';
-import { CaEmployeeStatComponent } from '../components/ca-employee-stat/ca-employee-stat.component';
+import { DoughnutGraphEmployeeComponent } from '../components/doughnut-graph-employee/doughnut-graph-employee.component';
 
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
@@ -29,6 +28,6 @@ export const caRoutes: Routes = [
   { path: 'dashboard', component: CompanyAdminDashboardComponent},
 
   //test
-  { path: 'averageTime', component: CaAverageTimeComponent },
-  { path: 'employeeStat', component: CaEmployeeStatComponent}
+  { path: 'doughnut-graph-employee', component: DoughnutGraphEmployeeComponent}
+
 ];
