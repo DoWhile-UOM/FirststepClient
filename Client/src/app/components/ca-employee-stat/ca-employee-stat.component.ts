@@ -45,18 +45,17 @@ export class CaEmployeeStatComponent implements OnInit {
 
     try {
       const data: EmployeeStats = await this.employeeService.getEmployeeStats(this.companyId);
-      console.log('Employee Stats:', data); // Debugging line
 
       this.hraCount = data.hraCount;
       this.hrmCount = data.hrmCount;
       this.hraEvaluations = data.hraEvaluations;
 
+      const columnColors = [ '#1DC9B7', '#FD3995', '#39A1F4', '#F5A623', '#00CCCC', '#0DCAF0', '#17A2B8','#1A55E3', '#FF0854', '#00D284', '#0DCAF0', '#5E6EED', '#6F42C1', '#007BFF'];
       const performanceDataPoints = data.hraEvaluations.map((item: HraEvaluation) => ({
         label: item.hraName,
-        y: item.assignedApplicationsWithRevisionsCount
-      }));
+        y: item.assignedApplicationsWithRevisionsCount,
+        color: columnColors[this.hraEvaluations.indexOf(item) % columnColors.length]      }));
 
-      console.log('Performance Data Points:', performanceDataPoints); // Debugging line
 
       this.columnChartOptions = {
         title: {
@@ -69,8 +68,7 @@ export class CaEmployeeStatComponent implements OnInit {
         }]
       };
 
-      console.log('Column Chart Options:', this.columnChartOptions); // Debugging line
-
+      const doughnutColors = ['#451CC9', '#A1C91C'];
       this.doughnutChartOptions = {
         title: {
           text: ''
@@ -81,8 +79,8 @@ export class CaEmployeeStatComponent implements OnInit {
           yValueFormatString: "#,###",
           indexLabel: "{name}",
           dataPoints: [
-            { y: data.hrmCount, name: "HRM" },
-            { y: data.hraCount, name: "TA Specialist" }
+            { y: data.hrmCount, name: "HRM",color: doughnutColors[0] },
+            { y: data.hraCount, name: "TA Specialist",color: doughnutColors[1] }
           ]
         }]
       };
@@ -94,5 +92,10 @@ export class CaEmployeeStatComponent implements OnInit {
     } catch (error) {
       console.error('Error fetching employee stats:', error); // Error handling
     }
+  }
+
+  getColor(index: number) {
+    const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#FF8C33', '#33FFF5'];
+    return colors[index % colors.length];
   }
 }
