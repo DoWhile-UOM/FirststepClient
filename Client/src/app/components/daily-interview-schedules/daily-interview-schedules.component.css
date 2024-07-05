@@ -4,25 +4,25 @@
 }
 
 .header {
-  font-size: 2em; /* Bigger font size */
-  color: teal; /* Teal color */
-  margin: 20px 0 40px 0; /* Top, Right, Bottom, Left */
+  font-size: 2em;
+  color: teal;
+  margin: 20px 0 40px 0;
 }
 
 .sub-header {
-  font-size: 1.3em; /* Bigger font size */
-  margin-bottom: 20px; /* Bottom margin */
+  font-size: 1.3em;
+  margin-bottom: 20px;
   padding: 5px;
   font-weight: bold;
 }
 
 .card {
-  padding: 2em 2em 2em 2em;
+  padding: 2em;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .up-next-container {
-  margin-bottom: 20px; /* Space between Up Next and the rest */
+  margin-bottom: 20px;
 }
 
 .up-next-box {
@@ -40,69 +40,93 @@
   align-items: center;
 }
 
-.schedule-container {
+.main-content {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px;
-  flex-wrap: wrap; /* Ensure wrapping in smaller screens */
 }
 
-.date-header {
-  width: 100%;
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  font-weight: bold;
-  padding-left: 10px;
+.calendar-container {
+  width: 30%;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .schedule-table {
+  width: 68%;
   display: flex;
-  flex-direction: column; /* Updated to column layout */
+  flex-direction: column;
   gap: 10px;
-  background: #fafafa; /* Lighter shade */
+  background: #fafafa;
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  flex-grow: 2; /* Take more space */
-  flex-basis: 0;
+}
+
+.time-slot-container {
+  position: relative;
+  height: 1440px; /* 24 hours * 60 minutes */
 }
 
 .time-slot {
   display: flex;
-  flex-direction: row; /* Ensure each time slot and interview slot are in a row */
+  flex-direction: column;
+  position: relative;
+  height: 60px; /* Each hour slot is 60px high */
+  border-bottom: 1px solid transparent;
+}
+
+.time-slot-header {
+  display: flex;
   align-items: center;
-  border-bottom: 1px solid #e0e0e0; /* Optional: Add a bottom border for separation */
-  padding: 10px 10px 20px 10px;
+  height: 20px; /* Adjust the height of the header as needed */
+  position: relative; /* Ensure the header is positioned correctly */
 }
 
 .time-label {
-  width: 80px; /* Fixed width for time labels */
   font-weight: bold;
+  margin-right: 10px;
+  color:#d3d3d3;
+  z-index: 1; /* Ensure the time label is always on top */
+  background: #fafafa; /* Match the background color to cover the line */
+}
+
+.time-line {
+  flex-grow: 1;
+  border-bottom: 1px solid #d3d3d3;
+  position: absolute;
+  top: 50%; /* Center the line vertically */
+  left: 0;
+  right: 0;
+  z-index: 0; /* Ensure the line is behind the label */
 }
 
 .interview-slot-container {
-  flex: 1; /* Make interview slot take the remaining space */
+  position: absolute;
+  height: 100%; /* Ensure container takes full height */
+  width: 100%;
 }
 
 .interview-slot {
-  flex: 1;
+  position: absolute;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background: #D3D3D3; 
-  margin-bottom: 10px; /* Add margin to separate each slot */
+  background: #D3D3D3;
+  z-index: 2; /* Ensure the slot is on top of the line */
 }
 
 .interview-slot.missed {
-  background: #EE9999; /* Red for missed */
+  background: #EE9999;
 }
 
 .interview-slot.complete {
-  background: #80CBC4; /* Teal for complete */
+  background: #80CBC4;
 }
 
 .status.booked {
@@ -120,7 +144,7 @@
 .interview-details {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Align items in the center vertically */
+  align-items: center;
   width: 100%;
 }
 
@@ -139,163 +163,18 @@
   margin-right: 10px;
 }
 
-.status {
-  display: flex;
-  align-items: center;
-}
-
 .status-dropdown {
   margin-left: 10px;
   width: 120px;
 }
 
-.mat-form-field-wrapper {
-  padding-bottom: 0 !important; /* Remove padding for a more compact look */
-}
-
-.calendar-details-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-  flex: 1;
-  max-width: 400px; /* Ensure calendar size is appropriate */
-  margin-right: 20px; /* Add more space between the calendar and the schedule table */
-}
-
-.calendar-container {
-  width: 100%;
-  padding: 10px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Border shadow around the calendar */
-}
-
-.selected-date-details {
-  width: 100%; /* Ensure full width */
-  padding-top: 20px; /* Add padding to separate from calendar */
-}
-
-.selected-date-details h3 {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: teal;
-  margin: 10px 0;
-}
-
-.schedule-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  margin-bottom: 10px;
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.schedule-item .time {
-  font-weight: bold;
-  margin-right: 10px; /* Gap between time and name */
-  color: teal;
-}
-
-.schedule-item .details {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-}
-
-.schedule-item .name {
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-.schedule-item .job-title {
-  font-size: 0.9em;
-  color: #555;
-  margin-right: 10px;
-}
-
-.slots {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-.details-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.name, .job-title, .time, .status-buttons {
-  flex: 1;
-  margin-right: 10px;
-}
-
-.status-buttons button {
-  margin-left: 10px;
-}
-
-/* Status dropdown  */
-.status-dropdown {
-  width: 150px;
-  margin-left: 10px;
-}
-
-.mat-select {
-  background-color: #D3D3D3; /* Match the background of interview slots */
-  border-radius: 5px;
-  padding: 0 10px;
-}
-
-.mat-select-trigger {
-  display: flex;
-  align-items: center;
-}
-
-.mat-option-text {
-  display: flex;
-  align-items: center;
-}
-
-/* Ensure dropdown options have appropriate styling and color */
-.mat-option {
-  padding: 10px;
-  background-color: #fff;
-}
-
-.mat-option:hover {
-  background-color: #f0f0f0;
-}
-
-/* Colors for the different status options */
-.mat-option[value="Pending"] {
-  color: teal;
-}
-
-.mat-option[value="Booked"] {
-  color: orange;
-}
-
-.mat-option[value="Complete"] {
-  color: green;
-}
-
-.mat-option[value="Missed"] {
-  color: red;
-}
-
-
 @media (max-width: 768px) {
-  .schedule-container {
+  .main-content {
     flex-direction: column;
   }
 
-  .schedule-table,
-  .calendar-details-container {
-    max-width: 100%;
+  .calendar-container,
+  .schedule-table {
+    width: 100%;
   }
 }
