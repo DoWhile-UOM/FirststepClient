@@ -7,7 +7,9 @@ import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { InterviewService } from '../../../services/interview.service';
-
+import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../../services/auth.service';
 interface advertisementDetials {
   interview_duration: number;
   title: string;
@@ -23,8 +25,20 @@ interface advertisementDetials {
 })
 export class IntViewSeekerBookComponent {
   advertismentDetails: advertisementDetials = { interview_duration: 0, title: '', company_name: '' };
+  advertismentId: number = 0;
+  seekerid: number = 0;
 
-  constructor(private interview: InterviewService) {
+  constructor(private auth:AuthService,private snackBar: MatSnackBar,private route: ActivatedRoute,private interview: InterviewService) {
+    this.seekerid = Number(this.auth.getUserId());
+    this.route.queryParamMap.subscribe(params => {
+      const id = params.get('id');
+      this.advertismentId = Number(id); //
+      if(id==null || this.advertismentId == 0){
+        this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
+      }else{
+        this.advertismentId = Number(id);
+      }
+    });
     this.loadSlot();
     
   }
@@ -44,7 +58,7 @@ export class IntViewSeekerBookComponent {
   }
 
   confirmTime(appointment_id:number) {
-    this.interview.bookSlotSeeker(appointment_id,4159);//change 4159 to the actual seeker id
+    this.interview.bookSlotSeeker(appointment_id,this.seekerid);//change 4159 to the actual seeker id
     console.log('Appointment ID ' + appointment_id);
   }
 
@@ -53,7 +67,7 @@ export class IntViewSeekerBookComponent {
   }
 
   async loadSlot() {
-    let result = await this.interview.getAvailableSlots2(1051);
+    let result = await this.interview.getAvailableSlots2(this.advertismentId);
     const slots = result['slot'];
     this.advertismentDetails = result['details'];
     this.schedule2 = this.getFormattedSchedule(slots);

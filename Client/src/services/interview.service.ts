@@ -102,6 +102,7 @@ export class InterviewService {
       duration: duration,
       time_slots: this.slots
     };
+    //console.log(slotRequest);
 
     try {
       const response = await axios.post(Apipaths.CreateAppointmentSlot, slotRequest);
@@ -192,7 +193,7 @@ export class InterviewService {
 
   async bookSlotSeeker(appointment_id: number,seeker_id:number){
     try {
-      const response = await axios.patch(Apipaths.BookSlotSeeker+'/'+appointment_id+'/'+seeker_id);
+      const response = await axios.patch(Apipaths.BookSlotSeeker+appointment_id+'/'+seeker_id);
 
     } catch (error: any) {
       console.error('Network Error: ', error);

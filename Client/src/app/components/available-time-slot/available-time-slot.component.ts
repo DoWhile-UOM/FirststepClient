@@ -41,7 +41,7 @@ export class AvailableTimeSlotComponent {
   isFormFilled: boolean = false;
   isIntroPopupVisible: boolean = true;
   isPopupVisible: boolean = false;
-  advertismentId: number = 1049;//-----------------hardcoded for testing--------------------
+  advertismentId: number = 0;//-----------------hardcoded for testing--------------------
   selectedDate: Date = new Date();
   calendarLoaded: boolean = false;
   startTime: number = 0;     // Variable to store start time
@@ -50,18 +50,17 @@ export class AvailableTimeSlotComponent {
   userType: string = 'ca';
   appointmentDetails: FormGroup;
   records: IRecord[] = [];
-  appointment: IAppointmentDetails = {duration: 0,comment: '',title: ''};
+  appointment: IAppointmentDetails = {duration: 30,comment: '',title: ''};
 
   constructor(private formAPD: FormBuilder, private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
-      this.advertismentId = Number(id); //
-      /*-----------------hardcoded for testing--------------------
+      this.advertismentId = Number(id); 
       if(id==null || this.advertismentId == 0 ||this.auth.getCompanyID() == null){
         this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
       }else{
         this.advertismentId = Number(id);
-      }*/
+      }
     });
     this.appointmentDetails = this.formAPD.group({
       title: [''],
@@ -188,9 +187,8 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
-    this.isPopupVisible = true;
-    //this.interview.postSplittedTimeSlots(this.records, 30,1051,this.auth.getCompanyID());
-    console.log(this.auth.getCompanyID() + " " + this.advertismentId);
+    this.interview.postSplittedTimeSlots(this.records, this.appointment.duration,this.advertismentId,this.auth.getCompanyID());
+    //console.log(this.appointment.duration+' '+this.advertismentId+' '+this.auth.getCompanyID());
   }
 
   closeAppointmentPopup() {
