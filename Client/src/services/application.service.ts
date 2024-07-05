@@ -189,4 +189,20 @@ export class ApplicationService {
         this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
+
+  //Average Time
+  async getAverageTimes(companyId: number): Promise<any> {
+    try {
+      const response = await axios.get(`${Apipaths.getAverageTime}/${companyId}`);
+      return response.data;
+    } catch (error) {
+      this.snackbar.open('Failed to load average times', 'Close', {
+        duration: 3000,
+      });
+      console.error("Network Error: " + error);
+      throw error;
+    }
+  }
+
+
 }
