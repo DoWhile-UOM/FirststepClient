@@ -5,7 +5,9 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #f4f6f8;
 }
 
 header {
@@ -15,6 +17,7 @@ header {
     padding: 10px 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
 header .logo {
@@ -40,158 +43,217 @@ header nav {
 header nav a {
     margin: 0 10px;
     text-decoration: none;
+    color: #333;
+    font-weight: 500;
 }
 
 header nav a:hover {
-    text-decoration: none;
+    color: #008080;
 }
 
 .container {
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
     padding: 20px;
 }
 
 .hero {
-    display: flex;
-    flex-wrap: wrap;
+    text-align: center;
     background-color: #f9f9f9;
-    padding: 20px;
+    padding: 60px 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-}
-
-.hero-image {
-    flex: 1;
-    max-width: 50%;
-}
-
-.hero-image img {
-    width: 80%;
-    height: auto;
-    border-radius: 10px;
+    width: 100%;
 }
 
 .hero-text {
-    flex: 1;
-    max-width: 50%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .hero-text h1 {
-    font-size: 5em;
-    margin-bottom: 10px;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
 }
 
 .hero-text p {
-    font-size: 2em;
-    margin: 5px 0;
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #666;
 }
 
 .hero-text button {
-    margin: 10px 0;
+    margin-top: 20px;
+}
+
+.clients {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clients img {
+    margin: 0 20px;
+    width: 100px;
+}
+
+.discover-career {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 40px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.discover-career h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
 .info {
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #fff;
-    padding: 20px;
+    background-color: #f9f9f9;
+    padding: 40px 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
 }
 
 .info-text {
-    flex: 1;
-    margin-right: 20px;
-    margin-left: 3em;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.info-text h1 {
-    font-size: 32px;
-    font-weight: 800;
-}
-
-.info-text p {
-    font-size: 20px;
-    line-height: 30px;
-    line-break: loose;
-    margin: 10px 0;
-}
-
-.info-image {
-    width: 450px;
-    height: 450px;
-}
-
-.info-image img {
-    width: 450px;
-    height: 450px;
-    
-}
-
-.register-company-container {
+.info-cards {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-.register-company-btn{
-    width: 18em;
+.info-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-footer {
+.why-choose-us {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.why-choose-us h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 40px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.how-it-works {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.how-it-works h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.step {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.step h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.register-company-container {
+    text-align: center;
     margin-top: 20px;
 }
 
-footer .footer-content {
+.register-company-btn {
+    width: 200px;
+}
+
+footer {
+    background-color: #fff;
+    padding: 20px 0;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.footer-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
-footer .footer-content p {
+.footer-content p {
     font-size: 0.9em;
     margin: 5px 0;
 }
 
-footer .sponsor-logo img {
+.footer-content img {
     width: 100px;
     margin: 10px 0;
 }
 
-.info-buttons{
+.footer-links {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.info-buttons button{
-    margin-top: 1em;
-}
-
-a{
+.footer-links a {
+    margin: 5px 10px;
     text-decoration: none;
-    color: black;
-    font-size: 16px;
-    display: block;
-    padding: 0.3em 0.6em;
-    border-radius: 0.35em;
+    color: #333;
+    font-size: 0.9em;
 }
-
-a:hover{
-    color: #008080;
-    background-color: #F9F9F9;
-  }
 
 @media screen and (max-width: 768px) {
     header {
-        flex-direction: row;
+        flex-direction: column;
         align-items: flex-start;
     }
 
@@ -204,24 +266,15 @@ a:hover{
         margin: 5px 0;
     }
 
-    .top-info .info-image{
-        max-width: 300px;
+    .hero {
+        padding: 20px;
     }
 
-    .info-text {
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: 2em;
-    }
-
-    .info {
+    .features, .steps {
         flex-direction: column;
-        margin-bottom: 0;
-        padding: 10px;
     }
 
-    footer .footer-content {
-        flex-direction: column;
-        align-items: center;
+    .feature, .step {
+        margin: 10px 0;
     }
 }
