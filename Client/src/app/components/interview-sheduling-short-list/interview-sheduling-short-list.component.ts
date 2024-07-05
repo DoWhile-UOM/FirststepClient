@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
 import { app } from '../../../../server';
+import { AdvertisementServices } from '../../../services/advertisement.service';
 
 interface CandidateData {
   application_id: number;
@@ -57,8 +58,9 @@ export class InterviewShedulingShortListComponent implements OnInit {
     'application',
   ];
   candidateData: CandidateData[] = [];
-  advertisment_id: string = '';
+  advertisment_id: number = 0;
   advertisment_title: string = '';
+  job_number: number = 0;  
 
   readonly task = signal<Task>({
     name: 'Select All',
@@ -70,19 +72,24 @@ export class InterviewShedulingShortListComponent implements OnInit {
 
   constructor(
     private applicationService: ApplicationService,
+    private advertismentServices: AdvertisementServices,
     private route: ActivatedRoute,
     private router: Router,
     private auth: AuthService
   ) {}
 
   ngOnInit() {
-    try {
-      this.advertisment_title = this.route.snapshot.paramMap.get('jobTitle')!;
-      this.advertisment_id = this.route.snapshot.paramMap.get('jobID')!;
-      this.getShortlistedCandidates();
-    } catch {
-      console.log('Error in fetching the shortlisted candidates');
-    }
+     const jobData = this.advertismentServices.getJobData();
+     if(jobData){
+       this.advertisment_id = jobData.jobID;
+       this.job_number = jobData.jobNumber;
+       this.advertisment_title = jobData.jobTitle;
+       this.getShortlistedCandidates();
+     }
+     else{
+      console.log('No job data found');
+     }
+     
   }
 
   async getShortlistedCandidates() {
@@ -99,7 +106,6 @@ export class InterviewShedulingShortListComponent implements OnInit {
       lastRevisionBy: item.last_revision_employee_name,
       interview: item.application_status,
     }));
-
     // Initialize task subtasks based on candidate data
     this.task.update(() => ({
       name: 'Select All',

@@ -19,11 +19,10 @@
 .title
      {
         color: #008080;
-        /*font-size: 30px in percentage*/
         font-size: 30px;
      }
 
 .num{
-    font-size: 1.1vw;
     font-weight: 550;
+    margin-top: 1em;
 }
