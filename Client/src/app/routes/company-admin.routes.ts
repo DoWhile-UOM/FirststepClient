@@ -12,6 +12,7 @@ import { CompanyAdminDashboardComponent } from '../components/company-admin-dash
 
 //test
 import { DoughnutGraphEmployeeComponent } from '../components/doughnut-graph-employee/doughnut-graph-employee.component';
+import { CaAverageTimeComponent } from '../components/ca-average-time/ca-average-time.component';
 
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
@@ -28,6 +29,7 @@ export const caRoutes: Routes = [
   { path: 'dashboard', component: CompanyAdminDashboardComponent},
 
   //test
-  { path: 'doughnut-graph-employee', component: DoughnutGraphEmployeeComponent}
+  { path: 'doughnut-graph-employee', component: DoughnutGraphEmployeeComponent},
+  { path: 'ca-average-time', component: CaAverageTimeComponent}
 
 ];

@@ -1,4 +1,4 @@
-<mat-card *ngIf="averageTimes && companyName" class="average-time-card">
+<div *ngIf="averageTimes && companyName" class="average-time-card">
     <div class="average-time-item" matTooltip="Average time taken to screen an application for the first time">
       <span class="title">Average Response Time</span>
       <span class="time">{{ averageTimes.avgResponseTime | number:'1.0-0' }} days</span>
@@ -11,4 +11,4 @@
       <span class="title">Average Completion Time</span>
       <span class="time">{{ averageTimes.avgCompletionTime | number:'1.0-0' }} days</span>
     </div>
-</mat-card>
+  </div>
