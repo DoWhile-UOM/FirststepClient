@@ -12,6 +12,7 @@ import { InterviewShedulingShortListComponent } from '../components/interview-sh
 
 import { DailyInterviewSchedulesComponent } from '../components/daily-interview-schedules/daily-interview-schedules.component';
 import { AvailableTimeSlotComponent } from '../components/available-time-slot/available-time-slot.component';
+import { IntViewConfirmComponent } from '../components/int-view-confirm/int-view-confirm.component';
 
 
 
@@ -29,7 +30,8 @@ export const caRoutes: Routes = [
   { path: 'profile-view', component: SeekerProfileViewComponent },
   { path: 'jobOfferList/applicationList/shortlist',component:InterviewShedulingShortListComponent},
   { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
-  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent}
+  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent},
+  { path: 'interview', component: IntViewConfirmComponent}
 
 
 ];
