@@ -1,0 +1,26 @@
+.average-time-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+  }
+  
+  .average-time-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .time {
+    font-size: 1.5em;
+    color: teal;
+  }
+  
