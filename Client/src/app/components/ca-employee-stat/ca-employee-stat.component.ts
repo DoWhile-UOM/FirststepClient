@@ -3,6 +3,18 @@ import { CommonModule } from '@angular/common';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { EmployeeService } from '../../../services/employee.service';
 import { AuthService } from '../../../services/auth.service';
+import { ChangeDetectorRef } from '@angular/core';
+
+interface HraEvaluation {
+  hraName: string;
+  assignedApplicationsWithRevisionsCount: number;
+}
+
+interface EmployeeStats {
+  hraCount: number;
+  hrmCount: number;
+  hraEvaluations: HraEvaluation[];
+}
 
 @Component({
   selector: 'app-ca-employee-stat',
@@ -14,12 +26,16 @@ import { AuthService } from '../../../services/auth.service';
 export class CaEmployeeStatComponent implements OnInit {
   columnChartOptions: any;
   doughnutChartOptions: any;
-  companyId!: number
+  companyId!: number;
   companyName!: string;
 
-  constructor(private employeeService: EmployeeService , private authService: AuthService) { }
+  hraCount!: number;
+  hrmCount!: number;
+  hraEvaluations: HraEvaluation[] = [];
 
-  ngOnInit() {
+  constructor(private employeeService: EmployeeService , private authService: AuthService, private cdr: ChangeDetectorRef) { }
+
+  async ngOnInit() {
     //test
     this.companyId = 7;
     this.companyName = "BISTEC Global Services";
@@ -27,16 +43,24 @@ export class CaEmployeeStatComponent implements OnInit {
     //this.companyId = this.authService.getCompanyID();
     //this.companyName = this.authService.getCompanyName();
 
-    // Fetch employee stats using company ID
-    this.employeeService.getEmployeeStats(this.companyId).then(data => {
-      const performanceDataPoints = data.hraEvaluations.map((item: any) => ({
+    try {
+      const data: EmployeeStats = await this.employeeService.getEmployeeStats(this.companyId);
+      console.log('Employee Stats:', data); // Debugging line
+
+      this.hraCount = data.hraCount;
+      this.hrmCount = data.hrmCount;
+      this.hraEvaluations = data.hraEvaluations;
+
+      const performanceDataPoints = data.hraEvaluations.map((item: HraEvaluation) => ({
         label: item.hraName,
         y: item.assignedApplicationsWithRevisionsCount
       }));
 
+      console.log('Performance Data Points:', performanceDataPoints); // Debugging line
+
       this.columnChartOptions = {
         title: {
-          text: 'HRA Performance'
+          text: ''
         },
         animationEnabled: true,
         data: [{
@@ -45,9 +69,11 @@ export class CaEmployeeStatComponent implements OnInit {
         }]
       };
 
+      console.log('Column Chart Options:', this.columnChartOptions); // Debugging line
+
       this.doughnutChartOptions = {
         title: {
-          text: 'HRM and HRA Count'
+          text: ''
         },
         animationEnabled: true,
         data: [{
@@ -56,10 +82,17 @@ export class CaEmployeeStatComponent implements OnInit {
           indexLabel: "{name}",
           dataPoints: [
             { y: data.hrmCount, name: "HRM" },
-            { y: data.hraCount, name: "HRA" }
+            { y: data.hraCount, name: "TA Specialist" }
           ]
         }]
       };
-    });
+
+      console.log('Doughnut Chart Options:', this.doughnutChartOptions); // Debugging line
+
+      this.cdr.detectChanges(); // Manually trigger change detection
+
+    } catch (error) {
+      console.error('Error fetching employee stats:', error); // Error handling
+    }
   }
 }
