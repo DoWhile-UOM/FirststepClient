@@ -15,8 +15,9 @@ import { MatTable } from '@angular/material/table';
 import { MatDivider } from '@angular/material/divider';
 import { MatCard } from '@angular/material/card';
 import { MatCardModule } from '@angular/material/card';
-
-
+import { InterviewService } from '../../../services/interview.service';
+import { RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 interface InterviewSchedule {
   name: string;
 }
@@ -33,33 +34,74 @@ const ELEMENT_DATA: PeriodicElement[] = [
 
 ];
 
+interface IBookedSlot {
+  seeker_id: number;
+  start_time: Date;
+  seeker_name: string;
+}
+
+interface INotBookedSlot {
+  seeker_id: number;
+  seeker_name: string;
+}
+
+interface IAllApplicants {
+  booked_slot: IBookedSlot[];
+  free_slot: INotBookedSlot[];
+}
+
+interface IDateTime{
+  date:string;
+  time:string;
+}
+
 @Component({
   selector: 'app-int-view-confirm',
   standalone: true,
-  imports: [MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider, MatCard, MatCardModule],
+  imports: [MatPaginatorModule,RouterModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider, MatCard, MatCardModule],
   templateUrl: './int-view-confirm.component.html',
   styleUrl: './int-view-confirm.component.css'
 })
 export class IntViewConfirmComponent {
   displayedColumns: string[] = ['name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
-  isPopupVisible:boolean = false;
+  isPopupVisible: boolean = false;
+  advertismentId: number = 0;
   selectedDate: Date = new Date();
-  schedules: InterviewSchedule[] = [];
+  schedules: INotBookedSlot[] = [];
+  bookedSchedules: IBookedSlot[] = [];
   timeSlots: string[] = [
     '7:00am', '7:30am', '8:00am', '8:30am', '9:00am', '9:30am',
     '10:00am', '10:30am', '11:00am', '11:30am', '12:00pm'
   ];
-  constructor(private snackBar: MatSnackBar) { }
+  dataSource = this.bookedSchedules;
+
+  constructor(private route: ActivatedRoute,private snackBar: MatSnackBar, private interview: InterviewService) { 
+    this.route.queryParamMap.subscribe(params => {
+      const id = params.get('id');
+      this.advertismentId = Number(id); //
+      if(id==null || this.advertismentId == 0){
+        this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
+      }else{
+        this.advertismentId = Number(id);
+      }
+    });
+  }
 
   ngOnInit() {
     // Fetch the interview schedules (this could be an API call in a real application)
-    this.schedules = [
-      { name: 'James Williams' },
-      { name: 'Willem van Helden' },
-      { name: 'Dianne Russel' },
-      { name: 'Theresa Webb' }
-    ];
+    //let allApplicants:IAllApplicants = this.interview.getConfirmedSlot(1057);
+    this.loadData(this.advertismentId);
+    //this.schedules = result['free_slot'];
+    console.log(this.dataSource);
+
+  }
+
+  async loadData(advertisement_id: number) {
+    let result = await this.interview.getConfirmedSlot(advertisement_id);
+    this.schedules = result['free_slot'];
+    this.bookedSchedules = result['booked_slot'];
+
+    //console.log(this.bookedSchedules);
   }
 
 
@@ -73,7 +115,15 @@ export class IntViewConfirmComponent {
     this.isPopupVisible = false;
   }
 
-  openpopup(){
+  openpopup() {
     this.isPopupVisible = true;
+  }
+
+  formatDate(date: Date) {
+    const dateStr = date.toLocaleDateString();
+    const time = date.toLocaleTimeString();
+    let dateTime:IDateTime = {date:dateStr,time:time};
+    return dateStr;
+
   }
 }

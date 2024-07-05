@@ -56,7 +56,7 @@ interface HRMApplicationList {
   seekerName: string;
   status: string;
   is_evaluated: boolean;
-  assigned_hrAssistant_id: string ;
+  assigned_hrAssistant_id: string;
   submitted_date: string;
 }
 
@@ -135,11 +135,11 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
     this.userType = this.auth.getRole();
 
-    if (this.userType == 'hra'){
+    if (this.userType == 'hra') {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'assigned_hrAssistant_id');
       this.restrictPermissionForButton = true;
     }
-    
+
     this.getApplicationList(this.jobID, this.selectedFilter);
 
     this.spinner.hide();
@@ -149,50 +149,50 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  filter(selected: any){
+  filter(selected: any) {
     // filter by current status of the advertisement
-    this.snackBar.open("Refeshing table to show " + selected.value + " Applications ...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+    this.snackBar.open("Refeshing table to show " + selected.value + " Applications ...", "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     this.getApplicationList(this.jobID, selected.value);
     this.selectedFilter = selected.value;
   }
 
-  async getHraList(){
-    try{
+  async getHraList() {
+    try {
       this.hraList = await this.employeeService.getAllHRAs(this.auth.getCompanyID());
     } catch (error) {
-      this.snackBar.open("Error : " + error, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      this.snackBar.open("Error : " + error, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
 
   async getApplicationList(jobID: number, status: string) {
     try {
-      var listing: HRMListing = {title: '', job_number: 0, field_name: '', company_id: 0, current_status: '', applicationList: []};
-      
-      if (this.userType == 'hra'){
+      var listing: HRMListing = { title: '', job_number: 0, field_name: '', company_id: 0, current_status: '', applicationList: [] };
+
+      if (this.userType == 'hra') {
         listing = await this.applicationService.getAssignedApplicationList(this.auth.getUserId(), jobID, status);
       }
-      else if (this.userType == 'hrm' || this.userType == 'ca'){ 
+      else if (this.userType == 'hrm' || this.userType == 'ca') {
         this.getHraList();
         listing = await this.applicationService.getApplicationList(jobID, status);
       }
-      else{
+      else {
         alert(this.userType);
-        this.snackBar.open("You are not authorized to view this page", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        this.snackBar.open("You are not authorized to view this page", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
         this.router.navigate(['/notfound']);
       }
-      
+
       if (!listing) {
-        this.snackBar.open('Not applications found for the job id', "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        this.snackBar.open('Not applications found for the job id', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
         window.history.back();
       }
 
-      if (listing.company_id != this.auth.getCompanyID()){
-        this.snackBar.open("You are not authorized to view this page", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      if (listing.company_id != this.auth.getCompanyID()) {
+        this.snackBar.open("You are not authorized to view this page", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
         this.router.navigate(['/notfound']);
       }
 
       this.title = listing.title;
-      this.job_number = listing.job_number; 
+      this.job_number = listing.job_number;
       this.field_name = listing.field_name;
       this.current_status = listing.current_status;
       this.applicationList = listing.applicationList || [];
@@ -207,14 +207,14 @@ export class HrManagerApplicationListingComponent implements OnInit {
       this.applicationListLength = this.applicationList.length;
 
       if (this.applicationList.length === 0) {
-        this.snackBar.open("Not application found", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+        this.snackBar.open("Not application found", "", { panelClass: ['app-notification-warning'] })._dismissAfter(3000);
       }
     } catch (error) {
-      this.snackBar.open("Error : " + error, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      this.snackBar.open("Error : " + error, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
 
-  async assign(application_Id: number, hra_id: number){
+  async assign(application_Id: number, hra_id: number) {
     await this.applicationService.changeAssignedHRA(application_Id, hra_id);
 
     this.applicationList = this.applicationList.map((application) => {
@@ -228,26 +228,26 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  getHRAName(hra_id: number){
+  getHRAName(hra_id: number) {
     for (let i = 0; i < this.hraList.length; i++) {
       if (Number(this.hraList[i].user_id) == hra_id) {
         return this.hraList[i].first_name + ' ' + this.hraList[i].last_name;
       }
     }
-    
+
     return 'Not Assigned';
   }
 
-  onBackButtonClick(){
-		window.history.back();
-	}
-
-  onEditClick(){
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', {jobID: this.jobID}]);
+  onBackButtonClick() {
+    window.history.back();
   }
 
-  explore(application_Id: number){
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
+  onEditClick() {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', { jobID: this.jobID }]);
+  }
+
+  explore(application_Id: number) {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', { applicationId: application_Id }]);
   }
 
   shortlist() {
@@ -258,5 +258,11 @@ export class HrManagerApplicationListingComponent implements OnInit {
     };
     this.advertisementServices.setJobData(jobData);
     this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist']);
-    }
+  }
+
+  interviewBooked() {
+    //this.advertisementServices.get
+    //this.router.navigate([this.auth.getRole() + '/', { interview: this.jobID }]);
+    this.router.navigate([this.auth.getRole() + '/interview'],{ queryParams: { id: this.jobID } });
+  }
 }

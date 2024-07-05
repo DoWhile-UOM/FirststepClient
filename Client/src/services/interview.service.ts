@@ -28,6 +28,21 @@ interface advertisementDetials {
   company_name: string;
 }
 
+interface IBookedSlot {
+  seeker_id: number;
+  start_time: Date;
+  seeker_name:string;
+}
+
+interface INotBookedSlot {
+  seeker_id: number;
+  seeker_name:string;
+}
+
+interface IAllApplicants {
+  booked_slot: IBookedSlot[];
+  free_slot:INotBookedSlot[];
+}
 
 @Injectable({
   providedIn: 'root'
@@ -177,11 +192,31 @@ export class InterviewService {
 
   async bookSlotSeeker(appointment_id: number,seeker_id:number){
     try {
-      const response = await axios.patch(Apipaths.BookSlotSeeker+'appointment='+appointment_id+'/seeker='+seeker_id);
+      const response = await axios.patch(Apipaths.BookSlotSeeker+'/'+appointment_id+'/'+seeker_id);
 
     } catch (error: any) {
       console.error('Network Error: ', error);
     }
   }
+
+  async getConfirmedSlot(AdvertisementId: number): Promise<IAllApplicants>{
+    let bookedAppointment: IBookedSlot[] = [];
+    let freeSlot: INotBookedSlot[] = [];
+    //let applicant: IAllApplicants = { booked_slot: bookedAppointment, free_slot: freeSlot };
+    //let advertisement: advertisement = { details: addetails, slot: appointments };
+
+    const response = await axios.get(Apipaths.GetAllApplicants + AdvertisementId);
+    bookedAppointment = response.data["bookedAppointments"] as IBookedSlot[];
+    freeSlot = response.data["freeAppointments"] as INotBookedSlot[];
+
+    let applicant: IAllApplicants = { booked_slot: bookedAppointment, free_slot: freeSlot }
+
+    //console.log(applicant);
+    return applicant;
+  }
+
+
+
+
 
 }
