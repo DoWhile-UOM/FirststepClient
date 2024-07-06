@@ -71,54 +71,89 @@
         </div>
       </div>
     </section>
-    
 
-    <section class="how-it-works">
-      <div class="steps">
+    <section class="how-it-works-container">
+      <div class="how-it-works">
         <h2>How It Works</h2>
+      </div>
+      <div class="toggle-container">
+        <mat-button-toggle-group [(ngModel)]="selectedToggle" class="toggle-group">
+          <mat-button-toggle value="jobSeeker">Job Seeker</mat-button-toggle>
+          <mat-button-toggle value="company">Company</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div class="steps" *ngIf="selectedToggle === 'jobSeeker'">
         <div class="step">
-          <h3>Step 1</h3>
-          <p>Register Account</p>
+          <p class="step-number">Step 1</p>
+          <h3>Register Account</h3>
           <p>Create your profile and set up your career path.</p>
         </div>
         <div class="step">
-          <h3>Step 2</h3>
-          <p>Find Job</p>
+          <p class="step-number">Step 2</p>
+          <h3>Find Job</h3>
           <p>Search and filter job listings that match your skills and preferences.</p>
         </div>
         <div class="step">
-          <h3>Step 3</h3>
-          <p>Apply for Job</p>
+          <p class="step-number">Step 3</p>
+          <h3>Apply for Job</h3>
           <p>Submit your application and track its status in real-time.</p>
         </div>
         <div class="step">
-          <h3>Step 4</h3>
-          <p>Schedule Interview</p>
+          <p class="step-number">Step 4</p>
+          <h3>Schedule Interview</h3>
           <p>Reserve a time slot for interviews through our platform.</p>
         </div>
       </div>
+      
+      <div class="steps" *ngIf="selectedToggle === 'company'">
+        <div class="step">
+          <p class="step-number">Step 1</p>
+          <h3>Register Company</h3>
+          <p>Create your company profile and set up your recruitment preferences.</p>
+        </div>
+        <div class="step">
+          <p class="step-number">Step 2</p>
+          <h3>Post Job Listings</h3>
+          <p>List job openings with detailed descriptions and requirements.</p>
+        </div>
+        <div class="step">
+          <p class="step-number">Step 3</p>
+          <h3>Review Applications</h3>
+          <p>Screen and evaluate applications using our advanced tools.</p>
+        </div>
+        <div class="step">
+          <p class="step-number">Step 4</p>
+          <h3>Schedule Interviews</h3>
+          <p>Arrange interview slots and communicate with candidates through the platform.</p>
+        </div>
+      </div>
+      
+      
     </section>
+    
+    
 
   </main>
 
-  <footer>
-    <div class="footer-content">
-      <div class="sponsor-logo">
-        <p>Brought to you by</p>
-        <img src="assets/images/bistec-logo.png" alt="Bistec Global Logo" />
-      </div>
-      <p>&copy; 2024 FirstStep. All rights reserved.</p>
-      <div class="footer-links">
-        <a href="#">About</a>
-        <a href="#">Features</a>
-        <a href="#">Blog</a>
-        <a href="#">Pricing</a>
-        <a href="#">Community</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Security Policy</a>
-        <a href="#">Cookie Settings</a>
-      </div>
-    </div>
-  </footer>
+  
 </div>
+<footer>
+  <div class="footer-content">
+    <div class="sponsor-logo">
+      <p>Brought to you by</p>
+      <img src="assets/images/bistec-logo.png" alt="Bistec Global Logo" />
+    </div>
+    <p>&copy; 2024 FirstStep. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Features</a>
+      <a href="#">Blog</a>
+      <a href="#">Pricing</a>
+      <a href="#">Community</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Security Policy</a>
+      <a href="#">Cookie Settings</a>
+    </div>
+  </div>
+</footer>
