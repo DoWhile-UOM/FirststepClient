@@ -1,28 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
-import { text } from 'stream/consumers';
+import { ApplicationService } from '../../../services/application.service';
+
+interface ApplicationStatusCount {
+  status: string;
+  count: number;
+}
 
 @Component({
   selector: 'app-doughnut-graph-status',
   standalone: true,
   imports: [CanvasJSAngularChartsModule],
   templateUrl: './doughnut-graph-status.component.html',
-  styleUrl: './doughnut-graph-status.component.css'
+  styleUrls: ['./doughnut-graph-status.component.css']
 })
-export class DoughnutGraphStatusComponent {
+export class DoughnutGraphStatusComponent implements OnInit {
 
-  chartOptions = {
-    data: [{
-      type: "doughnut",
-      showInLegend: true,
-      innerRadius: "40%",
-      legendText: "{label}",
-      dataPoints: [
-        { label: "Submitted", y: 450,color: "#3E95CD"},
-        { label: "In Review", y: 414,color: "#8E5EA2"},
-        { label: "Accepted", y: 520,color: "#3cba9f"},
-       
-      ]
-    }]
+  chartOptions: any;
+  company_id: number = 7;
+
+  constructor(private applicationService: ApplicationService) { }
+
+  ngOnInit(): void {
+    this.getApplicationStatusCount();
+  }
+
+  async getApplicationStatusCount() {
+    try {
+      const response = await this.applicationService.getApplicationStatusCount(this.company_id);
+      const datapoints = response.map((data: ApplicationStatusCount) => ({
+        y: data.count,
+        name: data.status,
+        color: this.getColor(data.status)
+      }));
+
+      this.chartOptions = {
+        animationEnabled: true,
+        exportEnabled: true,
+        theme: "light2",
+        data: [{
+          type: "doughnut",
+          showInLegend: true,
+          indexLabel: "{name}: {y}",
+          yValueFormatString: "#,###'%'",
+          dataPoints: datapoints
+        }]
+      };
+      console.log('Application status count:', response);
+    } catch (error) {
+      console.error('Error fetching application status count:', error);
+    }
+  }
+
+  getColor(status: string): string {
+    switch (status) {
+      case 'active': return 'red';
+      case 'hold': return 'green';
+      case 'interview': return 'orange';
+      case 'closed': return 'blue';
+      default: return 'black';
+    }
   }
 }

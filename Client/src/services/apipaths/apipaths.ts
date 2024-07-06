@@ -57,6 +57,8 @@ export class Apipaths {
     static readonly getApplicationList: string = this.baseUrl + 'Application/GetApplicationList/'; // + job_number + '/status=' + status
     static readonly getSeekerApplicationDetails: string = this.baseUrl + 'Application/GetSeekerApplications/'; // + application_id
     static readonly delegateTask:string = this.baseUrl + 'Application/DelegateTask/'; // + jobID + '/hraIds=' + hraIdsString
+    static readonly getApplicationCount = this.baseUrl + 'Application/GetApplicationCount/'; // + advertisement_id
+    static readonly getApplicationStatusCount = this.baseUrl + 'Application/GetApplicationStatusCount/'; // + advertisement_id
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id

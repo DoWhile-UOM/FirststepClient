@@ -189,4 +189,33 @@ export class ApplicationService {
         this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
+
+  
+    async getApplicationStatusCount(company_id: number) {
+      let applicationStatusCount: any = {};
+      await axios
+        .get(Apipaths.getApplicationStatusCount + company_id)
+        .then((response) => {
+          applicationStatusCount = response.data;
+        })
+        .catch((error) => {
+          console.error('Error fetching application status count:', error);
+        });
+  
+      return applicationStatusCount;
+    }
+
+  async getApplicationCount(advertisement_id: number) {
+    let applicationCount: any = {};
+    await axios
+      .get(Apipaths.getApplicationCount + advertisement_id)
+      .then((response) => {
+        applicationCount = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching application count:', error);
+      });
+
+    return applicationCount;
+  }
 }
