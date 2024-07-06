@@ -326,6 +326,7 @@ export class ConfirmToChangeEmail {
 @Component({
   selector: 'email-authentication-pop-up',
   standalone: true,
+  styleUrl: './company-admin-registrtion-form.component.css',
   templateUrl: 'email-authentication-pop-up.html',
   imports: [
     MatDialogTitle,
