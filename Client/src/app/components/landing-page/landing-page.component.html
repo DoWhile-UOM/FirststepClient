@@ -4,12 +4,8 @@
     <span>FirstStep</span>
   </div>
   <nav>
-    <a routerLink="/home" routerLinkActive="active">Home</a>
-    <a routerLink="/advice" routerLinkActive="active">Advice</a>
-    <a routerLink="/jobseeker" routerLinkActive="active">Jobseeker</a>
-    <a routerLink="/pricing" routerLinkActive="active">Pricing</a>
-    <a routerLink="/login" *ngIf="screenWidth >= 768" class="signUp" routerLinkActive="active">Login</a>
-    <a routerLink="/signup" *ngIf="screenWidth >= 768" class="signUp" routerLinkActive="active">Sign Up</a>
+    <a routerLink="/login" *ngIf="screenWidth >= 768" class="login" routerLinkActive="active">Login</a>
+    <a routerLink="/signup" *ngIf="screenWidth >= 768" class="signup" routerLinkActive="active">Sign Up</a>
 
     <button *ngIf="screenWidth < 768" mat-icon-button [matMenuTriggerFor]="menu" class="medium-icon-button">
       <mat-icon>menu</mat-icon>
@@ -22,67 +18,61 @@
       <button mat-menu-item (click)="login()">
         <span>Login</span>
       </button>
-    </mat-menu> 
+    </mat-menu>
   </nav>
 </header>
 <div class="container">
   <main>
     <section class="hero">
       <div class="hero-text">
-        <h1>Find the best people for your startup</h1>
-        <p>Empowering job seekers and employers with a seamless and efficient recruitment process.</p>
-        <button mat-raised-button color="primary" (click)="signup()">Get Started</button>
-      </div>
-    </section>
-
-    <section class="clients">
-      <img src="assets/images/clients/google.png" alt="Google" />
-      <img src="assets/images/clients/facebook.png" alt="Facebook" />
-      <img src="assets/images/clients/airbnb.png" alt="Airbnb" />
-      <img src="assets/images/clients/slack.png" alt="Slack" />
-    </section>
-
-    <section class="discover-career">
-      <h2>Discover Your Next Career Move with Ease</h2>
-      <p>Join FirstStep to find your dream job or the perfect candidate. Our platform simplifies job matching with advanced features like real-time application tracking, location-based job suggestions, and role-based application evaluation.</p>
-      <button mat-raised-button color="primary" >Learn More</button>
-    </section>
-
-    <section class="info">
-      <div class="info-text">
-        <h2>We're always here. Employees come and go</h2>
-        <p>Discover the optimal match for your startup and get the best results together.</p>
-        <button mat-raised-button color="primary">Learn more</button>
-      </div>
-      <div class="info-cards">
-        <div class="info-card">
-          <p>Top 0.1% candidates</p>
-          <p>Already tested</p>
+        <h1>Building Bridges Between Talent and Employers</h1>
+        <p>Facilitating Career Growth and Success Through Innovative Job Matching</p>
+        <div class="hero-buttons">
+          <button mat-raised-button color="primary" class="comReg-btn" (click)="comReg()">Register my company</button>
+          <button mat-raised-button color="primary" class="signup-btn" (click)="signup()">Sign Up as a job seeker</button>
         </div>
+      </div>
+      <div class="hero-images">
+        <img src="assets/images/l1.jpg" alt="Hero Image 1" class="hero-image hero-image-1">
+        <img src="assets/images/l2.jpg" alt="Hero Image 2" class="hero-image hero-image-2">
+        <img src="./assets/images/l3.jpg" alt="Hero Image 3" class="hero-image hero-image-3">
+        <img src="./assets/images/dp.png" alt="Hero Image 4" class="hero-image hero-image-4">
       </div>
     </section>
 
     <section class="why-choose-us">
-      <h2>Why Choose FirstStep?</h2>
       <div class="features">
+        <h2>Why Choose FirstStep?</h2>
         <div class="feature">
-          <h3>80% Faster Hiring</h3>
-          <p>No more back and forth to find the right qualified candidates. Our platform streamlines the hiring process.</p>
+          <h3>Faster Hiring</h3>
+          <p>Reduce time-to-hire with our efficient platform.</p>
         </div>
         <div class="feature">
           <h3>Decrease Spending</h3>
-          <p>Find the right candidates and pay less than market price with our efficient matching algorithm.</p>
+          <p>Optimize your hiring budget with competitive rates.</p>
         </div>
         <div class="feature">
-          <h3>Top 0.1% Candidates</h3>
-          <p>Access to the best talent pool, ensuring your company gets the best fit for every role.</p>
+          <h3>Application Tracking</h3>
+          <p>Track application status in real-time for transparency.</p>
+        </div>
+        <div class="feature">
+          <h3>Location-Based Suggestions</h3>
+          <p>Find candidates within a specific geographic radius.</p>
+        </div>
+        <div class="feature">
+          <h3>Role-Based Evaluation</h3>
+          <p>Implement structured application evaluation with distinct roles.</p>
+        </div>
+        <div class="feature">
+          <h3>Interview Scheduling</h3>
+          <p>Easily arrange and reserve interview time slots.</p>
         </div>
       </div>
     </section>
 
     <section class="how-it-works">
-      <h2>How It Works</h2>
       <div class="steps">
+        <h2>How It Works</h2>
         <div class="step">
           <h3>Step 1</h3>
           <p>Register Account</p>
@@ -98,12 +88,14 @@
           <p>Apply for Job</p>
           <p>Submit your application and track its status in real-time.</p>
         </div>
+        <div class="step">
+          <h3>Step 4</h3>
+          <p>Schedule Interview</p>
+          <p>Reserve a time slot for interviews through our platform.</p>
+        </div>
       </div>
     </section>
 
-    <section class="register-company-container">
-      <button mat-raised-button class="register-company-btn" color="primary" (click)="comReg()">Register Your Company</button>
-    </section>
   </main>
 
   <footer>
