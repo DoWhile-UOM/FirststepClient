@@ -237,33 +237,44 @@ header nav a:hover {
 .why-choose-us {
     text-align: center;
     margin-bottom: 20px;
-}
-
-.why-choose-us h2 {
+  }
+  
+  .why-choose-us-container {
+    background-color: #fff; /* White background color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .why-choose-us h2 {
     font-size: 2em;
     margin-bottom: 20px;
-}
+    color: teal; /* Teal text color */
+  }
 
-.features {
+  .why-choose-us h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color:#002c3e; /* Teal text color */
+  }
+  
+  .features {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 40px 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.feature {
+  }
+  
+  .feature {
     flex: 1;
     margin: 10px;
     padding: 20px;
-    background-color: #f7f8f3; /* Light background color from the palette */
+    background-color: #e0f7fa; /* Light teal background color */
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #002c3e; /* Dark text color from the palette */
-}
+  }
 
 .how-it-works {
     text-align: center;
@@ -387,12 +398,16 @@ footer {
     .hero-images {
         display: none; /* Hide images on small screens */
     }
+    .feature {
+        flex: 1 1 calc(100% - 40px); /* Full width on small screens */
+    }
 
-    .features, .steps {
+    .features {
         flex-direction: column;
-    }
-
-    .feature, .step {
+      }
+    
+      .feature {
         margin: 10px 0;
-    }
+      }
+
 }
