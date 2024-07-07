@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+<div class="container">
+  <h2 class="header">Daily Interview Schedules</h2>
+  <mat-card class="card">
+    <div class="up-next-container">
+      <h3 class="sub-header">Up Next Today</h3>
+      <div *ngIf="upNextSchedule; else noMoreSchedules" class="up-next-box">
+        <div class="up-next-details">
+          <span class="time">{{ upNextSchedule.start_time | date: 'shortTime' }} - {{ upNextSchedule.end_time | date: 'shortTime' }}</span>
+          <span class="name">{{ upNextSchedule.first_name }} {{ upNextSchedule.last_name }}</span>
+          <span class="job-title">{{ upNextSchedule.title }}</span>
+          <span class="status">{{ upNextSchedule.status }}</span>
+        </div>
+      </div>
+      <ng-template #noMoreSchedules>
+        <div class="no-more-schedules">{{ noMoreSchedulesMessage }}</div>
+      </ng-template>
+    </div>
+    <div class="main-content">
+      <div class="calendar-container">
+        <mat-calendar ngskiphydration [(selected)]="selectedDate" (selectedChange)="onDateChange($event)"></mat-calendar>
+      </div>
+      <div class="schedule-table">
+        <h3 class="sub-header">{{ selectedDate | date: 'fullDate' }}</h3>
+        <div class="time-slot-container">
+          <div *ngFor="let timeSlot of timeSlots" class="time-slot">
+            <div class="time-slot-header">
+              <span class="time-label">{{ timeSlot.label }} </span>
+              <div class="time-line"></div>
+            </div>
+            <div class="interview-slot-container">
+              <div *ngFor="let schedule of getScheduleForTimeSlot(timeSlot)" [ngClass]="getStatusClass(schedule.status)" 
+                   class="interview-slot" [ngStyle]="getStyleForSchedule(schedule)">
+                <div class="interview-details">
+                  <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
+                  <!-- <span class="name" (click)="viewSeekerProfile(schedule.seeker_id)" style="cursor: pointer;">
+                    {{ schedule.first_name }} {{ schedule.last_name }}
+                    <mat-icon>launch</mat-icon>
+                  </span> -->
+                  <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
+                  <span class="job-title">{{ schedule.title }}</span>
+                  <span *ngIf="schedule.status === 'Pending' || schedule.status === 'Booked'">
+                    <mat-select [value]="schedule.status" (selectionChange)="updateStatus($event, schedule.appointment_id)" class="status-dropdown">
+                      <mat-option value="Pending">Pending</mat-option>
+                      <mat-option value="Booked">Booked</mat-option>
+                      <mat-option value="Complete">Complete</mat-option>
+                      <mat-option value="Missed">Missed</mat-option>
+                    </mat-select>
+                  </span>
+                  <span *ngIf="schedule.status === 'Complete' || schedule.status === 'Missed'">
+                    {{ schedule.status }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

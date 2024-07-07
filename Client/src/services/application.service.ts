@@ -2,8 +2,11 @@ import { Injectable, booleanAttribute } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 
+interface interview{
+  application_id:number;
+  is_called:boolean;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -141,12 +144,7 @@ export class ApplicationService {
   async getApplicationStatus(advertisement_id: number, seeker_id: number) {
     let applicationStatusDetails: any = {};
     await axios
-      .get(
-        Apipaths.getApplicationStatus +
-          advertisement_id +
-          '&seekerId=' +
-          seeker_id
-      )
+      .get(Apipaths.getApplicationStatus + advertisement_id + '/' + seeker_id)
       .then((response) => {
         applicationStatusDetails = response.data;
         //format date
@@ -177,6 +175,31 @@ export class ApplicationService {
       });
 
     return applicationDetails;
+  }
+
+  async getShortlistedApplications(advertisement_id: number) {
+    let shortlistedApplications: any;
+    await axios
+      .get(Apipaths.getShortlistedApplications + advertisement_id)
+      .then((response) => {
+        shortlistedApplications = response.data;
+      })
+      .catch((error) => {
+        console.error('error fetching shortlist applicants:', error)
+      });
+
+    return shortlistedApplications;
+  }
+
+  async setToInterview(interview: interview): Promise<void>{
+    await axios
+      .patch(Apipaths.setToInterview, interview)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error setting interview:', error);
+      });
   }
 
   async delegateTask(jobID: number, hraIds: string): Promise<void> {

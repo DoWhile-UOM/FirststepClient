@@ -1,0 +1,69 @@
+.container {
+  margin-top: 4em;
+  margin-left: 4em;
+  margin-right: 3em;
+}
+
+.pagetitle-content span p{
+   
+  font-size: 1.3vw;
+  font-weight: bold;
+ 
+}
+
+.pagetitle-content {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.shedule-content  mat-checkbox{
+  margin-right: 1.3em;
+
+}
+
+table, mat-card{
+  margin: 0 auto;
+  margin-top: 3em;
+  margin-bottom: 0.5em;
+}
+
+mat-card div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height:65vh;
+}
+
+.center-text{
+  color:#008080;
+  font-family: Lato;
+  font-size: xx-large;
+}
+
+.mat-column-application {
+  text-align: right;
+}
+
+.mat-column-interview {
+  text-align: right;
+}
+
+.demo-button-container {
+  padding-bottom: 16px;
+}
+
+.demo-button + .demo-button {
+  margin-left: 8px;
+}
+
+
+
+
+
+
+
+
+  

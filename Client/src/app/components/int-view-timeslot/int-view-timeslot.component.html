@@ -17,47 +17,24 @@
           Edit <mat-icon class="edit" style="margin-left: 5px">edit</mat-icon>
         </button>
       </div>
-      <mat-label class="num"> Job Number: {{ job_number }} | Created by: {{ adData?.hr_manager_name }}, {{ getRoleDisplayName() }}</mat-label><br />
+      <mat-label class="num"> Job Number: {{ job_number }}</mat-label><br />
       <mat-label class="field">{{ field_name }}</mat-label>
 
     </div>
     <div class="buttons-right">
       <div>
-        <button mat-button color="primary" class="custom-button" [matMenuTriggerFor]="menu" [disabled]="userType == 'hra' || adData?.current_status == 'interview'">
-          <mat-icon><i class="fa-solid fa-chart-gantt" style="color: #005050;"></i></mat-icon>Status: {{ adData?.current_status }}
+        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'">
+          <mat-icon><i class="fa-solid fa-chart-gantt" style="color: #005050;"></i></mat-icon>Change Status
         </button>
-        <mat-menu #menu="matMenu" class="menu">
-          <button mat-menu-item color="primary" *ngIf="adData?.current_status == 'active'" (click)="changeStatusOfJob('Hold')">
-            <mat-icon>pause</mat-icon>
-            <span>Hold</span>
-          </button>
-          <button mat-menu-item color="primary" *ngIf="adData?.current_status != 'active'" (click)="changeStatusOfJob('Activate')">
-            <mat-icon>undo</mat-icon>
-            <span>Activate</span>
-          </button>
-          <button mat-menu-item color="primary" *ngIf="adData?.current_status == 'hold'" (click)="changeStatusOfJob('Close')">
-            <mat-icon>close</mat-icon>
-            <span>Close</span>
-          </button>
-          <button mat-menu-item color="primary" *ngIf="adData?.current_status == 'closed'" (click)="changeStatusOfJob('Delete')">
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
-          </button>
-        </mat-menu>
       </div>
       <div>
-        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra' || unassignedApplicationCount === 0" (click)="openTaskDelegationDialog()">
+        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'">
           <mat-icon><i class="fa-solid fa-thumbtack" style="color: #005050;"></i></mat-icon>Assign Applications
         </button>
       </div>
       <div>
-        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'" (click)="shortlist()">
+        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'">
           <mat-icon><i class="fa-regular fa-calendar-days" style="color: #005050;"></i></mat-icon>Interview Scheduling
-        </button>
-      </div>
-      <div>
-        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'" (click)="interviewBooked()">
-          <mat-icon><i class="fa-regular fa-calendar-days" style="color: #005050;"></i></mat-icon>Booked Interviews
         </button>
       </div>
     </div>
@@ -85,6 +62,7 @@
     </div>
   </mat-card>
   <div *ngIf="applicationListLength > 0"  class="mat-elevation-z8">
+
     <table mat-table [dataSource]="dataSource">
       <!-- ID Column -->
       <ng-container matColumnDef="application_Id">
@@ -151,8 +129,11 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      
+      
 
     </table>
+
     <mat-paginator 
       [pageSizeOptions]="[7, 15, 20]"
       showFirstLastButtons>

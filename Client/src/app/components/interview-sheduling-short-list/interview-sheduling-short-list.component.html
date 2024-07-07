@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="page-title">
+    <div>
+      <app-interview-sheduling-header
+        [job_title]="this.advertisment_title"
+        [job_number]="this.job_number"
+        [job_id]="this.advertisment_id"
+      >
+      </app-interview-sheduling-header>
+    </div>
+    <div class="pagetitle-content">
+      <span>
+        <p>Selected Applications</p>
+      </span>
+      <span class="shedule-content">
+        <mat-checkbox
+          [checked]="task().completed"
+          [indeterminate]="partiallyComplete()"
+          (change)="update($event.checked)"
+          >Select All
+        </mat-checkbox>
+      </span>
+    </div>
+  </div>
+
+  <mat-card *ngIf="candidateData.length <= 0">
+    <div>
+      <p class="center-text">No applications available for interviews at the moment. Please check back later!</p>
+    </div>
+  </mat-card>
+
+  <table
+    mat-table
+    [dataSource]="candidateData"
+    class="mat-elevation-z8 demo-table"
+    *ngIf="candidateData.length > 0"
+  >
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.position }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastRevisionBy">
+      <th mat-header-cell *matHeaderCellDef>Last Revision By</th>
+      <td mat-cell *matCellDef="let element">{{ element.lastRevisionBy }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="interview">
+      <th mat-header-cell *matHeaderCellDef>Interview</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <mat-checkbox
+          [checked]="task().subtasks![i].completed"
+          (change)="update($event.checked, i)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="application">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-button
+          color="primary"
+          class="small-icon-button"
+          (click)="explore(element.application_id)"
+        >
+          <mat-icon>explore</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+
+<app-spinner></app-spinner>

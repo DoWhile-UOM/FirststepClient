@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry, MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ViewChild } from '@angular/core';
@@ -47,7 +47,7 @@ export interface RolesData {
     SpinnerComponent
   ],
 })
-export class ManageRolesComponent {
+export class ManageRolesComponent implements OnInit{
   displayedColumns: string[] = ['position', 'name', 'email', 'Role', 'symbol'];
   rolesData: RolesData[] = [];
 

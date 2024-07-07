@@ -501,4 +501,12 @@ export class AdvertisementServices {
 
     return jobList;
   }
+
+  private jobData:{jobID:number;jobTitle:string;jobNumber:number}|null = null;
+  setJobData(jobData:{jobID:number;jobTitle:string;jobNumber:number}){
+    this.jobData = jobData;
+  }
+  getJobData(){
+    return this.jobData;
+  }
 }

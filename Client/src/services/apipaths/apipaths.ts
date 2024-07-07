@@ -52,9 +52,11 @@ export class Apipaths {
     static readonly submitApplication: string = this.baseUrl + 'Application/AddApplication';
     static readonly resubmitApplication: string = this.baseUrl + 'Application/ResubmitApplication';
     static readonly getassignedApplications: string = this.baseUrl + 'Application/GetAssignedApplicationList/'; // + hra_id
-    static readonly getApplicationStatus: string = this.baseUrl + 'Application/status?advertisementId='; //  '&seekerId=' + seeker_id
+    static readonly getApplicationStatus: string = this.baseUrl + 'Application/GetApplicationStatus/'; //  advertisement id
     static readonly getApplicationList: string = this.baseUrl + 'Application/GetApplicationList/'; // + job_number + '/status=' + status
     static readonly getSeekerApplicationDetails: string = this.baseUrl + 'Application/GetSeekerApplications/'; // + application_id
+    static readonly getShortlistedApplications: string = this.baseUrl + 'Application/GetSelectedApplicationsDetails/'; // + advertisment_id
+    static readonly setToInterview: string = this.baseUrl + 'Application/SetToInterview';
     static readonly delegateTask:string = this.baseUrl + 'Application/DelegateTask/'; // + jobID + '/hraIds=' + hraIdsString
 
     // keywords
@@ -98,4 +100,10 @@ export class Apipaths {
     static readonly BlobConnectionString = 'DefaultEndpointsProtocol=https;AccountName=firststep;AccountKey=uufTzzJ+uB7BRnKG9cN2RUi0mw92n5lTl2EMvnOTw6xv7sfPQSWBqJxHll+Zn2FNc06cGf8Qgrkb+ASteH1KEQ==;EndpointSuffix=core.windows.net';
     static readonly BlobContainerName = 'apiimages';
     static readonly BlobName = 'firststep';
+
+    //Interview
+    static readonly CreateAppointmentSlot: string = this.baseUrl + 'Appointment/CreateAppointments';
+    static readonly GetFreeAppointmentSlot: string = this.baseUrl + 'Appointment/GetAvailabelSlots/';
+    static readonly BookSlotSeeker: string = this.baseUrl + 'Appointment/BookAppointment/';
+    static readonly GetAllApplicants: string = this.baseUrl + 'Appointment/GetBookedAppointmentList/';
 }
