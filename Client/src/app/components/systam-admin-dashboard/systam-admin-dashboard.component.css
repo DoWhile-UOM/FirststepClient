@@ -108,15 +108,20 @@
 /* app.component.css */
 .spinner-container {
   display: flex;
-  flex-direction: row; /* Align items horizontally */
-  align-items: center; /* Center-align items vertically */
-  justify-content: center; /* Center-align items horizontally */
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: flex-start;
+  /* Center-align items horizontally */
 }
 
 .spinner-text {
-  margin-left: 10px; /* Add some space between the spinner and the text */
+  margin-left: 10px; 
   font-size: 1.2em;
   font-weight: bold;
+}
+.active-user-text {
+  margin-left: 20px; 
+  font-size: small;
 }
 
 .cmpy-user-card{

@@ -50,6 +50,7 @@
                                     diameter="50">
                                 </mat-progress-spinner>
                                 <div class="spinner-text">{{ percentageActiveCmpyUsers }}%</div>
+                                <div class="active-user-text">active user percentage </div>
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -94,6 +95,7 @@
                                     diameter="50">
                                 </mat-progress-spinner>
                                 <div class="spinner-text">{{ percentageActiveSeekers }}%</div>
+                                <div class="active-user-text">active user percentage </div>
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -142,13 +144,19 @@
                     <mat-expansion-panel-header class="panel-header">
                         <mat-panel-title> Company Admin </mat-panel-title>
                         <mat-panel-description class="panel-description">
-                            <div class="panel-description">
+                            <!-- <div class="panel-description">
                                 <div>
                                     <span class="value">{{loggings.inactiveCA+loggings.activeCA}}</span>
                                 </div>
                                 <div>
                                     <span class="name">Total</span>
                                 </div>
+                            </div> -->
+                            <div class="spinner-container">
+                                <mat-progress-spinner [value]="percentageActiveCA" mode="determinate" diameter="50">
+                                </mat-progress-spinner>
+                                <div class="spinner-text">{{ percentageActiveCA }}%</div>
+                                <div class="active-user-text">active user percentage </div>
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -171,6 +179,14 @@
                                 <span class="name">Inactive</span>
                             </div>
                         </div>
+                        <div class="panel-description total-panel">
+                            <div>
+                                <span class="value">{{loggings.activeCA+loggings.inactiveCA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Total</span>
+                            </div>
+                        </div>
                     </div>
                 </mat-expansion-panel>
 
@@ -178,13 +194,19 @@
                     <mat-expansion-panel-header class="panel-header">
                         <mat-panel-title>HR Manager</mat-panel-title>
                         <mat-panel-description class="panel-description">
-                            <div class="panel-description">
+                            <!-- <div class="panel-description">
                                 <div>
                                     <span class="value">{{loggings.inactiveHRM+loggings.activeHRM}}</span>
                                 </div>
                                 <div>
                                     <span class="name">Total</span>
                                 </div>
+                            </div> -->
+                            <div class="spinner-container">
+                                <mat-progress-spinner [value]="percentageActiveHRM" mode="determinate" diameter="50">
+                                </mat-progress-spinner>
+                                <div class="spinner-text">{{ percentageActiveHRM }}%</div>
+                                <div class="active-user-text">active user percentage</div>
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -207,6 +229,14 @@
                                 <span class="name">Inactive</span>
                             </div>
                         </div>
+                        <div class="panel-description total-panel">
+                            <div>
+                                <span class="value">{{loggings.activeHRM+loggings.inactiveHRM}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Total</span>
+                            </div>
+                        </div>
                     </div>
                 </mat-expansion-panel>
 
@@ -214,13 +244,19 @@
                     <mat-expansion-panel-header class="panel-header">
                         <mat-panel-title>Talent Acquisition Specialist</mat-panel-title>
                         <mat-panel-description class="panel-description">
-                            <div class="panel-description">
+                            <!-- <div class="panel-description">
                                 <div>
                                     <span class="value">{{loggings.inactiveHRA+loggings.activeHRA}}</span>
                                 </div>
                                 <div>
                                     <span class="name">Total</span>
                                 </div>
+                            </div> -->
+                            <div class="spinner-container">
+                                <mat-progress-spinner [value]="percentageActiveHRA" mode="determinate" diameter="50">
+                                </mat-progress-spinner>
+                                <div class="spinner-text">{{ percentageActiveHRA }}%</div>
+                                <div class="active-user-text">active user percentage</div>
                             </div>
                         </mat-panel-description>
                     </mat-expansion-panel-header>
@@ -243,6 +279,14 @@
                                 <span class="name">Inactive</span>
                             </div>
                         </div>
+                        <div class="panel-description total-panel">
+                            <div>
+                                <span class="value">{{loggings.activeHRA+loggings.inactiveHRA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Total</span>
+                            </div>
+                        </div>
                     </div>
                 </mat-expansion-panel>
 
@@ -251,7 +295,7 @@
         </mat-card>
 
 
-        <mat-card class="bar-chart-cmpy">
+        <!-- <mat-card class="bar-chart-cmpy">
             <p class="center-text title-section">Percentages of Active Company side Users</p>
             <div class="percentages-of-cmy-users">
                 <div class="content-container">
@@ -279,6 +323,204 @@
                     </div>
                 </div>
             </div>
+        </mat-card> -->
+        <mat-card>
+            <p class="center-text title-section">Statistics of Companies</p>
+            <mat-accordion>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header class="panel-header">
+                        <mat-panel-title>Eligible Unregistered Companies </mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                            <!-- <div class="panel-description">
+                                <div>
+                                    <span class="value">{{loggings.inactiveCA+loggings.activeCA}}</span>
+                                </div>
+                                <div>
+                                    <span class="name">Total</span>
+                                </div>
+                            </div> -->
+                            <!-- <div class="spinner-container">
+                                <mat-progress-spinner [value]="percentageEligibleNotRegisteredCompanies"
+                                    mode="determinate" diameter="50">
+                                </mat-progress-spinner>
+                                <div class="spinner-text">{{ percentageEligibleNotRegisteredCompanies }}%</div>
+                                <div class="active-user-text">eligible but not registered company percentage</div>
+                            </div> -->
+                            <div class="progress-container">
+                                <div class="percentage-text">{{ percentageEligibleNotRegisteredCompanies }}%</div>
+                                <mat-progress-bar mode="determinate"
+                                    [value]="percentageEligibleNotRegisteredCompanies"></mat-progress-bar>
+                                <div class="description-text">Eligible but not registered company percentage</div>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="hidden-panel">
+                        <div class="panel-description left-panel">
+                            <div>
+                                <span class="value">{{eligibleUnregisteredCompaniesLength}}</span>
+                            </div>
+                            <div>
+                                <span class="name">eligible but not registered company</span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="panel-description right-panel">
+                            <div>
+                                <span class="value">{{loggings.inactiveCA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Inactive</span>
+                            </div>
+                        </div> -->
+                        <div class="panel-description total-panel">
+                            <div>
+                                <span class="value">{{registeredCompanies}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Registered</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header class="panel-header">
+                        <mat-panel-title>Registered Companies</mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                            <!-- <div class="panel-description">
+                                <div>
+                                    <span class="value">{{loggings.inactiveHRM+loggings.activeHRM}}</span>
+                                </div>
+                                <div>
+                                    <span class="name">Total</span>
+                                </div>
+                            </div> -->
+                            <!-- <div class="spinner-container">
+                                <mat-progress-spinner [value]="percentageRegisteredCompanies" mode="determinate"
+                                    diameter="50">
+                                </mat-progress-spinner>
+                                <div class="spinner-text">{{ percentageRegisteredCompanies }}%</div>
+                                <div class="active-user-text">registered percentage</div>
+                            </div> -->
+                            <div class="progress-container">
+                                <div class="percentage-text">{{ percentageRegisteredCompanies }}%</div>
+                                <mat-progress-bar mode="determinate"
+                                    [value]="percentageRegisteredCompanies"></mat-progress-bar>
+                                <div class="description-text">percentage of being a registered company</div>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="hidden-panel">
+                        <div class="panel-description left-panel">
+                            <div>
+                                <span class="value">{{registeredCompanies}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Registered</span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="panel-description right-panel">
+                            <div>
+                                <span class="value">{{loggings.inactiveHRM}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Inactive</span>
+                            </div>
+                        </div> -->
+                        <div class="panel-description total-panel">
+                            <div>
+                                <span class="value">{{registeredCompanies+rejectedCompanies}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Total no of evaluated companies</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header class="panel-header">
+                        <mat-panel-title>Rejected Companies</mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                            <!-- <div class="panel-description">
+                                <div>
+                                    <span class="value">{{loggings.inactiveHRA+loggings.activeHRA}}</span>
+                                </div>
+                                <div>
+                                    <span class="name">Total</span>
+                                </div>
+                            </div> -->
+                            <!-- <div class="spinner-container">
+                                <mat-progress-spinner [value]="percentageRejectedCompanies" mode="determinate"
+                                    diameter="50">
+                                </mat-progress-spinner>
+                                <div class="spinner-text">{{percentageRejectedCompanies}}%</div>
+                                <div class="active-user-text">arejecting a company percentage</div>
+                            </div> -->
+                            <div class="progress-container">
+                                <div class="percentage-text">{{ percentageRejectedCompanies }}%</div>
+                                <mat-progress-bar mode="determinate"
+                                    [value]="percentageRejectedCompanies"></mat-progress-bar>
+                                <div class="description-text">percentage of rejecting a company</div>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="hidden-panel">
+                        <div class="panel-description left-panel">
+                            <div>
+                                <span class="value">{{rejectedCompanies}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Rejected</span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="panel-description right-panel">
+                            <div>
+                                <span class="value">{{loggings.inactiveHRA}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Inactive</span>
+                            </div>
+                        </div> -->
+                        <div class="panel-description total-panel">
+                            <div>
+                                <span class="value">{{registeredCompanies+rejectedCompanies}}</span>
+                            </div>
+                            <div>
+                                <span class="name">Total no of evaluated companies</span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+                    <mat-expansion-panel-header class="panel-header">
+                        <mat-panel-title>Pending</mat-panel-title>
+                        <mat-panel-description class="panel-description">
+                            <div class="panel-description">
+                                <div>
+                                    <span class="value">{{pendingCompanies}}</span>
+                                </div>
+                                <div>
+                                    <span class="name">Pending...</span>
+                                </div>
+                            </div>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="hidden-panel">
+                        <!--description-->
+                        This shows the no of companies that are waiting for the approval of the admin.
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
         </mat-card>
     </div>
 </div>

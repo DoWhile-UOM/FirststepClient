@@ -40,3 +40,78 @@ button {
   flex-direction: column !important;
  
 }
+.email-auth-popup-email-field:hover{
+  cursor: pointer !important;
+}
+.email-auth-popup{
+  
+  width: 100%;
+}
+.form-popup {
+  width: 1200px;
+  height: 600px;
+  border: 3px black;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  padding: 25px 25px 25px 25px;
+  margin-left: 130px;
+}
+.form-container {
+  border: 3px black;
+  border-radius: 25px;
+  background: #fff;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+  padding: 25px 25px 25px 25px;
+  width: 500px;
+  height: 525px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 16px;
+  display: grid;
+  width: 450px;
+  align-items: center;
+  padding-left: 15px;
+  padding-bottom: 0;
+}
+.card-email-auth {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+.email-auth-popup {
+  margin-top: 20px;
+}
+
+.email-auth-popup-email-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.button-with-inputbox {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+.card-email-auth{
+  width: 100%;
+}
+mat-grid-tile mat-form-field {
+  width: 75%;
+  margin: 0.75em;
+}
+.mat-mdc-button-touch-target {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.button-with-inputbox mat-form-field{
+  width: 55%;
+  margin-right: 10px;
+}
+
+.button-with-inputbox button{
+  width: 20%;
+}

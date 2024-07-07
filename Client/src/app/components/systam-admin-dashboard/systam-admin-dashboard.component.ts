@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { CompanyService } from '../../../services/company.service';
 import { UserService } from '../../../services/user.service';
+import { CompanyApplicationListComponent } from '../company-application-list/company-application-list.component';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -37,6 +38,13 @@ interface Logging {
   inactiveCmpUsers: number;
   eligibleUnregisteredCompaniesCount: number;
 }
+interface CompanyList {
+  company_id: number;
+  company_name: string;
+  verification_status: string;
+  evaluated_status: string;
+  view: string;
+}
 
 @Component({
   selector: 'app-systam-admin-dashboard',
@@ -59,6 +67,7 @@ interface Logging {
 })
 export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['company_name', 'company_email'];
+  companyList: CompanyList[] = [];
 
   @ViewChild(MatTable)
   table!: MatTable<EligibleUnregisteredCompany>;
@@ -69,6 +78,12 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
   eligibleUnregisteredCompanies: EligibleUnregisteredCompany[] = [];
   eligibleUnregisteredCompaniesLength: number = 0;
   isEligibleUnregCmpaniesLoading: boolean = false;
+
+  pendingCompanies: number = 0;
+  registeredCompanies: number = 0;
+  rejectedCompanies: number = 0;
+  eligibleNotRegisteredCompanies: number = 0;
+  totalCompanies: number = 0;
 
   totalItems = 100;
   pageSize = 3;
@@ -85,6 +100,10 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
   percentageActiveCA: number = 0;
   percentageActiveHRM: number = 0;
   percentageActiveHRA: number = 0;
+  percentagePendingCompanies: number = 0;
+  percentageRegisteredCompanies: number = 0;
+  percentageRejectedCompanies: number = 0;
+  percentageEligibleNotRegisteredCompanies: number = 0;
 
   subTab = 'active';
   tab = 'ca';
@@ -103,10 +122,52 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.fetchCompanyList();
+
     this.fetchEligibleUnregisteredCompanies();
     this.fetchLoggings();
 
     this.loggings.eligibleUnregisteredCompaniesCount = this.eligibleUnregisteredCompaniesLength;
+  }
+
+  async fetchCompanyList() {
+    await this.companyService
+      .getAllCompanyList()
+      .then((data: any[]) => {
+        this.companyList = data.map((item, index) => ({
+          company_id: item.company_id, // Use company_id
+          company_name: item.company_name,
+          verification_status:
+            item.verified_system_admin_id !== 0
+              ? item.verification_status
+                ? 'Registered'
+                : 'Rejected'
+              : 'Pending...',
+          evaluated_status:
+            item.verified_system_admin_id !== 0 ? 'Evaluated' : 'Not Evaluated',
+          view: item.verified_system_admin_id !== 0 ? 'Review' : 'Evaluate',
+        }));
+        this.getPendingCompanies();
+        this.getRegisteredCompanies();
+        this.getRejectedCompanies();
+        this.getCompanyListPercentages();
+      })
+      .catch((error) => {
+        this.spinner.hide();
+      });
+  }
+  getPendingCompanies() {
+    this.pendingCompanies = this.companyList.filter((item) => item.verification_status == 'Pending...').length;
+  }
+  getRegisteredCompanies() {
+    this.registeredCompanies = this.companyList.filter((item) => item.verification_status == 'Registered').length;
+  }
+  getRejectedCompanies() {
+    this.rejectedCompanies = this.companyList.filter((item) => item.verification_status == 'Rejected').length;
+  }
+  getCompanyListPercentages() {
+    this.percentageRegisteredCompanies = Number((this.registeredCompanies / (this.registeredCompanies + this.rejectedCompanies) * 100).toFixed(2));
+    this.percentageRejectedCompanies = Number((this.rejectedCompanies / (this.registeredCompanies + this.rejectedCompanies) * 100).toFixed(2));
   }
 
   ngAfterViewInit() {
@@ -147,10 +208,15 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
       this.getPercentageActiveCA();
       this.getPercentageActiveHRM();
       this.getPercentageActiveHRA();
+      this.getEligibleUnregisteredCompanies();
+
     }
     finally {
       this.spinner.hide();
     }
+  }
+  getEligibleUnregisteredCompanies() {
+    this.percentageEligibleNotRegisteredCompanies = Number((this.eligibleUnregisteredCompaniesLength / this.registeredCompanies * 100).toFixed(2));
   }
 
   pageChanged(event: PageEvent) {
