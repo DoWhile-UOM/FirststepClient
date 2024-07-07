@@ -350,8 +350,9 @@
   /* Media Queries */
   @media screen and (max-width: 768px) {
     header {
-      flex-direction: column;
+      flex-direction: row;
       align-items: flex-start;
+      justify-content: space-between;
     }
   
     header nav {
