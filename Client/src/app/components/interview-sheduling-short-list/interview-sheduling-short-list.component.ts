@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
 import { app } from '../../../../server';
 import { AdvertisementServices } from '../../../services/advertisement.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 interface CandidateData {
   application_id: number;
@@ -47,6 +48,7 @@ interface interview {
     InterviewShedulingHeaderComponent,
     MatCheckboxModule,
     MatIconModule,
+    MatDividerModule
   ],
 })
 export class InterviewShedulingShortListComponent implements OnInit {
@@ -86,10 +88,6 @@ export class InterviewShedulingShortListComponent implements OnInit {
        this.advertisment_title = jobData.jobTitle;
        this.getShortlistedCandidates();
      }
-     else{
-      console.log('No job data found');
-     }
-     
   }
 
   async getShortlistedCandidates() {

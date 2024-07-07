@@ -51,12 +51,12 @@
         </button>
       </div>
       <div>
-        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'" (click)="shortlist()">
+        <button mat-button color="primary" *ngIf="adData?.current_status != 'interview'" class="custom-button" [disabled]="userType == 'hra'" (click)="shortlist()">
           <mat-icon><i class="fa-regular fa-calendar-days" style="color: #005050;"></i></mat-icon>Interview Scheduling
         </button>
       </div>
       <div>
-        <button mat-button color="primary" class="custom-button" [disabled]="userType == 'hra'" (click)="interviewBooked()">
+        <button mat-button color="primary" *ngIf="adData?.current_status == 'interview'" class="custom-button" [disabled]="userType == 'hra'" (click)="interviewBooked()">
           <mat-icon><i class="fa-regular fa-calendar-days" style="color: #005050;"></i></mat-icon>Booked Interviews
         </button>
       </div>

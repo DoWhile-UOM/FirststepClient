@@ -5,7 +5,6 @@ import { MatCalendarBody } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCalendar } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -43,11 +42,11 @@ export class AvailableTimeSlotComponent {
   isFormFilled: boolean = false;
   isIntroPopupVisible: boolean = true;
   isPopupVisible: boolean = false;
-  advertismentId: number = 0;//-----------------hardcoded for testing--------------------
+  advertismentId: number = 0;
   selectedDate: Date = new Date();
   calendarLoaded: boolean = false;
-  startTime: number = 0;     // Variable to store start time
-  endTime: number = 0;       // Variable to store end time
+  startTime: number = 0;
+  endTime: number = 0;
   isAddTimeDisabled: boolean = true;
   userType: string = 'ca';
   appointmentDetails: FormGroup;
@@ -146,9 +145,7 @@ export class AvailableTimeSlotComponent {
     } else {
       this.snackBar.open('Please ensure that the Start Time precedes the End Time', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
-
   }
-
 
   formatTimeTo24Hour(timeString: string): number {
     // Split the time string into hours, minutes, and period (AM/PM)
@@ -194,7 +191,6 @@ export class AvailableTimeSlotComponent {
     this.spinner.show();
     this.interview.postSplittedTimeSlots(this.records, this.appointment.duration,this.advertismentId,this.auth.getCompanyID());
     this.spinner.hide();
-    //console.log(this.appointment.duration+' '+this.advertismentId+' '+this.auth.getCompanyID());
   }
 
   closeAppointmentPopup() {
@@ -216,6 +212,4 @@ export class AvailableTimeSlotComponent {
   dummy() {
 
   }
-
-
 }

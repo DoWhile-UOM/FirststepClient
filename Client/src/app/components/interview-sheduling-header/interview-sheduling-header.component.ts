@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatLabel } from '@angular/material/form-field';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import { I } from '@angular/cdk/keycodes';
+
 @Component({
   selector: 'app-interview-sheduling-header',
   standalone: true,
@@ -17,17 +17,13 @@ export class InterviewShedulingHeaderComponent {
   @Input() job_number: number = 0;
   @Input() job_id: number = 0;
 
-
-constructor(private router:Router,private auth:AuthService) { }
+  constructor(private router:Router,private auth:AuthService) { }
 
   onBackButtonClick(){
 		window.history.back();
 	}
 
   confirm() {
-    // code to confirm the interview
     this.router.navigate([`${this.auth.getRole()}/availableTimeSlot`], { queryParams: { id: this.job_id } });
-    //ca/availableTimeSlot?id=1051
   }
-
 }

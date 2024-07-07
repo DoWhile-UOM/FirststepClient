@@ -9,9 +9,6 @@
       </app-interview-sheduling-header>
     </div>
     <div class="pagetitle-content">
-      <span>
-        <p>Selected Applications</p>
-      </span>
       <span class="shedule-content">
         <mat-checkbox
           [checked]="task().completed"
@@ -22,6 +19,8 @@
       </span>
     </div>
   </div>
+
+  <mat-divider></mat-divider>
 
   <mat-card *ngIf="candidateData.length <= 0">
     <div>
