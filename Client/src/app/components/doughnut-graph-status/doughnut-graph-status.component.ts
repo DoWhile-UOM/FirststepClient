@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { ApplicationService } from '../../../services/application.service';
+import { ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 interface ApplicationStatusCount {
   status: string;
@@ -10,16 +12,17 @@ interface ApplicationStatusCount {
 @Component({
   selector: 'app-doughnut-graph-status',
   standalone: true,
-  imports: [CanvasJSAngularChartsModule],
+  imports: [CanvasJSAngularChartsModule, CommonModule],
   templateUrl: './doughnut-graph-status.component.html',
   styleUrls: ['./doughnut-graph-status.component.css']
 })
 export class DoughnutGraphStatusComponent implements OnInit {
 
-  chartOptions: any;
+  doughnutChartOptions: any;
+  isLoading = true; // Flag to track loading state
   company_id: number = 7;
 
-  constructor(private applicationService: ApplicationService) { }
+  constructor(private applicationService: ApplicationService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getApplicationStatusCount();
@@ -27,14 +30,14 @@ export class DoughnutGraphStatusComponent implements OnInit {
 
   async getApplicationStatusCount() {
     try {
-      const response = await this.applicationService.getApplicationStatusCount(this.company_id);
+      const response: ApplicationStatusCount[] = await this.applicationService.getApplicationStatusCount(this.company_id);
       const datapoints = response.map((data: ApplicationStatusCount) => ({
         y: data.count,
         name: data.status,
         color: this.getColor(data.status)
       }));
 
-      this.chartOptions = {
+      this.doughnutChartOptions = {
         animationEnabled: true,
         exportEnabled: true,
         theme: "light2",
@@ -42,10 +45,14 @@ export class DoughnutGraphStatusComponent implements OnInit {
           type: "doughnut",
           showInLegend: true,
           indexLabel: "{name}: {y}",
-          yValueFormatString: "#,###'%'",
+          yValueFormatString: "#,###",
           dataPoints: datapoints
         }]
+
       };
+
+      this.isLoading = false; // Data is ready
+      this.cdr.detectChanges(); // Manually trigger change detection
       console.log('Application status count:', response);
     } catch (error) {
       console.error('Error fetching application status count:', error);

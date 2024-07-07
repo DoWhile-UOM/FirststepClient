@@ -1,2 +1,2 @@
-<canvasjs-chart [options]="chartOptions"></canvasjs-chart>
-
+<div *ngIf="isLoading">Loading chart...</div>
+<canvasjs-chart *ngIf="!isLoading" [options]="doughnutChartOptions"></canvasjs-chart>
