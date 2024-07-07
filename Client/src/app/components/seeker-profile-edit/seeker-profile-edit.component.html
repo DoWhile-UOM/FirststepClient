@@ -1,191 +1,161 @@
 <div class="body">
-  <app-spinner *ngIf="!hasDataLoaded"></app-spinner>
   <mat-card class="card" *ngIf="hasDataLoaded">
     <div class="heading title" style="margin-bottom: 2em">
-      <span class="sectionHeading"
-        >{{ seekerForm.get("first_name")?.value }}
-        {{ seekerForm.get("last_name")?.value }}</span
-      >
+      <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
     </div>
     <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
-      <mat-grid-list cols="2" rowHeight="140" style="margin: 0">
-        <mat-grid-tile class="tile">
-          <div class="profile-container">
-            <img
-              [src]="propicUrl || 'fallback-image-url'"
-              alt="Seeker profile picture"
-              class="profile-image"
-              width="100"
-              height="auto"
-              (error)="onImageError()"
-            />
-            <div class="edit-container">
-              <button mat-button color="primary" (click)="triggerFileInput()" class="edit-button">
-                <mat-icon class="edit">edit</mat-icon>
-                Edit image
-              </button>
-              <input
-                type="file"
-                id="profile-upload"
-                (change)="onselectFile($event)"
-                style="display: none"
-              />
-            </div>
+      <div class="profile-section">
+        <div class="profile-container">
+          <img
+            [src]="propicUrl || 'fallback-image-url'"
+            alt="Seeker profile picture"
+            class="profile-image"
+            width="100"
+            height="auto"
+            (error)="onImageError()"
+          />
+          <div class="edit-container">
+            <button mat-button color="primary" (click)="triggerFileInput()" class="edit-button">
+              <mat-icon class="edit">edit</mat-icon>
+              Edit image
+            </button>
+            <input type="file" id="profile-upload" (change)="onselectFile($event)" style="display: none" />
           </div>
-        </mat-grid-tile>
-        
-        
-        <mat-grid-tile>
-          <mat-form-field appearance="outline">
+        </div>
+      </div>
+      <mat-grid-list cols="{{noOfCols}}" rowHeight="70px" gutterSize="10px" class="responsive-grid">
+        <mat-grid-tile colspan="{{noOfCols}}">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Bio</mat-label>
             <input matInput formControlName="bio" required />
-            <mat-error *ngIf="hasError('bio')">{{
-              getErrorMessage("bio")
-            }}</mat-error>
+            <mat-error *ngIf="hasError('bio')">{{ getErrorMessage('bio') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>First Name</mat-label>
             <input matInput formControlName="first_name" required />
-            <mat-error *ngIf="hasError('first_name')">{{
-              getErrorMessage("first_name")
-            }}</mat-error>
+            <mat-error *ngIf="hasError('first_name')">{{ getErrorMessage('first_name') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Last Name</mat-label>
             <input matInput formControlName="last_name" required />
-            <mat-error *ngIf="hasError('last_name')">{{
-              getErrorMessage("last_name")
-            }}</mat-error>
+            <mat-error *ngIf="hasError('last_name')">{{ getErrorMessage('last_name') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
       </mat-grid-list>
-      <div class="description-text-editor">
-        <mat-form-field appearance="outline">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" required></textarea>
-          <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
-        </mat-form-field>
-      </div>
-      <mat-grid-list cols="2" rowHeight="100" class="mat-grid-list-below-description">
+
+      <mat-form-field appearance="outline" class="full-width des">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+        <mat-error *ngIf="hasError('description')">{{ getErrorMessage('description') }}</mat-error>
+      </mat-form-field>
+
+      <mat-grid-list cols="{{noOfCols}}" rowHeight="70px" gutterSize="10px" class="responsive-grid">
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Phone Number</mat-label>
             <input matInput formControlName="phone_number" required />
             <mat-error *ngIf="hasError('phone_number')">{{ getErrorMessage('phone_number') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile class="button-with-inputbox">
-          <mat-form-field appearance="outline">
-            <mat-label>Email Address</mat-label>
-            <input
-              matInput
-              placeholder="Enter Email"
-              formControlName="email"
-              [readonly]="emailReadOnly"
-              required
-            />
-            <mat-error *ngIf="hasError('email')">{{
-              getErrorMessage("email")
-            }}</mat-error>
-          </mat-form-field>
-          <button
-            mat-button
-            color="primary"
-            (click)="openDialog()"
-            id="otpreqbtn"
-          >
-            Change Email
-          </button>
-        </mat-grid-tile>
+
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input
-              matInput
-              formControlName="password"
-              type="password"
-              placeholder="Enter new password if required"
-            />
-            <mat-error *ngIf="hasError('password')">{{ getErrorMessage('password') }}</mat-error>
-          </mat-form-field>
+          <div class="email-container">
+            <mat-form-field appearance="outline" class="email-form-field">
+              <mat-label>Email Address</mat-label>
+              <input matInput placeholder="Enter Email" formControlName="email" [readonly]="emailReadOnly" required />
+              <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error>
+            </mat-form-field>
+            <button mat-button color="primary" class="change-email-button" (click)="openDialog()" id="otpreqbtn">Change Email</button>
+          </div>
         </mat-grid-tile>
         
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" placeholder="Enter new password if required" />
+            <mat-error *ngIf="hasError('password')">{{ getErrorMessage('password') }}</mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>University</mat-label>
             <input matInput formControlName="university" />
           </mat-form-field>
         </mat-grid-tile>
+
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>LinkedIn URL</mat-label>
             <input matInput formControlName="linkedin" />
           </mat-form-field>
         </mat-grid-tile>
+
         <mat-grid-tile>
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Field</mat-label>
             <mat-select formControlName="field_id" required>
-              <mat-option
-                *ngFor="let field of fields"
-                [value]="field.field_id"
-                >{{ field.field_name }}</mat-option
-              >
+              <mat-option *ngFor="let field of fields" [value]="field.field_id">{{ field.field_name }}</mat-option>
             </mat-select>
-            <mat-error *ngIf="hasError('field_id')">{{
-              getErrorMessage("field_id")
-            }}</mat-error>
+            <mat-error *ngIf="hasError('field_id')">{{ getErrorMessage('field_id') }}</mat-error>
           </mat-form-field>
         </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <input type="text"
+              placeholder="Pick a Country"
+              aria-label="Country"
+              matInput #countryInput
+              [formControl]="locationCountryControl"
+              [matAutocomplete]="autocountry" (change)="onSelectedCountryChanged(countryInput.value)">
+            <mat-autocomplete autoActiveFirstOption #autocountry="matAutocomplete" (optionSelected)="onSelectedCountryChanged($event.option.viewValue)">
+            @for (option of locationCountryFilteredOptions | async; track option) {
+              <mat-option [value]="option">{{option}}</mat-option>
+            }
+            </mat-autocomplete>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+					<mat-form-field appearance="outline">
+						<mat-label>City</mat-label>
+						<input type="text"
+							placeholder="Pick a City"
+							aria-label="City"
+							matInput
+							[formControl]="locationCityControl"
+							[matAutocomplete]="autocity">
+						<mat-autocomplete autoActiveFirstOption #autocity="matAutocomplete">
+						@for (option of locationCityFilteredOptions | async; track option) {
+							<mat-option [value]="option">{{option}}</mat-option>
+						}
+						</mat-autocomplete>
+					</mat-form-field>
+				</mat-grid-tile>
+
       </mat-grid-list>
-      <div class="textbox-form-field">
-        <app-add-skills
-          [skills]="skills"
-          (skillChange)="changeSkillsArray($event)"
-        ></app-add-skills>
+      <div class="textbox-form-field full-width">
+        <app-add-skills [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
       </div>
-      <div class="button-container" style="gap: 10px">
-        <button mat-raised-button color="primary" (click)="openUploadDialog()">
-          Upload CV
-        </button>
-        <button
-          mat-raised-button
-          color="primary"
-          [disabled]="disableViewButton"
-          (click)="openPdfViewer()"
-        >
-          View CV
-        </button>
+      <div class="button-container">
+        <button mat-raised-button color="primary" (click)="openUploadDialog()" class="button">Upload CV</button>
+        <button mat-raised-button color="primary" [disabled]="disableViewButton" (click)="openPdfViewer()" class="button">View CV</button>
       </div>
       <mat-divider></mat-divider>
-      <section>
-        <div class="example-button-row">
-          <button type="submit" mat-raised-button color="primary">
-            Update Profile
-          </button>
-          <button
-            type="button"
-            mat-raised-button
-            id="discard"
-            (click)="discardChanges()"
-          >
-            Discard Changes
-          </button>
-          <button
-            type="button"
-            mat-raised-button
-            color="warn"
-            id="delete"
-            (click)="deleteAccount()"
-          >
-            Delete Profile
-          </button>
-        </div>
-      </section>
+      <div class="example-button-row">
+        <button type="submit" mat-raised-button color="primary" class="button">Update Profile</button>
+        <button type="button" mat-raised-button (click)="discardChanges()" class="button">Discard Changes</button>
+        <button type="button" mat-raised-button color="warn" (click)="deleteAccount()" class="button">Delete Profile</button>
+      </div>
+      
     </form>
   </mat-card>
 </div>

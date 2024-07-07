@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-seeker-application-form-confirm',
@@ -10,7 +10,11 @@ import { Router } from '@angular/router';
   styleUrl: './seeker-application-form-confirm.component.css'
 })
 export class SeekerApplicationFormConfirmComponent {
-  constructor(private router: Router) {}
+  companyName: string = 'Company';
+
+  constructor(private router: Router, private a_router: ActivatedRoute) {
+    this.companyName = this.a_router.snapshot.paramMap.get('company') ?? '';
+  }
 
   viewapplication(){
     this.router.navigate(['seeker/applied']);

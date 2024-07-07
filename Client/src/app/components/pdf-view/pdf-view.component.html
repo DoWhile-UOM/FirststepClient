@@ -1,10 +1,10 @@
-<mat-dialog-content>
 <button mat-icon-button class="back-button" (click)="closeDialog()">
     <mat-icon>arrow_back</mat-icon>
-  </button>  
+</button>  
+
 <ejs-pdfviewer
-      id="container"
-      [documentPath]="document"
-      [resourceUrl]="resource"
-    ></ejs-pdfviewer>
-</mat-dialog-content>
+  id="container"
+  [documentPath]="document"
+  [resourceUrl]="resource"
+  [serviceUrl]="service">
+</ejs-pdfviewer>

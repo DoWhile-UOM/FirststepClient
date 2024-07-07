@@ -7,7 +7,8 @@ import { RegisterCompanyComponent } from './components/register-company/register
 import { CompanyAdminRegistrtionFormComponent } from './components/company-admin-registrtion-form/company-admin-registrtion-form.component';
 import { SeekerSignupComponent } from './components/seeker-signup/seeker-signup.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { PopUpFinalComponent } from './components/pop-up-final/pop-up-final.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ResetPasswordReqComponent } from './components/reset-password-req/reset-password-req.component';
 
 //test
 import { DailyInterviewSchedulesComponent } from './components/daily-interview-schedules/daily-interview-schedules.component';
@@ -20,8 +21,9 @@ export const routes: Routes = [
   { path: 'signup', component: SeekerSignupComponent },
   { path: 'CompanyReg', component: RegisterCompanyComponent },
   { path: 'RegCheck', component: RegCmpStateCheckComponent },
-  { path: 'popupfinal', component: PopUpFinalComponent },
   { path: 'RegCompanyAdmin', component: CompanyAdminRegistrtionFormComponent },
+  { path: 'ResetPassword', component: ResetPasswordComponent },
+  { path: 'Recovery', component: ResetPasswordReqComponent },
 
   {
     path: 'ca',

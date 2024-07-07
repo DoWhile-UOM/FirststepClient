@@ -1,14 +1,14 @@
 import {
   Component,
   OnInit,
-  Inject,
+  HostListener,
   ViewChild,
   Output,
   EventEmitter,
 } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -24,7 +24,6 @@ import {
   MatDialogContent,
   MatDialogActions,
   MatDialogClose,
-  MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -37,18 +36,16 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ChangeDetectorRef } from '@angular/core';
-import { merge } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SeekerService } from '../../../services/seeker.service';
 import { JobfieldService } from '../../../services/jobfield.service';
 import { AddSkillsComponent } from '../add-skills/add-skills.component';
 import { SeekerEmailVerificationBoxComponent } from '../seeker-email-verification-box/seeker-email-verification-box.component';
-import {
-  MatProgressSpinnerModule,
-  MatSpinner,
-} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PdfViewComponent } from '../pdf-view/pdf-view.component';
+import { Observable } from 'rxjs';
+import { Country, City } from 'country-state-city';
+import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 interface SeekerProfile {
   user_id: number;
@@ -66,6 +63,8 @@ interface SeekerProfile {
   field_id: number;
   field_name?: string;
   seekerSkills?: string[];
+  country?: string;
+  city?: string;
   cvFile?: File; // New CV file
   profilePictureFile?: File; // New profile picture file
 }
@@ -96,6 +95,7 @@ interface SeekerProfile {
     AddSkillsComponent,
     MatProgressSpinnerModule,
     PdfViewComponent,
+    MatAutocompleteModule
   ],
   templateUrl: './seeker-profile-edit.component.html',
   styleUrl: './seeker-profile-edit.component.css',
@@ -104,16 +104,14 @@ export class SeekerProfileEditComponent implements OnInit {
   seekerDetails: SeekerProfile = {} as SeekerProfile;
   seekerForm: FormGroup;
   hasDataLoaded: boolean = false;
-  user_id: number = 0; //temp
+  user_id: number = 0; 
   isConfirmedToChangeEmail: boolean = false;
   emailcaptured = '';
   remainingTime: number = 0;
   reqOTPbtntxt: string = 'Request OTP';
   noOfCols: number = 2;
   fields: any = [];
-  // passwordFieldType: string = 'password';
-  // passwordPlaceholder: string = '********';
-  disableViewButton: boolean = false; // Disable view button when no CV is uploaded
+  disableViewButton: boolean = false;
 
   isEmailVerified: boolean = false;
   isOTPRequestSent: boolean = false;
@@ -121,13 +119,23 @@ export class SeekerProfileEditComponent implements OnInit {
 
   emailReadOnly: boolean = true;
 
-  propicUrl = '';
-  propicBlobName = '';
+  // for location country autocomplete
+	locationCountryControl = new FormControl('');
+	countries: string[] = [];
+	locationCountryFilteredOptions: Observable<string[]>;
+
+	// for city autocomplete
+	locationCityControl = new FormControl('');
+	cities: string[] = []; 
+	locationCityFilteredOptions: Observable<string[]>;
+
+  readonly defaultImageUrl = './assets/images/dp.png';
+  propicUrl = this.defaultImageUrl;
   selectedFile: File | null = null;
   selectedimage: File | null = null;
-  cVurl: string = '';
+  cVurl= '';
   readonly fallbackImageUrl = 'https://firststep.blob.core.windows.net/firststep/systemusers_94754.png?sv=2023-11-03&st=2024-06-14T22%3A57%3A27Z&se=2024-06-15T22%3A57%3A27Z&sr=b&sp=r&sig=nmtnO0WuoVLjj%2BCTpgvfNF8pfW%2Bm9Uw0uoL6c5gEcgo%3D';
-  eventOccured: boolean = false;
+  eventOccured= false;
 
   skills: string[] = [];
   @ViewChild(AddSkillsComponent) addSkillsComponent!: AddSkillsComponent;
@@ -145,10 +153,7 @@ export class SeekerProfileEditComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone_number: [
-        '',
-        [Validators.required, Validators.pattern(/^\d{7,15}$/)],
-      ], // Adjusted pattern for phone numbers with 7-15 digits
+      phone_number: ['',[Validators.required, Validators.pattern(/^\d{7,15}$/)],], 
       bio: ['', Validators.required],
       description: ['', Validators.required],
       university: [''],
@@ -158,8 +163,79 @@ export class SeekerProfileEditComponent implements OnInit {
       profile_picture: [''],
       password: [''],
       seekerSkills: [[]],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
     });
+
+    this.locationCountryFilteredOptions = this.locationCountryControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCountry(value || '')),
+		);
+
+		this.locationCityFilteredOptions = this.locationCityControl.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterCity(value || '')),
+		);
+
+    this.getScreenSize()
   }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?: undefined) {
+    try{
+      if (window.innerWidth <= 768){
+        this.noOfCols = 1;
+      }
+      else{
+        this.noOfCols = 2;
+      }
+    }
+    catch {}
+  }
+
+  onSelectedCountryChanged(selectedCountry: string){
+    // check whether the selected country is valid
+    if (selectedCountry == undefined || selectedCountry == ''){
+      return;
+    }
+    else if (this.countries.indexOf(selectedCountry) == -1){
+      return;
+    }
+
+		this.locationCityControl.setValue('');
+		this.cities = [];
+
+    this.spinner.show();
+
+		const countryCode = Country.getAllCountries().find(country => country.name === selectedCountry)?.isoCode;
+
+		if (countryCode == undefined){
+      this.snackBar.open("Invalid Country", "", {panelClass: ['app-notification-eror']})._dismissAfter(3000);
+      this.locationCountryControl.setValue('');
+      
+      this.spinner.hide();
+			return;
+		}
+		
+		this.cities = City.getCitiesOfCountry(countryCode)?.map(city => city.name) ?? [];
+
+    this.snackBar.open("Reset City List", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+
+    this.spinner.hide();
+	}
+
+  private _filterCountry(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.countries.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
+	private _filterCity(value: string): string[] {
+		const filterValue = value.toLowerCase();
+
+		return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+	}
+
   //image upload
   onselectFile(event: any) {
     const input = event.target as HTMLInputElement;
@@ -182,18 +258,14 @@ export class SeekerProfileEditComponent implements OnInit {
   onImageError() {
     this.propicUrl = this.fallbackImageUrl;
   }
+
   async ngOnInit() {
     this.spinner.show();
     try {
-      // Fetch all job fields
-      await this.jobFieldService.getAll().then((response) => {
-        this.fields = response;
-      });
-
+      this.fields = await this.jobFieldService.getAll();
       this.user_id = this.authService.getUserId();
-      // Fetch seeker profile data
       const seeker = await this.seekerService.getSeekerEditProfile(this.user_id);
-      // Populate the form with the fetched data
+  
       this.seekerForm.patchValue({
         first_name: seeker.first_name,
         last_name: seeker.last_name,
@@ -207,100 +279,101 @@ export class SeekerProfileEditComponent implements OnInit {
         field_id: seeker.field_id,
         password: '',
         seekerSkills: seeker.seekerSkills || [],
+        country: seeker.country,
+        city: seeker.city
       });
-      this.propicUrl = seeker.profile_picture;
-      this.cVurl = seeker.cVurl; // Save the CV URL
+  
+      this.propicUrl = seeker.profile_picture || this.defaultImageUrl;
+      this.cVurl = seeker.cVurl;
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
       this.hasDataLoaded = true;
+      this.countries = Country.getAllCountries().map(country => country.name);
+      this.locationCountryControl.setValue(seeker.country);
+      this.onSelectedCountryChanged(seeker.country);
+      this.locationCityControl.setValue(seeker.city);
     } catch (error) {
-      console.error(error);
-      this.snackBar.open('Failed to load profile details', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open('Failed to load profile details', '', { panelClass: ['app-notification-error'], duration: 3000 });
     } finally {
       this.spinner.hide();
     }
   }
-
+  
   ngAfterViewInit() {
     if (this.addSkillsComponent && this.addSkillsComponent.skills) {
       this.skills = this.removeDuplicates(this.addSkillsComponent.skills);
       this.seekerForm.get('seekerSkills')?.setValue(this.skills);
     }
   }
-
   
-
   async onSubmit() {
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
-      return;
-    }
-
-    await this.updateProfile();
-  }
-
-  async updateProfile() {
-    if (this.seekerForm.invalid) {
-      this.seekerForm.markAllAsTouched();
-      this.snackBar.open('Please fill in all required fields', 'Close', {
+      this.snackBar.open('Please fill in all required fields', '', {
+        panelClass: ['app-notification-error'],
         duration: 3000,
       });
       return;
     }
-
+  
+    await this.updateProfile();
+  }
+  
+  async updateProfile() {
+    if (this.seekerForm.invalid) {
+      this.seekerForm.markAllAsTouched();
+      this.snackBar.open('Please fill in all required fields', '', {
+        panelClass: ['app-notification-error'],
+        duration: 3000,
+      });
+      return;
+    }
+  
     this.spinner.show();
     try {
       const formValue: SeekerProfile = { ...this.seekerForm.value };
       formValue.seekerSkills = this.removeDuplicates(this.skills);
-      //formValue.seekerSkills = this.manageSkills(this.addSkillsComponent.skills); // Handle skills
-
+  
       const formData = new FormData();
-      formData.append('email', formValue.email);
-      formData.append('first_name', formValue.first_name);
-      formData.append('last_name', formValue.last_name);
-      formData.append('phone_number', formValue.phone_number.toString());
-      formData.append('bio', formValue.bio);
-      formData.append('description', formValue.description);
-      formData.append('university', formValue.university || '');
-      formData.append('CVurl', formValue.cVurl || '');
-      formData.append('profile_picture', formValue.profile_picture || '');
-      formData.append('linkedin', formValue.linkedin || '');
-      formData.append('field_id', formValue.field_id.toString());
-      
-       // Append each skill individually
-    if (formValue.seekerSkills) {
-      formValue.seekerSkills.forEach(skill => formData.append('seekerSkills', skill));
-    }
-
-    if (formValue.password) {
-      formData.append('password', formValue.password);
-    }
-
+      Object.keys(formValue).forEach((key) => {
+        const value = (formValue as any)[key];
+        if (value) {
+          if (key === 'seekerSkills' && Array.isArray(value)) {
+            value.forEach((skill: string) => formData.append('seekerSkills', skill));
+          } else {
+            formData.append(key, value);
+          }
+        }
+      });
+  
       if (this.selectedFile) {
         formData.append('cvFile', this.selectedFile);
       }
-
+  
       if (this.selectedimage) {
         formData.append('profilePictureFile', this.selectedimage);
       }
   
+      // Ensure country and city are appended to formData
+      formData.append('country', this.seekerForm.get('country')?.value);
+      formData.append('city', this.seekerForm.get('city')?.value);
   
       await this.seekerService.editSeeker(formData, this.user_id);
-      this.snackBar.open('Profile updated successfully', 'Close', {
+      this.snackBar.open('Profile updated successfully', '', {
+        panelClass: ['app-notification-normal'],
         duration: 2000,
       });
     } catch (error) {
-      console.error('Error updating profile: ', error);
-      this.snackBar.open('Failed to update profile', 'Close', {
+      this.snackBar.open('Failed to update profile', '', {
+        panelClass: ['app-notification-error'],
         duration: 3000,
       });
     } finally {
       this.spinner.hide();
     }
   }
-
+  
+  
   showInformEmailShouldBeVerifiedPopUp() {
     const dialogRef = this.dialog.open(InformEmailShouldBeVerifiedPopUp);
     dialogRef.afterClosed().subscribe((result) => {
@@ -311,37 +384,32 @@ export class SeekerProfileEditComponent implements OnInit {
       }
     });
   }
-
+  
   openDialog(): void {
     const dialogRef = this.dialog.open(SeekerEmailVerificationBoxComponent, {
-      width: '450px',
-      height: '100px',
+      width: '100%',
+      maxWidth: '400px',
+      height: 'auto',
       data: { email: this.seekerForm.get('email')?.value },
     });
-
+  
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.verified) {
         this.isConfirmedToChangeEmail = true;
         this.seekerForm.get('email')?.setValue(result.emailAddress);
         this.emailcaptured = result.emailAddress;
-        this.emailReadOnly = true; // Freeze email editing after updating
-        this.snackBar.open('Email verified successfully', 'Close', {
-          duration: 2000,
-        });
+        this.emailReadOnly = true;
+        this.snackBar.open('Email verified successfully', '', { panelClass: ['app-notification-normal'], duration: 2000 });
       } else {
-        this.snackBar.open('Email verification failed', '', {
-          panelClass: ['app-notification-error'],
-          duration: 3000,
-        });
+        this.snackBar.open('Email verification failed', '', { panelClass: ['app-notification-error'], duration: 3000 });
       }
     });
   }
-
+  
   revertEmailChange() {
-    // Revert the email field to the original value
     this.seekerForm.get('email')?.setValue(this.emailcaptured);
   }
-
+  
   async discardChanges() {
     this.spinner.show();
     try {
@@ -357,25 +425,23 @@ export class SeekerProfileEditComponent implements OnInit {
         cVurl: seeker.cVurl,
         linkedin: seeker.linkedin,
         field_id: seeker.field_id,
-        password: '', // Reset the password field
+        password: '',
         seekerSkills: seeker.seekerSkills || [],
+        country: seeker.country,
+        city: seeker.city
       });
       this.propicUrl = seeker.profile_picture;
       this.cVurl = seeker.cVurl;
       this.skills = this.removeDuplicates(seeker.seekerSkills || []);
       this.emailcaptured = seeker.email;
-      this.snackBar.open('Changes discarded', 'Close', { duration: 2000 });
+      this.snackBar.open('Changes discarded', '', { panelClass: ['app-notification-normal'], duration: 2000 });
     } catch (error) {
-      console.error('Failed to discard changes', error);
-      this.snackBar.open('Failed to discard changes', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open('Failed to discard changes', '', { panelClass: ['app-notification-error'], duration: 3000 });
     } finally {
       this.spinner.hide();
     }
   }
   
-
   async deleteAccount() {
     const dialogRef = this.dialog.open(ConfirmDeleteProfilePopUp);
     dialogRef.afterClosed().subscribe(async (result) => {
@@ -383,12 +449,13 @@ export class SeekerProfileEditComponent implements OnInit {
         this.spinner.show();
         try {
           await this.seekerService.deleteSeeker(this.user_id);
-          this.snackBar.open('Profile deleted successfully', 'Close', {
+          this.snackBar.open('Profile deleted successfully', '', {
+            panelClass: ['app-notification-normal'],
             duration: 2000,
           });
         } catch (error) {
-          console.error('Error deleting profile: ', error);
-          this.snackBar.open('Failed to delete profile', 'Close', {
+          this.snackBar.open('Failed to delete profile', '', {
+            panelClass: ['app-notification-error'],
             duration: 3000,
           });
         } finally {
@@ -397,114 +464,84 @@ export class SeekerProfileEditComponent implements OnInit {
       }
     });
   }
-
-  //Skill Handling
-
+  
   changeSkillsArray($event: Event) {
-    var skills = $event;
-    if (skills != null) {
-      let skillArray = skills as unknown as string[];
-      this.skills = this.removeDuplicates(skillArray);
-    }
+    const skills = $event as unknown as string[];
+    this.skills = this.removeDuplicates(skills);
   }
-
+  
   onSkillsChange(skills: string[]) {
     this.skills = this.removeDuplicates(skills);
     this.seekerForm.get('seekerSkills')?.setValue(this.skills);
   }
-
+  
   removeDuplicates(arr: string[]) {
-    let uniqueArr = Array.from(new Set(arr));
-
-    if (uniqueArr.length != arr.length) {
-      this.snackBar
-        .open('Removed Duplicate Keywords and Skills', '', {
-          panelClass: ['app-notification-warning'],
-        })
-        ._dismissAfter(3000);
+    const uniqueArr = Array.from(new Set(arr));
+    if (uniqueArr.length !== arr.length) {
+      this.snackBar.open('Removed Duplicate Keywords and Skills', '', { panelClass: ['app-notification-warning'], duration: 3000 });
     }
-
     return uniqueArr;
   }
-
-  private manageSkills(newSkills: string[] | null): string[] {
-    let currentSkills = this.seekerForm.get('seekerSkills')?.value || [];
-  
-    if (newSkills) {
-      currentSkills = [...currentSkills, ...newSkills];
-    }
-  
-    return this.removeDuplicates(currentSkills);
-  }
-
   
   phoneNumberErrorMessage() {
-    if (this.seekerForm.get('phone_number')?.hasError('required')) {
+    const control = this.seekerForm.get('phone_number');
+    if (control?.hasError('required')) {
       return 'Phone number is required';
     }
-    if (this.seekerForm.get('phone_number')?.hasError('pattern')) {
+    if (control?.hasError('pattern')) {
       return 'Phone number is invalid';
     }
     return '';
   }
-
+  
   emailErrorMessage() {
-    if (this.seekerForm.get('email')?.hasError('required')) {
+    const control = this.seekerForm.get('email');
+    if (control?.hasError('required')) {
       return 'Email is required';
     }
-    if (this.seekerForm.get('email')?.hasError('email')) {
+    if (control?.hasError('email')) {
       return 'Email is invalid';
     }
     return '';
   }
-
+  
   seekerNameErrorMessage() {
-    if (this.seekerForm.get('first_name')?.hasError('required')) {
+    const firstNameControl = this.seekerForm.get('first_name');
+    const lastNameControl = this.seekerForm.get('last_name');
+    if (firstNameControl?.hasError('required')) {
       return 'First name is required';
     }
-    if (this.seekerForm.get('last_name')?.hasError('required')) {
+    if (lastNameControl?.hasError('required')) {
       return 'Last name is required';
     }
     return '';
   }
-
+  
   descriptionErrorMessage() {
-    if (this.seekerForm.get('description')?.hasError('required')) {
+    const control = this.seekerForm.get('description');
+    if (control?.hasError('required')) {
       return 'Description is required';
     }
     return '';
   }
-
+  
   bioErrorMessage() {
-    if (this.seekerForm.get('bio')?.hasError('required')) {
+    const control = this.seekerForm.get('bio');
+    if (control?.hasError('required')) {
       return 'Bio is required';
     }
     return '';
   }
-
-  universityErrorMessage() {
-    if (this.seekerForm.get('university')?.hasError('required')) {
-      return 'University is required';
-    }
-    return '';
-  }
-
+  
   fieldErrorMessage() {
-    if (this.seekerForm.get('field_id')?.hasError('required')) {
+    const control = this.seekerForm.get('field_id');
+    if (control?.hasError('required')) {
       return 'Field is required';
     }
     return '';
   }
-
-  // passwordErrorMessage() {
-  //   if (this.seekerForm.get('password')?.hasError('required')) {
-  //     return 'Password is required';
-  //   }
-  //   return '';
-  // }
-
+  
   getErrorMessage(formControlName: string): string {
-    //To get error message for a given form control
     const control = this.seekerForm.get(formControlName);
     if (control?.hasError('required')) {
       return `${formControlName.replace('_', ' ')} is required`;
@@ -512,59 +549,44 @@ export class SeekerProfileEditComponent implements OnInit {
     if (control?.hasError('email')) {
       return 'Email is invalid';
     }
-    if (control?.hasError('pattern')) {
-      if (formControlName === 'phone_number') {
-        return 'Phone number is invalid';
-      }
+    if (control?.hasError('pattern') && formControlName === 'phone_number') {
+      return 'Phone number is invalid';
     }
     return '';
   }
-
+  
   hasError(formControlName: string): boolean {
     const control = this.seekerForm.get(formControlName);
-    return control
-      ? control.invalid && (control.dirty || control.touched)
-      : false;
+    return control ? control.invalid && (control.dirty || control.touched) : false;
   }
-
+  
   onCvSelected(file: File) {
     this.seekerDetails.cvFile = file;
   }
-
+  
   openPdfViewer() {
     if (this.cVurl) {
-      this.dialog.open(PdfViewComponent, {
-        data: { documentUrl: this.cVurl },
-      });
+      this.dialog.open(PdfViewComponent, { data: { documentUrl: this.cVurl } });
     } else {
-      this.snackBar.open('No CV available to view', 'Close', {
-        duration: 3000,
-      });
+      this.snackBar.open('No CV available to view', '', { panelClass: ['app-notification-warning'], duration: 3000 });
     }
   }
-
-  openUploadDialog(): void {
-    const dialogRef = this.dialog.open(UploadCV, {
-    });
-
+  
+  openUploadDialog() {
+    const dialogRef = this.dialog.open(UploadCV);
     dialogRef.componentInstance.fileSelected.subscribe((file: File) => {
       this.selectedFile = file;
-      this.seekerForm.patchValue({
-        //cvFile: file,
-      });
-      this.disableViewButton = true; // Disable view button when a new file is selected
+      this.disableViewButton = true;
     });
-
+  
     dialogRef.afterClosed().subscribe(() => {
       if (this.selectedFile) {
-        this.snackBar.open('File uploaded successfully', 'Close', {
-          duration: 2000,
-        });
+        this.snackBar.open('File uploaded successfully', '', { panelClass: ['app-notification-normal'], duration: 2000 });
       }
     });
   }
 }
-
+  
 // cannot-submit-without-all-inputs-are-valid-pop-up
 @Component({
   selector: 'cannot-submit-without-all-inputs-are-valid-pop-up',
@@ -647,7 +669,6 @@ export class ConfirmDeleteProfilePopUp {
 @Component({
   selector: 'app-upload-cv',
   templateUrl: 'upload-cv.html',
-  styleUrls: ['upload-cv.css'],
   standalone: true,
   imports: [
     MatIconModule,
@@ -674,7 +695,6 @@ export class UploadCV {
         this.uploadSuccess = true;
         this.fileSelected.emit(file);
       } catch (error) {
-        console.error('Error uploading file: ', error);
       } finally {
         this.uploadInProgress = false;
       }

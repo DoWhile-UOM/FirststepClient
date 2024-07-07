@@ -9,9 +9,43 @@
     justify-content: center;
 }
 
+.filter-job-button{
+    max-width: 94%;
+    display: flex;
+    justify-content: end;
+    margin: 0 auto;
+}
+
+.filter-job-button-main mat-icon{
+    font-size: small;
+    padding-bottom: 0.05em;
+}
+
+.menu-container{
+    margin-top: 0.25em !important;
+}
+
+.suggestion{
+    font-size: medium;
+    font-weight: 700;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.suggestion-des{
+    padding: 0;
+    margin: 0;
+    font-size: small !important;
+    font-weight: 400 !important;
+}
+
+mat-divider{
+    margin: 0.5em !important;
+}
+
 .container{
-    margin-top: 1em;
-    padding: 1.5em;
+    margin-top: 1.5em;
+    padding: 0.5em;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -90,4 +124,74 @@ mat-icon{
 
 .advance-search-field-name{
     font-size: larger;
+}
+
+.searchBtn-mobile{
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .search-card{
+        max-width: 100%;
+        margin: 1.7em;
+        margin-bottom: 1.5em;
+    }   
+
+    .searchBtn{
+        display: none;
+    }
+    
+    .searchBtn-mobile{
+        display: block;
+        padding: 0.75em;
+    }
+
+    .searchBtn-mobile button{
+        width: 100%;
+    }
+
+    .container{
+        margin-top: 0em;
+        padding: 0em;
+        flex-direction: column;
+        height: 15em;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .advance-search-section{
+        flex-direction: column;
+    }
+
+    .advance-search-field{
+        width: 100% !important;
+    }
+
+    mat-chip-listbox{
+        margin-bottom: 1em;
+    }
+
+    .search-element{
+        padding-left: 0em;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .advance-search-field-name{
+        font-size: medium;
+    }
+
+    .advance-search-title{
+        margin-bottom: 0.1em;
+    }
+
+    .title{
+        width: 100%;
+        margin-top: 0em;
+        margin-left: 0em;
+        margin-right: 0em;
+    }
 }

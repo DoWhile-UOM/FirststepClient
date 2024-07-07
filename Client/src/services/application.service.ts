@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, booleanAttribute } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
-import { A } from '@angular/cdk/keycodes';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
 
 interface interview{
   application_id:number;
@@ -15,21 +13,57 @@ interface interview{
 export class ApplicationService {
   constructor(private snackbar: MatSnackBar) {}
 
-  async submitSeekerApplication(applicationData: FormData): Promise<void> {
-    try {
-      const response = await axios.post(
-        Apipaths.submitApplication,
-        applicationData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+  async submitSeekerApplication(applicationData: FormData): Promise<boolean> {
+    let response = false;
+
+    await axios.post(
+      Apipaths.submitApplication,
+      applicationData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    ).then(function (res) {
+      response = true;
+    })
+    .catch(
+      (error) => {
+        if (error.response.status == 409) {
+          this.snackbar.open("Can't Resubmit an application", "",{panelClass: ['app-notification-warning']})._dismissAfter(5000);
         }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error submiting application: ', error);
-    }
+        else {
+          this.snackbar.open("Error occurred submitting application :" + error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+        response = false;
+      }
+    );
+
+    return response;
+  }
+
+  async resubmitSeekerApplication(applicationData: FormData): Promise<boolean> {
+    let response = false;
+
+    await axios.put(
+      Apipaths.resubmitApplication,
+      applicationData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    ).then(function (res) {
+      response = true;
+    })
+    .catch(
+      (error) => {
+        this.snackbar.open("Error occurred submitting application :" + error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        response = false;
+      }
+    );
+
+    return response;
   }
 
   async changeAssignedHRA(application_id: number, hra_id: number) {
@@ -43,7 +77,7 @@ export class ApplicationService {
       )
       .then((response) => {
         this.snackbar
-          .open('Sucessfully Change HR Assistant!', '', {
+          .open('Sucessfully Change Talent Acquisition Specialist!', '', {
             panelClass: ['app-notification-normal'],
           })
           ._dismissAfter(3000);
@@ -157,7 +191,6 @@ export class ApplicationService {
     return shortlistedApplications;
   }
 
-
   async setToInterview(interview: interview): Promise<void>{
     await axios
       .patch(Apipaths.setToInterview, interview)
@@ -167,6 +200,16 @@ export class ApplicationService {
       .catch((error) => {
         console.error('Error setting interview:', error);
       });
+  }
 
+  async delegateTask(jobID: number, hraIds: string): Promise<void> {
+    const url = `${Apipaths.delegateTask}jobID=${jobID}/hra_id_list=${hraIds}`;
+    await axios.patch(url, {})
+      .then(() => {
+        this.snackbar.open('Tasks assigned successfully.', '', { panelClass: ['app-notification-success'] })._dismissAfter(3000);
+      })
+      .catch((error) => {
+        this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
+      });
   }
 }

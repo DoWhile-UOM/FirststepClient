@@ -1,7 +1,6 @@
 .body {
   padding: 3em;
   width: 60%;
-  min-width: 400px;
   margin: 0 auto;
 }
 
@@ -10,31 +9,28 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.form-container {
-  margin-top: 2em;
-}
-
-.tile {
+.profile-section {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  margin-bottom: 2em;
 }
 
 .profile-container {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .profile-image {
   display: block;
-  margin-right: 20px; /* Adjust this value as needed */
+  margin-bottom: 10px;
 }
 
 .edit-container {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .edit-button {
@@ -47,7 +43,7 @@
 .edit {
   color: #008080;
   cursor: pointer;
-  margin-right: 5px; /* Space between icon and text */
+  margin-right: 5px;
 }
 
 .custom-file-upload mat-icon {
@@ -56,7 +52,7 @@
 
 mat-grid-tile mat-form-field {
   width: 100%;
-  margin: 0.75em;
+  margin: 0.75em 0;
 }
 
 mat-grid-tile {
@@ -83,6 +79,20 @@ mat-grid-tile {
   padding-top: 1em;
 }
 
+.email-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.email-form-field {
+  flex: 0 0 65%;
+}
+
+.change-email-button {
+  flex: 0 0 40%;
+}
+
 mat-form-field {
   width: 100%;
   height: 60px;
@@ -91,183 +101,77 @@ mat-form-field {
   margin-bottom: 1.5em;
 }
 
-.right-btn,
-.left-btn {
-  width: 100%;
-}
-
-.left-btn {
-  justify-content: flex-start;
-}
-
-.button-section,
-.right-btn {
-  display: block;
-}
-
-.button-section {
+.button-with-inputbox {
   display: flex;
-  margin-top: 40px;
-}
-
-.right-btn {
-  justify-content: flex-start;
-  width: 50%;
-  display: flex;
-  padding: 5px;
-}
-
-.left-btn {
-  justify-content: flex-end;
-  width: 50%;
-  display: flex;
-}
-
-button {
-  width: 25%;
-}
-
-.apply-changes,
-.discard-changes,
-.delete-account {
-  font-weight: 400;
-}
-
-.apply-changes-class {
-  background-color: #008080;
-  color: #ffffff;
-  border-width: 1px;
-  border-style: none;
-  outline: none;
-  border-radius: 5px;
-  border-color: #008080;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding: 10px;
-  margin-right: 10px;
-}
-
-.discard-changes-class {
-  background-color: #ffffff;
-  color: #008080;
-  border-width: 1px;
-  border-style: solid;
-  outline: none;
-  border-radius: 5px;
-  border-color: #008080;
-  padding: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-.delete-account-class {
-  background-color: #d73434;
-  color: #ffffff;
-  border-width: 1px;
-  border-style: none;
-  outline: none;
-  border-radius: 5px;
-  padding: 2px 0;
-  padding: 10px;
-}
-
-.container-otp {
-  display: flex;
-  flex-direction: column;
-}
-
-.example-button-row {
-  display: flex;
-  text-align: center;
   align-items: center;
-  margin-left: 10px;
-  margin-top: 25px;
-}
-
-.example-button-row .mat-mdc-button-base {
-  margin: 0px 8px 8px 0;
-}
-
-.example-flex-container {
-  display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.example-button-container {
-  display: flex;
-  justify-content: space-between;
-  width: 150px;
-}
-
-.button-container {
-  margin-left: 10px;
-  margin-bottom: 20px;
-  margin-top: 30px;
-  gap: 10px;
 }
 
 .button-with-inputbox mat-form-field {
-  width: 65%;
+  width: 70%;
+  margin-bottom: 0.5em;
 }
 
 .button-with-inputbox button {
-  width: 35%;
-  padding: 5px;
-  margin-right: 5px;
-  margin-top: 1.5em;
-  height: 3.5em;
+  width: auto;
+  height: auto;
+  padding: 0.5em 1em;
+  margin-left: 1em;
 }
 
 .textbox-form-field {
   position: relative;
-  width: calc(100% - 2.2em);
+  width: calc(100%);
   margin: 2rem auto 0 auto;
-}
-
-.imageLoading {
-  width: 50px !important;
-  margin: 0 auto;
-  display: block;
-}
-
-mat-error {
-  position: absolute;
-  bottom: -1.5em;
-  left: 0;
-  width: 100%;
-  font-size: 12px;
-  color: red;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between;
-  width: 30%;
-  gap: 10px;
+  justify-content: center;
   margin-top: 20px;
+  margin-bottom: 20px;
+  gap: 20px;
 }
 
-button {
+.button {
   flex: 1;
+  margin: 0 10px;
+  max-width: 150px;
+  overflow: hidden;
+  background-color: #008080;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 5px;
   padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.2;
 }
 
-.apply-changes-class,
-.discard-changes-class,
-.delete-account-class,
+.discard-button {
+  background-color: #e0e0e0;
+  color: #000000;
+}
+
+.delete-button {
+  background-color: #d32f2f;
+  color: #ffffff;
+}
+
+.button:hover, .discard-button:hover, .delete-button:hover {
+  cursor: pointer;
+  background-color: #006666;
+}
+
+.delete-button:hover {
+  background-color: #b71c1c;
+}
+
 .upload-cv-class,
 .view-cv-class {
   font-weight: 400;
   width: 100%;
-}
-
-.upload-cv-class,
-.view-cv-class {
   background-color: #008080;
   color: #ffffff;
   border: none;
@@ -281,4 +185,88 @@ button {
 .view-cv-class:hover {
   cursor: pointer;
   background-color: #006666;
+}
+
+.example-button-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.des{
+  margin-top: 1em;
+  padding-bottom: 1em;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .body {
+    width: 100%;
+    padding: 0em;
+    margin: 0;
+  }
+
+  .sectionHeading {
+    font-size: 20px;
+    margin: 3em 0.5em 2em 0.5em;
+  }
+
+  .card {
+    padding: 1.5em;
+    padding-top: 2em;
+    margin: 0;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .description-text-editor {
+    padding-left: 0.5em;
+    width: calc(100% - 1em);
+  }
+
+  mat-grid-tile mat-form-field {
+    margin: 0.5em 0;
+  }
+
+  .example-button-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+  }
+
+  .example-button-row button{
+    height: 3.5;
+  }
+
+  .example-button-row .mat-mdc-button-base {
+    width: 100%;
+    margin: 0.5em 0;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+  }
+
+  .button {
+    flex: 1;
+    margin: 0 10px;
+    max-width: 200px;
+  }
+
+  .button-with-inputbox mat-form-field {
+    width: 100%;
+    margin-bottom: 0.5em;
+  }
+
+  .button-with-inputbox button {
+    width: 100%;
+  }  
 }

@@ -1,22 +1,6 @@
-<!-----
-<form [formGroup]="loginForm">
-    <input type="email" formControlName="email" placeholder="Email">
-    <input type="password" formControlName="password" placeholder="Password">
-    <button type="submit" [disabled]="!loginForm.valid" (click)="onLogin()">Submit</button>
-</form>
---->
-
-<!---<input matInput class="email-field" placeholder="Enter your Email" [(ngModel)]="loginObj.email" name="email" required />
-
-<input matInput class="password-field" [(ngModel)]="loginObj.password" name="password" required />
-
-<button mat-button class="login" (click)="onLogin()">
-    <span class="Login-btn-name">Login</span>
-</button>-->
-
-<!-- <app-nav-bar></app-nav-bar> -->
+<div class="page"></div>
 <div class="body">
-    <div class="title"><span>Login to FirstStep</span></div>
+    <div class="title"><span>Login to FirstStep Account</span></div>
     <div class="card" fxLayout="column" fxLayout.lt-md="column wrap" fxLayoutGap="20px">
         <mat-card class="body-card">
             <mat-card-content>
@@ -38,15 +22,17 @@
                     </mat-form-field>
 
                     <div class="forgot-password">Forgot your password?
-                        <a href="forgotPassword" class="reset">Reset</a>
+                        <a href="Recovery" class="reset">Reset</a>
                     </div>
                     <button mat-button class="login" [disabled]="!loginForm.valid" (click)="onLogin()">
                         <span class="Login-btn-name">Login</span>
                     </button>
 
-                    <div class="SignUp">New here? <a href="forgotPassword" class="signUp">signUp</a></div>
+                    <div class="SignUp">New here? <a href="signup" class="signUp">SignUp as a Seeker</a></div>
                 </form>
             </mat-card-content>
         </mat-card>
     </div>
 </div>
+
+<app-spinner></app-spinner>

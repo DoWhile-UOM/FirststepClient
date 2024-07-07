@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider'; 
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -7,11 +7,9 @@ import { CommonModule } from '@angular/common';
 import { AdvertisementCardComponent } from '../advertisement-card/advertisement-card.component';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DocumentService } from '../../../services/document.service';
 import { AuthService } from '../../../services/auth.service';
 import { CompanyService } from '../../../services/company.service';
 
@@ -29,6 +27,7 @@ interface Job {
   posted_date: string;
   is_saved: boolean;
   is_expired: boolean;
+  can_apply: boolean;
 }
 
 interface Ad_List{
@@ -69,6 +68,7 @@ export class CompanyProfileComponent {
   bussinessScale: any = [];
 
   seekerID: number = 0;
+  screenWidth: number = 0;
 
   constructor(
     private advertisementService: AdvertisementServices, 
@@ -77,6 +77,7 @@ export class CompanyProfileComponent {
     private spinner: NgxSpinnerService,
     private auth: AuthService) { 
       this.bussinessScale = CompanyService.BusinessScales;
+      this.getScreenSize()
   }
 
   paginatorLength = 10;
@@ -105,16 +106,13 @@ export class CompanyProfileComponent {
         this.company.company_business_scale = this.bussinessScale.find((x: any) => x.value == this.company.company_business_scale)?.name ?? '';
         
         if (this.company.company_logo == ""){
-          // sample company logo
           this.company.company_logo = "../../../assets/Img.png";
         }
 
-        //this.jobList = this.company.advertisementUnderCompany;
+        this.paginatorLength = this.company.companyAdvertisements.allAdvertisementIds.length;
 
         if (this.jobList.length == 0) {
-          // no advertisements found under the company id
-          // something went wrong
-          console.log("No advertisements found");
+          this.router.navigate(['notfound']);
         }
       })
       .catch((error) => {
@@ -149,5 +147,13 @@ export class CompanyProfileComponent {
 
   goBack() {
     window.history.back();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?: undefined) {
+    try{
+      this.screenWidth = window.innerWidth;
+    }
+    catch {}
   }
 }

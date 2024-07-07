@@ -68,12 +68,11 @@ mat-dialog-content{
     margin-bottom: 2.5em;
     font-family: Lato;
     color: black !important;
-    /*increase the font size by 5points*/
-    
 }
 
-.skill-set{
-    margin-top: 1em;
+.skill-set-title{
+    margin-top: 1.25em;
+    margin-bottom: 0.5em;
 }
 
 .heading {
@@ -94,7 +93,7 @@ mat-dialog-content{
     margin-top: 0.25em;
 }
 
-.skill-chip{
+.skill-chip, .skill-chip-dis{
     background-color: #0a9a8d;
     color: white;
     padding: 0.6em 1em;
@@ -104,14 +103,82 @@ mat-dialog-content{
     margin-bottom: 0.5em;
 }
 
+.skill-chip-dis{
+    background-color: #D0D0D0;
+    color: black;
+}
+
 .skill-set{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 2em;
+}
+
+.skill-list{
+    margin-bottom: 1em;
 }
 
 .apply-button{
     width: 12.5em;
     margin-top: 1em;
+}
+
+.close-button{
+    margin-top: 1em;
+    margin-left: 1.5em;
+}
+
+@media screen and (max-width: 768px) {
+    mat-card{
+        padding: 1.5%;
+    }
+
+    .detail{
+        flex-direction: column;
+        width: 99%;
+    }
+
+    .detail-outer, .detail-outer-left{
+        width: 99%;
+    }
+
+    .detail-head-left {
+        width: 8em;
+    }
+
+    .detail-inner{
+        padding: 6px;
+        margin-bottom: 0px;
+    }
+
+    .detail-data {
+        font-size: 15px;
+        padding-left: 0.75em;
+        width: 10em;
+    }
+
+    .detail-head, .detail-head-left{
+        font-size: 15px;
+    }
+
+    .full-width-dialog .mat-dialog-container {
+        max-width: 45% !important;
+    }
+
+    .skill-chip{
+        padding: 0.4em 0.8em;
+        margin-right: 0.8em;
+        border-radius: 15px;
+        font-size: 12px;
+    }
+
+    .apply-button{
+        width: 10em;
+        font-size: medium;
+        margin-top: 0.75em;
+    }
+    
+    .close-button{
+        margin-top: 0.75em;
+    }
 }

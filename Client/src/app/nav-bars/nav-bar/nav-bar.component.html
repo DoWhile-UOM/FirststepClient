@@ -1,15 +1,15 @@
 <mat-toolbar class="nav-bar mat-elevation-z4">
   <span>
-    <a routerLink="/">
+    <a routerLink="/home">
       <img src="assets/images/logo.png" alt="Logo" class="logo">
     </a>
   </span>
-  <span>FirstStep</span>
+  <span class="logo-name">FirstStep</span>
   <span class="flex-spacer"></span>
   <div class="right-buttons">
-    <a routerLink="/seeker/home" routerLinkActive="active">Search</a>
-    <a routerLink="/seeker/liked" routerLinkActive="active">Saved List</a>
-    <a routerLink="/seeker/applied" routerLinkActive="active">Applications</a>
+    <a routerLink="/seeker/home" *ngIf="screenWidth >= 768" routerLinkActive="active">Search</a>
+    <a routerLink="/seeker/liked" *ngIf="screenWidth >= 768" routerLinkActive="active">Saved List</a>
+    <a routerLink="/seeker/applied" *ngIf="screenWidth >= 768" routerLinkActive="active">Applications</a>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="medium-icon-button">
       <mat-icon>menu</mat-icon>
     </button>
@@ -23,7 +23,19 @@
         </div>
       </span>
       <hr>
-      <button mat-menu-item (click)="onProfileClick()">
+      <button mat-menu-item (click)="onClick('/seeker/home')" *ngIf="screenWidth < 768">
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-magnifying-glass"></i></mat-icon>
+        <span>Search</span>
+      </button>
+      <button mat-menu-item (click)="onClick('/seeker/liked')" *ngIf="screenWidth < 768">
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-bookmark"></i></mat-icon>
+        <span>Saved List</span>
+      </button>
+      <button mat-menu-item (click)="onClick('/seeker/applied')" *ngIf="screenWidth < 768">
+        <mat-icon class="medium-mat-icon"><i class="fa-solid fa-paper-plane"></i></mat-icon>
+        <span>Applications</span>
+      </button>
+      <button mat-menu-item (click)="onClick('seeker/profile-edit')">
         <mat-icon class="medium-mat-icon"><i class="fa-solid fa-user-gear"></i></mat-icon>
         <span>My Profile</span>
       </button>

@@ -31,7 +31,6 @@ export class LoginComponent {
     private userStore: UserStoreService,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar){
-
   }
 
   loginForm = new FormGroup({
@@ -45,8 +44,6 @@ export class LoginComponent {
     (await this.auth.login(this.loginForm.value))
     .subscribe({
       next:async (res)=>{
-        //this.auth.storeToken(res.token)
-        this.loginForm.reset();
         this.auth.storeToken(res.accessToken);
         this.auth.storeRefreshToken(res.refreshToken);
 
@@ -55,13 +52,6 @@ export class LoginComponent {
         this.userStore.setFullNameForStore(tokenPayload.unique_name);
         this.userStore.setRoleForStore(tokenPayload.role);
         
-        //this.toast.success({detail:"SUCCESS", summary:res.message, duration: 5000});
-
-        if (tokenPayload.role == "seeker") {
-          this.snackBar.open("We need to access to your location informations for better job recommendation for you!", "", {panelClass: ['app-notification-warning']})._dismissAfter(5000);
-          await this.auth.getLocation();
-        }
-
         this.spinner.hide();
         this.router.navigate(['/' + tokenPayload.role]);
       },

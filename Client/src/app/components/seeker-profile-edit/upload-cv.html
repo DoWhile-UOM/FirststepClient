@@ -1,16 +1,19 @@
-<div class="fileupload">
-  <div id="Documentsubmissioncontainer" class="formchild">
+<div class="fileupload" style="padding: 20px; text-align: center;">
+  <h2 style="margin-bottom: 20px; color: teal; font-size: 15px;">Upload your new CV here</h2>
+  <div id="Documentsubmissioncontainer" class="formchild" style="padding: 20px; display: flex; flex-direction: column; align-items: center; border: 1px solid #a9a9a9; border-radius: 8px; background: #f9f9f9; margin-bottom: 20px;">
     <input type="file" #file style="display: none" (change)="onFileSelected($event)" />
-    <span class="spanicon"><mat-icon class="uploadicon">upload</mat-icon></span>
-    <button mat-stroked-button (click)="file.click()">Upload Document</button>
+    <span class="spanicon" style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+      <mat-icon class="uploadicon">upload</mat-icon>
+    </span>
+    <button mat-stroked-button (click)="file.click()" style="margin-bottom: 10px;">Upload Document</button>
   </div>
-  <div *ngIf="uploadInProgress" class="spinner">
+  <div *ngIf="uploadInProgress" class="spinner" style="margin-top: 10px;">
     <mat-spinner diameter="30"></mat-spinner>
   </div>
-  <div *ngIf="uploadSuccess" class="success-message">
+  <div *ngIf="uploadSuccess" class="success-message" style="margin-top: 10px; color: #008080;">
     File uploaded successfully!
   </div>
 </div>
-<div class="dialog-actions">
+<div class="dialog-actions" style="display: flex; justify-content: center; padding: 10px;">
   <button mat-button (click)="closeDialog()">Close</button>
 </div>
