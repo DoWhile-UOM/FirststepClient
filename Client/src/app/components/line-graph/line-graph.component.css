@@ -3,4 +3,10 @@ canvasjs-chart {
     width: 100%;
     height: 400px; /* Adjust as needed */
   }
+
+  .nulljob{
+    text-align: center;
+    color: teal;
+
+  }
   
