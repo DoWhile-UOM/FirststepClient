@@ -136,7 +136,7 @@ export class ManageRolesComponent implements OnInit{
         company_id: this.company_id,
       },
     });
- //after dialog closed fetch the results
+    
     dialog.afterClosed().subscribe((result) => {
       if (result == true) {
         this.fetchData(this.selected);

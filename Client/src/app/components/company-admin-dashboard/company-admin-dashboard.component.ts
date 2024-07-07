@@ -13,6 +13,8 @@ import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { ApplicationService } from '../../../services/application.service';
 import { Router } from '@angular/router';
+import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Job {
   job_id: number;
@@ -56,20 +58,17 @@ export class CompanyAdminDashboardComponent implements OnInit {
   constructor(
     public advertisementServices: AdvertisementServices,
     public applicationService: ApplicationService,
+    private dialog: MatDialog,
     private router: Router,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     try {
-      this.authService.getRole();
-      this.authService.getCompanyID();
-      this.authService.getCompanyName();
       this.userName = this.authService.getName();
       this.companyID = this.authService.getCompanyID();
       this.fetchJobData();
     } catch (e) {
-      console.log(e);
     }
   }
 
@@ -95,17 +94,24 @@ export class CompanyAdminDashboardComponent implements OnInit {
       );
       this.applicationData = data;
     } catch (e) {
-      console.log(e);
     }
   }
 
   createJobAd() {
-    //route to create job ad page
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+    
     this.router.navigate(['ca/jobOfferList/newJob']);
-  
   }
 
   createRoleAccount() {
-   this.router.navigate(['ca/manageRoles']);
+    this.dialog.open(AddrolesPopupComponent, {
+      data: {
+        company_id: this.companyID,
+      },
+    });
   }
 }
