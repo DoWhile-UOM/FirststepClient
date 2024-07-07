@@ -62,11 +62,11 @@ export class DoughnutGraphStatusComponent implements OnInit {
 
   getColor(status: string): string {
     switch (status) {
-      case 'active': return 'red';
-      case 'hold': return 'green';
-      case 'interview': return 'orange';
-      case 'closed': return 'blue';
-      default: return 'black';
+      case 'active': return '#1DC9B7'; //teal
+      case 'hold': return '#00CCCC'; // light teal
+      case 'interview': return '#17A2B8'; // cyan
+      case 'closed': return '#0DCAF0'; // light blue
+      default: return '#574476'; //  purple (default)
     }
   }
 }

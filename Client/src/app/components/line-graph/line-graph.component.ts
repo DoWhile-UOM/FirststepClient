@@ -21,7 +21,7 @@ export class LineGraphComponent implements OnChanges{
 
   chartOptions: any = {
     axisX: {
-      title: "Day of the Week"
+      title: "Day of the Submission"
     },
     axisY: {
       title: "Number of Applications"

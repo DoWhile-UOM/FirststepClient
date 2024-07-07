@@ -5,6 +5,9 @@
   padding: 1rem;
 }
 
+h2{
+  text-align: center;
+}
 .header-content {
   display: flex;
   align-self: start;
@@ -17,6 +20,9 @@
 .greeting {
   display: flex;
   flex-direction: column;
+}
+.hlo{
+  font-weight: bold;
 }
 
 .main-content {

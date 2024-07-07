@@ -40,7 +40,7 @@ export class CompanyAdminDashboardComponent implements OnInit {
 
   public userName: string = '';
   jobData: Job[] = [];
-  companyID: string = '7';
+  companyID: string = '';
   applicationData: ApplicationData[] = [];
 
   constructor(public advertisementServices: AdvertisementServices,public applicationService:ApplicationService,private authService: AuthService) {}
@@ -51,6 +51,7 @@ export class CompanyAdminDashboardComponent implements OnInit {
         this.authService.getCompanyID();
         this.authService.getCompanyName();
         this.userName=this.authService.getName();
+        this.companyID=this.authService.getCompanyID();
       this.fetchJobData();
     } catch (e) {
       console.log(e);
