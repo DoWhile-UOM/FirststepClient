@@ -23,7 +23,7 @@ export class AppointmentService {
   async getSchedulesByDate(date: Date | string): Promise<AppointmentSchedule[]> {
     const formattedDate = typeof date === 'string' ? date : date.toISOString().split('T')[0];
     try {
-      const response = await axios.get(`https://localhost:7213/api/Appointment/GetByDate/${formattedDate}`);
+      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetByDate/${formattedDate}`);
       return response.data.map((schedule: any) => ({
         ...schedule,
         status: this.mapStatus(schedule.status), // Map enum to string
@@ -32,18 +32,15 @@ export class AppointmentService {
         end_time: schedule.end_time // Ensure end_time is included
       }));
     } catch (error) {
-      console.error("Network Error: " + error);
       throw error;
     }
   }
 
   async updateAppointmentStatus(appointmentId: number, status: string): Promise<void> {
     try {
-      await axios.patch(`https://localhost:7213/api/Appointment/UpdateStatus/appointment=${appointmentId}/status=${status}`);
-      this.snackbar.open('Status updated successfully', '', { duration: 3000 });
+      await axios.patch(Apipaths.baseUrl + `Appointment/UpdateStatus/appointment=${appointmentId}/status=${status}`);
     } catch (error) {
-      console.error("Network Error: " + error);
-      this.snackbar.open('Failed to update status', '', { duration: 3000 });
+      this.snackbar.open('Failed to update status', "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
       throw error;
     }
   }

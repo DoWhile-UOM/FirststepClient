@@ -1,4 +1,4 @@
-import { Injectable, booleanAttribute } from '@angular/core';
+import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
