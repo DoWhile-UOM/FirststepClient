@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import axios from 'axios';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { CompanyApplicationListComponent } from '../app/components/company-application-list/company-application-list.component';
 
 interface Company {
   company_id: number;
@@ -62,6 +64,10 @@ interface EligibleUnregisteredCompany {
 })
 
 export class CompanyService {
+  //to share the company list data between components
+  private companyListSource = new BehaviorSubject<CompanyList[]>([]);
+  currentCompanyList = this.companyListSource.asObservable();
+
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
   public static BusinessScales: any[] = [
@@ -187,6 +193,8 @@ export class CompanyService {
       const response = await axios.get(Apipaths.getAllComapanyList);
       companyList = response.data;
       console.log('company list was received');
+      // Update the BehaviorSubject with the new data
+      this.companyListSource.next(companyList);
     } catch (error) {
       this.snackBar.open('Error fetching company list', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
@@ -230,7 +238,7 @@ export class CompanyService {
         console.log('Network Error: ' + error);
       });
   }
-  
+
   async getEligibleUnregisteredCompanies() {
     let eligibleUnregisteredCompanies: EligibleUnregisteredCompany[] = [];
 
