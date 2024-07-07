@@ -18,6 +18,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AdvertisementServices } from '../../../services/advertisement.service';
+import { MatDividerModule } from '@angular/material/divider';
 
 interface IRecord{
   id:number;
@@ -33,7 +34,7 @@ interface IAppointmentDetails{
 @Component({
   selector: 'app-available-time-slot',
   standalone: true,
-  imports: [SpinnerComponent,ReactiveFormsModule, MatIcon, MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
+  imports: [SpinnerComponent, MatDividerModule, ReactiveFormsModule, MatIcon, MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
   providers: [],
   templateUrl: './available-time-slot.component.html',
   styleUrls: ['./available-time-slot.component.css']

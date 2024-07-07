@@ -4,8 +4,9 @@
             <mat-calendar ngSkipHydration [(selected)]="selectedDate"></mat-calendar>
 
             <p class="selected_date">Selected date: {{formattedDate}}</p>
+            <hr>
 
-            <div>
+            <div class="time-slot-input">
                 <mat-form-field appearance="outline">
                     <mat-label>Start Time</mat-label>
                     <input matInput [ngxTimepicker]="startTimepicker" [placeholder]="'HHmm'" #startTimepickerInput>

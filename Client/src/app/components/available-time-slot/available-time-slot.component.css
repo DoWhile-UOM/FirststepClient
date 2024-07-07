@@ -160,6 +160,15 @@
     justify-content: end;
 }
 
+.buttons-right-inside button{
+    width: 100%;
+    margin-bottom: 0.75em;
+}
+
+.calendar-sidenav button{
+    width: 100%;
+}
+
 .addtitle {
     color: #008080;
     font-size: 30px;
@@ -200,4 +209,8 @@ mat-form-field {
     font-weight: 600;
     font-size: large;
     color: #008080
+}
+
+.time-slot-input{
+    margin-top: 1.5em;
 }
