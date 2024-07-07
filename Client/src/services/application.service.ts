@@ -4,6 +4,11 @@ import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
+interface ApplicationStatusCount {
+  status: string;
+  count: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -188,5 +193,30 @@ export class ApplicationService {
       .catch((error) => {
         this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
+  }
+
+  
+  async getApplicationStatusCount(company_id: number): Promise<ApplicationStatusCount[]> {
+    try {
+      const response = await axios.get(Apipaths.getApplicationStatusCount + company_id);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching application status count:', error);
+      throw error;
+    }
+  }
+
+  async getApplicationCount(advertisement_id: number) {
+    let applicationCount: any = {};
+    await axios
+      .get(Apipaths.getApplicationCount + advertisement_id)
+      .then((response) => {
+        applicationCount = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching application count:', error);
+      });
+
+    return applicationCount;
   }
 }
