@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { ApplicationService } from '../../../services/application.service';
 import { ChangeDetectorRef } from '@angular/core';
@@ -18,11 +18,10 @@ interface ApplicationStatusCount {
 
 })
 export class DoughnutGraphStatusComponent implements OnInit {
-
+  @Input() companyId!: string;
   doughnutChartOptions: any;
   isLoading = true; // Flag to track loading state
-  company_id: number = 7;
-
+ 
   constructor(private applicationService: ApplicationService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
@@ -31,7 +30,7 @@ export class DoughnutGraphStatusComponent implements OnInit {
 
   async getApplicationStatusCount() {
     try {
-      const response: ApplicationStatusCount[] = await this.applicationService.getApplicationStatusCount(this.company_id);
+      const response: ApplicationStatusCount[] = await this.applicationService.getApplicationStatusCount(this.companyId);
       const datapoints = response.map((data: ApplicationStatusCount) => ({
         y: data.count,
         name: data.status,

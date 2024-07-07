@@ -211,7 +211,7 @@ export class ApplicationService {
   }
 
   
-  async getApplicationStatusCount(company_id: number): Promise<ApplicationStatusCount[]> {
+  async getApplicationStatusCount(company_id: string): Promise<ApplicationStatusCount[]> {
     try {
       const response = await axios.get(Apipaths.getApplicationStatusCount + company_id);
       return response.data;
