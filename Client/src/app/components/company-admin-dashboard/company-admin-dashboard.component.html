@@ -1,0 +1,58 @@
+<div class="dashboard-container">
+  <div class="header-content">
+    <div class="greeting">
+      <h1><span class="hlo">Hello, </span><span class="hlo">{{userName}}!</span></h1>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <mat-card class="card applications-card">
+      <div class="up-content">
+        <div class="app-title">
+          <h2>Applications for Job Advertisements</h2>
+        </div>
+        <div class="ad-menu">
+          <button mat-button [matMenuTriggerFor]="menu">
+            Job Title<mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <ng-container
+              *ngIf="jobData.length > 0; else noAdvertisements"
+            >
+              <button mat-menu-item *ngFor="let ad of jobData"  (click)="advertismentSelect(ad.job_id)">
+                {{ ad.job_title}}
+              </button></ng-container
+            >
+            <ng-template #noAdvertisements>
+              <button mat-menu-item disabled>No advertisements available</button>
+            </ng-template>
+          </mat-menu>
+        </div>
+      </div>
+
+      <app-line-graph [applicationData]="applicationData"></app-line-graph>
+    </mat-card>
+
+    <mat-card class="card status-card">
+      <h2>Application By Status</h2>
+      <app-doughnut-graph-status [companyId]="companyID"></app-doughnut-graph-status>
+    </mat-card>
+
+    <div class="card response-times-card">
+      <app-ca-average-time></app-ca-average-time>
+    </div>
+
+    <mat-card class="card employees-card">
+      <app-ca-employee-stat></app-ca-employee-stat>
+    </mat-card>
+
+    <mat-card class="card actions-card">
+      <a mat-button target="_blank" (click)="createRoleAccount()"
+        >Create a role account <mat-icon>open_in_new</mat-icon></a
+      >
+      <a mat-button (click)="createJobAd()"
+        >Create job advertisement <mat-icon>open_in_new</mat-icon></a
+      >
+    </mat-card>
+  </div>
+</div>

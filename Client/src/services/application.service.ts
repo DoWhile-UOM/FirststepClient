@@ -3,10 +3,16 @@ import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-interface interview{
+interface ApplicationStatusCount {
+  status: string;
+  count: number;
+}
+
+interface interview {
   application_id:number;
   is_called:boolean;
 }
+
 @Injectable({
   providedIn: 'root',
 })
@@ -212,4 +218,43 @@ export class ApplicationService {
         this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
+
+  //Average Time
+  async getAverageTimes(companyId: number): Promise<any> {
+    try {
+      const response = await axios.get( Apipaths.getAverageTime + companyId);
+      return response.data;
+    } catch (error) {
+      this.snackbar.open('Failed to load average times', 'Close', {
+        duration: 3000,
+      });
+      console.error("Network Error: " + error);
+      throw error;
+    }
+  }
+  
+  async getApplicationStatusCount(company_id: string): Promise<ApplicationStatusCount[]> {
+    try {
+      const response = await axios.get(Apipaths.getApplicationStatusCount + company_id);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching application status count:', error);
+      throw error;
+    }
+  }
+
+  async getApplicationCount(advertisement_id: number) {
+    let applicationCount: any = {};
+    await axios
+      .get(Apipaths.getApplicationCount + advertisement_id)
+      .then((response) => {
+        applicationCount = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching application count:', error);
+      });
+
+    return applicationCount;
+  }
+
 }

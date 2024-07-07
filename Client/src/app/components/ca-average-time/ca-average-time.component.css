@@ -1,0 +1,143 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+h2 {
+  text-align: center;
+  color: #002c3e;
+}
+
+.header-content {
+  display: flex;
+  align-self: start;
+  margin: 10px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: teal;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: column;
+  color: #002c3e;
+}
+
+.hlo {
+  font-weight: bold;
+  color: #002c3e;
+}
+
+.main-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+.card {
+  padding: 1rem;
+}
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #002c3e;
+}
+
+.applications-card {
+  grid-column: span 2;
+}
+
+.status-card {
+  grid-column: span 1;
+}
+
+.response-times-card {
+  grid-column: span 1;
+}
+
+.actions-card {
+  grid-column: span 1;
+  align-self: start;
+}
+
+.employees-card {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.up-content {
+  display: flex;
+  justify-content: space-between;
+  color: #002c3e;
+}
+
+body {
+  color: #002c3e;
+}
+
+.average-time-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.average-time-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.average-time-item:hover {
+  transform: scale(1.02);
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #002c3e;
+}
+
+.time {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #002c3e;
+}
+
+.average-time-item:nth-child(1) .time {
+  color: #004c6d; 
+  background-color: #e0f7fa;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.average-time-item:nth-child(2) .time {
+  color: #004c6d; 
+  background-color: #e0f7fa; 
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.average-time-item:nth-child(3) .time {
+  color: #004c6d; 
+  background-color: #e0f7fa; 
+  padding: 10px 15px;
+  border-radius: 5px;
+}
