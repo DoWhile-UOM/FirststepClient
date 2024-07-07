@@ -29,6 +29,7 @@ import { EmployeeService } from '../../../services/employee.service';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { TaskDelegationPopUpComponent } from '../task-delegation-pop-up/task-delegation-pop-up.component';
 import { ConfirmDialog } from '../job-offer-list/job-offer-list.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface ApplicationListPage {
   title: string;
