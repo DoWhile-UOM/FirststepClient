@@ -1,25 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import {
-  MatTableDataSource,
-  MatTableModule,
-} from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -38,9 +26,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeService } from '../../../services/employee.service';
-import { application } from 'express';
 import { AdvertisementServices } from '../../../services/advertisement.service';
-
 
 interface HRMListing {
   title: string;
@@ -50,7 +36,6 @@ interface HRMListing {
   current_status: string;
   applicationList: HRMApplicationList[];
 }
-
 interface HRMApplicationList {
   application_Id: number;
   seekerName: string;
@@ -59,7 +44,6 @@ interface HRMApplicationList {
   assigned_hrAssistant_id: string;
   submitted_date: string;
 }
-
 @Component({
   selector: 'app-hr-manager-application-listing',
   standalone: true,
@@ -261,8 +245,6 @@ export class HrManagerApplicationListingComponent implements OnInit {
   }
 
   interviewBooked() {
-    //this.advertisementServices.get
-    //this.router.navigate([this.auth.getRole() + '/', { interview: this.jobID }]);
     this.router.navigate([this.auth.getRole() + '/interview'],{ queryParams: { id: this.jobID } });
   }
 }
