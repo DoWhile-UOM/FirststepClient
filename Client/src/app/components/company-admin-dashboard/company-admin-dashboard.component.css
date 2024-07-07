@@ -5,9 +5,11 @@
   padding: 1rem;
 }
 
-h2{
+h2 {
   text-align: center;
+  color: #002c3e;
 }
+
 .header-content {
   display: flex;
   align-self: start;
@@ -20,9 +22,12 @@ h2{
 .greeting {
   display: flex;
   flex-direction: column;
+  color: #002c3e;
 }
-.hlo{
+
+.hlo {
   font-weight: bold;
+  color: teal;
 }
 
 .main-content {
@@ -44,7 +49,9 @@ mat-card {
   border-radius: 15px;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #002c3e;
 }
+
 .applications-card {
   grid-column: span 2;
 }
@@ -59,7 +66,7 @@ mat-card {
 
 .actions-card {
   grid-column: span 1;
-  align-self: start; /* Align at the start of the row */
+  align-self: start;
 }
 
 .employees-card {
@@ -67,8 +74,12 @@ mat-card {
   grid-row: span 2;
 }
 
-/*application styles*/
 .up-content {
   display: flex;
   justify-content: space-between;
+  color: #002c3e;
+}
+
+body {
+  color: #002c3e;
 }
