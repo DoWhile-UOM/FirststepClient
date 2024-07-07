@@ -12,11 +12,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { InterviewService } from '../../../services/interview.service';
 import { AuthService } from '../../../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AdvertisementServices } from '../../../services/advertisement.service';
 
 interface IRecord{
   id:number;
@@ -42,7 +43,11 @@ export class AvailableTimeSlotComponent {
   isFormFilled: boolean = false;
   isIntroPopupVisible: boolean = true;
   isPopupVisible: boolean = false;
+
   advertismentId: number = 0;
+  job_number: number = 0;
+  advertisment_title: string = '';
+
   selectedDate: Date = new Date();
   calendarLoaded: boolean = false;
   startTime: number = 0;
@@ -53,7 +58,16 @@ export class AvailableTimeSlotComponent {
   records: IRecord[] = [];
   appointment: IAppointmentDetails = {duration: 30,comment: '',title: ''};
 
-  constructor(private spinner: NgxSpinnerService,private formAPD: FormBuilder, private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
+  constructor(
+    private spinner: 
+    NgxSpinnerService,
+    private formAPD: FormBuilder, 
+    private route: ActivatedRoute, 
+    private router: Router,
+    private snackBar: MatSnackBar, 
+    private interview: InterviewService, 
+    private auth: AuthService,
+    private advertisementService: AdvertisementServices) {
     this.spinner.show();
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
@@ -108,6 +122,16 @@ export class AvailableTimeSlotComponent {
       this.calendarLoaded = true;
     }, 100);
     this.onChanges();
+
+    const jobData = this.advertisementService.getJobData();
+
+    if(jobData){
+      this.job_number = jobData.jobNumber;
+      this.advertisment_title = jobData.jobTitle;
+    }
+    else{
+      //this.router.navigate(['/notfound']);
+    }
   }
 
   get formattedDate(): string {
@@ -212,4 +236,8 @@ export class AvailableTimeSlotComponent {
   dummy() {
 
   }
+
+  onBackButtonClick(){
+		window.history.back();
+	}
 }

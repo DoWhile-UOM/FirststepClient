@@ -81,13 +81,13 @@ export class InterviewShedulingShortListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-     const jobData = this.advertismentServices.getJobData();
-     if(jobData){
-       this.advertisment_id = jobData.jobID;
-       this.job_number = jobData.jobNumber;
-       this.advertisment_title = jobData.jobTitle;
-       this.getShortlistedCandidates();
-     }
+    const jobData = this.advertismentServices.getJobData();
+    if(jobData){
+      this.advertisment_id = jobData.jobID;
+      this.job_number = jobData.jobNumber;
+      this.advertisment_title = jobData.jobTitle;
+      this.getShortlistedCandidates();
+    }
   }
 
   async getShortlistedCandidates() {

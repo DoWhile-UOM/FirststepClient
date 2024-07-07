@@ -4,8 +4,7 @@
       <app-interview-sheduling-header
         [job_title]="this.advertisment_title"
         [job_number]="this.job_number"
-        [job_id]="this.advertisment_id"
-      >
+        [job_id]="this.advertisment_id">
       </app-interview-sheduling-header>
     </div>
     <div class="pagetitle-content">
@@ -13,8 +12,7 @@
         <mat-checkbox
           [checked]="task().completed"
           [indeterminate]="partiallyComplete()"
-          (change)="update($event.checked)"
-          >Select All
+          (change)="update($event.checked)">Select All
         </mat-checkbox>
       </span>
     </div>
