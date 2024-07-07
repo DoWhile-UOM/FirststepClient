@@ -64,6 +64,10 @@ export class CompanyAdminDashboardComponent implements OnInit {
       job_id: ad.advertisement_id,
       job_title: ad.advertisement_title,
     }));
+
+    if (this.jobData.length > 0) {
+      this.advertismentSelect(this.jobData[0].job_id);
+    }
   }
 
   async advertismentSelect(advertismentID: number): Promise<void>{
