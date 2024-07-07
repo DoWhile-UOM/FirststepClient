@@ -1,1 +1,7 @@
-<canvasjs-chart [options]="chartOptions"></canvasjs-chart>
+<div *ngIf="!hasData; else chartTemplate">
+    <p>Please select a job title to view application count.</p>
+  </div>
+  <ng-template #chartTemplate>
+    <canvasjs-chart #chartContainer [options]="chartOptions"></canvasjs-chart>
+</ng-template>
+  
