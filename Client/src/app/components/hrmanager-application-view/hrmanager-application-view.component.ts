@@ -302,7 +302,7 @@ export class HrmanagerApplicationViewComponent implements OnInit {
   getRoleDisplayName(role: string): string {
     switch (role) {
       case 'hra':
-        return 'HR Assistant';
+        return 'Talent Acquisition Specialist';
       case 'ca':
         return 'Company Admin';
       case 'hrm':
@@ -409,7 +409,7 @@ export class CommentHistoryDialog implements OnInit {
   getRoleDisplayName(role: string): string {
     switch (role) {
       case 'hra':
-        return 'HR Assistant';
+        return 'Talent Acquisition Specialist';
       case 'ca':
         return 'Company Admin';
       case 'hrm':

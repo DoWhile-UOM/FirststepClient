@@ -6,6 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-landing-page',
@@ -19,11 +21,14 @@ import { MatIconModule } from '@angular/material/icon';
     RouterModule,
     MatMenuModule,
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonToggleModule,
+    FormsModule
   ],
 })
 export class LandingPageComponent {
   screenWidth: number = 0;
+  selectedToggle: string = 'jobSeeker';
 
   constructor(private router: Router) {
     this.getScreenSize();
@@ -39,6 +44,10 @@ export class LandingPageComponent {
 
   comReg(){
     this.router.navigate(['/CompanyReg']);
+  }
+
+  onToggleChange(toggle: string) {
+    this.selectedToggle = toggle;
   }
 
   @HostListener('window:resize', ['$event'])

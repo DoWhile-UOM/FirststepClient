@@ -31,7 +31,6 @@ export class LoginComponent {
     private userStore: UserStoreService,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar){
-
   }
 
   loginForm = new FormGroup({
@@ -45,7 +44,6 @@ export class LoginComponent {
     (await this.auth.login(this.loginForm.value))
     .subscribe({
       next:async (res)=>{
-        this.loginForm.reset();
         this.auth.storeToken(res.accessToken);
         this.auth.storeRefreshToken(res.refreshToken);
 
