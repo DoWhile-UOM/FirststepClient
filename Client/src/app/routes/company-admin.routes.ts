@@ -10,6 +10,11 @@ import { HrmanagerApplicationViewComponent } from '../components/hrmanager-appli
 import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
 import { CompanyAdminDashboardComponent } from '../components/company-admin-dashboard/company-admin-dashboard.component';
 
+//test
+import { DoughnutGraphEmployeeComponent } from '../components/doughnut-graph-employee/doughnut-graph-employee.component';
+import { CaAverageTimeComponent } from '../components/ca-average-time/ca-average-time.component';
+import { CaEmployeeStatComponent } from '../components/ca-employee-stat/ca-employee-stat.component';
+
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
   { path: 'manageRoles', component: ManageRolesComponent },
@@ -22,5 +27,11 @@ export const caRoutes: Routes = [
   { path: 'companyProfile', component: CompanyProfileEditComponent },
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
   { path: 'profile-view', component: SeekerProfileViewComponent },
-  { path: 'dashboard', component: CompanyAdminDashboardComponent}
+  { path: 'dashboard', component: CompanyAdminDashboardComponent},
+
+  //test
+  { path: 'doughnut-graph-employee', component: DoughnutGraphEmployeeComponent},
+  { path: 'ca-average-time', component: CaAverageTimeComponent},
+  { path: 'ca-employee-stat', component: CaEmployeeStatComponent}
+
 ];

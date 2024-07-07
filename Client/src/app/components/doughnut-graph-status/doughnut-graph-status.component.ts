@@ -15,6 +15,7 @@ interface ApplicationStatusCount {
   imports: [CanvasJSAngularChartsModule, CommonModule],
   templateUrl: './doughnut-graph-status.component.html',
   styleUrls: ['./doughnut-graph-status.component.css']
+
 })
 export class DoughnutGraphStatusComponent implements OnInit {
 

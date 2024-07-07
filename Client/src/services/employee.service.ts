@@ -193,4 +193,17 @@ export class EmployeeService {
       this.snackBar.open('Error registering company admin', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
+
+  async getEmployeeStats(companyId: number): Promise<any> {
+    try {
+      const response = await axios.get(Apipaths.getEmployeeStat + companyId);
+      return response.data;
+    } catch (error) {
+      this.snackBar.open('Failed to load employee stats', 'Close', {
+        duration: 3000,
+      });
+      console.error("Network Error: " + error);
+      throw error;
+    }
+  }
 }

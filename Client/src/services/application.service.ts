@@ -195,6 +195,21 @@ export class ApplicationService {
       });
   }
 
+
+  //Average Time
+  async getAverageTimes(companyId: number): Promise<any> {
+    try {
+      const response = await axios.get( Apipaths.getAverageTime + companyId);
+      return response.data;
+    } catch (error) {
+      this.snackbar.open('Failed to load average times', 'Close', {
+        duration: 3000,
+      });
+      console.error("Network Error: " + error);
+      throw error;
+    }
+  }
+
   
   async getApplicationStatusCount(company_id: number): Promise<ApplicationStatusCount[]> {
     try {
@@ -205,6 +220,7 @@ export class ApplicationService {
       throw error;
     }
   }
+
 
   async getApplicationCount(advertisement_id: number) {
     let applicationCount: any = {};
@@ -219,4 +235,5 @@ export class ApplicationService {
 
     return applicationCount;
   }
+
 }
