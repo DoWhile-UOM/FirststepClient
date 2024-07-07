@@ -1,0 +1,7 @@
+<div *ngIf="!hasData; else chartTemplate">
+    <p class="nulljob">No applications have been submitted for this job advertisement during the period!</p>
+  </div>
+
+  <ng-template #chartTemplate>
+    <canvasjs-chart #chartContainer [options]="chartOptions"></canvasjs-chart>
+</ng-template>

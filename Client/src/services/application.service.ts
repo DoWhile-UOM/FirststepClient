@@ -1,8 +1,17 @@
-import { Injectable, booleanAttribute } from '@angular/core';
+import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Apipaths } from './apipaths/apipaths';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+
+interface ApplicationStatusCount {
+  status: string;
+  count: number;
+}
+
+interface interview {
+  application_id:number;
+  is_called:boolean;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -141,12 +150,7 @@ export class ApplicationService {
   async getApplicationStatus(advertisement_id: number, seeker_id: number) {
     let applicationStatusDetails: any = {};
     await axios
-      .get(
-        Apipaths.getApplicationStatus +
-          advertisement_id +
-          '&seekerId=' +
-          seeker_id
-      )
+      .get(Apipaths.getApplicationStatus + advertisement_id + '/' + seeker_id)
       .then((response) => {
         applicationStatusDetails = response.data;
         //format date
@@ -179,6 +183,31 @@ export class ApplicationService {
     return applicationDetails;
   }
 
+  async getShortlistedApplications(advertisement_id: number) {
+    let shortlistedApplications: any;
+    await axios
+      .get(Apipaths.getShortlistedApplications + advertisement_id)
+      .then((response) => {
+        shortlistedApplications = response.data;
+      })
+      .catch((error) => {
+        console.error('error fetching shortlist applicants:', error)
+      });
+
+    return shortlistedApplications;
+  }
+
+  async setToInterview(interview: interview): Promise<void>{
+    await axios
+      .patch(Apipaths.setToInterview, interview)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error('Error setting interview:', error);
+      });
+  }
+
   async delegateTask(jobID: number, hraIds: string): Promise<void> {
     const url = `${Apipaths.delegateTask}jobID=${jobID}/hra_id_list=${hraIds}`;
     await axios.patch(url, {})
@@ -189,4 +218,43 @@ export class ApplicationService {
         this.snackbar.open('Error: ' + error, '', { panelClass: ['app-notification-error'] })._dismissAfter(3000);
       });
   }
+
+  //Average Time
+  async getAverageTimes(companyId: number): Promise<any> {
+    try {
+      const response = await axios.get( Apipaths.getAverageTime + companyId);
+      return response.data;
+    } catch (error) {
+      this.snackbar.open('Failed to load average times', 'Close', {
+        duration: 3000,
+      });
+      console.error("Network Error: " + error);
+      throw error;
+    }
+  }
+  
+  async getApplicationStatusCount(company_id: string): Promise<ApplicationStatusCount[]> {
+    try {
+      const response = await axios.get(Apipaths.getApplicationStatusCount + company_id);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching application status count:', error);
+      throw error;
+    }
+  }
+
+  async getApplicationCount(advertisement_id: number) {
+    let applicationCount: any = {};
+    await axios
+      .get(Apipaths.getApplicationCount + advertisement_id)
+      .then((response) => {
+        applicationCount = response.data;
+      })
+      .catch((error) => {
+        console.error('Error fetching application count:', error);
+      });
+
+    return applicationCount;
+  }
+
 }

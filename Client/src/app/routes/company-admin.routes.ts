@@ -8,6 +8,11 @@ import { RoleProfileEditComponent } from '../components/role-profile-edit/role-p
 import { HrManagerApplicationListingComponent } from '../components/hr-manager-application-listing/hr-manager-application-listing.component';
 import { HrmanagerApplicationViewComponent } from '../components/hrmanager-application-view/hrmanager-application-view.component';
 import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
+import { CompanyAdminDashboardComponent } from '../components/company-admin-dashboard/company-admin-dashboard.component';
+import { InterviewShedulingShortListComponent } from '../components/interview-sheduling-short-list/interview-sheduling-short-list.component';
+import { DailyInterviewSchedulesComponent } from '../components/daily-interview-schedules/daily-interview-schedules.component';
+import { AvailableTimeSlotComponent } from '../components/available-time-slot/available-time-slot.component';
+import { IntViewConfirmComponent } from '../components/int-view-confirm/int-view-confirm.component';
 
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
@@ -15,10 +20,16 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList', component: JobOfferListComponent },
   { path: 'jobOfferList/newJob', component: NewJobComponent },
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
-  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent},
+  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent },
   { path: 'jobOfferList/applicationList', component: HrManagerApplicationListingComponent },
   { path: 'jobOfferList/applicationList/applicationView', component: HrmanagerApplicationViewComponent },
   { path: 'companyProfile', component: CompanyProfileEditComponent },
   { path: 'editRoleProfile', component: RoleProfileEditComponent },
-  { path: 'profile-view', component: SeekerProfileViewComponent }
+  { path: 'profile-view', component: SeekerProfileViewComponent },
+  { path: 'dashboard', component: CompanyAdminDashboardComponent},
+
+  { path: 'jobOfferList/applicationList/shortlist',component:InterviewShedulingShortListComponent},
+  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
+  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent},
+  { path: 'interview', component: IntViewConfirmComponent}
 ];

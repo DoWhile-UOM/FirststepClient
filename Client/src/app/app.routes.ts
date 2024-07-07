@@ -10,6 +10,9 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ResetPasswordReqComponent } from './components/reset-password-req/reset-password-req.component';
 
+//test
+import { DailyInterviewSchedulesComponent } from './components/daily-interview-schedules/daily-interview-schedules.component';
+
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   
@@ -46,5 +49,8 @@ export const routes: Routes = [
     loadChildren: () => import('./routes/system-admin.routes').then(m => m.saRoutes),
   },
   { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
-  { path: 'notfound', component: PageNotFoundComponent }
+  { path: 'notfound', component: PageNotFoundComponent },
+
+  //test
+  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent}
 ];

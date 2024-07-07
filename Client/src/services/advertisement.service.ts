@@ -501,4 +501,30 @@ export class AdvertisementServices {
 
     return jobList;
   }
+
+  async getCompanyAdvertisementTitleList(companyID: string){
+    let jobList: any = [];
+
+    await axios.get(Apipaths.getCompanyAdvertisementTitleList + companyID)
+      .then(function (response) {
+        jobList = response.data;
+      })
+      .catch(
+        (error) => {
+          this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+        }
+      );
+
+    return jobList;
+  }
+
+  private jobData:{ jobID:number; jobTitle:string; jobNumber:number } | null = null;
+  
+  setJobData(jobData:{jobID:number;jobTitle:string;jobNumber:number}){
+    this.jobData = jobData;
+  }
+  
+  getJobData(){
+    return this.jobData;
+  }
 }

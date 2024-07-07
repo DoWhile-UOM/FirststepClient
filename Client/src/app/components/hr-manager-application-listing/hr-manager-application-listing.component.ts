@@ -1,25 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import {
-  MatTableDataSource,
-  MatTableModule,
-} from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -38,8 +26,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/auth.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { EmployeeService } from '../../../services/employee.service';
+import { AdvertisementServices } from '../../../services/advertisement.service';
 import { TaskDelegationPopUpComponent } from '../task-delegation-pop-up/task-delegation-pop-up.component';
 import { ConfirmDialog } from '../job-offer-list/job-offer-list.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface ApplicationListPage {
   title: string;
@@ -51,16 +41,14 @@ interface ApplicationListPage {
   current_status: string;
   applicationList: HRMApplicationList[];
 }
-
 interface HRMApplicationList {
   application_Id: number;
   seekerName: string;
   status: string;
   is_evaluated: boolean;
-  assigned_hrAssistant_id: string ;
+  assigned_hrAssistant_id: string;
   submitted_date: string;
 }
-
 @Component({
   selector: 'app-hr-manager-application-adData',
   standalone: true,
@@ -92,6 +80,7 @@ interface HRMApplicationList {
 })
 
 export class HrManagerApplicationListingComponent implements OnInit {
+
   displayedColumns: string[] = [
     'application_Id',
     'seekerName',
@@ -123,6 +112,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
 
   constructor(
     private applicationService: ApplicationService,
+    private advertisementServices: AdvertisementServices,
     private employeeService: EmployeeService,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar,
@@ -138,11 +128,11 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.jobID = Number(this.acRouter.snapshot.paramMap.get('jobID'));
     this.userType = this.auth.getRole();
 
-    if (this.userType == 'hra'){
+    if (this.userType == 'hra') {
       this.displayedColumns = this.displayedColumns.filter((column) => column !== 'assigned_hrAssistant_id');
       this.restrictPermissionForButton = true;
     }
-    
+
     this.getApplicationList(this.jobID, this.selectedFilter);
 
     this.spinner.hide();
@@ -152,9 +142,9 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  filter(selected: any){
+  filter(selected: any) {
     // filter by current status of the advertisement
-    this.snackBar.open("Refeshing table to show " + selected.value + " Applications ...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
+    this.snackBar.open("Refeshing table to show " + selected.value + " Applications ...", "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
     this.getApplicationList(this.jobID, selected.value);
     this.selectedFilter = selected.value;
   }
@@ -188,7 +178,7 @@ export class HrManagerApplicationListingComponent implements OnInit {
     try{
       this.hraList = await this.employeeService.getAllHRAs(this.auth.getCompanyID());
     } catch (error) {
-      this.snackBar.open("Error : " + error, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      this.snackBar.open("Error : " + error, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
 
@@ -199,16 +189,16 @@ export class HrManagerApplicationListingComponent implements OnInit {
       if (this.userType == 'hra'){
         this.adData = await this.applicationService.getAssignedApplicationList(this.auth.getUserId(), jobID, status);
       }
-      else if (this.userType == 'hrm' || this.userType == 'ca'){ 
+      else if (this.userType == 'hrm' || this.userType == 'ca') {
         this.getHraList();
         this.adData = await this.applicationService.getApplicationList(jobID, status);
       }
-      else{
+      else {
         alert(this.userType);
-        this.snackBar.open("You are not authorized to view this page", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+        this.snackBar.open("You are not authorized to view this page", "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
         this.router.navigate(['/notfound']);
       }
-      
+
       if (!this.adData) {
         this.snackBar.open('Not applications found for the job id', "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
         window.history.back();
@@ -237,10 +227,10 @@ export class HrManagerApplicationListingComponent implements OnInit {
       this.applicationListLength = this.applicationList.length;
 
       if (this.applicationList.length === 0) {
-        this.snackBar.open("Not application found", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+        this.snackBar.open("Not application found", "", { panelClass: ['app-notification-warning'] })._dismissAfter(3000);
       }
     } catch (error) {
-      this.snackBar.open("Error : " + error, "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+      this.snackBar.open("Error : " + error, "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
   }
 
@@ -262,26 +252,40 @@ export class HrManagerApplicationListingComponent implements OnInit {
     this.spinner.hide();
   }
 
-  getHRAName(hra_id: number){
+  getHRAName(hra_id: number) {
     for (let i = 0; i < this.hraList.length; i++) {
       if (Number(this.hraList[i].user_id) == hra_id) {
         return this.hraList[i].first_name + ' ' + this.hraList[i].last_name;
       }
     }
-    
+
     return 'Not Assigned';
   }
 
-  onBackButtonClick(){
-		window.history.back();
-	}
-
-  onEditClick(){
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', {jobID: this.jobID}]);
+  onBackButtonClick() {
+    window.history.back();
   }
 
-  explore(application_Id: number){
-    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', {applicationId: application_Id}]);
+  onEditClick() {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/updateJobDetails', { jobID: this.jobID }]);
+  }
+
+  explore(application_Id: number) {
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/applicationView', { applicationId: application_Id }]);
+  }
+
+  shortlist() {
+    const jobData = {
+      jobID: this.jobID,
+      jobTitle: this.title,
+      jobNumber: this.job_number,
+    };
+    this.advertisementServices.setJobData(jobData);
+    this.router.navigate([this.auth.getRole() + '/jobOfferList/applicationList/shortlist']);
+  }
+
+  interviewBooked() {
+    this.router.navigate([this.auth.getRole() + '/interview'],{ queryParams: { id: this.jobID } });
   }
 
   changeStatusOfJob(action: string){

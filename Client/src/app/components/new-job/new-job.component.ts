@@ -64,7 +64,7 @@ interface UpdateJob{
 	employeement_type: string;
 	arrangement: string;
 	experience: string;
-	salary: string;
+	salary: number;
 	currency_unit: string;
 	submission_deadline: string;
 	posted_date: string;
@@ -202,7 +202,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			this.skills = this.removeDuplicates(adData.reqSkills);
 			this.description = adData.job_description;
 			this.createJobFormGroup.controls.job_number.setValue(String(adData.job_number));
-			this.createJobFormGroup.controls.salary.setValue(adData.salary);
+			this.createJobFormGroup.controls.salary.setValue(String(adData.salary));
 
 			await this.onChangeField(Number(adData.field_id));
 			this.keywords = adData.reqKeywords;
@@ -353,7 +353,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		adData.country = this.createJobFormGroup.controls.locationCountryControl.value ?? '';
 		adData.job_description = this.description;
 		adData.job_number = parseInt(this.createJobFormGroup.controls.job_number.value ?? '0') || 0;
-		adData.salary = this.createJobFormGroup.controls.salary.value ?? '';
+		adData.salary = parseFloat(this.createJobFormGroup.controls.salary.value ?? '0') || 0;
 
 		if (this.validateInput(adData) == false){
 			return;
@@ -370,7 +370,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 			window.history.back();
 		}
 		else{
-			this.snackBar.open("Error Updating Job Details", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
+			//this.snackBar.open("Error Updating Job Details", "", {panelClass: ['app-notification-error']})._dismissAfter(3000);
 		}
 	}
 

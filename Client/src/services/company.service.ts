@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import axios from 'axios';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 interface Company {
   company_id: number;
@@ -17,37 +18,20 @@ interface Company {
   company_province: string;
   company_business_scale: string;
 }
+
 interface CompanyList {
   company_id: number;
   company_name: string;
   verification_status: boolean;
   verified_system_admin_id: number;
 }
-interface CompanyApplication {
-  company_id: number;
-  company_name: string;
-  verification_status: boolean;
-  company_email: string;
-  company_website: string;
-  company_phone_number: number;
-  business_reg_certificate: string;
-  certificate_of_incorporation: string;
-  comment: string;
-  verified_system_admin_id: number;
-}
+
 interface EvaluatedCompanyDetails {
   company_id: number;
   verification_status: boolean;
   comment: string | null;
   company_registered_date: Date;
   verified_system_admin_id: number;
-}
-
-interface CmpAdminReg {
-  email: string;
-  password_hash: string;
-  first_name: string;
-  last_name: string;
 }
 
 interface EligibleUnregisteredCompany {
@@ -62,6 +46,10 @@ interface EligibleUnregisteredCompany {
 })
 
 export class CompanyService {
+  //to share the company list data between components
+  private companyListSource = new BehaviorSubject<CompanyList[]>([]);
+  currentCompanyList = this.companyListSource.asObservable();
+
   constructor(private snackBar: MatSnackBar, private http: HttpClient) { }
 
   public static BusinessScales: any[] = [
@@ -76,18 +64,14 @@ export class CompanyService {
     try {
       const response = await axios.get(Apipaths.getCompanyDetails + companyId);
       companyDetails = response.data;
-      console.log(companyDetails);
     } catch (error) {
-      console.error('Error fetching company details:', error);
     }
 
-    console.log(companyDetails);
     return companyDetails;
   }
 
   async getCompanyApplicationById(companyId: number) {
     let companyApplication: any = {};
-    console.log('from service', companyId);
     try {
       await axios
         .get(Apipaths.getCompanyApplicationById + companyId)
@@ -95,14 +79,12 @@ export class CompanyService {
           try {
             companyApplication = response.data;
           } catch (error) {
-            console.log('No company application found for the given id');
           }
         })
         .catch((error) => {
         });
       return companyApplication;
     } catch (error) {
-      console.log('No company application found for the given id');
     }
   }
 
@@ -116,7 +98,6 @@ export class CompanyService {
       //this.snackBar.open('Company registered successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       return { success: true, out: response.data };
     } catch (error: any) {
-      console.error('Network Error: ', error);
       return { success: false, out: error.response.data };
 
     }
@@ -136,14 +117,12 @@ export class CompanyService {
 
   async updateCompanyDetails(company: Company, company_id: number) {
     company.company_id = company_id; // should be chnaged
-    console.log('from service', company);
     await axios
       .put(Apipaths.updateCompanyDetails + company_id, company) // tem slotion
       .then((response) => {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
-        console.log('Network Error: ' + error);
       });
   }
 
@@ -186,7 +165,8 @@ export class CompanyService {
     try {
       const response = await axios.get(Apipaths.getAllComapanyList);
       companyList = response.data;
-      console.log('company list was received');
+      // Update the BehaviorSubject with the new data
+      this.companyListSource.next(companyList);
     } catch (error) {
       this.snackBar.open('Error fetching company list', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }
@@ -201,11 +181,9 @@ export class CompanyService {
       await axios.get(Apipaths.getCompanyRegState + id)
         .then((response) => {
           cmpData = response.data;
-          //console.log('Company Data:', cmpData);
         });
     }
     catch (error) {
-      //console.error(error);
       cmpData = false;
     }
 
@@ -213,9 +191,7 @@ export class CompanyService {
   }
 
   async updateUnregCompanyDetails(company: any) { // should be chnaged
-
     let Id = company.company_id;
-    //console.log('from service', company);
     await axios
       .put(Apipaths.updateUnregComapny + Id, company,
         {
@@ -227,17 +203,15 @@ export class CompanyService {
         this.snackBar.open('Company details updated successfully', "", { panelClass: ['app-notification-normal'] })._dismissAfter(3000);
       })
       .catch((error) => {
-        console.log('Network Error: ' + error);
       });
   }
-  
+
   async getEligibleUnregisteredCompanies() {
     let eligibleUnregisteredCompanies: EligibleUnregisteredCompany[] = [];
 
     try {
       const response = await axios.get(Apipaths.getEligibleUnregisteredCompanies);
       eligibleUnregisteredCompanies = response.data;
-      console.log('Eligible unregistered companies:', eligibleUnregisteredCompanies);
     } catch (error) {
       this.snackBar.open('Error fetching eligible unregistered companies', "", { panelClass: ['app-notification-error'] })._dismissAfter(3000);
     }

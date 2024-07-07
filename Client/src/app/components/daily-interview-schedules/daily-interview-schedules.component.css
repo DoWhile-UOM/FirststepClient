@@ -1,0 +1,180 @@
+.container {
+  padding: 20px;
+  margin: 20px;
+}
+
+.header {
+  font-size: 2em;
+  color: teal;
+  margin: 20px 0 40px 0;
+}
+
+.sub-header {
+  font-size: 1.3em;
+  margin-bottom: 20px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.card {
+  padding: 2em;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.up-next-container {
+  margin-bottom: 20px;
+}
+
+.up-next-box {
+  padding: 15px;
+  background: teal;
+  color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.up-next-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.calendar-container {
+  width: 30%;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-table {
+  width: 68%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.time-slot-container {
+  position: relative;
+  height: 1440px; /* 24 hours * 60 minutes */
+}
+
+.time-slot {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 60px; /* Each hour slot is 60px high */
+  border-bottom: 1px solid transparent;
+}
+
+.time-slot-header {
+  display: flex;
+  align-items: center;
+  height: 20px; /* Adjust the height of the header as needed */
+  position: relative; /* Ensure the header is positioned correctly */
+}
+
+.time-label {
+  font-weight: bold;
+  margin-right: 10px;
+  color:#d3d3d3;
+  z-index: 1; /* Ensure the time label is always on top */
+  background: #fafafa; /* Match the background color to cover the line */
+}
+
+.time-line {
+  flex-grow: 1;
+  border-bottom: 1px solid #d3d3d3;
+  position: absolute;
+  top: 50%; /* Center the line vertically */
+  left: 0;
+  right: 0;
+  z-index: 0; /* Ensure the line is behind the label */
+}
+
+.interview-slot-container {
+  position: absolute;
+  height: 100%; /* Ensure container takes full height */
+  width: 100%;
+}
+
+.interview-slot {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #D3D3D3;
+  z-index: 2; /* Ensure the slot is on top of the line */
+}
+
+.interview-slot.missed {
+  background: #EE9999;
+}
+
+.interview-slot.complete {
+  background: #80CBC4;
+}
+
+.status.booked {
+  color: white;
+}
+
+.status.missed {
+  color: white;
+}
+
+.status.complete {
+  color: white;
+}
+
+.interview-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.job-title {
+  font-size: 0.9em;
+  color: #555;
+  margin-right: 10px;
+}
+
+.time {
+  margin-right: 10px;
+}
+
+.status-dropdown {
+  margin-left: 10px;
+  width: 120px;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .calendar-container,
+  .schedule-table {
+    width: 100%;
+  }
+}

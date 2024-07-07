@@ -1,0 +1,27 @@
+.container{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+}
+
+.left{
+    display: flex;
+    flex-direction: row;
+}
+
+.jobContent {
+    display:flex;
+    flex-direction:column;
+    margin-left: 1em;
+}
+
+.title{
+    color: #008080;
+    font-size: 30px;
+}
+
+.num{
+    font-weight: 550;
+    margin-top: 1em;
+    font-size: 16px;
+}

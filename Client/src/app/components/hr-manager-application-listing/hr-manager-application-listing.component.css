@@ -95,6 +95,10 @@ button.mat-button:hover {
   right: 0;
 }
 
+.buttons-right button{
+  margin-bottom: 0.35em;
+}
+
 .custom-button {
   justify-content: left;
   align-items: left;
