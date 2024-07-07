@@ -36,10 +36,6 @@ export class CaEmployeeStatComponent implements OnInit {
   constructor(private employeeService: EmployeeService , private authService: AuthService, private cdr: ChangeDetectorRef) { }
 
   async ngOnInit() {
-    // //test
-    // this.companyId = 7;
-    // this.companyName = "BISTEC Global Services";
-
     this.companyId = this.authService.getCompanyID();
     this.companyName = this.authService.getCompanyName();
 
@@ -59,7 +55,8 @@ export class CaEmployeeStatComponent implements OnInit {
 
       this.columnChartOptions = {
         backgroundColor: 'white',
-        
+        exportEnabled: true,
+        exportFileName: "Performance Chart",
         axisY: {
           labelFontFamily: 'Roboto',
           labelFontSize: 14,
@@ -80,7 +77,8 @@ export class CaEmployeeStatComponent implements OnInit {
       const doughnutColors = ['#004c6d', '#00CCCC'];
       this.doughnutChartOptions = {
         backgroundColor: 'white',
-        
+        exportEnabled: true,
+        exportFileName: "Doughnut Chart",
         animationEnabled: true,
         data: [{
           type: 'doughnut',
