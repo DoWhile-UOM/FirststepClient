@@ -16,6 +16,8 @@ import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface IRecord{
   id:number;
@@ -31,7 +33,7 @@ interface IAppointmentDetails{
 @Component({
   selector: 'app-available-time-slot',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIcon, MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
+  imports: [SpinnerComponent,ReactiveFormsModule, MatIcon, MatFormFieldModule, MatInputModule, NgxMaterialTimepickerModule, MatButtonModule, CommonModule, MatSidenavModule, MatCardModule, MatCalendarBody, MatNativeDateModule, MatCalendar],
   providers: [],
   templateUrl: './available-time-slot.component.html',
   styleUrls: ['./available-time-slot.component.css']
@@ -52,7 +54,8 @@ export class AvailableTimeSlotComponent {
   records: IRecord[] = [];
   appointment: IAppointmentDetails = {duration: 30,comment: '',title: ''};
 
-  constructor(private formAPD: FormBuilder, private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
+  constructor(private spinner: NgxSpinnerService,private formAPD: FormBuilder, private route: ActivatedRoute, private snackBar: MatSnackBar, private interview: InterviewService, private auth: AuthService) {
+    this.spinner.show();
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
       this.advertismentId = Number(id); 
@@ -60,6 +63,7 @@ export class AvailableTimeSlotComponent {
         this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
       }else{
         this.advertismentId = Number(id);
+        this.spinner.hide();
       }
     });
     this.appointmentDetails = this.formAPD.group({
@@ -187,7 +191,9 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
+    this.spinner.show();
     this.interview.postSplittedTimeSlots(this.records, this.appointment.duration,this.advertismentId,this.auth.getCompanyID());
+    this.spinner.hide();
     //console.log(this.appointment.duration+' '+this.advertismentId+' '+this.auth.getCompanyID());
   }
 
