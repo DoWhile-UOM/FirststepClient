@@ -8,6 +8,7 @@ import { DoughnutGraphStatusComponent } from '../doughnut-graph-status/doughnut-
 import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { AdvertisementServices } from '../../../services/advertisement.service';
+import { ApplicationService } from '../../../services/application.service';
 
 interface Job {
   job_id: number;
@@ -17,6 +18,12 @@ interface Job {
 interface Advertisement {
   advertisement_id: number;
   advertisement_title: string;
+}
+
+interface ApplicationData {
+  date: string;
+  count: number;
+
 }
 
 @Component({
@@ -36,10 +43,12 @@ interface Advertisement {
   ],
 })
 export class CompanyAdminDashboardComponent implements OnInit {
-  jobData: Job[] = [];
-  companyID: string = '4043';
 
-  constructor(public advertisementServices: AdvertisementServices) {}
+  jobData: Job[] = [];
+  companyID: string = '7';
+  applicationData: ApplicationData[] = [];
+
+  constructor(public advertisementServices: AdvertisementServices,public applicationService:ApplicationService) {}
 
   ngOnInit(): void {
     try {
@@ -56,6 +65,16 @@ export class CompanyAdminDashboardComponent implements OnInit {
       job_title: ad.advertisement_title,
     }));
   }
+
+  async advertismentSelect(advertismentID: number): Promise<void>{
+    try{
+    const data = await this.applicationService.getApplicationCount(advertismentID);
+    this.applicationData = data;
+    }
+    catch(e){
+      console.log(e);
+    }
+}
 }
   
   

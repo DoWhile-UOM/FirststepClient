@@ -19,7 +19,7 @@
             <ng-container
               *ngIf="jobData.length > 0; else noAdvertisements"
             >
-              <button mat-menu-item *ngFor="let ad of jobData">
+              <button mat-menu-item *ngFor="let ad of jobData"  (click)="advertismentSelect(ad.job_id)">
                 {{ ad.job_title}}
               </button></ng-container
             >
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <app-line-graph></app-line-graph>
+      <app-line-graph [applicationData]="this.applicationData"></app-line-graph>
     </mat-card>
 
     <mat-card class="card status-card">
