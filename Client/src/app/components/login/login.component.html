@@ -1,38 +1,37 @@
-<div class="page">
-    <div class="body">
-        <div class="title"><span>Login to FirstStep</span></div>
-        <div class="card" fxLayout="column" fxLayout.lt-md="column wrap" fxLayoutGap="20px">
-            <mat-card class="body-card">
-                <mat-card-content>
-                    <form [formGroup]="loginForm">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Email Address</mat-label>
-                            <input type="email" formControlName="email" matInput class="email-field"
-                                placeholder="Enter your Email" name="email" required />
-                        </mat-form-field>
+<div class="page"></div>
+<div class="body">
+    <div class="title"><span>Login to FirstStep Account</span></div>
+    <div class="card" fxLayout="column" fxLayout.lt-md="column wrap" fxLayoutGap="20px">
+        <mat-card class="body-card">
+            <mat-card-content>
+                <form [formGroup]="loginForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email Address</mat-label>
+                        <input type="email" formControlName="email" matInput class="email-field"
+                            placeholder="Enter your Email" name="email" required />
+                    </mat-form-field>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Enter your password</mat-label>
-                            <input type="password" formControlName="password" matInput class="password-field"
-                                [type]="hide ? 'password' : 'text'" name="password" required />
-                            <button mat-icon-button matSuffix class="eye-btn" (click)="hide = !hide"
-                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                                <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-                            </button>
-                        </mat-form-field>
-
-                        <div class="forgot-password">Forgot your password?
-                            <a href="Recovery" class="reset">Reset</a>
-                        </div>
-                        <button mat-button class="login" [disabled]="!loginForm.valid" (click)="onLogin()">
-                            <span class="Login-btn-name">Login</span>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Enter your password</mat-label>
+                        <input type="password" formControlName="password" matInput class="password-field"
+                            [type]="hide ? 'password' : 'text'" name="password" required />
+                        <button mat-icon-button matSuffix class="eye-btn" (click)="hide = !hide"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
                         </button>
+                    </mat-form-field>
 
-                        <div class="SignUp">New here? <a href="signUp" class="signUp">signUp</a></div>
-                    </form>
-                </mat-card-content>
-            </mat-card>
-        </div>
+                    <div class="forgot-password">Forgot your password?
+                        <a href="Recovery" class="reset">Reset</a>
+                    </div>
+                    <button mat-button class="login" [disabled]="!loginForm.valid" (click)="onLogin()">
+                        <span class="Login-btn-name">Login</span>
+                    </button>
+
+                    <div class="SignUp">New here? <a href="signup" class="signUp">SignUp as a Seeker</a></div>
+                </form>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>
 

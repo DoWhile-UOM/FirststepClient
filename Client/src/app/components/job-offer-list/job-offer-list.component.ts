@@ -22,6 +22,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface JobOffer{
   advertisement_id: number;
@@ -66,6 +67,7 @@ var Table_data: JobOfferTable[] = [];
     MatFormFieldModule,
     MatInputModule,
     MatMenuModule,
+    MatTooltipModule,
     SpinnerComponent],
   templateUrl: './job-offer-list.component.html',
   styleUrl: './job-offer-list.component.css'

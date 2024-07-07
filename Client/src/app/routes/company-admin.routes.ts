@@ -9,11 +9,10 @@ import { HrManagerApplicationListingComponent } from '../components/hr-manager-a
 import { HrmanagerApplicationViewComponent } from '../components/hrmanager-application-view/hrmanager-application-view.component';
 import { SeekerProfileViewComponent } from '../components/seeker-profile-view/seeker-profile-view.component';
 import { CompanyAdminDashboardComponent } from '../components/company-admin-dashboard/company-admin-dashboard.component';
-
-//test
-import { DoughnutGraphEmployeeComponent } from '../components/doughnut-graph-employee/doughnut-graph-employee.component';
-import { CaAverageTimeComponent } from '../components/ca-average-time/ca-average-time.component';
-import { CaEmployeeStatComponent } from '../components/ca-employee-stat/ca-employee-stat.component';
+import { InterviewShedulingShortListComponent } from '../components/interview-sheduling-short-list/interview-sheduling-short-list.component';
+import { DailyInterviewSchedulesComponent } from '../components/daily-interview-schedules/daily-interview-schedules.component';
+import { AvailableTimeSlotComponent } from '../components/available-time-slot/available-time-slot.component';
+import { IntViewConfirmComponent } from '../components/int-view-confirm/int-view-confirm.component';
 
 export const caRoutes: Routes = [
   { path: '', redirectTo: 'jobOfferList', pathMatch: 'full' },
@@ -21,7 +20,7 @@ export const caRoutes: Routes = [
   { path: 'jobOfferList', component: JobOfferListComponent },
   { path: 'jobOfferList/newJob', component: NewJobComponent },
   { path: 'jobOfferList/updateJobDetails', component: NewJobComponent },
-  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent},
+  { path: 'jobOfferList/Uploaded', component: NewJobUploadedComponent },
   { path: 'jobOfferList/applicationList', component: HrManagerApplicationListingComponent },
   { path: 'jobOfferList/applicationList/applicationView', component: HrmanagerApplicationViewComponent },
   { path: 'companyProfile', component: CompanyProfileEditComponent },
@@ -29,9 +28,8 @@ export const caRoutes: Routes = [
   { path: 'profile-view', component: SeekerProfileViewComponent },
   { path: 'dashboard', component: CompanyAdminDashboardComponent},
 
-  //test
-  { path: 'doughnut-graph-employee', component: DoughnutGraphEmployeeComponent},
-  { path: 'ca-average-time', component: CaAverageTimeComponent},
-  { path: 'ca-employee-stat', component: CaEmployeeStatComponent}
-
+  { path: 'jobOfferList/applicationList/shortlist',component:InterviewShedulingShortListComponent},
+  { path: 'dailyInterviewSchedules', component: DailyInterviewSchedulesComponent},
+  { path: 'availableTimeSlot', component: AvailableTimeSlotComponent},
+  { path: 'interview', component: IntViewConfirmComponent}
 ];

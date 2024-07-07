@@ -186,10 +186,10 @@ export class AdvertisementServices {
     return jobList;
   }
 
-  async getAdvertisementById(jobID: string) {
+  async getAdvertisementById(jobID: string, seekerID: string) {
     let adData: any = {};
 
-    await axios.get(Apipaths.getJobDetails + jobID)
+    await axios.get(Apipaths.getJobDetails + jobID + '/' + seekerID)
       .then(function (response) {
         adData = response.data;
 
@@ -511,11 +511,20 @@ export class AdvertisementServices {
       })
       .catch(
         (error) => {
-        //console the error
-        console.log(error);
+          this.snackBar.open(error.message, "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
         }
       );
 
     return jobList;
+  }
+
+  private jobData:{ jobID:number; jobTitle:string; jobNumber:number } | null = null;
+  
+  setJobData(jobData:{jobID:number;jobTitle:string;jobNumber:number}){
+    this.jobData = jobData;
+  }
+  
+  getJobData(){
+    return this.jobData;
   }
 }
