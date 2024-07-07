@@ -1,6 +1,7 @@
 export class Apipaths {
+
     static readonly baseUrl: string = 'https://localhost:7213/api/';
-   //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/';
+   //static readonly baseUrl: string = 'https://firststepdowhile.azurewebsites.net/api/
 
     // employee
     static readonly addNewHRManager: string = this.baseUrl + 'Employee/AddNewHRManager';
@@ -32,6 +33,7 @@ export class Apipaths {
     static readonly updateAdvertisement = this.baseUrl + 'Advertisement/UpdateAdvertisement'; // + advertisement_id
     static readonly getAdvertisementsByHRA = this.baseUrl + 'Advertisement/GetAssignedAdvertisementsByHRA/hra_id='; // + employee_id
     static readonly getRecommendedAdvertisements = this.baseUrl + 'Advertisement/GetRecommendedAdvertisements/seekerID='; // + seeker_id
+    static readonly getCompanyAdvertisementTitleList = this.baseUrl + 'Advertisement/GetCompanyAdvertisementTitleList/'; // + company_id
 
     // company
     static readonly getCompanyProfile: string = this.baseUrl + 'Company/GetCompanyProfile/'; // + company_id
@@ -58,6 +60,9 @@ export class Apipaths {
     static readonly getSeekerApplicationDetails: string = this.baseUrl + 'Application/GetSeekerApplications/'; // + application_id
     static readonly delegateTask:string = this.baseUrl + 'Application/DelegateTask/'; // + jobID + '/hraIds=' + hraIdsString
     static readonly getAverageTime: string = this.baseUrl + 'Application/GetAverageTime/'; // + company_id
+    static readonly getApplicationCount = this.baseUrl + 'Application/GetApplicationCount/'; // + advertisement_id
+    static readonly getApplicationStatusCount = this.baseUrl + 'Application/GetApplicationStatusCount/'; // + advertisement_id
+
 
     // keywords
     static readonly getKeywords: string = this.baseUrl + 'ProfessionKeyword/GetAllProfessionKeywords/';  // + field_id
