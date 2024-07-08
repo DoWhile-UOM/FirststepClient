@@ -286,6 +286,12 @@ throw new Error('Method not implemented.');
 
   }
 
+  clearSearch(){
+    this.spinner.show();
+    
+    window.location.reload();
+  }
+
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?: undefined) {
     try{
