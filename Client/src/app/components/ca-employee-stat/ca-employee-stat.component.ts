@@ -48,16 +48,18 @@ export class CaEmployeeStatComponent implements OnInit {
 
       const columnColors = ['#008080', '#78bcc4', '#002c3e', '#e0f7fa', '#f9f9f9', '#e0e0e0', '#f7f8f3'];
       const performanceDataPoints = data.hraEvaluations.map((item: HraEvaluation) => ({
-        label: item.hraName,
+        label: item.hraName.split(' ')[0], // Extract the first name
         y: item.assignedApplicationsWithRevisionsCount,
         color: columnColors[this.hraEvaluations.indexOf(item) % columnColors.length]
       }));
+      
 
       this.columnChartOptions = {
         backgroundColor: 'white',
         exportEnabled: true,
         exportFileName: "Performance Chart",
         axisY: {
+          title: "No of revised Applications",
           labelFontFamily: 'Roboto',
           labelFontSize: 14,
           labelFontColor: '#666'

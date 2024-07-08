@@ -13,6 +13,19 @@ interface AppointmentSchedule {
   end_time: string;
 }
 
+interface DailyInterviewCount {
+  date: string;
+  booked: number;
+  completed: number;
+  missed: number;
+}
+
+interface InterviewStat {
+  interviewCountPerDay: DailyInterviewCount[];
+  isCalledPercentage: number;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,6 +45,16 @@ export class AppointmentService {
         end_time: schedule.end_time // Ensure end_time is included
       }));
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async getInterviewStat(companyId: number): Promise<InterviewStat> {
+    try {
+      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetInterviewStat?companyId=${companyId}`);
+      return response.data;
+    } catch (error) {
+      this.snackbar.open('Failed to fetch interview stats', "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
       throw error;
     }
   }
