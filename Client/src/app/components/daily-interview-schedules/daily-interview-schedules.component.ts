@@ -39,6 +39,7 @@ interface AppointmentSchedule {
 
 export class DailyInterviewSchedulesComponent implements OnInit {
   selectedDate: Date = new Date();
+  companyId: number = 7;
   schedules: AppointmentSchedule[] = [];
   timeSlots: { label: string, start: Date, end: Date }[] = [];
   upNextSchedule: AppointmentSchedule | null = null;
@@ -48,31 +49,29 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
 
   ngOnInit() {
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate));
-  }
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);  }
 
   onDateChange(date: Date) {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date));
-  }
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date), this.companyId);  }
 
-  fetchSchedulesAndTodaySchedules(date: string) {
-    this.appointmentService.getSchedulesByDate(date).then(
-      (schedules: AppointmentSchedule[]) => {
-        this.schedules = schedules;
-        this.todaySchedules = schedules.filter(schedule => {
-          const scheduleDate = new Date(schedule.start_time).toDateString();
-          return scheduleDate === new Date().toDateString();
-        });
-        this.loadTodaySchedules();
-        this.generateTimeSlotsForSelectedDate();
-      },
-      (error) => {
-        this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
-      }
-    );
-  }
+    fetchSchedulesAndTodaySchedules(date: string, companyId: number) {
+      this.appointmentService.getSchedulesByDateAndCompany(date, companyId).then(
+        (schedules: AppointmentSchedule[]) => {
+          this.schedules = schedules;
+          this.todaySchedules = schedules.filter(schedule => {
+            const scheduleDate = new Date(schedule.start_time).toDateString();
+            return scheduleDate === new Date().toDateString();
+          });
+          this.loadTodaySchedules();
+          this.generateTimeSlotsForSelectedDate();
+        },
+        (error) => {
+          this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
+        }
+      );
+    }
 
   loadTodaySchedules() {
     const currentTime = new Date();
@@ -120,7 +119,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
       () => {
         this.snackBar.open('Status updated successfully', '', { duration: 3000 });
-        this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate));
+        this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);
       },
       (error) => {
         this.snackBar.open('Failed to update status', '', { duration: 3000 });
