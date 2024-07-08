@@ -18,6 +18,7 @@ import { MatCard } from '@angular/material/card';
 import { MatCardModule } from '@angular/material/card';
 import { AppointmentService } from '../../../services/appointment.service';
 import { MatSelectChange } from '@angular/material/select';
+import { AuthService } from '../../../services/auth.service';
 
 interface AppointmentSchedule {
   appointment_id: number;
@@ -40,39 +41,47 @@ interface AppointmentSchedule {
 
 export class DailyInterviewSchedulesComponent implements OnInit {
   selectedDate: Date = new Date();
-  companyId: number = 7;
   schedules: AppointmentSchedule[] = [];
   timeSlots: { label: string, start: Date, end: Date }[] = [];
   upNextSchedule: AppointmentSchedule | null = null;
   todaySchedules: AppointmentSchedule[] = [];
   noMoreSchedulesMessage: string = '';
 
-  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router) {}
+  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router,private authService: AuthService) {}
 
   ngOnInit() {
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);  }
+    const userRole = this.authService.getRole();
+    const companyId = this.authService.getCompanyID();
+    const userId = this.authService.getUserId();
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), companyId, userRole, userId);
+  }
 
   onDateChange(date: Date) {
+    const userRole = this.authService.getRole();
+    const companyId = this.authService.getCompanyID();
+    const userId = this.authService.getUserId();
+
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date), this.companyId);  }
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date), companyId, userRole, userId);
+  }
 
-    fetchSchedulesAndTodaySchedules(date: string, companyId: number) {
-      this.appointmentService.getSchedulesByDateAndCompany(date, companyId).then(
-        (schedules: AppointmentSchedule[]) => {
-          this.schedules = schedules;
-          this.todaySchedules = schedules.filter(schedule => {
-            const scheduleDate = new Date(schedule.start_time).toDateString();
-            return scheduleDate === new Date().toDateString();
-          });
-          this.loadTodaySchedules();
-          this.generateTimeSlotsForSelectedDate();
-        },
-        (error) => {
-          this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
-        }
-      );
-    }
+  fetchSchedulesAndTodaySchedules(date: string, companyId: number, userRole: string, userId: number) {
+    this.appointmentService.getSchedulesByDateAndCompany(date, companyId, userRole, userId).then(
+      (schedules: AppointmentSchedule[]) => {
+        this.schedules = schedules;
+        this.todaySchedules = schedules.filter(schedule => {
+          const scheduleDate = new Date(schedule.start_time).toDateString();
+          return scheduleDate === new Date().toDateString();
+        });
+        this.loadTodaySchedules();
+        this.generateTimeSlotsForSelectedDate();
+      },
+      (error) => {
+        this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
+      }
+    );
+  }
 
   loadTodaySchedules() {
     const currentTime = new Date();
@@ -120,7 +129,10 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
       () => {
         this.snackBar.open('Status updated successfully', '', { duration: 3000 });
-        this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);
+        const userRole = this.authService.getRole();
+        const companyId = this.authService.getCompanyID();
+        const userId = this.authService.getUserId();
+        this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), companyId, userRole, userId);
       },
       (error) => {
         this.snackBar.open('Failed to update status', '', { duration: 3000 });
@@ -170,8 +182,4 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       this.router.navigate([`/seeker-profile/${seekerId}`]);
     }
   }
- 
 }
- 
-
-  

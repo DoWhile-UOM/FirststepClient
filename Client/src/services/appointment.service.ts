@@ -20,10 +20,10 @@ export class AppointmentService {
 
   constructor(private snackbar: MatSnackBar) {}
 
-  async getSchedulesByDateAndCompany(date: Date | string, companyId: number): Promise<AppointmentSchedule[]> {
+  async getSchedulesByDateAndCompany(date: Date | string, companyId: number, userRole: string, userId: number): Promise<AppointmentSchedule[]> {
     const formattedDate = typeof date === 'string' ? date : date.toISOString().split('T')[0];
     try {
-      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetSchedulesByDateAndCompany/${formattedDate}/Company/${companyId}`);
+      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetSchedulesByDateAndCompany/${formattedDate}/Company/${companyId}?userRole=${userRole}&userId=${userId}`);
       return response.data.map((schedule: any) => ({
         ...schedule,
         status: this.mapStatus(schedule.status), // Map enum to string
