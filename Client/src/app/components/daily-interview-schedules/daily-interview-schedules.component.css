@@ -51,7 +51,8 @@
   padding: 10px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-right: 20px;
 }
 
 .schedule-table {
@@ -88,14 +89,14 @@
 .time-label {
   font-weight: bold;
   margin-right: 10px;
-  color:#d3d3d3;
+  color:grey;
   z-index: 1; /* Ensure the time label is always on top */
   background: #fafafa; /* Match the background color to cover the line */
 }
 
 .time-line {
   flex-grow: 1;
-  border-bottom: 1px solid #d3d3d3;
+  border-bottom: 1px solid#d3d3d3;
   position: absolute;
   top: 50%; /* Center the line vertically */
   left: 0;

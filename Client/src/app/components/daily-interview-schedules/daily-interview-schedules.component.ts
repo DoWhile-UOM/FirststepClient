@@ -78,7 +78,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
 
     if (!this.upNextSchedule) {
-      this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
+      this.noMoreSchedulesMessage = 'There are no more scheduled interviews for this day.';
     } else {
       this.noMoreSchedulesMessage = '';
     }
