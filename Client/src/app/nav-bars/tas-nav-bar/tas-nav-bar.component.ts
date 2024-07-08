@@ -8,15 +8,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleProfileEditComponent } from '../../components/role-profile-edit/role-profile-edit.component';
+
 @Component({
-  selector: 'app-hr-manager-nav-bar',
+  selector: 'app-tas-nav-bar',
   standalone: true,
   imports: [MatSlideToggleModule, MatToolbarModule, MatButtonModule, RouterModule, MatMenuModule, MatIconModule],
-  templateUrl: './hr-manager-nav-bar.component.html',
-  styleUrl: './hr-manager-nav-bar.component.css',
+  templateUrl: './tas-nav-bar.component.html',
+  styleUrl: './tas-nav-bar.component.css'
 })
-export class HrManagerNavBarComponent {
-  name: string = "HR Manager";
+export class TasNavBarComponent {
+  name: string = "Talent Acquisition Specialist";
   company: string = "My Company";
 
   constructor(private auth: AuthService, private dialog: MatDialog) {
