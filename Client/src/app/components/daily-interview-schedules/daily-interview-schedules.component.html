@@ -34,11 +34,10 @@
                    class="interview-slot" [ngStyle]="getStyleForSchedule(schedule)">
                 <div class="interview-details">
                   <span class="time">{{ schedule.start_time | date: 'shortTime' }} - {{ schedule.end_time | date: 'shortTime' }}</span>
-                  <!-- <span class="name" (click)="viewSeekerProfile(schedule.seeker_id)" style="cursor: pointer;">
+                  <span class="name" (click)="viewSeekerProfile(schedule.seeker_id)" style="cursor: pointer;">
                     {{ schedule.first_name }} {{ schedule.last_name }}
                     <mat-icon>launch</mat-icon>
-                  </span> -->
-                  <span class="name">{{ schedule.first_name }} {{ schedule.last_name }}</span>
+                  </span>
                   <span class="job-title">{{ schedule.title }}</span>
                   <span *ngIf="schedule.status === 'Pending' || schedule.status === 'Booked'">
                     <mat-select [value]="schedule.status" (selectionChange)="updateStatus($event, schedule.appointment_id)" class="status-dropdown">

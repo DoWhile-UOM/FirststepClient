@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -26,7 +27,7 @@ interface AppointmentSchedule {
   status: string;
   start_time: string;
   end_time: string;
-  // seeker_id?: number;
+  seeker_id?: number;
 }
 
 @Component({
@@ -46,7 +47,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   todaySchedules: AppointmentSchedule[] = [];
   noMoreSchedulesMessage: string = '';
 
-  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
+  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router) {}
 
   ngOnInit() {
     this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);  }
@@ -163,12 +164,14 @@ export class DailyInterviewSchedulesComponent implements OnInit {
         return '';
     }
   }
+
+  viewSeekerProfile(seekerId: number | undefined) {
+    if (seekerId) {
+      this.router.navigate([`/seeker-profile/${seekerId}`]);
+    }
+  }
+ 
 }
-  // viewSeekerProfile(seekerId: number | undefined) {
-  //   if (seekerId) {
-  //     this.router.navigate([`/seeker-profile/${seekerId}`]);
-  //   }
-  // }
-  
+ 
 
   

@@ -152,6 +152,8 @@
 .name {
   font-weight: bold;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .job-title {
@@ -173,6 +175,11 @@ job-title-up{
 .status-dropdown {
   margin-left: 10px;
   width: 120px;
+}
+
+.mat-icon {
+  font-size: 16px; /* Smaller icon size */
+  margin-left: 5px; /* Space between text and icon */
 }
 
 @media (max-width: 768px) {
