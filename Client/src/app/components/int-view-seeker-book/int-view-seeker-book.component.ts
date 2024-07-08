@@ -32,11 +32,13 @@ export class IntViewSeekerBookComponent {
     this.seekerid = Number(this.auth.getUserId());
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
+      const uid = params.get('uid');
       this.advertismentId = Number(id); //
       if(id==null || this.advertismentId == 0){
         this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
       }else{
         this.advertismentId = Number(id);
+        this.seekerid = Number(uid);
       }
     });
     this.loadSlot();
