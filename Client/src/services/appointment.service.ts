@@ -13,6 +13,19 @@ interface AppointmentSchedule {
   end_time: string;
 }
 
+interface DailyInterviewCount {
+  date: string;
+  booked: number;
+  completed: number;
+  missed: number;
+}
+
+interface InterviewStat {
+  interviewCountPerDay: DailyInterviewCount[];
+  isCalledPercentage: number;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,10 +33,10 @@ export class AppointmentService {
 
   constructor(private snackbar: MatSnackBar) {}
 
-  async getSchedulesByDate(date: Date | string): Promise<AppointmentSchedule[]> {
+  async getSchedulesByDateAndCompany(date: Date | string, companyId: number): Promise<AppointmentSchedule[]> {
     const formattedDate = typeof date === 'string' ? date : date.toISOString().split('T')[0];
     try {
-      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetByDate/${formattedDate}`);
+      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetSchedulesByDateAndCompany/${formattedDate}/Company/${companyId}`);
       return response.data.map((schedule: any) => ({
         ...schedule,
         status: this.mapStatus(schedule.status), // Map enum to string
@@ -32,6 +45,16 @@ export class AppointmentService {
         end_time: schedule.end_time // Ensure end_time is included
       }));
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async getInterviewStat(companyId: number): Promise<InterviewStat> {
+    try {
+      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetInterviewStat?companyId=${companyId}`);
+      return response.data;
+    } catch (error) {
+      this.snackbar.open('Failed to fetch interview stats', "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
       throw error;
     }
   }
