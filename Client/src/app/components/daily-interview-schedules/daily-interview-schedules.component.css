@@ -46,13 +46,25 @@
   align-items: flex-start;
 }
 
-.calendar-container {
+.left-content {
+  display: flex;
+  flex-direction: column;
   width: 30%;
+}
+
+.calendar-container {
   padding: 10px;
   background: #fff;
   border-radius: 10px;
   box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
-  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.text-card {
+  padding: 20px;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: #fff;
 }
 
 .schedule-table {
@@ -89,14 +101,14 @@
 .time-label {
   font-weight: bold;
   margin-right: 10px;
-  color:grey;
+  color: grey;
   z-index: 1; /* Ensure the time label is always on top */
   background: #fafafa; /* Match the background color to cover the line */
 }
 
 .time-line {
   flex-grow: 1;
-  border-bottom: 1px solid#d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
   position: absolute;
   top: 50%; /* Center the line vertically */
   left: 0;
@@ -118,16 +130,16 @@
   padding: 12px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background: #D3D3D3;
+  background: #d3d3d3;
   z-index: 2; /* Ensure the slot is on top of the line */
 }
 
 .interview-slot.missed {
-  background: #EE9999;
+  background: #ee9999;
 }
 
 .interview-slot.complete {
-  background: #80CBC4;
+  background: #80cbc4;
 }
 
 .status.booked {
@@ -161,11 +173,11 @@
   color: #555;
   margin-right: 10px;
 }
-job-title-up{
-  font-size: 0.9em;
-  color:white;
-  margin-right: 10px;
 
+.job-title-up {
+  font-size: 0.9em;
+  color: white;
+  margin-right: 10px;
 }
 
 .time {

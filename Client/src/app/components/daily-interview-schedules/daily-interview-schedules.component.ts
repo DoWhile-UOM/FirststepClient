@@ -18,6 +18,8 @@ import { MatCard } from '@angular/material/card';
 import { MatCardModule } from '@angular/material/card';
 import { AppointmentService } from '../../../services/appointment.service';
 import { MatSelectChange } from '@angular/material/select';
+import { CaInterviewStatComponent } from '../ca-interview-stat/ca-interview-stat.component';
+import { AuthService } from '../../../services/auth.service';
 
 interface AppointmentSchedule {
   appointment_id: number;
@@ -33,23 +35,26 @@ interface AppointmentSchedule {
 @Component({
   selector: 'app-daily-interview-schedules',
   standalone: true,
-  imports: [MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider, MatCard, MatCardModule],
+  imports: [MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider, MatCard, MatCardModule,CaInterviewStatComponent],
   templateUrl: './daily-interview-schedules.component.html',
   styleUrl: './daily-interview-schedules.component.css'
 })
 
 export class DailyInterviewSchedulesComponent implements OnInit {
   selectedDate: Date = new Date();
-  companyId: number = 7;
+  companyId!: number;
   schedules: AppointmentSchedule[] = [];
   timeSlots: { label: string, start: Date, end: Date }[] = [];
   upNextSchedule: AppointmentSchedule | null = null;
   todaySchedules: AppointmentSchedule[] = [];
   noMoreSchedulesMessage: string = '';
+  userRole: string = '';
 
-  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router) {}
+  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.companyId = this.authService.getCompanyID();
+    this.userRole = this.authService.getRole();
     this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);  }
 
   onDateChange(date: Date) {
