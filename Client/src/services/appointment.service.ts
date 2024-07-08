@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Apipaths } from './apipaths/apipaths';
 import axios from 'axios';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from './auth.service';
 
 interface AppointmentSchedule {
   appointment_id: number;
@@ -12,7 +11,6 @@ interface AppointmentSchedule {
   status: string;
   start_time: string;
   end_time: string;
-  seeker_id?: number;
 }
 
 interface DailyInterviewCount {
@@ -33,18 +31,12 @@ interface InterviewStat {
 })
 export class AppointmentService {
 
-  constructor(private authService: AuthService, private snackbar: MatSnackBar) { }
+  constructor(private snackbar: MatSnackBar) {}
 
-  async getSchedulesByDateAndCompany(date: Date | string, companyId: number, userId: number, userRole: string): Promise<AppointmentSchedule[]> {
-    const token = this.authService.getToken(); // Get the token from AuthService
+  async getSchedulesByDateAndCompany(date: Date | string, companyId: number): Promise<AppointmentSchedule[]> {
     const formattedDate = typeof date === 'string' ? date : date.toISOString().split('T')[0];
     try {
-      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetSchedulesByDateAndCompany/${formattedDate}/Company/${companyId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}` // Include the token in the request headers
-        },
-        params: { userId, userRole }
-      });
+      const response = await axios.get(Apipaths.baseUrl + `Appointment/GetSchedulesByDateAndCompany/${formattedDate}/Company/${companyId}`);
       return response.data.map((schedule: any) => ({
         ...schedule,
         status: this.mapStatus(schedule.status), // Map enum to string
@@ -53,20 +45,6 @@ export class AppointmentService {
         end_time: schedule.end_time // Ensure end_time is included
       }));
     } catch (error) {
-      throw error;
-    }
-  }
-
-  async updateAppointmentStatus(appointmentId: number, status: string): Promise<void> {
-    const token = this.authService.getToken(); // Get the token from AuthService
-    try {
-      await axios.patch(Apipaths.baseUrl + `Appointment/UpdateStatus/appointment=${appointmentId}/status=${status}`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}` // Include the token in the request headers
-        }
-      });
-    } catch (error) {
-      this.snackbar.open('Failed to update status', "", { panelClass: ['app-notification-error'] })._dismissAfter(5000);
       throw error;
     }
   }
@@ -81,6 +59,15 @@ export class AppointmentService {
     }
   }
 
+  async updateAppointmentStatus(appointmentId: number, status: string): Promise<void> {
+    try {
+      await axios.patch(Apipaths.baseUrl + `Appointment/UpdateStatus/appointment=${appointmentId}/status=${status}`);
+    } catch (error) {
+      this.snackbar.open('Failed to update status', "", {panelClass: ['app-notification-error']})._dismissAfter(5000);
+      throw error;
+    }
+  }
+  
   private mapStatus(status: number): string {
     switch (status) {
       case 0:

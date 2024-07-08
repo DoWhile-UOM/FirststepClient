@@ -18,7 +18,6 @@ import { MatCard } from '@angular/material/card';
 import { MatCardModule } from '@angular/material/card';
 import { AppointmentService } from '../../../services/appointment.service';
 import { MatSelectChange } from '@angular/material/select';
-import { AuthService } from '../../../services/auth.service';
 
 interface AppointmentSchedule {
   appointment_id: number;
@@ -47,28 +46,19 @@ export class DailyInterviewSchedulesComponent implements OnInit {
   upNextSchedule: AppointmentSchedule | null = null;
   todaySchedules: AppointmentSchedule[] = [];
   noMoreSchedulesMessage: string = '';
-  userRole: string | null = '';
-  userId: number | null = null;
 
-  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router , private authService: AuthService) { }
-
+  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router) {}
 
   ngOnInit() {
-    this.companyId = this.authService.getCompanyID();
-    this.userRole = this.authService.getRole();
-    this.userId = parseInt(this.authService.getUserId());
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);
-  }
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);  }
 
   onDateChange(date: Date) {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date), this.companyId);
-  }
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date), this.companyId);  }
 
-  fetchSchedulesAndTodaySchedules(date: string, companyId: number) {
-    if (this.userId !== null && this.userRole !== null) {
-      this.appointmentService.getSchedulesByDateAndCompany(date, companyId, this.userId, this.userRole).then(
+    fetchSchedulesAndTodaySchedules(date: string, companyId: number) {
+      this.appointmentService.getSchedulesByDateAndCompany(date, companyId).then(
         (schedules: AppointmentSchedule[]) => {
           this.schedules = schedules;
           this.todaySchedules = schedules.filter(schedule => {
@@ -82,10 +72,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
           this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
         }
       );
-    } else {
-      this.snackBar.open('User ID or role is missing', '', { duration: 3000 });
     }
-  }
 
   loadTodaySchedules() {
     const currentTime = new Date();
@@ -183,4 +170,8 @@ export class DailyInterviewSchedulesComponent implements OnInit {
       this.router.navigate([`/seeker-profile/${seekerId}`]);
     }
   }
+ 
 }
+ 
+
+  
