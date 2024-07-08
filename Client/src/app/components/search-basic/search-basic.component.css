@@ -69,14 +69,22 @@ mat-divider{
 }
 
 .searchBtn{
-    margin-left: 0.5em;
-    margin-right: 1em;
+    margin-left: 0.4em;
+    margin-right: 0.5em;
+}
+
+.closeBtn, .searchBtn{
     width: 4em;
     height: 4em;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.searchBtn button, .closeBtn button{
+    padding-left: 0.28em;
+    padding-top: 0.4em;
 }
 
 mat-form-field mat-icon{
