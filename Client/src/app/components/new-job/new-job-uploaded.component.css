@@ -18,6 +18,5 @@
 
 .buttons {
     cursor: pointer;
-    gap: 2em;
     display: flex;
 }
