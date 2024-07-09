@@ -32,7 +32,6 @@
     "@azure/storage-blob": "^12.17.0",
     "@canvasjs/angular-charts": "^1.2.0",
     "@canvasjs/charts": "^3.8.12",
-    "@syncfusion/ej2-angular-pdfviewer": "^24.2.7",
     "@syncfusion/ej2-angular-richtexteditor": "^24.2.7",
     "axios": "^1.6.7",
     "canvasjs": "^1.8.3",
