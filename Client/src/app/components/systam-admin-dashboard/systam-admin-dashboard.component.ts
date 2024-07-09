@@ -179,7 +179,6 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
 
   async fetchEligibleUnregisteredCompanies() {
     this.spinner.show();
-    console.log('inside fetchEligibleUnregisteredCompanies');
     this.isEligibleUnregCmpaniesLoading = true;
     try {
       const data: any[] = await this.companyService.getEligibleUnregisteredCompanies();
@@ -190,7 +189,7 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
         company_logo: item.company_logo,
       }));
 
-      console.log('got the eligible companies');
+
       this.eligibleUnregisteredCompaniesLength = this.eligibleUnregisteredCompanies.length;
       this.items = this.eligibleUnregisteredCompanies.slice(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
     } catch (error) {
@@ -216,7 +215,7 @@ export class SystamAdminDashboardComponent implements OnInit, AfterViewInit {
     }
   }
   getEligibleUnregisteredCompanies() {
-    this.percentageEligibleNotRegisteredCompanies = Number((this.eligibleUnregisteredCompaniesLength / this.registeredCompanies * 100).toFixed(2));
+    this.percentageEligibleNotRegisteredCompanies = Number(((this.eligibleUnregisteredCompaniesLength / (this.registeredCompanies)) * 100).toFixed(2));
   }
 
   pageChanged(event: PageEvent) {
