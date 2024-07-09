@@ -10,6 +10,11 @@ import { InterviewService } from '../../../services/interview.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../services/auth.service';
+import { SpinnerComponent } from '../spinner/spinner.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { PopUpComponent } from '../pop-up/pop-up.component';
+import { Router } from '@angular/router';
 interface advertisementDetials {
   interview_duration: number;
   title: string;
@@ -19,7 +24,7 @@ interface advertisementDetials {
 @Component({
   selector: 'app-int-view-seeker-book',
   standalone: true,
-  imports: [MatGridListModule, MatDividerModule, CommonModule, MatCardModule, MatIconModule, MatButtonModule],
+  imports: [SpinnerComponent, MatGridListModule, MatDividerModule, CommonModule, MatCardModule, MatIconModule, MatButtonModule],
   templateUrl: './int-view-seeker-book.component.html',
   styleUrl: './int-view-seeker-book.component.css'
 })
@@ -28,19 +33,23 @@ export class IntViewSeekerBookComponent {
   advertismentId: number = 0;
   seekerid: number = 0;
 
-  constructor(private auth:AuthService,private snackBar: MatSnackBar,private route: ActivatedRoute,private interview: InterviewService) {
+  constructor(private router: Router,public dialog: MatDialog, private spinner: NgxSpinnerService, private auth: AuthService, private snackBar: MatSnackBar, private route: ActivatedRoute, private interview: InterviewService) {
+    this.spinner.show();
     this.seekerid = Number(this.auth.getUserId());
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
+      const uid = params.get('uid');
       this.advertismentId = Number(id); //
-      if(id==null || this.advertismentId == 0){
+      if (id == null || this.advertismentId == 0) {
         this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
-      }else{
+      } else {
         this.advertismentId = Number(id);
+        this.seekerid = Number(uid);
       }
     });
     this.loadSlot();
-    
+    //this.spinner.hide();
+
   }
   schedule2: any;
 
@@ -49,17 +58,26 @@ export class IntViewSeekerBookComponent {
   }
 
   isPopupVisible: boolean = false;
-  currentslot = { day: '', date: 0, time: '' ,id:0};
+  currentslot = { day: '', date: 0, time: '', id: 0 };
 
-  showPopup(day: string, date: number, time: string,aid:number) {
+  showPopup(day: string, date: number, time: string, aid: number) {
     this.isPopupVisible = true;
-    this.currentslot = { day: day, date: date, time: time ,id:aid};
+    this.currentslot = { day: day, date: date, time: time, id: aid };
     console.log('Date ' + date + ' Time ' + time);
   }
 
-  confirmTime(appointment_id:number) {
-    this.interview.bookSlotSeeker(appointment_id,this.seekerid);//change 4159 to the actual seeker id
+  confirmTime(appointment_id: number) {
+    this.spinner.show();
+    this.interview.bookSlotSeeker(appointment_id, this.seekerid);//change 4159 to the actual seeker id
     console.log('Appointment ID ' + appointment_id);
+    this.closePopup();
+    this.openFinaldialog();
+    this.spinner.hide();
+    const delay = 6000;
+    setTimeout(() => {
+      this.dialog.closeAll();
+      this.router.navigate(['/login']); // Replace '/target-route' with your desired route
+    }, delay);
   }
 
   closePopup() {
@@ -71,11 +89,12 @@ export class IntViewSeekerBookComponent {
     const slots = result['slot'];
     this.advertismentDetails = result['details'];
     this.schedule2 = this.getFormattedSchedule(slots);
+    this.spinner.hide();
     //console.log(this.schedule2);
   }
 
   getFormattedSchedule(schedule: { appointment_id: number; start_time: string }[]) {
-    let slotData:{ id: number, start: string}={id:0, start:''};
+    let slotData: { id: number, start: string } = { id: 0, start: '' };
     const weekDays: { number: string; timeSlots: typeof slotData[] }[] = [];
     const groupedSchedule: { [date: string]: { appointment_id: number; start_time: string }[] } = {};
 
@@ -94,7 +113,7 @@ export class IntViewSeekerBookComponent {
           minute: 'numeric',
           hour12: true
         });
-        slotData={id:slot.appointment_id, start:time};
+        slotData = { id: slot.appointment_id, start: time };
         return slotData;
       });
       const formattedDate = date;
@@ -104,6 +123,18 @@ export class IntViewSeekerBookComponent {
     return weekDays;
   }
 
+  openFinaldialog(): void {
+    const dialogRef = this.dialog.open(PopUpComponent, {
+      width: '1000px',
+      disableClose: true, 
+      data: { header:'Appointment Successfully Booked',input: 'Your appointment has been successfully booked. Please check your mailbox for full details. You will now be redirected to the home page.' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    }
+
+    );
+  }
 
 
 }

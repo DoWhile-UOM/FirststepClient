@@ -19,17 +19,19 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AdvertisementServices } from '../../../services/advertisement.service';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog } from '@angular/material/dialog';
+import { PopUpComponent } from '../pop-up/pop-up.component';
 
-interface IRecord{
-  id:number;
-  day:string;
-  start:number;
-  end:number;
+interface IRecord {
+  id: number;
+  day: string;
+  start: number;
+  end: number;
 }
-interface IAppointmentDetails{
-  duration:number;
-  comment:string;
-  title:string;
+interface IAppointmentDetails {
+  duration: number;
+  comment: string;
+  title: string;
 }
 @Component({
   selector: 'app-available-time-slot',
@@ -57,25 +59,26 @@ export class AvailableTimeSlotComponent {
   userType: string = 'ca';
   appointmentDetails: FormGroup;
   records: IRecord[] = [];
-  appointment: IAppointmentDetails = {duration: 30,comment: '',title: ''};
+  appointment: IAppointmentDetails = { duration: 30, comment: '', title: '' };
 
   constructor(
-    private spinner: 
-    NgxSpinnerService,
-    private formAPD: FormBuilder, 
-    private route: ActivatedRoute, 
+    public dialog: MatDialog,
+    private spinner:
+      NgxSpinnerService,
+    private formAPD: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar, 
-    private interview: InterviewService, 
+    private snackBar: MatSnackBar,
+    private interview: InterviewService,
     private auth: AuthService,
     private advertisementService: AdvertisementServices) {
     this.spinner.show();
     this.route.queryParamMap.subscribe(params => {
       const id = params.get('id');
-      this.advertismentId = Number(id); 
-      if(id==null || this.advertismentId == 0 ||this.auth.getCompanyID() == null){
+      this.advertismentId = Number(id);
+      if (id == null || this.advertismentId == 0 || this.auth.getCompanyID() == null) {
         this.snackBar.open('Invalid Request', '', { panelClass: ['app-notification-error'] })._dismissAfter(7000);
-      }else{
+      } else {
         this.advertismentId = Number(id);
         this.spinner.hide();
       }
@@ -93,7 +96,7 @@ export class AvailableTimeSlotComponent {
       this.appointment.duration = val;
       if (this.appointment.duration > 0) {
         this.isFormFilled = true;
-      }else{
+      } else {
         this.isFormFilled = false;
       }
       console.log(this.interViewDuration);
@@ -126,11 +129,11 @@ export class AvailableTimeSlotComponent {
 
     const jobData = this.advertisementService.getJobData();
 
-    if(jobData){
+    if (jobData) {
       this.job_number = jobData.jobNumber;
       this.advertisment_title = jobData.jobTitle;
     }
-    else{
+    else {
       //this.router.navigate(['/notfound']);
     }
   }
@@ -213,9 +216,18 @@ export class AvailableTimeSlotComponent {
   }
 
   allocateTime() {
+    this.closePopup();
+    this.openFinaldialog();
     this.spinner.show();
-    this.interview.postSplittedTimeSlots(this.records, this.appointment.duration,this.advertismentId,this.auth.getCompanyID());
+    this.interview.postSplittedTimeSlots(this.records, this.appointment.duration,this.appointment.comment,this.advertismentId,this.auth.getCompanyID());
     this.spinner.hide();
+    const delay = 6000;
+    setTimeout(() => {
+      this.dialog.closeAll();
+      const url = 'ca/jobOfferList';
+      //const params = { jobID: this.advertismentId };
+      this.router.navigate([url]); // Replace '/target-route' with your desired route
+    }, delay);
   }
 
   closeAppointmentPopup() {
@@ -230,7 +242,7 @@ export class AvailableTimeSlotComponent {
     this.isIntroPopupVisible = true;
   }
 
-  openAllocateopup(){
+  openAllocateopup() {
     this.isPopupVisible = true;
   }
 
@@ -238,7 +250,20 @@ export class AvailableTimeSlotComponent {
 
   }
 
-  onBackButtonClick(){
-		window.history.back();
-	}
+  onBackButtonClick() {
+    window.history.back();
+  }
+
+  openFinaldialog(): void {
+    const dialogRef = this.dialog.open(PopUpComponent, {
+      width: '1000px',
+      disableClose: true,
+      data: { header: 'Time Allocation Successful', input: 'The time allocation process has been successfully completed, and emails have been sent to seekers to book their time slots. You will now be redirected to the job offer page.' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    }
+
+    );
+  }
 }

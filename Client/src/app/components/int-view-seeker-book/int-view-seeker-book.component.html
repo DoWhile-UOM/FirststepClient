@@ -36,15 +36,7 @@
 
         <div class="header">
 
-            <button mat-icon-button>
-                <mat-icon>chevron_left</mat-icon>
-            </button>
-            <div class="date">T 10</div>
-            <button mat-icon-button>
-                <mat-icon>chevron_right</mat-icon>
-            </button>
-
-            <div class="timezone">Test</div>
+            <div class="timezone">(GMT+5:30) Time in Sri Lanka </div>
         </div>
         <div class="week">
             <div class="day" *ngFor="let day of schedule2">
@@ -72,3 +64,5 @@
         <button class="popup-button" mat-raised-button color="warn" (click)="closePopup()">Cancel</button>
     </div>
 </div>
+
+<app-spinner></app-spinner>

@@ -23,16 +23,9 @@ interface InterviewSchedule {
 }
 interface PeriodicElement {
   name: string;
-  weight: number;
+  weight: string;
   symbol: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { name: 'Lithium', weight: 6.941, symbol: 'Li' },
-
-];
 
 interface IBookedSlot {
   seeker_id: number;
@@ -116,14 +109,19 @@ export class IntViewConfirmComponent {
   }
 
   openpopup() {
-    this.isPopupVisible = true;
+    this.onBackButtonClick();
   }
 
-  formatDate(date: Date) {
-    const dateStr = date.toLocaleDateString();
-    const time = date.toLocaleTimeString();
+  formatDate(date: string) {
+    let dateObj = new Date(date);
+    const dateStr = dateObj.toLocaleDateString();
+    const time = dateObj.toLocaleTimeString();
     let dateTime:IDateTime = {date:dateStr,time:time};
-    return dateStr;
+    return dateTime;
 
   }
+
+  onBackButtonClick(){
+		window.history.back();
+	}
 }
