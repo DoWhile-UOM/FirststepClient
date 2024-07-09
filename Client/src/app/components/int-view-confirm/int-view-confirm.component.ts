@@ -109,7 +109,7 @@ export class IntViewConfirmComponent {
   }
 
   openpopup() {
-    this.isPopupVisible = true;
+    this.onBackButtonClick();
   }
 
   formatDate(date: string) {
@@ -120,4 +120,8 @@ export class IntViewConfirmComponent {
     return dateTime;
 
   }
+
+  onBackButtonClick(){
+		window.history.back();
+	}
 }

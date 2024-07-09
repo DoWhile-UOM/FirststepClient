@@ -37,15 +37,15 @@
             <div class="calendar-details-container">
                 <div class="calendar-container">
                     <div class="buttons-right-inside">
-                        <button mat-raised-button class="apply-button" color="primary" (click)="openpopup()">Proceed to interview</button>
+                        <button mat-raised-button class="apply-button" color="primary" (click)="openpopup()">Back To Job Offer</button>
                     </div>
                 </div>
                 <div class="calendar-container">
-                    <h3>Selected applicants have not yet booked an appointment</h3>
+                    <h3>Shortlisted Applicants have not yet booked an appointment</h3>
                     <div class="slots" *ngFor="let schedule of schedules">
                         <div class="schedule-item">
                             <div class="details">
-                                <div class="name">{{ schedule.seeker_name }} {{schedule.seeker_id}}</div>
+                                <div class="name">{{ schedule.seeker_name }}</div>
                             </div>
                         </div>
                     </div>
