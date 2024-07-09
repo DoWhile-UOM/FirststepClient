@@ -173,16 +173,16 @@
                   </mat-select>
                   <mat-error *ngIf="seekerReg.get('field_id')?.hasError('required')">Field is required</mat-error>
                 </mat-form-field>
-                <mat-label class="label-import">Please upload your CV</mat-label>
-                <div class="cvupload">
-                    <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload>
-                </div>
                 <div class="skill-part fixed-width">
-                  <mat-label class="label-import" style="text-align: center;">Add Your Skills</mat-label>
+                  <mat-label class="label-import">Add your Skills here</mat-label>
                   <div class="skillchip">
                     <app-add-skills (skillChange)="changeSkillsArray($event)"></app-add-skills>
                   </div>
                 </div>
+                <mat-label class="label-import">Please upload your CV</mat-label>
+                <div class="cvupload">
+                    <app-seeker-application-file-upload (fileSelected)="onCvSelected($event)"></app-seeker-application-file-upload>
+                </div>                
                 <div class="button-container">
                   <button mat-button matStepperPrevious class="custom-stepper-button">
                     Back
@@ -213,7 +213,7 @@
                 <mat-form-field appearance="outline" class="fixed-width">
                   <mat-label>Bio</mat-label>
                   <input matInput placeholder="Enter Bio" formControlName="bio" />
-                  <mat-hint>e.g., Passionate software developer with 5 years of experience.</mat-hint>
+                  <mat-hint>e.g., Passionate software developer</mat-hint>
                   <mat-error *ngIf="seekerReg.get('bio')?.hasError('required')">Bio is required</mat-error>
                   <mat-error *ngIf="seekerReg.get('bio')?.hasError('maxlength')">Bio is too long</mat-error>
                 </mat-form-field>

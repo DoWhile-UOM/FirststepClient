@@ -3,7 +3,7 @@
     <div class="heading title" style="margin-bottom: 2em">
       <span class="sectionHeading">{{ seekerForm.get('first_name')?.value }} {{ seekerForm.get('last_name')?.value }}</span>
     </div>
-    <form [formGroup]="seekerForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="seekerForm" (ngSubmit)="onSubmit($event)">
       <div class="profile-section">
         <div class="profile-container">
           <img
@@ -15,7 +15,7 @@
             (error)="onImageError()"
           />
           <div class="edit-container">
-            <button mat-button color="primary" (click)="triggerFileInput()" class="edit-button">
+            <button mat-button color="primary" type="button" (click)="triggerFileInput()" class="edit-button">
               <mat-icon class="edit">edit</mat-icon>
               Edit image
             </button>
@@ -71,7 +71,7 @@
               <input matInput placeholder="Enter Email" formControlName="email" [readonly]="emailReadOnly" required />
               <mat-error *ngIf="hasError('email')">{{ getErrorMessage('email') }}</mat-error>
             </mat-form-field>
-            <button mat-button color="primary" class="change-email-button" (click)="openDialog()" id="otpreqbtn">Change Email</button>
+            <button mat-button color="primary" class="change-email-button" type="button" (click)="openDialog()" id="otpreqbtn">Change Email</button>
           </div>
         </mat-grid-tile>
         
@@ -146,14 +146,14 @@
         <app-add-skills [skills]="skills" (skillChange)="changeSkillsArray($event)"></app-add-skills>
       </div>
       <div class="button-container">
-        <button mat-raised-button color="primary" (click)="openUploadDialog()" class="button">Upload CV</button>
-        <button mat-raised-button color="primary" [disabled]="disableViewButton" (click)="openPdfViewer()" class="button">View CV</button>
+        <button mat-raised-button color="primary" (click)="openUploadDialog()" type="button" class="button">Upload CV</button>
+        <button mat-raised-button color="primary" [disabled]="disableViewButton" type="button" (click)="openPdfViewer()" class="button">View CV</button>
       </div>
       <mat-divider></mat-divider>
       <div class="example-button-row">
-        <button type="submit" mat-raised-button color="primary" class="button">Update Profile</button>
-        <button type="button" mat-raised-button (click)="discardChanges()" class="button">Discard Changes</button>
-        <button type="button" mat-raised-button color="warn" (click)="deleteAccount()" class="button">Delete Profile</button>
+        <button type="submit" mat-raised-button type="submit" color="primary" class="button">Update Profile</button>
+        <button type="button" mat-raised-button type="button" (click)="discardChanges()" class="button">Discard Changes</button>
+        <button type="button" mat-raised-button type="button" color="warn" (click)="deleteAccount()" class="button">Delete Profile</button>
       </div>
       
     </form>
