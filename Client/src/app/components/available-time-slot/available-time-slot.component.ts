@@ -219,14 +219,14 @@ export class AvailableTimeSlotComponent {
     this.closePopup();
     this.openFinaldialog();
     this.spinner.show();
-    this.interview.postSplittedTimeSlots(this.records, this.appointment.duration,this.advertismentId,this.auth.getCompanyID());
+    this.interview.postSplittedTimeSlots(this.records, this.appointment.duration,this.appointment.comment,this.advertismentId,this.auth.getCompanyID());
     this.spinner.hide();
     const delay = 6000;
     setTimeout(() => {
       this.dialog.closeAll();
-      const url = 'ca/jobOfferList/applicationList';
-      const params = { jobID: this.advertismentId };
-      this.router.navigate([url], { queryParams: params }); // Replace '/target-route' with your desired route
+      const url = 'ca/jobOfferList';
+      //const params = { jobID: this.advertismentId };
+      this.router.navigate([url]); // Replace '/target-route' with your desired route
     }, delay);
   }
 

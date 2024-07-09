@@ -90,7 +90,7 @@ export class InterviewService {
 
 
 
-  async postSplittedTimeSlots(records: Record[], duration: number, advertisement_id: number, company_id: number) {
+  async postSplittedTimeSlots(records: Record[], duration: number,comment:string, advertisement_id: number, company_id: number) {
     records.forEach((record: Record) => {
       this.splitIntoSlots(record, duration);
     });
@@ -100,7 +100,8 @@ export class InterviewService {
       company_id: company_id,
       advertisement_id: advertisement_id,
       duration: duration,
-      time_slots: this.slots
+      time_slots: this.slots,
+      comment:comment
     };
     //console.log(slotRequest);
 
