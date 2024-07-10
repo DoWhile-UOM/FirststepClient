@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { FormField } from '@syncfusion/ej2-angular-pdfviewer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
