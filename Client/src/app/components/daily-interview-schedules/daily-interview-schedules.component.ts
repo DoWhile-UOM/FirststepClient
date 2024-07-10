@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -17,6 +18,8 @@ import { MatCard } from '@angular/material/card';
 import { MatCardModule } from '@angular/material/card';
 import { AppointmentService } from '../../../services/appointment.service';
 import { MatSelectChange } from '@angular/material/select';
+import { CaInterviewStatComponent } from '../ca-interview-stat/ca-interview-stat.component';
+import { AuthService } from '../../../services/auth.service';
 
 interface AppointmentSchedule {
   appointment_id: number;
@@ -26,60 +29,62 @@ interface AppointmentSchedule {
   status: string;
   start_time: string;
   end_time: string;
-  // seeker_id?: number;
+  seeker_id?: number;
 }
 
 @Component({
   selector: 'app-daily-interview-schedules',
   standalone: true,
-  imports: [MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider, MatCard, MatCardModule],
+  imports: [MatPaginatorModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule, MatTable, FormsModule, MatSnackBarModule, MatTableModule, MatDivider, MatCard, MatCardModule,CaInterviewStatComponent],
   templateUrl: './daily-interview-schedules.component.html',
   styleUrl: './daily-interview-schedules.component.css'
 })
 
 export class DailyInterviewSchedulesComponent implements OnInit {
   selectedDate: Date = new Date();
+  companyId!: number;
   schedules: AppointmentSchedule[] = [];
   timeSlots: { label: string, start: Date, end: Date }[] = [];
   upNextSchedule: AppointmentSchedule | null = null;
   todaySchedules: AppointmentSchedule[] = [];
   noMoreSchedulesMessage: string = '';
+  userRole: string = '';
 
-  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService) {}
+  constructor(private snackBar: MatSnackBar, private appointmentService: AppointmentService ,private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate));
-  }
+    this.companyId = this.authService.getCompanyID();
+    this.userRole = this.authService.getRole();
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);  }
 
   onDateChange(date: Date) {
     this.selectedDate = date;
     this.snackBar.open(`Selected date: ${date.toDateString()}`, '', { duration: 3000 });
-    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date));
-  }
+    this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(date), this.companyId);  }
 
-  fetchSchedulesAndTodaySchedules(date: string) {
-    this.appointmentService.getSchedulesByDate(date).then(
-      (schedules: AppointmentSchedule[]) => {
-        this.schedules = schedules;
-        this.todaySchedules = schedules.filter(schedule => {
-          const scheduleDate = new Date(schedule.start_time).toDateString();
-          return scheduleDate === new Date().toDateString();
-        });
-        this.loadTodaySchedules();
-        this.generateTimeSlotsForSelectedDate();
-      },
-      (error) => {
-        this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
-      }
-    );
-  }
+    fetchSchedulesAndTodaySchedules(date: string, companyId: number) {
+      this.appointmentService.getSchedulesByDateAndCompany(date, companyId).then(
+        (schedules: AppointmentSchedule[]) => {
+          this.schedules = schedules;
+          this.todaySchedules = schedules.filter(schedule => {
+            const scheduleDate = new Date(schedule.start_time).toDateString();
+            return scheduleDate === new Date().toDateString();
+          });
+          this.loadTodaySchedules();
+          this.generateTimeSlotsForSelectedDate();
+        },
+        (error) => {
+          this.snackBar.open('Failed to fetch schedules', '', { duration: 3000 });
+        }
+      );
+    }
 
   loadTodaySchedules() {
     const currentTime = new Date();
     this.upNextSchedule = this.todaySchedules.find(schedule => new Date(schedule.start_time) > currentTime) || null;
 
     if (!this.upNextSchedule) {
-      this.noMoreSchedulesMessage = 'There are no more scheduled interviews today.';
+      this.noMoreSchedulesMessage = 'There are no more scheduled interviews for this day.';
     } else {
       this.noMoreSchedulesMessage = '';
     }
@@ -120,7 +125,7 @@ export class DailyInterviewSchedulesComponent implements OnInit {
     this.appointmentService.updateAppointmentStatus(appointmentId, newStatus).then(
       () => {
         this.snackBar.open('Status updated successfully', '', { duration: 3000 });
-        this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate));
+        this.fetchSchedulesAndTodaySchedules(this.adjustDateToUTC(this.selectedDate), this.companyId);
       },
       (error) => {
         this.snackBar.open('Failed to update status', '', { duration: 3000 });
@@ -164,12 +169,14 @@ export class DailyInterviewSchedulesComponent implements OnInit {
         return '';
     }
   }
+
+  viewSeekerProfile(seekerId: number | undefined) {
+    if (seekerId) {
+      this.router.navigate([`/seeker-profile/${seekerId}`]);
+    }
+  }
+ 
 }
-  // viewSeekerProfile(seekerId: number | undefined) {
-  //   if (seekerId) {
-  //     this.router.navigate([`/seeker-profile/${seekerId}`]);
-  //   }
-  // }
-  
+ 
 
   

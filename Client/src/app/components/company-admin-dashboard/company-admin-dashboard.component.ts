@@ -15,6 +15,7 @@ import { ApplicationService } from '../../../services/application.service';
 import { Router } from '@angular/router';
 import { AddrolesPopupComponent } from '../addroles-popup/addroles-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CaInterviewStatComponent } from '../ca-interview-stat/ca-interview-stat.component';
 
 interface Job {
   job_id: number;
@@ -47,6 +48,7 @@ interface ApplicationData {
     MatMenuModule,
     CaEmployeeStatComponent,
     CaAverageTimeComponent,
+    CaInterviewStatComponent
   ],
 })
 export class CompanyAdminDashboardComponent implements OnInit {

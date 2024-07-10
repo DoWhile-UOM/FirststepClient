@@ -73,7 +73,7 @@ export class AdvertisementActionsComponent {
     this.snackbar.open("Unsaved job...", "", {panelClass: ['app-notification-normal']})._dismissAfter(3000);
     this.currentStatus = false;
 
-    if (this.router.url == '/seeker/saved'){
+    if (this.router.url == '/seeker/liked'){
       window.location.reload();
     }
   }

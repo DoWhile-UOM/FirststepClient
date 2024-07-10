@@ -1,0 +1,90 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-bar {
+    height: 4em; 
+    background-color: white;
+    margin-top: 0;
+    position: fixed !important;
+    top: 0;
+    width: 100%;
+    z-index: 1000 !important;
+  }
+  
+  .rep{
+    padding-top: 4em;
+  }
+  
+  .mat-toolbar{
+    position: relative;
+    z-index: 2;
+  }
+  
+  .logo{
+    height: 2.5em;
+    width: 2.5em;
+    margin-right: 0.5em; 
+  }
+  
+  .flex-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .right-buttons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .profile-image {
+    height: 2em;
+    width: 2em; 
+    border-radius: 50%; 
+    margin-right: 16px;
+    margin-left: 5px;
+  }
+  
+  .right-buttons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  a{
+    text-decoration: none;
+    color: black;
+    display: block;
+  }
+  
+  .right-buttons a{
+    font-size: 20px;
+    display: block;
+    padding: 0.2em 0.6em;
+    border-radius: 0.35em;
+  }
+  
+  .active {
+    color: #008080 !important;
+  }
+  
+  .menu-header{
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 1em;
+  }
+  
+  .menu-header .icon{
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+    justify-content: center;
+    padding-right: 0.9em;
+  }
+  
+  .user-name{
+    font-weight: bold;
+    color: #008080;
+    font-size: large;
+  }
+    

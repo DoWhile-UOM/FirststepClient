@@ -1,4 +1,4 @@
-ejs-pdfviewer{
+.container{
   width: 120vh;
   height: 80vh;
   overflow: hidden;
@@ -10,7 +10,8 @@ ejs-pdfviewer{
 
 .back-button{
   position: absolute;
-  top: 1.5em;
+  background-color: #fff;
+  top: 3em;
   left: 1.5em;
   z-index: 1000;
 }

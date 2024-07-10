@@ -2,9 +2,4 @@
     <mat-icon>arrow_back</mat-icon>
 </button>  
 
-<ejs-pdfviewer
-  id="container"
-  [documentPath]="document"
-  [resourceUrl]="resource"
-  [serviceUrl]="service">
-</ejs-pdfviewer>
+<iframe [src]="documentUrlSafe" class="container"></iframe>

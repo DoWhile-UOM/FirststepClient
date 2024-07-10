@@ -1,0 +1,10 @@
+<div *ngIf="isLoaded">
+  <h2>Interviews in the company</h2>
+  <canvasjs-chart [options]="chartOptions" [styles]="{ width: '100%', height: '360px' }"></canvasjs-chart>
+  <mat-card class="applications-card">
+    <div class="applications-item">
+      <span class="title">Applications called for Interviews</span>
+      <span class="time">{{ isCalledPercentage | number:'1.0-2' }}%</span>
+    </div>
+  </mat-card>
+</div>

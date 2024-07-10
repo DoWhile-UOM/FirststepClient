@@ -306,7 +306,9 @@ export class SeekerProfileEditComponent implements OnInit {
     }
   }
   
-  async onSubmit() {
+  async onSubmit(event: Event) {
+    event.preventDefault(); // Prevent default form submission behavior
+
     if (this.seekerForm.invalid) {
       this.seekerForm.markAllAsTouched();
       this.snackBar.open('Please fill in all required fields', '', {
@@ -315,7 +317,7 @@ export class SeekerProfileEditComponent implements OnInit {
       });
       return;
     }
-  
+
     await this.updateProfile();
   }
   

@@ -46,12 +46,25 @@
   align-items: flex-start;
 }
 
-.calendar-container {
+.left-content {
+  display: flex;
+  flex-direction: column;
   width: 30%;
+}
+
+.calendar-container {
   padding: 10px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+.text-card {
+  padding: 20px;
+  box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: #fff;
 }
 
 .schedule-table {
@@ -88,7 +101,7 @@
 .time-label {
   font-weight: bold;
   margin-right: 10px;
-  color:#d3d3d3;
+  color: grey;
   z-index: 1; /* Ensure the time label is always on top */
   background: #fafafa; /* Match the background color to cover the line */
 }
@@ -117,16 +130,16 @@
   padding: 12px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background: #D3D3D3;
+  background: #d3d3d3;
   z-index: 2; /* Ensure the slot is on top of the line */
 }
 
 .interview-slot.missed {
-  background: #EE9999;
+  background: #ee9999;
 }
 
 .interview-slot.complete {
-  background: #80CBC4;
+  background: #80cbc4;
 }
 
 .status.booked {
@@ -151,11 +164,19 @@
 .name {
   font-weight: bold;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .job-title {
   font-size: 0.9em;
   color: #555;
+  margin-right: 10px;
+}
+
+.job-title-up {
+  font-size: 0.9em;
+  color: white;
   margin-right: 10px;
 }
 
@@ -166,6 +187,11 @@
 .status-dropdown {
   margin-left: 10px;
   width: 120px;
+}
+
+.mat-icon {
+  font-size: 16px; /* Smaller icon size */
+  margin-left: 5px; /* Space between text and icon */
 }
 
 @media (max-width: 768px) {

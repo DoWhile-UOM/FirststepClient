@@ -45,7 +45,7 @@ interface AddJob {
     employeement_type: string;
     arrangement: string;
     experience: string;
-    salary: string;
+    salary: number;
 	currency_unit: string;
     submission_deadline: string;
 	job_description: string;
@@ -325,7 +325,7 @@ export class NewJobComponent implements AfterViewInit, OnInit{
 		addAdvertisement.country = this.createJobFormGroup.controls.locationCountryControl.value?.trim() ?? '';
 		addAdvertisement.job_description = this.description;
 		addAdvertisement.job_number = parseInt(this.createJobFormGroup.controls.job_number.value ?? '0') || 0;
-		addAdvertisement.salary = this.createJobFormGroup.controls.salary.value ?? '';
+		addAdvertisement.salary = parseFloat(this.createJobFormGroup.controls.salary.value ?? '0') || 0;
 
 		if (this.validateInput(addAdvertisement) == false){
 			return;

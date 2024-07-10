@@ -132,46 +132,10 @@ throw new Error('Method not implemented.');
   }
 
   async ngOnInit() {
-    this.suggesting = true;
-    this.spinner.show();
-
-    this.isSearch = false;
-
     this.seekerID = String(this.auth.getUserId());
-    
     this.countries = Country.getAllCountries().map(country => country.name);
 
-    let res = await this.auth.getLocation();
-
-    if (res != undefined && res != null){
-      await this.advertisementService.getRecommendedAdvertisements(this.seekerID, res.longitude, res.latitude, this.pageSize)
-        .then((response) => {
-          this.jobList = response.firstPageAdvertisements;
-          this.jobIdList = response.allAdvertisementIds;
-        });
-
-      this.jobSuggesion = 'Jobs Near to Me';
-    }
-    else{
-      await this.advertisementService.getRecommendedAdvertisementsWithoutLocation(this.seekerID, this.pageSize)
-        .then((response) => {
-          this.jobList = response.firstPageAdvertisements;
-          this.jobIdList = response.allAdvertisementIds;
-        });
-
-      this.jobSuggesion = 'Jobs More Relevant to Me';
-    }
-
-    if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
-      this.spinner.hide();
-      return;
-    }
-
-    this.newItemEvent.emit(this.jobList);
-    this.changePaginatorLengthEvent.emit(this.jobIdList.length);
-
-    this.spinner.hide();
-    this.suggesting = false;
+    await this.changeSuggestion(false);
   }
 
   async search(data: SearchData){
@@ -297,8 +261,12 @@ throw new Error('Method not implemented.');
       this.jobSuggesion = 'Jobs More Relevant to Me';
     }
     else{
+      this.snackBar.open("No advertisements found", "", {panelClass: ['app-notification-warning']})._dismissAfter(3000);
+
       this.spinner.hide();
       this.suggesting = false;
+      this.isSearch = false;
+      return
     }
 
     if (this.jobList == undefined || this.jobList == null || this.jobList.length == 0) {
@@ -316,6 +284,12 @@ throw new Error('Method not implemented.');
 
   showAllFilters(){
 
+  }
+
+  clearSearch(){
+    this.spinner.show();
+    
+    window.location.reload();
   }
 
   @HostListener('window:resize', ['$event'])

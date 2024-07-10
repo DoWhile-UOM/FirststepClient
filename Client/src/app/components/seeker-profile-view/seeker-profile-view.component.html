@@ -50,7 +50,9 @@
         </div>
         <div class="info-row">
           <mat-label class="head">Skills</mat-label>
-          <span>{{ seekerDetails.seekerSkills }}</span>
+          <span class="skill-set">
+            <div *ngFor="let skill of seekerDetails.seekerSkills" class="skill-chip">{{skill[0].toUpperCase() + skill.slice(1)}}</div>
+          </span>
         </div>
       </div>
       <div class="button-container">

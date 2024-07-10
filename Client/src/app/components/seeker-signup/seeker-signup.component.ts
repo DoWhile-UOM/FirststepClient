@@ -231,7 +231,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
   // OTP timer
   startOtpTimer() {
     this.isOTPRequestSent = true;
-    this.remainingTime = 1800; // Initialize remaining time in seconds
+    this.remainingTime = 60; //remaining time in seconds
     this.updateOtpBtnText();
     this.timerHintMessage = '';
 
@@ -240,17 +240,16 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
       this.updateOtpBtnText();
 
       if (this.remainingTime <= 0) {
-        clearInterval(intervalId); // Stop the timer when time is up
+        clearInterval(intervalId); 
         this.isOTPRequestSent = false;
         this.reqOTPBtnText = "Request OTP";
         this.timerHintMessage = 'Timer ran out. Please request an OTP again.';
       }
-    }, 1000); // Update every second
+    }, 1000);
   }
 
   updateOtpBtnText() {
-    const minutes = Math.floor(this.remainingTime / 60);
-    this.reqOTPBtnText = `${minutes} min`;
+    this.reqOTPBtnText = `${this.remainingTime} sec`;
   }
 
   async onRegister() {
@@ -283,7 +282,7 @@ export class SeekerSignupComponent implements OnInit, AfterViewChecked {
     formData.append('first_name', this.seekerReg.get('first_name')?.value);
     formData.append('last_name', this.seekerReg.get('last_name')?.value);
     formData.append('phone_number', this.seekerReg.get('phone_number')?.value);
-    formData.append('password', this.seekerReg.get('password')?.value); // Ensure password is included
+    formData.append('password', this.seekerReg.get('password')?.value); 
     formData.append('bio', this.seekerReg.get('bio')?.value);
     formData.append('description', this.seekerReg.get('description')?.value);
     formData.append('university', this.seekerReg.get('university')?.value);

@@ -1,34 +1,33 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { PdfViewerModule } from '@syncfusion/ej2-angular-pdfviewer';
 import { MatDialogModule, MatDialogContent, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import { DialogData } from '../company-application/company-application.component';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pdf-view',
   standalone: true,
-  imports: [PdfViewerModule, MatDialogModule, MatDialogContent,MatIconModule,MatButtonModule], 
+  imports: [MatDialogModule, MatDialogContent, MatIconModule, MatButtonModule], 
   templateUrl: './pdf-view.component.html',
   styleUrl: './pdf-view.component.css'
 })
 export class PdfViewComponent implements OnInit{
-
   public document: any;
-  public resource: string = "https://cdn.syncfusion.com/ej2/23.1.43/dist/ej2-pdfviewer-lib";
-  public service = 'https://services.syncfusion.com/angular/production/api/pdfviewer';
+  public documentUrlSafe: SafeResourceUrl | undefined;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private dialogRef: MatDialogRef<PdfViewComponent>)
+    private dialogRef: MatDialogRef<PdfViewComponent>,
+    private sanitizer: DomSanitizer)
   { }
   
   ngOnInit() {
     this.document = this.data.documentUrl;
+    this.documentUrlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.document);
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
-
 }
