@@ -35,8 +35,7 @@
               "src/assets/custom-theme.scss",
               "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "node_modules/ngx-spinner/animations/ball-spin-clockwise.css",
-              "node_modules/@syncfusion/ej2-base/styles/material.css",
-              "node_modules/@syncfusion/ej2-angular-pdfviewer/styles/material.css"
+              "node_modules/@syncfusion/ej2-base/styles/material.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
